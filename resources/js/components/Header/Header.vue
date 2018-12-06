@@ -29,36 +29,46 @@
 				</div>
 				<div class="site-logo-wrap d-custom-flex ml-0 align-items-center" v-else>
 					<router-link to="/horizontal/dashboard/ecommerce" class="grayish-blue site-logo-img">
-						<img src="/static/img/site-logo.png" alt="site logo" width="100" height="30">
+						<img src="/images/HOLIPIC-LOGO.png" alt="site logo" width="100" height="30">
 					</router-link>
 				</div>
-				<quick-links></quick-links>
-				<v-text-field flat solo prepend-icon="search" :placeholder="$t('message.search')" class="search-bar"></v-text-field>
-				<div class="mobile-search d-none">
-					<v-btn flat icon  small class="mobile-search-btn" @click="toggleSearchForm">
-						<v-icon class="font-md">search</v-icon>
-					</v-btn>
-				</div>
+				<!-- component quick link -->
+					<!-- <quick-links></quick-links> -->
+				<!--  end component quick link -->
+
+				<!-- <v-text-field flat solo prepend-icon="search" :placeholder="$t('message.search')" class="search-bar"></v-text-field> -->
+
+				<!-- <div class="mobile-search d-none"> -->
+					<!-- Input search -->
+						<!-- <v-btn flat icon  small class="mobile-search-btn" @click="toggleSearchForm">
+							<v-icon class="font-md">search</v-icon>
+						</v-btn> -->
+					<!-- end input search  -->
+				<!-- </div> -->
 			</div>
 			<div class="navbar-right">
-				<v-btn class="v-step-2 upgrade-btn" color="primary" tag="link" :to="getMenuLink('/pages/pricing-1')">{{ $t('message.plans') }}</v-btn>
+
+				<!-- <v-btn class="v-step-2 upgrade-btn" color="primary" tag="link" :to="getMenuLink('/pages/pricing-1')">{{ $t('message.plans') }}</v-btn> -->
+
 				<v-btn icon large @click="toggleFullScreen" class="full-screen ma-0">
 					<v-icon color="grey">fullscreen</v-icon>
 				</v-btn>
-				<v-btn class="ma-0" icon large @click.stop="chatSidebar = !chatSidebar">
+				<!-- click show chat searchbar -->
+				<!-- <v-btn class="ma-0" icon large @click.stop="chatSidebar = !chatSidebar">
 					<v-icon color="grey">forum</v-icon>
-				</v-btn>
-				<notifications></notifications>
-				<cart :horizontal="horizontal"></cart>
+				</v-btn> -->
+
+				<!-- <notifications></notifications> -->
+				<!-- <cart :horizontal="horizontal"></cart> -->
 				<language-provider></language-provider>
-				<user></user>
+				<!-- <user></user> -->
 			</div>
 		</v-toolbar>
 		<!-- Chat Searchbar -->
-		<v-navigation-drawer fixed v-model="chatSidebar" :right="!rtlLayout" temporary app class="chat-sidebar-wrap">
+		<!-- <v-navigation-drawer fixed v-model="chatSidebar" :right="!rtlLayout" temporary app class="chat-sidebar-wrap">
 			<chat-sidebar></chat-sidebar>
 		</v-navigation-drawer>
-		<mobile-search-form></mobile-search-form>
+		<mobile-search-form></mobile-search-form> -->
 	</div>
 </template>
 
@@ -109,11 +119,11 @@ export default {
 			screenfull.toggle();
 			}
 		},
-		getMenuLink(link) {
-			return "/" + getCurrentAppLayout(this.$router) + link;
-		},
-			toggleSearchForm() {
-			this.$store.dispatch('toggleSearchForm');
+		// getMenuLink(link) {
+		// 	return "/" + getCurrentAppLayout(this.$router) + link;
+		// },
+		toggleSearchForm() {
+			// this.$store.dispatch('toggleSearchForm');
 		}
 	},
 	components: {

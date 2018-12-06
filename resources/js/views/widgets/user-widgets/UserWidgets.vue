@@ -23,7 +23,7 @@
 						<v-btn class="ma-0" color="primary" small>{{$t('message.assignNow')}}</v-btn>
 					</div>    
 				</app-card>
-				<app-card 
+		<!-- 		<app-card 
 					:fullBlock="true"
 					colClasses="xl4 lg4 md4 sm6 xs12"
 				>
@@ -34,7 +34,7 @@
 					colClasses="xl4 lg4 md4 sm12 xs12"
 				>
 					<blog-layout-three></blog-layout-three>
-				</app-card>
+				</app-card> -->
 			</v-layout>
 			<v-layout row wrap>
 				<app-card 
@@ -54,16 +54,12 @@
 
 <script>
 import SupportTickets from "../../../components/Widgets/SupportTickets";
-import ToDoList from "../../../components/Widgets/ToDoList";
 import AddNewBlog from "../../../components/Widgets/AddNewBlog";
 import ActiveUser from "../../../components/Widgets/ActiveUser";
 import SupportRequest from "../../../components/Widgets/SupportRequest";
 import UsersList from "../../../components/Widgets/UsersList";
 import ProjectStatus from "../../../components/Widgets/ProjectStatus";
 import Invoice from "../../../components/Widgets/Invoice";
-import BlogLayoutOne from "../../../components/Widgets/BlogLayoutOne";
-import BlogLayoutTwo from "../../../components/Widgets/BlogLayoutTwo";
-import BlogLayoutThree from "../../../components/Widgets/BlogLayoutThree";
 import QuoteOfTheDay from "../../../components/Widgets/QuoteOfTheDay";
 import NewEmails from "../../../components/Widgets/NewEmails";
 
@@ -72,16 +68,12 @@ import { activeUser } from "../data";
 export default {
   components: {
     SupportTickets,
-    ToDoList,
     AddNewBlog,
     ActiveUser,
     SupportRequest,
     UsersList,
     ProjectStatus,
     Invoice,
-    BlogLayoutOne,
-    BlogLayoutTwo,
-    BlogLayoutThree,
     QuoteOfTheDay,
     NewEmails
   },

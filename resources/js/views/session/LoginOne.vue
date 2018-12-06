@@ -95,7 +95,7 @@ export default {
         email: this.email,
         password: this.password
       };
-     	// console.log('im here')
+   
     	this.$router.push({
     		path: '/default/dashboard/ecommerce'
     	});

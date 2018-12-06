@@ -1,6 +1,7 @@
 //messages.js
 export default {
   general: 'General',
+  company: 'Company',
   overview: 'Overview',
   customizer: 'Customizer',
   applications: 'Applications',
@@ -14,7 +15,7 @@ export default {
   dashboardOverview: 'Dashboard Overview',
   dashboardv1: 'Dashboard V1',
   dashboardv2: 'Dashboard V2',
-  widgets: 'Widgets',
+  companymanagement: 'Company Management',
   horizontalMenu: 'Horizontal Menu',
   pages: 'Pages',
   gallery: 'Gallery',

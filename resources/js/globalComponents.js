@@ -16,7 +16,7 @@ import PageTitleBar from "./components/PageTitleBar/PageTitleBar";
 import AppCard from './components/AppCard/AppCard';
 
 // stats card
-import StatsCard from './components/StatsCard/StatsCard';
+// import StatsCard from './components/StatsCard/StatsCard';
 import StatsCardV2 from './components/StatsCardV2/StatsCardV2';
 
 // section tooltip
@@ -26,7 +26,7 @@ const GlobalComponents = {
    install(Vue) {
       Vue.component('appCard', AppCard);
       Vue.component('sectionTooltip', SectionTooltip);
-      Vue.component('statsCard', StatsCard);
+      // Vue.component('statsCard', StatsCard);
       Vue.component('statsCardV2', StatsCardV2);
       Vue.component('deleteConfirmationDialog', DeleteConfirmationDialog);
       Vue.component('vuePerfectScrollbar', VuePerfectScrollbar);

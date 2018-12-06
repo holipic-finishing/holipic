@@ -149,18 +149,3 @@ new Vue({
 	// render: h => h(App),
 	components: { App }
 }).$mount('#app')
-
-// const app = new Vue({
-//     el: '#app',
-//     template: '<app></app>',
-//     components: { App },
-//     router
-// })
-
-
-// const app = new Vue({
-//     el: '#app',
-//     template: '<app></app>',
-//     components: { App },
-//     router
-// })

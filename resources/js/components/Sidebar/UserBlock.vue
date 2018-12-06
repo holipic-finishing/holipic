@@ -77,9 +77,11 @@ export default {
 	},
   methods: {
     logoutUser() {
-      this.$store.dispatch("logoutUserFromFirebase", this.$router);
+    	console.log('123123')
+      // this.$store.dispatch("logoutUserFromFirebase", this.$router);
 	 },
 	 getMenuLink(path) {
+	 	console.log('im herer')
 		 return '/' + getCurrentAppLayout(this.$router) +  path;
 	 }
   }

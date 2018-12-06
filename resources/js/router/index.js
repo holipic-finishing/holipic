@@ -2,13 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Nprogress from 'nprogress'
 
-//routes
-import defaultRoutes from './default';
-import horizontalRoutes from './horizontal';
-import boxedRoutes from './boxed';
-import mini from './mini';
-import boxedV2 from './boxed-v2';
-
 // session components
 
 import AppLogin from '../views/session/AppLogin.vue';
@@ -17,17 +10,16 @@ import LoginOne from '../views/session/LoginOne.vue';
 // import LockScreen from '../views/session/LockScreen.vue';
 import ForgotPassword from '../views/session/ForgotPassword.vue';
 import ResetPassword from '../views/session/ResetPassword.vue';
-import Auth0CallBack from '../components/Auth0Callback/Auth0Callback.vue';
+// import Auth0CallBack from '../components/Auth0Callback/Auth0Callback.vue';
 
 
 // dashboard components
 import Full from '../container/Full'
 import Ecommerce   from'../views/dashboard/Ecommerce';
-import WebAnalytics   from'../views/dashboard/WebAnalytics';
-import Magazine   from'../views/dashboard/Magazine';
-import News   from'../views/dashboard/News';
-import Agency   from'../views/dashboard/Agency';
-import Saas   from'../views/dashboard/Saas';
+// import WebAnalytics   from'../views/dashboard/WebAnalytics';
+// import Magazine   from'../views/dashboard/Magazine';
+// import News   from'../views/dashboard/News';
+// import Saas   from'../views/dashboard/Saas';
 
 Vue.use(Router)
 
@@ -65,11 +57,11 @@ routers = [
 	{
 		path: '/',
    		component: Full,
-		redirect: '/default/dashboard/ecommerce',
+		redirect: '/default/dashboard/index',
 		meta: { requiresAuth: true },
 		children: [
       		{
-	         	path: '/default/dashboard/ecommerce',
+	         	path: '/default/dashboard/index',
 	         	component: Ecommerce,
 	         	meta: {
 		            title: 'message.ecommerce',
@@ -129,7 +121,7 @@ router.beforeEach((to, from, next) => {
   	}else if(to.path === '/session/login' && (localStorage.getItem('access_token') !== null)){
   		console.log('ok');
   		next({
-				path:'/default/dashboard/ecommerce',
+				path:'/default/dashboard/index',
 			})
   	} 
   	else {

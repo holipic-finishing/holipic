@@ -454,4 +454,6 @@ export default {
 
   // Menu
   company : "Company",
+  package : "Packages",
+  listPackage : "List Package"
 }

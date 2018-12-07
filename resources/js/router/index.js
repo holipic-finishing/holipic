@@ -18,8 +18,11 @@ import Full from '../container/Full'
 import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // view users 
+
 // import UserWidgets   from'../views/users/UsersList';
-import Company from '../views/company/index'
+import Company from '../views/company/index';
+import PackageIndex from '../views/package/Index';
+
 
 Vue.use(Router)
 
@@ -87,6 +90,15 @@ routers = [
 		            breadcrumb: 'Company / List'
 		        }
 		    },
+		    {
+		        path: '/default/packages/index',
+		        component: PackageIndex,
+		        meta: {
+		        	requiresAuth: true,
+		            title: 'message.package',
+		            breadcrumb: 'Packages / List'
+		        }
+		    },
       	]	
 	},
 	// {
@@ -129,16 +141,13 @@ var router = new Router({
 // navigation guards before each
 router.beforeEach((to, from, next) => { 
 	Nprogress.start()
-	// console.log('123');
 	// if (to.path !== '/login' && !access_token) {
 	if (to.matched.some(record => record.meta.requiresAuth) && (localStorage.getItem('access_token') === null)) {
-		console.log(123);
     	next({
 				path: '/session/login',
 				// query: { redirect: to.fullPath }
 			})
   	}else if(to.path === '/session/login' && (localStorage.getItem('access_token') !== null)){
-  		console.log('ok');
   		next({
 				path:'/default/dashboard/index',
 			})

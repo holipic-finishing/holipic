@@ -18,7 +18,7 @@ import Full from '../container/Full'
 import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // view users 
-import UserWidgets   from'../views/users/UsersList';
+// import UserWidgets   from'../views/users/UsersList';
 import Company from '../views/company/index'
 
 Vue.use(Router)

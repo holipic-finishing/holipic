@@ -16,7 +16,7 @@
 <body>
   <div id="app"></div>
   <script type="text/javascript">
-    localStorage.setItem('access_token', '{{ isset($token) ? $token : "" }}');
+    localStorage.setItem('accesss_token', '{{ isset($token) ? $token : "" }}');
     localStorage.setItem('currentUser', '{{ isset($currentUser) ? json_encode($currentUser) : "" }}');
   </script>
   <script type="text/javascript" src="{{asset('js/app.js')}}"></script>

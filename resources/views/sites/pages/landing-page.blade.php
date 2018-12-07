@@ -1204,11 +1204,13 @@
 				<div class="myaccount-form">
 					<h3>Welcome back, <br />
 					Please sign in to your account</h3>
+
 					<div id="message-form-login" style="color:#05cbfc">
 						
 					</div>
 					<form method="post" id="form-signin">
 						<input type="hidden" name="_token" value="{{csrf_token()}}">
+
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -1274,7 +1276,8 @@
 					<h3>Let's get started,<br />
 					Sign Up just in minute</h3>
 				
-					<form action="#" method="post">
+					<form action="{{ route('users.signup') }}" method="post">
+						 @csrf
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">

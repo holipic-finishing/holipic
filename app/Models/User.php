@@ -3,26 +3,26 @@
 namespace App\Models;
 
 use Eloquent as Model;
+
 use Lcobucci\JWT\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    // use SoftDeletes;
 
     public $table = 'users';
-    
-
-    // protected $dates = ['deleted_at'];
-
 
     public $fillable = [
-        'name',
+        'company_name',
+        'first_name',
+        'last_name',
         'email',
         'password',
-        'email_verified_at',
-        'role_id',
-        'access_token'
+        'access_token',
+        'active',
+        'package_id',
+        'role_id'
+
     ];
 
     /**
@@ -31,7 +31,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'name' => 'string',
+
+        'first_name' => 'string',
+        'last_name' => 'string',
         'email' => 'string',
         'password' => 'string',
         'email_verified_at'  => 'string',
@@ -40,7 +42,8 @@ class User extends Authenticatable
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
+
     ];
 
     /**
@@ -57,7 +60,7 @@ class User extends Authenticatable
         $token =(string)(new Builder())->setId('4f1g23a12aa', true) 
                         ->setIssuedAt(time())
                         ->setExpiration(time() + 1209600) 
-                        ->set('username', $this->name) 
+                        ->set('username', $this->first_name) 
                         ->set('email', $this->email) 
                         ->set('id', $this->id) 
                         ->getToken();

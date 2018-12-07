@@ -33,7 +33,7 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'package_id' => $request['package_id'],
-            'role_id' => $request['role_id'],
+            'access_token'=>'qweweqwe'
 
         ]);
         $user = $this->reNewToken($user);

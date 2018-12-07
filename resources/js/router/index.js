@@ -16,10 +16,10 @@ import ResetPassword from '../views/session/ResetPassword.vue';
 // dashboard components
 import Full from '../container/Full'
 import Ecommerce   from'../views/dashboard/Ecommerce';
-// import WebAnalytics   from'../views/dashboard/WebAnalytics';
-// import Magazine   from'../views/dashboard/Magazine';
-// import News   from'../views/dashboard/News';
-// import Saas   from'../views/dashboard/Saas';
+
+// view users 
+import UserWidgets   from'../views/users/UsersList';
+import Company from '../views/company/index'
 
 Vue.use(Router)
 
@@ -64,10 +64,29 @@ routers = [
 	         	path: '/default/dashboard/index',
 	         	component: Ecommerce,
 	         	meta: {
+	         		requiresAuth: true,
 		            title: 'message.ecommerce',
 		            breadcrumb: 'Dashboard / Ecommerce'
-	        	 }
+	        	}
       		},
+      		{
+		        path: '/default/users/user-list',
+		        component: UserWidgets,
+		        meta: {
+		        	requiresAuth: true,
+		            title: 'message.user',
+		            breadcrumb: 'Users / List'
+		        }
+		    },
+		    {
+		        path: '/default/widgets/mana-company',
+		        component: Company,
+		        meta: {
+		        	requiresAuth: true,
+		            title: 'message.company',
+		            breadcrumb: 'Company / List'
+		        }
+		    },
       	]	
 	},
 	// {

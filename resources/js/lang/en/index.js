@@ -445,5 +445,9 @@ export default {
   hardware: "Hardware",
   directional: "Directional",
   mapAliases: "Map (Aliases)",
-  dateAndTime: "Date And Time"
+  dateAndTime: "Date And Time",
+
+
+  // Menu
+  company : "Company",
 }

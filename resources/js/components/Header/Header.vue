@@ -74,7 +74,6 @@
 
 <script>
 import Sidebar from "../Sidebar/Sidebar.vue";
-import ChatSidebar from "../ChatSidebar/ChatSidebar.vue";
 import screenfull from "screenfull";
 import LanguageProvider from "./LanguageProvider";
 import Notifications from "./Notifications";
@@ -128,7 +127,6 @@ export default {
 	},
 	components: {
 		appSidebar: Sidebar,
-		ChatSidebar,
 		LanguageProvider,
 		Notifications,
 		Cart,

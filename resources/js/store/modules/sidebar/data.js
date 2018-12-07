@@ -5,7 +5,6 @@ export const menus = {
 			action: 'zmdi-view-dashboard',
 			title: 'message.dashboard',
 			active: true,
-			items: null,
 			path: '/default/dashboard/index'
 			// items: [
 			// 	{ title: 'message.ecommerce', path: '/default/dashboard/ecommerce', exact: true },
@@ -21,45 +20,45 @@ export const menus = {
 			title: 'message.companymanagement',
 			active: false,
 			items: [
-				{ title: 'message.user', path: '/widgets/user-widgets' },
+				{ title: 'message.user', path: '/users/user-list' },
 				{ title: 'message.company', path: '/widgets/mana-company' }
 			]
 		},
-		{
-			action: 'zmdi-shopping-cart',
-			title: 'message.ecommerce',
-			active: false,
-			items: [
-				{ title: 'message.shop', path: '/ecommerce/shop' },
-				{ title: 'message.cart', path: '/ecommerce/cart' },
-				{ title: 'message.checkout', path: '/ecommerce/checkout' },
-				{ title: 'message.cards', path: '/ecommerce/cards' }
-			]
-		},
-		{
-			action: 'zmdi-file-plus',
-			title: 'message.pages',
-			active: false,
-			items: [
-				{ title: 'message.blog', path: '/pages/blog' },
-				{ title: 'message.gallery', path: '/pages/gallery' },
-				{ title: 'message.pricing1', path: '/pages/pricing-1' },
-				{ title: 'message.pricing2', path: '/pages/pricing-2' },
-				{ title: 'message.blank', path: '/pages/blank' }
-			]
-		},
-		{
-			action: 'zmdi-time',
-			title: 'message.session',
-			active: false,
-			items: [
-				{ title: 'message.signUp', path: '/session/sign-up', exact: true },
-				{ title: 'message.login', path: '/session/login', exact: true },
-				{ title: 'message.lockScreen', path: '/session/lock-screen', exact: true },
-				{ title: 'message.forgotPassword', path: '/session/forgot-password', exact: true },
-				{ title: 'message.resetPassword', path: '/session/reset-password', exact: true }
-			]
-		}
+		// {
+		// 	action: 'zmdi-shopping-cart',
+		// 	title: 'message.ecommerce',
+		// 	active: false,
+		// 	items: [
+		// 		{ title: 'message.shop', path: '/ecommerce/shop' },
+		// 		{ title: 'message.cart', path: '/ecommerce/cart' },
+		// 		{ title: 'message.checkout', path: '/ecommerce/checkout' },
+		// 		{ title: 'message.cards', path: '/ecommerce/cards' }
+		// 	]
+		// },
+		// {
+		// 	action: 'zmdi-file-plus',
+		// 	title: 'message.pages',
+		// 	active: false,
+		// 	items: [
+		// 		{ title: 'message.blog', path: '/pages/blog' },
+		// 		{ title: 'message.gallery', path: '/pages/gallery' },
+		// 		{ title: 'message.pricing1', path: '/pages/pricing-1' },
+		// 		{ title: 'message.pricing2', path: '/pages/pricing-2' },
+		// 		{ title: 'message.blank', path: '/pages/blank' }
+		// 	]
+		// },
+		// {
+		// 	action: 'zmdi-time',
+		// 	title: 'message.session',
+		// 	active: false,
+		// 	items: [
+		// 		{ title: 'message.signUp', path: '/session/sign-up', exact: true },
+		// 		{ title: 'message.login', path: '/session/login', exact: true },
+		// 		{ title: 'message.lockScreen', path: '/session/lock-screen', exact: true },
+		// 		{ title: 'message.forgotPassword', path: '/session/forgot-password', exact: true },
+		// 		{ title: 'message.resetPassword', path: '/session/reset-password', exact: true }
+		// 	]
+		// }
 	],
 	// 'message.modules': [
 	// 	{

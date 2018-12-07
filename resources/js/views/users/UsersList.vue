@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<page-title-bar></page-title-bar>
-    <app-section-loader :status="loader"></app-section-loader>
-		<v-container fluid grid-list-xl pt-0>
+    <!-- <app-section-loader :status="loader"></app-section-loader> -->
+		<!-- <v-container fluid grid-list-xl pt-0>
 			<v-layout row wrap v-if="usersList !== null">
 				<app-card colClasses="xs12 sm6 md4" v-for="(users, index) in usersList" :key="index">
 					<div class="user-image text-xs-center mb-3">
@@ -35,7 +35,7 @@
 					</div>
 				</app-card>
 			</v-layout>
-		</v-container>
+		</v-container> -->
 	</div>
 </template>
 

@@ -20,14 +20,6 @@ class UserController extends Controller
    
     public function signUp(Request $request){
 
-    	$request['company_name'] = 'holipic';
-    	$request['first_name'] = 'thong';
-    	$request['last_name'] = 'tran';
-    	$request['email'] = 'ttthongcn@gmail.com';
-    	$request['password'] = '123456';
-    	$request['package_id'] = '1';
-    	$request['role_id'] = '1';
-
         $check = User::where('email', $request['email'])->first();
        
         if($check != null){

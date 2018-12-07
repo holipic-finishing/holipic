@@ -15,8 +15,5 @@ Route::get('/', function () {
     return view('sites.pages.landing-page');
 });
 
-
-Route::resource('categories', 'CategoryAPIController');
-
-
-Route::resource('users', 'UserController');
+Route::post('users/signup', 'UserController@signUp')->name('users.signup');
+Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');

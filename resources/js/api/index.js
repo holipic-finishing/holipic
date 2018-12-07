@@ -1,9 +1,39 @@
 import axios from 'axios';
 
-let instance = axios.create({
-    baseURL: 'http://reactify.theironnetwork.org/data/'
-});
+export function get(url) {
+    return axios({
+    	method: 'GET',
+    	url: url
+    })
+}
 
-instance.defaults.headers.common['Access-Control-Allow-Headers'] = 'X-CSRF-Token';
+export function getWithData(url, data) {
+    return axios({
+        method: 'GET',
+        url: url,
+        params: data
+    })
+}
 
-export default instance;
+export function post(url, data) {
+    return axios({
+    	method: 'POST',
+    	url: url,
+    	data: data
+    })
+}
+
+export function put(url, data) {
+    return axios({
+        method: 'PUT',
+        url: url,
+        data: data
+    })
+}
+
+export function del(url) {
+    return axios({
+        method: 'DELETE',
+        url: url
+    })
+}

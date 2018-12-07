@@ -1204,16 +1204,21 @@
 				<div class="myaccount-form">
 					<h3>Welcome back, <br />
 					Please sign in to your account</h3>
-				
-					<form action="#" method="post">
-						 @csrf
+
+					<div id="message-form-login" style="color:#05cbfc">
+						
+					</div>
+					<form method="post" id="form-signin">
+						<input type="hidden" name="_token" value="{{csrf_token()}}">
+
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<span class="fa fa-user"></span>
 								</div>
 								
-								<input type="text" class="form-control" placeholder="Enter Your User Name">
+								<input type="text" class="form-control" placeholder="Enter Your User Name" name=
+								"email" >
 							</div>
 						</div>
 						
@@ -1223,7 +1228,7 @@
 									<span class="fa fa-lock"></span>
 								</div>
 								
-								<input type="password" class="form-control" placeholder="Enter Your Password">
+								<input type="password" class="form-control" placeholder="Enter Your Password" name="password" > 
 							</div>
 						</div>
 						
@@ -1242,8 +1247,9 @@
 						</div>
 						
 						<div class="form-group">
-							<input type="submit" value="Login" class="btn-submit" />
+							<button type="submit" class="btn-submit">Login</button>
 							<a href="#signup" class="btn-submit has-popup">Sign Up</a>
+							{{-- <input type="submit" value="Login" class="btn-submit" /> --}}
 						</div>
 					</form>
 				</div>
@@ -1331,5 +1337,61 @@
 		</div>
 	</div>
 	<!-- End signup popup -->
+
+@endsection
+@section('scripts')
+<script>
+	$(document).ready(function() {
+		$("#form-signin").submit(function(e) {
+			e.preventDefault();	
+	    	var form = $(this);
+	    //var url = form.attr('action');
+	    $.ajax({
+	           type: "POST",
+	           url: 'landing-page/login',
+	           data: form.serialize(), 
+	           success: function(data)
+	           {
+	           	if(data && data.success == false) {
+	           		$('#message-form-login').empty();
+	           		$("#message-form-login").append(
+	           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+data.message+"</span>");
+	           	} else {
+	           		// console.log(data.data.user.access_token)
+	           		localStorage.setItem('access_token', data.data.user.access_token)
+	           		localStorage.setItem('currentUser', JSON.stringify(data.data.user))
+	           		console.log(localStorage.access_token)
+	           		window.location.href = "/";
+	           	}
+	           	
+	           	
+	           },
+	            error: function(error) {
+			        // console.log(error.responseJSON.errors);
+
+			        if(error.responseJSON.errors.email && error.responseJSON.errors.password) {
+			        	$('#message-form-login').empty();
+	           			$("#message-form-login").append(
+	           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+'Please enter your email and password '+"</span>");
+			        }
+
+			        if(error.responseJSON.errors.email) {
+			        	var errorMessage = error.responseJSON.errors.email[0]
+			        } else {
+			        	var errorMessage = error.responseJSON.errors.password[0]
+			        }
+
+			        $('#message-form-login').empty();
+	           		$("#message-form-login").append(
+	           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+errorMessage+"</span>");
+			        console.log(error); 
+
+			    }   
+	         });
+
+	     // avoid to execute the actual submit of the form.
+		});
+	});
+</script>
 
 @endsection

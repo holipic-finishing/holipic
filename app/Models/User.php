@@ -3,23 +3,11 @@
 namespace App\Models;
 
 use Eloquent as Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-/**
- * Class User
- * @package App\Models
- * @version December 7, 2018, 7:20 am UTC
- *
- * @property string company_name
- * @property string first_name
- * @property string last_name
- * @property string email
- * @property string password
- * @property string access_token
- * @property integer active
- * @property integer package_id
- */
-class User extends Model
+use Lcobucci\JWT\Builder;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
 {
 
     public $table = 'users';
@@ -34,6 +22,7 @@ class User extends Model
         'active',
         'package_id',
         'role_id'
+
     ];
 
     /**
@@ -42,15 +31,19 @@ class User extends Model
      * @var array
      */
     protected $casts = [
-        'company_name' => 'string',
+
         'first_name' => 'string',
         'last_name' => 'string',
         'email' => 'string',
         'password' => 'string',
-        'access_token' => 'string',
-        'active' => 'integer',
-        'package_id' => 'integer',
-        'role_id' => 'integer'
+        'email_verified_at'  => 'string',
+        'role_id' => 'string',
+        'access_token' => 'string'
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token'
+
     ];
 
     /**
@@ -62,5 +55,16 @@ class User extends Model
         
     ];
 
-    
+     public function generateAccessToken(){
+
+        $token =(string)(new Builder())->setId('4f1g23a12aa', true) 
+                        ->setIssuedAt(time())
+                        ->setExpiration(time() + 1209600) 
+                        ->set('username', $this->first_name) 
+                        ->set('email', $this->email) 
+                        ->set('id', $this->id) 
+                        ->getToken();
+
+        return $token;
+    }
 }

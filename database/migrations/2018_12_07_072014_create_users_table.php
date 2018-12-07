@@ -20,11 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('access_token');
+            $table->string('access_token')->nullable();
             $table->integer('active')->default(0);
             $table->integer('package_id');
-            $table->integer('role_id')->default(1);
+            $table->integer('role_id')->nullable()->unsigned()->default(1);
             $table->timestamps();
+            // $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

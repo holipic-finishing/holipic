@@ -26,25 +26,23 @@ class UserController extends Controller
            	return \Response::json(['msg' => 'email had existed']);
         }
         
-        $access_token = $this->generateUniqueAccessToken();
-
         $user = User::create([
             'company_name' => $request['company_name'],
             'first_name' => $request['first_name'],
             'last_name' => $request['last_name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
-            'access_token' => $access_token,
             'package_id' => $request['package_id'],
             'role_id' => $request['role_id'],
 
         ]);
+        $user = $this->reNewToken($user);
 
         $fullname =  $request['first_name']." ".$request['last_name'];
 
         $data = array(
             'fullname'=> $fullname,
-            'access_token' => $access_token,
+            'access_token' => $user->access_token
         );
 
         \Mail::to($request['email'])->send(new activationMail($data));  
@@ -52,12 +50,13 @@ class UserController extends Controller
         return \Response::json(['msg' => 'please login gmail to active your account']);
     }
 
-    protected function generateUniqueAccessToken(){
-    	do{
-    		$token = str_random(64);
-    	}while($user = User::where('access_token', $token)->first());
+     public function reNewToken($user)
+    {
+        $user = User::find($user['id']);
+        $user->access_token = $user->generateAccessToken();
+        $user->save();
 
-    	return $token;
+        return $user;
     }
 
 

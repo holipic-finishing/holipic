@@ -4,50 +4,47 @@
 			<!-- Dash Cards -->
 			<v-layout row wrap border-rad-sm overflow-hidden>
 				<stats-card-v2
-					colClasses="xl4 lg4 md4 sm6 xs12"
-					:heading="$t('message.totalEarnings')"
+					colClasses="xl3 lg3 md3 sm6 xs12"
+					:heading="$t('message.totalcompany')"
 					:amount="2145"
+					:icon="$t('zmdi zmdi-account-calendar')"
+					customClasses="style-card-user"
 				>
-				<div class="pa-4">
-					<line-chart-shadow
-						:dataSet="totalEarnings"
-						:lineTension="0.4"
-						:dataLabels="labels"
-						:width="370"
-						:height="80"
-						:borderWidth=3
-						:enableGradient='false'
-						:enableShadow='false'
-						:borderColor="ChartConfig.color.primary">
-					</line-chart-shadow>
-				</div>
+				<!-- <div class="pa-4">
+				</div> -->
 				</stats-card-v2>
 				<stats-card-v2
-					colClasses="xl4 lg4 md4 sm6 xs12"
-					:heading="$t('message.newCustomers')"
+					colClasses="xl3 lg3 md3 sm6 xs12"
+					:heading="$t('message.totalpackagebasic')"
 					:amount="136"
+					:icon="$t('zmdi zmdi-card')"
+					customClasses="style-card-basic"
+					
 				>
-				<div class="pa-4">
-					<line-chart-shadow
-						:dataSet="newCustomers"
-						:lineTension="0.4"
-						:dataLabels="labels"
-						:width="370"
-						:height="80"
-						:borderWidth=3
-						:enableGradient='false'
-						:enableShadow='false'
-						:borderColor="ChartConfig.color.info"
-						>
-					</line-chart-shadow>
-				</div>
+				<!-- <div class="pa-4">
+				</div> -->
 				</stats-card-v2>
 				<stats-card-v2
-					colClasses="xl4 lg4 md4 sm12 xs12"
-					:heading="$t('message.onlineRevenue')"
+					colClasses="xl3 lg3 md3 sm12 xs12"
+					:heading="$t('message.totalpackagepro')"
 					:amount="2145"
+					:icon="$t('zmdi zmdi-card-membership')"
+					customClasses="style-card-pro"
+
+
 				>
-				<div class="pa-4">
+				<!-- <div class="pa-4">
+					
+				</div> -->
+				</stats-card-v2>
+				<stats-card-v2
+					colClasses="xl3 lg3 md3 sm12 xs12"
+					:heading="$t('message.totalimagesuploads')"
+					:amount="2145"
+					:icon="$t('zmdi zmdi-camera')"
+					customClasses="style-card-image"
+				>
+				<!-- <div class="pa-4">
 					<line-chart-shadow
 						:dataSet="onlineRevenue"
 						:lineTension="0.4"
@@ -59,7 +56,7 @@
 						:enableShadow='false'
 						:borderColor="ChartConfig.color.warning">
 					</line-chart-shadow>
-				</div>
+				</div> -->
 				</stats-card-v2>
 			</v-layout>
 			<!-- Sales -->

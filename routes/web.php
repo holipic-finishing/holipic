@@ -12,6 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
-    // dd('ok');
+    return view('sites.pages.landing-page');
 });
+
+
+Route::resource('categories', 'CategoryAPIController');
+
+
+Route::resource('users', 'UserController');

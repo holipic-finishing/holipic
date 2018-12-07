@@ -652,77 +652,9 @@ Holipic
 			<div class="myaccount-form">
 				<h3>Let's get started,<br />
 				Sign Up just in minute</h3>
-				
-<!-- 				<form action="{{ route('users.signup') }}" method="post" id="frmRegister">
-					{!! csrf_field() !!}
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="fa fa-user"></span>
-							</div>
-							<input type="text" name="first_name" class="form-control" placeholder="Enter Your First Name">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="fa fa-user"></span>
-							</div>
-							<input type="text" name="last_name" class="form-control" placeholder="Enter Your Last Name">
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="fa fa-lock"></span>
-							</div>
-								
-							<input type="password" class="form-control" placeholder="Enter Your Password" name="password" > 
-							</div>
 
-							<input type="text" name="last_name" class="form-control" placeholder="Enter Your Last Name">
-					</div>
-					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="fa fa-envelope"></span>
-							</div>
-
-							<input type="text" name="company_name" class="form-control" placeholder="Enter Your Company Name">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="fa fa-envelope"></span>
-							</div>
-
-							<input type="text" name="email" class="form-control" placeholder="Enter Your Email">
-						</div>
-					</div>
-					{{-- <div class="form-group">
-						<button type="submit" class="btn-submit">Login</button>
-						<a href="#signup" class="btn-submit has-popup">Sign Up</a>
-						<input type="submit" value="Login" class="btn-submit" />
-					</div> --}}
-					</div>
-
-					<div class="single-row">
-						<label class="account-checkbox">
-							<input type="checkbox">
-							<span class="checkmark"></span>
-							<b>I read and agree to <a href="#">Terms & Conditions</a></b>
-						</label>
-					</div>
-					
-					<div class="form-group">
-						<input type="submit" value="Sign Up" class="btn-submit" />
-						<p class="other-text">have an account? <a href="#login" class="has-popup">Sign in</a></p>
-					</div>
-
-				</form> -->
+				<div id="message-form-signup" style="color:#05cbfc"></div>
+			
 				<form action="{{ route('users.signup') }}" method="post" id="frmRegister">
 					{!! csrf_field() !!}
 					<div class="form-group">
@@ -928,6 +860,32 @@ Holipic
 	        $("#test").append(" <b>Appended text</b>.");
 	        $("#frmRegister").append("<input type='hidden' name='package_id' value='"+package+"'>");
 	    });
+
+	    $("#frmRegister").submit(function(e) {
+			e.preventDefault();	
+	    	var form = $(this);
+
+	    $.ajax({
+	           type: "POST",
+	           url: 'users/signup',
+	           data: form.serialize(), 
+	           success: function(data)
+	           {
+	           		if(data) {
+	           		$('#message-form-signup').empty();
+	           		$("#message-form-signup").append(
+	           			"<span class='label label-important'>"+" "+data.message+"</span>");
+	           	} else {
+	           		
+	           	}
+	           },
+	            error: function(error) {			      
+			        console.log(456) 
+
+			    }   
+	        });
+
+		});
 	});
 </script>
 @endsection

@@ -69,15 +69,15 @@ routers = [
 		            breadcrumb: 'Dashboard / Ecommerce'
 	        	}
       		},
-      		{
-		        path: '/default/users/user-list',
-		        component: UserWidgets,
-		        meta: {
-		        	requiresAuth: true,
-		            title: 'message.user',
-		            breadcrumb: 'Users / List'
-		        }
-		    },
+      // 		{
+		    //     path: '/default/users/user-list',
+		    //     component: UserWidgets,
+		    //     meta: {
+		    //     	requiresAuth: true,
+		    //         title: 'message.user',
+		    //         breadcrumb: 'Users / List'
+		    //     }
+		    // },
 		    {
 		        path: '/default/widgets/mana-company',
 		        component: Company,

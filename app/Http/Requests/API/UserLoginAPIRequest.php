@@ -32,10 +32,10 @@ class UserLoginAPIRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required'   => 'Please type email',
-            'email.email'      => 'Incorrect email', 
-            'password.required' => 'Please type password',
-            'password.min' => 'Enter at least 5 characters',
+            'email.required'   => 'Please enter email a address',
+            'email.email'      => 'Email attribute must be in a valid format', 
+            'password.required' => 'Please enter a password',
+            'password.min' => 'Enter Password at least 5 characters',
         ];
     }
 }

@@ -46,7 +46,6 @@ class LoginController extends Controller
 
     public function login(UserLoginAPIRequest $request)
     {
-        $input = $request->all();
         $credentials = $request->only(['email', 'password']);
         $email = $credentials['email'];
 
@@ -56,7 +55,7 @@ class LoginController extends Controller
 
                 return [
                     "success"=> false,
-                    "message"=>'Email does not exit',
+                    "message"=>'Email address not exist in system',
 
                 ];
             }
@@ -65,7 +64,7 @@ class LoginController extends Controller
 
                 return [
                     "success"=> false,
-                    "message"=>' Password provider was incorrect'
+                    "message"=> 'Password provider was incorrect'
                 ];
             }
 

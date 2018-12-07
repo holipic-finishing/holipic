@@ -12,6 +12,12 @@
 */
 
 Route::get('/', function () {
+    return view('sites.pages.landing-page');
+});
+
+Route::post('users/signup', 'UserController@signUp')->name('users.signup');
+Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');
+
+Route::get('/admin', function () {
     return view('welcome');
-    // dd('ok');
 });

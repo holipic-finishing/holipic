@@ -18,7 +18,7 @@ import Full from '../container/Full'
 import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // view users 
-import UserWidgets   from'../views/users/UsersList';
+// import UserWidgets   from'../views/users/UsersList';
 import Company from '../views/company/index'
 
 Vue.use(Router)
@@ -69,15 +69,15 @@ routers = [
 		            breadcrumb: 'Dashboard / Ecommerce'
 	        	}
       		},
-      		{
-		        path: '/default/users/user-list',
-		        component: UserWidgets,
-		        meta: {
-		        	requiresAuth: true,
-		            title: 'message.user',
-		            breadcrumb: 'Users / List'
-		        }
-		    },
+      // 		{
+		    //     path: '/default/users/user-list',
+		    //     component: UserWidgets,
+		    //     meta: {
+		    //     	requiresAuth: true,
+		    //         title: 'message.user',
+		    //         breadcrumb: 'Users / List'
+		    //     }
+		    // },
 		    {
 		        path: '/default/widgets/mana-company',
 		        component: Company,

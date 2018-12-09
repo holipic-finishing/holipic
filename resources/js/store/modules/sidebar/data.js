@@ -24,6 +24,18 @@ export const menus = {
 				{ title: 'message.company', path: '/widgets/mana-company' }
 			]
 		},
+		{
+			action: 'zmdi-settings',
+			title: 'message.settings',
+			active: false,
+			path: '/setting'
+		},
+		{
+			action: 'zmdi-camera-switch',
+			title: 'message.userManager',
+			active: false,
+			path: '/user-management'
+		},
 		// {
 		// 	action: 'zmdi-shopping-cart',
 		// 	title: 'message.ecommerce',

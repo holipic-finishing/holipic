@@ -450,6 +450,8 @@ export default {
   directional: "Directional",
   mapAliases: "Map (Aliases)",
   dateAndTime: "Date And Time",
+  userManager: "Users Management",
+
 
 
   // Menu

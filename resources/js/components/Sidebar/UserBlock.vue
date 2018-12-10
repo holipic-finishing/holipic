@@ -68,6 +68,12 @@ export default {
 					path: '/users/users-list'
 				},
 				{
+					id: 5,
+					title: 'message.changePassword',
+					icon: 'ti-lock mr-3 info--text',
+					path: '/users/change-password'
+				},
+				{
 					id: 4,
 					title: 'message.logOut',
 					icon: 'ti-power-off mr-3 error--text'

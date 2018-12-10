@@ -126,4 +126,12 @@ class PackageAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Package deleted successfully');
     }
+
+    public function CountPackages(){
+
+        $count_packages = $this->packageRepository->countPackages();
+
+        return $this->sendResponse($count_packages, 'Package deleted successfully');
+
+    }
 }

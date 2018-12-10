@@ -11,7 +11,26 @@
 |
 */
 
+Route::get('/landing-page', function () {
+    return view('sites.pages.landing-page');
+});
+
+
+Route::namespace('API')->group(function(){
+	Route::namespace('Auth')->group(function(){
+		
+		Route::post('landing-page/login', 'LoginController@login');
+
+		Route::get('landing-page/logout', 'LoginController@logout');
+
+
+	});
+});
+
+
+Route::post('users/signup', 'UserController@signUp')->name('users.signup');
+Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');
+
 Route::get('/', function () {
     return view('welcome');
-    // dd('ok');
 });

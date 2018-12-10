@@ -38,4 +38,38 @@ class PackageRepository extends BaseRepository
     {
         return Package::class;
     }
+
+    public function countPackages(){
+
+        $data = $this->model->withCount('users')->get()->toArray();
+
+        $count_packages = 0;
+
+        $array_data = [];
+
+        foreach ($data as $key => $value) {
+
+            if($value['package_name']=="Basic"){
+                if($value['users_count'])
+                {
+                    $array_data['count_basic'] = $value['users_count'];
+                }
+            }
+
+            if($value['package_name']=="Pro"){
+                if($value['users_count'])
+                {
+                    $array_data['count_pro'] = $value['users_count'];
+                }
+            }
+
+            $count_packages += $value['users_count'];
+
+        }
+
+        $array_data['total_count_company'] = $count_packages;
+
+        return $array_data;
+
+    }
 }

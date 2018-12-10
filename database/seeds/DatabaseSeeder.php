@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,7 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+
+        // $this->call(RolesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+
+
         $this->call(PackagesTableSeeder::class);
         
+
     }
 }

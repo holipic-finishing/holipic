@@ -18,9 +18,11 @@ import Full from '../container/Full'
 import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // view users 
-import UserWidgets   from'../views/users/UsersList';
+
+// import UserWidgets   from'../views/users/UsersList';
 import Company from '../views/company/index';
 import PackageIndex from '../views/package/Index';
+
 
 import Setting from '../views/setting/setting'
 import UserManagement from '../views/superadmin-user/user-management'
@@ -75,15 +77,15 @@ routers = [
 		            breadcrumb: 'Dashboard / Ecommerce'
 	        	}
       		},
-      		{
-		        path: '/default/users/user-list',
-		        component: UserWidgets,
-		        meta: {
-		        	requiresAuth: true,
-		            title: 'message.user',
-		            breadcrumb: 'Users / List'
-		        }
-		    },
+      // 		{
+		    //     path: '/default/users/user-list',
+		    //     component: UserWidgets,
+		    //     meta: {
+		    //     	requiresAuth: true,
+		    //         title: 'message.user',
+		    //         breadcrumb: 'Users / List'
+		    //     }
+		    // },
 		    {
 		        path: '/default/widgets/mana-company',
 		        component: Company,
@@ -101,7 +103,8 @@ routers = [
 		            title: 'message.package',
 		            breadcrumb: 'Packages / List'
 		        }
-		    },  
+
+		    }, 
 		    {
 		        path: 'default/setting',
 		        component: Setting,

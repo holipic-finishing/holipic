@@ -13,8 +13,18 @@
 				          inset
 				          vertical
 				        ></v-divider>
+			      	</v-toolbar>
+			      	<v-toolbar flat color="white">
+				        <v-text-field
+				        	v-model="search.company_name"
+					        append-icon="search"
+					        label="Search Company Name"
+					        single-line
+					        hide-details
+				        ></v-text-field>
 				        <v-spacer></v-spacer>
-			        
+				        <v-btn @click="doSearch" color="primary" dark class="mb-2">Search</v-btn>
+				        <v-btn @click="doReset" color="primary" dark class="mb-2">Reset</v-btn>
 			      	</v-toolbar>
 			      	<v-data-table
 			        :headers="headers"
@@ -24,17 +34,14 @@
 			       	<template slot="items" slot-scope="props">
 			    		<td>{{ props.item.id }}</td>
 				        <td class="text-xs-left">{{ props.item.name }}</td>
+				        <td class="text-xs-left">{{ props.item.package_name }}</td>
 				        <td class="text-xs-left">{{ props.item.address }}</td>
 				        <td class="text-xs-left">{{ props.item.email }}</td>
-				        <td class="text-xs-left">{{ props.item.logo }}</td>
+				        <td class="text-xs-left">{{ props.item.description }}</td>
 				        <td class="text-xs-left">
-				          <v-icon
-				            small
-				            class="mr-2"
-				            @click="editItem(props.item)"
-				          >
-				            edit
-				          </v-icon>
+				        	<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
+				    	</td>
+				        <td class="text-xs-left">
 				          <v-icon
 				            small
 				    		class="mr-2"
@@ -44,9 +51,6 @@
 				          </v-icon>
 				        </td>
 			    	</template>
-			        <template slot="no-data">
-			          <v-btn color="primary" >Reset</v-btn>
-			        </template>
 			      </v-data-table>
 			    </div>
 			  </v-app>
@@ -69,12 +73,18 @@ export default {
 	    	headers: [	        
 		        { text: 'ID', value: 'id' },	       
 		        { text: 'Company Name', value: 'name' },	       
-		        { text: 'Address', value: 'address' },	       
-		        { text: 'Owner', value: 'email' },	
+		        { text: 'Package Name', value: 'package_name' ,  sortable: false},	       
+		        { text: 'Address', value: 'address', sortable: false },	       
+		        { text: 'Owner', value: 'email', sortable: false },	
+		        { text: 'Description', value: 'description', sortable: false },	
 		        { text: 'Logo' , value: 'logo', sortable: false},
-		        { text: 'Action' }       
+		        { text: 'Action', sortable: false }       
 	      	],
-	      	desserts:[]
+	      	desserts:[],
+	      	search:{
+	      		company_name : ''
+	      	},
+	      	pagination: {},
 	    }
   	},
 
@@ -89,24 +99,37 @@ export default {
 				if(res.data && res.data.success){
 					this.desserts = res.data.data
 				}
-				
 			})
 			.catch((e) =>{
 				console.log(e)
 			}) 
 		},
 
-		showItem(item){
-			alert(1)
-			this.$root.$router.push({
-    			path: '/default/widgets/mana-company-chart', 
-    			query: { companyId: item.id, name: item.name, description: item.description, address: item.address }
+		doSearch(){
+			post(config.API_URL+'search/companies', this.search)
+			.then((res) => {
+				if(res.data && res.data.success){
+					this.desserts = res.data.data
+				}
+			})
+			.catch((e) =>{
+				console.log(e)
 			})
 		},
 
-		editItem(item){
-			console.log('edit')
-		}
+		doReset(){
+			this.search.company_name = ''
+			this.fetchData()
+		},
+
+		showItem(item){
+
+			this.$root.$router.push({
+    			path: '/default/widgets/mana-company-chart', 
+    			query: { companyId: item.id}
+			})
+		},
+
 
 	},
 

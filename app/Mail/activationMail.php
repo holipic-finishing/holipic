@@ -16,6 +16,7 @@ class activationMail extends Mailable
      *
      * @return void
      */
+    protected $user;
     public function __construct($user)
     {
         $this->user = $user;

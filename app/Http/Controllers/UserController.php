@@ -20,7 +20,7 @@ class UserController extends Controller
     */
    
     public function signUp(Request $request){
-        // dd($request->all());
+      
         $check = User::where('email', $request['email'])->first();
        
         if($check != null){
@@ -55,13 +55,13 @@ class UserController extends Controller
             'access_token' => $user->access_token
         );
 
-        \Mail::to($request['email'])->send(new activationMail($data));  
+        \Mail::to($request['email'])->queue(new activationMail($data));  
 
         return [
                 "success"=> true,
                 "message"=> 'Please login your email to active your account',
             ];
-
+            
     }
 
     /**

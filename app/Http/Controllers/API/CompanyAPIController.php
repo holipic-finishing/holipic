@@ -127,4 +127,20 @@ class CompanyAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Company deleted successfully');
     }
+
+    /**
+        TODO:
+        - function to search of list companies
+
+    */
+    
+    public function doSearch(Request $request){
+        $input = $request->all();
+        
+        $results = $this->companyRepository->search($input);
+
+
+        return $this->sendResponse($results->toArray(), 'Companies searched successfully');
+
+    }
 }

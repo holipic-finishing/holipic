@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->integer('active')->default(0);
             $table->integer('package_id');
             $table->integer('role_id')->nullable()->unsigned()->default(1);
+            $table->string('remember_token', 100)->nullable();
             $table->timestamps();
             // $table->foreign('role_id')->references('id')->on('roles');
         });

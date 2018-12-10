@@ -1205,7 +1205,7 @@
 					<h3>Welcome back, <br />
 					Please sign in to your account</h3>
 
-					<div id="message-form-login" style="color:#05cbfc">
+					<div id="message-form-login" style="color:#05cbfc; font-size:13px">
 						
 					</div>
 					<form method="post" id="form-signin">
@@ -1345,34 +1345,42 @@
 		$("#form-signin").submit(function(e) {
 			e.preventDefault();	
 	    	var form = $(this);
-	    //var url = form.attr('action');
-	    $.ajax({
+	    	$.ajax({
 	           type: "POST",
 	           url: 'landing-page/login',
 	           data: form.serialize(), 
 	           success: function(data)
 	           {
-	           	if(data && data.success == false) {
-	           		$('#message-form-login').empty();
-	           		$("#message-form-login").append(
-	           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+data.message+"</span>");
-	           	} else {
-	           		// console.log(data.data.user.access_token)
-	           		localStorage.setItem('access_token', data.data.user.access_token)
-	           		localStorage.setItem('currentUser', JSON.stringify(data.data.user))
-	           		console.log(localStorage.access_token)
-	           		window.location.href = "/";
-	           	}
-	           	
-	           	
+		           	if(data && data.success == false) {
+		           		$('#message-form-login').empty();
+		           		$("#message-form-login").append(
+		           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+data.message+"</span>");
+		           	} else {
+		           		window.localStorage.setItem('access_token', data.data.user.access_token)
+
+		           		var object = {
+		           			'userId': data.data.user.id, 
+		           			'fullname': data.data.user.last_name+' '+data.data.user.first_name, 
+		           			'email': data.data.user.email, 
+		           			'roleId': data.data.user.role_id
+		           			}
+
+		           		window.localStorage.setItem('user', JSON.stringify(object))
+
+		           		window.location.href = "/";
+		           	}
+	           		
 	           },
 	            error: function(error) {
-			        // console.log(error.responseJSON.errors);
+			        // console.log(error.responseJSON.errors.email);
+			        if(error && error.responseJSON.errors.email && error.responseJSON.errors.password) {
 
-			        if(error.responseJSON.errors.email && error.responseJSON.errors.password) {
 			        	$('#message-form-login').empty();
+
 	           			$("#message-form-login").append(
 	           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+'Please enter your email and password '+"</span>");
+
+	           			return false;
 			        }
 
 			        if(error.responseJSON.errors.email) {
@@ -1382,14 +1390,11 @@
 			        }
 
 			        $('#message-form-login').empty();
+
 	           		$("#message-form-login").append(
 	           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+errorMessage+"</span>");
-			        console.log(error); 
-
 			    }   
 	         });
-
-	     // avoid to execute the actual submit of the form.
 		});
 	});
 </script>

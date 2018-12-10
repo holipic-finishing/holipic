@@ -23,7 +23,11 @@ class UserController extends Controller
         $check = User::where('email', $request['email'])->first();
        
         if($check != null){
-           	return \Response::json(['msg' => 'email had existed']);
+
+            return [
+                    "success"=> false,
+                    "message"=> 'Email had existed',
+                ];
         }
         
         $user = User::create([
@@ -33,7 +37,6 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'package_id' => $request['package_id'],
-            'role_id' => $request['role_id'],
 
         ]);
         $user = $this->reNewToken($user);
@@ -47,8 +50,20 @@ class UserController extends Controller
 
         \Mail::to($request['email'])->send(new activationMail($data));  
 
-        return \Response::json(['msg' => 'please login gmail to active your account']);
+        return [
+                "success"=> true,
+                "message"=> 'Please login your email to active your account',
+            ];
+
     }
+
+    /**
+
+        TODO:
+        - function create access_token
+
+    */
+    
 
      public function reNewToken($user)
     {
@@ -61,10 +76,12 @@ class UserController extends Controller
 
 
     /**
+
     	TODO:
     	- function to activate account
     	- @param : access_token
-     */
+
+    */
     
     protected function activationAccount(Request $request){
     	$input = $request->all() ;
@@ -77,6 +94,6 @@ class UserController extends Controller
 
         $result = User::where('access_token',$access_token)->update($array);
 
-        return \Response::json(['msg' => 'activation success']);
+         return redirect('/');
     }
 }

@@ -33,7 +33,6 @@ Route::get('/', function () {
 });
 
 
-
 Route::post('users/signup', 'UserController@signUp')->name('users.signup');
 Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');
 

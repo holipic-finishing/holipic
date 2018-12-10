@@ -34,6 +34,7 @@
 			       	<template slot="items" slot-scope="props">
 			    		<td>{{ props.item.id }}</td>
 				        <td class="text-xs-left">{{ props.item.name }}</td>
+				        <td class="text-xs-left">{{ props.item.package_name }}</td>
 				        <td class="text-xs-left">{{ props.item.address }}</td>
 				        <td class="text-xs-left">{{ props.item.email }}</td>
 				        <td class="text-xs-left">{{ props.item.description }}</td>
@@ -79,11 +80,12 @@ export default {
 	    	headers: [	        
 		        { text: 'ID', value: 'id' },	       
 		        { text: 'Company Name', value: 'name' },	       
-		        { text: 'Address', value: 'address' },	       
-		        { text: 'Owner', value: 'email' },	
-		        { text: 'Description', value: 'description' },	
+		        { text: 'Package Name', value: 'package_name' ,  sortable: false},	       
+		        { text: 'Address', value: 'address', sortable: false },	       
+		        { text: 'Owner', value: 'email', sortable: false },	
+		        { text: 'Description', value: 'description', sortable: false },	
 		        { text: 'Logo' , value: 'logo', sortable: false},
-		        { text: 'Action' }       
+		        { text: 'Action', sortable: false }       
 	      	],
 	      	desserts:[],
 	      	search:{

@@ -18,23 +18,23 @@ Route::get('/','API\PackageAPIController@listPackage');
 
 Route::namespace('API')->group(function(){
 	Route::namespace('Auth')->group(function(){
+		
 		Route::post('landing-page/login', 'LoginController@login');
 
 		Route::get('landing-page/logout', 'LoginController@logout');
 
-		Route::get('test', 'LoginController@reNewToken');
-
-		Route::get('user', function() {
-			$user = \Auth::user();
-			dd($user);
-		});
 
 	});
 });
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
 
 Route::post('users/signup', 'UserController@signUp')->name('users.signup');
 Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');
+
+

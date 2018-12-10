@@ -99,6 +99,10 @@ export default {
   cancel: 'Cancel',
   totalEarnings: 'Total Earnings',
   onlineRevenue: 'Online Revenue',
+  totalimagesuploads : "Total Images Uploads",
+  totalpackagebasic : "Total Package Basic",
+  totalpackagepro : "Total Package Pro",
+  totalcompany : "Total Company",
   offlineRevenue: 'Offline Revenue',
   marketingExpenses: 'Marketing Expenses',
   newCustomers: 'New Customers',
@@ -446,8 +450,12 @@ export default {
   directional: "Directional",
   mapAliases: "Map (Aliases)",
   dateAndTime: "Date And Time",
+  userManager: "Users Management",
+
 
 
   // Menu
   company : "Company",
+  package : "Packages",
+  listPackage : "List Package"
 }

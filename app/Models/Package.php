@@ -8,14 +8,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Package
  * @package App\Models
+
  * @version December 7, 2018, 12:34 pm UTC
- *
+ * @version December 7, 2018, 3:44 am UTC
  * @property string package_name
  * @property string short_description
  * @property string full_description
+
  * @property string secure_storage
  * @property string file_upload
  * @property string minimum_user
+ * @property decimal fee
+ * @property integer secure_storage
+ * @property integer file_upload
+ * @property integer minimum_user
  * @property string max_user
  * @property integer company_id
  */
@@ -23,7 +29,6 @@ class Package extends Model
 {
 
     public $table = 'packages';
-    
 
 
 
@@ -31,12 +36,12 @@ class Package extends Model
         'package_name',
         'short_description',
         'full_description',
+        'fee',
         'secure_storage',
         'file_upload',
         'minimum_user',
         'max_user',
-        'company_id',
-        'fee'
+        'company_id'
     ];
 
     /**
@@ -64,5 +69,9 @@ class Package extends Model
         
     ];
 
-    
+
+     public function users(){
+        return $this->hasMany('App\Models\User','package_id','id');
+    }
+
 }

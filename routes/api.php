@@ -32,3 +32,6 @@ Route::group(['namespace' => 'API'],function(){
 });	
 
 
+
+
+Route::resource('companies', 'CompanyAPIController');

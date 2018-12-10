@@ -132,7 +132,7 @@ class PackageAPIController extends AppBaseController
         $list = $this->packageRepository->getPackage();
 
         return view('sites.pages.landing-page',compact('list'));
-
+    }
 
     public function CountPackages(){
 

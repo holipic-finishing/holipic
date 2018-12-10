@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(PackagesTableSeeder::class);
+        $this->call(CompanysTableSeeder::class);
     }
 }

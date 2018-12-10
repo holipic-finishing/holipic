@@ -632,19 +632,12 @@ Holipic
 			</div>
 		</div>
 
-<<<<<<< HEAD
-					<div id="message-form-login" style="color:#05cbfc; font-size:13px">
-						
-					</div>
-					<form method="post" id="form-signin">
-						<input type="hidden" name="_token" value="{{csrf_token()}}">
-=======
 		<div class="col-md-6">
 			<div class="myaccount-image-note">
 				<figure>
 					<img src="images/logo-large.png" alt="" />
 				</figure>
->>>>>>> 4c953cd9d54af323788edd4261555c0ca52027b0
+
 
 				<p>Lorem Ipsum is simply dummy text of the printing and this typesetting industry. Lorem Ipsum has been the.</p>
 			</div>

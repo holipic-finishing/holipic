@@ -41,6 +41,8 @@ class UserController extends Controller
         ]);
         $user = $this->reNewToken($user);
 
+        dd($user);
+
         $fullname =  $request['first_name']." ".$request['last_name'];
 
         $data = array(

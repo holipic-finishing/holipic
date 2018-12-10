@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\activationMail;
 use Response;
@@ -19,6 +20,7 @@ class UserController extends Controller
     */
    
     public function signUp(Request $request){
+        // dd($request->all());
         $check = User::where('email', $request['email'])->first();
        
         if($check != null){
@@ -38,9 +40,13 @@ class UserController extends Controller
             'package_id' => $request['package_id'],
 
         ]);
-        $user = $this->reNewToken($user);
 
-        dd($user);
+        $company  = Company::create([
+            'name' => $user->company_name,
+            'owner_id' => $user->id
+        ]);
+
+        $user = $this->reNewToken($user);
 
         $fullname =  $request['first_name']." ".$request['last_name'];
 

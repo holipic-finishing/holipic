@@ -18,7 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('address')->nullable();
-            $table->integer('ower_id');
+            $table->integer('owner_id');
             $table->string('logo')->nullable();
             $table->timestamps();
         });

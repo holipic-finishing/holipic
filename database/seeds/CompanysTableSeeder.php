@@ -15,7 +15,7 @@ class CompanysTableSeeder extends Seeder
             'name' => 'sfr',
             'description' => 'IT software company',
             'address' => '1331 Nguyen Tat Thanh Da Nang',
-            'user_id' => '2',
+            'owner_id' => '2',
             'logo' => 'blabla.jpg'
         ]);
     }

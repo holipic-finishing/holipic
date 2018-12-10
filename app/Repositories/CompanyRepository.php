@@ -45,4 +45,14 @@ class CompanyRepository extends BaseRepository
                     ->get();
         return $results;
     }
+
+    public function search($input){
+        $results = DB::table('companies as c')
+                    ->join('users as u', 'u.id', '=', 'c.owner_id')
+                    ->where('name', 'like', '%'.$input['company_name'].'%')
+                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email')
+                    ->get();
+                    
+        return $results;
+    }
 }

@@ -31,6 +31,8 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('count-packages','PackageAPIController@CountPackages');
 
 	Route::resource('companies', 'CompanyAPIController');
+
+	Route::post('search/companies', 'CompanyAPIController@doSearch');
 });	
 
 

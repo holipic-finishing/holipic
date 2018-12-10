@@ -13,8 +13,18 @@
 				          inset
 				          vertical
 				        ></v-divider>
+			      	</v-toolbar>
+			      	<v-toolbar flat color="white">
+				        <v-text-field
+				        	v-model="search.company_name"
+					        append-icon="search"
+					        label="Search"
+					        single-line
+					        hide-details
+				        ></v-text-field>
 				        <v-spacer></v-spacer>
-			        
+				        <v-btn @click="doSearch" color="primary" dark class="mb-2">Search</v-btn>
+				        <v-btn @click="doReset" color="primary" dark class="mb-2">Reset</v-btn>
 			      	</v-toolbar>
 			      	<v-data-table
 			        :headers="headers"
@@ -26,7 +36,10 @@
 				        <td class="text-xs-left">{{ props.item.name }}</td>
 				        <td class="text-xs-left">{{ props.item.address }}</td>
 				        <td class="text-xs-left">{{ props.item.email }}</td>
-				        <td class="text-xs-left">{{ props.item.logo }}</td>
+				        <td class="text-xs-left">{{ props.item.description }}</td>
+				        <td class="text-xs-left">
+				        <img v-if="props.item.logo != null " v-bind:src="props.item.logo"  class="size-img"/>
+				    	</td>
 				        <td class="text-xs-left">
 				          <v-icon
 				            small
@@ -44,9 +57,6 @@
 				          </v-icon>
 				        </td>
 			    	</template>
-			        <template slot="no-data">
-			          <v-btn color="primary" >Reset</v-btn>
-			        </template>
 			      </v-data-table>
 			    </div>
 			  </v-app>
@@ -71,10 +81,14 @@ export default {
 		        { text: 'Company Name', value: 'name' },	       
 		        { text: 'Address', value: 'address' },	       
 		        { text: 'Owner', value: 'email' },	
+		        { text: 'Description', value: 'description' },	
 		        { text: 'Logo' , value: 'logo', sortable: false},
 		        { text: 'Action' }       
 	      	],
-	      	desserts:[]
+	      	desserts:[],
+	      	search:{
+	      		company_name : ''
+	      	},
 	    }
   	},
 
@@ -89,11 +103,27 @@ export default {
 				if(res.data && res.data.success){
 					this.desserts = res.data.data
 				}
-				
 			})
 			.catch((e) =>{
 				console.log(e)
 			}) 
+		},
+
+		doSearch(){
+			post(config.API_URL+'search/companies', this.search)
+			.then((res) => {
+				if(res.data && res.data.success){
+					this.desserts = res.data.data
+				}
+			})
+			.catch((e) =>{
+				console.log(e)
+			})
+		},
+
+		doReset(){
+			this.search.company_name = ''
+			this.fetchData()
 		},
 
 		showItem(item){
@@ -103,6 +133,8 @@ export default {
 		editItem(item){
 			console.log('edit')
 		}
+
+
 
 	},
 

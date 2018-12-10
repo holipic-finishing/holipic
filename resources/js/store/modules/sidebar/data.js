@@ -5,24 +5,31 @@ export const menus = {
 			action: 'zmdi-view-dashboard',
 			title: 'message.dashboard',
 			active: true,
-			path: '/default/dashboard/index'
-			// items: [
-			// 	{ title: 'message.ecommerce', path: '/default/dashboard/ecommerce', exact: true },
-			// 	// { title: 'message.webAnalytics', path: '/mini/dashboard/web-analytics', exact: true },
-			// 	// { title: 'message.magazine', path: '/horizontal/dashboard/magazine', exact: true },
-			// 	// { title: 'message.news', path: '/boxed-v2/dashboard/news', exact: true },
-			// 	// { title: 'message.agency', path: '/boxed/dashboard/agency', exact: true },
-			// 	// { title: 'message.saas', path: '/horizontal/dashboard/saas', exact: true }
-			// ]
+			path: '/dashboard/index',
+			items:null
 		},
 		{
 			action: 'zmdi-widgets',
 			title: 'message.companymanagement',
 			active: false,
 			items: [
-				{ title: 'message.user', path: '/users/user-list' },
+				// { title: 'message.user', path: '/users/user-list' },
 				{ title: 'message.company', path: '/widgets/mana-company' }
 			]
+		},
+		{
+			action: 'zmdi zmdi-dropbox',
+			title: 'message.package',
+			active: false,
+			items:null,
+			path : '/packages/index'
+			// items: [
+			// 	// { title: 'message.shop', path: '/ecommerce/shop' },
+			// 	// { title: 'message.cart', path: '/ecommerce/cart' },
+			// 	// { title: 'message.checkout', path: '/ecommerce/checkout' },
+			// 	// { title: 'message.cards', path: '/ecommerce/cards' }
+			// ]
+
 		},
 		{
 			action: 'zmdi-settings',

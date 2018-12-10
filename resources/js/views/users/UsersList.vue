@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import api from "../../api/index.js";
+// import api from "../../api/index.js";
 
 export default {
   data() {
@@ -66,25 +66,25 @@ export default {
       }
     },
     getUsers() {
-      api
-        .get("vuely/users.js")
-        .then(response => {
-          this.loader = false;
-          this.usersList = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      // api
+      //   .get("vuely/users.js")
+      //   .then(response => {
+      //     this.loader = false;
+      //     this.usersList = response.data;
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
     },
     getConnections() {
-      api
-        .get("vuely/connections.js")
-        .then(response => {
-          this.connectUsersList = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      // api
+      //   .get("vuely/connections.js")
+      //   .then(response => {
+      //     this.connectUsersList = response.data;
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
     }
   }
 };

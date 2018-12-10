@@ -38,7 +38,7 @@ import config from './config/index.js'
 import GlobalComponents from './globalComponents'
 
 // app.vue
-import App from './App'
+import App from './App.vue'
 
 // router
 import router from './router'

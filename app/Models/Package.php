@@ -62,7 +62,11 @@ class Package extends Model
         
     ];
 
-     public function users(){
+    public function users(){
         return $this->hasMany('App\Models\User','package_id','id');
+    }
+
+    public function setting(){
+        return $this->hasOne('App\Models\Setting','package_id','id');
     }
 }

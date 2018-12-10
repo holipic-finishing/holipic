@@ -19,7 +19,6 @@ class UserController extends Controller
     */
    
     public function signUp(Request $request){
-
         $check = User::where('email', $request['email'])->first();
        
         if($check != null){

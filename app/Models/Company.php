@@ -25,7 +25,7 @@ class Company extends Model
         'name',
         'description',
         'address',
-        'user_id',
+        'ower_id',
         'logo'
     ];
 
@@ -38,7 +38,7 @@ class Company extends Model
         'name' => 'string',
         'description' => 'string',
         'address' => 'string',
-        'user_id' => 'integer',
+        'ower_id' => 'integer',
         'logo' => 'string'
     ];
 

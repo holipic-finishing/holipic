@@ -858,7 +858,6 @@ Holipic
 	    $(".select-package").click(function(){
 	        var elem = $(this)
 	        package = elem.data('package');
-	        $("#test").append(" <b>Appended text</b>.");
 	        $("#frmRegister").append("<input type='hidden' name='package_id' value='"+package+"'>");
 	    });
 

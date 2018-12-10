@@ -91,14 +91,9 @@ export default {
   },
   methods: {
     submit() {
-      const user = {
-        email: this.email,
-        password: this.password
-      };
-   
-    	this.$router.push({
-    		path: '/default/dashboard/ecommerce'
-    	});
+       const user = {email: this.email,password: this.password};   		
+       localStorage.setItem('access_token','123123123')
+       this.$router.push('/default/dashboard/ecommerce');
     },
     signInWithFacebook() {
       // this.$store.dispatch("signinUserWithFacebook");

@@ -18,9 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-
-
-
 Route::group(['namespace' => 'API'],function(){
 	
 	Route::resource('packages', 'PackageAPIController');
@@ -34,3 +31,11 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('count-packages','PackageAPIController@CountPackages');
 });	
 
+
+
+
+Route::resource('companies', 'CompanyAPIController');
+
+Route::resource('currencies', 'CurrencyAPIController');
+
+Route::resource('transactions', 'TransactionAPIController');

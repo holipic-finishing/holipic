@@ -21,6 +21,8 @@ import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // import UserWidgets   from'../views/users/UsersList';
 import Company from '../views/company/index';
+import CompanyChart from '../views/company/chart';
+
 import PackageIndex from '../views/package/Index';
 
 
@@ -93,6 +95,15 @@ routers = [
 		        	requiresAuth: true,
 		            title: 'message.company',
 		            breadcrumb: 'Company / List'
+		        }
+		    },
+		    {
+		        path: '/default/widgets/mana-company-chart',
+		        component: CompanyChart,
+		        meta: {
+		        	requiresAuth: true,
+		            title: 'message.chartCompany',
+		            breadcrumb: 'Company / Information /Chart'
 		        }
 		    },
 		    {

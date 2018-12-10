@@ -52,7 +52,6 @@ class CompanyRepository extends BaseRepository
                     ->where('name', 'like', '%'.$input['company_name'].'%')
                     ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email')
                     ->get();
-                    
         return $results;
     }
 }

@@ -18,7 +18,7 @@
 				        <v-text-field
 				        	v-model="search.company_name"
 					        append-icon="search"
-					        label="Search"
+					        label="Search Company Name"
 					        single-line
 					        hide-details
 				        ></v-text-field>
@@ -38,7 +38,7 @@
 				        <td class="text-xs-left">{{ props.item.email }}</td>
 				        <td class="text-xs-left">{{ props.item.description }}</td>
 				        <td class="text-xs-left">
-				        <img v-if="props.item.logo != null " v-bind:src="props.item.logo"  class="size-img"/>
+				        	<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
 				    	</td>
 				        <td class="text-xs-left">
 				          <v-icon
@@ -89,6 +89,7 @@ export default {
 	      	search:{
 	      		company_name : ''
 	      	},
+	      	pagination: {},
 	    }
   	},
 

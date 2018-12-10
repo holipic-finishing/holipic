@@ -1365,7 +1365,7 @@
 		           			'roleId': data.data.user.role_id
 		           			}
 
-		           		window.localStorage.setItem('current_user', JSON.stringify(object))
+		           		window.localStorage.setItem('user', JSON.stringify(object))
 
 		           		window.location.href = "/";
 		           	}

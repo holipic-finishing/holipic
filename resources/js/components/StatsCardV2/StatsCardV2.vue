@@ -25,3 +25,22 @@ export default {
   }
 };
 </script>
+<style lang="css" scoped>
+.style-card-user{
+  background-color:  #FFB64D !important;
+}
+.style-card-basic{
+  background-color:  #5d91f4 !important;
+}
+.style-card-pro{
+  background-color:  #ffb70d !important;
+}
+.style-card-image{
+  background-color:  #FFB64D !important;
+}
+.grey--text {
+    color: #FFFFFF !important;
+    font-weight: bold;
+    font-size: 15px;
+}
+</style>

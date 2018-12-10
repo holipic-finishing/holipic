@@ -4,50 +4,47 @@
 			<!-- Dash Cards -->
 			<v-layout row wrap border-rad-sm overflow-hidden>
 				<stats-card-v2
-					colClasses="xl4 lg4 md4 sm6 xs12"
-					:heading="$t('message.totalEarnings')"
-					:amount="2145"
+					colClasses="xl3 lg3 md3 sm6 xs12"
+					:heading="$t('message.totalcompany')"
+					:amount="count_pack_company"
+					:icon="$t('zmdi zmdi-account-calendar')"
+					customClasses="style-card-user"
 				>
-				<div class="pa-4">
-					<line-chart-shadow
-						:dataSet="totalEarnings"
-						:lineTension="0.4"
-						:dataLabels="labels"
-						:width="370"
-						:height="80"
-						:borderWidth=3
-						:enableGradient='false'
-						:enableShadow='false'
-						:borderColor="ChartConfig.color.primary">
-					</line-chart-shadow>
-				</div>
+				<!-- <div class="pa-4">
+				</div> -->
 				</stats-card-v2>
 				<stats-card-v2
-					colClasses="xl4 lg4 md4 sm6 xs12"
-					:heading="$t('message.newCustomers')"
-					:amount="136"
+					colClasses="xl3 lg3 md3 sm6 xs12"
+					:heading="$t('message.totalpackagebasic')"
+					:amount="count_pack_basic"
+					:icon="$t('zmdi zmdi-card')"
+					customClasses="style-card-basic"
+					
 				>
-				<div class="pa-4">
-					<line-chart-shadow
-						:dataSet="newCustomers"
-						:lineTension="0.4"
-						:dataLabels="labels"
-						:width="370"
-						:height="80"
-						:borderWidth=3
-						:enableGradient='false'
-						:enableShadow='false'
-						:borderColor="ChartConfig.color.info"
-						>
-					</line-chart-shadow>
-				</div>
+				<!-- <div class="pa-4">
+				</div> -->
 				</stats-card-v2>
 				<stats-card-v2
-					colClasses="xl4 lg4 md4 sm12 xs12"
-					:heading="$t('message.onlineRevenue')"
-					:amount="2145"
+					colClasses="xl3 lg3 md3 sm12 xs12"
+					:heading="$t('message.totalpackagepro')"
+					:amount="count_pack_pro"
+					:icon="$t('zmdi zmdi-card-membership')"
+					customClasses="style-card-pro"
+
+
 				>
-				<div class="pa-4">
+				<!-- <div class="pa-4">
+					
+				</div> -->
+				</stats-card-v2>
+				<stats-card-v2
+					colClasses="xl3 lg3 md3 sm12 xs12"
+					:heading="$t('message.totalimagesuploads')"
+					:amount="2145"
+					:icon="$t('zmdi zmdi-camera')"
+					customClasses="style-card-image"
+				>
+				<!-- <div class="pa-4">
 					<line-chart-shadow
 						:dataSet="onlineRevenue"
 						:lineTension="0.4"
@@ -59,7 +56,7 @@
 						:enableShadow='false'
 						:borderColor="ChartConfig.color.warning">
 					</line-chart-shadow>
-				</div>
+				</div> -->
 				</stats-card-v2>
 			</v-layout>
 			<!-- Sales -->
@@ -188,6 +185,10 @@ import DeviceShare from "../../components/Widgets/DeviceShare";
 
 import { ChartConfig } from "../../constants/chart-config";
 
+//config 
+import config from '../../config/index.js'
+import { get } from '../../api/index.js'
+
 export default {
   components: {
     LineChartShadow,
@@ -198,21 +199,38 @@ export default {
     DeviceShare
   },
   data() {
-    return {
-      blog: {
-        id: 3,
-        thumbnail: "/static/img/blog-3.jpg",
-        title: "lorem ipsum is simply dummy text",
-        body:
-          "Consectetur adipisicing elit. Ullam expedita, necessitatibus sit exercitationem aut quo quos inventore similique nulla minima distinctio illo iste dignissimos vero nostrum, magni pariatur delectus natus.",
-        date: "1-jun-2018"
-      },
-      ChartConfig,
-      labels: ["A", "B", "C", "D", "E", "F", "J", "K", "L", "M", "N", "P"],
-      totalEarnings: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44],
-      onlineRevenue: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44],
-      newCustomers: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44]
-    };
-  }
+	    return {
+	     	
+	      ChartConfig,
+	      labels: ["A", "B", "C", "D", "E", "F", "J", "K", "L", "M", "N", "P"],
+	      totalEarnings: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44],
+	      onlineRevenue: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44],
+	      newCustomers: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44],
+	      count_pack_basic:0,
+	      count_pack_pro:0,
+	      count_pack_company:0,
+
+	    };
+	},
+	methods:{
+		fetchData(){
+			let url = config.API_URL+'count-packages'
+			get(url)
+			.then((res)=>{
+				if(res.data && res.data.success){
+					this.count_pack_basic = res.data.data.count_basic	
+					this.count_pack_pro = res.data.data.count_pro	
+					this.count_pack_company = res.data.data.total_count_company	
+				}
+			})
+			.catch((err)=>{
+
+			})
+		}
+	},
+	created(){
+		this.fetchData()
+	}
+
 };
 </script>

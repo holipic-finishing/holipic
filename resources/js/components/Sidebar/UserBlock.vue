@@ -81,7 +81,7 @@ export default {
       // this.$store.dispatch("logoutUserFromFirebase", this.$router);
 	 },
 	 getMenuLink(path) {
-	 	console.log('im herer')
+	 	console.log('im herer user block')
 		 return '/' + getCurrentAppLayout(this.$router) +  path;
 	 }
   }

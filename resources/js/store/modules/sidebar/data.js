@@ -31,6 +31,29 @@ export const menus = {
 			// ]
 
 		},
+		{
+			action: 'zmdi-settings',
+			title: 'message.settings',
+			active: false,
+			path: '/setting'
+		},
+		{
+			action: 'zmdi-camera-switch',
+			title: 'message.userManager',
+			active: false,
+			path: '/user-management'
+		},
+		// {
+		// 	action: 'zmdi-shopping-cart',
+		// 	title: 'message.ecommerce',
+		// 	active: false,
+		// 	items: [
+		// 		{ title: 'message.shop', path: '/ecommerce/shop' },
+		// 		{ title: 'message.cart', path: '/ecommerce/cart' },
+		// 		{ title: 'message.checkout', path: '/ecommerce/checkout' },
+		// 		{ title: 'message.cards', path: '/ecommerce/cards' }
+		// 	]
+		// },
 		// {
 		// 	action: 'zmdi-file-plus',
 		// 	title: 'message.pages',

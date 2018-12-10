@@ -22,6 +22,11 @@ import UserWidgets   from'../views/users/UsersList';
 import Company from '../views/company/index';
 import PackageIndex from '../views/package/Index';
 
+import Setting from '../views/setting/setting'
+import UserManagement from '../views/superadmin-user/user-management'
+
+
+
 Vue.use(Router)
 
 
@@ -95,6 +100,24 @@ routers = [
 		        	requiresAuth: true,
 		            title: 'message.package',
 		            breadcrumb: 'Packages / List'
+		        }
+		    },  
+		    {
+		        path: 'default/setting',
+		        component: Setting,
+		        meta: {
+		        	requiresAuth: true,
+		            title: 'message.settings',
+		            breadcrumb: 'Setting / List'
+		        }
+		    },
+		    {
+		        path: 'default/user-management',
+		        component: UserManagement,
+		        meta: {
+		        	requiresAuth: true,
+		            title: 'message.userManager',
+		            breadcrumb: 'User / Manager'
 		        }
 		    },
       	]	

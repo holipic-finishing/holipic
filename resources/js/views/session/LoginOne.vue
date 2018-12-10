@@ -95,10 +95,10 @@ export default {
         email: this.email,
         password: this.password
       };
-   
-    	this.$router.push({
-    		path: '/default/dashboard/ecommerce'
-    	});
+   		localStorage.setItem('access_token','123123123')
+    	this.$router.push(
+    	 '/default/dashboard/ecommerce'
+    	);
     },
     signInWithFacebook() {
       // this.$store.dispatch("signinUserWithFacebook");

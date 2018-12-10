@@ -38,7 +38,7 @@ class CompanyAPIController extends AppBaseController
     {
         $this->companyRepository->pushCriteria(new RequestCriteria($request));
         $this->companyRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $companies = $this->companyRepository->all();
+        $companies = $this->companyRepository->getCompanies();
 
         return $this->sendResponse($companies->toArray(), 'Companies retrieved successfully');
     }

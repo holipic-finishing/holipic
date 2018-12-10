@@ -44,13 +44,6 @@
 				        <td class="text-xs-left">
 				          <v-icon
 				            small
-				            class="mr-2"
-				            @click="editItem(props.item)"
-				          >
-				            edit
-				          </v-icon>
-				          <v-icon
-				            small
 				    		class="mr-2"
 				    		@click="showItem(props.item)"
 				          >
@@ -130,13 +123,8 @@ export default {
 		},
 
 		showItem(item){
-			console.log('show')
+			
 		},
-
-		editItem(item){
-			console.log('edit')
-		}
-
 
 
 	},

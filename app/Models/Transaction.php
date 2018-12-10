@@ -48,7 +48,7 @@ class Transaction extends Model
         'amount' => 'decimal',
         'currency_id' => 'integer',
         'status' => 'string',
-        'company_id' => 'integer'
+        'company_id' => 'integer',
         'dated' => 'datetime'
     ];
 

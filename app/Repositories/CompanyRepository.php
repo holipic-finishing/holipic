@@ -3,7 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Company;
+use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
+use DB;
 
 /**
  * Class CompanyRepository
@@ -33,5 +35,14 @@ class CompanyRepository extends BaseRepository
     public function model()
     {
         return Company::class;
+    }
+
+
+    public function getCompanies(){
+        $results = DB::table('companies as c')
+                    ->join('users as u', 'u.id', '=', 'c.owner_id')
+                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email')
+                    ->get();
+        return $results;
     }
 }

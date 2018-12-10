@@ -38,7 +38,7 @@ class CompanyAPIController extends AppBaseController
     {
         $this->companyRepository->pushCriteria(new RequestCriteria($request));
         $this->companyRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $companies = $this->companyRepository->all();
+        $companies = $this->companyRepository->getCompanies();
 
         return $this->sendResponse($companies->toArray(), 'Companies retrieved successfully');
     }
@@ -71,8 +71,8 @@ class CompanyAPIController extends AppBaseController
     public function show($id)
     {
         /** @var Company $company */
+        
         $company = $this->companyRepository->findWithoutFail($id);
-
         if (empty($company)) {
             return $this->sendError('Company not found');
         }
@@ -92,6 +92,7 @@ class CompanyAPIController extends AppBaseController
     public function update($id, UpdateCompanyAPIRequest $request)
     {
         $input = $request->all();
+        // dd($input['params']);
 
         /** @var Company $company */
         $company = $this->companyRepository->findWithoutFail($id);
@@ -100,7 +101,7 @@ class CompanyAPIController extends AppBaseController
             return $this->sendError('Company not found');
         }
 
-        $company = $this->companyRepository->update($input, $id);
+        $company = $this->companyRepository->update($input['params'], $id);
 
         return $this->sendResponse($company->toArray(), 'Company updated successfully');
     }

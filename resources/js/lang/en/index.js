@@ -458,5 +458,6 @@ export default {
   company : "Company",
   package : "Packages",
   listPackage : "List Package",
-  chartCompany: "Chart Company",
+  chartCompany: "Company Infomation & Chart",
+  totalAmountCompany: 'Total Amount Company',
 }

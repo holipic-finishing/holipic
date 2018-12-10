@@ -126,4 +126,10 @@ class TransactionAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Transaction deleted successfully');
     }
+
+    public function totalAmountCompany(Request $request)
+    {
+        $company = $this->transactionRepository->getTotalAmountCompany($request['companyId']);
+        return $this->sendResponse($company, 'Transaction Company successfully');
+    }
 }

@@ -96,7 +96,6 @@ routers = [
 		        }
 		    },
 		    {
-
 		        path: '/default/packages/index',
 		        component: PackageIndex,
 		        meta: {
@@ -104,8 +103,9 @@ routers = [
 		            title: 'message.package',
 		            breadcrumb: 'Packages / List'
 		        }
-		    },
-		    {    
+
+		    }, 
+		    {
 		        path: 'default/setting',
 		        component: Setting,
 		        meta: {

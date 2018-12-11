@@ -10,15 +10,12 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
   <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/holipic.css')}}">
   <title>Holipic Admin</title>
 </head>
 
 <body>
   <div id="app"></div>
-  <script type="text/javascript">
-    localStorage.setItem('accesss_token', '{{ isset($token) ? $token : "" }}');
-    localStorage.setItem('currentUser', '{{ isset($currentUser) ? json_encode($currentUser) : "" }}');
-  </script>
   <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
 </body>
 

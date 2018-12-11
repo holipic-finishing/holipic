@@ -31,7 +31,6 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('companies', 'CompanyAPIController');
 
-	
 	Route::resource('currencies', 'CurrencyAPIController');
 
 	Route::post('search/companies', 'CompanyAPIController@doSearch');
@@ -45,7 +44,6 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('settings', 'SettingAPIController');
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
-
 
 });	
 

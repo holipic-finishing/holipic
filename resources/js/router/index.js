@@ -28,7 +28,12 @@ import PackageIndex from '../views/package/Index';
 
 import Setting from '../views/setting/setting'
 import UserManagement from '../views/superadmin-user/user-management'
+
 import page404 from '../views/pages/page404'
+
+
+import UserPass from '../views/users/ChangePassword'
+
 
 
 Vue.use(Router)
@@ -132,6 +137,15 @@ routers = [
 		        	requiresAuth: true,
 		            title: 'message.userManager',
 		            breadcrumb: 'User / Manager'
+		        }
+		    },
+		    {
+		        path: '/default/users/change-password',
+		        component: UserPass,
+		        meta: {
+		            requiresAuth: true,
+		            title: 'message.changePassword',
+		            breadcrumb: 'Users / Change Password'
 		        }
 		    },
       	]	

@@ -461,4 +461,6 @@ export default {
   chartCompany: "Company Infomation & Chart",
   totalAmountCompany: 'Total Amount Company',
   settingPackageSystem: "Setting Packages System"
+
+
 }

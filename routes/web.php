@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/landing-page', function () {
-    return view('sites.pages.landing-page');
-});
-Route::get('/','API\PackageAPIController@listPackage');
+// Route::get('/landing-page', function () {
+//     return view('sites.pages.landing-page');
+// });
+Route::get('','API\PackageAPIController@listPackage');
 
 Route::namespace('API')->group(function(){
 	Route::namespace('Auth')->prefix('auth')->group(function(){
@@ -29,13 +29,14 @@ Route::namespace('API')->group(function(){
 	});
 });
 
+Route::get('/{any}', function () {
+		  return view('welcome');
+})->where('any', '^(?!api).*$');
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
 Route::post('users/signup', 'UserController@signUp')->name('users.signup');
 Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');
+
 
 

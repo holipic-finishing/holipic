@@ -54,3 +54,10 @@
 	display: flex;
 
 }
+.text-error {
+	font-size: 11px;
+	margin-top: 3px;
+}
+.checkbox-error{
+	margin-top: -8px;
+}

@@ -501,7 +501,7 @@ Holipic
 									<div class="pricing-box">
 										<div class="pricing-header">
 											<div class="icon-box">
-												<i class="flaticon-sun"></i>
+												<img src="/static/img/pricing-icon.png" alt="pricing icon" width="" height="" class="img-responsive">
 											</div>												
 											<h3{{$value->package_name=="Basic" ? "" : " class=title-name"}}>{{$value->package_name}}</h3>
 										</div>
@@ -538,12 +538,12 @@ Holipic
 									
 									@if($value->package_name=="Basic")
 									<div class="btn-buynow">
-										<a data-package='1' class="has-popup select-package" href="#login">START TO BASIC</a>
+										<a data-package='1' class="has-popup select-package" href="#signup">START TO BASIC</a>
 									</div>
 									@else
 
 									<div class="btn-buynow btn-enterprise">
-										<a class="has-popup select-package" data-package='2' href="#login">UPDATE TO PRO</a>
+										<a class="has-popup select-package" data-package='2' href="#signup">UPDATE TO PRO</a>
 									</div>
 
 									@endif
@@ -635,9 +635,7 @@ Holipic
 				<h3>Let's get started,<br />
 				Sign Up just in minute</h3>
 
-				<div id="message-form-signup" style="color:#05cbfc"></div>
-			
-				<form action="{{ route('users.signup') }}" method="post" id="frmRegister">
+				<form  id="frmRegister">
 					{!! csrf_field() !!}
 					<div class="form-group">
 						<div class="input-group">
@@ -646,7 +644,9 @@ Holipic
 							</div>
 
 							<input type="text" name="first_name" class="form-control" placeholder="Enter Your First Name">
+							
 						</div>
+						<div id="message-form-signup-first_name" class="text-error"></div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
@@ -655,25 +655,29 @@ Holipic
 							</div>
 
 							<input type="text" name="last_name" class="form-control" placeholder="Enter Your last Name">
+							
 						</div>
+						<div id="message-form-signup-last_name" class="text-error"></div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<span class="fa fa-user"></span>
+								<span class="fa fa-building"></span>
 							</div>
 
 							<input type="text" name="company_name" class="form-control" placeholder="Enter Your Company Name">
 						</div>
+						<div id="message-form-signup-company_name" class="text-error"></div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<span class="fa fa-user"></span>
+								<span class="fa fa-envelope-o"></span>
 							</div>
 
 							<input type="text" name="email" class="form-control" placeholder="Enter Your Email">
 						</div>
+						<div id="message-form-signup-email" class="text-error"></div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
@@ -683,17 +687,19 @@ Holipic
 
 							<input type="password" name="password" class="form-control" placeholder="Enter Your Password">
 						</div>
+						<div id="message-form-signup-password" class="text-error"></div>
 					</div>
 					<div class="single-row">
 						<label class="account-checkbox">
-							<input type="checkbox">
+							<input type="checkbox" name="checkbox" class="text-error" >
 							<span class="checkmark"></span>
 							<b>I read and agree to <a href="#">Terms & Conditions</a></b>
 						</label>
+						<div id="message-form-signup-checkbox" class="text-error checkbox-error"></div>
 					</div>
-					
+					<div id="message-form-signup" class="text-error"></div>	
 					<div class="form-group">
-						<input type="submit" value="Sign Up" class="btn-submit" />
+						<input type="submit" id='signup-submit' value="Sign Up" class="btn-submit" />
 						<p class="other-text">have an account? <a href="#login" class="has-popup">Sign in</a></p>
 					</div>
 				</form>
@@ -842,29 +848,44 @@ Holipic
 	        $("#frmRegister").append("<input type='hidden' name='package_id' value='"+package+"'>");
 	    });
 
-	    $("#frmRegister").submit(function(e) {
+	   
+		$("#frmRegister").submit(function(e) {
 			e.preventDefault();	
 	    	var form = $(this);
+	    	console.log(form.serialize())
+		    $.ajax({
+		           type: "POST",
+		           url: 'users/signup',
+		           data: form.serialize(), 
+		           success: function(data)
+		           {
+		           		if(data && data.success == true) {
+			           		$('#message-form-signup').empty();
+			           		$("#message-form-signup").append(
+			           			"<span class='label label-important' style='color:#05cbfc'>"+" "+data.message+"</span>");
+			           	} else if(data && data.success == false){
+			           		$('#message-form-signup').empty();
+			           		$("#message-form-signup").append(
+			           			"<span class='label label-important' style='color:red'>"+" "+data.message+"</span>");
+			           	}
+		           	},
+		           	error: function(error) {
+				        if(error) {
+						   	$('#message-form-signup-first_name').empty();
+						   	$('#message-form-signup-last_name').empty();
+						   	$('#message-form-signup-company_name').empty();
+						   	$('#message-form-signup-email').empty();
+						   	$('#message-form-signup-password').empty();
+						   	$('#message-form-signup-checkbox').empty();
+						  _.each(error.responseJSON.errors, function(val,key){
+							  	var id = '#message-form-signup-'+key;
 
-	    $.ajax({
-	           type: "POST",
-	           url: 'users/signup',
-	           data: form.serialize(), 
-	           success: function(data)
-	           {
-	           		if(data) {
-	           		$('#message-form-signup').empty();
-	           		$("#message-form-signup").append(
-	           			"<span class='label label-important'>"+" "+data.message+"</span>");
-	           	} else {
-	           		
-	           	}
-	           },
-	            error: function(error) {			      
-			        console.log() 
-
-			    }   
-	        });
+							  	$(id).append(
+				           			"<span class='label label-important' style='color:red'>"+" "+val+"</span>");
+						  	});							
+				    	}   
+					}
+			});
 
 		});
 	});

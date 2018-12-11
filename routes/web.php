@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/landing-page', function () {
-    return view('sites.pages.landing-page');
-});
-Route::get('/','API\PackageAPIController@listPackage');
+// Route::get('/landing-page', function () {
+//     return view('sites.pages.landing-page');
+// });
+Route::get('/landing-page','API\PackageAPIController@listPackage');
 
 Route::namespace('API')->group(function(){
 	Route::namespace('Auth')->group(function(){

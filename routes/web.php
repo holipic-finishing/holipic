@@ -24,9 +24,11 @@ Route::get('/index','API\PackageAPIController@listPackage');
 Route::get('','API\PackageAPIController@listPackage');
 
 Route::namespace('API')->group(function(){
-	Route::namespace('Auth')->group(function(){
+	Route::namespace('Auth')->prefix('auth')->group(function(){
 		
-		Route::post('landing-page/login', 'LoginController@login');
+		// Route::post('landing-page/login', 'LoginController@login');
+		Route::post('login', 'LoginController@login');
+		Route::post('loginSuperAdmin','LoginController@loginSuperAdmin');
 
 		Route::get('landing-page/logout', 'LoginController@logout');
 

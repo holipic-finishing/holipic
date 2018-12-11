@@ -59,7 +59,7 @@ class UserRepository extends BaseRepository
     {
         $this->skipPresenter();
         return $this->scopeQuery(function($query) use ($email){
-            return $query->where('email', $email)->where('role_id', 1);
+            return $query->where('email', $email)->where('role_id', 0);
         })->first();
     }
 

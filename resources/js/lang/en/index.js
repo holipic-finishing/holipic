@@ -457,10 +457,9 @@ export default {
   // Menu
   company : "Company",
   package : "Packages",
+  changePassword : "Change Password",
   listPackage : "List Package",   
   chartCompany: "Company Infomation & Chart",
   totalAmountCompany: 'Total Amount Company',
   settingPackageSystem: "Setting Packages System"
-
-
 }

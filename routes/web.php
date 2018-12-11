@@ -10,14 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/landing-page', function () {
-    return view('sites.pages.landing-page');
-});
+
+// Route::get('/landing-page', function () {
+//     return view('sites.pages.landing-page');
+// });
+
 Route::get('/index','API\PackageAPIController@listPackage');
+
+Route::get('','API\PackageAPIController@listPackage');
 
 Route::namespace('API')->group(function(){
 	Route::namespace('Auth')->group(function(){
@@ -30,7 +34,18 @@ Route::namespace('API')->group(function(){
 	});
 });
 
+Route::prefix('/admin')->group(function () {
+     Route::get('/', function () {
+ 	   return view('welcome');
+	});
+});
+
+// Route::get('/{any}', function () {
+// 		  return view('welcome');
+// })->where('any', '^(?!api).*$');
+
 Route::post('users/signup', 'UserController@signUp')->name('users.signup');
 Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');
+
 
 

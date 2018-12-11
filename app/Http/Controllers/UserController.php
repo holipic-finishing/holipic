@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Company;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\activationMail;
 use Response;
+use App\Http\Requests\UserSignupRequest;
 
 class UserController extends Controller
 {
@@ -19,8 +20,8 @@ class UserController extends Controller
       
     */
    
-    public function signUp(Request $request){
-      
+    public function signUp(UserSignupRequest $request){
+
         $check = User::where('email', $request['email'])->first();
        
         if($check != null){
@@ -101,6 +102,6 @@ class UserController extends Controller
 
         $result = User::where('access_token',$access_token)->update($array);
 
-         return redirect('/');
+        return redirect('/');
     }
 }

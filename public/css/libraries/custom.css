@@ -203,7 +203,7 @@ a:focus{
 }
 
 .header-layout-1 .navbar-brand img{
-	height: 69px;
+	height: 45px;
 	transition: all 0.3s;
 }
 
@@ -369,7 +369,7 @@ a:focus{
 	width: 100%;
 	background: #f5f7fa;
 	background-size: cover;
-	padding: 130px 0 200px;
+	padding: 130px 0 30px;
 }
 
 .banner-layout-1 .row{
@@ -1707,4 +1707,29 @@ footer.footer-layout-1{
 	.download-app-layout-1 .btn-download{
 		margin-bottom: 10px;
 	}
+}
+
+
+.version-image img {
+	width: 416px;
+	height: 314px;
+}
+
+.btn-play img {
+	width: 100px;
+	height: 100px;
+}
+
+.banner-layout-1 .header-content h1 {
+	color: #3e4555;
+	font-size: 35px;
+}
+
+.banner-layout-1 .header-content h3 {
+	color: #3e4555;
+	/*font-size: 35px;*/
+}
+
+.banner-layout-1 .header-content p {
+	margin-top: 70px;
 }

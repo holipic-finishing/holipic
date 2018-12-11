@@ -43,6 +43,10 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('company/load-chart', 'TransactionAPIController@loadChartCompany');
 
-});	
+	Route::resource('settings', 'SettingAPIController');
 
+	Route::get('get-package', 'SettingAPIController@getPackage');
+
+
+});	
 

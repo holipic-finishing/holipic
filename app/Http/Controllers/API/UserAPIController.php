@@ -130,32 +130,38 @@ class UserAPIController extends AppBaseController
     }
 
     public function changePassWord(Request $request) {
-        $token = (new Parser())->parse((string) $request['access_token']);           
-        $email=  $token->getClaim('email');
-        $user = User::where('email',$email)->first();
-        // $a = Hash::make($request['oldPassword']);
-        // dd($a);
 
-        if (!password_verify($request['oldPassword'], $user->password)) {   
-            return $this->sendError('Ole Password Incorrect'); 
-        }
+        try {
+             $token = (new Parser())->parse((string) $request['access_token']);           
+            $email=  $token->getClaim('email');
+            $user = User::where('email',$email)->first();
+          
 
-        // if(!Hash::check( $user->password , $request['oldPassword'])){   
-        //     return $this->sendError('Ole Password Incorrect');
-        // }
+            if (!password_verify($request['oldPassword'], $user->password)) {   
+                return response()->json(['success' => false, 'message' => 'Old Password In Incorrect']);
+            }
 
-        if(strcmp($request['newPassword'], $request['confirmPassword']) != 0 ) {
-            return $this->sendError('success');
-           
-        }
-
-        if($user){
-            $user = User::where('email',$email)->first()->update([
-                            'password' => Hash::make($request['newPassword'])
+            if(strcmp($request['newPassword'], $request['confirmPassword']) != 0 ) {
+                 return response()->json([
+                        'success' => false, 
+                        'message' => 'Old Password or Confirm Password Incorrect'
                     ]);
-        }
+               
+            }
 
-        return $this->sendResponse($user, 'Change Password successfully');
+            if($user){
+                $user = User::where('email',$email)->first()->update([
+                                'password' => Hash::make($request['newPassword'])
+                        ]);
+            }
+
+            return $this->sendResponse($user, 'Change Password successfully');
+        }
+        
+         catch (Exception $e) {
+             return $e;
+        }
+       
         
     }
 }

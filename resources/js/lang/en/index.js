@@ -458,5 +458,5 @@ export default {
   company : "Company",
   package : "Packages",
   listPackage : "List Package",
-
+  changePassword : "Change Password"
 }

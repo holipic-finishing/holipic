@@ -43,7 +43,7 @@ import AppConfig from "../../constants/AppConfig";
 
 // const auth = new AuthService();
 // const { login, logout, authenticated, authNotifier } = auth;
-import {SnotifyPosition} from 'vue-snotify';
+// import {SnotifyPosition} from 'vue-snotify';
 
 export default {
 	components: {
@@ -77,15 +77,13 @@ methods: {
 			path: '/default/dashboard/ecommerce'
 		});
 	},
-  login () {
+  	login () {
       // localStorage.getItem('access_token')
   		axios.post('/auth/loginSuperAdmin', {
   			email: this.email,
   			password: this.password,
   		})
   		.then(response => {
-  			console.log(response)		            
-  				// 
   			if(response.data.success && response.data.data){
 				Vue.notify({
 					group: 'loggedIn',

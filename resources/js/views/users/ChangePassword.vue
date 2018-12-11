@@ -68,20 +68,20 @@ export default {
                         text: 'Update Password Success!'
                     });
                },500);
-             }
-             this.$router.push('/default/dashboard/index')
-          })
-          .catch(err =>{
-            console.log(err)
-             if(err.response.status == 404){
-                setTimeout(function(){
+                this.$router.push('/default/dashboard/index') 
+             } else {
+                 setTimeout(function(){
                     Vue.notify({
                         group: 'loggedIn',
                         type: 'error',
-                        text: 'Old Password or Confirm Password Incorrect'
+                        text: res.data.message
                     });
                },500);
              }
+          })
+          .catch(err =>{
+            console.log(err)
+          
           })
       }
     } 

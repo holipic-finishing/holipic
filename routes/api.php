@@ -29,6 +29,6 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('count-packages','PackageAPIController@CountPackages');
 
-
+	Route::post('change-password', 'UserAPIController@changePassWord');
 });	
 

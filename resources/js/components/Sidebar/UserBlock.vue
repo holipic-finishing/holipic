@@ -83,13 +83,13 @@ export default {
 	},
   methods: {
     logoutUser() {
-    	console.log('123123')
+    	// console.log('123123')
     	localStorage.removeItem('access_token');
     	this.$router.push('/session/login')
       // this.$store.dispatch("logoutUserFromFirebase", this.$router);
 	 },
 	 getMenuLink(path) {
-	 	console.log('im herer user block')
+	 	// console.log('im herer user block')
 		 return '/' + getCurrentAppLayout(this.$router) +  path;
 	 }
   }

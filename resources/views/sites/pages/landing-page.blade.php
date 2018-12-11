@@ -569,47 +569,56 @@ Holipic
 				<h3>Welcome back, <br />
 				Please sign in to your account</h3>
 				
-				<form action="#" method="post" >
-					
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="fa fa-user"></span>
+				<div id="message-form-login" style="color:#05cbfc; font-size:13px">
+						
+					</div>
+					<form method="post" id="form-signin">
+						<input type="hidden" name="_token" value="{{csrf_token()}}">
+
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="fa fa-user"></span>
+								</div>
+								
+								<input type="text" class="form-control" placeholder="Enter Your User Name" name=
+								"email" >
+
 							</div>
-
-							<input type="text" class="form-control" placeholder="Enter Your User Name">
+							<div id="message-form-signin-email" class="text-error"></div>
 						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-prepend">
-								<span class="fa fa-lock"></span>
+						
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="fa fa-lock"></span>
+								</div>
+								
+								<input type="password" class="form-control" placeholder="Enter Your Password" name="password" > 
 							</div>
-
-							<input type="password" class="form-control" placeholder="Enter Your Password">
+							<div id="message-form-signin-password" class="text-error"></div>
 						</div>
-					</div>
-
-					<div class="account-row">
-						<div class="account-left">
-							<label class="account-checkbox">
-								<input type="checkbox">
-								<span class="checkmark"></span>
-								<b>Remember Me</b>
-							</label>
+						
+						<div class="account-row">
+							<div class="account-left">
+								<label class="account-checkbox">
+									<input type="checkbox">
+									<span class="checkmark"></span>
+									<b>Remember Me</b>
+								</label>
+							</div>
+							
+							<div class="account-right text-right">
+								<a href="#" class="forget-password">Forget Password?</a>
+							</div>
 						</div>
-
-						<div class="account-right text-right">
-							<a href="#" class="forget-password">Forget Password?</a>
+						
+						<div class="form-group">
+							<button type="submit" class="btn-submit">Login</button>
+							<a href="#signup" class="btn-submit has-popup">Sign Up</a>
+							{{-- <input type="submit" value="Login" class="btn-submit" /> --}}
 						</div>
-					</div>
-
-					<div class="form-group">
-						<input type="submit" value="Login" class="btn-submit" />
-						<a href="#signup" class="btn-submit has-popup">Sign Up</a>
-					</div>
-				</form>
+					</form>
 			</div>
 		</div>
 
@@ -779,7 +788,7 @@ Holipic
 					<h2>Get in Touch</h2>
 				</div>
 				
-					<form action="{{ route('users.signup') }}" method="post">
+					<form method="post">
 						 @csrf
 						<div class="form-group">
 							<div class="input-group">
@@ -888,13 +897,9 @@ Holipic
 			});
 
 		});
-	});
-</script>
-@endsection
-@section('scripts')
-<script>
-	$(document).ready(function() {
+
 		$("#form-signin").submit(function(e) {
+			
 			e.preventDefault();	
 	    	var form = $(this);
 	    	$.ajax({
@@ -919,36 +924,47 @@ Holipic
 
 		           		window.localStorage.setItem('user', JSON.stringify(object))
 
-		           		window.location.href = "/";
+		           		window.location.href = "/admin";
 		           	}
 	           		
 	           },
 	            error: function(error) {
 			        // console.log(error.responseJSON.errors.email);
-			        if(error && error.responseJSON.errors.email && error.responseJSON.errors.password) {
+			        // if(error && error.responseJSON.errors.email && error.responseJSON.errors.password) {
 
-			        	$('#message-form-login').empty();
+			        // 	$('#message-form-login').empty();
 
-	           			$("#message-form-login").append(
-	           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+'Please enter your email and password '+"</span>");
+	          //  			$("#message-form-login").append(
+	          //  			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+'Please enter your email and password '+"</span>");
 
-	           			return false;
-			        }
+	          //  			return false;
+			        // }
 
-			        if(error.responseJSON.errors.email) {
-			        	var errorMessage = error.responseJSON.errors.email[0]
-			        } else {
-			        	var errorMessage = error.responseJSON.errors.password[0]
-			        }
+			        // if(error.responseJSON.errors.email) {
+			        // 	var errorMessage = error.responseJSON.errors.email[0]
+			        // } else {
+			        // 	var errorMessage = error.responseJSON.errors.password[0]
+			        // }
 
-			        $('#message-form-login').empty();
+			        // $('#message-form-login').empty();
 
-	           		$("#message-form-login").append(
-	           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+errorMessage+"</span>");
+	          //  		$("#message-form-login").append(
+	          //  			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+errorMessage+"</span>");
+
+	          				$('#message-form-signin-email').empty();
+						   	$('#message-form-signin-password').empty();
+						   	
+						  _.each(error.responseJSON.errors, function(val,key){
+						  	console.log(val)
+						  	console.log(key)
+							  	var id = '#message-form-signin-'+key;
+
+							  	$(id).append(
+				           			"<span class='label label-important' style='color:red'>"+" "+val+"</span>");
+						  	});	
 			    }   
 	         });
 		});
 	});
 </script>
-
 @endsection

@@ -43,12 +43,12 @@ import AppConfig from "../../constants/AppConfig";
 
 // const auth = new AuthService();
 // const { login, logout, authenticated, authNotifier } = auth;
-import {SnotifyPosition} from 'vue-snotify';
+// import {SnotifyPosition} from 'vue-snotify';
 
 export default {
 	components: {
     // SessionSliderWidget
-},
+	},
 data() {
 	return {
 		checkbox: false,

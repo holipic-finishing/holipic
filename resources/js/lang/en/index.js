@@ -457,6 +457,10 @@ export default {
   // Menu
   company : "Company",
   package : "Packages",
-  listPackage : "List Package",
+  listPackage : "List Package",   
+  chartCompany: "Company Infomation & Chart",
+  totalAmountCompany: 'Total Amount Company',
+  settingPackageSystem: "Setting Packages System"
+
 
 }

@@ -457,5 +457,6 @@ export default {
   // Menu
   company : "Company",
   package : "Packages",
-  listPackage : "List Package"
+  listPackage : "List Package",
+  settingPackageSystem: "Setting Packages System"
 }

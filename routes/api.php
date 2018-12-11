@@ -17,11 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
-
-
-
 Route::group(['namespace' => 'API'],function(){
 	
 	Route::resource('packages', 'PackageAPIController');
@@ -33,5 +28,14 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('users', 'UserAPIController');
 
 	Route::get('count-packages','PackageAPIController@CountPackages');
+
+	Route::resource('companies', 'CompanyAPIController');
+
+	Route::post('search/companies', 'CompanyAPIController@doSearch');
+
+	Route::resource('settings', 'SettingAPIController');
+
+	Route::get('get-package', 'SettingAPIController@getPackage');
+
 });	
 

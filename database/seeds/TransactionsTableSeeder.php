@@ -16,18 +16,18 @@ class TransactionsTableSeeder extends Seeder
         	[
 	            'user_id' => 1,
 	            'type' => '1', //incomece
-	            'currency_id' => '3',
-	            'amount' => 50000,
+	            'currency_id' => '1',
+	            'amount' => 6500,
 	            'status' => 'completed',
 	            'company_id' => 1,
-	            'dated' => '2018-12-10'
+	            'dated' => '2018-12-11'
         	],
 
         	[
 	            'user_id' => 1,
 	            'type' => '1', //incomece
-	            'currency_id' => '3',
-	            'amount' => 50000,
+	            'currency_id' => '1',
+	            'amount' => 3400,
 	            'status' => 'completed',
 	            'company_id' => 1,
 	            'dated' => '2018-12-11'
@@ -36,21 +36,21 @@ class TransactionsTableSeeder extends Seeder
             [
                 'user_id' => 1,
                 'type' => '1', //incomece
-                'currency_id' => '3',
+                'currency_id' => '1',
                 'amount' => 4000,
                 'status' => 'completed',
                 'company_id' => 1,
-                'dated' => '2018-12-1'
+                'dated' => '2018-12-9'
             ],
 
             [
                 'user_id' => 1,
                 'type' => '1', //incomece
-                'currency_id' => '3',
-                'amount' => 9000,
+                'currency_id' => '1',
+                'amount' => 1800,
                 'status' => 'completed',
                 'company_id' => 1,
-                'dated' => '2018-12-4'
+                'dated' => '2018-11-30'
             ],
 
         ]

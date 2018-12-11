@@ -132,4 +132,13 @@ class TransactionAPIController extends AppBaseController
         $company = $this->transactionRepository->getTotalAmountCompany($request['companyId']);
         return $this->sendResponse($company, 'Transaction Company successfully');
     }
+
+    public function loadChartCompany(Request $request) 
+    {
+
+        $company = $this->transactionRepository->getTotalAmountCompanyByTime($request->all());
+
+        return $this->sendResponse($company, 'Transaction Company date/month successfully');
+
+    }
 }

@@ -40,14 +40,51 @@ class TransactionRepository extends BaseRepository
 
     public function getTotalAmountCompany($companyId)
     {
-
-        $company = $this->model->select(DB::raw("sum(amount) as total"),'dated'
-            // DB::raw("DATE_FORMAT(dated,'%M %Y %D') as months")
-        )->where('company_id', $companyId)->where('currency_id', 3)
+        // DB::raw("DATE_FORMAT(dated,'%M %Y %D') as months")
+        $company = $this->model->select(DB::raw("sum(amount) as total"),'dated as date', 'currency_id')
+        ->where('company_id', $companyId)
+        ->where(DB::raw('DAY(dated)'), '>=', Carbon::now()->subDays(10)->day)
+        ->where(DB::raw('DAY(dated)'), '<=', Carbon::now()->day)
         ->whereMonth('dated', Carbon::now()->month)
-        ->groupBy('dated')->orderBy('dated', 'asc')
+        ->groupBy('date', 'currency_id')->orderBy('date', 'asc')
         ->get()->toArray();
-        
+        // dd($company);
+
         return $company;
     }
+
+    public function getTotalAmountCompanyByTime($request)
+    {   
+        $company = $this->model;
+
+        if($request['type'] == 'Day') {
+            
+            $time = explode("-", $request['date']);
+            $date = Carbon::create($time[0], $time[1], $time[2]);
+
+            $dateBefore = Carbon::create($time[0], $time[1], $time[2])->subDays(10)->toDateString();
+
+            $company = $company->select(DB::raw("sum(amount) as total"),'dated as date')
+                ->where('company_id', $request['companyId'])
+                ->where('currency_id', 3);                     
+        } else {
+
+            $timeMonth = explode("-", $request['date']);
+            $date = Carbon::create($timeMonth[0], $timeMonth[1], 31 );
+
+            $dateBefore = Carbon::create($timeMonth[0], $timeMonth[1], 1)->subMonths(12);
+
+            $company = $company->select(DB::raw("sum(amount) as total"), DB::raw("DATE_FORMAT(dated,'%Y/%c/%d') as date"))
+                ->where('company_id', $request['companyId'])
+                ->where('currency_id', 3);
+        }
+
+        $company = $company->where(DB::raw('dated'), '>=', $dateBefore)
+                            ->where(DB::raw('dated'), '<=', $date)
+                            ->groupBy('date')->orderBy('date', 'asc')
+                            ->get()->toArray();
+
+        return $company;
+    }
+
 }

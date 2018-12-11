@@ -12,53 +12,50 @@
 		    			</div>
 		    			
 		    			<div class="col-sm-8">
-		    				<v-form ref='vform' v-model="valid">
-		    				<label class="company-label">Company name:</label>
-		    				<v-flex xs12 >
-					          <v-text-field
-					            label="Outline"
-					            single-line
-					            outline
-					            v-model="company.name"
-					            :rules="[rules.required]"
-					          ></v-text-field>
-					        </v-flex>
-					        <label class="company-label">Description:</label>
-					        <v-flex xs12 >
-					          <v-text-field
-					            label="Outline"
-					            single-line
-					            outline
-					            v-model="company.description"
-					            :rules="[rules.required, rules.min]"
-					          ></v-text-field>
-					        </v-flex>
-					        <label class="company-label">Address:</label>
-					        <v-flex xs12 >
-					          <v-text-field
-					            label="Outline"
-					            single-line
-					            outline
-					            v-model="company.address"
-					            :rules="[rules.required, rules.min]"
-					          ></v-text-field>
-					        </v-flex>
+		    				<v-form ref="form" lazy-validation>
+			    				<label class="company-label">Company name:</label>
+			    				<v-flex xs12 >
+						          <v-text-field
+						            label="Outline"
+						            single-line
+						            outline
+						            type="text"
+						            name="company.name"
+						            v-model="company.name"
+						            required
+						            :rules="[rules.required, rules.min]"
+						          ></v-text-field>
+						        </v-flex>
+						        <label class="company-label">Description:</label>
+						        <v-flex xs12 >
+						          <v-text-field
+						            label="Outline"
+						            single-line
+						            outline
+						            v-model="company.description"
+						            :rules="[rules.required]"
+						          ></v-text-field>
+						        </v-flex>
+						        <label class="company-label">Address:</label>
+						        <v-flex xs12 >
+						          <v-text-field
+						            label="Outline"
+						            single-line
+						            outline
+						            v-model="company.address"
+						            :rules="[rules.required]"
+						          ></v-text-field>
+						        </v-flex>
 
-					       <!--  <v-flex xs12 >
-					          <v-text-field
-					            label="Outline"
-					            single-line
-					            outline
-					          ></v-text-field>
-					        </v-flex> -->
 					        </v-form>
 					        <v-btn
 						      color="info"
+						      :disabled="!valid"
 						      @click="updateCompany()"
 						    >
 						      Update Company
 						    </v-btn>
-						    
+						     
 		    			</div>
 
 		    		</div>
@@ -93,9 +90,56 @@
 					:closeable="true"
 					>					
 					<div class="ladgend-wrapper mb-3">
-						<p class="mb-0"><span class="ladgend ladgend-success"></span> <span>Open Rate</span></p>
-						<p class="mb-0"><span class="ladgend ladgend-pink"></span> <span>Recurring Payments</span></p>
+						<div class="row">
+							<!-- <div class="col-sm-4">
+								<p class="mb-0"><span class="ladgend ladgend-success"></span> <span>Open Rate</span></p>
+								<p class="mb-0"><span class="ladgend ladgend-pink"></span> <span>Recurring Payments</span></p>
+							</div>
+ -->
+							<div class="col-sm-2">
+								 <v-select
+						          :items="selectDate"
+						          label="Choose Date or Month"
+						          outline
+						          v-model="valueSelectDateMonth"
+						        ></v-select>
+							</div>
+
+							<div class="col-sm-4">
+								
+								 <v-menu
+							        ref="menu"
+							        :close-on-content-click="false"
+							        v-model="menu"
+							        :nudge-right="40"
+							        :return-value.sync="date"
+							        lazy
+							        transition="scale-transition"
+							        offset-y
+							        full-width
+							        min-width="290px"
+							      >
+							        <v-text-field
+							          slot="activator"
+							          v-model="date"
+							          label="Date/Month"
+							          prepend-icon="event"
+							          outline
+							          @change="loadChartWithDayMonth"
+							        ></v-text-field>
+
+							        <v-date-picker v-model="date" no-title scrollable :type="valueSelectDateMonth == 'Month' ? 'month' : 'date'">
+							          <v-spacer></v-spacer>
+							          <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+							          <v-btn flat color="primary" @click="loadChartWithDayMonth">OK</v-btn>
+							        </v-date-picker>
+							      </v-menu>
+							</div>
+						
+						</div>
+					
 					</div>
+
 					<total-earnings :width="300" :height="300" :companyId="companyId"></total-earnings>				
 				</app-card>
 		    </v-card-text>
@@ -120,11 +164,18 @@ export default {
         loading: false,
         company: [],
         companyId: this.$route.query.companyId,
-        valid: false,
+        valid: true,
         rules: {
         	required: value => !!value || 'This field is required.',
-        	min: value => value.length >= 8 || 'Min 8 characters'
-        }
+        	min: value => value.length >= 8 || 'Min 8 characters',
+        },
+        date: new Date().toISOString().substr(0, 10),
+      	menu: false,
+      	modal: false,
+      	menu2: false,
+      	selectDate: ['Day', 'Month'],
+      	valueSelectDateMonth: ''
+       
         // totalEarnings: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44]
     }
 
@@ -145,26 +196,39 @@ export default {
 
   methods:{
   		updateCompany() {
-  			axios.put(config.API_URL+'companies/'+this.$route.query.companyId, {params: {name: this.company.name, address: this.company.address, description: this.company.description}})
-  			.then (response => {
-  				if(response && response.data.success) {
-  					this.company = response.data.data
-  					 setTimeout(function(){	
-  					 	Vue.notify({
-  					 	 group: 'loggedIn',
-  					 	 type: 'success',
-  					 	 text: 'Update success'
-  					 	});
-  					 },500);
+  			if (this.$refs.form.validate()) {
+  				axios.put(config.API_URL+'companies/'+this.$route.query.companyId, {params: {name: this.company.name, address: this.company.address, description: this.company.description}})
+  				.then (response => {
+  					if(response && response.data.success) {
+	  					this.company = response.data.data
+	  					 setTimeout(function(){	
+	  					 	Vue.notify({
+	  					 	 group: 'loggedIn',
+	  					 	 type: 'success',
+	  					 	 text: 'Update success'
+	  					 	});
+	  					 },500);
 
   				}
-  			})
+  				})
+  			}	
   		},
   		informationCompany() {
   			axios.get((config.API_URL+'companies/'+this.$route.query.companyId))
   			.then ((response) => {
   				if(response && response.data.success) {
   					this.company = response.data.data
+  				}
+  			});
+  		},
+
+  		loadChartWithDayMonth() {
+  			this.$refs.menu.save(this.date)
+  			//alert(this.valueSelectDateMonth)
+  			axios.get(config.API_URL+'company/load-chart?type='+this.valueSelectDateMonth+'&date='+this.date+'&companyId='+this.companyId)
+  			.then((response) => {
+  				if(response && response.data.success) {
+  					this.$root.$emit('companyChart', response.data.data)
   				}
   			});
   		}

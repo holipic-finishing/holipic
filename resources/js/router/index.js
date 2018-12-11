@@ -28,7 +28,7 @@ import PackageIndex from '../views/package/Index';
 
 import Setting from '../views/setting/setting'
 import UserManagement from '../views/superadmin-user/user-management'
-
+import page404 from '../views/pages/page404'
 
 
 Vue.use(Router)
@@ -163,7 +163,7 @@ routers = [
 	{
     // not found handler
     	path: '*',
-    	redirect: '/session/login'
+    	component: page404
   	}
 
 ];

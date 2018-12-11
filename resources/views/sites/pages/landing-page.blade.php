@@ -792,7 +792,7 @@ Holipic
 					<h2>Get in Touch</h2>
 				</div>
 				
-					<form action="{{ route('users.signup') }}" method="post">
+					<form method="post">
 						 @csrf
 						<div class="form-group">
 							<div class="input-group">

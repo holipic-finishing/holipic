@@ -130,12 +130,9 @@ class UserAPIController extends AppBaseController
     }
 
     public function changePassWord(Request $request) {
-        
         $token = (new Parser())->parse((string) $request['access_token']);           
         $email=  $token->getClaim('email');
-        
         $user = User::where('email',$email)->first();
-
         // $a = Hash::make($request['oldPassword']);
         // dd($a);
 

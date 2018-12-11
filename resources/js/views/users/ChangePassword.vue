@@ -78,7 +78,7 @@ export default {
                     Vue.notify({
                         group: 'loggedIn',
                         type: 'error',
-                        text: 'Old Password Incorrect'
+                        text: 'Old Password or Confirm Password Incorrect'
                     });
                },500);
              }

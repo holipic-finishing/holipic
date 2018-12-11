@@ -48,7 +48,7 @@ import AppConfig from "../../constants/AppConfig";
 export default {
 	components: {
     // SessionSliderWidget
-},
+	},
 data() {
 	return {
 		checkbox: false,

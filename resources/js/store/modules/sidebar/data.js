@@ -14,7 +14,8 @@ export const menus = {
 			active: false,
 			items: [
 				// { title: 'message.user', path: '/users/user-list' },
-				{ title: 'message.company', path: '/widgets/mana-company' }
+				{ title: 'message.company', path: '/widgets/mana-company' },
+				{ title: 'message.chartCompany', path: '/widgets/mana-company-chart' }
 			]
 		},
 		{

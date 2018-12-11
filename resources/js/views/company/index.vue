@@ -123,7 +123,11 @@ export default {
 		},
 
 		showItem(item){
-			
+
+			this.$root.$router.push({
+    			path: '/default/widgets/mana-company-chart', 
+    			query: { companyId: item.id}
+			})
 		},
 
 

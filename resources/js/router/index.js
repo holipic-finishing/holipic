@@ -21,11 +21,16 @@ import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // import UserWidgets   from'../views/users/UsersList';
 import Company from '../views/company/index';
+import CompanyChart from '../views/company/chart';
+
 import PackageIndex from '../views/package/Index';
 
 
 import Setting from '../views/setting/setting'
 import UserManagement from '../views/superadmin-user/user-management'
+
+import page404 from '../views/pages/page404'
+
 
 import UserPass from '../views/users/ChangePassword'
 
@@ -98,6 +103,15 @@ routers = [
 		        }
 		    },
 		    {
+		        path: '/default/widgets/mana-company-chart',
+		        component: CompanyChart,
+		        meta: {
+		        	requiresAuth: true,
+		            title: 'message.chartCompany',
+		            breadcrumb: 'Company / Information /Chart'
+		        }
+		    },
+		    {
 		        path: '/default/packages/index',
 		        component: PackageIndex,
 		        meta: {
@@ -163,7 +177,7 @@ routers = [
 	{
     // not found handler
     	path: '*',
-    	redirect: '/session/login'
+    	component: page404
   	}
 
 ];

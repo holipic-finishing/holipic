@@ -30,5 +30,22 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('count-packages','PackageAPIController@CountPackages');
 
 	Route::post('change-password', 'UserAPIController@changePassWord');
+
+	Route::resource('companies', 'CompanyAPIController');
+
+	Route::resource('currencies', 'CurrencyAPIController');
+
+	Route::post('search/companies', 'CompanyAPIController@doSearch');
+
+	Route::resource('transactions', 'TransactionAPIController');
+
+	Route::get('company/total-amount', 'TransactionAPIController@totalAmountCompany');
+
+	Route::get('company/load-chart', 'TransactionAPIController@loadChartCompany');
+
+	Route::resource('settings', 'SettingAPIController');
+
+	Route::get('get-package', 'SettingAPIController@getPackage');
+
 });	
 

@@ -33,9 +33,10 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('companies', 'CompanyAPIController');
 
 	Route::post('search/companies', 'CompanyAPIController@doSearch');
+
+	Route::resource('settings', 'SettingAPIController');
+
+	Route::get('get-package', 'SettingAPIController@getPackage');
+
 });	
-
-
-
-
 

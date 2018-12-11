@@ -1,0 +1,39 @@
+.common-section {
+	padding-top: 125px;
+
+}
+.section-pricing .pricing-header h3 {
+	color:#5d91f4 !important;
+}
+.section-pricing .pricing-header h3.title-enterprise {
+	color:#ffb70d !important;
+}
+.section-pricing .pricing-body h4 {
+	color:#3b3c3d !important;
+}
+.section-pricing .common-pricing-box .pricing-box{
+	margin:0 !important;
+	background: #f5f7fa;
+}
+.section-pricing .pricing-box-wrapper.common-pricing-box {
+	background: #f5f7fa;
+	margin:0px;
+	padding: 35px 20px;
+	margin-bottom: 15px;
+}
+.section-pricing .common-pricing-box .btn-buynow a {
+	text-decoration: none;
+}
+.section-pricing .common-pricing-box .btn-buynow a:before {
+	display: none;
+}
+.section-pricing .common-pricing-box .btn-buynow {
+	background-color: #5d91f4;
+	padding: 10px 0;
+}
+.section-pricing .common-pricing-box .btn-buynow.btn-enterprise {
+	background-color: #ffb70d;
+}
+.section-pricing .common-pricing-box .pricing-body ul li {
+	color: #464c68;
+}

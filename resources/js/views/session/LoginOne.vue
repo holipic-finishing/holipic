@@ -27,35 +27,8 @@
 			<router-link class="mb-1" to="/session/forgot-password">{{$t('message.forgotPassword')}}?</router-link>
 			<div>
 				<v-btn large @click="login" block color="primary">{{$t('message.loginNow')}}</v-btn>
-				<v-btn large @click="onCreateAccount" block color="warning">{{$t('message.createAccount')}}</v-btn>
 			</div>
-			<p>{{$t('message.bySigningUpYouAgreeTo')}} {{brand}}</p>
-			<!-- <router-link to="">{{$t('message.termsOfService')}}</router-link> -->
 		</v-form>
-		<div class="session-social-links d-inline-block">
-			<ul class="list-inline">
-				<li @click="signInWithFacebook">
-					<span class="facebook-bg session-icon">
-						<i class="ti-facebook"></i>
-					</span>
-				</li>
-				<li @click="signInWithGoogle">
-					<span class="google-bg session-icon">
-						<i class="ti-google"></i>
-					</span>
-				</li>
-				<li @click="signInWithTwitter">
-					<span class="twitter-bg session-icon">
-						<i class="ti-twitter-alt"></i>
-					</span>
-				</li>
-				<li @click="signInWithGithub">
-					<span class="github-bg session-icon">
-						<i class="ti-github"></i>
-					</span>
-				</li>
-			</ul>
-		</div>
 	</div>
 
 </template>
@@ -104,25 +77,6 @@ methods: {
 			path: '/default/dashboard/ecommerce'
 		});
 	},
-	signInWithFacebook() {
-      // this.$store.dispatch("signinUserWithFacebook");
-  },
-  signInWithGoogle() {
-  	this.$store.dispatch("signinUserWithGoogle");
-  },
-  signInWithTwitter() {
-      // this.$store.dispatch("signinUserWithTwitter");
-  },
-  signInWithGithub() {
-      // this.$store.dispatch("signinUserWithGithub");
-  },
-  onCreateAccount() {
-  	this.$router.push("/session/sign-up");
-  },
-  signinWithAuth0() {
-      // login();
-
-  },
   login () {
       // localStorage.getItem('access_token')
   		axios.post('/auth/loginSuperAdmin', {
@@ -147,34 +101,16 @@ methods: {
   				Vue.notify({
 					group: 'loggedIn',
 					type: 'Faill',
-					text: 'Login Faill',
+					text: 'E-mail or Password Incorrect',
 					duration: 2000,
 				})
   			}
 
   		})
   		.catch(error => {
-
-  		// 	if(error && error.errors){
-
-  		// 		let errors = error.errors
-  		// 		console.log(errors)
-  		// 		if(errors.email && errors.email.length){
-  		// 			this.errors.emailMesg = errors.email[0]
-  		// 		}
-
-  		// 		if(errors.password && errors.password.length){
-  		// 			this.errors.passwordMesg = errors.password[0]
-  		// 		}
-  		// 	}else{
-  		// 		this.$snotify.error('Something wrong, please try again!', {
-  		// 			timeout: 1000,
-  		// 			position: SnotifyPosition.rightTop
-  		// 		})
-  		// 	}
+  			console.log(error)
   		})
-  },
-
+  }
 }
 };
 </script>

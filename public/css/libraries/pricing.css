@@ -5,7 +5,7 @@
 .section-pricing .pricing-header h3 {
 	color:#5d91f4 !important;
 }
-.section-pricing .pricing-header h3.title-enterprise {
+.section-pricing .pricing-header h3.title-name {
 	color:#ffb70d !important;
 }
 .section-pricing .pricing-body h4 {
@@ -14,12 +14,15 @@
 .section-pricing .common-pricing-box .pricing-box{
 	margin:0 !important;
 	background: #f5f7fa;
+	padding: 0 0 40px;
 }
 .section-pricing .pricing-box-wrapper.common-pricing-box {
 	background: #f5f7fa;
 	margin:0px;
-	padding: 35px 20px;
+	padding: 50px 20px 60px;
 	margin-bottom: 15px;
+	position: relative;
+	width: 100%;
 }
 .section-pricing .common-pricing-box .btn-buynow a {
 	text-decoration: none;
@@ -30,10 +33,31 @@
 .section-pricing .common-pricing-box .btn-buynow {
 	background-color: #5d91f4;
 	padding: 10px 0;
+	position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 35px;
 }
 .section-pricing .common-pricing-box .btn-buynow.btn-enterprise {
 	background-color: #ffb70d;
 }
 .section-pricing .common-pricing-box .pricing-body ul li {
 	color: #464c68;
+}
+
+.section-pricing .common-pricing-box .title-basic,.section-pricing .common-pricing-box .title-enterprise {
+	font-size: 40px;
+	font-weight: bold;
+	letter-spacing: 3px;
+}
+.section-pricing .common-package-discount {
+	display: flex;
+
+}
+.text-error {
+	font-size: 11px;
+	margin-top: 3px;
+}
+.checkbox-error{
+	margin-top: -8px;
 }

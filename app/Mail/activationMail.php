@@ -31,10 +31,9 @@ class activationMail extends Mailable
     {
         $fullname =  $this->user['fullname'];
         $access_token = $this->user['access_token'];
-        $domain = 'http://127.0.0.1:8000'.'/users/activation?access_token=';
+        $domain = \Config::get('testHolipic.url').'users/activation?access_token=';
         $urlActivation = $domain.$access_token;
 
-  
         return $this->subject('Mail From Holipic')
                     ->view('mails.activationMail',compact('fullname', 'urlActivation'));
     }

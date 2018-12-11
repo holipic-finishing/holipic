@@ -12,14 +12,15 @@ Holipic
 			<div class="col-lg-5">
 				<!-- Header content start -->
 				<div class="header-content wow fadeInUp">
-					<h2>Just another #1 Mobile app landing page template</h2>
+					<h1>Online / Offline <br> Photo Selling Systems</h1>
+					<h3>to increase your business</h3>
 					<p>labore et dolore magna aliqua. Ut eniminim veniam, the exercitation ullamco laboris commodo.labore et dolore magna aliqua. Ut eniminim veniam.</p>
 
 					<div class="btn-video-play">
-						<a href="http://www.youtube.com/watch?v=K4wEI5zhHB0" class="popup-video">
+						<a href="https://holipic.com/wp-content/uploads/2018/07/compress_2_1.mp4" class="popup-video">
 							<div class="btn-play">
 								<figure>
-									<img src="images/video-bg.jpg" alt="" />
+									<img src="images/holipic-mardan-copy.jpg" alt="" />
 								</figure>
 
 								<i class="flaticon-play-button"></i>
@@ -44,67 +45,30 @@ Holipic
 
 
 <!-- Service box starts -->
-<div class="service-layout-1">
+<!-- <div class="service-layout-1">
 	<div class="container">
-		<div class="row">
-			<div class="col-lg-3 col-md-6">
+		<div class="row"> -->
+			<!-- <div class="col-lg-3 col-md-6"> -->
 				<!-- service single box start -->
-				<div class="service-single wow fadeInUp" data-wow-delay="0.2s">
-					<div class="icon-box">
-						<i class="flaticon-social-network"></i>
-					</div>
+					<!-- <div class="service-single wow fadeInUp" data-wow-delay="0.2s">
+						<div class="icon-box">
+							<i class="flaticon-social-network"></i>
+						</div>
 
-					<h3>Exclusive Design</h3>
-					<a href="#" class="btn-seemore">See More</a>
-				</div>
+						<h3>Exclusive Design</h3>
+						<a href="#" class="btn-seemore">See More</a>
+					</div> -->
 				<!-- service single box end -->
-			</div>
+			<!-- </div> -->
 
-			<div class="col-lg-3 col-md-6">
-				<!-- service single box start -->
-				<div class="service-single wow fadeInUp" data-wow-delay="0.4s">
-					<div class="icon-box">
-						<i class="flaticon-settings"></i>
-					</div>
-
-					<h3>Easy to Customize</h3>
-					<a href="#" class="btn-seemore">See More</a>
-				</div>
-				<!-- service single box end -->
-			</div>
-
-			<div class="col-lg-3 col-md-6">
-				<!-- service single box start -->
-				<div class="service-single wow fadeInUp" data-wow-delay="0.6s">
-					<div class="icon-box">
-						<i class="flaticon--01-thinking"></i>
-					</div>
-
-					<h3>Creative Design</h3>
-					<a href="#" class="btn-seemore">See More</a>
-				</div>
-				<!-- service single box end -->
-			</div>
-
-			<div class="col-lg-3 col-md-6">
-				<!-- service single box start -->
-				<div class="service-single wow fadeInUp" data-wow-delay="0.8s">
-					<div class="icon-box">
-						<i class="flaticon-technology"></i>
-					</div>
-
-					<h3>Quick Support</h3>
-					<a href="#" class="btn-seemore">See More</a>
-				</div>
-				<!-- service single box end -->
-			</div>
-		</div>
+			
+<!-- 		</div>
 	</div>
-</div>
+</div> -->
 <!-- Service box ends -->
 
 <!-- welcome quotes section starts -->
-<div class="welcome-layout-1">
+<!-- <div class="welcome-layout-1">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 offset-lg-2">
@@ -115,36 +79,36 @@ Holipic
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 <!-- welcome quotes section ends -->
 
 <!-- Features section starts -->
-<section class="features-layout-1">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 offset-md-1">
+<!-- <section class="features-layout-1">
+	<div class="container"> -->
+	<!-- 	<div class="row">
+			<div class="col-md-6 offset-md-1"> -->
 				<!-- Features content start -->
-				<div class="feature-content">
+			<!-- 	<div class="feature-content">
 					<h2>Everything get easier here</h2>
 					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
 
 					<p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
 					<a href="#" class="btn-custom">Know More</a>
-				</div>
+				</div> -->
 				<!-- Features content end -->
-			</div>
+			<!-- </div> -->
 
-			<div class="col-md-4">
+			<!-- <div class="col-md-4"> -->
 				<!-- Features Image start -->
-				<div class="feature-image wow fadeInRight">
+				<!-- <div class="feature-image wow fadeInRight">
 					<img src="images/feature.png" alt="" />
-				</div>
+				</div> -->
 				<!-- Features Image end -->
-			</div>
-		</div>
-	</div>
-</section>
+		<!-- 	</div> -->
+		<!-- </div> -->
+<!-- 	</div>
+</section> -->
 <!-- Features section ends -->
 
 <section class="version-history-layout-1" id="benefits">
@@ -167,7 +131,7 @@ Holipic
 							<div class="swiper-slide">
 								<div class="version-slide" data-version="Launch" data-date="June, 2001">
 									<div class="version-image">
-										<img src="images/version-image-1.png" alt="" />
+										<img src="images/holipic.jpg" alt="" />
 									</div>
 
 									<div class="version-entry">
@@ -408,7 +372,7 @@ Holipic
 									<div class="row">
 										<div class="col-md-5">
 											<div class="how-it-image">
-												<img src="images/howit.jpg" alt="" />
+												<img src="images/holipic.jpg" alt="" />
 											</div>
 										</div>
 
@@ -529,41 +493,57 @@ Holipic
 					<div role="tabpanel" class="tab-pane fade show active" id="monthly" aria-labelledby="monthly-tab">
 						<div class="row">
 							<!-- Pricing single start -->
+							@if(!empty($list))
 							@foreach( $list as $value)
-							{{-- {{$value-}} --}}
-							<div class="col-md-6">
+							
+							<div class="col-md-6 common-package-discount">
 								<div class="pricing-box-wrapper common-pricing-box">
 									<div class="pricing-box">
 										<div class="pricing-header">
 											<div class="icon-box">
-												<i class="flaticon-sun"></i>
+												<img src="/static/img/pricing-icon.png" alt="pricing icon" width="" height="" class="img-responsive">
 											</div>												
-											<h3{{$value->package_name=="Basic" ? "" : " class=title-enterprise"}}>{{$value->package_name}}</h3>
+											<h3{{$value->package_name=="Basic" ? "" : " class=title-name"}}>{{$value->package_name}}</h3>
 										</div>
 
 										<div class="pricing-body">
 											<ul>
 												
-												<li {{$value->short_description=="Basic" ? "" : " class=title-enterprise"}}>{{$value->short_description}}</li>
-												<li {{$value->fee=="Basic" ? "" : " class=title-enterprise"}}>{{$value->fee}}%</li>
-												<li {{$value->secure_storage=="Basic" ? "" : " class=title-enterprise"}}>{{$value->secure_storage}}</li>
-												<li {{$value->file_upload=="Basic" ? "" : " class=title-enterprise"}}>{{$value->file_upload}} file upload</li>
-												<li {{$value->minimum_user=="Basic" ? "" : " class=title-enterprise"}}>{{$value->minimum_user}} Minimum user</li>
-												<li {{$value->max_user=="Basic" ? "" : " class=title-enterprise"}}>{{$value->max_user}} Max user</li>
+												<li>
+													{{$value->short_description}}
+												</li>
+												<li {{$value->package_name=="Basic" ? "class=title-basic" : " class=title-enterprise"}}>
+													{{$value->fee}}%
+												</li>
+												<li>
+													@if($value->package_name=="Basic")
+														{{$value->secure_storage}} GB secure storage
+													@else
+														{{$value->secure_storage}} storage
+													@endif		 
+												</li>
+												<li>{{$value->file_upload}} GB file upload</li>
 
-												
+												<li>
+													Minimum {{$value->minimum_user}} users ,
+													@if($value->package_name=="Basic")
+														max {{$value->max_user}} users
+													@else 
+														{{$value->max_user}} maximum
+													@endif	
+												</li>
 											</ul>
 										</div>
 									</div>
-									{{-- work --}}
+									
 									@if($value->package_name=="Basic")
 									<div class="btn-buynow">
-										<a data-package='1' class="has-popup select-package" href="#login">START TO BASIC</a>
+										<a data-package='1' class="has-popup select-package" href="#signup">START TO BASIC</a>
 									</div>
 									@else
 
 									<div class="btn-buynow btn-enterprise">
-										<a class="has-popup select-package" data-package='2' href="#login">UPDATE TO PRO</a>
+										<a class="has-popup select-package" data-package='2' href="#signup">UPDATE TO PRO</a>
 									</div>
 
 									@endif
@@ -571,6 +551,7 @@ Holipic
 							</div>
 							<!-- Pricing single end -->
 							@endforeach
+							@endif
 							
 						</div>
 					</div>
@@ -654,9 +635,7 @@ Holipic
 				<h3>Let's get started,<br />
 				Sign Up just in minute</h3>
 
-				<div id="message-form-signup" style="color:#05cbfc"></div>
-			
-				<form action="{{ route('users.signup') }}" method="post" id="frmRegister">
+				<form  id="frmRegister">
 					{!! csrf_field() !!}
 					<div class="form-group">
 						<div class="input-group">
@@ -665,7 +644,9 @@ Holipic
 							</div>
 
 							<input type="text" name="first_name" class="form-control" placeholder="Enter Your First Name">
+							
 						</div>
+						<div id="message-form-signup-first_name" class="text-error"></div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
@@ -674,25 +655,29 @@ Holipic
 							</div>
 
 							<input type="text" name="last_name" class="form-control" placeholder="Enter Your last Name">
+							
 						</div>
+						<div id="message-form-signup-last_name" class="text-error"></div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<span class="fa fa-user"></span>
+								<span class="fa fa-building"></span>
 							</div>
 
 							<input type="text" name="company_name" class="form-control" placeholder="Enter Your Company Name">
 						</div>
+						<div id="message-form-signup-company_name" class="text-error"></div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<span class="fa fa-user"></span>
+								<span class="fa fa-envelope-o"></span>
 							</div>
 
 							<input type="text" name="email" class="form-control" placeholder="Enter Your Email">
 						</div>
+						<div id="message-form-signup-email" class="text-error"></div>
 					</div>
 					<div class="form-group">
 						<div class="input-group">
@@ -702,17 +687,19 @@ Holipic
 
 							<input type="password" name="password" class="form-control" placeholder="Enter Your Password">
 						</div>
+						<div id="message-form-signup-password" class="text-error"></div>
 					</div>
 					<div class="single-row">
 						<label class="account-checkbox">
-							<input type="checkbox">
+							<input type="checkbox" name="checkbox" class="text-error" >
 							<span class="checkmark"></span>
 							<b>I read and agree to <a href="#">Terms & Conditions</a></b>
 						</label>
+						<div id="message-form-signup-checkbox" class="text-error checkbox-error"></div>
 					</div>
-					
+					<div id="message-form-signup" class="text-error"></div>	
 					<div class="form-group">
-						<input type="submit" value="Sign Up" class="btn-submit" />
+						<input type="submit" id='signup-submit' value="Sign Up" class="btn-submit" />
 						<p class="other-text">have an account? <a href="#login" class="has-popup">Sign in</a></p>
 					</div>
 				</form>
@@ -732,24 +719,24 @@ Holipic
 </div>
 <!-- End signup popup -->
 <!-- Page Header Section Starts -->
-<section class="page-header" id="contact" >
+<!-- <section class="page-header" id="contact" >
 	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
+		<div class="row"> -->
+			<!-- <div class="col-lg-12"> -->
 				<!-- Page Header start -->
-				<div class="page-header-title wow fadeInUp">
+				<!-- <div class="page-header-title wow fadeInUp">
 					<h1>Contact us</h1>
 					<p>giving information on its origins</p>
-				</div>
+				</div> -->
 				<!-- Page Header start -->
-			</div>
-		</div>
+			<!-- </div> -->
+		<!-- </div>
 	</div>	
-</section>
+</section> -->
 <!-- Banner Section Ends -->
 
 <!-- Contact us Page starts -->
-<div class="page-contact" >
+<!-- <div class="page-contact" >
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">
@@ -825,15 +812,15 @@ Holipic
 						</div>
 					</form>
 				</div>
-				<!-- Contact Form end -->
+				
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 <!-- Contact us Page ends -->
 
 <!-- Download app section starts -->
-<section class="download-app-layout-1">
+<!-- <section class="download-app-layout-1">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-5">
@@ -849,7 +836,7 @@ Holipic
 			</div>
 		</div>
 	</div>
-</section>
+</section> -->
 @endsection
 @section('scripts')
 <script type="text/javascript">
@@ -861,29 +848,44 @@ Holipic
 	        $("#frmRegister").append("<input type='hidden' name='package_id' value='"+package+"'>");
 	    });
 
-	    $("#frmRegister").submit(function(e) {
+	   
+		$("#frmRegister").submit(function(e) {
 			e.preventDefault();	
 	    	var form = $(this);
+	    	console.log(form.serialize())
+		    $.ajax({
+		           type: "POST",
+		           url: 'users/signup',
+		           data: form.serialize(), 
+		           success: function(data)
+		           {
+		           		if(data && data.success == true) {
+			           		$('#message-form-signup').empty();
+			           		$("#message-form-signup").append(
+			           			"<span class='label label-important' style='color:#05cbfc'>"+" "+data.message+"</span>");
+			           	} else if(data && data.success == false){
+			           		$('#message-form-signup').empty();
+			           		$("#message-form-signup").append(
+			           			"<span class='label label-important' style='color:red'>"+" "+data.message+"</span>");
+			           	}
+		           	},
+		           	error: function(error) {
+				        if(error) {
+						   	$('#message-form-signup-first_name').empty();
+						   	$('#message-form-signup-last_name').empty();
+						   	$('#message-form-signup-company_name').empty();
+						   	$('#message-form-signup-email').empty();
+						   	$('#message-form-signup-password').empty();
+						   	$('#message-form-signup-checkbox').empty();
+						  _.each(error.responseJSON.errors, function(val,key){
+							  	var id = '#message-form-signup-'+key;
 
-	    $.ajax({
-	           type: "POST",
-	           url: 'users/signup',
-	           data: form.serialize(), 
-	           success: function(data)
-	           {
-	           		if(data) {
-	           		$('#message-form-signup').empty();
-	           		$("#message-form-signup").append(
-	           			"<span class='label label-important'>"+" "+data.message+"</span>");
-	           	} else {
-	           		
-	           	}
-	           },
-	            error: function(error) {			      
-			        console.log() 
-
-			    }   
-	        });
+							  	$(id).append(
+				           			"<span class='label label-important' style='color:red'>"+" "+val+"</span>");
+						  	});							
+				    	}   
+					}
+			});
 
 		});
 	});

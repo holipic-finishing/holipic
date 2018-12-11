@@ -899,6 +899,7 @@ Holipic
 		});
 
 		$("#form-signin").submit(function(e) {
+			
 			e.preventDefault();	
 	    	var form = $(this);
 	    	$.ajax({

@@ -11,6 +11,8 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Lcobucci\JWT\Parser;
+use \Illuminate\Support\Facades\Hash;
 
 /**
  * Class UserController
@@ -125,5 +127,35 @@ class UserAPIController extends AppBaseController
         $user->delete();
 
         return $this->sendResponse($id, 'User deleted successfully');
+    }
+
+    public function changePassWord(Request $request) {
+        $token = (new Parser())->parse((string) $request['access_token']);           
+        $email=  $token->getClaim('email');
+        $user = User::where('email',$email)->first();
+        // $a = Hash::make($request['oldPassword']);
+        // dd($a);
+
+        if (!password_verify($request['oldPassword'], $user->password)) {   
+            return $this->sendError('Ole Password Incorrect'); 
+        }
+
+        // if(!Hash::check( $user->password , $request['oldPassword'])){   
+        //     return $this->sendError('Ole Password Incorrect');
+        // }
+
+        if(strcmp($request['newPassword'], $request['confirmPassword']) != 0 ) {
+            return $this->sendError('success');
+           
+        }
+
+        if($user){
+            $user = User::where('email',$email)->first()->update([
+                            'password' => Hash::make($request['newPassword'])
+                    ]);
+        }
+
+        return $this->sendResponse($user, 'Change Password successfully');
+        
     }
 }

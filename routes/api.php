@@ -49,3 +49,6 @@ Route::group(['namespace' => 'API'],function(){
 
 });	
 
+
+
+Route::resource('files', 'FileAPIController');

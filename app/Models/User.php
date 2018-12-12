@@ -68,4 +68,16 @@ class User extends Authenticatable
 
         return $token;
     }
+
+    public function files(){
+        return $this->hasMany('App\Models\File','user_id','id');
+    }
+
+    public function package(){
+        return $this->hasOne('App\Models\Package','id','package_id');
+    }
+
+    public function setting(){
+        return $this->hasOne('App\Models\Setting','id','package_id');
+    }
 }

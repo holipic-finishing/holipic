@@ -28,13 +28,17 @@ Route::namespace('API')->group(function(){
 		
 		Route::post('landing-page/login', 'LoginController@login');
 		// Route::post('login', 'LoginController@login');
-		Route::post('loginSuperAdmin','LoginController@loginSuperAdmin');
 		Route::post('forgotpassword','LoginController@forgotpassword');
 		Route::post('resetpassword','LoginController@resetpassword');
 
 		Route::get('landing-page/logout', 'LoginController@logout');
 
 
+	});
+
+	Route::namespace('Auth')->prefix('auth')->group(function(){
+		Route::post('loginSuperAdmin','LoginController@loginSuperAdmin');
+		
 	});
 });
 

@@ -196,51 +196,25 @@ class TransactionRepository extends BaseRepository
 
         foreach ($dayWeek as $key => $date) {
 
+             $total = 0;
+
             foreach ($transactions as $k_v => $value) {
                 
                 $day = Carbon::parse($value->dated)->format('Y-m-d');
                 if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
-                    // $monthInYear[$key]['total'] = $value->total;
-                    // $total = $total + $value->total;
-                    $dayWeek[$key]['total'] = $value->total;
+                    $total = $total + $value->total;  
                 } 
                 else {
                     $dayWeek[$key]['total'] = 0;
-                    // break;
+                   
                 }
-            }              
+            }
+
+            $dayWeek[$key]['total'] = $total;
+       
         }    
-        // dd($transactions->toArray());
-        dd($dayWeek);      
-
-        //  $arrayWeekV2 = [];
-
-        // foreach ($dayWeek as $key => $date) {
-
-        //     array_unshift($arrayWeekV2, $date);         
-        // }    
-
-        // foreach ($arrayWeekV2 as $k_v2 => $value) {
-          
-        //     foreach ($transactions as $k_v => $value) {
-                
-        //         $total = 0;
-
-        //         $day = Carbon::parse($value->dated)->format('Y-m-d');
-
-        //         if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
-        //             // $monthInYear[$key]['total'] = $value->total;
-        //             $total = $total + $value->total;
-        //             $arrayWeekV2[$key]['total'] = $total;
-        //             break;
-
-        //         } else {
-        //             $arrayWeekV2[$key]['total'] = 0;
-        //         }
-        //     }     
         
-        // }
-        // dd($arrayWeekV2);            
+        return $dayWeek;        
 
     }
 

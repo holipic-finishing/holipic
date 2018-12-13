@@ -230,7 +230,8 @@ export default {
 	      valueSelectDateMonth:'---Choose---',
 	      range:'',
 	      month:'',
-	      year:''
+	      year:'',
+	      week:''
 	      
 
 	    };
@@ -299,6 +300,7 @@ export default {
 					week :  'week'
 			}
 			this.getData(params);
+			// console.log(this.valueSelectDateMonth)
 		},
 
 		getData(params){
@@ -308,8 +310,16 @@ export default {
 			getWithData(url,params)
 			.then((res) => {
 				if(res.data.success && res){
-					// console.log(res.data.data)
-					this.handleDataDaily(res.data.data);
+					if(this.valueSelectDateMonth == "Week") {
+						var dataWeek =[];
+		                _.forEach(res.data.data,function(value,key){
+		                  dataWeek.unshift(value);
+		                });
+                		this.handleDataWeek(dataWeek);
+
+					}else {
+						this.handleDataDaily(res.data.data);
+					}
 				}
 				
 			})
@@ -330,9 +340,19 @@ export default {
 
 		},
 
+		handleDataWeek(data){
 
+			var lables = []
+	        var total = []
+	        _.forEach(data, function(value, key) {
+	          lables.push(moment(value['startOfWeek']).format('MMM-DD') + ' / ' + moment(value['endOfWeek']).format('MMM-DD'))
+	          total.push(value.total)                      
+	        });
+	        this.renderData(lables,total);
 
-		 renderData(lables,total){
+		},
+
+		renderData(lables,total){
 	        this.datacollection = {
 				labels: lables,
 				datasets: [
@@ -356,7 +376,8 @@ export default {
 	},
 	created(){
 		this.fetchData()
-
+		this.valueSelectDateMonth = "Week"
+		this.reportByWeek()
 		
 	}
 

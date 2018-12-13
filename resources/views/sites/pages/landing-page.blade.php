@@ -581,7 +581,7 @@ Holipic
 									<span class="fa fa-user"></span>
 								</div>
 								
-								<input type="text" class="form-control" placeholder="Enter Your User Name" name=
+								<input type="text" class="form-control" placeholder="Enter Your Email" name=
 								"email" >
 
 							</div>

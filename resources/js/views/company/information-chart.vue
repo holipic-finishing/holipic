@@ -23,7 +23,7 @@
 						            name="company.name"
 						            v-model="company.name"
 						            required
-						            :rules="[rules.required, rules.min]"
+						            :rules="[rules.required]"
 						          ></v-text-field>
 						        </v-flex>
 						        <label class="company-label">Description:</label>
@@ -211,6 +211,14 @@ export default {
 
   				}
   				})
+  			} else {
+  				setTimeout(function(){	
+	  					 	Vue.notify({
+	  					 	 group: 'loggedIn',
+	  					 	 type: 'error',
+	  					 	 text: 'Error update'
+	  					 	});
+	  			},500);
   			}	
   		},
   		informationCompany() {

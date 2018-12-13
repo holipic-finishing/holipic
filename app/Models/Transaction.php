@@ -64,5 +64,9 @@ class Transaction extends Model
         'dated' => 'required'
     ];
 
+    public function currency()
+    {
+        return $this->belongsTo(\App\Models\Currency::class, 'currency_id', 'id');
+    }
     
 }

@@ -49,5 +49,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
 
+	Route::resource('files', 'FileAPIController');
 });	
+
 

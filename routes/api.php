@@ -47,5 +47,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
 
+	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
+
 });	
 

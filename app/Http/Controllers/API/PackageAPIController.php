@@ -38,7 +38,7 @@ class PackageAPIController extends AppBaseController
     {
         $this->packageRepository->pushCriteria(new RequestCriteria($request));
         $this->packageRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $packages = $this->packageRepository->all();
+        $packages = $this->packageRepository->orderBy('fee','DESC')->get();
 
         return $this->sendResponse($packages->toArray(), 'Packages retrieved successfully');
     }

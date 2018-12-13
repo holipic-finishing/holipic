@@ -87,4 +87,35 @@ class TransactionRepository extends BaseRepository
         return $company;
     }
 
+
+    public function reportUserDaily($attributes,$dates){
+
+        if(isset($attributes['start_day']) && isset($attributes['end_day']) )
+        {
+            $startDay = Carbon::parse($attributes['start_day'])->format('Y-m-d');
+            $endDay = Carbon::parse($attributes['end_day'])->format('Y-m-d');
+        }
+
+        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])->groupBy('dated')->get();
+
+
+         foreach ($dates as $key => $date) {
+
+            foreach ($transactions as $k_v => $value) {
+            
+                $day = Carbon::parse($value->dated)->format('Y-m-d');
+
+                if($key == $day) {
+                    $dates[$key]['total'] = $value->total;
+                    break;
+
+                } else {
+                    $dates[$key]['total'] = 0;
+                }
+            }              
+        }
+        
+        return $dates;
+    }
+
 }

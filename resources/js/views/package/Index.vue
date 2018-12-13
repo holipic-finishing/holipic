@@ -16,6 +16,9 @@
 	      :headers="headers"
 	      :items="desserts"
 	      class="elevation-1"
+	      :disable-initial-sort="true"
+	      :pagination.sync="pagination"
+
 	    >
 	    	<template slot="items" slot-scope="props">
 	    		<td>{{ props.item.package_name }}</td>
@@ -80,6 +83,12 @@ export default {
 		        { text: 'Actions', value: 'name', sortable: false }
 	      	],
 	      	desserts: [],
+	      	pagination: {
+		      page: 1,
+		      rowsPerPage: 25,
+		      totalItems: 0,
+		      // rowsPerPageItems: [5,10, 15, 20, 25, 30]
+		    },
 	      	// item : {}
 
 

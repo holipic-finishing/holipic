@@ -95,11 +95,11 @@ class TransactionRepository extends BaseRepository
             $startDay = Carbon::parse($attributes['start_day'])->format('Y-m-d');
             $endDay = Carbon::parse($attributes['end_day'])->format('Y-m-d');
         }
-
+       
         $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])->groupBy('dated')->get();
 
 
-         foreach ($dates as $key => $date) {
+        foreach ($dates as $key => $date) {
 
             foreach ($transactions as $k_v => $value) {
             
@@ -114,8 +114,134 @@ class TransactionRepository extends BaseRepository
                 }
             }              
         }
-        
+
         return $dates;
+    }
+
+    public function reportUserMonth($attributes,$dayInMonth){
+
+        if(isset($attributes['month']))
+        {
+            $month = Carbon::parse($attributes['month'])->format('Y-m');
+        }
+
+        $timeMonth = explode("-", $attributes['month']);
+
+        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
+                                    ->whereYear('dated',$timeMonth[0])
+                                    ->whereMonth('dated',$timeMonth[1])
+                                    ->groupBy('dated')->get();
+
+        foreach ($dayInMonth as $key => $date) {
+
+            foreach ($transactions as $k_v => $value) {
+            
+                $day = Carbon::parse($value->dated)->format('Y-m-d');
+
+                if($key == $day) {
+                    $dayInMonth[$key]['total'] = $value->total;
+                    break;
+
+                } else {
+                    $dayInMonth[$key]['total'] = 0;
+                }
+            }              
+        }
+
+        return $dayInMonth;
+    }
+
+    public function reportUserYear($attributes,$monthInYear){
+
+        if(isset($attributes['year']))
+        {
+            $year = Carbon::parse($attributes['year'])->format('Y');
+        }
+
+        $timeYear = explode("-", $attributes['year']);
+
+        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total'),
+                                            DB::raw("DATE_FORMAT(dated,'%Y-%c') as date"))
+                                    ->whereYear('dated',$timeYear[0])
+                                    ->groupBy('date')->get();
+
+        foreach ($monthInYear as $key => $date) {
+
+            foreach ($transactions as $k_v => $value) {
+            
+                if($key == $value->date) {
+                    $monthInYear[$key]['total'] = $value->total;
+                    break;
+
+                } else {
+                    $monthInYear[$key]['total'] = 0;
+                }
+            }              
+        }
+
+       return $monthInYear;
+
+    }
+
+    public function reportUserWeek($dayWeek){
+
+        $startDay   = Carbon::today()->subDays(27)->format('Y-m-d');
+
+        $endDay     = Carbon::today()->format('Y-m-d');
+
+
+        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
+                                ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+                                ->groupBy('dated')->get();                
+
+        foreach ($dayWeek as $key => $date) {
+
+            foreach ($transactions as $k_v => $value) {
+                
+                $day = Carbon::parse($value->dated)->format('Y-m-d');
+                if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
+                    // $monthInYear[$key]['total'] = $value->total;
+                    // $total = $total + $value->total;
+                    $dayWeek[$key]['total'] = $value->total;
+                } 
+                else {
+                    $dayWeek[$key]['total'] = 0;
+                    // break;
+                }
+            }              
+        }    
+        // dd($transactions->toArray());
+        dd($dayWeek);      
+
+        //  $arrayWeekV2 = [];
+
+        // foreach ($dayWeek as $key => $date) {
+
+        //     array_unshift($arrayWeekV2, $date);         
+        // }    
+
+        // foreach ($arrayWeekV2 as $k_v2 => $value) {
+          
+        //     foreach ($transactions as $k_v => $value) {
+                
+        //         $total = 0;
+
+        //         $day = Carbon::parse($value->dated)->format('Y-m-d');
+
+        //         if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
+        //             // $monthInYear[$key]['total'] = $value->total;
+        //             $total = $total + $value->total;
+        //             $arrayWeekV2[$key]['total'] = $total;
+        //             break;
+
+        //         } else {
+        //             $arrayWeekV2[$key]['total'] = 0;
+        //         }
+        //     }     
+        
+        // }
+        // dd($arrayWeekV2);            
+
     }
 
 }

@@ -31,10 +31,70 @@ class ReportController extends BaseApiController
        		$report = $this->transactionRepository->reportUserDaily($input,$arrayDay);
 
        		return $this->responseSuccess('Data success',$report);
+       	} else if($request->has(['month'])){
+
+       		$arrayDayInMonth = $this->initDayInMonth($input['month']);
+
+       		$report = $this->transactionRepository->reportUserMonth($input,$arrayDayInMonth);
+
+       		return $this->responseSuccess('Data success',$report);
+       	} else if($request->has(['year'])){
+
+       		$arrayMonthInYear = $this->initMonthInYear($input['year']);
+       		
+       		$report = $this->transactionRepository->reportUserYear($input,$arrayMonthInYear);
+
+       		return $this->responseSuccess('Data success',$report);
+
+       	} else if ($request->has(['week'])) {
+
+       		$arrayWeek = $this->initWeekDays();
+
+       		$report = $this->transactionRepository->reportUserWeek($arrayWeek);
+
+       		return $this->responseSuccess('Data success',$report);
+
+       	} else {
+       		return $this->responseError('Failed!', [
+                'error' => 'Data not found',
+            ],500);
        	}
+       
 
     }
 
+
+    public function initMonthInYear($year){
+
+    	$timeYear = explode("-", $year);
+
+    	$data = [];
+        $date = 1;
+        while($date <= 12){
+        	if($date < 10) {
+        		$key = $timeYear[0]."-0".$date;
+        	}else {
+        		$key = $timeYear[0]."-".$date;
+        	}
+        	
+            $data[$key] = null;
+            $date++;
+        }
+        return $data;
+
+    }
+
+    public function initDayInMonth($month){
+    
+    	$endInMonth = Carbon::parse($month)->endOfMonth();
+    	$data = [];
+        $date = Carbon::parse($month);
+        while($date <= $endInMonth){
+            $data[$date->toDateString()] = null;
+            $date->addDays(1);
+        }
+        return $data;
+    }
 
     public function initDays($startDate, $endDate){
         $startDate = Carbon::parse($startDate);
@@ -47,6 +107,7 @@ class ReportController extends BaseApiController
         }
         return $data;
     }
+    
     public function initWeekDays(){
        $today = Carbon::today();
         $arrayWeek = [];
@@ -57,5 +118,4 @@ class ReportController extends BaseApiController
         }
         return $arrayWeek;
     }
-
 }

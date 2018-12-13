@@ -92,16 +92,19 @@
 								<date-picker v-model="month" :append-to-body="true" lang="en" type="month" format="YYYY-MM" placeholder="Select Month" ></date-picker>
 							</div>
 							<div class="btn-date" v-show="valueSelectDateMonth == 'Month'">
-		                          <button class="btn btn-success"  v-on:click="reportByRangeDay()">Report</button>
+		                          <button class="btn btn-success"  v-on:click="reportByMonth()">Report</button>
 		                    </div>
 							<!-- Report By Year -->
 							<div class="btn-date" v-show="valueSelectDateMonth == 'Year'">
 								<date-picker v-model="year" :append-to-body="true" lang="en" type="year" format="YYYY" placeholder="Select Year" ></date-picker>
 							</div>
 							<div class="btn-date" v-show="valueSelectDateMonth == 'Year'">
-		                          <button class="btn btn-success"  v-on:click="reportByRangeDay()">Report</button>
+		                          <button class="btn btn-success"  v-on:click="reportByYear()">Report</button>
 		                    </div>
 							<!-- end By year -->
+							<div class="btn-date" v-show="valueSelectDateMonth == 'Week'">
+		                          <button class="btn btn-success"  v-on:click="reportByWeek()">Report</button>
+		                    </div>
 						</div>
 				</div>			
 				 <line-chart :options="options" :chart-data="datacollection">
@@ -269,19 +272,38 @@ export default {
 				},500);
 			}
 			else {
-
-				this.getData();
+				let params = {
+					start_day :  this.formatDate(this.range[0]),
+					end_day :   this.formatDate(this.range[1])
+				}
+				this.getData(params);
 			}
 		},
 
-		getData(){
+		reportByMonth(){
+			var month = {
+	      			month:moment(this.month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD')
+	      	}
+			this.getData(month);
+		},
+
+		reportByYear(){
+			var year = {
+	      			year:moment(this.year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM')
+	      	}
+			this.getData(year);
+		},
+
+		reportByWeek(){
+			let params = {
+					week :  'week'
+			}
+			this.getData(params);
+		},
+
+		getData(params){
 
 			let url = config.API_URL+'report-incomes-package'
-
-			let params = {
-				start_day :  this.formatDate(this.range[0]),
-				end_day :   this.formatDate(this.range[1])
-			}
 
 			getWithData(url,params)
 			.then((res) => {
@@ -307,6 +329,8 @@ export default {
 	        this.renderData(lables,total);
 
 		},
+
+
 
 		 renderData(lables,total){
 	        this.datacollection = {

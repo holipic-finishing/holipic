@@ -34,6 +34,8 @@ import page404 from '../views/pages/page404'
 
 import UserPass from '../views/users/ChangePassword'
 
+import HistoriesTransaction from '../views/transactions/Histories.vue'
+
 
 
 Vue.use(Router)
@@ -146,6 +148,15 @@ routers = [
 		            requiresAuth: true,
 		            title: 'message.changePassword',
 		            breadcrumb: 'Users / Change Password'
+		        }
+		    },
+		    {
+		        path: '/default/transaction/histories',
+		        component: HistoriesTransaction,
+		        meta: {
+		            requiresAuth: true,
+		            title: 'message.histories',
+		            breadcrumb: 'Transaction / Histories List'
 		        }
 		    },
       	]	

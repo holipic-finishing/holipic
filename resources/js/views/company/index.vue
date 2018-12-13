@@ -38,6 +38,14 @@
 				        <td class="text-xs-left">{{ props.item.address }}</td>
 				        <td class="text-xs-left">{{ props.item.email }}</td>
 				        <td class="text-xs-left">{{ props.item.description }}</td>
+				        <td class="text-xs-left">{{ props.item.system_fee }}</td>
+
+				
+
+
+
+
+
 				        <td class="text-xs-left">
 				        	<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
 				    	</td>
@@ -77,8 +85,10 @@ export default {
 		        { text: 'Address', value: 'address', sortable: false },	       
 		        { text: 'Owner', value: 'email', sortable: false },	
 		        { text: 'Description', value: 'description', sortable: false },	
+		        { text: 'System fee' , value: 'system_fee', sortable: false},
 		        { text: 'Logo' , value: 'logo', sortable: false},
-		        { text: 'Action', sortable: false }       
+		        { text: 'Action', sortable: false }
+		     
 	      	],
 	      	desserts:[],
 	      	search:{

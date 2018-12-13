@@ -39,11 +39,14 @@ class CompanyRepository extends BaseRepository
 
 
     public function getCompanies(){
-        $results = DB::table('companies as c')
+        $results = DB::table('transactions as t')
+                    ->rightJoin('companies as c', 't.company_id', '=', 'c.id')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name')
+                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('sum((t.amount * p.fee /100)) as system_fee') )
+                   ->groupBy('t.company_id', 'c.id','c.name', 'c.description' ,'c.address', 'c.logo', 'u.email', 'p.package_name')
                     ->get();
+                    // dd($results);
         return $results;
     }
 

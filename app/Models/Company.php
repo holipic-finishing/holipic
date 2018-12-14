@@ -51,5 +51,10 @@ class Company extends Model
         
     ];
 
-    
+     public function files(){
+        return $this->hasMany('App\Models\File','company_id','id');
+    }
+     public function user(){
+        return $this->hasOne('App\Models\User','id','owner_id');
+    }
 }

@@ -39,11 +39,24 @@ class CompanyRepository extends BaseRepository
 
 
     public function getCompanies(){
-        $results = DB::table('companies as c')
-                    ->join('users as u', 'u.id', '=', 'c.owner_id')
-                    ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name')
-                    ->get();
+        // $results = DB::table('companies as c')
+        //             ->join('users as u', 'u.id', '=', 'c.owner_id')
+        //             ->join('packages as p', 'p.id', '=', 'u.package_id')
+        //             ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name')
+        //             ->get();
+
+        $results = $this->model->with(['files','user.package'])->get();
+
+        foreach ($results as $key => $value) {
+            $total_file_size = 0;
+            foreach ($value->files as $k_v2 => $item) {
+                    $total_file_size += $item->file_size;
+            }
+            $results[$key]->total_file_size = $total_file_size;
+            $results[$key]->email = $value->user->email;
+            $results[$key]->package_name = $value->user->package->package_name;
+        }
+
         return $results;
     }
 

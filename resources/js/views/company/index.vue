@@ -50,6 +50,9 @@
 				            visibility
 				          </v-icon>
 				        </td>
+				        <td class="text-xs-left"></td>
+				        <td class="text-xs-left">{{ props.item.total_file_size }}</td>
+				        <td class="text-xs-left"></td>
 			    	</template>
 			      </v-data-table>
 			    </div>
@@ -78,7 +81,10 @@ export default {
 		        { text: 'Owner', value: 'email', sortable: false },	
 		        { text: 'Description', value: 'description', sortable: false },	
 		        { text: 'Logo' , value: 'logo', sortable: false},
-		        { text: 'Action', sortable: false }       
+		        { text: 'Action', sortable: false },       
+		        { text: 'Total Incomes', value: '', sortable: false },       
+		        { text: 'Total File Size', value: 'total_file_size', sortable: false },       
+		        { text: 'Total Income Fee', value: '' , sortable: false },       
 	      	],
 	      	desserts:[],
 	      	search:{
@@ -98,6 +104,7 @@ export default {
 			.then((res) => {
 				if(res.data && res.data.success){
 					this.desserts = res.data.data
+					console.log(this.desserts)
 				}
 			})
 			.catch((e) =>{

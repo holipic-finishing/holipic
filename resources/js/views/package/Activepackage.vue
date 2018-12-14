@@ -207,7 +207,7 @@ export default {
 				            Vue.notify({
 				                group: 'loggedIn',
 				                type: 'success',
-				                text: 'Add Packages Success!'
+				                text: 'Add Success!'
 				            });
 					    },500);
 	                    this.dialog = false

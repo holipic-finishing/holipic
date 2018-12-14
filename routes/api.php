@@ -49,8 +49,9 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
 
+	Route::resource('files', 'FileAPIController');
+
+	Route::resource('coupon_codes', 'CouponCodeAPIController');
 });	
 
 
-
-Route::resource('files', 'FileAPIController');

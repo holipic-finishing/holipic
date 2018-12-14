@@ -290,6 +290,14 @@ export default {
 		choosePackage(package_name,id){
 			this.activetab = package_name
 			this.packages_id = id
+			this.pro = {
+				expiration_date:'',
+				fee:'',
+				card_fee:'',
+				bonus:''
+
+
+			}
 		},
 
 	},

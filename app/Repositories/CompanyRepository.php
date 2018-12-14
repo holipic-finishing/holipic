@@ -37,23 +37,73 @@ class CompanyRepository extends BaseRepository
         return Company::class;
     }
 
-
+    /**
+    
+        TODO:
+        - function to get list companies 
+    
+    */
+    
     public function getCompanies(){
         $results = DB::table('companies as c')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name')
+                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name','u.first_name', 'u.last_name')
                     ->get();
+
+        $results = $this->transform($results);
+
         return $results;
     }
 
+    /**
+        TODO:
+        - function to search companies by company_name, fullname, email ;  filter package name
+        -@param : keywords search, package_name
+
+    */
+    
     public function search($input){
+
         $results = DB::table('companies as c')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
-                    ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->where('c.name', 'like', '%'.$input['company_name'].'%')
-                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name')
-                    ->get();
+                    ->join('packages as p', 'p.id', '=', 'u.package_id');
+
+        if($input['keywords'] != null){
+            $results = $results->where('name', 'like', '%'.$input['keywords'].'%')
+                                ->orwhere('email', 'like', '%'.$input['keywords'].'%')
+                                ->orWhereRaw("concat(first_name, ' ', last_name) like '%{$input['keywords']}%' ");
+        }
+
+        elseif($input['filterPackage'] != null){
+            if($input['filterPackage'] != "All"){
+                $results = $results->where('p.package_name','=', $input['filterPackage']);
+            }
+        }
+        
+        $results = $results->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name','u.first_name', 'u.last_name')
+                            ->get();
+
+        $results = $this->transform($results);
         return $results;
     }
+
+    /**
+    
+       TODO:
+        - create new_field from old_filed
+       
+     */
+    
+    public function transform($results){
+        foreach ($results as $key => $result) {      
+            $results[$key]->fullname = $result->first_name ." ".$result->last_name;             
+        }
+
+        return $results;
+    } 
+
+   
+
+
 }

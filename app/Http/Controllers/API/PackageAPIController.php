@@ -142,4 +142,16 @@ class PackageAPIController extends AppBaseController
 
     }
 
+    /**
+
+        TODO:
+        - get list package
+
+    */
+
+    public function getListNamePackage(){
+        $results = Package::select('package_name')->get()->toArray();
+        
+        return $results;
+    }
 }

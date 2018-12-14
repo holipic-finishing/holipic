@@ -2,6 +2,8 @@ import { Line } from 'vue-chartjs'
 import config from '../../config/index.js'
 import Vue from 'vue'
 import moment from "moment"
+import {ChartConfig} from "../../constants/chart-config"
+import {hexToRgbA} from "../../helpers/helpers"
 
 
 export default {
@@ -13,6 +15,13 @@ export default {
       labels: [],
       gradient1: null,
       gradient2: null,
+      gradient3: null,
+      gradient4: null,
+      line1: null,
+      line2:null,
+      line3:null,
+      line4:null,
+
       options: {
         scales: {
           yAxes: [{
@@ -22,6 +31,7 @@ export default {
             },
             ticks: {
               stepSize: 500
+              //display:false
             }
           }],
           xAxes: [{
@@ -68,21 +78,48 @@ export default {
     ctx.stroke = function () {
       ctx.save()
       ctx.shadowColor = 'rgba(0,0,0,0.6)'
-      ctx.shadowBlur = 22
+      ctx.shadowBlur = 8
       ctx.shadowOffsetX = 0
-      ctx.shadowOffsetY = 15
+      ctx.shadowOffsetY = 4
       _stroke.apply(this, arguments)
       ctx.restore()
     }
 
     this.gradient1 = this.$refs.canvas.getContext('2d').createLinearGradient(1000, 0, 100, 0)
+
     this.gradient2 = this.$refs.canvas.getContext('2d').createLinearGradient(1000, 0, 100, 0)
 
-    this.gradient1.addColorStop(0, '#1E3C72')
-    this.gradient1.addColorStop(1, '#3B7CFF')
+    this.gradient3 = this.$refs.canvas.getContext('2d').createLinearGradient(1000, 0, 100, 0)
 
-    this.gradient2.addColorStop(0, '#F7981C')
-    this.gradient2.addColorStop(1, '#F56074')
+    this.gradient4 = this.$refs.canvas.getContext('2d').createLinearGradient(1000, 0, 100, 0)
+
+    this.gradient1.addColorStop(0, hexToRgbA('#6eaeef', 0.1))
+    this.gradient1.addColorStop(0.5, hexToRgbA('#0a6b99', 0.2))
+
+    this.gradient2.addColorStop(0, hexToRgbA(ChartConfig.color.white, 0.1))
+    this.gradient2.addColorStop(0.5, hexToRgbA('#F7981C', 0.2))
+
+    this.gradient3.addColorStop(0, hexToRgbA(ChartConfig.color.white, 0.1))
+    this.gradient3.addColorStop(0.5, hexToRgbA('#11e0c8', 0.2))
+
+    this.gradient4.addColorStop(0, hexToRgbA(ChartConfig.color.white, 0.1))
+    this.gradient4.addColorStop(0.5, hexToRgbA('#4a9e1e', 0.2))
+
+    this.line1 = this.$refs.canvas.getContext('2d').createLinearGradient(1000, 0, 100, 0)
+    this.line1.addColorStop(0, '#1E3C72')
+    this.line1.addColorStop(1, '#3B7CFF')
+
+    this.line2 = this.$refs.canvas.getContext('2d').createLinearGradient(1000, 0, 100, 0)
+    this.line2.addColorStop(0, '#F7981C')
+    this.line2.addColorStop(1, '#F56074')
+
+    this.line3 = this.$refs.canvas.getContext('2d').createLinearGradient(1000, 0, 100, 0)
+    this.line3.addColorStop(0, '#37b7a8')
+    this.line3.addColorStop(1, '#13af9d')
+
+    this.line4 = this.$refs.canvas.getContext('2d').createLinearGradient(1000, 0, 100, 0)
+    this.line4.addColorStop(0, '#ed9b61')
+    this.line4.addColorStop(1, '#bf6220')
 
     let datasets = []
 
@@ -91,31 +128,38 @@ export default {
     _.forEach(data, function(item, key){
 
         var color = ''
+        var line = ''
+
         switch(key) {
             case "€":
                 color = _this.gradient1;
+                line = _this.line1
                 break;
             case "$":
                 color = _this.gradient2;
+                line = _this.line2;
                 break;
             case "VND":
-                color = "green";
+                color = _this.gradient3;
+                line = _this.line3
                 break;
             default:
-                color = "blue";
-        }
+                color = _this.gradient1;
+                line = _this.line4
+    }
         
         let tmp = {
               label: key,
               lineTension: 0.4,
-              borderColor: color,
-              pointBorderColor: color,
+              borderColor: line,
+              pointBorderColor: line,
               pointBorderWidth: 2,
               pointRadius: 7,
-              fill: false,
+              backgroundColor: color,
               pointBackgroundColor: '#FFF',
               borderWidth: 3,
-              data: _this.showPrice(item)
+              data: _this.showPrice(item),
+              fill: true
         }
       datasets.push(tmp)
 

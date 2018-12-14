@@ -140,7 +140,7 @@
 					
 					</div>
 
-					<chart :width="300" :height="300" :companyId="companyId"></chart>				
+					<chart :width="300" :height="400" :companyId="companyId"></chart>				
 				</app-card>
 		    </v-card-text>
 		      
@@ -174,7 +174,7 @@ export default {
       	modal: false,
       	menu2: false,
       	selectDate: ['Day', 'Month'],
-      	valueSelectDateMonth: ''
+      	valueSelectDateMonth: 'Day'
        
     }
 
@@ -231,6 +231,7 @@ export default {
 
   		loadChartWithDayMonth() {
   			this.$refs.menu.save(this.date)
+  			
   			axios.get(config.API_URL+'company/load-chart?type='+this.valueSelectDateMonth+'&date='+this.date+'&companyId='+this.companyId)
   			.then((response) => {
   				if(response && response.data.success) {

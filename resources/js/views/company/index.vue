@@ -90,7 +90,6 @@ export default {
 	      	search:{
 	      		company_name : ''
 	      	},
-	      	pagination: {},
 	    }
   	},
 

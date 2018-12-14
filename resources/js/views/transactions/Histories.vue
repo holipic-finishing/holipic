@@ -1,0 +1,111 @@
+<template>
+	<div>
+		<page-title-bar></page-title-bar>
+		<v-container fluid grid-list-xl pt-0>
+			<div id="app">
+			  <v-app id="inspire">
+			    <div>
+			      	<v-toolbar flat color="white">
+				        <v-toolbar-title>Transacsion Histories Table</v-toolbar-title>
+				        <v-divider
+				          class="mx-2"
+				          inset
+				          vertical
+				        ></v-divider>
+			      	</v-toolbar>
+			      	<v-data-table
+			        :headers="headers"
+			        :items="desserts"
+			        class="elevation-1"
+			        :disable-initial-sort="true"
+			        :pagination.sync="pagination"
+			        :rows-per-page-items="rows_per_page"
+			      	>
+			      	<template slot="items" slot-scope="props">
+			    		<td>{{ props.item.id }}</td>
+			    		<td>{{ props.item.company_name }}</td>
+			    		<td>{{ props.item.email }}</td>
+			    		<td>{{ props.item.fullname }}</td>
+			    		<td>{{ props.item.package_name }}</td>
+			    		<td>{{ props.item.type }}</td>
+			    		<td>{{ props.item.amount_with_symbol }}</td>
+			    		<td>{{ props.item.system_fee_with_symbol }}</td>
+			    		<td>{{ props.item.credit_card_fee_with_symbol }}</td>
+			    		<td>{{ props.item.status }}</td>
+			    		<td>{{ props.item.country }}</td>
+			    		<td>{{ props.item.dated }}</td>
+			    	</template>
+			      </v-data-table>
+			    </div>
+			  </v-app>
+			</div>
+		</v-container>
+	</div>
+</template>
+
+<script>
+import  { get, post, put, del } from '../../api/index.js'
+import config from '../../config/index.js'
+import Vue from 'vue'
+
+export default {
+
+  name: 'Histories',
+
+  	data () {
+		return {
+			headers: [	        
+		        { text: 'ID', value: 'id' },	       
+		        { text: 'Company Name',value: 'company_name', sortable: false},	       
+		        { text: 'Email', value: 'email', sortable: false},	       
+		        { text: 'Full Name',value: 'fullname', sortable: false},	       
+		        { text: 'Package Name', value: 'package_name', sortable: false },	       
+		        { text: 'Type', value: 'type', sortable: false },	       
+		        { text: 'Amount', value: 'amount_with_symbol'},	       
+		        { text: 'System Fee', value: 'system_fee_with_symbol' },	       
+		        { text: 'Create Card Fee', value: 'credit_card_fee_with_symbol'},	   
+		        { text: 'Status', value: 'status',  sortable: false},	
+		        { text: 'Country', value: 'country',  sortable: false},	
+		        { text: 'Date', value: 'dated' },	   
+
+		  	],
+		  	desserts:[],
+		  	pagination:{
+		  		rowsPerPage: 20,
+		  	},
+		  	rows_per_page:[
+		  		20, 
+		  		40, 
+		  		60, 
+		  		{ "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }
+		  	]
+		}
+  	},
+  	created(){
+		this.fetchData();	
+	},
+
+	methods:{
+		fetchData() {
+			get(config.API_URL+'histories/transactions')
+			.then((res) => {
+				console.log(res)
+				if(res.data && res.data.success){
+					this.desserts = res.data.data
+					console.log(this.desserts)
+				}
+				
+			})
+			.catch((e) =>{
+				console.log(e)
+			}) 
+		},
+
+		
+
+	},
+}
+</script>
+
+<style lang="css" scoped>
+</style>

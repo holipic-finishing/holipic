@@ -260,7 +260,6 @@ export default {
 			})
 		},
 		reportByRangeDay() {
-			
 			var	start_day = moment(this.range[0])
 			var	end_day =  moment(this.range[1])
 

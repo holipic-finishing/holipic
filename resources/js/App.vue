@@ -14,11 +14,14 @@
         position="top right"
         animation-type="velocity"
       />
+      <transaction-history></transaction-history>
   </v-app>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+
+import TransactionHistory from './views/company/TransactionHistory.vue'
 
 // import AuthService from "./auth/AuthService";
 
@@ -63,6 +66,9 @@ export default {
       "rtlLayout",
       "selectedLocale"
     ])
+  },
+  components: {
+    'transaction-history': TransactionHistory
   }
 };
 </script>

@@ -69,6 +69,7 @@ class User extends Authenticatable
         return $token;
     }
 
+
     public function files(){
         return $this->hasMany('App\Models\File','user_id','id');
     }
@@ -80,4 +81,5 @@ class User extends Authenticatable
     public function setting(){
         return $this->hasOne('App\Models\Setting','id','package_id');
     }
+
 }

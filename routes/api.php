@@ -50,6 +50,8 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('settings', 'SettingAPIController');
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
+	
+	Route::get('transaction/history', 'CompanyAPIController@getTransactionHistory');
 
 	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
 

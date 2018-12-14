@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<page-title-bar></page-title-bar>
-
 		<v-container fluid grid-list-xl pt-0>
 			<div id="app">
 			  <v-app id="inspire">
@@ -70,12 +69,12 @@
 				          </v-icon>
 				        </td>
 			    	</template>
-
 			      </v-data-table>
 			    </div>
 			  </v-app>
+
 			</div>
-		</v-container>
+		</v-container>		
 	</div>	
 </template>
 
@@ -120,7 +119,7 @@ export default {
   		this.getListPackage();
 	},
 
-  	methods:{
+	methods:{
 		fetchData() {
 			get(config.API_URL+'companies')
 			.then((res) => {
@@ -145,6 +144,23 @@ export default {
 			})
 		},
 
+		doTransaction(id){
+			this.$root.$emit('toggleTransactionHistoryEvent', {
+				isShow: true,
+				companyId: id
+			});
+			// this.isShowTransaction = true
+			// get(config.API_URL+'transaction/history?companyId='+id)
+			// .then((res)=>{
+			// 	// console.log(res)
+			// 	if (res.data && res.data.success) {
+			// 		this.items= res.data.data
+			// 	}
+			// })
+			// .catch((e) =>{
+			// 	console.log(e)
+			// })
+		},
 		doReset(){
 			this.search.keywords = ''
 			this.search.filterPackage =''
@@ -171,18 +187,13 @@ export default {
 		},
 
 		showItem(item){
-
 			this.$root.$router.push({
-    			path: '/default/widgets/mana-company-chart', 
-    			query: { companyId: item.id}
+				path: '/default/widgets/mana-company-chart', 
+				query: { companyId: item.id}
 			})
 		},
 
-
-
-
 	},
-
 
 }
 </script>

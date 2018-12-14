@@ -41,7 +41,6 @@ class CompanyAPIController extends AppBaseController
         $this->companyRepository->pushCriteria(new RequestCriteria($request));
         $this->companyRepository->pushCriteria(new LimitOffsetCriteria($request));
         $companies = $this->companyRepository->getCompanies();
-
         return $this->sendResponse($companies->toArray(), 'Companies retrieved successfully');
     }
 
@@ -146,7 +145,14 @@ class CompanyAPIController extends AppBaseController
 
     }
 
+
+    public function getTransactionHistory(Request $request){
+        
+        $results = $this->companyRepository->handleTransaction($request['companyId']);
+        return $this->sendResponse($results->toArray(), 'Transaction History successfully');
+
     public function exportExcel(Request $request){
         return \Excel::download(new ListCompaniesExport($request->all()), 'ListCompany.xlsx');
+
     }
 }

@@ -45,10 +45,13 @@ class CompanyRepository extends BaseRepository
     */
     
     public function getCompanies(){
-        $results = DB::table('companies as c')
+        $results = DB::table('transactions as t')
+                    ->rightJoin('companies as c', 't.company_id', '=', 'c.id')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name','u.first_name', 'u.last_name')
+
+                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('sum((t.amount * p.fee /100)) as system_fee') )
+                   ->groupBy('t.company_id', 'c.id','c.name', 'c.description' ,'c.address', 'c.logo', 'u.email', 'p.package_name')
                     ->get();
 
         $results = $this->transform($results);
@@ -65,7 +68,8 @@ class CompanyRepository extends BaseRepository
     
     public function search($input){
 
-        $results = DB::table('companies as c')
+        $results =  DB::table('transactions as t')
+                    ->rightJoin('companies as c', 't.company_id', '=', 'c.id')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id');
 
@@ -81,10 +85,25 @@ class CompanyRepository extends BaseRepository
             }
         }
         
-        $results = $results->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name','u.first_name', 'u.last_name')
-                            ->get();
+        $results = $results->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('sum((t.amount * p.fee /100)) as system_fee') )
+                   ->groupBy('t.company_id', 'c.id','c.name', 'c.description' ,'c.address', 'c.logo', 'u.email', 'p.package_name')
+                    ->get();
 
         $results = $this->transform($results);
+        return $results;
+    }
+
+
+    public function handleTransaction($companyId){
+         $results = DB::table('transactions as t')
+                    ->rightJoin('companies as c', 't.company_id', '=', 'c.id')
+                    ->join('users as u', 'u.id', '=', 'c.owner_id')
+                    ->join('packages as p', 'p.id', '=', 'u.package_id')
+                    ->select('c.id as company_id', 't.amount', 'p.fee','c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('(t.amount * p.fee /100) as system_fee') )
+                    ->where('t.company_id', $companyId)
+                    ->get();
+
+
         return $results;
     }
 
@@ -102,8 +121,5 @@ class CompanyRepository extends BaseRepository
 
         return $results;
     } 
-
-   
-
 
 }

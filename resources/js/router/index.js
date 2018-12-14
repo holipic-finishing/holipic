@@ -35,6 +35,7 @@ import UserPass from '../views/users/ChangePassword'
 import HistoriesTransaction from '../views/transactions/Histories.vue'
 
 
+
 Vue.use(Router)
 
 

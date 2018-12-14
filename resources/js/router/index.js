@@ -34,6 +34,8 @@ import UserPass from '../views/users/ChangePassword'
 
 import HistoriesTransaction from '../views/transactions/Histories.vue'
 
+import IndexCoupon from '../views/coupon-code/Index.vue'
+
 
 
 Vue.use(Router)
@@ -155,6 +157,15 @@ routers = [
 		            requiresAuth: true,
 		            title: 'message.histories',
 		            breadcrumb: 'Transaction / Histories List'
+		        }
+		    },
+		    {
+		        path: '/default/coupon-code/index',
+		        component: IndexCoupon,
+		        meta: {
+		            requiresAuth: true,
+		            title: 'message.couponCode',
+		            breadcrumb: 'Coupon Code / Histories List'
 		        }
 		    },
       	]	

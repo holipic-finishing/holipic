@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'API'],function(){
 	
 	Route::resource('packages', 'PackageAPIController');
+
+	Route::get('list/packages', 'PackageAPIController@getListNamePackage');
 	
 	Route::resource('roles', 'roleAPIController');
 
@@ -44,14 +46,20 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('company/total-amount', 'TransactionAPIController@totalAmountCompany');
 
 	Route::get('company/load-chart', 'TransactionAPIController@loadChartCompany');
-
+ 	
 	Route::resource('settings', 'SettingAPIController');
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
+	
+	Route::get('transaction/history', 'CompanyAPIController@getTransactionHistory');
+
+	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
 
 	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
 
 	Route::resource('files', 'FileAPIController');
+
+	Route::resource('coupon_codes', 'CouponCodeAPIController');
 });	
 
 

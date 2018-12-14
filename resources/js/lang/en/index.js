@@ -463,5 +463,6 @@ export default {
   totalAmountCompany: 'Total Amount Company',
   settingPackageSystem: "Setting Packages System",
   transaction: "Transaction",
-  histories : "Histories"
+  histories : "Histories",
+  couponCode : "Coupon Code"
 }

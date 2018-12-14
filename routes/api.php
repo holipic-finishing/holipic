@@ -46,7 +46,7 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('company/total-amount', 'TransactionAPIController@totalAmountCompany');
 
 	Route::get('company/load-chart', 'TransactionAPIController@loadChartCompany');
-
+ 	
 	Route::resource('settings', 'SettingAPIController');
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
@@ -57,7 +57,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('files', 'FileAPIController');
 
+	Route::resource('coupon_codes', 'CouponCodeAPIController');
 });	
-
 
 

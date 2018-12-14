@@ -31,26 +31,26 @@
 			        :items="desserts"
 			        class="elevation-1"
 			      	>
-			       	<template slot="items" slot-scope="props">
-			    		<td>{{ props.item.id }}</td>
-				        <td class="text-xs-left">{{ props.item.name }}</td>
-				        <td class="text-xs-left">{{ props.item.package_name }}</td>
-				        <td class="text-xs-left">{{ props.item.address }}</td>
-				        <td class="text-xs-left">{{ props.item.email }}</td>
-				        <td class="text-xs-left">{{ props.item.description }}</td>
-				        <td class="text-xs-left">
-				        	<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
-				    	</td>
-				        <td class="text-xs-left">
-				          <v-icon
-				            small
-				    		class="mr-2"
-				    		@click="showItem(props.item)"
-				          >
-				            visibility
-				          </v-icon>
-				        </td>
-			    	</template>
+				       	<template slot="items" slot-scope="props">
+				    		<td>{{ props.item.id }}</td>
+					        <td class="text-xs-left">{{ props.item.name }}</td>
+					        <td class="text-xs-left">{{ props.item.package_name }}</td>
+					        <td class="text-xs-left">{{ props.item.address }}</td>
+					        <td class="text-xs-left">{{ props.item.email }}</td>
+					        <td class="text-xs-left">{{ props.item.description }}</td>
+					        <td class="text-xs-left">
+					        	<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
+					    	</td>
+					        <td class="text-xs-left">
+					          <v-icon
+					            medium
+					    		class="mr-2"
+					    		@click="showItem(props.item)"
+					          >
+					            visibility
+					          </v-icon>
+					        </td>
+				    	</template>
 			      </v-data-table>
 			    </div>
 			  </v-app>
@@ -84,7 +84,6 @@ export default {
 	      	search:{
 	      		company_name : ''
 	      	},
-	      	pagination: {},
 	    }
   	},
 

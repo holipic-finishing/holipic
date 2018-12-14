@@ -96,7 +96,12 @@ class TransactionRepository extends BaseRepository
             $endDay = Carbon::parse($attributes['end_day'])->format('Y-m-d');
         }
        
-        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])->groupBy('dated')->get();
+        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
+                                    ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+                                    ->where('type','1')
+                                    ->where('status','completed')
+                                    ->groupBy('dated')
+                                    ->get();
 
 
         foreach ($dates as $key => $date) {
@@ -130,6 +135,8 @@ class TransactionRepository extends BaseRepository
         $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
                                     ->whereYear('dated',$timeMonth[0])
                                     ->whereMonth('dated',$timeMonth[1])
+                                    ->where('type','1')
+                                    ->where('status','completed')
                                     ->groupBy('dated')->get();
 
         foreach ($dayInMonth as $key => $date) {
@@ -160,9 +167,13 @@ class TransactionRepository extends BaseRepository
 
         $timeYear = explode("-", $attributes['year']);
 
-        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total'),
-                                            DB::raw("DATE_FORMAT(dated,'%Y-%c') as date"))
+        $transactions = $this->model->select(
+                                        DB::raw('SUM(system_fee) AS total'),
+                                        DB::raw("DATE_FORMAT(dated,'%Y-%c') as date")
+                                    )
                                     ->whereYear('dated',$timeYear[0])
+                                    ->where('type','1')
+                                    ->where('status','completed')
                                     ->groupBy('date')->get();
 
         foreach ($monthInYear as $key => $date) {
@@ -192,7 +203,10 @@ class TransactionRepository extends BaseRepository
 
         $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
                                 ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                                ->groupBy('dated')->get();                
+                                ->groupBy('dated')
+                                ->where('type','1')
+                                ->where('status','completed')
+                                ->get();                
 
         foreach ($dayWeek as $key => $date) {
 

@@ -224,7 +224,10 @@ export default {
 	      datacollection: null,
 	      options: {
 	        responsive: true, 
-	        maintainAspectRatio: false
+	        maintainAspectRatio: false,
+	        legend: {
+               display: false
+            }
 	      },
 	      selectDate:['---Choose---','Day','Month','Year','Week'],
 	      valueSelectDateMonth:'---Choose---',
@@ -307,10 +310,12 @@ export default {
 
 			let url = config.API_URL+'report-incomes-package'
 
+			this.week = this.valueSelectDateMonth
+
 			getWithData(url,params)
 			.then((res) => {
 				if(res.data.success && res){
-					if(this.valueSelectDateMonth == "Week") {
+					if(this.week == "Week") {
 						var dataWeek =[];
 		                _.forEach(res.data.data,function(value,key){
 		                  dataWeek.unshift(value);
@@ -373,11 +378,13 @@ export default {
 			}
       	},
 
+
 	},
 	created(){
 		this.fetchData()
 		this.valueSelectDateMonth = "Week"
 		this.reportByWeek()
+		this.valueSelectDateMonth = "---Choose---"
 		
 	}
 

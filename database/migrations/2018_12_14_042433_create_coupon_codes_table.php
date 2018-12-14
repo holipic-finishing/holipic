@@ -18,7 +18,7 @@ class CreateCouponCodesTable extends Migration
             $table->string('name');
             $table->string('code');
             $table->decimal('discount',8,2);
-            $table->string('active')->length(1)->default('0');;
+            $table->boolean('active')->default('0');;
             $table->datetime('from_date');
             $table->datetime('to_date');
         });

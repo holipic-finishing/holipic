@@ -42,7 +42,7 @@ class CouponCode extends Model
     protected $casts = [
         'name' => 'string',
         'code' => 'string',
-        'active' => 'string'
+        'active' => 'boolean'
     ];
 
     /**

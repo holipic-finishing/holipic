@@ -21,7 +21,7 @@ import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // import UserWidgets   from'../views/users/UsersList';
 import Company from '../views/company/index';
-import CompanyChart from '../views/company/chart';
+import CompanyChart from '../views/company/information-chart';
 
 import PackageIndex from '../views/package/Index';
 

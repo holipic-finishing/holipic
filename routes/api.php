@@ -42,11 +42,11 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('transactions', 'TransactionAPIController');
 
 	Route::get('histories/transactions', 'TransactionAPIController@getHistories');
-
-	Route::get('company/total-amount', 'TransactionAPIController@totalAmountCompany');
-
-	Route::get('company/load-chart', 'TransactionAPIController@loadChartCompany');
  	
+	Route::get('company/information', 'TransactionAPIController@getInformationCompany');
+
+	Route::get('company/load-chart', 'TransactionAPIController@loadChartCompanyByTime');
+
 	Route::resource('settings', 'SettingAPIController');
 
 	Route::get('get-package', 'SettingAPIController@getPackage');

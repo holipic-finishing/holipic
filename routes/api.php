@@ -41,6 +41,8 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('transactions', 'TransactionAPIController');
 
+	Route::get('histories/transactions', 'TransactionAPIController@getHistories');
+
 	Route::get('company/total-amount', 'TransactionAPIController@totalAmountCompany');
 
 	Route::get('company/load-chart', 'TransactionAPIController@loadChartCompany');

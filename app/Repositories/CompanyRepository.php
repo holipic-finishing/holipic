@@ -81,12 +81,10 @@ class CompanyRepository extends BaseRepository
             }
         }
         
-
         $results = $results->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name','u.first_name', 'u.last_name')
                             ->get();
 
         $results = $this->transform($results);
-
         return $results;
     }
 

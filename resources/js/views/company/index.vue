@@ -48,6 +48,7 @@
 			        :items="desserts"
 			        class="elevation-1"
 			      	>
+
 			       	<template slot="items" slot-scope="props">
 			    		<td>{{ props.item.id }}</td>
 				        <td class="text-xs-left">{{ props.item.name }}</td>
@@ -69,6 +70,7 @@
 				          </v-icon>
 				        </td>
 			    	</template>
+
 			      </v-data-table>
 			    </div>
 			  </v-app>
@@ -106,8 +108,10 @@ export default {
 	      		filterPackage : ''
 	      	},
 
+
 	      	listPackage : [],
 	      	urlExport:config.API_URL+'exportexcel/companies'
+
 	    }
   	},
 

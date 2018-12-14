@@ -59,4 +59,17 @@ class CompanyRepository extends BaseRepository
                     ->get();
         return $results;
     }
+
+    public function handleTransaction($companyId){
+         $results = DB::table('transactions as t')
+                    ->rightJoin('companies as c', 't.company_id', '=', 'c.id')
+                    ->join('users as u', 'u.id', '=', 'c.owner_id')
+                    ->join('packages as p', 'p.id', '=', 'u.package_id')
+                    ->select('c.id as company_id', 't.amount', 'p.fee','c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('(t.amount * p.fee /100) as system_fee') )
+                    ->where('t.company_id', $companyId)
+                    ->get();
+        // dd($results);
+
+        return $results;
+    }
 }

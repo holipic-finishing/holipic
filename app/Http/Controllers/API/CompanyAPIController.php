@@ -142,4 +142,10 @@ class CompanyAPIController extends AppBaseController
         return $this->sendResponse($results->toArray(), 'Companies searched successfully');
 
     }
+
+    public function getTransactionHistory(Request $request){
+        
+        $results = $this->companyRepository->handleTransaction($request['companyId']);
+        return $this->sendResponse($results->toArray(), 'Transaction History successfully');
+    }
 }

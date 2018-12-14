@@ -4,67 +4,94 @@
 
 		<v-container fluid grid-list-xl pt-0>
 			<div id="app">
-			  <v-app id="inspire">
-			    <div>
-			      	<v-toolbar flat color="white">
-				        <v-toolbar-title>Company Table</v-toolbar-title>
-				        <v-divider
-				          class="mx-2"
-				          inset
-				          vertical
-				        ></v-divider>
-			      	</v-toolbar>
-			      	<v-toolbar flat color="white">
-				        <v-text-field
-				        	v-model="search.company_name"
-					        append-icon="search"
-					        label="Search Company Name"
-					        single-line
-					        hide-details
-				        ></v-text-field>
-				        <v-spacer></v-spacer>
-				        <v-btn @click="doSearch" color="primary" dark class="mb-2">Search</v-btn>
-				        <v-btn @click="doReset" color="primary" dark class="mb-2">Reset</v-btn>
-			      	</v-toolbar>
-			      	<v-data-table
-			        :headers="headers"
-			        :items="desserts"
-			        class="elevation-1"
-			      	>
-			       	<template slot="items" slot-scope="props">
-			    		<td>{{ props.item.id }}</td>
-				        <td class="text-xs-left">{{ props.item.name }}</td>
-				        <td class="text-xs-left">{{ props.item.package_name }}</td>
-				        <td class="text-xs-left">{{ props.item.address }}</td>
-				        <td class="text-xs-left">{{ props.item.email }}</td>
-				        <td class="text-xs-left">{{ props.item.description }}</td>
-				        <td class="text-xs-left">{{ props.item.system_fee }}</td>
+				<v-app id="inspire">
+					<div>
+						<v-toolbar flat color="white">
+							<v-toolbar-title>Company Table</v-toolbar-title>
+							<v-divider
+							class="mx-2"
+							inset
+							vertical
+							></v-divider>
+						</v-toolbar>
+						<v-toolbar flat color="white">
+							<v-text-field
+							v-model="search.company_name"
+							append-icon="search"
+							label="Search Company Name"
+							single-line
+							hide-details
+							></v-text-field>
+							<v-spacer></v-spacer>
+							<v-btn @click="doSearch" color="primary" dark class="mb-2">Search</v-btn>
+							<v-btn @click="doReset" color="primary" dark class="mb-2">Reset</v-btn>
+							
 
-				
+						</v-toolbar>
+						<v-data-table
+						:headers="headers"
+						:items="desserts"
+						class="elevation-1"
+						>
+						<template slot="items" slot-scope="props">
+							<td>{{ props.item.id }}</td>
+							<td class="text-xs-left">{{ props.item.name }}</td>
+							<td class="text-xs-left">{{ props.item.package_name }}</td>
+							<td class="text-xs-left">{{ props.item.address }}</td>
+							<td class="text-xs-left">{{ props.item.email }}</td>
+							<td class="text-xs-left">{{ props.item.description }}</td>
+							<td class="text-xs-left">{{ props.item.system_fee }}</td>
 
+							<td class="text-xs-left">
+								<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
+							</td>
+							<td class="text-xs-left">
+								<v-icon
+								small
+								class="mr-2"
+								@click="showItem"
+								>
+								visibility
+								</v-icon>
+								<v-toolbar-side-icon @click="doTransaction(props.item.id)"></v-toolbar-side-icon>
+							</td>
 
+					</template>
+				</v-data-table>
 
+				<v-layout row>
+					<v-flex xs12 sm6 offset-sm3>
+						<v-card>
+							<v-toolbar color="cyan" dark>
+								<v-toolbar-title>Transaction History</v-toolbar-title>
+								<v-spacer></v-spacer>
 
+							</v-toolbar>
 
-				        <td class="text-xs-left">
-				        	<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
-				    	</td>
-				        <td class="text-xs-left">
-				          <v-icon
-				            small
-				    		class="mr-2"
-				    		@click="showItem(props.item)"
-				          >
-				            visibility
-				          </v-icon>
-				        </td>
-			    	</template>
-			      </v-data-table>
-			    </div>
-			  </v-app>
-			</div>
-		</v-container>
-	</div>	
+							<v-list two-line>
+								<template v-for="(item, index) in items">
+								<v-list-tile
+								:key=""
+								avatar
+								@click=""
+								>
+								<v-list-tile-content>
+									<v-list-tile-title > Amount: {{item.amount}}</v-list-tile-title>
+									<v-list-tile-sub-title >Fee: {{item.fee}}</v-list-tile-sub-title>
+									<v-list-tile-sub-title >System fee: {{item.system_fee}}</v-list-tile-sub-title>
+								</v-list-tile-content>
+							</v-list-tile>
+							<hr>
+						</template>
+					</v-list>
+				</v-card>
+			</v-flex>
+		</v-layout>
+	</div>
+</v-app>
+</div>
+</v-container>
+</div>	
 </template>
 
 <script>
@@ -74,35 +101,38 @@ import Vue from 'vue'
 
 export default {
 
-  	name: 'index',
+	name: 'index',
 
-  	data () {
-	    return {
-	    	headers: [	        
-		        { text: 'ID', value: 'id' },	       
-		        { text: 'Company Name', value: 'name' },	       
-		        { text: 'Package Name', value: 'package_name' ,  sortable: false},	       
-		        { text: 'Address', value: 'address', sortable: false },	       
-		        { text: 'Owner', value: 'email', sortable: false },	
-		        { text: 'Description', value: 'description', sortable: false },	
-		        { text: 'System fee' , value: 'system_fee', sortable: false},
-		        { text: 'Logo' , value: 'logo', sortable: false},
-		        { text: 'Action', sortable: false }
-		     
-	      	],
-	      	desserts:[],
-	      	search:{
-	      		company_name : ''
-	      	},
-	      	pagination: {},
-	    }
-  	},
+	data () {
+		return {
+			headers: [	        
+			{ text: 'ID', value: 'id' },	       
+			{ text: 'Company Name', value: 'name' },	       
+			{ text: 'Package Name', value: 'package_name' ,  sortable: false},	       
+			{ text: 'Address', value: 'address', sortable: false },	       
+			{ text: 'Owner', value: 'email', sortable: false },	
+			{ text: 'Description', value: 'description', sortable: false },	
+			{ text: 'System fee' , value: 'system_fee', sortable: false},
+			{ text: 'Logo' , value: 'logo', sortable: false},
+			{ text: 'Action', sortable: false }
 
-  	created(){
-  		this.fetchData();	
+			],
+			desserts:[],
+			search:{
+				company_name : ''
+			},
+			pagination: {},
+			items: []
+			
+		}
 	},
 
-  	methods:{
+	created(){
+		this.fetchData();
+		//this.doTransaction();	
+	},
+
+	methods:{
 		fetchData() {
 			get(config.API_URL+'companies')
 			.then((res) => {
@@ -126,17 +156,30 @@ export default {
 				console.log(e)
 			})
 		},
+		doTransaction(id){
+			get(config.API_URL+'transaction/history?companyId='+id)
+			.then((res)=>{
+				// console.log(res)
+				if (res.data && res.data.success) {
+					this.items= res.data.data
+				}
+			})
+			.catch((e) =>{
+				console.log(e)
+			})
+		},
 
 		doReset(){
 			this.search.company_name = ''
 			this.fetchData()
 		},
 
+
 		showItem(item){
 
 			this.$root.$router.push({
-    			path: '/default/widgets/mana-company-chart', 
-    			query: { companyId: item.id}
+				path: '/default/widgets/mana-company-chart', 
+				query: { companyId: item.id}
 			})
 		},
 

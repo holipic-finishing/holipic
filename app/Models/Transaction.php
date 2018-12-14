@@ -64,6 +64,9 @@ class Transaction extends Model
         'dated' => 'required'
     ];
 
+
+    
+
     public function packages(){
         return $this->hasOne('App\Model\Package','company_id','id');
     }

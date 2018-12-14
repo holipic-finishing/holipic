@@ -27,77 +27,50 @@
 							<v-btn @click="doReset" color="primary" dark class="mb-2">Reset</v-btn>
 							
 
-						</v-toolbar>
-						<v-data-table
-						:headers="headers"
-						:items="desserts"
-						class="elevation-1"
-						>
-						<template slot="items" slot-scope="props">
-							<td>{{ props.item.id }}</td>
-							<td class="text-xs-left">{{ props.item.name }}</td>
-							<td class="text-xs-left">{{ props.item.package_name }}</td>
-							<td class="text-xs-left">{{ props.item.address }}</td>
-							<td class="text-xs-left">{{ props.item.email }}</td>
-							<td class="text-xs-left">{{ props.item.description }}</td>
-							<td class="text-xs-left">{{ props.item.system_fee }}</td>
-
-							<td class="text-xs-left">
-								<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
-							</td>
-							<td class="text-xs-left">
-								<v-icon
-								small
-								class="mr-2"
-								@click="showItem"
+						</v-toolbar>	
+						<div class="row">
+							<div class="col">
+								<v-data-table :headers="headers" :items="desserts" class="elevation-1"
 								>
-								visibility
-								</v-icon>
-								<v-toolbar-side-icon @click="doTransaction(props.item.id)"></v-toolbar-side-icon>
-							</td>
+									<template slot="items" slot-scope="props">
+										<td>{{ props.item.id }}</td>
+										<td class="text-xs-left">{{ props.item.name }}</td>
+										<td class="text-xs-left">{{ props.item.package_name }}</td>
+										<td class="text-xs-left">{{ props.item.address }}</td>
+										<td class="text-xs-left">{{ props.item.email }}</td>
+										<td class="text-xs-left">{{ props.item.description }}</td>
+										<td class="text-xs-left">{{ props.item.system_fee }}</td>
 
-					</template>
-				</v-data-table>
+										<td class="text-xs-left">
+											<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
+										</td>
+										<td class="text-xs-left">
+											<v-icon
+											small
+											class="mr-2"
+											@click="showItem"
+											>
+											visibility
+											</v-icon>
+											<v-toolbar-side-icon @click="doTransaction(props.item.id)"></v-toolbar-side-icon>
+										</td>
 
-				<v-layout row>
-					<v-flex xs12 sm6 offset-sm3>
-						<v-card>
-							<v-toolbar color="cyan" dark>
-								<v-toolbar-title>Transaction History</v-toolbar-title>
-								<v-spacer></v-spacer>
+									</template>
+								</v-data-table>
+							</div>
+						</div>
+					</div>
+				</v-app>
+			</div>
+		</v-container>
 
-							</v-toolbar>
-
-							<v-list two-line>
-								<template v-for="(item, index) in items">
-								<v-list-tile
-								:key=""
-								avatar
-								@click=""
-								>
-								<v-list-tile-content>
-									<v-list-tile-title > Amount: {{item.amount}}</v-list-tile-title>
-									<v-list-tile-sub-title >Fee: {{item.fee}}</v-list-tile-sub-title>
-									<v-list-tile-sub-title >System fee: {{item.system_fee}}</v-list-tile-sub-title>
-								</v-list-tile-content>
-							</v-list-tile>
-							<hr>
-						</template>
-					</v-list>
-				</v-card>
-			</v-flex>
-		</v-layout>
-	</div>
-</v-app>
-</div>
-</v-container>
-</div>	
+		
+	</div>	
 </template>
 
 <script>
 import  { get, post, put, del } from '../../api/index.js'
 import config from '../../config/index.js'
-import Vue from 'vue'
 
 export default {
 
@@ -122,8 +95,6 @@ export default {
 				company_name : ''
 			},
 			pagination: {},
-			items: []
-			
 		}
 	},
 
@@ -156,36 +127,37 @@ export default {
 				console.log(e)
 			})
 		},
-		doTransaction(id){
-			get(config.API_URL+'transaction/history?companyId='+id)
-			.then((res)=>{
-				// console.log(res)
-				if (res.data && res.data.success) {
-					this.items= res.data.data
-				}
-			})
-			.catch((e) =>{
-				console.log(e)
-			})
-		},
 
+		doTransaction(id){
+			this.$root.$emit('toggleTransactionHistoryEvent', {
+				isShow: true,
+				companyId: id
+			});
+			// this.isShowTransaction = true
+			// get(config.API_URL+'transaction/history?companyId='+id)
+			// .then((res)=>{
+			// 	// console.log(res)
+			// 	if (res.data && res.data.success) {
+			// 		this.items= res.data.data
+			// 	}
+			// })
+			// .catch((e) =>{
+			// 	console.log(e)
+			// })
+		},
 		doReset(){
 			this.search.company_name = ''
 			this.fetchData()
 		},
 
-
 		showItem(item){
-
 			this.$root.$router.push({
 				path: '/default/widgets/mana-company-chart', 
 				query: { companyId: item.id}
 			})
 		},
 
-
 	},
-
 
 }
 </script>

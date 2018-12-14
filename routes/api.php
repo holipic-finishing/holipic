@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'API'],function(){
 	
 	Route::resource('packages', 'PackageAPIController');
+
+	Route::get('list/packages', 'PackageAPIController@getListNamePackage');
 	
 	Route::resource('roles', 'roleAPIController');
 

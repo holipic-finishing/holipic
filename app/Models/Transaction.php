@@ -68,5 +68,9 @@ class Transaction extends Model
         return $this->hasOne('App\Model\Package','company_id','id');
     }
 
+    public function currency()
+    {
+        return $this->belongsTo(\App\Models\Currency::class, 'currency_id', 'id');
+    }
     
 }

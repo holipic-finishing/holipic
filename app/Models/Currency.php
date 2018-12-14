@@ -52,5 +52,10 @@ class Currency extends Model
         'country' => 'required'
     ];
 
+    public function transactions()
+    {
+        return $this->hasMany(\App\Models\Transaction::class, 'currency_id', 'id');
+    }
+
     
 }

@@ -23,7 +23,7 @@
 						            name="company.name"
 						            v-model="company.name"
 						            required
-						            :rules="[rules.required, rules.min]"
+						            :rules="[rules.required]"
 						          ></v-text-field>
 						        </v-flex>
 						        <label class="company-label">Description:</label>
@@ -140,7 +140,7 @@
 					
 					</div>
 
-					<total-earnings :width="300" :height="300" :companyId="companyId"></total-earnings>				
+					<chart :width="300" :height="400" :companyId="companyId"></chart>				
 				</app-card>
 		    </v-card-text>
 		      
@@ -152,11 +152,11 @@
 <script>
 import config from '../../config/index.js'
 import Vue from 'vue'
-import TotalEarnings from "../../components/Charts/TotalEarnings"
+import chart from "./total-amount-chart.js"
 export default {
   	name: 'chart-company',
    	components: {
-    TotalEarnings
+    chart
   },
   data () {
     return {
@@ -174,9 +174,8 @@ export default {
       	modal: false,
       	menu2: false,
       	selectDate: ['Day', 'Month'],
-      	valueSelectDateMonth: ''
+      	valueSelectDateMonth: 'Day'
        
-        // totalEarnings: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44]
     }
 
   },
@@ -211,6 +210,14 @@ export default {
 
   				}
   				})
+  			} else {
+  				setTimeout(function(){	
+	  					 	Vue.notify({
+	  					 	 group: 'loggedIn',
+	  					 	 type: 'error',
+	  					 	 text: 'Error update'
+	  					 	});
+	  			},500);
   			}	
   		},
   		informationCompany() {
@@ -224,7 +231,7 @@ export default {
 
   		loadChartWithDayMonth() {
   			this.$refs.menu.save(this.date)
-  			//alert(this.valueSelectDateMonth)
+  			
   			axios.get(config.API_URL+'company/load-chart?type='+this.valueSelectDateMonth+'&date='+this.date+'&companyId='+this.companyId)
   			.then((response) => {
   				if(response && response.data.success) {

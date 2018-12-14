@@ -144,15 +144,15 @@ export const menus = {
 	// 			{ title: 'message.stepper', path: '/forms/stepper' }
 	// 		]
 	// 	},
-	// 	{
-	// 		action: 'zmdi-chart-donut',
-	// 		title: 'message.charts',
-	// 		active: false,
-	// 		items: [
-	// 			{ title: 'message.vueChartjs', path: '/charts/vue-chartjs' },
-	// 			{ title: 'message.vueEcharts', path: '/charts/vue-echarts' }
-	// 		]
-	// 	},
+		// {
+		// 	action: 'zmdi-chart-donut',
+		// 	title: 'message.charts',
+		// 	active: false,
+		// 	items: [
+		// 		{ title: 'message.vueChartjs', path: '/charts/vue-chartjs' },
+		// 		// { title: 'message.vueEcharts', path: '/charts/vue-echarts' }
+		// 	]
+		// },
 	// 	{
 	// 		action: 'zmdi-flag',
 	// 		title: 'message.icons',

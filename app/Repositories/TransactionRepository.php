@@ -38,7 +38,8 @@ class TransactionRepository extends BaseRepository
         return Transaction::class;
     }
 
-    public function getInfomationCompanyAndTotalAmountDefault($companyId)
+    //function show chart default from now with 10 day before
+    public function getInformationCompanyAndTotalAmountDefault($companyId)
     {
         //DB::raw("DATE_FORMAT(dated,'%M %Y %D') as months")
         // $companies = $this->model->select(DB::raw("sum(amount) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currency_id') 
@@ -50,7 +51,7 @@ class TransactionRepository extends BaseRepository
         // ->get()->toArray();
 
         $companies = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
-                    ->select(DB::raw("sum(amount) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currencies.id','currencies.name' ) 
+                    ->select(DB::raw("sum(amount) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currencies.id','currencies.symbol' ) 
                     ->where('company_id', $companyId)
                     ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10))
                     ->where(DB::raw('dated'), '<=', Carbon::now())
@@ -63,6 +64,7 @@ class TransactionRepository extends BaseRepository
         // {
         //     $array[$company['currency_id']][] = $company;
         // }
+        
 
         $data = [];
 
@@ -72,11 +74,10 @@ class TransactionRepository extends BaseRepository
 
         foreach($companies as $company){
             $date = str_replace(' 00:00:00', '', $company['date']);
-            $key = $company['name'];
+            $key = $company['symbol'];
             
             for($i = 0; $i < $length; $i++){
                 if(!isset($data[$key][$labels[$i]['date']])) {
-
                     $data[$key][$labels[$i]['date']] = 0;
                 }
             }
@@ -88,6 +89,8 @@ class TransactionRepository extends BaseRepository
             'data' => $data 
         ]; 
     }
+
+    //function show label date default for chart
 
     private function createLabels($date = null, $companyId)
     {
@@ -117,6 +120,8 @@ class TransactionRepository extends BaseRepository
         return $date;
     }
 
+    //function show label date default with time for chart
+
     private function createLabelsByTime($time,$timeBefore ,$companyId)
     {
 
@@ -129,7 +134,9 @@ class TransactionRepository extends BaseRepository
         return $date;
     }
 
-    public function getInfomationCompanyAndTotalAmountByTime($request)
+    //function show chart with day or month
+
+    public function getInformationCompanyAndTotalAmountByTime($request)
     {   
         $companies = $this->model;
 
@@ -141,7 +148,7 @@ class TransactionRepository extends BaseRepository
             $dateBefore = Carbon::create($time[0], $time[1], $time[2])->subDays(10)->toDateString();
 
             $companies = $companies->join('currencies','currencies.id', '=', 'transactions.currency_id')
-                                    ->select(DB::raw("sum(amount) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currencies.id','currencies.name');
+                                    ->select(DB::raw("sum(amount) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currencies.id','currencies.symbol');
 
         } else {
 
@@ -151,7 +158,7 @@ class TransactionRepository extends BaseRepository
             $dateBefore = Carbon::create($timeMonth[0], $timeMonth[1], 1)->subMonths(12);
 
             $companies = $companies->join('currencies','currencies.id', '=', 'transactions.currency_id')
-                                    ->select(DB::raw("sum(amount) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currencies.id','currencies.name'); 
+                                    ->select(DB::raw("sum(amount) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currencies.id','currencies.symbol'); 
         }
 
         $companies = $companies->where('company_id', $request['companyId'])
@@ -168,7 +175,7 @@ class TransactionRepository extends BaseRepository
 
         foreach($companies as $company){
             $date = str_replace(' 00:00:00', '', $company['date']);
-            $key = $company['name'];
+            $key = $company['symbol'];
             
             for($i = 0; $i < $length; $i++){
                 if(!isset($data[$key][$labels[$i]['date']])) {

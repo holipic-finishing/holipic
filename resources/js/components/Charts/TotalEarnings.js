@@ -95,13 +95,13 @@ export default {
 
         var color = ''
         switch(key) {
-            case "Andorra euro":
+            case "€":
                 color = _this.gradient1;
                 break;
-            case "Australia dollar":
+            case "$":
                 color = _this.gradient2;
                 break;
-            case "Viet Nam Dong":
+            case "VND":
                 color = "green";
                 break;
             default:
@@ -213,7 +213,7 @@ export default {
            dataPrices.push(item)
       });
 
-      return dataPrices
+      return dataPrices; 
     },
     
     fetchData() {

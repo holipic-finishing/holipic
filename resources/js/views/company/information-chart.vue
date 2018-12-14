@@ -140,7 +140,7 @@
 					
 					</div>
 
-					<total-earnings :width="300" :height="300" :companyId="companyId"></total-earnings>				
+					<chart :width="300" :height="300" :companyId="companyId"></chart>				
 				</app-card>
 		    </v-card-text>
 		      
@@ -152,11 +152,11 @@
 <script>
 import config from '../../config/index.js'
 import Vue from 'vue'
-import TotalEarnings from "../../components/Charts/TotalEarnings"
+import chart from "./total-amount-chart.js"
 export default {
   	name: 'chart-company',
    	components: {
-    TotalEarnings
+    chart
   },
   data () {
     return {
@@ -176,7 +176,6 @@ export default {
       	selectDate: ['Day', 'Month'],
       	valueSelectDateMonth: ''
        
-        // totalEarnings: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44]
     }
 
   },
@@ -232,7 +231,6 @@ export default {
 
   		loadChartWithDayMonth() {
   			this.$refs.menu.save(this.date)
-  			//alert(this.valueSelectDateMonth)
   			axios.get(config.API_URL+'company/load-chart?type='+this.valueSelectDateMonth+'&date='+this.date+'&companyId='+this.companyId)
   			.then((response) => {
   				if(response && response.data.success) {

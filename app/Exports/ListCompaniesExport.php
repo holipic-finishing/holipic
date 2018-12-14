@@ -54,12 +54,13 @@ class ListCompaniesExport implements FromCollection,WithHeadings
         return [
             '#',
             'Company Name',
+            'Fullname',
             'Email',
             'Package Name',
             'Address',
             'Description',
-            'Logo',
-            'Fullname'
+            'Logo'
+            
         ];
     } 
 
@@ -72,14 +73,21 @@ class ListCompaniesExport implements FromCollection,WithHeadings
     
     public function transform($results){
 
-        foreach ($results as $key => $result) {      
-            $results[$key]->fullname = $result->first_name ." ".$result->last_name;
-            unset($results[$key]->first_name);
-            unset($results[$key]->last_name);
-        
+    	$results2 = collect();
+        foreach ($results as $key => $result) {
+        	$results2->push([
+        		'id' => $result->id,
+        		'name' => $result->name,
+        		'full_name' => $result->first_name . ' ' . $result->last_name,
+        		'email' => $result->email,
+        		'package_name' => $result->package_name,
+        		'address' => $result->address,
+        		'description' => $result->description,
+        		'logo' => $result->logo,
+        	]);            
         }
-   		
-        return $results;   
+   	
+        return $results2;
     } 
 
     

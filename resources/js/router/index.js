@@ -30,10 +30,11 @@ import Setting from '../views/setting/setting'
 import UserManagement from '../views/superadmin-user/user-management'
 
 import page404 from '../views/pages/page404'
-
-
 import UserPass from '../views/users/ChangePassword'
 
+import HistoriesTransaction from '../views/transactions/Histories.vue'
+
+import IndexCoupon from '../views/coupon-code/Index.vue'
 
 
 Vue.use(Router)
@@ -146,6 +147,24 @@ routers = [
 		            requiresAuth: true,
 		            title: 'message.changePassword',
 		            breadcrumb: 'Users / Change Password'
+		        }
+		    },
+		    {
+		        path: '/default/transaction/histories',
+		        component: HistoriesTransaction,
+		        meta: {
+		            requiresAuth: true,
+		            title: 'message.histories',
+		            breadcrumb: 'Transaction / Histories List'
+		        }
+		    },
+		    {
+		        path: '/default/coupon-code/index',
+		        component: IndexCoupon,
+		        meta: {
+		            requiresAuth: true,
+		            title: 'message.couponCode',
+		            breadcrumb: 'Coupon Code / Histories List'
 		        }
 		    },
       	]	

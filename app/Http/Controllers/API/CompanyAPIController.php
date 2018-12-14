@@ -11,6 +11,8 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Maatwebsite\Excel\Excel;
+use App\Exports\ListCompaniesExport;
 
 /**
  * Class CompanyController
@@ -143,9 +145,14 @@ class CompanyAPIController extends AppBaseController
 
     }
 
+
     public function getTransactionHistory(Request $request){
         
         $results = $this->companyRepository->handleTransaction($request['companyId']);
         return $this->sendResponse($results->toArray(), 'Transaction History successfully');
+
+    public function exportExcel(Request $request){
+        return \Excel::download(new ListCompaniesExport($request->all()), 'ListCompany.xlsx');
+
     }
 }

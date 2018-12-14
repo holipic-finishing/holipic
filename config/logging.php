@@ -87,6 +87,12 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+
+        'cron_job' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/cron_job.log'),
+            'level' => 'debug',
+        ],
     ],
 
 ];

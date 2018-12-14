@@ -461,5 +461,8 @@ export default {
   listPackage : "List Package",   
   chartCompany: "Company Infomation & Chart",
   totalAmountCompany: 'Total Amount Company',
-  settingPackageSystem: "Setting Packages System"
+  settingPackageSystem: "Setting Packages System",
+  transaction: "Transaction",
+  histories : "Histories",
+  couponCode : "Coupon Code"
 }

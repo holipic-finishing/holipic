@@ -869,10 +869,22 @@ Holipic
 		           success: function(data)
 		           {
 		           		if(data && data.success == true) {
+		           			$('#message-form-signup-first_name').empty();
+						   	$('#message-form-signup-last_name').empty();
+						   	$('#message-form-signup-company_name').empty();
+						   	$('#message-form-signup-email').empty();
+						   	$('#message-form-signup-password').empty();
+						   	$('#message-form-signup-checkbox').empty();
 			           		$('#message-form-signup').empty();
 			           		$("#message-form-signup").append(
 			           			"<span class='label label-important' style='color:#05cbfc'>"+" "+data.message+"</span>");
 			           	} else if(data && data.success == false){
+			           		$('#message-form-signup-first_name').empty();
+						   	$('#message-form-signup-last_name').empty();
+						   	$('#message-form-signup-company_name').empty();
+						   	$('#message-form-signup-email').empty();
+						   	$('#message-form-signup-password').empty();
+						   	$('#message-form-signup-checkbox').empty();
 			           		$('#message-form-signup').empty();
 			           		$("#message-form-signup").append(
 			           			"<span class='label label-important' style='color:red'>"+" "+data.message+"</span>");

@@ -41,7 +41,7 @@
 		                </v-flex> 
 				        <v-spacer></v-spacer>
 				        <v-btn @click="doSearch" color="primary" dark class="mb-2">Search</v-btn>
-				        <v-btn @click="doExport" color="primary" dark class="mb-2">Export</v-btn>
+				        <v-btn color="primary" dark class="mb-2"><a :href="urlExport+'?keywords='+search.keywords+'&filterPackage='+search.filterPackage" target="_blank">Export</a></v-btn>
 			      	</v-toolbar>
 			      	<v-data-table
 			        :headers="headers"
@@ -106,7 +106,8 @@ export default {
 	      		filterPackage : ''
 	      	},
 
-	      	listPackage : []
+	      	listPackage : [],
+	      	urlExport:config.API_URL+'exportexcel/companies'
 	    }
   	},
 
@@ -140,11 +141,6 @@ export default {
 			})
 		},
 
-		doExport(){
-			console.log(123123)
-		},
-
-
 		doReset(){
 			this.search.keywords = ''
 			this.search.filterPackage =''
@@ -155,6 +151,7 @@ export default {
 		getListPackage(){
 			var data = []
 			data.push('All')
+
 			get(config.API_URL+'list/packages')
 			.then((res) => {
 				_.forEach(res.data, function(value) {

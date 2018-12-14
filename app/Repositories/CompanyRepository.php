@@ -68,7 +68,7 @@ class CompanyRepository extends BaseRepository
         $results = DB::table('companies as c')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id');
-                    
+
         if($input['keywords'] != null){
             $results = $results->where('name', 'like', '%'.$input['keywords'].'%')
                                 ->orwhere('email', 'like', '%'.$input['keywords'].'%')
@@ -104,6 +104,8 @@ class CompanyRepository extends BaseRepository
 
         return $results;
     } 
+
+   
 
 
 }

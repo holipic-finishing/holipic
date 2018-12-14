@@ -51,6 +51,20 @@ Route::get('test-job', function() {
 	App\Jobs\CronJobRemoveFile::dispatch();
 });
 
+Route::get('abc', function() {
+	$array = array(
+  'zero'  => '0',
+  'one'   => '1',
+  'two'   => '2',
+  'three' => '3',
+);
+$res = array_slice($array, 0, 3, true) +
+    array("asda" => "my_value") +
+    array_slice($array, 3, count($array) - 1, true) ;
+dd($res);
+
+});
+
 
 
 

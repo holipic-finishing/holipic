@@ -49,6 +49,9 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
 
+	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
+
+
 });	
 
 

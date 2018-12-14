@@ -142,5 +142,10 @@ class TransactionAPIController extends AppBaseController
 
     }
 
-    
+    public function getHistories(Request $request){
+        $transactions = $this->transactionRepository->getHistoriesTransaction();
+
+        return $this->sendResponse($transactions->toArray(), 'Transactions retrieved successfully');
+    }
+
 }

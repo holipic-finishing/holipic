@@ -44,6 +44,14 @@ export const menus = {
 			active: false,
 			path: '/user-management'
 		},
+		{
+			action: 'zmdi-card',
+			title: 'message.transaction',
+			active: false,
+			items: [
+				{ title: 'message.histories', path: '/transaction/histories' },
+			]
+		},
 		// {
 		// 	action: 'zmdi-shopping-cart',
 		// 	title: 'message.ecommerce',

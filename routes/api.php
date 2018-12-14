@@ -53,9 +53,11 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
 
+	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
+
+	Route::resource('files', 'FileAPIController');
 
 });	
 
 
 
-Route::resource('files', 'FileAPIController');

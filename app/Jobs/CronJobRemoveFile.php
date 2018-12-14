@@ -38,7 +38,6 @@ class CronJobRemoveFile implements ShouldQueue
 
         $expiration_date = 0;
 
-
         $resultes = Setting::all();
 
         foreach ($resultes as $key => $item) {
@@ -57,20 +56,40 @@ class CronJobRemoveFile implements ShouldQueue
 
             $package_id = $item->id;
 
-            $resultes = File::whereHas('user' , function($query) use ($package_id){
-                                $query->where('package_id','=',$package_id);
-                        })->whereDate('uploaded_date','<',$day)->where('status','1')->get();
+            $resultes = $this->arrayFileRemove($package_id,$day);
+
+            $this->updateStatusFile($resultes);
 
             Log::channel('cron_job')->info("Number of images has expired : ".count($resultes) ." \r\n");
-
-            foreach ($resultes as $key => $value) {
-                Log::channel('cron_job')->info("Update status of image with id : ".$value->id ." \r\n");
-                $data = File::where('id',$value->id)->update([
-                            'status' => '0'
-                        ]);
-            }
 
         }
         Log::channel('cron_job')->info("============== CRON JOB REMOVE END at ". date('Y-m-d H:i:s') ." ================ \r\n");
     }
+
+    public function arrayFileRemove($package_id,$day) {
+
+        $resultes = File::whereHas('user' , function($query) use ($package_id){
+                                $query->where('package_id','=',$package_id);
+                        })->whereDate('uploaded_date','<',$day)->where('status','1')->get();
+
+        return $resultes;
+
+    } 
+
+    public function updateStatusFile($attribute){
+        
+        if(count($attribute) !=0){
+            
+            foreach ($attribute as $key => $value) {
+                $data = File::where('id',$value->id)->update([
+                            'status' => '0'
+                        ]);
+            }
+            return true;
+
+        } else {
+
+            return false;
+        }
+    } 
 }

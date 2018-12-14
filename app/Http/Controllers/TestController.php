@@ -26,20 +26,40 @@ class TestController extends Controller
 
 			$package_id = $item->id;
 
-			$resultes = File::whereHas('user' , function($query) use ($package_id){
+			$resultes = $this->arrayFileRemove($package_id,$day);
+
+			$this->updateStatusFile($resultes);
+
+		}
+
+	} 
+
+	public function arrayFileRemove($package_id,$day) {
+
+		$resultes = File::whereHas('user' , function($query) use ($package_id){
 								$query->where('package_id','=',$package_id);
 						})->whereDate('uploaded_date','<',$day)->where('status','1')->get();
 
-			// dd(count($resultes));
-			foreach ($resultes as $key => $value) {
+		return $resultes;
+
+	} 
+
+	public function updateStatusFile($attribute){
+		
+		if(count($attribute) !=0){
+			foreach ($attribute as $key => $value) {
 				$data = File::where('id',$value->id)->update([
 							'status' => '0'
 						]);
 			}
+			return true;
 
+		} else {
+
+			return false;
 		}
 
 		
 
-	}    
+	}
 }

@@ -50,9 +50,9 @@
 				            visibility
 				          </v-icon>
 				        </td>
-				        <td class="text-xs-left"></td>
+				        <td class="text-xs-left">{{ props.item.total_income }}</td>
 				        <td class="text-xs-left">{{ props.item.total_file_size }}</td>
-				        <td class="text-xs-left"></td>
+				        <td class="text-xs-left">{{ props.item.total_income_fee }}</td>
 			    	</template>
 			      </v-data-table>
 			    </div>
@@ -103,7 +103,6 @@ export default {
 			.then((res) => {
 				if(res.data && res.data.success){
 					this.desserts = res.data.data
-					console.log(this.desserts)
 				}
 			})
 			.catch((e) =>{

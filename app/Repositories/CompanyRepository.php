@@ -45,14 +45,22 @@ class CompanyRepository extends BaseRepository
         //             ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name')
         //             ->get();
 
-        $results = $this->model->with(['files','user.package'])->get();
+        $results = $this->model->with(['files','user.package','transactions'])->get(); 
 
         foreach ($results as $key => $value) {
             $total_file_size = 0;
-            foreach ($value->files as $k_v2 => $item) {
-                    $total_file_size += $item->file_size;
+            $total_system_fee = 0;
+            $total_amount = 0;
+            foreach ($value->files as $item) {
+                $total_file_size += $item->file_size;
+            }
+            foreach ($value->transactions as $item) {
+                $total_system_fee += $item->system_fee;
+                $total_amount += $item->amount;
             }
             $results[$key]->total_file_size = $total_file_size;
+            $results[$key]->total_income_fee = $total_system_fee;
+            $results[$key]->total_income = $total_amount - $total_system_fee;
             $results[$key]->email = $value->user->email;
             $results[$key]->package_name = $value->user->package->package_name;
         }

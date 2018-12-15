@@ -45,7 +45,7 @@ class Transaction extends Model
     protected $casts = [
         'user_id' => 'integer',
         'type' => 'boolean',
-        'amount' => 'decimal',
+        // 'amount' => 'decimal',
         'currency_id' => 'integer',
         'status' => 'string',
         'company_id' => 'integer',

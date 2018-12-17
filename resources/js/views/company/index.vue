@@ -59,6 +59,9 @@
 				        <td class="text-xs-left">
 				        	<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
 				    	</td>
+				        <td class="text-xs-left">{{ props.item.total_income }}</td>
+				        <td class="text-xs-left">{{ props.item.total_file_size }}</td>
+				        <td class="text-xs-left">{{ props.item.total_income_fee }}</td>
 				        <td class="text-xs-left">
 				          <v-icon
 				            small
@@ -99,7 +102,10 @@ export default {
 		        { text: 'Address', value: 'address', sortable: false },	       
 		        { text: 'Description', value: 'description', sortable: false },	
 		        { text: 'Logo' , value: 'logo', sortable: false},
-		        { text: 'Action', sortable: false }       
+		        { text: 'Total Incomes', value: 'total_income'  },       
+		        { text: 'Total File Size', value: 'total_file_size'},       
+		        { text: 'Total Income Fee', value: 'total_income_fee'  },
+		        { text: 'Action', sortable: false },         
 	      	],
 	      	desserts:[],
 	      	search:{

@@ -148,4 +148,14 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($transactions->toArray(), 'Transactions retrieved successfully');
     }
 
+    public function doSearch(Request $request){
+        $input = $request->all();
+
+        $results =  $this->transactionRepository->search($input);
+
+        return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
+
+    }
+
 }
+

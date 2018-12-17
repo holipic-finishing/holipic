@@ -13,6 +13,23 @@
 				          vertical
 				        ></v-divider>
 			      	</v-toolbar>
+			      	<v-toolbar flat color="white">       
+				        <v-flex xs12 class="row"> 
+		                    <v-flex xs5>
+		                     	 <v-text-field
+							        append-icon="search"
+							        label="Search"
+							        v-model= "search.keywords	"
+							        single-line
+							        hide-details
+							        @keyup.enter="doSearch"
+							       	@keydown.esc="doReset"
+						        ></v-text-field>
+		                    </v-flex>
+		                </v-flex> 
+				        <v-spacer></v-spacer>
+				        <v-btn @click="doSearch" color="primary" dark class="mb-2">Search</v-btn>
+			      	</v-toolbar>
 			      	<v-data-table
 			        :headers="headers"
 			        :items="desserts"
@@ -23,6 +40,7 @@
 			      	>
 			      	<template slot="items" slot-scope="props">
 			    		<td>{{ props.item.id }}</td>
+			    		<td>{{ props.item.invoice }}</td>
 			    		<td>{{ props.item.company_name }}</td>
 			    		<td>{{ props.item.email }}</td>
 			    		<td>{{ props.item.fullname }}</td>
@@ -31,7 +49,10 @@
 			    		<td>{{ props.item.amount_with_symbol }}</td>
 			    		<td>{{ props.item.system_fee_with_symbol }}</td>
 			    		<td>{{ props.item.credit_card_fee_with_symbol }}</td>
-			    		<td>{{ props.item.status }}</td>
+			    		<td>
+							<v-btn color="success" small v-if="props.item.status === 'RECIVED'">{{ props.item.status }}</v-btn>
+							 <v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
+			    		</td>
 			    		<td>{{ props.item.country }}</td>
 			    		<td>{{ props.item.dated }}</td>
 			    	</template>
@@ -56,8 +77,9 @@ export default {
 		return {
 			headers: [	        
 		        { text: 'ID', value: 'id' },	       
-		        { text: 'Company Name',value: 'company_name', sortable: false},	       
-		        { text: 'Email', value: 'email', sortable: false},	       
+		        { text: 'Invoice', value: 'invoice' },	       
+		        { text: 'Company Name',value: 'company_name'},	       
+		        { text: 'Email', value: 'email'	},	       
 		        { text: 'Full Name',value: 'fullname', sortable: false},	       
 		        { text: 'Package Name', value: 'package_name', sortable: false },	       
 		        { text: 'Type', value: 'type', sortable: false },	       
@@ -78,7 +100,11 @@ export default {
 		  		40, 
 		  		60, 
 		  		{ "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }
-		  	]
+		  	],
+
+		  	search:{
+		  		keywords : ''
+		  	}
 		}
   	},
   	created(){
@@ -89,10 +115,8 @@ export default {
 		fetchData() {
 			get(config.API_URL+'histories/transactions')
 			.then((res) => {
-				console.log(res)
 				if(res.data && res.data.success){
 					this.desserts = res.data.data
-					console.log(this.desserts)
 				}
 				
 			})
@@ -100,6 +124,25 @@ export default {
 				console.log(e)
 			}) 
 		},
+
+		doSearch(){
+			post(config.API_URL+'search/transactions', this.search)
+			.then((res) => {
+				if(res.data && res.data.success){
+					this.desserts = res.data.data
+				}
+			})
+			.catch((e) =>{
+				console.log(e)
+			})
+		},
+
+		doReset(){
+			this.search.keywords = ''
+			this.fetchData()
+		}
+
+
 
 		
 

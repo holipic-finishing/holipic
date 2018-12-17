@@ -122,6 +122,7 @@
 					<device-share></device-share>
 				</app-card> -->
 			</v-layout>
+			<TransactionHistories></TransactionHistories>
 			<!-- Social Feeds -->
 <!-- 			<v-layout row wrap>
 				<app-card
@@ -205,6 +206,7 @@ import { get, getWithData } from '../../api/index.js'
 import DatePicker from 'vue2-datepicker'
 import moment from 'moment'
 import Vue from 'vue'
+import TransactionHistories from './TransactionHistories'
 
 export default {
   components: {
@@ -212,7 +214,8 @@ export default {
     NewPost,
     DeviceShare,
     LineChart,
-    DatePicker
+    DatePicker,
+    TransactionHistories
   },
   data() {
 	    return {
@@ -234,8 +237,7 @@ export default {
 	      range:'',
 	      month:'',
 	      year:'',
-	      week:''
-	      
+	      week:'',	      
 
 	    };
 	},

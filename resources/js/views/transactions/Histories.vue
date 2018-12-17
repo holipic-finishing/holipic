@@ -19,7 +19,7 @@
 		                     	 <v-text-field
 							        append-icon="search"
 							        label="Search"
-							        v-model= "search.keywords	"
+							        v-model= "search.keywords"
 							        single-line
 							        hide-details
 							        @keyup.enter="doSearch"
@@ -51,7 +51,7 @@
 			    		<td>{{ props.item.credit_card_fee_with_symbol }}</td>
 			    		<td>
 							<v-btn color="success" small v-if="props.item.status === 'RECIVED'">{{ props.item.status }}</v-btn>
-							 <v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
+							<v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
 			    		</td>
 			    		<td>{{ props.item.country }}</td>
 			    		<td>{{ props.item.dated }}</td>
@@ -82,14 +82,13 @@ export default {
 		        { text: 'Email', value: 'email'	},	       
 		        { text: 'Full Name',value: 'fullname', sortable: false},	       
 		        { text: 'Package Name', value: 'package_name', sortable: false },	       
-		        { text: 'Type', value: 'type', sortable: false },	       
+		        { text: 'Transaction', value: 'type', sortable: false },	       
 		        { text: 'Amount', value: 'amount_with_symbol'},	       
 		        { text: 'System Fee', value: 'system_fee_with_symbol' },	       
 		        { text: 'Create Card Fee', value: 'credit_card_fee_with_symbol'},	   
 		        { text: 'Status', value: 'status',  sortable: false},	
 		        { text: 'Country', value: 'country',  sortable: false},	
 		        { text: 'Date', value: 'dated' },	   
-
 		  	],
 		  	desserts:[],
 		  	pagination:{
@@ -98,13 +97,13 @@ export default {
 		  	rows_per_page:[
 		  		20, 
 		  		40, 
-		  		60, 
+		  		80, 
 		  		{ "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }
 		  	],
 
 		  	search:{
 		  		keywords : ''
-		  	}
+		  	},
 		}
   	},
   	created(){
@@ -140,11 +139,7 @@ export default {
 		doReset(){
 			this.search.keywords = ''
 			this.fetchData()
-		}
-
-
-
-		
+		}	
 
 	},
 }
@@ -152,3 +147,4 @@ export default {
 
 <style lang="css" scoped>
 </style>
+

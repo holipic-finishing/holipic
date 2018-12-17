@@ -157,5 +157,11 @@ class TransactionAPIController extends AppBaseController
 
     }
 
+    public function editTransaction(Request $request){
+        $input =  $request->all();
+
+        dd($input);
+    }
+
 }
 

@@ -24,20 +24,23 @@ class ReportController extends BaseApiController
 
 		$input = $request->all();
 
+
        	if($request->has(['start_day','end_day'])){
 
        		$arrayDay = $this->initDays($input['start_day'],$input['end_day']);
 
-       		$report = $this->transactionRepository->reportUserDaily($input,$arrayDay);
+       		$report = $this->transactionRepository->reportTransactionrDaily($input,$arrayDay);
 
        		return $this->responseSuccess('Data success',$report);
-       	} else if($request->has(['month'])){
 
-       		$arrayDayInMonth = $this->initDayInMonth($input['month']);
+       	} else if($request->has(['start_month','end_month'])){
+
+       		$arrayDayInMonth = $this->initInMonth($input['start_month'],$input['end_month']);
 
        		$report = $this->transactionRepository->reportUserMonth($input,$arrayDayInMonth);
 
        		return $this->responseSuccess('Data success',$report);
+
        	} else if($request->has(['year'])){
 
        		$arrayMonthInYear = $this->initMonthInYear($input['year']);
@@ -54,7 +57,19 @@ class ReportController extends BaseApiController
 
        		return $this->responseSuccess('Data success',$report);
 
-       	} else {
+       	} else if($request->has(['defaultDay'])){
+
+          $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
+
+          $endDay     = Carbon::today()->format('Y-m-d');
+
+          $arrayDay = $this->initDays($startDay,$endDay);
+
+          $report = $this->transactionRepository->reportTransactionrDaily($input,$arrayDay);
+
+          return $this->responseSuccess('Data success',$report);
+       
+        } else {
        		return $this->responseError('Failed!', [
                 'error' => 'Data not found',
             ],500);
@@ -117,5 +132,13 @@ class ReportController extends BaseApiController
             $today = Carbon::parse($today)->subDays(7)->format('Y-m-d');
         }
         return $arrayWeek;
+    }
+
+    public function initInMonth($from_month,$end_month){
+        $start_month = Carbon::parse($from_month);
+        dd($start_month);
+        $end_month = Carbon::parse($from_month);
+        $month = $end_month->diffInMonths($start_month);
+        dd($month);
     }
 }

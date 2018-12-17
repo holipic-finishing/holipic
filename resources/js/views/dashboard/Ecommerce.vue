@@ -69,58 +69,98 @@
 					:reloadable="true"
 					:closeable="false"
 				>
-				<div class="ladgend-wrapper mb-3">
-						<div class="col-md-12 form-inline">	
-							<div class="col-md-2">
-								<select class="search-input-select form-control font-weight-bold" type="select" aria-controls="example" v-model="valueSelectDateMonth">
-                                    <option v-for="option in selectDate">
-                                        {{option}}
-                                    </option>
-                                </select>
+					<div class="mt-4 visitor-area-chart">
+						<div class="d-custom-flex justify-space-between px-4 mb-4 label-wrap">
+							<nav class="nav nav-bar-chart">
+							  <a class="nav-link" :class="typeTimeReturn === 'revenue' ? 'active' : '' " @click="activeTypeTime('revenue')">Revenue</a>
+							  <a class="nav-link" :class="typeTimeReturn === 'day' ? 'active' : '' " @click="activeTypeTime('day')">Day</a>
+							  <a class="nav-link" :class="typeTimeReturn === 'week' ? 'active' : '' " @click="activeTypeTime('week')">Week</a>
+							  <a class="nav-link" :class="typeTimeReturn === 'month' ? 'active' : '' " @click="activeTypeTime('month')">Month</a>
+							  <a class="nav-link" :class="typeTimeReturn === 'year' ? 'active' : '' " @click="activeTypeTime('year')">Year</a>
+							</nav>
+							<div class="d-custom-flex justify-space-between w-30">
+								<div class="w-50">
+									<h4 class="info--text mb-0">$ {{total}}</h4>
+									<p class="fs-12 grey--text mb-0">Total Transaction</p>
+								</div>
 							</div>
-							<!-- Report By Range Day -->
-							<div class="btn-date" v-show="valueSelectDateMonth == 'Day'">
-								<date-picker v-model="range" :append-to-body="true" range lang="en" format="YYYY-MM-DD" width="200"
-								 ></date-picker>
-							</div>
-							<div class="btn-date" v-show="valueSelectDateMonth == 'Day'">
+						</div>
+					</div>	
+					<line-chart :width="300" >
+					</line-chart>
+					
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:red" v-show="typeTime == 'day'">	
+						<!-- Fom day -->
+						<div class="style-card">
+							<p>Start</p>
+							<date-picker v-model="from_day" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200"
+							 ></date-picker>
+						</div>
+					</div>
+					
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:red" v-show="typeTime == 'day'">	
+						<!-- Fom day -->
+						<div class="style-card">
+							<p>End</p>
+							<date-picker v-model="to_day" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200" 
+							 ></date-picker> 
+						</div>
+					</div>
+
+					<div class="xl3 btn-date" style="background-color:red" v-show="typeTime == 'day'">	
+						 <button class="btn btn-success"  v-on:click="reportByRangeDay()">Report</button>
+					</div>
+
+					<!-- Month -->
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:red" v-show="typeTime == 'month'">	
+						<!-- Fom day -->
+						<div class="style-card">
+							<p>Start</p>
+							<date-picker v-model="from_month" :append-to-body="true" lang="en" format="YYYY-MM" width="200" type="month" placeholder="Select Month"
+							 ></date-picker>
+						</div>
+					</div>
+					
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:red" v-show="typeTime == 'month'">	
+						<!-- Fom day -->
+						<div class="style-card">
+							<p>End</p>
+							<date-picker v-model="to_month" :append-to-body="true" lang="en" format="YYYY-MM" width="200"  type="month"  placeholder="Select Month"
+							 ></date-picker> 
+						</div>
+					</div>
+
+					<div class="xl3 btn-date" style="background-color:red" v-show="typeTime == 'month'">	
+						 <button class="btn btn-success"  v-on:click="reportByMonth()">Report</button>
+					</div>
+
+
+					</app-card>
+				
+									
+							<!-- <div class="btn-date" v-show="valueSelectDateMonth == 'Day'">
 		                          <button class="btn btn-success"  v-on:click="reportByRangeDay()">Report</button>
-		                    </div>
+		                    </div> -->
 							<!-- Range Day-->
 							<!-- Report By Month -->
-							<div class="btn-date" v-show="valueSelectDateMonth == 'Month'">
+							<!-- <div class="btn-date" v-show="valueSelectDateMonth == 'Month'">
 								<date-picker v-model="month" :append-to-body="true" lang="en" type="month" format="YYYY-MM" placeholder="Select Month" ></date-picker>
 							</div>
 							<div class="btn-date" v-show="valueSelectDateMonth == 'Month'">
 		                          <button class="btn btn-success"  v-on:click="reportByMonth()">Report</button>
-		                    </div>
+		                    </div> -->
 							<!-- Report By Year -->
-							<div class="btn-date" v-show="valueSelectDateMonth == 'Year'">
+							<!-- <div class="btn-date" v-show="valueSelectDateMonth == 'Year'">
 								<date-picker v-model="year" :append-to-body="true" lang="en" type="year" format="YYYY" placeholder="Select Year" ></date-picker>
 							</div>
 							<div class="btn-date" v-show="valueSelectDateMonth == 'Year'">
 		                          <button class="btn btn-success"  v-on:click="reportByYear()">Report</button>
-		                    </div>
+		                    </div> -->
 							<!-- end By year -->
-							<div class="btn-date" v-show="valueSelectDateMonth == 'Week'">
+							<!-- <div class="btn-date" v-show="valueSelectDateMonth == 'Week'">
 		                          <button class="btn btn-success"  v-on:click="reportByWeek()">Report</button>
-		                    </div>
-						</div>
-				</div>			
-				 <line-chart :options="options" :chart-data="datacollection">
-				  </line-chart>
-				</app-card>
-				<!-- Devices Share -->
-				<!-- <app-card
-					colClasses="xl4 lg5 md5 sm6 xs12"
-					:heading="$t('message.devicesShare')"
-					:fullScreen="true"
-					:reloadable="true"
-					:closeable="true"
-					customClasses="device-share-widget"
-				>
-					<device-share></device-share>
-				</app-card> -->
+		                    </div> -->
+				
 			</v-layout>
 			<!-- Social Feeds -->
 <!-- 			<v-layout row wrap>
@@ -221,20 +261,12 @@ export default {
 	      count_pack_basic:0,
 	      count_pack_pro:0,
 	      count_pack_company:0,
-	      datacollection: null,
-	      options: {
-	        responsive: true, 
-	        maintainAspectRatio: false,
-	        legend: {
-               display: false
-            }
-	      },
-	      selectDate:['---Choose---','Day','Month','Year','Week'],
-	      valueSelectDateMonth:'---Choose---',
-	      range:'',
-	      month:'',
-	      year:'',
-	      week:''
+	      from_day:'',
+	      to_day:'',
+	      from_month:'',
+	      to_month:'',
+	      typeTime:'',
+	      total:0
 	      
 
 	    };
@@ -260,145 +292,235 @@ export default {
 			})
 		},
 		reportByRangeDay() {
-			var	start_day = moment(this.range[0])
-			var	end_day =  moment(this.range[1])
-
-			var day = end_day.diff(start_day,'days')
-
-			if(day > 30) {
+			if(!this.from_day && !this.to_day){
 				setTimeout(function(){
 		            Vue.notify({
 		                group: 'loggedIn',
 		                type: 'error',
-		                text: 'Less than 30 days'
+		                text: 'No Date Yet'
 		            });
 				},500);
-			}
-			else {
-				let params = {
-					start_day :  this.formatDate(this.range[0]),
-					end_day :   this.formatDate(this.range[1])
+			} else if (!this.to_day) {
+				setTimeout(function(){
+		            Vue.notify({
+		                group: 'loggedIn',
+		                type: 'error',
+		                text: 'To Day Required'
+		            });
+				},500);
+			} else if(!this.from_day) {
+				setTimeout(function(){
+		            Vue.notify({
+		                group: 'loggedIn',
+		                type: 'error',
+		                text: 'From Day Required'
+		            });
+				},500);
+			} else {
+
+				var	start_day = moment(this.from_day)
+				var	end_day =  moment(this.to_day)
+
+				var day = end_day.diff(start_day,'days')
+
+				if(day > 15) {
+					setTimeout(function(){
+			            Vue.notify({
+			                group: 'loggedIn',
+			                type: 'error',
+			                text: 'Less than 15 days'
+			            });
+					},500);
+				} else {
+					let params = {
+					start_day :  this.formatDate(this.from_day),
+					end_day :   this.formatDate(this.to_day)
+					}
+					let obj = {
+						params : params,
+						chooes : 'Day'
+					}
+					this.$root.$emit('companyChart', obj)
 				}
-				this.getData(params);
 			}
 		},
 
 		reportByMonth(){
 			var month = {
-	      			month:moment(this.month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD')
+	      		start_month: moment(this.from_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
+	      		end_month:moment(this.to_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD')
 	      	}
-			this.getData(month);
+			let obj = {
+					params : month,
+					chooes : 'Month'
+				}
+			this.$root.$emit('companyChart', obj)
 		},
 
 		reportByYear(){
 			var year = {
 	      			year:moment(this.year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM')
 	      	}
-			this.getData(year);
+			let obj = {
+					params : year,
+					chooes : 'Year'
+				}
+			this.$root.$emit('companyChart', obj)
+
 		},
 
 		reportByWeek(){
 			let params = {
 					week :  'week'
 			}
-			this.getData(params);
-			// console.log(this.valueSelectDateMonth)
-		},
-
-		getData(params){
-
-			let url = config.API_URL+'report-incomes-package'
-
-			this.week = this.valueSelectDateMonth
-
-			getWithData(url,params)
-			.then((res) => {
-				if(res.data.success && res){
-					if(this.week == "Week") {
-						var dataWeek =[];
-		                _.forEach(res.data.data,function(value,key){
-		                  dataWeek.unshift(value);
-		                });
-                		this.handleDataWeek(dataWeek);
-
-					}else {
-						this.handleDataDaily(res.data.data);
-					}
-				}
-				
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-		},
-
-		handleDataDaily(data){
-			var lables = []
-	        var total = []
-	        _.forEach(data, function(value, key) {
-	            lables.push(key)
-	            total.push(value.total)
-	        });
-
-	        this.renderData(lables,total);
-
-		},
-
-		handleDataWeek(data){
-
-			var lables = []
-	        var total = []
-	        _.forEach(data, function(value, key) {
-	          lables.push(moment(value['startOfWeek']).format('MMM-DD') + ' / ' + moment(value['endOfWeek']).format('MMM-DD'))
-	          total.push(value.total)                      
-	        });
-	        this.renderData(lables,total);
-
-		},
-
-		renderData(lables,total){
-	        this.datacollection = {
-				labels: lables,
-				datasets: [
-					{
-						label: 'Total Transaction',
-						backgroundColor: '#f87979',
-						fill: false,
-						lineTension: 0.4,
-						borderColor: '#5D92F4',
-			            pointBorderColor: '#5D92F4',
-			            pointBorderWidth: 2,
-			            pointRadius: 3,
-			            pointBackgroundColor: '#FFF',
-	              		borderWidth: 3,
-						data: total
-					}
-				]
+			let obj = {
+					params : params,
+					chooes : 'Week'
 			}
-      	},
+			this.$root.$emit('companyChart', obj)
+
+		},
+
+		activeTypeTime(time) {
+  			this.typeTime = time
+
+  			if(this.typeTime == "day"){
+  				this.defaultReportSevenDay()
+  			}
+  		},
+
+  		defaultReportSevenDay(){
+
+  			let params = {
+					defaultDay :  'default'
+			}
+
+  			let obj = {
+					params : params,
+					chooes : 'SevenDay'
+			}
+			this.$root.$emit('companyChart', obj)
+  	
+  		}
+		// getData(params){
+
+		// 	let url = config.API_URL+'report-incomes-package'
+
+		// 	this.week = this.valueSelectDateMonth
+
+		// 	getWithData(url,params)
+		// 	.then((res) => {
+		// 		if(res.data.success && res){
+		// 			if(this.week == "Week") {
+		// 				var dataWeek =[];
+		//                 _.forEach(res.data.data,function(value,key){
+		//                   dataWeek.unshift(value);
+		//                 });
+  //               		this.handleDataWeek(dataWeek);
+
+		// 			}else {
+		// 				this.handleDataDaily(res.data.data);
+		// 			}
+		// 		}
+				
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err)
+		// 	})
+		// },
+
+		// handleDataDaily(data){
+		// 	var lables = []
+	 //        var total = []
+	 //        _.forEach(data, function(value, key) {
+	 //            lables.push(key)
+	 //            total.push(value.total)
+	 //        });
+
+	 //        this.renderData(lables,total);
+
+		// },
+
+		// handleDataWeek(data){
+
+		// 	var lables = []
+	 //        var total = []
+	 //        _.forEach(data, function(value, key) {
+	 //          lables.push(moment(value['startOfWeek']).format('MMM-DD') + ' / ' + moment(value['endOfWeek']).format('MMM-DD'))
+	 //          total.push(value.total)                      
+	 //        });
+	 //        this.renderData(lables,total);
+
+		// },
+
+		// renderData(lables,total){
+			
+	 //        this.datacollection = {
+		// 		labels: lables,
+		// 		datasets: [
+		// 			{
+		// 				label: 'Total Transaction',
+		// 				backgroundColor: '#f87979',
+		// 				fill: false,
+		// 				lineTension: 0.4,
+		// 				borderColor: '#5D92F4',
+		// 	            pointBorderColor: '#5D92F4',
+		// 	            pointBorderWidth: 2,
+		// 	            pointRadius: 3,
+		// 	            pointBackgroundColor: '#FFF',
+	 //              		borderWidth: 3,
+		// 				data: total
+		// 			}
+		// 		]
+		// 	}
+  //     	},
 
 
 	},
 	created(){
 		this.fetchData()
-		this.valueSelectDateMonth = "Week"
-		this.reportByWeek()
-		this.valueSelectDateMonth = "---Choose---"
 		
-	}
+	},
+	computed:{
+
+	  	typeTimeReturn(){
+	  		return this.typeTime
+	  	}
+	},
+	mounted() {
+
+	    this.$root.$on('totalTransaction', res => {
+	       	this.total = res
+	    });
+  	}
+
 
 };
 </script>
 
 
 <style lang="css" scoped>
-.row {
-	/*margin-right: 15px !important;
-	margin-left: 15px !important;*/
-	
-}
 .btn-date {
 	display: inline-block;
-    margin: 15px;
+    margin: 30px 10px 0px 0px;;
+}
+.nav-bar-chart{
+	font-size:20px;
+	font-weight: bold;
+}
+
+.nav-link {
+		color: #6b6d70 !important;
+}
+
+.active{
+		color: #2196f3 !important;
+}
+.style-card {
+	padding: 15px !important;
+}
+.style-card p {
+	margin: 0px 0px 5px 5px;
+    font-size: 17px;
 }
 </style>

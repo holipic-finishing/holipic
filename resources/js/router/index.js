@@ -21,7 +21,7 @@ import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // import UserWidgets   from'../views/users/UsersList';
 import Company from '../views/company/index';
-import CompanyChart from '../views/company/chart';
+import CompanyChart from '../views/company/information-chart';
 
 import PackageIndex from '../views/package/Index';
 
@@ -30,11 +30,11 @@ import Setting from '../views/setting/setting'
 import UserManagement from '../views/superadmin-user/user-management'
 
 import page404 from '../views/pages/page404'
-
-
 import UserPass from '../views/users/ChangePassword'
 
 import HistoriesTransaction from '../views/transactions/Histories.vue'
+
+import IndexCoupon from '../views/coupon-code/Index.vue'
 
 
 
@@ -157,6 +157,15 @@ routers = [
 		            requiresAuth: true,
 		            title: 'message.histories',
 		            breadcrumb: 'Transaction / Histories List'
+		        }
+		    },
+		    {
+		        path: '/default/coupon-code/index',
+		        component: IndexCoupon,
+		        meta: {
+		            requiresAuth: true,
+		            title: 'message.couponCode',
+		            breadcrumb: 'Coupon Code / Histories List'
 		        }
 		    },
       	]	

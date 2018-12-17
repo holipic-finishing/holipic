@@ -63,39 +63,55 @@
 			<v-layout row wrap>
 				<app-card
 					:heading="$t('message.sales')"
-					colClasses="xl8 lg7 md7 sm6 xs12"
+					colClasses="xl12 lg12 md12 sm12 xs12"
 					customClasses="mb-0 sales-widget"
 					:fullScreen="true"
 					:reloadable="true"
-					:closeable="true"
+					:closeable="false"
 				>
-					<sales class="mb-4" :height="320"></sales>	
-					<v-layout class="cart-wrap hidden-xs-only pl-4">
-						<v-flex d-custom-flex>
-							<span class="mr-2"><i class="zmdi zmdi-shopping-cart-plus primary--text"></i></span>
-							<p class="mb-0">
-								<span class="d-block fs-14 fw-bold">2382</span>
-								<span class="d-block fs-12 grey--text">Sales</span>
-							</p>
-						</v-flex>
-						<v-flex d-custom-flex>
-							<span class="mr-2"><i class="zmdi zmdi-eye success--text"></i></span>
-							<p class="mb-0">
-								<span class="d-block fs-14 fw-bold">53,255</span>
-								<span class="d-block fs-12 grey--text">Views</span>
-							</p>
-						</v-flex>
-						<v-flex d-custom-flex>
-							<span class="mr-2"><i class="zmdi zmdi-equalizer error--text"></i></span>
-							<p class="mb-0">
-								<span class="d-block fs-14 fw-bold">$1,25,000</span>
-								<span class="d-block fs-12 grey--text">Earned</span>
-							</p>
-						</v-flex>
-					</v-layout>				
+				<div class="ladgend-wrapper mb-3">
+						<div class="col-md-12 form-inline">	
+							<div class="col-md-2">
+								<select class="search-input-select form-control font-weight-bold" type="select" aria-controls="example" v-model="valueSelectDateMonth">
+                                    <option v-for="option in selectDate">
+                                        {{option}}
+                                    </option>
+                                </select>
+							</div>
+							<!-- Report By Range Day -->
+							<div class="btn-date" v-show="valueSelectDateMonth == 'Day'">
+								<date-picker v-model="range" :append-to-body="true" range lang="en" format="YYYY-MM-DD" width="200"
+								 ></date-picker>
+							</div>
+							<div class="btn-date" v-show="valueSelectDateMonth == 'Day'">
+		                          <button class="btn btn-success"  v-on:click="reportByRangeDay()">Report</button>
+		                    </div>
+							<!-- Range Day-->
+							<!-- Report By Month -->
+							<div class="btn-date" v-show="valueSelectDateMonth == 'Month'">
+								<date-picker v-model="month" :append-to-body="true" lang="en" type="month" format="YYYY-MM" placeholder="Select Month" ></date-picker>
+							</div>
+							<div class="btn-date" v-show="valueSelectDateMonth == 'Month'">
+		                          <button class="btn btn-success"  v-on:click="reportByMonth()">Report</button>
+		                    </div>
+							<!-- Report By Year -->
+							<div class="btn-date" v-show="valueSelectDateMonth == 'Year'">
+								<date-picker v-model="year" :append-to-body="true" lang="en" type="year" format="YYYY" placeholder="Select Year" ></date-picker>
+							</div>
+							<div class="btn-date" v-show="valueSelectDateMonth == 'Year'">
+		                          <button class="btn btn-success"  v-on:click="reportByYear()">Report</button>
+		                    </div>
+							<!-- end By year -->
+							<div class="btn-date" v-show="valueSelectDateMonth == 'Week'">
+		                          <button class="btn btn-success"  v-on:click="reportByWeek()">Report</button>
+		                    </div>
+						</div>
+				</div>			
+				 <line-chart :options="options" :chart-data="datacollection">
+				  </line-chart>
 				</app-card>
 				<!-- Devices Share -->
-				<app-card
+				<!-- <app-card
 					colClasses="xl4 lg5 md5 sm6 xs12"
 					:heading="$t('message.devicesShare')"
 					:fullScreen="true"
@@ -104,10 +120,10 @@
 					customClasses="device-share-widget"
 				>
 					<device-share></device-share>
-				</app-card>
+				</app-card> -->
 			</v-layout>
 			<!-- Social Feeds -->
-			<v-layout row wrap>
+<!-- 			<v-layout row wrap>
 				<app-card
 					colClasses="xl3 lg3 md3 sm6 xs12"
 					customClasses="social-share-wrap"
@@ -168,15 +184,13 @@
 				>
 					<new-post></new-post>
 				</app-card>
-			</v-layout>
+			</v-layout> -->
 		</v-container>
 </template>
 
 <script>
 // charts component
-import LineChartShadow from "../../components/Charts/LineChartShadow";
-import Sales from "../../components/Charts/SalesChartV2";
-import LineChartWithArea from "../../components/Charts/LineChartWithArea";
+import LineChart from './LineChart.js'
 
 // widgets
 import SocialFeeds from "../../components/Widgets/SocialFeeds";
@@ -187,32 +201,50 @@ import { ChartConfig } from "../../constants/chart-config";
 
 //config 
 import config from '../../config/index.js'
-import { get } from '../../api/index.js'
+import { get, getWithData } from '../../api/index.js'
+import DatePicker from 'vue2-datepicker'
+import moment from 'moment'
+import Vue from 'vue'
 
 export default {
   components: {
-    LineChartShadow,
-    Sales,
-    LineChartWithArea,
     SocialFeeds,
     NewPost,
-    DeviceShare
+    DeviceShare,
+    LineChart,
+    DatePicker
   },
   data() {
 	    return {
 	     	
 	      ChartConfig,
-	      labels: ["A", "B", "C", "D", "E", "F", "J", "K", "L", "M", "N", "P"],
-	      totalEarnings: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44],
-	      onlineRevenue: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44],
-	      newCustomers: [30, 50, 25, 55, 44, 60, 30, 20, 40, 20, 40, 44],
 	      count_pack_basic:0,
 	      count_pack_pro:0,
 	      count_pack_company:0,
+	      datacollection: null,
+	      options: {
+	        responsive: true, 
+	        maintainAspectRatio: false,
+	        legend: {
+               display: false
+            }
+	      },
+	      selectDate:['---Choose---','Day','Month','Year','Week'],
+	      valueSelectDateMonth:'---Choose---',
+	      range:'',
+	      month:'',
+	      year:'',
+	      week:''
+	      
 
 	    };
 	},
 	methods:{
+		formatDate(date) {
+          if(date){
+              return moment(date, 'YYYY-MM-DD hh:mm:ss').format('MM/DD/YYYY');
+          }
+      	},
 		fetchData(){
 			let url = config.API_URL+'count-packages'
 			get(url)
@@ -226,11 +258,147 @@ export default {
 			.catch((err)=>{
 
 			})
-		}
+		},
+		reportByRangeDay() {
+			var	start_day = moment(this.range[0])
+			var	end_day =  moment(this.range[1])
+
+			var day = end_day.diff(start_day,'days')
+
+			if(day > 30) {
+				setTimeout(function(){
+		            Vue.notify({
+		                group: 'loggedIn',
+		                type: 'error',
+		                text: 'Less than 30 days'
+		            });
+				},500);
+			}
+			else {
+				let params = {
+					start_day :  this.formatDate(this.range[0]),
+					end_day :   this.formatDate(this.range[1])
+				}
+				this.getData(params);
+			}
+		},
+
+		reportByMonth(){
+			var month = {
+	      			month:moment(this.month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD')
+	      	}
+			this.getData(month);
+		},
+
+		reportByYear(){
+			var year = {
+	      			year:moment(this.year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM')
+	      	}
+			this.getData(year);
+		},
+
+		reportByWeek(){
+			let params = {
+					week :  'week'
+			}
+			this.getData(params);
+			// console.log(this.valueSelectDateMonth)
+		},
+
+		getData(params){
+
+			let url = config.API_URL+'report-incomes-package'
+
+			this.week = this.valueSelectDateMonth
+
+			getWithData(url,params)
+			.then((res) => {
+				if(res.data.success && res){
+					if(this.week == "Week") {
+						var dataWeek =[];
+		                _.forEach(res.data.data,function(value,key){
+		                  dataWeek.unshift(value);
+		                });
+                		this.handleDataWeek(dataWeek);
+
+					}else {
+						this.handleDataDaily(res.data.data);
+					}
+				}
+				
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+		},
+
+		handleDataDaily(data){
+			var lables = []
+	        var total = []
+	        _.forEach(data, function(value, key) {
+	            lables.push(key)
+	            total.push(value.total)
+	        });
+
+	        this.renderData(lables,total);
+
+		},
+
+		handleDataWeek(data){
+
+			var lables = []
+	        var total = []
+	        _.forEach(data, function(value, key) {
+	          lables.push(moment(value['startOfWeek']).format('MMM-DD') + ' / ' + moment(value['endOfWeek']).format('MMM-DD'))
+	          total.push(value.total)                      
+	        });
+	        this.renderData(lables,total);
+
+		},
+
+		renderData(lables,total){
+	        this.datacollection = {
+				labels: lables,
+				datasets: [
+					{
+						label: 'Total Transaction',
+						backgroundColor: '#f87979',
+						fill: false,
+						lineTension: 0.4,
+						borderColor: '#5D92F4',
+			            pointBorderColor: '#5D92F4',
+			            pointBorderWidth: 2,
+			            pointRadius: 3,
+			            pointBackgroundColor: '#FFF',
+	              		borderWidth: 3,
+						data: total
+					}
+				]
+			}
+      	},
+
+
 	},
 	created(){
 		this.fetchData()
+		this.valueSelectDateMonth = "Week"
+		this.reportByWeek()
+		this.valueSelectDateMonth = "---Choose---"
+		
 	}
 
 };
 </script>
+
+
+<style lang="css" scoped>
+.row {
+	/*margin-right: 15px !important;
+	margin-left: 15px !important;*/
+	
+}
+.btn-date {
+	display: inline-block;
+    margin: 15px;
+}
+</style>

@@ -1,16 +1,16 @@
-import { Line, mixins } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
 import config from '../../config/index.js'
 import Vue from 'vue'
-import moment from "moment";
-const { reactiveProp } = mixins
+import moment from "moment"
+
 
 export default {
   extends: Line,
   props:['companyId'],
-  mixins: [reactiveProp],
   data() {
     return {
       data: [],
+      labels: [],
       gradient1: null,
       gradient2: null,
       options: {
@@ -36,27 +36,35 @@ export default {
         },
         responsive: true,
         maintainAspectRatio: false,
-        days:null,
-        prices:null
+        days:[],
+        prices:[],
+        prices2:[],
+        prices3:[],
+        prices4:[]
 
       }
     }
   },
   created(){
     this.fetchData();
+
   },
+
   mounted() {
     
     this.$root.$on('companyChart', res => {
-        console.log(res)
-        this.renderData(res)
-        this.renderChartData(this.days,this.prices)
+
+        //this.labels = res.data.labels;
+        //this.data = res.data.data;
+    
+        this.renderData(res.data, res.labels);
+        this.renderChartData(res.data, this.chartLabels)
     });
-
-
   },
+
   methods: {
-    renderChartData(days,prices){
+    //renderChartData(data,days,prices, prices2,prices3, prices4, labels ){
+    renderChartData(data, labels ){
 
     let ctx = this.$refs.canvas.getContext('2d')
     let _stroke = ctx.stroke
@@ -79,57 +87,144 @@ export default {
     this.gradient2.addColorStop(0, '#F7981C')
     this.gradient2.addColorStop(1, '#F56074')
 
+    let datasets = []
 
-     this.renderChart({
-          labels: days,
-          datasets: [
-            {
-              label: 'Open Rate',
+    var _this = this
+
+    _.forEach(data, function(item, key){
+
+        var color = ''
+        switch(key) {
+            case "€":
+                color = _this.gradient1;
+                break;
+            case "$":
+                color = _this.gradient2;
+                break;
+            case "VND":
+                color = "green";
+                break;
+            default:
+                color = "blue";
+        }
+        
+        let tmp = {
+              label: key,
               lineTension: 0.4,
-              borderColor: this.gradient2,
-              pointBorderColor: this.gradient2,
+              borderColor: color,
+              pointBorderColor: color,
               pointBorderWidth: 2,
               pointRadius: 7,
               fill: false,
               pointBackgroundColor: '#FFF',
               borderWidth: 3,
-              data: prices
-            },
-            {
-              label: 'Open Rate2',
-              lineTension: 0.4,
-              borderColor: this.gradient1,
-              pointBorderColor: this.gradient1,
-              pointBorderWidth: 2,
-              pointRadius: 7,
-              fill: false,
-              pointBackgroundColor: '#FFF',
-              borderWidth: 3,
-              data: [2000,5000]
-            }
+              data: _this.showPrice(item)
+        }
+      datasets.push(tmp)
+
+    })
+
+         this.renderChart({
+          labels: labels, 
+          datasets:  datasets
+            // {
+            //   label: 'Open Rate',
+            //   lineTension: 0.4,
+            //   borderColor: this.gradient2,
+            //   pointBorderColor: this.gradient2,
+            //   pointBorderWidth: 2,
+            //   pointRadius: 7,
+            //   fill: false,
+            //   pointBackgroundColor: '#FFF',
+            //   borderWidth: 3,
+            //   data: [10,20,50]
+            // },
+    
+            // {
+            //   label: 'Open Rate4',
+            //   lineTension: 0.4,
+            //   borderColor: this.gradient1,
+            //   pointBorderColor: this.gradient1,
+            //   pointBorderWidth: 2,
+            //   pointRadius: 7,
+            //   fill: false,
+            //   pointBackgroundColor: '#FFF',
+            //   borderWidth: 3,
+            //   data: prices4
+            // } 
             
-          ]
         }, this.options)
     },
-    renderData(data) {
-        let Days = new Array();
-        let Prices = new Array();
-        data.forEach(element => {
+    
+    renderData(data, labels) {
+        
+        // let Days = new Array();
+        // let Prices = new Array();
+        // let prices2 = new Array();
+        // let prices3 = new Array();
+        // let prices4 = new Array();
+       
+
+        // const origin = data["3"];
+        // for (let i = 0; i < origin.length; i++) {
+        //     Days.push(origin[i].date);
+        //     Prices.push(this.getDefIfNotExist(data["2"][i] ));
+        //     prices2.push(this.getDefIfNotExist(data["3"][i]));
+        //     prices3.push(this.getDefIfNotExist(data["4"][i]));
+        //    // prices4.push(this.getDefIfNotExist(data["5"][i]));
+        // }
+       
+        // _.forEach(data, function(item, key){
+        //     Days.push(item)
+        //   _.forEach(Days, function(value, index) {
+
+        //       // console.log(value)
+        //   });
+
+        //     // Days.push(moment(element.date, 'YYYY-MM-DD').format('DD-MM-YY'));
             
-            Days.push(moment(element.date, 'YYYY-MM-DD').format('DD-MM-YY'));
-            
-            Prices.push(element.total)
+        //     // Prices.push(element.total)
+        // });
+
+        // this.days = Days;
+        // this.prices = Prices;
+        // this.prices2 = prices2;
+        // this.prices3 = prices3;
+        // this.prices4 = prices4;
+         let Labels = new Array();
+
+        _.forEach(labels, function(value, index) {
+            Labels.push(moment(value['date'], 'YYYY-MM-DD').format('DD-MM-YY'));
         });
-        this.days = Days
-        this.prices = Prices
+
+        this.chartLabels = Labels;   
+    },
+
+    getDefIfNotExist(value) {
+        if (typeof value !== 'undefined')
+            return value.total;
+        return 0;
+    },
+
+    showPrice(data) {
+      let dataPrices = new Array()
+
+      _.forEach(data, function(item, key) {
+           dataPrices.push(item)
+      });
+
+      return dataPrices; 
     },
     
     fetchData() {
-        axios.get(config.API_URL+'company/total-amount?companyId='+this.companyId)
+        axios.get(config.API_URL+'company/information?companyId='+this.companyId)
         .then(response => {
             if(response && response.data.success) {
-                this.renderData(response.data.data)
-                this.renderChartData(this.days,this.prices)
+                
+                this.renderData(response.data.data.data, response.data.data.labels)
+                //this.renderChartData(response.data.data.data,this.days,this.prices, this.prices2, this.prices3, this.prices4, this.chartLabels)
+                this.renderChartData(response.data.data.data, this.chartLabels)
+
             }
         })
     }

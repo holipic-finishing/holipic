@@ -79,4 +79,6 @@ class Package extends Model
         return $this->hasOne('App\Models\Setting','package_id','id');
     }
 
+
+
 }

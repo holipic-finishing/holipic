@@ -40,7 +40,7 @@ import DoughnutChartV2 from "../Charts/DoughnutChartV2";
 import { ChartConfig } from "../../constants/chart-config";
 
 //data
-import { devicesShare } from "../../views/dashboard/data";
+// import { devicesShare } from "../../views/dashboard/data";
 
 export default {
    components: {
@@ -49,7 +49,7 @@ export default {
    data() {
       return {
          ChartConfig,
-         devicesShare
+         // devicesShare
       };
    }
 };

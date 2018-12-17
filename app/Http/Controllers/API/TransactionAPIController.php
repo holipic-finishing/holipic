@@ -127,16 +127,16 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($id, 'Transaction deleted successfully');
     }
 
-    public function totalAmountCompany(Request $request)
+    public function getInformationCompany()
     {
-        $company = $this->transactionRepository->getTotalAmountCompany($request['companyId']);
+        $company = $this->transactionRepository->getInformationCompanyAndTotalAmountDefault(request('companyId'));
         return $this->sendResponse($company, 'Transaction Company successfully');
     }
 
-    public function loadChartCompany(Request $request) 
+    public function loadChartCompanyByTime(Request $request) 
     {
 
-        $company = $this->transactionRepository->getTotalAmountCompanyByTime($request->all());
+        $company = $this->transactionRepository->getInformationCompanyAndTotalAmountByTime($request->all());
 
         return $this->sendResponse($company, 'Transaction Company date/month successfully');
 
@@ -147,4 +147,5 @@ class TransactionAPIController extends AppBaseController
 
         return $this->sendResponse($transactions->toArray(), 'Transactions retrieved successfully');
     }
+
 }

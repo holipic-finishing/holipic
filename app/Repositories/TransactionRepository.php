@@ -410,5 +410,20 @@ class TransactionRepository extends BaseRepository
         return $results;
     }
 
+    public function searchDashboard($input){
+        $results = DB::table('transactions as t')
+                    ->join('users as u', 'u.id', '=', 't.user_id')
+                    ->join('currencies as cu', 'cu.id', '=', 't.currency_id')
+                    ->join('packages as p', 'p.id', '=', 'u.package_id')
+                    ->where('u.company_name' , 'like', '%' . $input['keywords'] . '%')
+                    ->orWhere('t.invoice' , 'like', '%' . $input['keywords'] . '%')
+                    ->orderBy('t.dated', 'desc')
+                    ->select('t.*','cu.symbol', 'cu.country','u.company_name', 'u.email', 'u.first_name', 'u.last_name','p.package_name')
+                    ->get();
+        $results = $this->transform($results);
+
+        return $results;
+    }
+
 
 }

@@ -118,25 +118,38 @@
 			          	</v-list-tile-content>
 		        </v-list-tile>
 	      	</v-list>
+	      	<v-list-tile>
+              	<v-list-tile-content>
+                	<v-list-tile-title >ID : {{ items.id }}</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile >
+                <v-list-tile-content>
+                	<v-list-tile-title class="font-weight-regular">Company Name :</v-list-tile-title>
+                	<v-list-tile-sub-title class="font-weight-thin">{{ items.company_name }}</v-list-tile-sub-title>
+              	</v-list-tile-content>
+            </v-list-tile>
 	      	<v-list-tile >
                 <v-list-tile-content>
               	</v-list-tile-content>
             </v-list-tile>
 	      	<v-list-tile>
-	            <v-text-field label="Amount" v-model="items.amount"></v-text-field>
+	            <v-text-field label="Amount" v-model="itemEdit.amount"></v-text-field>
             </v-list-tile>
             <v-list-tile>
 	            <v-select
 		            :items="listStatus"
 		            label="Status"
-		            value="items.status"
+		            v-model="itemEdit.status"
 		        ></v-select>
             </v-list-tile>
-	      	
-	      	
+            <v-list-tile>
+            	<v-spacer></v-spacer>
+	           	<v-btn color="primary" @click="editTransaction()">Edit</v-btn>
+            </v-list-tile>
 	    </v-navigation-drawer>
 	      	<v-toolbar flat color="white">
-		        <v-toolbar-title>Transacsion Histories Table</v-toolbar-title>
+		        <v-toolbar-title ><a href="admin#/default/transaction/histories"> Transacsion Histories Table</a></v-toolbar-title>
 		        <v-divider
 		          class="mx-2"
 		          inset
@@ -184,15 +197,14 @@
 				            small
 				    		class="mr-2"
 				    		@click.stop="drawerRight = !drawerRight"
-				    		@click="showTransaction(props.item)"
-				        >
+				    		@click="showTransaction(props.item)">
 				            visibility
 				        </v-icon>
 				         <v-icon
 				            small
 				    		class="mr-2"
 				    		@click.stop="drawerRightEdit = !drawerRightEdit"
-				    		@click="editTransaction(props.item)"
+				    		@click="showEditTransaction(props.item)"
 				        >
 				            edit
 				        </v-icon>
@@ -203,7 +215,6 @@
 				        >
 				            delete
 				        </v-icon>
-				       
 		    		</td>
 		    	</template>
 	      	</v-data-table>	
@@ -237,7 +248,7 @@ export default {
 		  	],
 		  	desserts:[],
 		  	pagination:{
-		  		rowsPerPage: 20,
+		  		rowsPerPage: 10,
 		  	},
 		  	rows_per_page:[
 		  		10, 
@@ -258,6 +269,12 @@ export default {
 	        snackText: '',
 
 	        items:{},
+
+	        itemEdit: {
+	        	'amount' : '',
+	        	'status' : '',
+	        	'id' : ''
+	        },
 
 	        listStatus: ['RECIVED', 'BEEN SEEN']
 	    }
@@ -282,7 +299,7 @@ export default {
 		},
 
   		doSearch(){
-			post(config.API_URL+'search/transactions', this.search)
+			post(config.API_URL+'searchdashboard/transactions', this.search)
 			.then((res) => {
 				if(res.data && res.data.success){
 					this.desserts = res.data.data
@@ -319,17 +336,26 @@ export default {
 			this.items = items
 		},
 
-		editTransaction(items){
+		showEditTransaction(items){
 			this.drawerRight = false
 			this.items = items
-			post(config.API_URL+'edit/transactions', items)
+			this.itemEdit.id = items.id
+			this.itemEdit.amount = items.amount
+			this.itemEdit.status = items.status
+		},
+
+		editTransaction(){
+			post(config.API_URL+'edit/transactions', this.itemEdit)
 			.then((res) => {
-				
+				this.drawerRightEdit = false
+				this.fetchData()
+				this.snack = true,
+                this.snackColor = 'success'
+                this.snackText = 'Data edited'
 			})
 			.catch((e) =>{
 				console.log(e)
 			})
-
 		}
 
 

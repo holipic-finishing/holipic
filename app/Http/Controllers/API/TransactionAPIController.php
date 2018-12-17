@@ -160,7 +160,19 @@ class TransactionAPIController extends AppBaseController
     public function editTransaction(Request $request){
         $input =  $request->all();
 
-        dd($input);
+        $results = $this->transactionRepository->update($input, $input['id']);
+
+        return $this->sendResponse($results->toArray(), 'Transaction updated successfully');
+
+
+    }
+
+    public function doSearchDashboard(Request $request){
+        $input = $request->all();
+
+        $results =  $this->transactionRepository->searchDashboard($input);
+
+        return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
     }
 
 }

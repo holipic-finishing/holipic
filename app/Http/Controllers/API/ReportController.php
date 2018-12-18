@@ -56,8 +56,11 @@ class ReportController extends BaseApiController
         // report week
           if($request->has(['start_day_week','end_day_week'])){
 
-            // $arrayWeek = $this->initDayWeekDays()
+            $arrayWeek = $this->initDayWeekDays($input['start_day_week'],$input['end_day_week']);
 
+            $report = $this->transactionRepository->reportTransactionWeek($input,$arrayWeek);
+
+            return $this->responseSuccess('Data success',$report);
 
         } else 
           // report default week
@@ -65,7 +68,7 @@ class ReportController extends BaseApiController
 
          		$arrayWeek = $this->initWeekDays();
 
-         		$report = $this->transactionRepository->reportTransactionWeek($arrayWeek);
+         		$report = $this->transactionRepository->reportTransactionWeek($input,$arrayWeek);
 
          		return $this->responseSuccess('Data success',$report);
 
@@ -204,14 +207,19 @@ class ReportController extends BaseApiController
         return $data;
     }
 
-    public function initDayWeekDays(){
-       $today = Carbon::today();
+    public function initDayWeekDays($start_day_week,$end_day_week){
+
+        $start_day_week = Carbon::parse($start_day_week);
+        $end_day_week = Carbon::parse($end_day_week);
         $arrayWeek = [];
-        for ($i=0; $i <=6 ; $i++) { 
-            $arrayWeek[$i]['endOfWeek'] = Carbon::parse($today)->format('Y-m-d');
-            $arrayWeek[$i]['startOfWeek'] = Carbon::parse($today)->subDays(6)->format('Y-m-d');
-            $today = Carbon::parse($today)->subDays(7)->format('Y-m-d');
-        }
-        return $arrayWeek;
+        $week = $start_day_week->diffInWeeks($end_day_week);
+
+         for ($i=0; $i <= $week ; $i++) { 
+            $arrayWeek[$i]['startOfWeek'] = Carbon::parse($start_day_week)->format('Y-m-d');
+            $arrayWeek[$i]['endOfWeek'] = Carbon::parse($start_day_week)->addDays(6)->format('Y-m-d');
+            $start_day_week = Carbon::parse($start_day_week)->addDays(7)->format('Y-m-d');
+         }
+          $data = array_reverse($arrayWeek);
+         return $data;
     }
 }

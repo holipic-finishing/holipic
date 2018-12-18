@@ -358,7 +358,7 @@ export default {
 				var	end_day =  moment(this.to_day)
 
 				var day = end_day.diff(start_day,'days')
-				console.log(day)
+
 				if(day > 15) {
 					setTimeout(function(){
 			            Vue.notify({
@@ -479,46 +479,23 @@ export default {
 		},
 
 		reportByWeek(){
-
-			if(!this.from_day_week && !this.to_day_week){
-				setTimeout(function(){
-		            Vue.notify({
-		                group: 'loggedIn',
-		                type: 'error',
-		                text: 'No Date Yet'
-		            });
-				},500);
-			} else if (!this.to_day_week) {
-				setTimeout(function(){
-		            Vue.notify({
-		                group: 'loggedIn',
-		                type: 'error',
-		                text: 'To Day Required'
-		            });
-				},500);
-			} else if(!this.from_day_week) {
-				setTimeout(function(){
-		            Vue.notify({
-		                group: 'loggedIn',
-		                type: 'error',
-		                text: 'From Day Required'
-		            });
-				},500);
-			} else {
-
-				var	start_day = moment(this.from_day)
-				var	end_day =  moment(this.to_day)
+			this.Validations(this.from_day_week,this.to_day_week,'Days')
+			if(this.validate == true)
+			{
+				var	start_day = moment(this.from_day_week)
+				var	end_day =  moment(this.to_day_week)
 
 				var day = end_day.diff(start_day,'days')
-				console.log(day)
-				if(day > 15) {
+		
+				if(day > 42) {
 					setTimeout(function(){
 			            Vue.notify({
 			                group: 'loggedIn',
 			                type: 'error',
-			                text: 'Less than 15 days'
+			                text: 'Less than 6 Week'
 			            });
 					},500);
+
 				}  else if(day <=0) {
 
 					setTimeout(function(){
@@ -530,8 +507,10 @@ export default {
 					},500);
 
 				} else {
+
 					let params = {
-							week :  'week'
+						start_day_week :  this.formatDate(this.from_day_week),
+						end_day_week :   this.formatDate(this.to_day_week)
 					}
 					let obj = {
 							params : params,
@@ -540,10 +519,7 @@ export default {
 					this.$root.$emit('companyChart', obj)
 				}
 			}
-
-
-			
-
+		
 		},
 
 		activeTypeTime(time) {
@@ -551,14 +527,20 @@ export default {
 
   			if(this.typeTime == "day"){
   				this.defaultReportSevenDay()
+  				this.from_day=''
+  				this.to_day= ''
   			}
 
   			if(this.typeTime == "month"){
   				this.defaultReportMonth()
+  				this.from_month=''
+	      		this.to_month=''
   			}
 
   			if(this.typeTime == "year") {
   				this.defaultReportYear()
+  				this.from_year=''
+	      		this.to_year=''
   			}
 
   			if(this.typeTime == "revenue") {
@@ -625,6 +607,7 @@ export default {
 	},
 	created(){
 		this.fetchData()
+		this.typeTime = "revenue"
 	},
 	computed:{
 

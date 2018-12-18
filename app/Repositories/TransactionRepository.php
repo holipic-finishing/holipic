@@ -333,11 +333,22 @@ class TransactionRepository extends BaseRepository
 
     }
 
-    public function reportTransactionWeek($dayWeek){
+    public function reportTransactionWeek($attributes,$dayWeek){
 
-        $startDay   = Carbon::today()->subDays(42)->format('Y-m-d');
 
-        $endDay     = Carbon::today()->format('Y-m-d');
+        if(isset($attributes['start_day_week']) && isset($attributes['end_day_week']))
+        {
+            $startDay = Carbon::parse($attributes['start_day_week'])->format('Y-m-d');
+
+            $endDay = Carbon::parse($attributes['end_day_week'])->format('Y-m-d');
+        }
+        else {
+
+            $startDay   = Carbon::today()->subDays(42)->format('Y-m-d');
+
+            $endDay     = Carbon::today()->format('Y-m-d');
+        }
+      
 
 
         $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
@@ -349,24 +360,27 @@ class TransactionRepository extends BaseRepository
 
         foreach ($dayWeek as $key => $date) {
 
-             $total = 0;
-
-            foreach ($transactions as $k_v => $value) {
-                
-                $day = Carbon::parse($value->dated)->format('Y-m-d');
-                if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
-                    $total = $total + $value->total;  
-                } 
-                else {
-                    $dayWeek[$key]['total'] = 0;
-                   
+            $total = 0;
+            if(count($transactions)) {
+                foreach ($transactions as $k_v => $value) {
+                    
+                    $day = Carbon::parse($value->dated)->format('Y-m-d');
+                    if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
+                        $total = $total + $value->total;  
+                    } 
+                    else {
+                        $dayWeek[$key]['total'] = 0;
+                       
+                    }
                 }
+                $dayWeek[$key]['total'] = $total;
+            }  else {
+                $dayWeek[$key]['total'] = 0;
             }
 
-            $dayWeek[$key]['total'] = $total;
+           
        
         }    
-
         return $dayWeek;        
 
     }

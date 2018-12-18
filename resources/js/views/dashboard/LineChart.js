@@ -91,10 +91,6 @@ export default {
     },
  
     fetchData() {
-  //      let params = {
-		// 		week :  'week'
-		// 	}
-		// this.chooes = "Week"
 		let params = {
 					defaultDay :  'default'
 		}
@@ -109,10 +105,13 @@ export default {
 			.then((res) => {
 				if(res.data.success && res){
 					if(this.chooes == "Week") {
-						var dataWeek =[];
+						var dataWeek =[]
+						var total = 0
 		                _.forEach(res.data.data,function(value,key){
 		                  dataWeek.unshift(value);
+		                  total = total + parseFloat(value.total)
 		                });
+		                this.$root.$emit('totalTransaction', total)
                 		this.handleDataWeek(dataWeek);
 
 					}else {

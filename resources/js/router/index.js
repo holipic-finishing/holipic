@@ -14,7 +14,7 @@ import ResetPassword from '../views/session/ResetPassword.vue';
 
 
 // dashboard components
-import Full from '../container/Full'
+import mini from '../container/MiniSidebarLayout.vue'
 import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // view users 
@@ -73,12 +73,12 @@ routers = [
 	},
 	{
 		path: '/',
-   		component: Full,
-		redirect: '/default/dashboard/index',
+   		component: mini,
+		redirect: '/mini/dashboard/index',
 		meta: { requiresAuth: true },
 		children: [
       		{
-	         	path: '/default/dashboard/index',
+	         	path: '/mini/dashboard/index',
 	         	component: Ecommerce,
 	         	meta: {
 	         		requiresAuth: true,
@@ -96,7 +96,7 @@ routers = [
 		    //     }
 		    // },
 		    {
-		        path: '/default/widgets/mana-company',
+		        path: '/mini/widgets/mana-company',
 		        component: Company,
 		        meta: {
 		        	requiresAuth: true,
@@ -105,7 +105,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/default/widgets/mana-company-chart',
+		        path: '/mini/widgets/mana-company-chart',
 		        component: CompanyChart,
 		        meta: {
 		        	requiresAuth: true,
@@ -114,7 +114,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/default/packages/index',
+		        path: '/mini/packages/index',
 		        component: PackageIndex,
 		        meta: {
 		        	requiresAuth: true,
@@ -124,7 +124,7 @@ routers = [
 
 		    }, 
 		    {
-		        path: 'default/setting',
+		        path: '/mini/setting',
 		        component: Setting,
 		        meta: {
 		        	requiresAuth: true,
@@ -133,7 +133,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: 'default/user-management',
+		        path: '/mini/user-management',
 		        component: UserManagement,
 		        meta: {
 		        	requiresAuth: true,
@@ -142,7 +142,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/default/users/change-password',
+		        path: '/mini/users/change-password',
 		        component: UserPass,
 		        meta: {
 		            requiresAuth: true,
@@ -151,7 +151,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/default/transaction/histories',
+		        path: '/mini/transaction/histories',
 		        component: HistoriesTransaction,
 		        meta: {
 		            requiresAuth: true,
@@ -160,7 +160,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/default/coupon-code/index',
+		        path: '/mini/coupon-code/index',
 		        component: IndexCoupon,
 		        meta: {
 		            requiresAuth: true,

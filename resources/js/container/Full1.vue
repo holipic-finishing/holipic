@@ -1,8 +1,7 @@
-<!-- App Main Structure --> -->
+<!-- App Main Structure --> 
 <template>
-	<div class="app-default-layout">
-
-<template v-if="loading">
+  <div class="app-mini-layout">
+    <template v-if="loading">
       <rotate-square2></rotate-square2>
     </template>
     <template v-else>
@@ -16,11 +15,11 @@
         </transition>
       </v-content>
       <!-- app customizer -->
-      <!-- <app-customizer></app-customizer> -->
+      <app-customizer></app-customizer>
       <!-- User Tour -->
-    
+      <tour></tour>
     </template>
-	</div>
+  </div>
 </template>
 
 <script>

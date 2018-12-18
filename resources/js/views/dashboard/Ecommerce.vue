@@ -89,7 +89,7 @@
 					<line-chart :width="300" >
 					</line-chart>
 					
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:red" v-show="typeTime == 'day'">	
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'day'">	
 						<!-- Fom day -->
 						<div class="style-card">
 							<p>Start</p>
@@ -98,7 +98,7 @@
 						</div>
 					</div>
 					
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:red" v-show="typeTime == 'day'">	
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'day'">	
 						<!-- Fom day -->
 						<div class="style-card">
 							<p>End</p>
@@ -107,12 +107,12 @@
 						</div>
 					</div>
 
-					<div class="xl3 btn-date" style="background-color:red" v-show="typeTime == 'day'">	
+					<div class="xl3 btn-date" style="background-color:#FFF" v-show="typeTime == 'day'">	
 						 <button class="btn btn-success"  v-on:click="reportByRangeDay()">Report</button>
 					</div>
 
 					<!-- Month -->
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:red" v-show="typeTime == 'month'">	
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'month'">	
 						<!-- Fom day -->
 						<div class="style-card">
 							<p>Start</p>
@@ -121,7 +121,7 @@
 						</div>
 					</div>
 					
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:red" v-show="typeTime == 'month'">	
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'month'">	
 						<!-- Fom day -->
 						<div class="style-card">
 							<p>End</p>
@@ -130,36 +130,58 @@
 						</div>
 					</div>
 
-					<div class="xl3 btn-date" style="background-color:red" v-show="typeTime == 'month'">	
+					<div class="xl3 btn-date" style="background-color:#FFF" v-show="typeTime == 'month'">	
 						 <button class="btn btn-success"  v-on:click="reportByMonth()">Report</button>
+					</div>
+
+					<!-- Year -->
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'year'">	
+						<!-- Fom day -->
+						<div class="style-card">
+							<p>Start</p>
+							<date-picker v-model="from_year" :append-to-body="true" lang="en" format="YYYY" width="200" type="year" placeholder="Select Year"
+							 ></date-picker>
+						</div>
+					</div>
+					
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'year'">	
+						<!-- Fom day -->
+						<div class="style-card">
+							<p>End</p>
+							<date-picker v-model="to_year" :append-to-body="true" lang="en" format="YYYY" width="200"  type="year"  placeholder="Select Year"
+							 ></date-picker> 
+						</div>
+					</div>
+
+					<div class="xl3 btn-date" style="background-color:#FFF" v-show="typeTime == 'year'">	
+						 <button class="btn btn-success"  v-on:click="reportByYear()">Report</button>
+					</div>
+
+					<!-- Week -->
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'week'">	
+						<!-- Fom day -->
+						<div class="style-card">
+							<p>Start</p>
+							<date-picker v-model="from_day_week" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200" placeholder="Select date"
+							 ></date-picker>
+						</div>
+					</div>
+					
+					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'week'">	
+						<!-- Fom day -->
+						<div class="style-card">
+							<p>End</p>
+							<date-picker v-model="to_day_week" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200"  placeholder="Select date"
+							 ></date-picker> 
+						</div>
+					</div>
+
+					<div class="xl3 btn-date" style="background-color:#FFF" v-show="typeTime == 'week'">	
+						 <button class="btn btn-success"  v-on:click="reportByWeek()">Report</button>
 					</div>
 
 
 					</app-card>
-				
-									
-							<!-- <div class="btn-date" v-show="valueSelectDateMonth == 'Day'">
-		                          <button class="btn btn-success"  v-on:click="reportByRangeDay()">Report</button>
-		                    </div> -->
-							<!-- Range Day-->
-							<!-- Report By Month -->
-							<!-- <div class="btn-date" v-show="valueSelectDateMonth == 'Month'">
-								<date-picker v-model="month" :append-to-body="true" lang="en" type="month" format="YYYY-MM" placeholder="Select Month" ></date-picker>
-							</div>
-							<div class="btn-date" v-show="valueSelectDateMonth == 'Month'">
-		                          <button class="btn btn-success"  v-on:click="reportByMonth()">Report</button>
-		                    </div> -->
-							<!-- Report By Year -->
-							<!-- <div class="btn-date" v-show="valueSelectDateMonth == 'Year'">
-								<date-picker v-model="year" :append-to-body="true" lang="en" type="year" format="YYYY" placeholder="Select Year" ></date-picker>
-							</div>
-							<div class="btn-date" v-show="valueSelectDateMonth == 'Year'">
-		                          <button class="btn btn-success"  v-on:click="reportByYear()">Report</button>
-		                    </div> -->
-							<!-- end By year -->
-							<!-- <div class="btn-date" v-show="valueSelectDateMonth == 'Week'">
-		                          <button class="btn btn-success"  v-on:click="reportByWeek()">Report</button>
-		                    </div> -->
 				
 			</v-layout>
 			<!-- Social Feeds -->
@@ -265,8 +287,13 @@ export default {
 	      to_day:'',
 	      from_month:'',
 	      to_month:'',
+	      from_year:'',
+	      to_year:'',
 	      typeTime:'',
-	      total:0
+	      total:0,
+	      from_day_week:'',
+	      to_day_week:'',
+	      validate:false
 	      
 
 	    };
@@ -291,8 +318,169 @@ export default {
 
 			})
 		},
+
+		Validations(from,to,value){
+
+			if(!from && !to){
+				setTimeout(function(){
+		            Vue.notify({
+		                group: 'loggedIn',
+		                type: 'error',
+		                text: 'No '+value+' Yet'
+		            });
+				},500);
+			} else if (!to) {
+				setTimeout(function(){
+		            Vue.notify({
+		                group: 'loggedIn',
+		                type: 'error',
+		                text: 'To '+value+' Required'
+		            });
+				},500);
+			} else if(!from) {
+				setTimeout(function(){
+		            Vue.notify({
+		                group: 'loggedIn',
+		                type: 'error',
+		                text: 'From '+value+' Required'
+		            });
+				},500);
+			} else { 
+				this.validate = true
+			}
+		},
+
 		reportByRangeDay() {
-			if(!this.from_day && !this.to_day){
+			this.Validations(this.from_day,this.to_day,'Days')
+			if(this.validate == true)
+			{	
+				var	start_day = moment(this.from_day)
+				var	end_day =  moment(this.to_day)
+
+				var day = end_day.diff(start_day,'days')
+				console.log(day)
+				if(day > 15) {
+					setTimeout(function(){
+			            Vue.notify({
+			                group: 'loggedIn',
+			                type: 'error',
+			                text: 'Less than 15 days'
+			            });
+					},500);
+				}  else if(day <=0) {
+
+					setTimeout(function(){
+			            Vue.notify({
+			                group: 'loggedIn',
+			                type: 'error',
+			                text: 'To days Large from days'
+			            });
+					},500);
+
+				} else {
+					let params = {
+					start_day :  this.formatDate(this.from_day),
+					end_day :   this.formatDate(this.to_day)
+					}
+					let obj = {
+						params : params,
+						chooes : 'Day'
+					}
+					this.$root.$emit('companyChart', obj)
+					this.validate = false
+				}
+			}
+
+		},
+
+		reportByMonth(){
+			this.Validations(this.from_month,this.to_month,'Month')
+			if(this.validate == true)
+			{
+				var	start_month = moment(this.from_month)
+				var	end_month =  moment(this.to_month)
+
+				var month = end_month.diff(start_month,'month')
+
+				if(month > 12) {
+					setTimeout(function(){
+			            Vue.notify({
+			                group: 'loggedIn',
+			                type: 'error',
+			                text: 'Less than 12 Month'
+			            });
+					},500);
+				} else if(month <=0) {
+
+					setTimeout(function(){
+			            Vue.notify({
+			                group: 'loggedIn',
+			                type: 'error',
+			                text: 'To month Large from month'
+			            });
+					},500);
+				
+				} else {
+					var month = {
+			      		start_month: moment(this.from_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
+			      		end_month:moment(this.to_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD')
+		      		}
+					let obj = {
+							params : month,
+							chooes : 'Month'
+						}
+					this.$root.$emit('companyChart', obj)
+					this.validate = false
+				}
+			}
+
+		},
+
+		reportByYear(){
+			this.Validations(this.from_year,this.to_year,'Year')
+			if(this.validate == true)
+			{
+				var	start_year = moment(this.from_year)
+				var	end_year =  moment(this.to_year)
+
+				var year = end_year.diff(start_year,'year')
+
+				if(year > 5) {
+					setTimeout(function(){
+			            Vue.notify({
+			                group: 'loggedIn',
+			                type: 'error',
+			                text: 'Less than 5 Year'
+			            });
+					},500);
+				} else if (year <=0) {
+
+					setTimeout(function(){
+			            Vue.notify({
+			                group: 'loggedIn',
+			                type: 'error',
+			                text: 'To year Large from year'
+			            });
+					},500);
+
+				} else {
+					var year = {
+	      				start_year:moment(this.from_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+	      				end_year:moment(this.to_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM')		
+			      	}
+					let obj = {
+							params : year,
+							chooes : 'Year'
+					}
+					this.$root.$emit('companyChart', obj)
+					this.validate = false
+				}
+			}
+		},
+
+		reportByWeek(){
+
+			if(!this.from_day_week && !this.to_day_week){
 				setTimeout(function(){
 		            Vue.notify({
 		                group: 'loggedIn',
@@ -300,7 +488,7 @@ export default {
 		                text: 'No Date Yet'
 		            });
 				},500);
-			} else if (!this.to_day) {
+			} else if (!this.to_day_week) {
 				setTimeout(function(){
 		            Vue.notify({
 		                group: 'loggedIn',
@@ -308,7 +496,7 @@ export default {
 		                text: 'To Day Required'
 		            });
 				},500);
-			} else if(!this.from_day) {
+			} else if(!this.from_day_week) {
 				setTimeout(function(){
 		            Vue.notify({
 		                group: 'loggedIn',
@@ -322,7 +510,7 @@ export default {
 				var	end_day =  moment(this.to_day)
 
 				var day = end_day.diff(start_day,'days')
-
+				console.log(day)
 				if(day > 15) {
 					setTimeout(function(){
 			            Vue.notify({
@@ -331,53 +519,30 @@ export default {
 			                text: 'Less than 15 days'
 			            });
 					},500);
+				}  else if(day <=0) {
+
+					setTimeout(function(){
+			            Vue.notify({
+			                group: 'loggedIn',
+			                type: 'error',
+			                text: 'To days Large from days'
+			            });
+					},500);
+
 				} else {
 					let params = {
-					start_day :  this.formatDate(this.from_day),
-					end_day :   this.formatDate(this.to_day)
+							week :  'week'
 					}
 					let obj = {
-						params : params,
-						chooes : 'Day'
+							params : params,
+							chooes : 'Week'
 					}
 					this.$root.$emit('companyChart', obj)
 				}
 			}
-		},
 
-		reportByMonth(){
-			var month = {
-	      		start_month: moment(this.from_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
-	      		end_month:moment(this.to_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD')
-	      	}
-			let obj = {
-					params : month,
-					chooes : 'Month'
-				}
-			this.$root.$emit('companyChart', obj)
-		},
 
-		reportByYear(){
-			var year = {
-	      			year:moment(this.year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM')
-	      	}
-			let obj = {
-					params : year,
-					chooes : 'Year'
-				}
-			this.$root.$emit('companyChart', obj)
-
-		},
-
-		reportByWeek(){
-			let params = {
-					week :  'week'
-			}
-			let obj = {
-					params : params,
-					chooes : 'Week'
-			}
-			this.$root.$emit('companyChart', obj)
+			
 
 		},
 
@@ -387,6 +552,23 @@ export default {
   			if(this.typeTime == "day"){
   				this.defaultReportSevenDay()
   			}
+
+  			if(this.typeTime == "month"){
+  				this.defaultReportMonth()
+  			}
+
+  			if(this.typeTime == "year") {
+  				this.defaultReportYear()
+  			}
+
+  			if(this.typeTime == "revenue") {
+  				this.defaultReportSevenDay()
+  			}
+
+  			if(this.typeTime == "week") {
+  				this.defaultReportWeek()
+  			}
+  			
   		},
 
   		defaultReportSevenDay(){
@@ -401,85 +583,48 @@ export default {
 			}
 			this.$root.$emit('companyChart', obj)
   	
+  		},
+
+  		defaultReportMonth(){
+  			let params = {
+					defaultMonth :  'default'
+			}
+
+  			let obj = {
+					params : params,
+					chooes : 'Month'
+			}
+			this.$root.$emit('companyChart', obj)
+  		},
+
+  		defaultReportYear(){
+  			let params = {
+					defaultYear :  'default'
+			}
+
+  			let obj = {
+					params : params,
+					chooes : 'year'
+			}
+			this.$root.$emit('companyChart', obj)
+  		},
+
+  		defaultReportWeek(){
+  			let params = {
+					defaultWeek :  'default'
+			}
+
+  			let obj = {
+					params : params,
+					chooes : 'Week'
+			}
+			this.$root.$emit('companyChart', obj)
   		}
-		// getData(params){
-
-		// 	let url = config.API_URL+'report-incomes-package'
-
-		// 	this.week = this.valueSelectDateMonth
-
-		// 	getWithData(url,params)
-		// 	.then((res) => {
-		// 		if(res.data.success && res){
-		// 			if(this.week == "Week") {
-		// 				var dataWeek =[];
-		//                 _.forEach(res.data.data,function(value,key){
-		//                   dataWeek.unshift(value);
-		//                 });
-  //               		this.handleDataWeek(dataWeek);
-
-		// 			}else {
-		// 				this.handleDataDaily(res.data.data);
-		// 			}
-		// 		}
-				
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err)
-		// 	})
-		// },
-
-		// handleDataDaily(data){
-		// 	var lables = []
-	 //        var total = []
-	 //        _.forEach(data, function(value, key) {
-	 //            lables.push(key)
-	 //            total.push(value.total)
-	 //        });
-
-	 //        this.renderData(lables,total);
-
-		// },
-
-		// handleDataWeek(data){
-
-		// 	var lables = []
-	 //        var total = []
-	 //        _.forEach(data, function(value, key) {
-	 //          lables.push(moment(value['startOfWeek']).format('MMM-DD') + ' / ' + moment(value['endOfWeek']).format('MMM-DD'))
-	 //          total.push(value.total)                      
-	 //        });
-	 //        this.renderData(lables,total);
-
-		// },
-
-		// renderData(lables,total){
-			
-	 //        this.datacollection = {
-		// 		labels: lables,
-		// 		datasets: [
-		// 			{
-		// 				label: 'Total Transaction',
-		// 				backgroundColor: '#f87979',
-		// 				fill: false,
-		// 				lineTension: 0.4,
-		// 				borderColor: '#5D92F4',
-		// 	            pointBorderColor: '#5D92F4',
-		// 	            pointBorderWidth: 2,
-		// 	            pointRadius: 3,
-		// 	            pointBackgroundColor: '#FFF',
-	 //              		borderWidth: 3,
-		// 				data: total
-		// 			}
-		// 		]
-		// 	}
-  //     	},
 
 
 	},
 	created(){
 		this.fetchData()
-		
 	},
 	computed:{
 
@@ -522,5 +667,6 @@ export default {
 .style-card p {
 	margin: 0px 0px 5px 5px;
     font-size: 17px;
+    font-weight: 700;
 }
 </style>

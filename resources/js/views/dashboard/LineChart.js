@@ -91,10 +91,13 @@ export default {
     },
  
     fetchData() {
-       let params = {
-					week :  'week'
-			}
-		this.chooes = "Week"
+  //      let params = {
+		// 		week :  'week'
+		// 	}
+		// this.chooes = "Week"
+		let params = {
+					defaultDay :  'default'
+		}
 		this.getData(params);
     },
 
@@ -145,7 +148,7 @@ export default {
 			var lables = []
 	        var total = []
 	        _.forEach(data, function(value, key) {
-	          lables.push(moment(value['startOfWeek']).format('MMM-DD') + ' / ' + moment(value['endOfWeek']).format('MMM-DD'))
+	          lables.push(moment(value['startOfWeek']).format('MM-DD') + ' / ' + moment(value['endOfWeek']).format('MM-DD'))
 	          total.push(value.total)                      
 	        });
 	        this.renderChartData(lables,total);

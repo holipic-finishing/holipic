@@ -23,8 +23,7 @@ class ReportController extends BaseApiController
 	public function reportIncomesPackage(Request $request){
 
 		$input = $request->all();
-
-
+        // report from day, to day
        	if($request->has(['start_day','end_day'])){
 
        		$arrayDay = $this->initDays($input['start_day'],$input['end_day']);
@@ -33,43 +32,90 @@ class ReportController extends BaseApiController
 
        		return $this->responseSuccess('Data success',$report);
 
-       	} else if($request->has(['start_month','end_month'])){
+       	} else 
+        // report from month, to month 
+          if($request->has(['start_month','end_month'])){
 
-       		$arrayDayInMonth = $this->initInMonth($input['start_month'],$input['end_month']);
+         		$arrayInMonth = $this->initInMonth($input['start_month'],$input['end_month']);
 
-       		$report = $this->transactionRepository->reportUserMonth($input,$arrayDayInMonth);
+         		$report = $this->transactionRepository->reportTransactionMonth($input,$arrayInMonth);
 
-       		return $this->responseSuccess('Data success',$report);
+         		return $this->responseSuccess('Data success',$report);
 
-       	} else if($request->has(['year'])){
+       	} else 
+        // report year
+          if($request->has(['start_year','end_year'])){
 
-       		$arrayMonthInYear = $this->initMonthInYear($input['year']);
-       		
-       		$report = $this->transactionRepository->reportUserYear($input,$arrayMonthInYear);
+         		$arrayMonthInYear = $this->initYear($input['start_year'],$input['end_year']);
+         		
+         		$report = $this->transactionRepository->reportTransactionYear($input,$arrayMonthInYear);
 
-       		return $this->responseSuccess('Data success',$report);
+         		return $this->responseSuccess('Data success',$report);
 
-       	} else if ($request->has(['week'])) {
+       	} else 
+        // report week
+          if($request->has(['start_day_week','end_day_week'])){
 
-       		$arrayWeek = $this->initWeekDays();
+            // $arrayWeek = $this->initDayWeekDays()
 
-       		$report = $this->transactionRepository->reportUserWeek($arrayWeek);
 
-       		return $this->responseSuccess('Data success',$report);
+        } else 
+          // report default week
+          if ($request->has(['defaultWeek'])) {
 
-       	} else if($request->has(['defaultDay'])){
+         		$arrayWeek = $this->initWeekDays();
 
-          $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
+         		$report = $this->transactionRepository->reportTransactionWeek($arrayWeek);
 
-          $endDay     = Carbon::today()->format('Y-m-d');
+         		return $this->responseSuccess('Data success',$report);
 
-          $arrayDay = $this->initDays($startDay,$endDay);
+       	} else 
+          // report default 7 days 
+          if($request->has(['defaultDay'])){
 
-          $report = $this->transactionRepository->reportTransactionrDaily($input,$arrayDay);
+            $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
 
-          return $this->responseSuccess('Data success',$report);
+            $endDay     = Carbon::today()->format('Y-m-d');
+
+            $arrayDay = $this->initDays($startDay,$endDay);
+
+            $report = $this->transactionRepository->reportTransactionrDaily($input,$arrayDay);
+
+            return $this->responseSuccess('Data success',$report);
        
-        } else {
+        } else 
+          // report default 12 month
+          if($request->has(['defaultMonth'])){
+
+            $startMonth  = Carbon::today()->subMonth(12)->format('Y-m-d');
+
+            $endMonth    = Carbon::today()->format('Y-m-d');
+
+            $arrayMonth = $this->initInMonth($startMonth,$endMonth);
+
+            $report = $this->transactionRepository->reportTransactionMonth($input,$arrayMonth);
+
+            return $this->responseSuccess('Data success',$report);
+
+          }  else 
+
+          if($request->has(['defaultYear'])){
+
+            $startYear  = Carbon::today()->subYears(2)->format('Y-m');
+
+            $endYear    = Carbon::today()->format('Y-m');
+
+            $arrayYear = $this->initYear($startYear,$endYear);
+
+            $report = $this->transactionRepository->reportTransactionYear($input,$arrayYear);
+
+            return $this->responseSuccess('Data success',$report);
+
+          }
+
+        else
+        {
+
        		return $this->responseError('Failed!', [
                 'error' => 'Data not found',
             ],500);
@@ -126,7 +172,7 @@ class ReportController extends BaseApiController
     public function initWeekDays(){
        $today = Carbon::today();
         $arrayWeek = [];
-        for ($i=0; $i <=3 ; $i++) { 
+        for ($i=0; $i <=6 ; $i++) { 
             $arrayWeek[$i]['endOfWeek'] = Carbon::parse($today)->format('Y-m-d');
             $arrayWeek[$i]['startOfWeek'] = Carbon::parse($today)->subDays(6)->format('Y-m-d');
             $today = Carbon::parse($today)->subDays(7)->format('Y-m-d');
@@ -134,11 +180,38 @@ class ReportController extends BaseApiController
         return $arrayWeek;
     }
 
-    public function initInMonth($from_month,$end_month){
+    public function initInMonth($from_month,$to_month){
         $start_month = Carbon::parse($from_month);
-        dd($start_month);
-        $end_month = Carbon::parse($from_month);
-        $month = $end_month->diffInMonths($start_month);
-        dd($month);
+        $end_month = Carbon::parse($to_month);
+        $data = [];
+        $date = $start_month;
+        while($date <= $end_month){
+            $data[$date->format('Y-m')] = null;
+            $date->addMonth(1);
+        }
+        return $data;
+    }
+
+    public function initYear($from_year, $to_year){
+        $start_year = Carbon::parse($from_year);
+        $end_year = Carbon::parse($to_year);
+        $data = [];
+        $date = $start_year;
+        while($date <= $end_year){
+            $data[$date->format('Y')] = null;
+            $date->addYear(1);
+        }
+        return $data;
+    }
+
+    public function initDayWeekDays(){
+       $today = Carbon::today();
+        $arrayWeek = [];
+        for ($i=0; $i <=6 ; $i++) { 
+            $arrayWeek[$i]['endOfWeek'] = Carbon::parse($today)->format('Y-m-d');
+            $arrayWeek[$i]['startOfWeek'] = Carbon::parse($today)->subDays(6)->format('Y-m-d');
+            $today = Carbon::parse($today)->subDays(7)->format('Y-m-d');
+        }
+        return $arrayWeek;
     }
 }

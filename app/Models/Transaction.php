@@ -19,13 +19,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Transaction extends Model
 {
-    use SoftDeletes;
 
     public $table = 'transactions';
-    
-
-    protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'user_id',

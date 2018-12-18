@@ -22,7 +22,9 @@ class TransactionsTableSeeder extends Seeder
 	            'company_id' => 1,
 	            'dated' => '2018-12-11',
                 'system_fee' => '1000',
-                'credit_card_fee' => '2000'
+                'credit_card_fee' => '2000',
+                'invoice' => '11520'
+
         	],
 
         	[
@@ -34,7 +36,9 @@ class TransactionsTableSeeder extends Seeder
 	            'company_id' => 1,
 	            'dated' => '2018-12-11',
                 'system_fee' => '1200',
-                'credit_card_fee' => '205'
+                'credit_card_fee' => '205',
+                'invoice' => 'A5B20'
+
         	],
 
             [
@@ -46,7 +50,9 @@ class TransactionsTableSeeder extends Seeder
                 'company_id' => 1,
                 'dated' => '2018-12-9',
                 'system_fee' => '800',
-                'credit_card_fee' => '1800'
+                'credit_card_fee' => '1800',
+                'invoice' => '8520'
+
             ],
 
             [
@@ -58,7 +64,8 @@ class TransactionsTableSeeder extends Seeder
                 'company_id' => 1,
                 'dated' => '2018-11-30',
                 'system_fee' => '250',
-                'credit_card_fee' => '200'
+                'credit_card_fee' => '200',
+                'invoice' => '2366'
             ],
 
         ]

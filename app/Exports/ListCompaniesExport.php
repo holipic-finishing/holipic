@@ -52,7 +52,7 @@ class ListCompaniesExport implements FromCollection,WithHeadings
     public function headings(): array
     {
         return [
-            '#',
+            'ID',
             'Company Name',
             'Fullname',
             'Email',

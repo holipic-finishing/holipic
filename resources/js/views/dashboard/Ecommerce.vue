@@ -88,98 +88,106 @@
 					</div>	
 					<line-chart :width="300" >
 					</line-chart>
+					<div class="card-body" v-show="typeTime == 'day'">
+						<p class="text-primary">(*) Please No choose more than 15 days</p>
+						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" >	
+							<!-- Fom day -->
+							<div class="style-card">
+								<p>Start</p>
+								<date-picker v-model="from_day" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200"
+								 ></date-picker>
+							</div>
+						</div>
+						
+						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" >	
+							<!-- Fom day -->
+							<div class="style-card">
+								<p>End</p>
+								<date-picker v-model="to_day" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200" 
+								 ></date-picker> 
+							</div>
+						</div>
 					
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'day'">	
-						<!-- Fom day -->
-						<div class="style-card">
-							<p>Start</p>
-							<date-picker v-model="from_day" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200"
-							 ></date-picker>
+
+						<div class="xl3 btn-date" style="background-color:#FFF" >	
+							 <button class="btn btn-success"  v-on:click="reportByRangeDay()">Report</button>
 						</div>
 					</div>
-					
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'day'">	
-						<!-- Fom day -->
-						<div class="style-card">
-							<p>End</p>
-							<date-picker v-model="to_day" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200" 
-							 ></date-picker> 
-						</div>
-					</div>
-
-					<div class="xl3 btn-date" style="background-color:#FFF" v-show="typeTime == 'day'">	
-						 <button class="btn btn-success"  v-on:click="reportByRangeDay()">Report</button>
-					</div>
-
 					<!-- Month -->
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'month'">	
-						<!-- Fom day -->
-						<div class="style-card">
-							<p>Start</p>
-							<date-picker v-model="from_month" :append-to-body="true" lang="en" format="YYYY-MM" width="200" type="month" placeholder="Select Month"
-							 ></date-picker>
+					<div class="card-body" v-show="typeTime == 'month'">
+						<p class="text-primary">(*) Please No choose more than 12 month</p>
+						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF">	
+							<!-- Fom day -->
+							<div class="style-card">
+								<p>Start</p>
+								<date-picker v-model="from_month" :append-to-body="true" lang="en" format="YYYY-MM" width="200" type="month" placeholder="Select Month"
+								 ></date-picker>
+							</div>
+						</div>
+						
+						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF">	
+							<!-- Fom day -->
+							<div class="style-card">
+								<p>End</p>
+								<date-picker v-model="to_month" :append-to-body="true" lang="en" format="YYYY-MM" width="200"  type="month"  placeholder="Select Month"
+								 ></date-picker> 
+							</div>
+						</div>
+
+						<div class="xl3 btn-date" style="background-color:#FFF">	
+							 <button class="btn btn-success"  v-on:click="reportByMonth()">Report</button>
 						</div>
 					</div>
-					
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'month'">	
-						<!-- Fom day -->
-						<div class="style-card">
-							<p>End</p>
-							<date-picker v-model="to_month" :append-to-body="true" lang="en" format="YYYY-MM" width="200"  type="month"  placeholder="Select Month"
-							 ></date-picker> 
-						</div>
-					</div>
-
-					<div class="xl3 btn-date" style="background-color:#FFF" v-show="typeTime == 'month'">	
-						 <button class="btn btn-success"  v-on:click="reportByMonth()">Report</button>
-					</div>
-
 					<!-- Year -->
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'year'">	
-						<!-- Fom day -->
-						<div class="style-card">
-							<p>Start</p>
-							<date-picker v-model="from_year" :append-to-body="true" lang="en" format="YYYY" width="200" type="year" placeholder="Select Year"
-							 ></date-picker>
+					<div class="card-body" v-show="typeTime == 'year'">
+						<p class="text-primary">(*) Please No choose more than 5 year</p>
+						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF">	
+							<!-- Fom day -->
+							<div class="style-card">
+								<p>Start</p>
+								<date-picker v-model="from_year" :append-to-body="true" lang="en" format="YYYY" width="200" type="year" placeholder="Select Year"
+								 ></date-picker>
+							</div>
 						</div>
-					</div>
-					
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'year'">	
-						<!-- Fom day -->
-						<div class="style-card">
-							<p>End</p>
-							<date-picker v-model="to_year" :append-to-body="true" lang="en" format="YYYY" width="200"  type="year"  placeholder="Select Year"
-							 ></date-picker> 
+						
+						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF">	
+							<!-- Fom day -->
+							<div class="style-card">
+								<p>End</p>
+								<date-picker v-model="to_year" :append-to-body="true" lang="en" format="YYYY" width="200"  type="year"  placeholder="Select Year"
+								 ></date-picker> 
+							</div>
 						</div>
-					</div>
 
-					<div class="xl3 btn-date" style="background-color:#FFF" v-show="typeTime == 'year'">	
-						 <button class="btn btn-success"  v-on:click="reportByYear()">Report</button>
-					</div>
-
+						<div class="xl3 btn-date" style="background-color:#FFF">	
+							 <button class="btn btn-success"  v-on:click="reportByYear()">Report</button>
+						</div>
+					</div>	
 					<!-- Week -->
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'week'">	
-						<!-- Fom day -->
-						<div class="style-card">
-							<p>Start</p>
-							<date-picker v-model="from_day_week" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200" placeholder="Select date"
-							 ></date-picker>
+					<div class="card-body" v-show="typeTime == 'week'">
+						<p class="text-primary">(*) Please No choose more than 6 week</p>
+						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF">	
+							<!-- Fom day -->
+							<div class="style-card">
+								<p>Start</p>
+								<date-picker v-model="from_day_week" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200" placeholder="Select date"
+								 ></date-picker>
+							</div>
+						</div>
+						
+						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF">	
+							<!-- Fom day -->
+							<div class="style-card">
+								<p>End</p>
+								<date-picker v-model="to_day_week" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200"  placeholder="Select date"
+								 ></date-picker> 
+							</div>
+						</div>
+
+						<div class="xl3 btn-date" style="background-color:#FFF">	
+							 <button class="btn btn-success"  v-on:click="reportByWeek()">Report</button>
 						</div>
 					</div>
-					
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date" style="background-color:#FFF" v-show="typeTime == 'week'">	
-						<!-- Fom day -->
-						<div class="style-card">
-							<p>End</p>
-							<date-picker v-model="to_day_week" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200"  placeholder="Select date"
-							 ></date-picker> 
-						</div>
-					</div>
-
-					<div class="xl3 btn-date" style="background-color:#FFF" v-show="typeTime == 'week'">	
-						 <button class="btn btn-success"  v-on:click="reportByWeek()">Report</button>
-					</div>
-
 
 					</app-card>
 				
@@ -551,6 +559,8 @@ export default {
 
   			if(this.typeTime == "week") {
   				this.defaultReportWeek()
+  				this.from_day_week=''
+	      		this.to_day_week=''
   			}
   			
   		},
@@ -632,7 +642,7 @@ export default {
 <style lang="css" scoped>
 .btn-date {
 	display: inline-block;
-    margin: 30px 10px 0px 0px;;
+    margin: 0px 10px 0px 0px;;
 }
 .nav-bar-chart{
 	font-size:20px;
@@ -647,11 +657,14 @@ export default {
 		color: #2196f3 !important;
 }
 .style-card {
-	padding: 15px !important;
+	padding: 5px !important;
 }
 .style-card p {
-	margin: 0px 0px 5px 5px;
+	margin: 0px 0px 5px 0px;
     font-size: 17px;
     font-weight: 700;
+}
+.card-body p{
+	margin: 0px 0px 5px 5px;
 }
 </style>

@@ -215,7 +215,7 @@ class TransactionRepository extends BaseRepository
         $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
                                     ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
                                     ->where('type','1')
-                                    ->where('status','completed')
+                                    ->where('status','RECIVED')
                                     ->groupBy('dated')
                                     ->get();
         
@@ -262,7 +262,7 @@ class TransactionRepository extends BaseRepository
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth)
                                     ->where('type','1')
-                                    ->where('status','completed')
+                                    ->where('status','RECIVED')
                                     ->groupBy('date')->get();
         foreach ($InMonth as $key => $date) {
             if(count($transactions)){
@@ -309,7 +309,7 @@ class TransactionRepository extends BaseRepository
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $from_year)
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $to_year)
                                     ->where('type','1')
-                                    ->where('status','completed')
+                                    ->where('status','RECIVED')
                                     ->groupBy('date')->get();
 
         foreach ($InYear as $key => $date) {
@@ -355,7 +355,7 @@ class TransactionRepository extends BaseRepository
                                 ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
                                 ->groupBy('dated')
                                 ->where('type','1')
-                                ->where('status','completed')
+                                ->where('status','RECIVED')
                                 ->get();                
 
         foreach ($dayWeek as $key => $date) {

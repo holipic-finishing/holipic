@@ -92,13 +92,13 @@ export const sidebarBackgroundImages = [
 export const sidebarFilters = [
    {
       id: 1,
-      class: 'sidebar-overlay-dark',
-      name: 'message.dark'
+      class: 'sidebar-overlay-light',
+      name: 'message.light'
    },
    {
       id: 2,
-      class: 'sidebar-overlay-light',
-      name: 'message.light'
+      class: 'sidebar-overlay-dark',
+      name: 'message.dark'
    },
    {
       id: 3,

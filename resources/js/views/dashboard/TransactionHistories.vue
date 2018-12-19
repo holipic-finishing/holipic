@@ -137,39 +137,39 @@
                 	<v-list-tile-sub-title class="font-weight-thin ">{{ items.id }}</v-list-tile-sub-title>
                 </v-list-tile-content>
             </v-list-tile>
-           <v-list-tile >
+           	<v-list-tile >
                 <v-list-tile-content  class="drawer-info">
                 	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Company Name </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.company_name }}</v-list-tile-sub-title>
+              	</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile >
+                <v-list-tile-content  class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Currency </v-list-tile-title>
+                	<v-list-tile-sub-title class="font-weight-thin">{{ items.symbol }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
 	      	<v-list-tile >
                 <v-list-tile-content>
               	</v-list-tile-content>
             </v-list-tile>
-	      	<v-list-tile>
-	      		<v-flex xs12>
-	      			<v-flex xs9>
-	      				<v-text-field label="Amount" v-model="itemEdit.amount"></v-text-field>
-	      			</v-flex>
-	      			<v-flex xs3>
-	      				
-	      			</v-flex>
-	            	
-	        	</v-flex>
+	      	<v-list-tile>	      			
+	      		<v-text-field label="Amount" v-model="itemEdit.amount" :rules="[rules.number]"></v-text-field>
             </v-list-tile>
             <v-list-tile>
-            	<v-flex xs12>
-        			<v-select
-			            :items="listStatus"
-			            label="Status"
-			            v-model="itemEdit.status"
-			        ></v-select>
-            	</v-flex>
+    			<v-select
+		            :items="listStatus"
+		            label="Status"
+		            v-model="itemEdit.status"
+		        ></v-select>		    	
+            </v-list-tile>
+             <v-list-tile>
+    			<v-list-tile-content>
+              	</v-list-tile-content>		    	
             </v-list-tile>
             <v-list-tile>
             	<v-spacer></v-spacer>
-	           	<v-btn color="primary" @click="editTransaction()">Edit</v-btn>
+	           	<v-btn color="primary" @click="editTransaction()" :disabled="!itemEdit.amount">Edit</v-btn>
             </v-list-tile>
 	    </v-navigation-drawer>
 	      	<v-toolbar flat color="white">
@@ -298,10 +298,21 @@ export default {
 	        itemEdit: {
 	        	'amount' : '',
 	        	'status' : '',
-	        	'id' : ''
+	        	'id' : '',
+	        	'symbol' : ''
 	        },
 
-	        listStatus: ['RECIVED', 'BEEN SEEN']
+	        listStatus: ['RECIVED', 'BEEN SEEN'],
+
+	        rules: {
+	          	number: value => {
+		            const abc = /^([0-9]*|\d*\.\d{1}?\d*)$/
+		            return abc.test(value) || 'Please input number.'
+	          	},
+
+        	},
+
+
 	    }
   	},
 
@@ -371,6 +382,7 @@ export default {
 			this.itemEdit.id = items.id
 			this.itemEdit.amount = items.amount
 			this.itemEdit.status = items.status
+			this.itemEdit.symbol = items.symbol
 		},
 
 		editTransaction(){

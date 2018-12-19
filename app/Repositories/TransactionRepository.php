@@ -597,146 +597,190 @@ class TransactionRepository extends BaseRepository
     }
 
 
-    public function reportUserDaily($attributes,$dates){
+    public function reportTransactionrDaily($attributes,$dates){
 
         if(isset($attributes['start_day']) && isset($attributes['end_day']) )
         {
             $startDay = Carbon::parse($attributes['start_day'])->format('Y-m-d');
+
             $endDay = Carbon::parse($attributes['end_day'])->format('Y-m-d');
+
+        }else {
+
+            $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
+
+            $endDay     = Carbon::today()->format('Y-m-d');
         }
        
         $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
                                     ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
                                     ->where('type','1')
-                                    ->where('status','completed')
+                                    ->where('status','RECIVED')
                                     ->groupBy('dated')
                                     ->get();
-
-
+        
         foreach ($dates as $key => $date) {
-
-            foreach ($transactions as $k_v => $value) {
+            if(count($transactions)){
+                foreach ($transactions as $k_v => $value) {
             
-                $day = Carbon::parse($value->dated)->format('Y-m-d');
+                    $day = Carbon::parse($value->dated)->format('Y-m-d');
 
-                if($key == $day) {
-                    $dates[$key]['total'] = $value->total;
-                    break;
+                    if($key == $day) {
+                        $dates[$key]['total'] = $value->total;
+                        break;
 
-                } else {
-                    $dates[$key]['total'] = 0;
-                }
-            }              
+                    } else {
+                        $dates[$key]['total'] = 0;
+                    }
+                }  
+            } else {
+                 $dates[$key]['total'] = 0;
+            }
+                        
         }
-
+       
         return $dates;
     }
 
-    public function reportUserMonth($attributes,$dayInMonth){
+    public function reportTransactionMonth($attributes,$InMonth){
 
-        if(isset($attributes['month']))
+        if(isset($attributes['start_month']) && isset($attributes['end_month']))
         {
-            $month = Carbon::parse($attributes['month'])->format('Y-m');
+            $fromMonth = Carbon::parse($attributes['start_month'])->format('Y-m');
+
+            $toMonth = Carbon::parse($attributes['end_month'])->format('Y-m');
+        }
+        else {
+
+            $fromMonth = Carbon::today()->subMonth(12)->format('Y-m');
+
+            $toMonth = Carbon::today()->format('Y-m');
         }
 
-        $timeMonth = explode("-", $attributes['month']);
-
-        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
-                                    ->whereYear('dated',$timeMonth[0])
-                                    ->whereMonth('dated',$timeMonth[1])
+        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total'),
+                                            DB::raw("DATE_FORMAT(dated,'%Y-%m') as date"))
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth)
                                     ->where('type','1')
-                                    ->where('status','completed')
-                                    ->groupBy('dated')->get();
-
-        foreach ($dayInMonth as $key => $date) {
-
-            foreach ($transactions as $k_v => $value) {
+                                    ->where('status','RECIVED')
+                                    ->groupBy('date')->get();
+        foreach ($InMonth as $key => $date) {
+            if(count($transactions)){
+                 foreach ($transactions as $k_v => $value) {
             
-                $day = Carbon::parse($value->dated)->format('Y-m-d');
+                    $month = Carbon::parse($value->date)->format('Y-m');
 
-                if($key == $day) {
-                    $dayInMonth[$key]['total'] = $value->total;
-                    break;
+                    if($key == $month) {
+                        $InMonth[$key]['total'] = $value->total;
+                        break;
 
-                } else {
-                    $dayInMonth[$key]['total'] = 0;
-                }
-            }              
+                    } else {
+                        $InMonth[$key]['total'] = 0;
+                    }
+                }   
+            } else {
+                $InMonth[$key]['total'] = 0;
+            }
+                      
         }
-
-        return $dayInMonth;
+        return $InMonth;
     }
 
-    public function reportUserYear($attributes,$monthInYear){
+    public function reportTransactionYear($attributes,$InYear){
 
-        if(isset($attributes['year']))
+        if(isset($attributes['start_year']) && isset($attributes['end_year']))
         {
-            $year = Carbon::parse($attributes['year'])->format('Y');
+            $from_year = Carbon::parse($attributes['start_year'])->format('Y');
+
+            $to_year = Carbon::parse($attributes['end_year'])->format('Y');
+        }
+        else {
+
+            $from_year = Carbon::today()->subYears(2)->format('Y-m');
+
+            $to_year = Carbon::today()->format('Y-m');
         }
 
-        $timeYear = explode("-", $attributes['year']);
 
         $transactions = $this->model->select(
                                         DB::raw('SUM(system_fee) AS total'),
-                                        DB::raw("DATE_FORMAT(dated,'%Y-%c') as date")
+                                        DB::raw("DATE_FORMAT(dated,'%Y') as date")
                                     )
-                                    ->whereYear('dated',$timeYear[0])
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $from_year)
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $to_year)
                                     ->where('type','1')
-                                    ->where('status','completed')
+                                    ->where('status','RECIVED')
                                     ->groupBy('date')->get();
 
-        foreach ($monthInYear as $key => $date) {
+        foreach ($InYear as $key => $date) {
+            if(count($transactions)) {
+                foreach ($transactions as $k_v => $value) {
+                
+                    if($key == $value->date) {
+                        $InYear[$key]['total'] = $value->total;
+                        break;
 
-            foreach ($transactions as $k_v => $value) {
-            
-                if($key == $value->date) {
-                    $monthInYear[$key]['total'] = $value->total;
-                    break;
-
-                } else {
-                    $monthInYear[$key]['total'] = 0;
-                }
-            }              
+                    } else {
+                        $InYear[$key]['total'] = 0;
+                    }
+                }              
+            } else {
+                $InYear[$key]['total'] = 0;
+            }
         }
 
-       return $monthInYear;
+       return $InYear;
 
     }
 
-    public function reportUserWeek($dayWeek){
+    public function reportTransactionWeek($attributes,$dayWeek){
 
-        $startDay   = Carbon::today()->subDays(27)->format('Y-m-d');
 
-        $endDay     = Carbon::today()->format('Y-m-d');
+        if(isset($attributes['start_day_week']) && isset($attributes['end_day_week']))
+        {
+            $startDay = Carbon::parse($attributes['start_day_week'])->format('Y-m-d');
+
+            $endDay = Carbon::parse($attributes['end_day_week'])->format('Y-m-d');
+        }
+        else {
+
+            $startDay   = Carbon::today()->subDays(42)->format('Y-m-d');
+
+            $endDay     = Carbon::today()->format('Y-m-d');
+        }
+      
 
 
         $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
                                 ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
                                 ->groupBy('dated')
                                 ->where('type','1')
-                                ->where('status','completed')
+                                ->where('status','RECIVED')
                                 ->get();                
 
         foreach ($dayWeek as $key => $date) {
 
-             $total = 0;
-
-            foreach ($transactions as $k_v => $value) {
-                
-                $day = Carbon::parse($value->dated)->format('Y-m-d');
-                if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
-                    $total = $total + $value->total;  
-                } 
-                else {
-                    $dayWeek[$key]['total'] = 0;
-                   
+            $total = 0;
+            if(count($transactions)) {
+                foreach ($transactions as $k_v => $value) {
+                    
+                    $day = Carbon::parse($value->dated)->format('Y-m-d');
+                    if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
+                        $total = $total + $value->total;  
+                    } 
+                    else {
+                        $dayWeek[$key]['total'] = 0;
+                       
+                    }
                 }
+                $dayWeek[$key]['total'] = $total;
+            }  else {
+                $dayWeek[$key]['total'] = 0;
             }
 
-            $dayWeek[$key]['total'] = $total;
+           
        
         }    
-        
         return $dayWeek;        
 
     }
@@ -774,11 +818,13 @@ class TransactionRepository extends BaseRepository
     
     public function transform($results){
         foreach ($results as $key => $result) {
+
             if($result->type == 1){
                 $results[$key]->type = 'Income';
             }else{
                 $results[$key]->type = 'Outcome';
             }
+
             $results[$key]->amount_with_symbol = $result->amount ." ".$result->symbol;             
             $results[$key]->system_fee_with_symbol = $result->system_fee ." ".$result->symbol;         
             $results[$key]->credit_card_fee_with_symbol = $result->credit_card_fee ." ".$result->symbol;             

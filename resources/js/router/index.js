@@ -170,30 +170,6 @@ routers = [
 		    },
       	]	
 	},
-	// {
-	// 	path:'/',
-	// 	name:'Dashboard',
-	// 	component: Dashboard,
-	// 	meta: { requiresAuth: true },
-	// 	children : [
-	// 		{
-	// 			path:'/users',
-	// 			name:'indexUser',
-	// 			component:User
-	// 		},
-	// 		{
-	// 			path:'/slide',
-	// 			name:'Slide',
-	// 			component:Slide
-	// 		},
-	// 		{
-	// 			path:'/user-dash',
-	// 			name:'UserDash',
-	// 			component:UserDash
-	// 		}
-
-	// 	]
-	// },
 	{
     // not found handler
     	path: '*',
@@ -249,57 +225,4 @@ router.afterEach((to, from) => {
 
 export default router;
 
-// export default new Router({
-// 	mode: 'history',
-// 	routes: [
-// 		defaultRoutes,
-// 		horizontalRoutes,
-// 		boxedRoutes,
-// 		mini,
-// 		boxedV2,
-// 		{
-// 			path: '/callback',
-// 			component: Auth0CallBack
-// 		},
-// 		{
-// 			path: '/session/sign-up',
-// 			component: SignUpOne,
-// 			meta: {
-// 				title: 'message.signUp',
-// 				breadcrumb: 'Session / Sign Up'
-// 			}
-// 		},
-// 		{
-// 			path: '/session/login',
-// 			component: LoginOne,
-// 			meta: {
-// 				title: 'message.login',
-// 				breadcrumb: 'Session / Login'
-// 			}
-// 		},
-// 		{
-// 			path: '	',
-// 			component: LockScreen,
-// 			meta: {
-// 				title: 'Lock Screen',
-// 				breadcrumb: 'Session / Lock Screen'
-// 			}
-// 		},
-// 		{
-// 			path: '/session/forgot-password',
-// 			component: ForgotPassword,
-// 			meta: {
-// 				title: 'message.forgotPassword',
-// 				breadcrumb: 'Session / Forgot Password'
-// 			}
-// 		},
-// 		{
-// 			path: '/session/reset-password',
-// 			component: ResetPassword,
-// 			meta: {
-// 				title: 'message.resetPassword',
-// 				breadcrumb: 'Session / Reset Password'
-// 			}
-// 		}
-// 	]
-// })
+

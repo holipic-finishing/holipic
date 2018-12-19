@@ -140,7 +140,7 @@
 					
 					</div>
 
-					<chart :width="300" :height="400" :companyId="companyId"></chart>				
+					<chart :width="300" :height="600" :companyId="companyId"></chart>				
 				</app-card>
 		    </v-card-text>
 		      

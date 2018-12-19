@@ -179,4 +179,12 @@ class CompanyRepository extends BaseRepository
         return $input;
     }
 
+    public function transactionHistoryDay($attributes) {
+
+        $now     = Carbon::today()->format('Y-m-d');
+
+        // $transactions = $this->model->
+
+    }
+
 }

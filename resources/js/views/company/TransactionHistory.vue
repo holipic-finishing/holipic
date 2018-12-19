@@ -19,30 +19,6 @@
 						</div>
 							
 					</div>
-					
-					
-						<!-- <v-card>
-							<v-toolbar color="cyan" dark>
-								<v-toolbar-title>Transaction History</v-toolbar-title>
-								<v-spacer></v-spacer>
-							</v-toolbar>
-
-							<v-list two-line>
-								<template v-for="(item, index) in transactionHistories">
-									<v-list-tile
-										:key=""
-										avatar
-										@click=""
-										>
-										<v-list-tile-content>
-											<v-list-tile-title > Amount: {{item.amount}}</v-list-tile-title>
-											<v-list-tile-sub-title >Fee: {{item.fee}}</v-list-tile-sub-title>
-											<v-list-tile-sub-title >System fee: {{item.system_fee}}</v-list-tile-sub-title>
-										</v-list-tile-content>
-									</v-list-tile>
-								</template>
-							</v-list>
-						</v-card> -->
 				
 			</div>
 		</div>

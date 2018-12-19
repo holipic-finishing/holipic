@@ -150,7 +150,13 @@ class CompanyAPIController extends AppBaseController
 
     public function getTransactionHistory(Request $request){
         
-        $results = $this->companyRepository->handleTransaction($request['companyId']);
+        $input = $request->all();
+
+        if($input['params'] == 'day'){
+            $results = $this->companyRepository->transactionHistoryDay($input);
+        }
+
+        
         return $this->sendResponse($results->toArray(), 'Transaction History successfully');
     }
     

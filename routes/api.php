@@ -17,13 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
-
-
 Route::group(['namespace' => 'API'],function(){
 	
 	Route::resource('packages', 'PackageAPIController');
+
+	Route::get('list/packages', 'PackageAPIController@getListNamePackage');
 	
 	Route::resource('roles', 'roleAPIController');
 
@@ -32,5 +30,44 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('users', 'UserAPIController');
 
 	Route::get('count-packages','PackageAPIController@CountPackages');
+
+	Route::post('change-password', 'UserAPIController@changePassWord');
+
+	Route::get('companies/information', 'CompanyAPIController@showInformationCompany'); //different
+
+	Route::resource('companies', 'CompanyAPIController');
+
+	Route::resource('currencies', 'CurrencyAPIController');
+
+	Route::post('search/companies', 'CompanyAPIController@doSearch');
+
+	Route::resource('transactions', 'TransactionAPIController');
+
+	Route::get('histories/transactions', 'TransactionAPIController@getHistories');
+
+	Route::post('search/transactions', 'TransactionAPIController@doSearch');
+
+	Route::post('searchdashboard/transactions', 'TransactionAPIController@doSearchDashboard');
+
+	Route::post('edit/transactions', 'TransactionAPIController@editTransaction');
+
+	Route::get('company/information', 'TransactionAPIController@getInformationCompany');
+
+	Route::get('company/load-chart', 'TransactionAPIController@loadChartCompanyByTime');
+
+	Route::resource('settings', 'SettingAPIController');
+
+	Route::get('get-package', 'SettingAPIController@getPackage');
+	
+	Route::get('transaction/history', 'CompanyAPIController@getTransactionHistory');
+
+	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
+
+	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
+
+	Route::resource('files', 'FileAPIController');
+
+	Route::resource('coupon_codes', 'CouponCodeAPIController');
 });	
+
 

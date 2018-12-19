@@ -9,6 +9,7 @@
     <meta name="keywords" content="">
     <meta name="author" content="Awaiken">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" type="image/x-icon" href="images/HOLIPIC-FAVICON.png" />
     <base href="{{asset('')}}">
 	<!-- Page Title -->
 	<title>@yield('title')</title>

@@ -8,7 +8,11 @@ use InfyOm\Generator\Common\BaseRepository;
 /**
  * Class PackageRepository
  * @package App\Repositories
+<<<<<<< HEAD
+ * @version December 7, 2018, 12:34 pm UTC
+=======
  * @version December 7, 2018, 3:44 am UTC
+>>>>>>> 631723baa105c8a24d83155a812b37acfd07c6b3
  *
  * @method Package findWithoutFail($id, $columns = ['*'])
  * @method Package find($id, $columns = ['*'])
@@ -38,6 +42,13 @@ class PackageRepository extends BaseRepository
     {
         return Package::class;
     }
+
+    public function getPackage(){
+
+        $data = $this->model->get();
+        return $data;
+     }
+
 
     public function countPackages(){
 
@@ -72,4 +83,5 @@ class PackageRepository extends BaseRepository
         return $array_data;
 
     }
+
 }

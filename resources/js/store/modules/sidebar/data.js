@@ -14,7 +14,8 @@ export const menus = {
 			active: false,
 			items: [
 				// { title: 'message.user', path: '/users/user-list' },
-				{ title: 'message.company', path: '/widgets/mana-company' }
+				{ title: 'message.company', path: '/widgets/mana-company' },
+				{ title: 'message.chartCompany', path: '/widgets/mana-company-chart' }
 			]
 		},
 		{
@@ -43,6 +44,20 @@ export const menus = {
 			active: false,
 			path: '/user-management'
 		},
+		{
+			action: 'zmdi-card',
+			title: 'message.transaction',
+			active: false,
+			items: [
+				{ title: 'message.histories', path: '/transaction/histories' },
+			]
+		},
+		{
+			action: 'zmdi zmdi-ticket-star',
+			title: 'message.couponCode',
+			active: false,
+			path: '/coupon-code/index'
+		}
 		// {
 		// 	action: 'zmdi-shopping-cart',
 		// 	title: 'message.ecommerce',
@@ -135,15 +150,15 @@ export const menus = {
 	// 			{ title: 'message.stepper', path: '/forms/stepper' }
 	// 		]
 	// 	},
-	// 	{
-	// 		action: 'zmdi-chart-donut',
-	// 		title: 'message.charts',
-	// 		active: false,
-	// 		items: [
-	// 			{ title: 'message.vueChartjs', path: '/charts/vue-chartjs' },
-	// 			{ title: 'message.vueEcharts', path: '/charts/vue-echarts' }
-	// 		]
-	// 	},
+		// {
+		// 	action: 'zmdi-chart-donut',
+		// 	title: 'message.charts',
+		// 	active: false,
+		// 	items: [
+		// 		{ title: 'message.vueChartjs', path: '/charts/vue-chartjs' },
+		// 		// { title: 'message.vueEcharts', path: '/charts/vue-echarts' }
+		// 	]
+		// },
 	// 	{
 	// 		action: 'zmdi-flag',
 	// 		title: 'message.icons',

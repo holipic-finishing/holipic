@@ -66,7 +66,6 @@ class BaseApiController extends Controller
     protected function makeResponseUserData($token = null, $isLogin = false)
     {
         $user = auth()->user();
-
         $data = [
             'user' => $user,
         ];
@@ -80,7 +79,8 @@ class BaseApiController extends Controller
 
             // Save user logged in
         }
-
+        dd($data);
+        
         return $data;
     }
 }

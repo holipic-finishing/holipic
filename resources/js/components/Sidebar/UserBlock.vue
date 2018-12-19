@@ -68,6 +68,12 @@ export default {
 					path: '/users/users-list'
 				},
 				{
+					id: 5,
+					title: 'message.changePassword',
+					icon: 'ti-lock mr-3 info--text',
+					path: '/users/change-password'
+				},
+				{
 					id: 4,
 					title: 'message.logOut',
 					icon: 'ti-power-off mr-3 error--text'
@@ -77,11 +83,13 @@ export default {
 	},
   methods: {
     logoutUser() {
-    	console.log('123123')
+    	// console.log('123123')
+    	localStorage.removeItem('access_token');
+    	this.$router.push('/session/login')
       // this.$store.dispatch("logoutUserFromFirebase", this.$router);
 	 },
 	 getMenuLink(path) {
-	 	console.log('im herer user block')
+	 	// console.log('im herer user block')
 		 return '/' + getCurrentAppLayout(this.$router) +  path;
 	 }
   }

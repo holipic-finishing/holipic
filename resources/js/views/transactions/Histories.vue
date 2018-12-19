@@ -45,10 +45,32 @@
 			    		<td>{{ props.item.email }}</td>
 			    		<td>{{ props.item.fullname }}</td>
 			    		<td>{{ props.item.package_name }}</td>
-			    		<td>{{ props.item.type }}</td>
-			    		<td>{{ props.item.amount_with_symbol }}</td>
-			    		<td>{{ props.item.system_fee_with_symbol }}</td>
-			    		<td>{{ props.item.credit_card_fee_with_symbol }}</td>
+			    		<td>{{ props.item.title }}</td>
+			    		<td>
+			    			<div v-if="props.item.type == 1" style="color:green">
+		    					+{{ props.item.amount_with_symbol}} 
+			    			</div>
+			    			<div v-else>
+			    				-{{ props.item.amount_with_symbol}} 
+			    			</div>
+			    		
+			    		</td>
+			    		<td>
+			    			<div v-if="props.item.type == 1" style="color:green">
+		    					+{{ props.item.system_fee_with_symbol}} 
+			    			</div>
+			    			<div v-else>
+			    				-{{ props.item.system_fee_with_symbol}} 
+			    			</div>
+			    		</td>
+			    		<td>
+			    			<div v-if="props.item.type == 1" style="color:green">
+		    					+{{ props.item.credit_card_fee_with_symbol}} 
+			    			</div>
+			    			<div v-else>
+			    				-{{ props.item.credit_card_fee_with_symbol}} 
+			    			</div>
+			    		</td>
 			    		<td>
 							<v-btn color="success" small v-if="props.item.status === 'RECIVED'">{{ props.item.status }}</v-btn>
 							<v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
@@ -82,13 +104,13 @@ export default {
 		        { text: 'Email', value: 'email'	},	       
 		        { text: 'Full Name',value: 'fullname', sortable: false},	       
 		        { text: 'Package Name', value: 'package_name', sortable: false },	       
-		        { text: 'Transaction', value: 'type', sortable: false },	       
+		        { text: 'Transaction', value: 'title', sortable: false },	       
 		        { text: 'Amount', value: 'amount_with_symbol'},	       
 		        { text: 'System Fee', value: 'system_fee_with_symbol' },	       
 		        { text: 'Create Card Fee', value: 'credit_card_fee_with_symbol'},	   
 		        { text: 'Status', value: 'status',  sortable: false},	
 		        { text: 'Country', value: 'country',  sortable: false},	
-		        { text: 'Date', value: 'dated' },	   
+		        { text: 'Date', value: 'dated', width : '15%' },	   
 		  	],
 		  	desserts:[],
 		  	pagination:{

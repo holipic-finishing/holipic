@@ -57,7 +57,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
 	
-	Route::get('transaction/history', 'CompanyAPIController@getTransactionHistory');
+	// Route::get('transaction/history', 'CompanyAPIController@getTransactionHistory');
 
 	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
 
@@ -66,6 +66,8 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('files', 'FileAPIController');
 
 	Route::resource('coupon_codes', 'CouponCodeAPIController');
+
+	Route::get('transaction/history', 'TransactionAPIController@getTransactionHistory');
 });	
 
 

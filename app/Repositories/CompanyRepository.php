@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Company;
 use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
-use DB;
+use DB ;
 
 /**
  * Class CompanyRepository
@@ -121,7 +121,6 @@ class CompanyRepository extends BaseRepository
 
         $results = $this->transform($results);
 
-        dd($results);
         return $results;
     }
 
@@ -161,7 +160,6 @@ class CompanyRepository extends BaseRepository
     public function total($input){
 
         $results = $this->model->with(['files','user.package','transactions'])->get(); 
-        dd($results);
 
         foreach ($results as $key => $value) {
             $total_file_size = 0;
@@ -183,12 +181,6 @@ class CompanyRepository extends BaseRepository
         return $input;
     }
 
-    public function transactionHistoryDay($attributes) {
-
-        $now     = Carbon::today()->format('Y-m-d');
-
-        // $transactions = $this->model->
-
-    }
+   
 
 }

@@ -421,4 +421,54 @@ class TransactionRepository extends BaseRepository
     }
 
 
+     public function transactionHistoryDay($attributes,$perPage) {
+
+        $now     = \Carbon\Carbon::today()->format('Y-m-d');
+
+        $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->where(DB::raw('date(dated)'),$now)
+                                    ->where('company_id', $attributes['companyId']);
+
+        return $transactions->paginate($perPage);                            
+
+    }
+
+    public function transactionHistoryWeek($attributes) {
+
+        $startDay   = \Carbon\Carbon::today()->subDays(7)->format('Y-m-d');
+
+        $endDay     = \Carbon\Carbon::today()->format('Y-m-d');
+
+        $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+                                    ->where('company_id', $attributes['companyId']);
+        return $transactions->paginate(1);                            
+
+    }
+
+    public function transactionHistoryMonth($attributes) {
+
+         $month = \Carbon\Carbon::today()->format('Y-m');
+
+         $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
+                                    ->where('company_id', $attributes['companyId']);
+        return $transactions->paginate(1); 
+
+    }
+
+    public function transactionHistoryYear($attributes,$perPage) {
+
+         $year = \Carbon\Carbon::today()->format('Y');
+
+         $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
+                                    ->where('company_id', $attributes['companyId']);
+        return $transactions->paginate($perPage); 
+
+    }
+
+    
+
+
 }

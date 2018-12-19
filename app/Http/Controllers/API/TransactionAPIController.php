@@ -175,5 +175,45 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
     }
 
+
+    public function getTransactionHistory(Request $request) {
+
+        $input = $request->all();   
+
+        $perPage = $request->input('perPage');
+
+        if($input['time'] == 'day'){
+
+            $results = $this->transactionRepository->transactionHistoryDay($input,$perPage);
+
+            return $this->sendResponse($results, 'Transactions retrieved successfully');
+
+        } else if($input['time'] == 'week'){
+
+            $results = $this->transactionRepository->transactionHistoryWeek($input);
+
+            return $this->sendResponse($results, 'Transactions retrieved successfully');
+
+        } else if($input['time'] == 'month'){
+
+            $results = $this->transactionRepository->transactionHistoryMonth($input);
+
+            return $this->sendResponse($results, 'Transactions retrieved successfully');
+
+        } else if($input['time'] == 'year'){
+
+            $results = $this->transactionRepository->transactionHistoryYear($input,$perPage);
+
+            return $this->sendResponse($results, 'Transactions retrieved successfully');
+
+        } else {
+            return response()->json([
+                        'success' => false, 
+                        'message' => 'Data not Found'
+            ]);
+        }
+    
+    }
+
 }
 

@@ -147,7 +147,7 @@
 								</nav>
 								<div class="justify-space-between w-30">
 									<div class="text-total text-xs-right">
-										<h4 class="info--text mb-0">{{total}}$</h4>
+										<h4 class="primary--text mb-0">{{total}}$</h4>
 										
 									</div>
 	 							</div>			
@@ -155,27 +155,24 @@
 		              	</v-list-tile-content>
            		 	</v-list-tile>
            		 	<v-list two-line>
-			            <v-list-tile>
+			            <v-list-tile
+							v-for="item in transactionHistories"
+            				:key="item.id"
+            				class="style-list"
+			            >
 			              <v-list-tile-content>
-			                <v-list-tile-title>(650) 555-1234</v-list-tile-title>
-			                <v-list-tile-sub-title>Mobile</v-list-tile-sub-title>
+			                <v-list-tile-title v-text="item.title"></v-list-tile-title>
+			                <v-list-tile-sub-title v-text="item.dated" class="text-style"></v-list-tile-sub-title>
 			              </v-list-tile-content>
 			  
 			              <v-list-tile-action>
-			                <p class="info--text mb-0">{{total}}$</p>
+			                <p class="success--text mb-0" v-if="item.type == true">+{{item.amount}}</p>
+			                <p class="mb-0" v-if="item.type == false">-{{item.amount}}</p>
 			              </v-list-tile-action>
 			            </v-list-tile>
-			            <v-list-tile>
-			              <v-list-tile-content>
-			                <v-list-tile-title>(650) 555-1234</v-list-tile-title>
-			                <v-list-tile-sub-title>Mobile</v-list-tile-sub-title>
-			              </v-list-tile-content>
-			  
-			              <v-list-tile-action>
-			                <v-icon>chat</v-icon>
-			              </v-list-tile-action>
-			            </v-list-tile>
-			        </v-list>    
+
+			        </v-list> 
+			        <button type="button" @click="addTenItem()" class="btn btn-primary">Primary</button>  
 	   			 </v-navigation-drawer>
 	   			 <!-- end -->
 			</div>
@@ -216,15 +213,22 @@ export default {
 	      		filterPackage : ''
 	      	},
 
-
 	      	listPackage : [],
 	      	urlExport:config.API_URL+'exportexcel/companies',
 	      	drawerRight: false,
 	      	title:'',
 	      	typeTime:'',
-	      	total:200,
+	      	total:0,
 	      	company_id:'',
-	      	transactionHistories: {}
+	      	transactionHistories: {},
+	      	paginator: {
+                perPage: 1,
+                currentPage: 1,
+                lastPage: 1,
+                total: 0,
+                from: 0,
+                to: 0,
+        	},
 
 
 	    }
@@ -233,7 +237,7 @@ export default {
   	created(){
   		this.fetchData();	
   		this.getListPackage();
-  		this.typeTime="day"
+		this.typeTime = "day"
 	},
 
 	methods:{
@@ -261,27 +265,40 @@ export default {
 			})
 		},
 
-		doTransaction(id){
+
+		getData(value,id){
+
 			let url = config.API_URL+'transaction/history'
 
 			let params = {
-				params : 'day',
-				companyId :  id
-			}
+                perPage: this.paginator.perPage,
+                companyId: this.company_id,
+                search: this.searchBy,
+                time:value
+            }	
 
 			getWithData(url,params)
 			.then((res)=>{
-
 				if (res.data && res.data.success) {
-					// this.transactionHistories= res.data.data
-					console.log(res.data.data)
-
+					this.transactionHistories= res.data.data.data
+					var total_revenue = 0
+					var total_expenditure = 0
+					 _.forEach(res.data.data.data,function(value,key){
+		                if(value.type == true) {
+		                	total_revenue = total_revenue + parseFloat(value.amount)
+		                } else {
+		                	total_expenditure =total_expenditure + parseFloat(value.amount)
+		                }
+		             });
+					this.total = total_revenue - total_expenditure
 				}
 			})
 			.catch((e) =>{
 				console.log(e)
 			})
+
 		},
+
 		doReset(){
 			this.search.keywords = ''
 			this.search.filterPackage =''
@@ -316,18 +333,57 @@ export default {
 
 		showTransaction(items){
 			this.drawerRight = true
+
 			this.company_id = items.id
-			this.doTransaction(items.id)
+
+			// this.configParams('day',items.id)
+			this.getData('day',items.id)
+			
 
 		},
 
 		activeTypeTime(time) {
+
   			this.typeTime = time
+
+  			if(this.typeTime == "day") {
+  				// this.configParams(this.company_id,'day')
+  				this.getData('day',this.company_id)
+
+			}
+
+			if(this.typeTime == "week") {
+
+				this.configParams(this.company_id,'week')
+			}
+
+			if(this.typeTime == "month") {
+
+				this.configParams(this.company_id,'month')
+			}
+
+			if(this.typeTime == "year") {
+
+				// this.configParams(this.company_id,'year')
+				this.getData('year',this.company_id)
+
+			}
 		}, 
 
-		stopdrawerRight(){
-			this.drawerRight = false
+		addTenItem(){
+			if(this.typeTime == "day") {
+				this.paginator.perPage = this.paginator.perPage + 1
+  				// this.configParams(,'day')
+  				this.getData('day',this.company_id)
+			}
+			if(this.typeTime == "year") {
+				this.paginator.perPage = this.paginator.perPage + 1
+				this.getData('year',this.company_id)
+				// this.configParams(this.company_id,'year')
+			}
+			
 		}
+
 
 	},
 
@@ -346,8 +402,9 @@ export default {
 }
 
 .nav-bar-chart{
-	font-size:14px;
-	font-weight: bold;
+	font-size: 14px;
+    font-weight: bold;
+    width: 100%;
 }
 
 .nav-link {
@@ -363,5 +420,11 @@ export default {
 }
 .text-total {
 	padding: 7px 15px;
+}.style-list {
+	border-bottom: 1px solid gray;
+    margin: 0px 20px;
+}
+.text-style {
+	font-size: 12px !important;
 }
 </style>

@@ -14,7 +14,9 @@
         'css/libraries/custom.css',
         'css/libraries/pages.css',
         'css/libraries/flaticon.css',
-        'css/libraries/font-awesome.min.css'
+        'css/libraries/font-awesome.min.css',
+        'css/libraries/pricing.css',
+        'css/libraries/slicknav.css',
     ]);
 
 ?>

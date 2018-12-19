@@ -14,18 +14,27 @@ import ResetPassword from '../views/session/ResetPassword.vue';
 
 
 // dashboard components
-import Full from '../container/Full'
+import mini from '../container/MiniSidebarLayout.vue'
 import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // view users 
 
 // import UserWidgets   from'../views/users/UsersList';
 import Company from '../views/company/index';
+import CompanyChart from '../views/company/information-chart';
+
 import PackageIndex from '../views/package/Index';
 
 
 import Setting from '../views/setting/setting'
 import UserManagement from '../views/superadmin-user/user-management'
+
+import page404 from '../views/pages/page404'
+import UserPass from '../views/users/ChangePassword'
+
+import HistoriesTransaction from '../views/transactions/Histories.vue'
+
+import IndexCoupon from '../views/coupon-code/Index.vue'
 
 
 
@@ -64,12 +73,12 @@ routers = [
 	},
 	{
 		path: '/',
-   		component: Full,
-		redirect: '/default/dashboard/index',
+   		component: mini,
+		redirect: '/mini/dashboard/index',
 		meta: { requiresAuth: true },
 		children: [
       		{
-	         	path: '/default/dashboard/index',
+	         	path: '/mini/dashboard/index',
 	         	component: Ecommerce,
 	         	meta: {
 	         		requiresAuth: true,
@@ -87,7 +96,7 @@ routers = [
 		    //     }
 		    // },
 		    {
-		        path: '/default/widgets/mana-company',
+		        path: '/mini/widgets/mana-company',
 		        component: Company,
 		        meta: {
 		        	requiresAuth: true,
@@ -96,7 +105,16 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/default/packages/index',
+		        path: '/mini/widgets/mana-company-chart',
+		        component: CompanyChart,
+		        meta: {
+		        	requiresAuth: true,
+		            title: 'message.chartCompany',
+		            breadcrumb: 'Company / Information /Chart'
+		        }
+		    },
+		    {
+		        path: '/mini/packages/index',
 		        component: PackageIndex,
 		        meta: {
 		        	requiresAuth: true,
@@ -106,7 +124,7 @@ routers = [
 
 		    }, 
 		    {
-		        path: 'default/setting',
+		        path: '/mini/setting',
 		        component: Setting,
 		        meta: {
 		        	requiresAuth: true,
@@ -115,12 +133,39 @@ routers = [
 		        }
 		    },
 		    {
-		        path: 'default/user-management',
+		        path: '/mini/user-management',
 		        component: UserManagement,
 		        meta: {
 		        	requiresAuth: true,
 		            title: 'message.userManager',
 		            breadcrumb: 'User / Manager'
+		        }
+		    },
+		    {
+		        path: '/mini/users/change-password',
+		        component: UserPass,
+		        meta: {
+		            requiresAuth: true,
+		            title: 'message.changePassword',
+		            breadcrumb: 'Users / Change Password'
+		        }
+		    },
+		    {
+		        path: '/mini/transaction/histories',
+		        component: HistoriesTransaction,
+		        meta: {
+		            requiresAuth: true,
+		            title: 'message.histories',
+		            breadcrumb: 'Transaction / Histories List'
+		        }
+		    },
+		    {
+		        path: '/mini/coupon-code/index',
+		        component: IndexCoupon,
+		        meta: {
+		            requiresAuth: true,
+		            title: 'message.couponCode',
+		            breadcrumb: 'Coupon Code / Histories List'
 		        }
 		    },
       	]	
@@ -152,7 +197,7 @@ routers = [
 	{
     // not found handler
     	path: '*',
-    	redirect: '/session/login'
+    	component: page404
   	}
 
 ];

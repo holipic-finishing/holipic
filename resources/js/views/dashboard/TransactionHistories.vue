@@ -149,7 +149,7 @@
             </v-list-tile>
 	    </v-navigation-drawer>
 	      	<v-toolbar flat color="white">
-		        <v-toolbar-title ><a href="admin#/default/transaction/histories"> Transacsion Histories Table</a></v-toolbar-title>
+		        <v-toolbar-title ><a href="admin#/default/transaction/histories"> Transaction Histories Table</a></v-toolbar-title>
 		        <v-divider
 		          class="mx-2"
 		          inset

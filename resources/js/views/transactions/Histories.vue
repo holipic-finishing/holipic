@@ -6,7 +6,7 @@
 			  <v-app id="inspire">
 			    <div>
 			      	<v-toolbar flat color="white">
-				        <v-toolbar-title>Transacsion Histories Table</v-toolbar-title>
+				        <v-toolbar-title>Transaction Histories Table</v-toolbar-title>
 				        <v-divider
 				          class="mx-2"
 				          inset

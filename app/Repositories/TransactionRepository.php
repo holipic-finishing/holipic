@@ -46,31 +46,28 @@ class TransactionRepository extends BaseRepository
         //DB::raw("DATE_FORMAT(dated,'%M %Y %D') as months")
         // $companies = $this->model->select(DB::raw("sum(amount) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currency_id') 
         // ->where('company_id', $companyId)
-        // ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10))
-        //         ->where(DB::raw('dated'), '<=', Carbon::now())
+        // ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10)->toDateString())
+        //         ->where(DB::raw('dated'), '<=', Carbon::now()->toDateString())
         // ->groupBy('date', 'currency_id')
         // ->orderBy('date', 'asc')
         // ->get()->toArray();
-
+       
         $companies = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
-                    ->select(DB::raw("sum(amount) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currencies.id','currencies.symbol' ) 
-                    ->where('company_id', $companyId)
-                    ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10))
-                    ->where(DB::raw('dated'), '<=', Carbon::now())
+                    ->join('companies', 'companies.id', '=', 'transactions.company_id')
+                    ->join('users', 'users.id', '=', 'companies.owner_id')
+                    ->join('packages', 'packages.id', '=', 'users.package_id')
+                    ->select(DB::raw("sum(amount * packages.fee /100) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currencies.id','currencies.symbol' ) 
+                    ->where('transactions.company_id', $companyId)
+                    ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10)->toDateString())
+                    ->where(DB::raw('dated'), '<=', Carbon::now()->toDateString())
+                    ->where('type', 1)
                     ->groupBy('date', 'currency_id')
                     ->orderBy('date', 'asc')
                     ->get()->toArray();
-
-        // $array = [];
-        // foreach($companies as $company)
-        // {
-        //     $array[$company['currency_id']][] = $company;
-        // }
         
-
         $data = [];
 
-        $labels = $this->createLabels(null,$companyId);
+        $labels = $this->createLabels(null, $companyId);
 
         $length = count($labels);
 
@@ -115,8 +112,8 @@ class TransactionRepository extends BaseRepository
         // ];
 
         $date = $this->model->select(DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"))->where('company_id', $companyId)
-                            ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10))
-                            ->where(DB::raw('dated'), '<=', Carbon::now())
+                            ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10)->toDateString())
+                            ->where(DB::raw('dated'), '<=', Carbon::now()->toDateString())
                             ->groupBy('dated')->orderBy('dated', 'asc')->get()->toArray();
 
         return $date;
@@ -192,8 +189,411 @@ class TransactionRepository extends BaseRepository
             'labels' => $labels,
             'data' => $data 
         ]; 
+    }
 
-        // return $company;
+    public function handleChartCompanyWithTime($request)
+    { 
+        if($request['type'] == '' || $request['companyId'] = '') {
+            return false;
+        }
+        
+        $companyId = $request['company'];
+
+        $company = $this->model;
+
+        if($request['type'] == 'day') {
+            $fromDate = Carbon::parse($request['startTime']);
+            
+            $toDate = Carbon::parse($request['endTime']);
+            
+            $diffDate = $fromDate->diffInDays($toDate);
+
+            if($fromDate > $toDate) {
+                return [
+                    'success' => false, 
+                    'message' => 'Start date must be less than end date or end date must be greater than start date'
+                ];
+            }
+
+            if($diffDate < 10 || $diffDate > 10) {
+                return [
+                    'success' => false, 
+                    'message' => 'Start day to End day must 10 days'
+                ];
+            }
+
+            return $this->loadChartWithFromDateToDate($fromDate->toDateString(), $toDate->toDateString(), $companyId);
+        }
+
+        if($request['type'] == 'revenue') {
+            return $this->getInformationCompanyAndTotalAmountDefault($companyId);
+        }
+
+        if($request['type'] == 'month') {
+            if(!isset($request['startTime']) && !isset($request['endTime'])) {
+                return $this->loadChartWithMonthDefault($companyId);
+            } else {
+
+                $fromMonth = Carbon::parse($request['startTime']);
+                
+                $toMonth = Carbon::parse($request['endTime']);
+                
+                $diffMonth = $fromMonth->diffInMonths($toMonth);
+
+                if($fromMonth > $toMonth) {
+                    return [
+                        'success' => false, 
+                        'message' => 'Start month must be less than End month or End month must be greater than Start month'
+                    ];
+                }
+
+                if($diffMonth > 12) {
+                    return [
+                        'success' => false, 
+                        'message' => 'Just choose show with 12 months'
+                    ];
+                }
+
+                return $this->loadChartWithFromMonthToMonth($request['startTime'], $request['endTime'], $companyId);
+            }
+        } 
+
+        if($request['type'] == 'year') {
+            if(!isset($request['startTime']) && !isset($request['endTime'])) {
+                return $this->loadChartWithYearDefault($companyId);
+            } else {
+
+                if($request['startTime'] >= $request['endTime']) {
+                    return [
+                        'success' => false, 
+                        'message' => 'Start Year must be less than End Year or End Year must be greater than Start Year'
+                    ];
+                }
+
+                return $this->loadChartWithFromYearToYear($request['startTime'], $request['endTime'], $companyId);
+                
+            } 
+        }
+
+        if($request['type'] == 'week') {
+            $weeks = $this->initWeekDays();
+
+            return $this->loadChartWithWeekDefault($weeks, $companyId);
+        }
+    }
+
+    public function initWeekDays()
+    {
+        $today = Carbon::today();
+
+        $arrayWeek = [];
+
+        for ($i=0; $i <=5 ; $i++) { 
+
+            $arrayWeek[$i]['endOfWeek'] = Carbon::parse($today)->format('Y-m-d');
+
+            $arrayWeek[$i]['startOfWeek'] = Carbon::parse($today)->subDays(6)->format('Y-m-d');
+
+            $today = Carbon::parse($today)->subDays(7)->format('Y-m-d');
+        }
+        return $arrayWeek;
+    }
+
+    public function loadChartWithWeekDefault($dayWeek, $companyId)
+    {
+        $startDay   = Carbon::today()->subDays(41)->format('Y-m-d');
+
+        $endDay     = Carbon::today()->format('Y-m-d');
+
+        $company = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
+                                    ->join('companies', 'companies.id', '=', 'transactions.company_id')
+                                    ->join('users', 'users.id', '=', 'companies.owner_id')
+                                    ->join('packages', 'packages.id', '=', 'users.package_id')
+                                    ->select(DB::raw("sum(amount * packages.fee /100) as total"), DB::raw("DATE_FORMAT(dated,'%Y-%m-%d') as date"), 'currencies.id','currencies.symbol') 
+                                    ->where('transactions.company_id', $companyId)
+                                    ->where(DB::raw("date(dated)"), '>=', $startDay)
+                                    ->where(DB::raw("date(dated)"), '<=', $endDay)
+                                    ->where('type', 1)
+                                    ->groupBy('date', 'currency_id')
+                                    ->orderBy('date', 'asc')
+                                    ->get()->toArray(); 
+
+        $arrayCompanyWithKey = [];
+
+        foreach($company as $value) {
+            $arrayCompanyWithKey[$value['symbol']]
+        }
+        $data = [];             
+
+        foreach ($dayWeek as $key => $date) {
+
+            $total = 0;
+
+            foreach ($company as $index=>$value) {
+                $symbol = $value['symbol'];
+                
+                $day = Carbon::parse($value['date'])->format('Y-m-d');
+
+                if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
+                    $total = $total + $company$value['total'];  
+                } 
+                else {
+                    if(!isset($data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']])) {
+                        $data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']] = 0;    
+                    }
+                    $data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']] = $total;  
+                }
+            }
+
+            //$dayWeek[$key]['total'] = $total;
+
+        }
+
+        dd($data);
+
+        $weeks = $this->initWeekDays();  
+        
+        return  [  
+            'labels' => $weeks,
+            'data' => $dayWeek 
+        ];        
+
+    }
+
+    private function createLabelsByYear($year, $yearBefore ,$companyId)
+    {
+        $length = $year - $yearBefore;
+
+        $array = [];
+
+        for($i = 0 ; $i<= $length; $i++) {
+
+            $yearNew = $yearBefore;
+
+            $array[$i]['date'] = $yearNew;
+
+            $yearBefore = $yearBefore + 1;
+        }
+
+        // $date = $this->model->select(DB::raw("DATE_FORMAT(dated,'%Y') as date"))
+        //                     ->where('company_id', $companyId)
+        //                     ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $yearBefore)
+        //                     ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $year)
+        //                     ->groupBy('date')->orderBy('date', 'asc')->get()->toArray();
+
+        return $array;
+    }   
+
+    private function createLabelsByMonth($month, $monthBefore ,$companyId)
+    {
+        $date = $this->model->select(DB::raw("DATE_FORMAT(dated,'%Y-%m') as date"))
+                            ->where('company_id', $companyId)
+                            ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $monthBefore)
+                            ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $month)
+                            ->groupBy('date')->orderBy('date', 'asc')->get()->toArray();
+
+        return $date;
+    }
+
+    public function loadChartWithFromMonthToMonth($fromMonth, $toMonth, $companyId)
+    {
+        $company = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
+                                    ->join('companies', 'companies.id', '=', 'transactions.company_id')
+                                    ->join('users', 'users.id', '=', 'companies.owner_id')
+                                    ->join('packages', 'packages.id', '=', 'users.package_id')
+                                    ->select(DB::raw("sum(amount * packages.fee /100) as total"), DB::raw("DATE_FORMAT(dated,'%Y-%m') as date"), 'currencies.id','currencies.symbol') 
+                                    ->where('transactions.company_id', $companyId)
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth)
+                                    ->where('type', 1)
+                                    ->groupBy('date', 'currency_id')
+                                    ->orderBy('date', 'asc')
+                                    ->get()->toArray();
+
+        $data = [];
+
+        $labels = $this->createLabelsByMonth($toMonth, $fromMonth, $companyId);
+
+        $length = count($labels);
+
+        foreach($company as $companyValue){
+            $key = $companyValue['symbol'];
+            
+            for($i = 0; $i < $length; $i++){
+                if(!isset($data[$key][$labels[$i]['date']])) {
+
+                    $data[$key][$labels[$i]['date']] = 0;
+                }
+            }
+            $data[$key][$companyValue['date']] = $companyValue['total'];
+        }
+
+        return [
+            'labels' => $labels,
+            'data' => $data 
+        ]; 
+    }
+
+    public function loadChartWithMonthDefault($companyId)
+    {
+        $month = Carbon::now()->format('Y-m');
+
+        // $explodeMonth = explode('-', $month);
+
+        $monthBefore = Carbon::now()->subMonths(12)->format('Y-m');
+
+        $company = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
+                    ->join('companies', 'companies.id', '=', 'transactions.company_id')
+                    ->join('users', 'users.id', '=', 'companies.owner_id')
+                    ->join('packages', 'packages.id', '=', 'users.package_id')
+                    ->select(DB::raw("sum(amount * packages.fee /100) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%m') as date"), 'currencies.id','currencies.symbol' ) 
+                    ->where('transactions.company_id', $companyId)
+                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $monthBefore)
+                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $month)
+                    ->where('type', 1)
+                    ->groupBy('date', 'currency_id')
+                    ->orderBy('date', 'asc')
+                    ->get()->toArray();
+
+        $data = [];
+
+        $labels = $this->createLabelsByMonth($month, $monthBefore, $companyId);
+
+        $length = count($labels);
+
+        foreach($company as $companyValue){
+            $key = $companyValue['symbol'];
+            
+            for($i = 0; $i < $length; $i++){
+                if(!isset($data[$key][$labels[$i]['date']])) {
+
+                    $data[$key][$labels[$i]['date']] = 0;
+                }
+            }
+            $data[$key][$companyValue['date']] = $companyValue['total'];
+        }
+
+        return [
+            'labels' => $labels,
+            'data' => $data 
+        ]; 
+    }
+
+    public function loadChartWithYearDefault($companyId)
+    {
+        $year = Carbon::now()->year;
+
+        $yearBefore = Carbon::now()->subYears(4)->year;
+
+        $company = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
+                                ->join('companies', 'companies.id', '=', 'transactions.company_id')
+                                ->join('users', 'users.id', '=', 'companies.owner_id')
+                                ->join('packages', 'packages.id', '=', 'users.package_id')
+                                ->select(DB::raw("sum(amount * packages.fee /100) as total"), DB::raw("DATE_FORMAT(dated,'%Y') as date"), 'currencies.id','currencies.symbol') 
+                                ->where('transactions.company_id', $companyId)
+                                ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $yearBefore)
+                                ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $year)
+                                ->where('type', 1)
+                                ->groupBy('date', 'currency_id')
+                                ->orderBy('date', 'asc')
+                                ->get()->toArray();
+        $data = [];
+
+        $labels = $this->createLabelsByYear($year, $yearBefore, $companyId);
+
+        $length = count($labels);
+
+        foreach($company as $companyValue){
+            $key = $companyValue['symbol'];
+            
+            for($i = 0; $i < $length; $i++){
+                if(!isset($data[$key][$labels[$i]['date']])) {
+
+                    $data[$key][$labels[$i]['date']] = 0;
+                }
+            }
+            $data[$key][$companyValue['date']] = $companyValue['total'];
+        }
+
+        return [
+            'labels' => $labels,
+            'data' => $data 
+        ]; 
+    }
+
+    public function loadChartWithFromYearToYear($startYear, $endYear, $companyId) 
+    {
+        $company = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
+                                ->join('companies', 'companies.id', '=', 'transactions.company_id')
+                                ->join('users', 'users.id', '=', 'companies.owner_id')
+                                ->join('packages', 'packages.id', '=', 'users.package_id')
+                                ->select(DB::raw("sum(amount * packages.fee /100) as total"), DB::raw("DATE_FORMAT(dated,'%Y') as date"), 'currencies.id','currencies.symbol') 
+                                ->where('transactions.company_id', $companyId)
+                                ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $startYear)
+                                ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $endYear)
+                                ->where('type', 1)
+                                ->groupBy('date', 'currency_id')
+                                ->orderBy('date', 'asc')
+                                ->get()->toArray();
+        $data = [];
+
+        $labels = $this->createLabelsByYear($endYear, $startYear, $companyId);
+
+        $length = count($labels);
+
+        foreach($company as $companyValue){
+            $key = $companyValue['symbol'];
+            
+            for($i = 0; $i < $length; $i++){
+                if(!isset($data[$key][$labels[$i]['date']])) {
+
+                    $data[$key][$labels[$i]['date']] = 0;
+                }
+            }
+            $data[$key][$companyValue['date']] = $companyValue['total'];
+        }
+
+        return [
+            'labels' => $labels,
+            'data' => $data 
+        ]; 
+    }
+
+    public function loadChartWithFromDateToDate($fromDate, $toDate, $companyId)
+    {
+        $company = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
+                               ->join('companies', 'companies.id', '=', 'transactions.company_id')
+                               ->join('users', 'users.id', '=', 'companies.owner_id')
+                               ->join('packages', 'packages.id', '=', 'users.package_id')
+                               ->select(DB::raw("sum(amount * packages.fee /100) as total"), DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currencies.id','currencies.symbol')
+                               ->where('transactions.company_id', $companyId)
+                               ->where(DB::raw('dated'), '>=', $fromDate)
+                               ->where(DB::raw('dated'), '<=', $toDate)
+                               ->groupBy('date', 'currency_id')->orderBy('date', 'asc')
+                               ->get()->toArray();
+
+        $data = [];
+
+        $labels = $this->createLabelsByTime($toDate, $fromDate, $companyId);
+
+        $length = count($labels);
+
+        foreach($company as $companyValue){
+            $key = $companyValue['symbol'];
+            
+            for($i = 0; $i < $length; $i++){
+                if(!isset($data[$key][$labels[$i]['date']])) {
+
+                    $data[$key][$labels[$i]['date']] = 0;
+                }
+            }
+            $data[$key][$companyValue['date']] = $companyValue['total'];
+        }
+
+        return [
+            'labels' => $labels,
+            'data' => $data 
+        ]; 
     }
 
 
@@ -393,12 +793,15 @@ class TransactionRepository extends BaseRepository
      */
     
     public function getHistoriesTransaction(){
+        $now = \Carbon\Carbon::today();
+        $dateBefore7Days = $now->subDays(7); 
 
         $results = DB::table('transactions as t')
                     ->join('users as u', 'u.id', '=', 't.user_id')
                     ->join('currencies as cu', 'cu.id', '=', 't.currency_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->orderBy('t.dated', 'desc')
+                    ->where('t.dated', '>=', $dateBefore7Days)
+                    ->orderBy('t.amount', 'asc')
                     ->select('t.*','cu.symbol', 'cu.country','u.company_name', 'u.email', 'u.first_name', 'u.last_name','p.package_name')
                     ->get();
         $results = $this->transform($results);
@@ -415,6 +818,13 @@ class TransactionRepository extends BaseRepository
     
     public function transform($results){
         foreach ($results as $key => $result) {
+
+            if($result->type == 1){
+                $results[$key]->type = 'Income';
+            }else{
+                $results[$key]->type = 'Outcome';
+            }
+
             $results[$key]->amount_with_symbol = $result->amount ." ".$result->symbol;             
             $results[$key]->system_fee_with_symbol = $result->system_fee ." ".$result->symbol;         
             $results[$key]->credit_card_fee_with_symbol = $result->credit_card_fee ." ".$result->symbol;             
@@ -423,46 +833,6 @@ class TransactionRepository extends BaseRepository
 
         return $results;
     } 
-
-    /**
-    
-        TODO:
-        - function to search in transaction table with invoice, company_name, email, fullname
-        -@param : keywords
-    
-     */
-    
-    public function search($input){
-        $results = DB::table('transactions as t')
-                    ->join('users as u', 'u.id', '=', 't.user_id')
-                    ->join('currencies as cu', 'cu.id', '=', 't.currency_id')
-                    ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->where('u.company_name' , 'like', '%' . $input['keywords'] . '%')
-                    ->orWhere('t.invoice' , 'like', '%' . $input['keywords'] . '%')
-                    ->orWhere('u.email' , 'like', '%' . $input['keywords'] . '%')
-                    ->orWhereRaw("concat(first_name, ' ', last_name) like '%{$input['keywords']}%' ")
-                    ->orderBy('t.dated', 'desc')
-                    ->select('t.*','cu.symbol', 'cu.country','u.company_name', 'u.email', 'u.first_name', 'u.last_name','p.package_name')
-                    ->get();
-        $results = $this->transform($results);
-
-        return $results;
-    }
-
-    public function searchDashboard($input){
-        $results = DB::table('transactions as t')
-                    ->join('users as u', 'u.id', '=', 't.user_id')
-                    ->join('currencies as cu', 'cu.id', '=', 't.currency_id')
-                    ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->where('u.company_name' , 'like', '%' . $input['keywords'] . '%')
-                    ->orWhere('t.invoice' , 'like', '%' . $input['keywords'] . '%')
-                    ->orderBy('t.dated', 'desc')
-                    ->select('t.*','cu.symbol', 'cu.country','u.company_name', 'u.email', 'u.first_name', 'u.last_name','p.package_name')
-                    ->get();
-        $results = $this->transform($results);
-
-        return $results;
-    }
 
 
 }

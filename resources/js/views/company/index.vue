@@ -63,16 +63,26 @@
 				        <td class="text-xs-left">{{ props.item.total_file_size }}</td>
 				        <td class="text-xs-left">{{ props.item.total_income_fee }}</td>
 				        <td class="text-xs-left">
-				          <v-icon
+				          <!-- <v-icon
 				            small
 				    		class="mr-2"
 				    		@click="showItem(props.item)"
 				          >
 				            visibility
+				          </v-icon> -->
+
+				           <v-icon
+				            small
+				    		class="mr-2"
+				    		@click="showInfo(props.item)"
+				          >
+				            visibility
 				          </v-icon>
+
 				        </td>
 			    	</template>
 			      </v-data-table>
+			       <company-information></company-information>
 			    </div>
 			  </v-app>
 
@@ -86,10 +96,14 @@ import  { get, post, put, del } from '../../api/index.js'
 import config from '../../config/index.js'
 import Vue from 'vue'
 import Lodash from 'lodash'
+import CompanyInformation from './NavigationCompanyInformation'
 
 export default {
 
   	name: 'index',
+  	components: {
+  		'company-information' : CompanyInformation
+  	},
 
   	data () {
 	    return {
@@ -194,10 +208,17 @@ export default {
 
 		showItem(item){
 			this.$root.$router.push({
-				path: '/default/widgets/mana-company-chart', 
+				path: '/mini/widgets/mana-company-chart', 
 				query: { companyId: item.id}
 			})
 		},
+
+		showInfo(item) {
+			this.$root.$emit('sendEventCompanyInformation', {
+				showNavigation: true,
+				data: item
+			});
+		}
 
 	},
 

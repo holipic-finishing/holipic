@@ -200,4 +200,25 @@ class CompanyRepository extends BaseRepository
         return $input;
     }
 
+    public function handleShowInformationCompany($companyId)
+    {
+
+        $totalSize = DB::table('files')->where('company_id', $companyId)
+                    ->select(DB::raw("sum(file_size) as total"))->groupBy('company_id')->first();
+
+        $company = $this->model
+                    ->join('users', 'users.id', 'companies.owner_id')
+                    ->join('packages', 'packages.id', 'users.package_id')
+                    ->select('companies.id','companies.name', 'companies.address', 'packages.package_name', 'users.email', 'users.created_at', 'packages.file_upload')
+                    ->where('companies.id', $companyId)
+                    ->first()->toArray();
+
+        $company['total_upload'] = number_format($totalSize->total/1024, 4);
+
+        $company['capacity'] = number_format($company['file_upload'] - $company['total_upload']/1024, 2);
+
+        return $company;
+
+    }
+
 }

@@ -143,13 +143,13 @@
 		                    </v-textarea>
 				        </v-flex>
 
-				         <v-flex xs12 sm12>
+				         <!-- <v-flex xs12 sm12>
 				         	<v-textarea label="Full Description" 
 		                     	v-model="data.full_description"
 		                       :rules="[rules.required]"
 		                       	class="style-rextarea">
 		                    </v-textarea>
-				        </v-flex>
+				        </v-flex> -->
 	                  
 	              
 	                  	<v-flex xs12 sm12 class="row style">

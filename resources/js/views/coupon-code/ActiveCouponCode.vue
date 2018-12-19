@@ -270,7 +270,7 @@ export default {
 		    rules: {
 		        required: value => !!value || 'Required.',
 	          	decimal: value => {
-		            const abc = /^[1-9]\d*(\.\d+)?$/
+		            const abc = /^[0-9]\d*(\.\d+)?$/
 		            return abc.test(value) || 'Please input number.'
 	          	},
 	          	number: value => {

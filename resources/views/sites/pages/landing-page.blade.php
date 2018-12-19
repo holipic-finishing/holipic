@@ -519,7 +519,7 @@ Holipic
 													@if($value->package_name=="Basic")
 														{{$value->secure_storage}} GB secure storage
 													@else
-														{{$value->secure_storage}} storage
+														{{$value->secure_storage}} secure storage
 													@endif		 
 												</li>
 												<li>{{$value->file_upload}} GB file upload</li>
@@ -527,7 +527,7 @@ Holipic
 												<li>
 													Minimum {{$value->minimum_user}} users ,
 													@if($value->package_name=="Basic")
-														max {{$value->max_user}} users
+														maximum {{$value->max_user}} users
 													@else 
 														{{$value->max_user}} maximum
 													@endif	
@@ -609,7 +609,7 @@ Holipic
 							</div>
 							
 							<div class="account-right text-right">
-								<a href="#" class="forget-password">Forget Password?</a>
+								<a href="#" class="forget-password">Forgot Password?</a>
 							</div>
 						</div>
 						

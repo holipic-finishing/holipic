@@ -190,13 +190,13 @@ class TransactionAPIController extends AppBaseController
 
         } else if($input['time'] == 'week'){
 
-            $results = $this->transactionRepository->transactionHistoryWeek($input);
+            $results = $this->transactionRepository->transactionHistoryWeek($input,$perPage);
 
             return $this->sendResponse($results, 'Transactions retrieved successfully');
 
         } else if($input['time'] == 'month'){
 
-            $results = $this->transactionRepository->transactionHistoryMonth($input);
+            $results = $this->transactionRepository->transactionHistoryMonth($input,$perPage);
 
             return $this->sendResponse($results, 'Transactions retrieved successfully');
 

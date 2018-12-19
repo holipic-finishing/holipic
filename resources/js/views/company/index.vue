@@ -108,7 +108,7 @@
 				  :width="400"
 			      >
 		      		<v-list dense>
-				        <v-list-tile @click.stop="drawerRight = !drawerRight">
+				        <v-list-tile @click.stop="stopdrawerRight()">
 					          	<v-list-tile-action>
 					            	<v-icon>exit_to_app</v-icon>
 					          	</v-list-tile-action>
@@ -117,24 +117,24 @@
 					          	</v-list-tile-content>
 				        </v-list-tile>
 		    	 	</v-list>
-		    	 	
-		            <v-list-tile >
-		                <v-list-tile-content>
-		                	 <v-toolbar flat class="transparent">
-						        <v-list class="pa-0">
-						          <v-list-tile avatar>
-						            <v-list-tile-content>
-						             	Transaction History
-						             </v-list-tile-content>
-						            <v-list-tile-content>
-					              		<input type="text" v-model="search.keywords" class="form-control input-style" placeholder="Search" 
-								       	@keydown.esc="doReset">
-						            </v-list-tile-content>
-						          </v-list-tile>
-						        </v-list>
-						      </v-toolbar>
-		              	</v-list-tile-content>
-           		 	</v-list-tile>
+		    	 	<v-list two-line>
+			          <v-list-tile >
+			            <v-list-tile-content>
+			              	Transaction History
+			            </v-list-tile-content>
+
+			            <v-list-tile-content>
+			              <input type="text" v-model="title" class="form-control input-style" placeholder="Search" @keydown.esc="doReset">
+			            </v-list-tile-content>
+
+			            <v-list-tile-action>
+			            	<v-btn color="primary" fab small dark>
+			            		<v-icon>search</v-icon>
+			            	</v-btn>         
+			            </v-list-tile-action>
+			          </v-list-tile>
+			        </v-list> 
+		     
            		 	  <v-list-tile >
 		                <v-list-tile-content>
 		             
@@ -170,9 +170,14 @@
 			                <p class="mb-0" v-if="item.type == false">-{{item.amount}}</p>
 			              </v-list-tile-action>
 			            </v-list-tile>
-
+			            <v-list-tile>
+			            	<v-list-tile-content class="btn-style">
+			            		<app-section-loader :status="reload"></app-section-loader>
+								<button type="button" @click="addTenItem()" class="btn btn-primary">More (50+) </button>
+							</v-list-tile-content>
+						</v-list-tile>
 			        </v-list> 
-			        <button type="button" @click="addTenItem()" class="btn btn-primary">Primary</button>  
+			        
 	   			 </v-navigation-drawer>
 	   			 <!-- end -->
 			</div>
@@ -186,10 +191,14 @@ import config from '../../config/index.js'
 import Vue from 'vue'
 import Lodash from 'lodash'
 import moment from 'moment'
+import AppSectionLoader from "../../components/AppSectionLoader/AppSectionLoader.vue";
 
 export default {
 
   	name: 'index',
+  	components: {
+  		AppSectionLoader
+  	},
 
   	data () {
 	    return {
@@ -216,19 +225,22 @@ export default {
 	      	listPackage : [],
 	      	urlExport:config.API_URL+'exportexcel/companies',
 	      	drawerRight: false,
-	      	title:'',
 	      	typeTime:'',
 	      	total:0,
 	      	company_id:'',
-	      	transactionHistories: {},
+	      	transactionHistories: [],
 	      	paginator: {
-                perPage: 1,
-                currentPage: 1,
+                perPageDay: 2,
                 lastPage: 1,
-                total: 0,
-                from: 0,
-                to: 0,
         	},
+        	reload: false,
+        	title:'',
+        	lastpage: {
+        		lastPageDay:1,
+        		lastPageWeek:1,
+        		lastPageMonth:1,
+        		lastPageYear:1,
+        	}
 
 
 	    }
@@ -239,6 +251,7 @@ export default {
   		this.getListPackage();
 		this.typeTime = "day"
 	},
+
 
 	methods:{
 		fetchData() {
@@ -266,14 +279,15 @@ export default {
 		},
 
 
-		getData(value,id){
+		getData(value,id,page){
 
 			let url = config.API_URL+'transaction/history'
 
 			let params = {
-                perPage: this.paginator.perPage,
-                companyId: this.company_id,
+                perPage: this.paginator.perPageDay,
+                companyId: id,
                 search: this.searchBy,
+                page: page,
                 time:value
             }	
 
@@ -281,9 +295,54 @@ export default {
 			.then((res)=>{
 				if (res.data && res.data.success) {
 					this.transactionHistories= res.data.data.data
+				
 					var total_revenue = 0
 					var total_expenditure = 0
 					 _.forEach(res.data.data.data,function(value,key){
+		                if(value.type == true) {
+		                	total_revenue = total_revenue + parseFloat(value.amount)
+		                } else {
+		                	total_expenditure =total_expenditure + parseFloat(value.amount)
+		                }
+		             });
+					this.total = total_revenue - total_expenditure
+                    this.paginator.lastPage = res.data.data.last_page
+				}
+			})
+			.catch((e) =>{
+				console.log(e)
+			})
+
+		},
+
+		getDataNew(value,id,page){
+
+			let url = config.API_URL+'transaction/history'
+
+			let params = {
+                perPage: this.paginator.perPageDay,
+                companyId: id,
+                search: this.searchBy,
+                page: page,
+                time:value
+            }	
+
+			getWithData(url,params)
+			.then((res)=>{
+				if (res.data && res.data.success) {
+					
+					var arrayA = this.transactionHistories
+
+					var arrayB = res.data.data.data
+
+					var arrayc = arrayA.concat(arrayB)
+
+					this.transactionHistories = arrayc
+
+					var total_revenue = 0
+					var total_expenditure = 0
+
+					 _.forEach(this.transactionHistories,function(value,key){
 		                if(value.type == true) {
 		                	total_revenue = total_revenue + parseFloat(value.amount)
 		                } else {
@@ -332,12 +391,12 @@ export default {
 		},
 
 		showTransaction(items){
+
 			this.drawerRight = true
 
 			this.company_id = items.id
 
-			// this.configParams('day',items.id)
-			this.getData('day',items.id)
+			this.getData('day',items.id,this.lastpage.lastPageDay)
 			
 
 		},
@@ -347,43 +406,97 @@ export default {
   			this.typeTime = time
 
   			if(this.typeTime == "day") {
-  				// this.configParams(this.company_id,'day')
-  				this.getData('day',this.company_id)
+  
+  				this.getData('day',this.company_id,this.lastpage.lastPageDay)
 
 			}
 
 			if(this.typeTime == "week") {
 
-				this.configParams(this.company_id,'week')
+				this.getData('week',this.company_id,this.lastpage.lastPageWeek)
 			}
 
 			if(this.typeTime == "month") {
 
-				this.configParams(this.company_id,'month')
+				this.getData('month',this.company_id,this.lastpage.lastPageMonth)
 			}
 
 			if(this.typeTime == "year") {
 
-				// this.configParams(this.company_id,'year')
-				this.getData('year',this.company_id)
+				this.getData('year',this.company_id,this.lastpage.lastPageYear)
 
 			}
 		}, 
 
 		addTenItem(){
 			if(this.typeTime == "day") {
-				this.paginator.perPage = this.paginator.perPage + 1
-  				// this.configParams(,'day')
-  				this.getData('day',this.company_id)
+
+				if(this.lastpage.lastPageDay < this.paginator.lastPage){
+					this.reload = true;
+				      let self = this;
+				      setTimeout(() => {
+				        self.reload = false;
+				        this.lastpage.lastPageDay = this.lastpage.lastPageDay + 1
+				        self.getDataNew('day',this.company_id,this.lastpage.lastPageDay)
+				      }, 1500);
+				}
+  				
+  				
+			}
+
+			if(this.typeTime == "week") {
+				if(this.lastpage.lastPageWeek < this.paginator.lastPage){
+				
+				  this.reload = true;
+			      let self = this;
+			      setTimeout(() => {
+			        self.reload = false;
+			        self.lastpage.lastPageWeek = self.lastpage.lastPageWeek + 1
+			        self.getDataNew('week',self.company_id,self.lastpage.lastPageWeek)
+			      }, 1500);
+
+				}
+			
+			}
+
+			if(this.typeTime == "month") {
+			
+				if(this.lastpage.lastPageMonth < this.paginator.lastPage){
+					
+					this.reload = true;
+			      	let self = this;
+			      	setTimeout(() => {
+			        	self.reload = false;
+			        	self.lastpage.lastPageMonth = self.lastpage.lastPageMonth + 1
+			        	self.getDataNew('month',self.company_id,self.lastpage.lastPageMonth)
+			      	}, 1500);
+
+				}
+
 			}
 			if(this.typeTime == "year") {
-				this.paginator.perPage = this.paginator.perPage + 1
-				this.getData('year',this.company_id)
-				// this.configParams(this.company_id,'year')
+			
+				if(this.lastpage.lastPageYear < this.paginator.lastPage){
+					this.reload = true;
+				      let self = this;
+				      setTimeout(() => {
+				        self.reload = false;
+				        self.lastpage.lastPageYear = self.lastpage.lastPageYear + 1  
+				        self.getDataNew('year',self.company_id,self.lastpage.lastPageYear)
+				      }, 1500);
+
+				}
+			
 			}
 			
-		}
+		},
 
+		stopdrawerRight(){
+			this.drawerRight = false
+			// this.paginator.perPageDay = 1
+			// this.paginator.perPageYear = 1
+
+		}
 
 	},
 
@@ -426,5 +539,8 @@ export default {
 }
 .text-style {
 	font-size: 12px !important;
+}
+.btn-style {
+	align-items: center !important;
 }
 </style>

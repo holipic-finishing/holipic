@@ -427,13 +427,14 @@ class TransactionRepository extends BaseRepository
 
         $transactions = $this->model->select('id','title','dated','amount','type')
                                     ->where(DB::raw('date(dated)'),$now)
-                                    ->where('company_id', $attributes['companyId']);
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
 
         return $transactions->paginate($perPage);                            
 
     }
 
-    public function transactionHistoryWeek($attributes) {
+    public function transactionHistoryWeek($attributes,$perPage) {
 
         $startDay   = \Carbon\Carbon::today()->subDays(7)->format('Y-m-d');
 
@@ -441,19 +442,23 @@ class TransactionRepository extends BaseRepository
 
         $transactions = $this->model->select('id','title','dated','amount','type')
                                     ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                                    ->where('company_id', $attributes['companyId']);
-        return $transactions->paginate(1);                            
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+                                    // dd($transactions->get()->toArray());
+        return $transactions->paginate($perPage);                            
 
     }
 
-    public function transactionHistoryMonth($attributes) {
+    public function transactionHistoryMonth($attributes,$perPage) {
 
          $month = \Carbon\Carbon::today()->format('Y-m');
 
          $transactions = $this->model->select('id','title','dated','amount','type')
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
-                                    ->where('company_id', $attributes['companyId']);
-        return $transactions->paginate(1); 
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+                                    // dd($transactions->get()->toArray());
+        return $transactions->paginate($perPage); 
 
     }
 
@@ -463,7 +468,10 @@ class TransactionRepository extends BaseRepository
 
          $transactions = $this->model->select('id','title','dated','amount','type')
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
-                                    ->where('company_id', $attributes['companyId']);
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+
+                                    // dd($transactions->get()->toArray());
         return $transactions->paginate($perPage); 
 
     }

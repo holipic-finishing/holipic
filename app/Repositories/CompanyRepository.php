@@ -72,18 +72,24 @@ class CompanyRepository extends BaseRepository
         //     $results[$key]->package_name = $value->user->package->package_name;
         // }
 
-         $results = DB::table('transactions as t')
-                    ->rightJoin('companies as c', 't.company_id', '=', 'c.id')
+        //  $results = DB::table('transactions as t')
+        //             ->rightJoin('companies as c', 't.company_id', '=', 'c.id')
+        //             ->join('users as u', 'u.id', '=', 'c.owner_id')
+        //             ->join('packages as p', 'p.id', '=', 'u.package_id')
+
+        //             ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('sum((t.amount * p.fee /100)) as system_fee'),'u.first_name', 'u.last_name' )
+        //            ->groupBy('t.company_id', 'c.id','c.name', 'c.description' ,'c.address', 'c.logo', 'u.email', 'p.package_name', 'u.first_name', 'u.last_name')
+        //             ->get();
+
+        // $results = $this->transform($results);
+
+        $results = DB::table('companies as c')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id')
-
-                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('sum((t.amount * p.fee /100)) as system_fee'),'u.first_name', 'u.last_name' )
-                   ->groupBy('t.company_id', 'c.id','c.name', 'c.description' ,'c.address', 'c.logo', 'u.email', 'p.package_name', 'u.first_name', 'u.last_name')
+                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name')
                     ->get();
-
+       
         $results = $this->transform($results);
-
-
 
         return $results;
     }
@@ -97,44 +103,53 @@ class CompanyRepository extends BaseRepository
     
     public function search($input){
 
-        $results =  DB::table('transactions as t')
-                    ->rightJoin('companies as c', 't.company_id', '=', 'c.id')
+        $results = DB::table('companies as c')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id');
 
-        if($input['keywords'] != null){
-            $results = $results->where('name', 'like', '%'.$input['keywords'].'%')
-                                ->orwhere('email', 'like', '%'.$input['keywords'].'%')
-                                ->orWhereRaw("concat(first_name, ' ', last_name) like '%{$input['keywords']}%' ");
-        }
 
-        elseif($input['filterPackage'] != null){
-            if($input['filterPackage'] != "All"){
-                $results = $results->where('p.package_name','=', $input['filterPackage']);
+        if($input['keywords'] != null){
+            $results = $results->where(function($query) use ($input){
+                $query->orwhere('name', 'like', '%'.$input['keywords'].'%')
+                                ->orwhere('email', 'like', '%'.$input['keywords'].'%')
+                                ->orWhereRaw("concat(first_name,' ', last_name) like '%{$input['keywords']}%' ");
+            });
+            if($input['filterPackage'] != null){
+                if($input['filterPackage'] != "All"){
+                    $results = $results->where('p.package_name','=', $input['filterPackage']);
+                }
+            }
+                               
+        }else{
+            if($input['filterPackage'] != null){
+                if($input['filterPackage'] != "All"){
+                    $results = $results->where('p.package_name','=', $input['filterPackage']);
+                }
             }
         }
+  
+        $results = $results->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' , 'u.last_name', 'u.first_name')->get();
         
-        $results = $results->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('sum((t.amount * p.fee /100)) as system_fee') ,'u.first_name', 'u.last_name')
-                   ->groupBy('t.company_id', 'c.id','c.name', 'c.description' ,'c.address', 'c.logo', 'u.email', 'p.package_name', 'u.first_name', 'u.last_name')
-                    ->get();
 
         $results = $this->transform($results);
-        return $results;
-    }
-
-
-    public function handleTransaction($companyId){
-         $results = DB::table('transactions as t')
-                    ->rightJoin('companies as c', 't.company_id', '=', 'c.id')
-                    ->join('users as u', 'u.id', '=', 'c.owner_id')
-                    ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->select('c.id as company_id', 't.amount', 'p.fee','c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('(t.amount * p.fee /100) as system_fee'), 'u.first_name', 'u.last_name' )
-                    ->where('t.company_id', $companyId)
-                    ->get();
 
 
         return $results;
     }
+
+
+    // public function handleTransaction($companyId){
+    //      $results = DB::table('transactions as t')
+    //                 ->rightJoin('companies as c', 't.company_id', '=', 'c.id')
+    //                 ->join('users as u', 'u.id', '=', 'c.owner_id')
+    //                 ->join('packages as p', 'p.id', '=', 'u.package_id')
+    //                 ->select('c.id as company_id', 't.amount', 'p.fee','c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('(t.amount * p.fee /100) as system_fee'), 'u.first_name', 'u.last_name' )
+    //                 ->where('t.company_id', $companyId)
+    //                 ->get();
+
+
+    //     return $results;
+    // }
 
     /**
     
@@ -156,8 +171,14 @@ class CompanyRepository extends BaseRepository
 
 
     public function total($input){
+        $listID = [];
 
-        $results = $this->model->with(['files','user.package','transactions'])->get(); 
+        foreach ($input as $key => $value) {
+            array_push($listID, $value->id);
+        }
+
+
+        $results = $this->model->with(['files','user.package','transactions'])->whereIn('id',$listID)->get(); 
 
         foreach ($results as $key => $value) {
             $total_file_size = 0;

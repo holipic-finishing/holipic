@@ -609,7 +609,7 @@ Holipic
 							</div>
 							
 							<div class="account-right text-right">
-								<a href="#" class="forget-password">Forget Password?</a>
+								<a href="#" class="forget-password">Forgot Password?</a>
 							</div>
 						</div>
 						

@@ -11,7 +11,7 @@
       <router-view></router-view>
       <notifications 
         group="loggedIn" 
-        position="top right"
+        position="bottom right"
         animation-type="velocity"
       />
       <transaction-history></transaction-history>

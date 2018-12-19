@@ -102,23 +102,26 @@ class CompanyRepository extends BaseRepository
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id');
 
+        if($input['filterPackage'] != null){
+            if($input['filterPackage'] != "All"){
+                $results = $results->where('p.package_name','=', $input['filterPackage']);
+            }
+        }
+
         if($input['keywords'] != null){
             $results = $results->where('name', 'like', '%'.$input['keywords'].'%')
                                 ->orwhere('email', 'like', '%'.$input['keywords'].'%')
                                 ->orWhereRaw("concat(first_name, ' ', last_name) like '%{$input['keywords']}%' ");
         }
 
-        elseif($input['filterPackage'] != null){
-            if($input['filterPackage'] != "All"){
-                $results = $results->where('p.package_name','=', $input['filterPackage']);
-            }
-        }
         
         $results = $results->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', DB::raw('sum((t.amount * p.fee /100)) as system_fee') ,'u.first_name', 'u.last_name')
                    ->groupBy('t.company_id', 'c.id','c.name', 'c.description' ,'c.address', 'c.logo', 'u.email', 'p.package_name', 'u.first_name', 'u.last_name')
                     ->get();
 
         $results = $this->transform($results);
+
+        dd($results);
         return $results;
     }
 
@@ -158,6 +161,7 @@ class CompanyRepository extends BaseRepository
     public function total($input){
 
         $results = $this->model->with(['files','user.package','transactions'])->get(); 
+        dd($results);
 
         foreach ($results as $key => $value) {
             $total_file_size = 0;

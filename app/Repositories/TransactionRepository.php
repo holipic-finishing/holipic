@@ -371,11 +371,6 @@ class TransactionRepository extends BaseRepository
     
     public function transform($results){
         foreach ($results as $key => $result) {
-            if($result->type == 1){
-                $results[$key]->type = 'Top Up';
-            }else{
-                $results[$key]->type = 'Bank Transfer';
-            }
             $results[$key]->amount_with_symbol = $result->amount ." ".$result->symbol;             
             $results[$key]->system_fee_with_symbol = $result->system_fee ." ".$result->symbol;         
             $results[$key]->credit_card_fee_with_symbol = $result->credit_card_fee ." ".$result->symbol;             

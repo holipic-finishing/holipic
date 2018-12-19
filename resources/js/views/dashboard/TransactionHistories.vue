@@ -12,7 +12,8 @@
 	      v-model="drawerRight"
 	      right
 	      clipped
-	      app>
+	      app
+	      :width="400">
 	      	<v-list dense>
 		        <v-list-tile @click.stop="drawerRight = !drawerRight">
 			          	<v-list-tile-action>
@@ -24,49 +25,50 @@
 		        </v-list-tile>
 	      	</v-list>
 	      	<v-list-tile>
-              	<v-list-tile-content>
-                	<v-list-tile-title >ID : {{ items.id }}</v-list-tile-title>
+              	<v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Company ID</v-list-tile-title>
+                	<v-list-tile-sub-title class="font-weight-thin ">{{ items.id }}</v-list-tile-sub-title>
                 </v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Company Name :</v-list-tile-title>
+                <v-list-tile-content  class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Company Name </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.company_name }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Invoice :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Invoice </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.invoice }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Date :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Date </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.dated }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Transaction :</v-list-tile-title>
-                	<v-list-tile-sub-title class="font-weight-thin">{{ items.type }}</v-list-tile-sub-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Transaction </v-list-tile-title>
+                	<v-list-tile-sub-title class="font-weight-thin">{{ items.title }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Amount :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Amount </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.amount_with_symbol }}</v-list-tile-sub-title>
-              	</v-list-tile-content>
+              	</v-list-tile-content class="drawer-info">
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Credit Card Fee :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Credit Card Fee </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.credit_card_fee_with_symbol }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Status :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Status </v-list-tile-title>
                 	<v-list-tile-sub-title>
 	                	<v-btn color="success" small v-if="items.status === 'RECIVED'">{{ items.status }}</v-btn>
 						<v-btn color="error" small v-else>{{ items.status }}</v-btn>
@@ -74,26 +76,26 @@
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Package Name :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Package Name </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.package_name }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Email:</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Email </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.email }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Fullname :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Fullname </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.fullname }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Country :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Country </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.country }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
@@ -101,13 +103,24 @@
                 <v-list-tile-content>
               	</v-list-tile-content>
             </v-list-tile>
+            <v-list dense>
+		        <v-list-tile @click.stop="drawerRight = !drawerRight">
+			          	<v-list-tile-action>
+			            	<v-icon>exit_to_app</v-icon>
+			          	</v-list-tile-action>
+			          	<v-list-tile-content>
+			            	<v-list-tile-title>Exit Your Drawer</v-list-tile-title>
+			          	</v-list-tile-content>
+		        </v-list-tile>
+	      	</v-list>
 	    </v-navigation-drawer>
 	    <v-navigation-drawer
 	      fixed
 	      v-model="drawerRightEdit"
 	      right
 	      clipped
-	      app>
+	      app
+	      :width="400">
 	      	<v-list dense>
 		        <v-list-tile @click.stop="drawerRightEdit = !drawerRightEdit">
 			          	<v-list-tile-action>
@@ -119,13 +132,14 @@
 		        </v-list-tile>
 	      	</v-list>
 	      	<v-list-tile>
-              	<v-list-tile-content>
-                	<v-list-tile-title >ID : {{ items.id }}</v-list-tile-title>
+              	<v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Company ID</v-list-tile-title>
+                	<v-list-tile-sub-title class="font-weight-thin ">{{ items.id }}</v-list-tile-sub-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Company Name :</v-list-tile-title>
+           <v-list-tile >
+                <v-list-tile-content  class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Company Name </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.company_name }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
@@ -134,14 +148,24 @@
               	</v-list-tile-content>
             </v-list-tile>
 	      	<v-list-tile>
-	            <v-text-field label="Amount" v-model="itemEdit.amount"></v-text-field>
+	      		<v-flex xs12>
+	      			<v-flex xs9>
+	      				<v-text-field label="Amount" v-model="itemEdit.amount"></v-text-field>
+	      			</v-flex>
+	      			<v-flex xs3>
+	      				
+	      			</v-flex>
+	            	
+	        	</v-flex>
             </v-list-tile>
             <v-list-tile>
-	            <v-select
-		            :items="listStatus"
-		            label="Status"
-		            v-model="itemEdit.status"
-		        ></v-select>
+            	<v-flex xs12>
+        			<v-select
+			            :items="listStatus"
+			            label="Status"
+			            v-model="itemEdit.status"
+			        ></v-select>
+            	</v-flex>
             </v-list-tile>
             <v-list-tile>
             	<v-spacer></v-spacer>
@@ -149,7 +173,7 @@
             </v-list-tile>
 	    </v-navigation-drawer>
 	      	<v-toolbar flat color="white">
-		        <v-toolbar-title ><a href="admin#/default/transaction/histories"> Transacsion Histories Table</a></v-toolbar-title>
+		        <v-toolbar-title ><a href="admin#/mini/transaction/histories"> Transaction Histories Table</a></v-toolbar-title>
 		        <v-divider
 		          class="mx-2"
 		          inset
@@ -186,8 +210,16 @@
 		    		<td>{{ props.item.company_name }}</td>
 		    		<td>{{ props.item.invoice }}</td>
 					<td>{{ props.item.dated }}</td>
-		    		<td>{{ props.item.type }}</td>
-		    		<td>{{ props.item.amount_with_symbol }}</td>
+		    		<td>{{ props.item.title }}</td>
+		    		<td>
+		    			<div v-if="props.item.type == 1" style="color:green">
+		    				+{{ props.item.amount_with_symbol}} 
+		    			</div>
+		    			<div v-else>
+		    				-{{ props.item.amount_with_symbol}} 
+		    			</div>
+
+		    		</td>
 		    		<td>
 						<v-btn color="success" small v-if="props.item.status === 'RECIVED'">{{ props.item.status }}</v-btn>
 						 <v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
@@ -218,10 +250,6 @@
 		    		</td>
 		    	</template>
 	      	</v-data-table>	
-	      	<v-snackbar v-model="snack" :timeout="3000" :color="snackColor" right bottom>
-		        {{ snackText }}
-		        <v-btn flat @click="snack = false">Close</v-btn>
-		    </v-snackbar>			
 	   	</app-card>
 	</v-layout>
 </template>
@@ -241,8 +269,8 @@ export default {
 		        { text: 'Company Name',value: 'company_name'},	       
 		        { text: 'Invoice', value: 'invoice' },	
 		        { text: 'Date', value: 'dated' },       
-		        { text: 'Transaction', value: 'type' },
-		        { text: 'Amount', value: 'amount_with_symbol' },
+		        { text: 'Transaction', value: 'title' },
+		        { text: 'Amount', value: 'amount_with_symbol' , width: '15%'},
 		        { text: 'Status', value: 'status' },	
 		        { text: 'Action'},	   
 		  	],
@@ -264,10 +292,7 @@ export default {
 	      	drawerRight: false,
 	      	drawerRightEdit : false,
 		  	right: null,
-		  	snack: false,
-	        snackColor: '',
-	        snackText: '',
-
+		  	
 	        items:{},
 
 	        itemEdit: {
@@ -320,9 +345,13 @@ export default {
 				del(config.API_URL+'transactions/'+id)
 				.then((res) => {
 					this.fetchData()
-					this.snack = true,
-	                this.snackColor = 'success',
-	                this.snackText = 'Data deleted'
+	                setTimeout(function(){
+	                    Vue.notify({
+	                        group: 'loggedIn',
+	                        type: 'success',
+	                        text: 'Data deleted'
+	                    });
+	               	},500);
 					
 				})
 				.catch((e) =>{
@@ -349,9 +378,13 @@ export default {
 			.then((res) => {
 				this.drawerRightEdit = false
 				this.fetchData()
-				this.snack = true,
-                this.snackColor = 'success'
-                this.snackText = 'Data edited'
+                setTimeout(function(){
+                    Vue.notify({
+                        group: 'loggedIn',
+                        type: 'success',
+                        text: 'Data edited'
+                    });
+               	},500);
 			})
 			.catch((e) =>{
 				console.log(e)
@@ -365,4 +398,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+	.drawer-info{
+		flex-direction:row
+	}
+	.drawer-info-tile{
+		flex: 0 0 40%
+	}
 </style>

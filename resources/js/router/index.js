@@ -74,11 +74,11 @@ routers = [
 	{
 		path: '/',
    		component: mini,
-		redirect: '/mini/dashboard/index',
+		redirect: '/default/dashboard/index',
 		meta: { requiresAuth: true },
 		children: [
       		{
-	         	path: '/mini/dashboard/index',
+	         	path: '/default/dashboard/index',
 	         	component: Ecommerce,
 	         	meta: {
 	         		requiresAuth: true,
@@ -96,7 +96,7 @@ routers = [
 		    //     }
 		    // },
 		    {
-		        path: '/mini/widgets/mana-company',
+		        path: '/default/widgets/mana-company',
 		        component: Company,
 		        meta: {
 		        	requiresAuth: true,
@@ -105,7 +105,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/mini/widgets/mana-company-chart',
+		        path: '/default/widgets/mana-company-chart',
 		        component: CompanyChart,
 		        meta: {
 		        	requiresAuth: true,
@@ -114,7 +114,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/mini/packages/index',
+		        path: '/default/packages/index',
 		        component: PackageIndex,
 		        meta: {
 		        	requiresAuth: true,
@@ -124,7 +124,7 @@ routers = [
 
 		    }, 
 		    {
-		        path: '/mini/setting',
+		        path: '/default/setting',
 		        component: Setting,
 		        meta: {
 		        	requiresAuth: true,
@@ -133,7 +133,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/mini/user-management',
+		        path: '/default/user-management',
 		        component: UserManagement,
 		        meta: {
 		        	requiresAuth: true,
@@ -142,7 +142,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/mini/users/change-password',
+		        path: '/default/users/change-password',
 		        component: UserPass,
 		        meta: {
 		            requiresAuth: true,
@@ -151,7 +151,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/mini/transaction/histories',
+		        path: '/default/transaction/histories',
 		        component: HistoriesTransaction,
 		        meta: {
 		            requiresAuth: true,
@@ -160,7 +160,7 @@ routers = [
 		        }
 		    },
 		    {
-		        path: '/mini/coupon-code/index',
+		        path: '/default/coupon-code/index',
 		        component: IndexCoupon,
 		        meta: {
 		            requiresAuth: true,
@@ -170,30 +170,6 @@ routers = [
 		    },
       	]	
 	},
-	// {
-	// 	path:'/',
-	// 	name:'Dashboard',
-	// 	component: Dashboard,
-	// 	meta: { requiresAuth: true },
-	// 	children : [
-	// 		{
-	// 			path:'/users',
-	// 			name:'indexUser',
-	// 			component:User
-	// 		},
-	// 		{
-	// 			path:'/slide',
-	// 			name:'Slide',
-	// 			component:Slide
-	// 		},
-	// 		{
-	// 			path:'/user-dash',
-	// 			name:'UserDash',
-	// 			component:UserDash
-	// 		}
-
-	// 	]
-	// },
 	{
     // not found handler
     	path: '*',
@@ -249,57 +225,4 @@ router.afterEach((to, from) => {
 
 export default router;
 
-// export default new Router({
-// 	mode: 'history',
-// 	routes: [
-// 		defaultRoutes,
-// 		horizontalRoutes,
-// 		boxedRoutes,
-// 		mini,
-// 		boxedV2,
-// 		{
-// 			path: '/callback',
-// 			component: Auth0CallBack
-// 		},
-// 		{
-// 			path: '/session/sign-up',
-// 			component: SignUpOne,
-// 			meta: {
-// 				title: 'message.signUp',
-// 				breadcrumb: 'Session / Sign Up'
-// 			}
-// 		},
-// 		{
-// 			path: '/session/login',
-// 			component: LoginOne,
-// 			meta: {
-// 				title: 'message.login',
-// 				breadcrumb: 'Session / Login'
-// 			}
-// 		},
-// 		{
-// 			path: '	',
-// 			component: LockScreen,
-// 			meta: {
-// 				title: 'Lock Screen',
-// 				breadcrumb: 'Session / Lock Screen'
-// 			}
-// 		},
-// 		{
-// 			path: '/session/forgot-password',
-// 			component: ForgotPassword,
-// 			meta: {
-// 				title: 'message.forgotPassword',
-// 				breadcrumb: 'Session / Forgot Password'
-// 			}
-// 		},
-// 		{
-// 			path: '/session/reset-password',
-// 			component: ResetPassword,
-// 			meta: {
-// 				title: 'message.resetPassword',
-// 				breadcrumb: 'Session / Reset Password'
-// 			}
-// 		}
-// 	]
-// })
+

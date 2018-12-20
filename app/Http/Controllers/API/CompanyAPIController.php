@@ -164,4 +164,11 @@ class CompanyAPIController extends AppBaseController
         return \Excel::download(new ListCompaniesExport($request->all()), 'ListCompany.xlsx');
 
     }
+
+    public function showInformationCompany(Request $request) 
+    {
+        $companyInfo = $this->companyRepository->handleShowInformationCompany(request('companyId'));
+
+        return $this->sendResponse($companyInfo, 'Get Information Company Completed');
+    }
 }

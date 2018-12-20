@@ -33,6 +33,8 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('change-password', 'UserAPIController@changePassWord');
 
+	Route::get('companies/information', 'CompanyAPIController@showInformationCompany'); //different
+
 	Route::resource('companies', 'CompanyAPIController');
 
 	Route::resource('currencies', 'CurrencyAPIController');

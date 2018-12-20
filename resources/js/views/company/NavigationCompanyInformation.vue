@@ -15,7 +15,9 @@
 	      clipped
 	      app
 	      :width="400"
-	      class="hung">
+	      temporary
+	      class="chat-sidebar-wrap"
+	      style="overflow: auto;">
 	      	<v-list dense>
 		        <v-list-tile @click.stop="drawerRight = !drawerRight">
 			          	<v-list-tile-action>
@@ -118,7 +120,7 @@
 import config from '../../config/index.js'
 
 	export default {
-		name: 'Company Information',
+		name: 'CompanyInformation',
 		data() {
 			return {
 				drawerRight: false,
@@ -162,6 +164,7 @@ import config from '../../config/index.js'
 <style>
 	.fix-navigation{
 		padding: 10px 0px;
+		
 	}
 
 	.fix-list{
@@ -172,6 +175,7 @@ import config from '../../config/index.js'
 		right:0px !important;
 		color:red !important;
 	}
+
 	.title-company{
 		height: 50px;
 	    background-color: #4286f4;
@@ -182,6 +186,7 @@ import config from '../../config/index.js'
 	    padding: 10px 0px;
 	    color: white;
 	}
+
 	.text-value-company-left {
 		margin: 10px 0px;
 		font-size: 15px;
@@ -218,26 +223,37 @@ import config from '../../config/index.js'
 	}
 
 	.container-company{
+		overflow: auto;
 		/*top:0px;
 		position: absolute;
 		margin-top: 130px;*/
 	}
+
 	.container-company2 {
-		bottom:30px;
-		position: absolute;
+		/*bottom:30px;
+		position: absolute;*/
+		padding-top: 0px;
+		overflow: auto;
 		/*bottom:0px;
 		position: absolute;
 		margin-bottom: 50px;*/
 	}
+
 	.coupon-left{
 		font-weight: bold;
 	}
+
 	.btn-company{
-		bottom: 17px;
+		
     	right: 30px;
     	position: absolute;
-    	color:white;
+    	color:black;
+    	background-color: #e8e9ea !important;
+    	border-color: #b7b9bc !important;
 	}
 
+	.btn-company:hover{
+    	color:black !important;    	
+	}
 	
 </style>

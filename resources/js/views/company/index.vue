@@ -99,87 +99,8 @@
 				<!-- show money transaction -->
 
 			    </v-app>
-				<v-navigation-drawer
-			      fixed
-			      v-model="drawerRight"
-			      right
-			      clipped
-			      app
-				  :width="400"
-			      >
-		      		<v-list dense>
-				        <v-list-tile @click.stop="stopdrawerRight()">
-					          	<v-list-tile-action>
-					            	<v-icon>exit_to_app</v-icon>
-					          	</v-list-tile-action>
-					          	<v-list-tile-content>
-					            	<v-list-tile-title>Exit Your Drawer</v-list-tile-title>
-					          	</v-list-tile-content>
-				        </v-list-tile>
-		    	 	</v-list>
-		    	 	<v-list two-line>
-			          <v-list-tile >
-			            <v-list-tile-content>
-			              	Transaction History
-			            </v-list-tile-content>
-
-			            <v-list-tile-content>
-			              <input type="text" v-model="currentFilterValue" class="form-control input-style" placeholder="Search" @keyup="searchFilter()">
-			            </v-list-tile-content>
-
-			            <v-list-tile-action>
-			            	<v-btn color="primary" fab small dark>
-			            		<v-icon>search</v-icon>
-			            	</v-btn>         
-			            </v-list-tile-action>
-			          </v-list-tile>
-			        </v-list> 
-		     
-           		 	  <v-list-tile >
-		                <v-list-tile-content>
-		             
-								<div class="custom-flex">
-								<nav class="nav nav-bar-chart">
-								  <a class="nav-link" :class="typeTimeReturn === 'Day' ? 'active' : '' " @click="activeTypeTime('Day')">Day</a>
-								  <a class="nav-link" :class="typeTimeReturn === 'Week' ? 'active' : '' " @click="activeTypeTime('Week')">Week</a>
-								  <a class="nav-link" :class="typeTimeReturn === 'Month' ? 'active' : '' " @click="activeTypeTime('Month')">Month</a>
-								  <a class="nav-link" :class="typeTimeReturn === 'Year' ? 'active' : '' " @click="activeTypeTime('Year')">Year</a>
-								</nav>
-								<div class="justify-space-between w-30">
-									<div class="text-total text-xs-right">
-										<h4 class="primary--text mb-0">{{total}}$</h4>
-										
-									</div>
-	 							</div>			
-								</div>
-		              	</v-list-tile-content>
-           		 	</v-list-tile>
-           		 	<v-list two-line>
-			            <v-list-tile
-							v-for="(item, key) in optionLoadView"
-            				:key="item.id"
-            				class="style-list"
-			            >
-			              <v-list-tile-content>
-			                <v-list-tile-title v-text="item.title"></v-list-tile-title>
-			                <v-list-tile-sub-title v-text="item.dated" class="text-style"></v-list-tile-sub-title>
-			              </v-list-tile-content>
-			  
-			              <v-list-tile-action>
-			                <p class="success--text mb-0" v-if="item.type == true">+{{item.amount}}</p>
-			                <p class="mb-0" v-if="item.type == false">-{{item.amount}}</p>
-			              </v-list-tile-action>
-			            </v-list-tile>
-			            <v-list-tile>
-			            	<v-list-tile-content class="btn-style">
-			            		<app-section-loader :status="reload"></app-section-loader>
-								<button type="button" @click="addTenItem(typeTime)" class="btn btn-primary">More (50+) </button>
-							</v-list-tile-content>
-						</v-list-tile>
-			        </v-list> 
-			        
-	   			 </v-navigation-drawer>
-	   			 <!-- end -->
+			    <show-transaction></show-transaction>
+	
 			</div>
 		</v-container>		
 	</div>	
@@ -191,13 +112,13 @@ import config from '../../config/index.js'
 import Vue from 'vue'
 import Lodash from 'lodash'
 import moment from 'moment'
-import AppSectionLoader from "../../components/AppSectionLoader/AppSectionLoader.vue";
+import ShowTransaction from './ShowTransaction.vue'
 
 export default {
 
   	name: 'index',
   	components: {
-  		AppSectionLoader
+  		ShowTransaction,
   	},
 
   	data () {
@@ -225,35 +146,13 @@ export default {
 	      	listPackage : [],
 	      	urlExport:config.API_URL+'exportexcel/companies',
 	      	drawerRight: false,
-	      	typeTime:'',
-	      	total:0,
-	      	company_id:'',
-	      	transactionHistories: [
-	      	],
-	      	option: [],
-	      	paginator: {
-                perPageDay: 2,
-                lastPage: 1,
-        	},
-        	reload: false,
-        	currentFilterValue:'',
-        	lastpage: {
-        		lastPageDay:1,
-        		lastPageWeek:1,
-        		lastPageMonth:1,
-        		lastPageYear:1,
-        	},
-
-        	searchResult: [],
-
-
+	
 	    }
   	},
 
   	created(){
   		this.fetchData();	
   		this.getListPackage();
-		this.typeTime = "Day"
 	},
 
 
@@ -282,54 +181,11 @@ export default {
 			})
 		},
 
-
-		getData(id, page){
-
-			let url = config.API_URL+'transaction/history'
-
-			let params = {
-                perPage: this.paginator.perPageDay,
-                companyId: id,
-                page: page
-            }	
-
-			getWithData(url,params)
-			.then((res)=>{
-				if (res.data && res.data.success) {
-
-					this.transactionHistories = res.data.data
-					
-					let total_revenue = 0
-					let total_expenditure = 0
-					let vm = this
-					 _.forEach(res.data.data,function(value,key){
-					 	if(key == "Day") {
-					 		vm.option = value
-					 		_.forEach(value.data,function(v_1,k_1){
-						 		if(v_1.type == true) {
-				                	total_revenue = total_revenue + parseFloat(v_1.amount)
-				                } else {
-				                	total_expenditure =total_expenditure + parseFloat(v_1.amount)
-				                }
-					 		})
-					 		vm.total = total_revenue - total_expenditure
-					 	}
-		               
-		             });
-				}
-			})
-			.catch((e) =>{
-				console.log(e)
-			})
-
-		},
-
 		doReset(){
 			this.search.keywords = ''
 			this.search.filterPackage =''
 			this.fetchData()
 		},
-
 
 		getListPackage(){
 			var data = []
@@ -349,6 +205,7 @@ export default {
 
 		},
 
+
 		showItem(item){
 			this.$root.$router.push({
 				path: '/default/widgets/mana-company-chart', 
@@ -357,174 +214,21 @@ export default {
 		},
 
 		showTransaction(items){
-			this.typeTime = "Day"
-			this.option = []
-			this.lastpage.lastPageDay = 1
-			this.lastpage.lastPageWeek = 1
-			this.lastpage.lastPageMonth =1
-			this.lastpage.lastPageYear = 1
 
-			this.drawerRight = true
-
-			this.company_id = items.id
-
-			this.getData(items.id, this.paginator.lastPage)
-		},
-
-		activeTypeTime(timevalue) {
-
-			this.currentFilterValue = ''
-			this.searchResult = []
-			this.typeTime = timevalue
-
-			let option
-
-			let total_revenue = 0
-			let total_expenditure = 0
-			let vm = this
-
-			_.forEach(vm.transactionHistories, function(value, key){
-				if(timevalue == key){
-					option = value
-					_.forEach(value.data, function(v_1, k_1){
-						if(v_1.type == true) {
-		                	total_revenue = total_revenue + parseFloat(v_1.amount)
-		                } else {
-		                	total_expenditure =total_expenditure + parseFloat(v_1.amount)
-		                }
-					})
-					vm.total = total_revenue - total_expenditure
-				}
-			})
-
-			this.option = option
-
-		},
-
-		getDataWithTimeValue(value,page){
-
-			let url = config.API_URL+'transaction/history/item'
-
-			let params = {
-                perPage: this.paginator.perPageDay,
-                companyId: this.company_id,
-                page: page,
-                time: value
-            }	
-
-			getWithData(url, params)
-			.then((res)=>{
-				if (res.data && res.data.success) {
-
-					let resItem = res.data.data.data
-					let vm = this
-
-					_.forEach(resItem, function(value,key){
-						
-						vm.option.data.push(value)
-					})
-							
-					var total_revenue = 0
-					var total_expenditure = 0
-					 _.forEach(vm.option.data,function(value,key){
-		                if(value.type == true) {
-		                	total_revenue = total_revenue + parseFloat(value.amount)
-		                } else {
-		                	total_expenditure =total_expenditure + parseFloat(value.amount)
-		                }
-		             });
-		             vm.total = total_revenue - total_expenditure
-					
- 
-				}
-			})
-			.catch((e) =>{
-				console.log(e)
-			})
-
-		},
-
-		addTenItem(timevalue){
-
-			let page = 0
-
-			switch (timevalue) {
-			    case 'Day':
-			       		this.lastpage.lastPageDay = this.lastpage.lastPageDay + 1 
-			       		page = this.lastpage.lastPageDay
-			        break;
-			    case 'Week':
-			        	this.lastpage.lastPageWeek = this.lastpage.lastPageWeek + 1 
-			       		page = this.lastpage.lastPageWeek
-			        break;
-			    case 'Month':
-			       		this.lastpage.lastPageMonth = this.lastpage.lastPageMonth + 1 
-			       		page = this.lastpage.lastPageMonth
-			        break;
-			    case 'Year':
-			        	this.lastpage.lastPageYear = this.lastpage.lastPageYear + 1 
-			       		page = this.lastpage.lastPageYear
-			        break;
-			    default:
-			        console.log("Something went horribly wrong...");
+			let obj = {
+				typeTime : 'Day',
+				showDrawerRight : true,
+				companyId : items.id
 			}
 
-			this.getDataWithTimeValue(timevalue,page)
+			this.$root.$emit('showTransactionStatus', obj)
 
-			console.log(this.option.data)
-
-			
+	
 		},
-
-		stopdrawerRight(){
-			this.drawerRight = false
-			this.lastpage.lastPageDay = 1
-			this.lastpage.lastPageWeek = 1
-			this.lastpage.lastPageMonth =1
-			this.lastpage.lastPageYear = 1
-			this.option = []
-
-		},
-
-		searchFilter(){
-			var self = this;
-	        // Add condition for currentFilterProperty == 'Name'
-	    	if(this.currentFilterValue != undefined && this.currentFilterValue != ''){
- 
-	    		var result = this.option.data.filter(function(d){
-	        		
-	        		if(d.title.indexOf(self.currentFilterValue) > -1){
-	        			return d
-	        		}
-	      		})
-
-	      		this.searchResult = result
-
-	      		return this.searchResult
-
-	      	}else{
-	      		this.searchResult = []	
-	      		return this.option.data
-	      	}  
-	    }  	
 
 
 	},
 
-	computed:{
-	  	typeTimeReturn(){
-	  		return this.typeTime
-	  	},
-
-	  	optionLoadView(){
-
-	  		if(this.searchResult && this.searchResult.length){
-	  			return this.searchResult
-	  		}else{
-	      		return this.option.data
-	  		}
-	  	}
-	},
 
 }
 </script>
@@ -534,33 +238,4 @@ export default {
 	width: 160px ;
 }
 
-.nav-bar-chart{
-	font-size: 14px;
-    font-weight: bold;
-    width: 100%;
-}
-
-.nav-link {
-		color: #6b6d70 !important;
-}
-
-.active{
-		color: #2196f3 !important;
-}
-.custom-flex {
-	display: flex !important;
-    width: 100%;
-}
-.text-total {
-	padding: 7px 15px;
-}.style-list {
-	border-bottom: 1px solid gray;
-    margin: 0px 20px;
-}
-.text-style {
-	font-size: 12px !important;
-}
-.btn-style {
-	align-items: center !important;
-}
 </style>

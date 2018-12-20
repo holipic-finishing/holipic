@@ -259,7 +259,7 @@
 								        @input="saveStartYear"
 								        reactive
 								        no-title
-								        max="2018/01/01"
+								        :max="defaultYear"
 								        type="year"
 								      ></v-date-picker>
 								    </v-menu>
@@ -301,7 +301,7 @@
 								        @input="saveEndYear"
 								        reactive
 								        no-title
-								        max="2018/01/01"
+								        :max="defaultYear"
 								        type="year"
 								      ></v-date-picker>
 								    </v-menu>
@@ -504,7 +504,8 @@ export default {
 	      menu6:false,
 	      menu7:false,
 	      menu8:false,
-	      date: ''
+	      date: '',
+	      defaultYear : new Date().getUTCFullYear() +'/01/01'
 
 	    };
 	},
@@ -850,6 +851,8 @@ export default {
 	    this.$root.$on('totalTransaction', res => {
 	       	this.total = res
 	    });
+
+	    alert(this.defaultYear)
   	}
 
 

@@ -86,7 +86,7 @@ class CompanyRepository extends BaseRepository
         $results = DB::table('companies as c')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name')
+                    ->select('c.id as id', 'c.name','c.phone' ,'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name')
                     ->get();
        
         $results = $this->transform($results);
@@ -209,7 +209,7 @@ class CompanyRepository extends BaseRepository
         $company = $this->model
                     ->join('users', 'users.id', 'companies.owner_id')
                     ->join('packages', 'packages.id', 'users.package_id')
-                    ->select('companies.id','companies.name', 'companies.address', 'packages.package_name', 'users.email', 'users.created_at', 'packages.file_upload')
+                    ->select('companies.id', 'companies.description', 'companies.name', 'companies.address', 'packages.package_name', 'users.first_name', 'users.last_name', 'users.email', 'users.created_at', 'packages.file_upload', 'companies.coupon_codes_id')
                     ->where('companies.id', $companyId)
                     ->first()->toArray();
 
@@ -217,8 +217,48 @@ class CompanyRepository extends BaseRepository
 
         $company['capacity'] = number_format($company['file_upload'] - $company['total_upload']/1024, 2);
 
-        return $company;
+        $company['fullname'] = $company['first_name'] ." ".$company['last_name'];
 
+        $companyRelationship = $this->model->with('user.package')
+                            ->with(['files' => function($query) use($companyId){
+                                $query->where('files.company_id', $companyId);
+                            }])
+                            ->with(['transactions' => function($query) use($companyId) {
+                                $query->where('transactions.company_id', $companyId);
+                            }])
+                            ->where([['companies.id', $companyId]])
+                            ->get()->toArray(); 
+
+        foreach ($companyRelationship as $key => $value) 
+        {
+
+            $totalFileSize = 0;
+
+            $totalSystemFee = 0;
+
+            $totalAmount = 0;
+
+            foreach ($value['files'] as $item) {
+                $totalFileSize += $item['file_size'];
+            }
+
+            foreach ($value['transactions'] as $item) {
+
+                $totalSystemFee += $item['system_fee'];
+
+                $totalAmount += $item['amount'];
+            }
+            
+        }
+
+        $company['total_income_fee'] = $totalSystemFee;
+
+        $company['total_income'] = $totalAmount - $totalSystemFee;
+
+        $couponCodes = DB::table('coupon_codes')->where('id', $company['coupon_codes_id'])->where('active', 1)->get();
+
+        return [$company, $couponCodes];
+        
     }
 
 }

@@ -175,5 +175,10 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
     }
 
+    public function week()
+    {
+        $this->transactionRepository->initWeekDays();
+    }
+
 }
 

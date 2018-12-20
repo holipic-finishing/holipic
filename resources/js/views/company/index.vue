@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div >
 		<page-title-bar></page-title-bar>
 		<v-container fluid grid-list-xl pt-0>
 			<div id="app">
@@ -51,19 +51,21 @@
 			       	<template slot="items" slot-scope="props">
 			    		<td>{{ props.item.id }}</td>
 				        <td class="text-xs-left">{{ props.item.name }}</td>
-				        <td class="text-xs-left">{{ props.item.email }}</td>
 				        <td class="text-xs-left">{{ props.item.fullname }}</td>
-				        <td class="text-xs-left">{{ props.item.package_name }}</td>
-				        <td class="text-xs-left">{{ props.item.address }}</td>
-				        <td class="text-xs-left">{{ props.item.description }}</td>
-				        <td class="text-xs-left">
+				        <td class="text-xs-left">{{ props.item.email }}</td>
+				        <td class="text-xs-left">{{ props.item.phone }}</td>
+
+				        <!-- <td class="text-xs-left">{{ props.item.package_name }}</td> -->
+				        <!-- <td class="text-xs-left">{{ props.item.address }}</td> -->
+				        <!-- <td class="text-xs-left">{{ props.item.description }}</td> -->
+				        <!-- <td class="text-xs-left">
 				        	<img v-if="props.item.logo != null " v-bind:src="props.item.logo"  width="100px" height="100px"/>
 				    	</td>
 				        <td class="text-xs-left">{{ props.item.total_income }}</td>
 				        <td class="text-xs-left">{{ props.item.total_file_size }}</td>
-				        <td class="text-xs-left">{{ props.item.total_income_fee }}</td>
+				        <td class="text-xs-left">{{ props.item.total_income_fee }}</td> -->
 				        <td class="text-xs-left">
-				          <!-- <v-icon
+				         <!--  <v-icon
 				            small
 				    		class="mr-2"
 				    		@click="showItem(props.item)"
@@ -110,15 +112,17 @@ export default {
 	    	headers: [	        
 		        { text: 'ID', value: 'id' },	       
 		        { text: 'Company Name', value: 'name' },	
-		        { text: 'Email', value: 'email'},
-		        { text: 'Fullname', value: 'fullname' },		      
-		        { text: 'Package', value: 'package_name' },	       
-		        { text: 'Address', value: 'address', sortable: false },	       
-		        { text: 'Description', value: 'description', sortable: false },	
-		        { text: 'Logo' , value: 'logo', sortable: false},
-		        { text: 'Total Incomes', value: 'total_income'  },       
-		        { text: 'Total File Size', value: 'total_file_size'},       
-		        { text: 'Total Income Fee', value: 'total_income_fee'  },
+		        { text: 'Owner/ Manager', value: 'fullname' },
+		        { text: 'Email', value: 'email'},	
+		        { text: 'Phone', value: 'phone' },		      
+
+		        // { text: 'Package', value: 'package_name' },	       
+		        // { text: 'Address', value: 'address', sortable: false },	       
+		        // { text: 'Description', value: 'description', sortable: false },	
+		        // { text: 'Logo' , value: 'logo', sortable: false},
+		        // { text: 'Total Incomes', value: 'total_income'  },       
+		        // { text: 'Total File Size', value: 'total_file_size'},       
+		        // { text: 'Total Income Fee', value: 'total_income_fee'  },
 		        { text: 'Action', sortable: false },         
 	      	],
 	      	desserts:[],
@@ -208,7 +212,7 @@ export default {
 
 		showItem(item){
 			this.$root.$router.push({
-				path: '/mini/widgets/mana-company-chart', 
+				path: '/default/widgets/mana-company-chart', 
 				query: { companyId: item.id}
 			})
 		},
@@ -226,4 +230,5 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 </style>

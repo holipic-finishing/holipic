@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('weeks', 'API\TransactionAPIController@week');
 
 Route::get('','API\PackageAPIController@listPackage');
 
@@ -37,6 +38,8 @@ Route::prefix('/admin')->group(function () {
  	   return view('welcome');
 	});
 });
+
+
 
 
 // Route::get('/{any}', function () {

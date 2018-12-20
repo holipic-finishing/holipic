@@ -54,5 +54,7 @@ class CouponCode extends Model
         
     ];
 
-    
+    public function company(){
+        return $this->hasOne('App\Models\Company', 'coupon_codes_id', 'id');
+    }
 }

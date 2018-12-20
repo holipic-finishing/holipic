@@ -476,6 +476,36 @@ class TransactionRepository extends BaseRepository
 
     }
 
+
+    public function transactionHistory($attributes, $perPage){
+
+        switch ($attributes['time']) {
+            case 'Day':
+                $result = $this->transactionHistoryDay($attributes,$perPage);
+                return $result;
+                break;
+
+            case 'Week':
+                $result = $this->transactionHistoryWeek($attributes,$perPage);
+                return $result;
+                break;
+
+            case 'Month':
+                $result = $this->transactionHistoryMonth($attributes,$perPage);
+                return $result;
+                break;
+
+            case 'Year':
+                $result = $this->transactionHistoryYear($attributes,$perPage);
+                return $result;
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    }
+
     
 
 

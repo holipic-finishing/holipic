@@ -124,7 +124,7 @@
 			            </v-list-tile-content>
 
 			            <v-list-tile-content>
-			              <input type="text" v-model="title" class="form-control input-style" placeholder="Search" @keydown.esc="doReset">
+			              <input type="text" v-model="currentFilterValue" class="form-control input-style" placeholder="Search" @keyup="searchFilter()">
 			            </v-list-tile-content>
 
 			            <v-list-tile-action>
@@ -140,10 +140,10 @@
 		             
 								<div class="custom-flex">
 								<nav class="nav nav-bar-chart">
-								  <a class="nav-link" :class="typeTimeReturn === 'day' ? 'active' : '' " @click="activeTypeTime('day')">Day</a>
-								  <a class="nav-link" :class="typeTimeReturn === 'week' ? 'active' : '' " @click="activeTypeTime('week')">Week</a>
-								  <a class="nav-link" :class="typeTimeReturn === 'month' ? 'active' : '' " @click="activeTypeTime('month')">Month</a>
-								  <a class="nav-link" :class="typeTimeReturn === 'year' ? 'active' : '' " @click="activeTypeTime('year')">Year</a>
+								  <a class="nav-link" :class="typeTimeReturn === 'Day' ? 'active' : '' " @click="activeTypeTime('Day')">Day</a>
+								  <a class="nav-link" :class="typeTimeReturn === 'Week' ? 'active' : '' " @click="activeTypeTime('Week')">Week</a>
+								  <a class="nav-link" :class="typeTimeReturn === 'Month' ? 'active' : '' " @click="activeTypeTime('Month')">Month</a>
+								  <a class="nav-link" :class="typeTimeReturn === 'Year' ? 'active' : '' " @click="activeTypeTime('Year')">Year</a>
 								</nav>
 								<div class="justify-space-between w-30">
 									<div class="text-total text-xs-right">
@@ -156,7 +156,7 @@
            		 	</v-list-tile>
            		 	<v-list two-line>
 			            <v-list-tile
-							v-for="item in transactionHistories"
+							v-for="(item, key) in optionLoadView"
             				:key="item.id"
             				class="style-list"
 			            >
@@ -173,7 +173,7 @@
 			            <v-list-tile>
 			            	<v-list-tile-content class="btn-style">
 			            		<app-section-loader :status="reload"></app-section-loader>
-								<button type="button" @click="addTenItem()" class="btn btn-primary">More (50+) </button>
+								<button type="button" @click="addTenItem(typeTime)" class="btn btn-primary">More (50+) </button>
 							</v-list-tile-content>
 						</v-list-tile>
 			        </v-list> 
@@ -228,19 +228,23 @@ export default {
 	      	typeTime:'',
 	      	total:0,
 	      	company_id:'',
-	      	transactionHistories: [],
+	      	transactionHistories: [
+	      	],
+	      	option: [],
 	      	paginator: {
                 perPageDay: 2,
                 lastPage: 1,
         	},
         	reload: false,
-        	title:'',
+        	currentFilterValue:'',
         	lastpage: {
         		lastPageDay:1,
         		lastPageWeek:1,
         		lastPageMonth:1,
         		lastPageYear:1,
-        	}
+        	},
+
+        	searchResult: [],
 
 
 	    }
@@ -249,7 +253,7 @@ export default {
   	created(){
   		this.fetchData();	
   		this.getListPackage();
-		this.typeTime = "day"
+		this.typeTime = "Day"
 	},
 
 
@@ -279,77 +283,39 @@ export default {
 		},
 
 
-		getData(value,id,page){
+		getData(id, page){
 
 			let url = config.API_URL+'transaction/history'
 
 			let params = {
                 perPage: this.paginator.perPageDay,
                 companyId: id,
-                search: this.searchBy,
-                page: page,
-                time:value
+                page: page
             }	
 
 			getWithData(url,params)
 			.then((res)=>{
 				if (res.data && res.data.success) {
-					this.transactionHistories= res.data.data.data
-				
-					var total_revenue = 0
-					var total_expenditure = 0
-					 _.forEach(res.data.data.data,function(value,key){
-		                if(value.type == true) {
-		                	total_revenue = total_revenue + parseFloat(value.amount)
-		                } else {
-		                	total_expenditure =total_expenditure + parseFloat(value.amount)
-		                }
-		             });
-					this.total = total_revenue - total_expenditure
-                    this.paginator.lastPage = res.data.data.last_page
-				}
-			})
-			.catch((e) =>{
-				console.log(e)
-			})
 
-		},
-
-		getDataNew(value,id,page){
-
-			let url = config.API_URL+'transaction/history'
-
-			let params = {
-                perPage: this.paginator.perPageDay,
-                companyId: id,
-                search: this.searchBy,
-                page: page,
-                time:value
-            }	
-
-			getWithData(url,params)
-			.then((res)=>{
-				if (res.data && res.data.success) {
+					this.transactionHistories = res.data.data
 					
-					var arrayA = this.transactionHistories
-
-					var arrayB = res.data.data.data
-
-					var arrayc = arrayA.concat(arrayB)
-
-					this.transactionHistories = arrayc
-
-					var total_revenue = 0
-					var total_expenditure = 0
-
-					 _.forEach(this.transactionHistories,function(value,key){
-		                if(value.type == true) {
-		                	total_revenue = total_revenue + parseFloat(value.amount)
-		                } else {
-		                	total_expenditure =total_expenditure + parseFloat(value.amount)
-		                }
+					let total_revenue = 0
+					let total_expenditure = 0
+					let vm = this
+					 _.forEach(res.data.data,function(value,key){
+					 	if(key == "Day") {
+					 		vm.option = value
+					 		_.forEach(value.data,function(v_1,k_1){
+						 		if(v_1.type == true) {
+				                	total_revenue = total_revenue + parseFloat(v_1.amount)
+				                } else {
+				                	total_expenditure =total_expenditure + parseFloat(v_1.amount)
+				                }
+					 		})
+					 		vm.total = total_revenue - total_expenditure
+					 	}
+		               
 		             });
-					this.total = total_revenue - total_expenditure
 				}
 			})
 			.catch((e) =>{
@@ -391,118 +357,172 @@ export default {
 		},
 
 		showTransaction(items){
+			this.typeTime = "Day"
+			this.option = []
+			this.lastpage.lastPageDay = 1
+			this.lastpage.lastPageWeek = 1
+			this.lastpage.lastPageMonth =1
+			this.lastpage.lastPageYear = 1
 
 			this.drawerRight = true
 
 			this.company_id = items.id
 
-			this.getData('day',items.id,this.lastpage.lastPageDay)
-			
+			this.getData(items.id, this.paginator.lastPage)
+		},
+
+		activeTypeTime(timevalue) {
+
+			this.currentFilterValue = ''
+			this.searchResult = []
+			this.typeTime = timevalue
+
+			let option
+
+			let total_revenue = 0
+			let total_expenditure = 0
+			let vm = this
+
+			_.forEach(vm.transactionHistories, function(value, key){
+				if(timevalue == key){
+					option = value
+					_.forEach(value.data, function(v_1, k_1){
+						if(v_1.type == true) {
+		                	total_revenue = total_revenue + parseFloat(v_1.amount)
+		                } else {
+		                	total_expenditure =total_expenditure + parseFloat(v_1.amount)
+		                }
+					})
+					vm.total = total_revenue - total_expenditure
+				}
+			})
+
+			this.option = option
 
 		},
 
-		activeTypeTime(time) {
+		getDataWithTimeValue(value,page){
 
-  			this.typeTime = time
+			let url = config.API_URL+'transaction/history/item'
 
-  			if(this.typeTime == "day") {
-  
-  				this.getData('day',this.company_id,this.lastpage.lastPageDay)
+			let params = {
+                perPage: this.paginator.perPageDay,
+                companyId: this.company_id,
+                page: page,
+                time: value
+            }	
 
-			}
+			getWithData(url, params)
+			.then((res)=>{
+				if (res.data && res.data.success) {
 
-			if(this.typeTime == "week") {
+					let resItem = res.data.data.data
+					let vm = this
 
-				this.getData('week',this.company_id,this.lastpage.lastPageWeek)
-			}
-
-			if(this.typeTime == "month") {
-
-				this.getData('month',this.company_id,this.lastpage.lastPageMonth)
-			}
-
-			if(this.typeTime == "year") {
-
-				this.getData('year',this.company_id,this.lastpage.lastPageYear)
-
-			}
-		}, 
-
-		addTenItem(){
-			if(this.typeTime == "day") {
-
-				if(this.lastpage.lastPageDay < this.paginator.lastPage){
-					this.reload = true;
-				      let self = this;
-				      setTimeout(() => {
-				        self.reload = false;
-				        this.lastpage.lastPageDay = this.lastpage.lastPageDay + 1
-				        self.getDataNew('day',this.company_id,this.lastpage.lastPageDay)
-				      }, 1500);
-				}
-  				
-  				
-			}
-
-			if(this.typeTime == "week") {
-				if(this.lastpage.lastPageWeek < this.paginator.lastPage){
-				
-				  this.reload = true;
-			      let self = this;
-			      setTimeout(() => {
-			        self.reload = false;
-			        self.lastpage.lastPageWeek = self.lastpage.lastPageWeek + 1
-			        self.getDataNew('week',self.company_id,self.lastpage.lastPageWeek)
-			      }, 1500);
-
-				}
-			
-			}
-
-			if(this.typeTime == "month") {
-			
-				if(this.lastpage.lastPageMonth < this.paginator.lastPage){
+					_.forEach(resItem, function(value,key){
+						
+						vm.option.data.push(value)
+					})
+							
+					var total_revenue = 0
+					var total_expenditure = 0
+					 _.forEach(vm.option.data,function(value,key){
+		                if(value.type == true) {
+		                	total_revenue = total_revenue + parseFloat(value.amount)
+		                } else {
+		                	total_expenditure =total_expenditure + parseFloat(value.amount)
+		                }
+		             });
+		             vm.total = total_revenue - total_expenditure
 					
-					this.reload = true;
-			      	let self = this;
-			      	setTimeout(() => {
-			        	self.reload = false;
-			        	self.lastpage.lastPageMonth = self.lastpage.lastPageMonth + 1
-			        	self.getDataNew('month',self.company_id,self.lastpage.lastPageMonth)
-			      	}, 1500);
-
+ 
 				}
+			})
+			.catch((e) =>{
+				console.log(e)
+			})
 
-			}
-			if(this.typeTime == "year") {
-			
-				if(this.lastpage.lastPageYear < this.paginator.lastPage){
-					this.reload = true;
-				      let self = this;
-				      setTimeout(() => {
-				        self.reload = false;
-				        self.lastpage.lastPageYear = self.lastpage.lastPageYear + 1  
-				        self.getDataNew('year',self.company_id,self.lastpage.lastPageYear)
-				      }, 1500);
+		},
 
-				}
-			
+		addTenItem(timevalue){
+
+			let page = 0
+
+			switch (timevalue) {
+			    case 'Day':
+			       		this.lastpage.lastPageDay = this.lastpage.lastPageDay + 1 
+			       		page = this.lastpage.lastPageDay
+			        break;
+			    case 'Week':
+			        	this.lastpage.lastPageWeek = this.lastpage.lastPageWeek + 1 
+			       		page = this.lastpage.lastPageWeek
+			        break;
+			    case 'Month':
+			       		this.lastpage.lastPageMonth = this.lastpage.lastPageMonth + 1 
+			       		page = this.lastpage.lastPageMonth
+			        break;
+			    case 'Year':
+			        	this.lastpage.lastPageYear = this.lastpage.lastPageYear + 1 
+			       		page = this.lastpage.lastPageYear
+			        break;
+			    default:
+			        console.log("Something went horribly wrong...");
 			}
+
+			this.getDataWithTimeValue(timevalue,page)
+
+			console.log(this.option.data)
+
 			
 		},
 
 		stopdrawerRight(){
 			this.drawerRight = false
-			// this.paginator.perPageDay = 1
-			// this.paginator.perPageYear = 1
+			this.lastpage.lastPageDay = 1
+			this.lastpage.lastPageWeek = 1
+			this.lastpage.lastPageMonth =1
+			this.lastpage.lastPageYear = 1
+			this.option = []
 
-		}
+		},
+
+		searchFilter(){
+			var self = this;
+	        // Add condition for currentFilterProperty == 'Name'
+	    	if(this.currentFilterValue != undefined && this.currentFilterValue != ''){
+ 
+	    		var result = this.option.data.filter(function(d){
+	        		
+	        		if(d.title.indexOf(self.currentFilterValue) > -1){
+	        			return d
+	        		}
+	      		})
+
+	      		this.searchResult = result
+
+	      		return this.searchResult
+
+	      	}else{
+	      		this.searchResult = []	
+	      		return this.option.data
+	      	}  
+	    }  	
+
 
 	},
 
 	computed:{
 	  	typeTimeReturn(){
 	  		return this.typeTime
+	  	},
+
+	  	optionLoadView(){
+
+	  		if(this.searchResult && this.searchResult.length){
+	  			return this.searchResult
+	  		}else{
+	      		return this.option.data
+	  		}
 	  	}
 	},
 

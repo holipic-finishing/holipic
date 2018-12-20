@@ -68,6 +68,8 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('coupon_codes', 'CouponCodeAPIController');
 
 	Route::get('transaction/history', 'TransactionAPIController@getTransactionHistory');
+
+	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 });	
 
 

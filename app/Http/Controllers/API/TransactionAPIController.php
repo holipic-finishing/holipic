@@ -178,41 +178,31 @@ class TransactionAPIController extends AppBaseController
 
     public function getTransactionHistory(Request $request) {
 
-        $input = $request->all();   
+        $input = $request->all(); 
 
         $perPage = $request->input('perPage');
 
-        if($input['time'] == 'day'){
+        $timeArr = ['Day', 'Week', 'Month', 'Year'];
+        
+        $data = [];
 
-            $results = $this->transactionRepository->transactionHistoryDay($input,$perPage);
-
-            return $this->sendResponse($results, 'Transactions retrieved successfully');
-
-        } else if($input['time'] == 'week'){
-
-            $results = $this->transactionRepository->transactionHistoryWeek($input,$perPage);
-
-            return $this->sendResponse($results, 'Transactions retrieved successfully');
-
-        } else if($input['time'] == 'month'){
-
-            $results = $this->transactionRepository->transactionHistoryMonth($input,$perPage);
-
-            return $this->sendResponse($results, 'Transactions retrieved successfully');
-
-        } else if($input['time'] == 'year'){
-
-            $results = $this->transactionRepository->transactionHistoryYear($input,$perPage);
-
-            return $this->sendResponse($results, 'Transactions retrieved successfully');
-
-        } else {
-            return response()->json([
-                        'success' => false, 
-                        'message' => 'Data not Found'
-            ]);
+        foreach ($timeArr as $tmp) {
+            $input['time'] = $tmp;
+            $result = $this->transactionRepository->transactionHistory($input,$perPage);
+            $data[$tmp] = $result; 
         }
+
+        return $this->sendResponse($data, 'Transaction updated successfully');
     
+    }
+
+    public function getTransactionHistoryWithTimevalue(Request $request)
+    {
+        $input = $request->all();
+        
+        $result = $this->transactionRepository->transactionHistory($input, $input['perPage']);
+
+        return $this->sendResponse($result, 'Transactions retrieved successfully');
     }
 
 }

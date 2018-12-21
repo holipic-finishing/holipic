@@ -28,7 +28,7 @@
 		        <td class="text-xs-center">{{ props.item.file_upload }}</td>
 		        <td class="text-xs-center">{{ props.item.minimum_user }}</td>
 		        <td class="text-xs-center">{{ props.item.max_user }}</td>
-		        <td class="justify-center layout px-0">
+		        <td>
 		          <v-icon
 		            small
 		            class="mr-2"
@@ -38,7 +38,7 @@
 		          </v-icon>
 		          <v-icon
 		            small
-		            @click="deleteItem(props.item.id)"
+		            @click="deleteItem(props.item.id,props.item.setting_id)"
 		          >
 		            delete
 		          </v-icon>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import  { get, post, put, del } from '../../api/index.js'
+import  { get, post, put, del, getWithData } from '../../api/index.js'
 import config from '../../config/index.js'
 import Vue from 'vue'
 import ActivePackage from './Activepackage.vue'
@@ -125,15 +125,21 @@ export default {
 	  				check : false,
 	  				showDialog: true,
 	  			}
-			// console.log(123)
+
   			this.$root.$emit('change-status', obj)
   			this.$root.$emit('data-packages', item)
 		},
 
-		deleteItem(id){
+		deleteItem(id,setting_id){
 			if(confirm('Are you sure you want to delete this item?')){
-				let url = config.API_URL+'packages/'+id
-				del(url)
+				let url = config.API_URL+'delete-package'
+
+				let params = {
+					id_packages : id,
+					id_setting : setting_id
+				}
+
+				getWithData(url,params)
 				.then((res) => {
 					this.fetchData();	
 					setTimeout(function(){

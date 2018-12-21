@@ -70,6 +70,7 @@
                 <p class="mb-0" v-if="item.type == false">-{{item.amount}}</p>
               </v-list-tile-action>
             </v-list-tile>
+
             <v-list-tile>
             	<v-list-tile-content class="btn-style">
             		<app-section-loader :status="reload"></app-section-loader>
@@ -130,7 +131,7 @@ export default {
 
   	mounted () {
   		this.$root.$on('showTransactionStatus', (data) => {
-  			
+  		
   			this.drawerRight = data.showDrawerRight
   			this.typeTime = "Day"
   			this.reset()
@@ -151,7 +152,7 @@ export default {
                 companyId: id,
                 page: page
             }	
-
+            
 			getWithData(url,params)
 			.then((res)=>{
 				if (res.data && res.data.success) {
@@ -164,7 +165,7 @@ export default {
 					 _.forEach(res.data.data,function(value,key){
 					
 					 	if(key == "Day") {
-					 		vm.option = value
+					 		vm.option = value.data
 					 		_.forEach(value.data,function(v_1,k_1){
 						 		if(v_1.type == true) {
 				                	total_revenue = total_revenue + parseFloat(v_1.amount)
@@ -227,7 +228,7 @@ export default {
 
 			_.forEach(vm.transactionHistories, function(value, key){
 				if(timevalue == key){
-					option = value
+					option = value.data
 					_.forEach(value.data, function(v_1, k_1){
 						if(v_1.type == true) {
 		                	total_revenue = total_revenue + parseFloat(v_1.amount)
@@ -263,8 +264,7 @@ export default {
 					let vm = this
 
 					_.forEach(resItem, function(value,key){
-						
-						vm.option.data.push(value)
+						vm.option.push(value)
 					})
 							
 					var total_revenue = 0
@@ -314,7 +314,7 @@ export default {
 	        // Add condition for currentFilterProperty == 'Name'
 	    	if(this.currentFilterValue != undefined && this.currentFilterValue != ''){
  
-	    		var result = this.option.data.filter(function(d){
+	    		var result = this.option.filter(function(d){
 	        		
 	        		if(d.title.indexOf(self.currentFilterValue) > -1){
 	        			return d
@@ -327,7 +327,7 @@ export default {
 
 	      	}else{
 	      		this.searchResult = []	
-	      		return this.option.data
+	      		return this.option
 	      	}  
 	    },
 
@@ -351,7 +351,7 @@ export default {
 	  		if(this.searchResult && this.searchResult.length){
 	  			return this.searchResult
 	  		}else{
-	      		return this.option.data
+	      		return this.option
 	  		}
 	  	}
 	},

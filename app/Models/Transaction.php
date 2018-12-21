@@ -29,7 +29,9 @@ class Transaction extends Model
         'currency_id',
         'status',
         'company_id',
-        'dated'
+        'dated',
+        'title',
+        'invoice'
     ];
 
     /**
@@ -44,7 +46,9 @@ class Transaction extends Model
         'currency_id' => 'integer',
         'status' => 'string',
         'company_id' => 'integer',
-        'dated' => 'datetime'
+        'dated' => 'datetime',
+        'title' => 'string',
+        'invoice' => 'string'
     ];
 
     /**

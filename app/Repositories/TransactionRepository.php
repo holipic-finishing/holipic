@@ -299,66 +299,66 @@ class TransactionRepository extends BaseRepository
         return $arrayWeek;
     }
 
-    // public function loadChartWithWeekDefault($dayWeek, $companyId)
-    // {
-    //     $startDay   = Carbon::today()->subDays(41)->format('Y-m-d');
+    public function loadChartWithWeekDefault($dayWeek, $companyId)
+    {
+        $startDay   = Carbon::today()->subDays(41)->format('Y-m-d');
 
-    //     $endDay     = Carbon::today()->format('Y-m-d');
+        $endDay     = Carbon::today()->format('Y-m-d');
 
-    //     $company = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
-    //                                 ->join('companies', 'companies.id', '=', 'transactions.company_id')
-    //                                 ->join('users', 'users.id', '=', 'companies.owner_id')
-    //                                 ->join('packages', 'packages.id', '=', 'users.package_id')
-    //                                 ->select(DB::raw("sum(amount * packages.fee /100) as total"), DB::raw("DATE_FORMAT(dated,'%Y-%m-%d') as date"), 'currencies.id','currencies.symbol') 
-    //                                 ->where('transactions.company_id', $companyId)
-    //                                 ->where(DB::raw("date(dated)"), '>=', $startDay)
-    //                                 ->where(DB::raw("date(dated)"), '<=', $endDay)
-    //                                 ->where('type', 1)
-    //                                 ->groupBy('date', 'currency_id')
-    //                                 ->orderBy('date', 'asc')
-    //                                 ->get()->toArray(); 
+        $company = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
+                                    ->join('companies', 'companies.id', '=', 'transactions.company_id')
+                                    ->join('users', 'users.id', '=', 'companies.owner_id')
+                                    ->join('packages', 'packages.id', '=', 'users.package_id')
+                                    ->select(DB::raw("sum(amount * packages.fee /100) as total"), DB::raw("DATE_FORMAT(dated,'%Y-%m-%d') as date"), 'currencies.id','currencies.symbol') 
+                                    ->where('transactions.company_id', $companyId)
+                                    ->where(DB::raw("date(dated)"), '>=', $startDay)
+                                    ->where(DB::raw("date(dated)"), '<=', $endDay)
+                                    ->where('type', 1)
+                                    ->groupBy('date', 'currency_id')
+                                    ->orderBy('date', 'asc')
+                                    ->get()->toArray(); 
 
-    //     $arrayCompanyWithKey = [];
+        $arrayCompanyWithKey = [];
 
-    //     foreach($company as $value) {
-    //         $arrayCompanyWithKey[$value['symbol']]
-    //     }
-    //     $data = [];             
+        foreach($company as $value) {
+            $arrayCompanyWithKey[$value['symbol']]
+        }
+        $data = [];             
 
-    //     foreach ($dayWeek as $key => $date) {
+        foreach ($dayWeek as $key => $date) {
 
-    //         $total = 0;
+            $total = 0;
 
-    //         foreach ($company as $index=>$value) {
-    //             $symbol = $value['symbol'];
+            foreach ($company as $index=>$value) {
+                $symbol = $value['symbol'];
                 
-    //             $day = Carbon::parse($value['date'])->format('Y-m-d');
+                $day = Carbon::parse($value['date'])->format('Y-m-d');
 
-    //             if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
-    //                 $total = $total + $company$value['total'];  
-    //             } 
-    //             else {
-    //                 if(!isset($data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']])) {
-    //                     $data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']] = 0;    
-    //                 }
-    //                 $data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']] = $total;  
-    //             }
-    //         }
+                if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
+                    $total = $total + $company$value['total'];  
+                } 
+                else {
+                    if(!isset($data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']])) {
+                        $data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']] = 0;    
+                    }
+                    $data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']] = $total;  
+                }
+            }
 
-    //         //$dayWeek[$key]['total'] = $total;
+            //$dayWeek[$key]['total'] = $total;
 
-    //     }
+        }
 
-    //     dd($data);
+        dd($data);
 
-    //     $weeks = $this->initWeekDays();  
+        $weeks = $this->initWeekDays();  
         
-    //     return  [  
-    //         'labels' => $weeks,
-    //         'data' => $dayWeek 
-    //     ];        
+        return  [  
+            'labels' => $weeks,
+            'data' => $dayWeek 
+        ];        
 
-    // }
+    }
 
     private function createLabelsByYear($year, $yearBefore ,$companyId)
     {
@@ -833,6 +833,94 @@ class TransactionRepository extends BaseRepository
 
         return $results;
     } 
+
+
+     public function transactionHistoryDay($attributes,$perPage) {
+
+        $now     = \Carbon\Carbon::today()->format('Y-m-d');
+
+        $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->where(DB::raw('date(dated)'),$now)
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+
+        return $transactions->paginate($perPage);                            
+
+    }
+
+    public function transactionHistoryWeek($attributes,$perPage) {
+
+        $startDay   = \Carbon\Carbon::today()->subDays(7)->format('Y-m-d');
+
+        $endDay     = \Carbon\Carbon::today()->format('Y-m-d');
+
+        $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+                                    // dd($transactions->get()->toArray());
+        return $transactions->paginate($perPage);                            
+
+    }
+
+    public function transactionHistoryMonth($attributes,$perPage) {
+
+         $month = \Carbon\Carbon::today()->format('Y-m');
+
+         $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+                                    // dd($transactions->get()->toArray());
+        return $transactions->paginate($perPage); 
+
+    }
+
+    public function transactionHistoryYear($attributes,$perPage) {
+
+         $year = \Carbon\Carbon::today()->format('Y');
+
+         $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+
+                                    // dd($transactions->get()->toArray());
+        return $transactions->paginate($perPage); 
+
+    }
+
+
+    public function transactionHistory($attributes, $perPage){
+
+        switch ($attributes['time']) {
+            case 'Day':
+                $result = $this->transactionHistoryDay($attributes,$perPage);
+                return $result;
+                break;
+
+            case 'Week':
+                $result = $this->transactionHistoryWeek($attributes,$perPage);
+                return $result;
+                break;
+
+            case 'Month':
+                $result = $this->transactionHistoryMonth($attributes,$perPage);
+                return $result;
+                break;
+
+            case 'Year':
+                $result = $this->transactionHistoryYear($attributes,$perPage);
+                return $result;
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    }
+
+    
 
 
 }

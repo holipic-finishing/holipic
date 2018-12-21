@@ -321,7 +321,7 @@ class TransactionRepository extends BaseRepository
         $arrayCompanyWithKey = [];
 
         foreach($company as $value) {
-            $arrayCompanyWithKey[$value['symbol']]
+            $arrayCompanyWithKey[$value['symbol']];
         }
         $data = [];             
 
@@ -335,7 +335,7 @@ class TransactionRepository extends BaseRepository
                 $day = Carbon::parse($value['date'])->format('Y-m-d');
 
                 if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
-                    $total = $total + $company$value['total'];  
+                    $total = $total + $value['total'];  
                 } 
                 else {
                     if(!isset($data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']])) {

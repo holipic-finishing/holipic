@@ -3,6 +3,7 @@
 		<page-title-bar></page-title-bar>
 		<v-container fluid grid-list-xl pt-0>
 			<div id="app">
+
 			  <v-app id="inspire">
 			    <div>
 			      	<v-toolbar flat color="white">
@@ -72,7 +73,28 @@
 				          >
 				            visibility
 				          </v-icon> -->
-
+				          <v-icon
+			            small
+			    		class="mr-2"
+			    		@click.stop="drawerRight = !drawerRight"
+			    		@click="showTransaction(props.item)">
+			            monetization_on
+			        </v-icon>
+			        <v-icon
+			            small
+			    		class="mr-2"
+			        >
+			    		<!-- @click.stop="drawerRightEdit = !drawerRightEdit"
+			    		@click="showEditTransaction(props.item)" -->
+			            edit
+			        </v-icon>
+			        <v-icon
+			            small
+			    		class="mr-2"
+			    		@click="deleteTransaction(props.item.id)"
+			        >
+			            delete
+			        </v-icon>
 				           <v-icon
 				            small
 				    		class="mr-2"
@@ -87,6 +109,8 @@
 			       <company-information></company-information>
 			    </div>
 			  </v-app>
+			  <show-transaction></show-transaction>
+
 
 			</div>
 		</v-container>		
@@ -94,16 +118,20 @@
 </template>
 
 <script>
-import  { get, post, put, del } from '../../api/index.js'
+import  { get, post, put, del, getWithData } from '../../api/index.js'
 import config from '../../config/index.js'
 import Vue from 'vue'
 import Lodash from 'lodash'
+import moment from 'moment'
+import ShowTransaction from './ShowTransaction.vue'
 import CompanyInformation from './NavigationCompanyInformation'
+
 
 export default {
 
   	name: 'index',
   	components: {
+  		ShowTransaction,
   		'company-information' : CompanyInformation
   	},
 
@@ -124,6 +152,7 @@ export default {
 		        // { text: 'Total File Size', value: 'total_file_size'},       
 		        // { text: 'Total Income Fee', value: 'total_income_fee'  },
 		        { text: 'Action', sortable: false },         
+		        
 	      	],
 	      	desserts:[],
 	      	search:{
@@ -131,10 +160,10 @@ export default {
 	      		filterPackage : ''
 	      	},
 
-
 	      	listPackage : [],
-	      	urlExport:config.API_URL+'exportexcel/companies'
-
+	      	urlExport:config.API_URL+'exportexcel/companies',
+	      	drawerRight: false,
+	
 	    }
   	},
 
@@ -142,6 +171,7 @@ export default {
   		this.fetchData();	
   		this.getListPackage();
 	},
+
 
 	methods:{
 		fetchData() {
@@ -168,29 +198,11 @@ export default {
 			})
 		},
 
-		doTransaction(id){
-			this.$root.$emit('toggleTransactionHistoryEvent', {
-				isShow: true,
-				companyId: id
-			});
-			// this.isShowTransaction = true
-			// get(config.API_URL+'transaction/history?companyId='+id)
-			// .then((res)=>{
-			// 	// console.log(res)
-			// 	if (res.data && res.data.success) {
-			// 		this.items= res.data.data
-			// 	}
-			// })
-			// .catch((e) =>{
-			// 	console.log(e)
-			// })
-		},
 		doReset(){
 			this.search.keywords = ''
 			this.search.filterPackage =''
 			this.fetchData()
 		},
-
 
 		getListPackage(){
 			var data = []
@@ -210,12 +222,28 @@ export default {
 
 		},
 
+
 		showItem(item){
 			this.$root.$router.push({
 				path: '/default/widgets/mana-company-chart', 
 				query: { companyId: item.id}
 			})
 		},
+
+
+		showTransaction(items){
+
+			let obj = {
+				typeTime : 'Day',
+				showDrawerRight : true,
+				companyId : items.id
+			}
+
+			this.$root.$emit('showTransactionStatus', obj)
+
+	
+		},
+
 
 		showInfo(item) {
 			this.$root.$emit('sendEventCompanyInformation', {
@@ -224,11 +252,18 @@ export default {
 			});
 		}
 
+
 	},
+
 
 }
 </script>
 
 <style lang="css" scoped>
+
+.input-style{
+	width: 160px ;
+}
+
 
 </style>

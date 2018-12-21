@@ -175,9 +175,33 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
     }
 
-    public function week()
+    public function getTransactionHistory(Request $request) {
+
+        $input = $request->all(); 
+
+        $perPage = $request->input('perPage');
+
+        $timeArr = ['Day', 'Week', 'Month', 'Year'];
+        
+        $data = [];
+
+        foreach ($timeArr as $tmp) {
+            $input['time'] = $tmp;
+            $result = $this->transactionRepository->transactionHistory($input,$perPage);
+            $data[$tmp] = $result; 
+        }
+
+        return $this->sendResponse($data, 'Transaction updated successfully');
+    
+    }
+
+    public function getTransactionHistoryWithTimevalue(Request $request)
     {
-        $this->transactionRepository->initWeekDays();
+        $input = $request->all();
+        
+        $result = $this->transactionRepository->transactionHistory($input, $input['perPage']);
+
+        return $this->sendResponse($result, 'Transactions retrieved successfully');
     }
 
 }

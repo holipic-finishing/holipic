@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Company;
 use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
-use DB;
+use DB ;
 
 /**
  * Class CompanyRepository
@@ -133,7 +133,6 @@ class CompanyRepository extends BaseRepository
 
         $results = $this->transform($results);
 
-
         return $results;
     }
 
@@ -176,9 +175,9 @@ class CompanyRepository extends BaseRepository
         foreach ($input as $key => $value) {
             array_push($listID, $value->id);
         }
-
-
+        
         $results = $this->model->with(['files','user.package','transactions'])->whereIn('id',$listID)->get(); 
+
 
         foreach ($results as $key => $value) {
             $total_file_size = 0;
@@ -199,6 +198,7 @@ class CompanyRepository extends BaseRepository
 
         return $input;
     }
+
 
     public function handleShowInformationCompany($companyId)
     {
@@ -260,5 +260,6 @@ class CompanyRepository extends BaseRepository
         return [$company, $couponCodes];
         
     }
+
 
 }

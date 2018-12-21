@@ -94,8 +94,32 @@
 							<!-- Fom day -->
 							<div class="style-card">
 								<p>Start</p>
-								<date-picker v-model="from_day" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200"
-								 ></date-picker>
+								<!-- <date-picker v-model="from_day" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200"
+								 ></date-picker> -->
+
+								 
+									<v-menu 
+										ref="menu" 
+										lazy 
+										:close-on-content-click="false" 
+										v-model="menu" 
+										transition="scale-transition" 
+										offset-y 
+										full-width 
+										:nudge-right="40" 
+										min-width="290px" 
+										:return-value.sync="from_day"
+
+										>
+										<v-text-field slot="activator" label="Start Day" v-model="from_day" prepend-icon="event" readonly></v-text-field>
+										<v-date-picker v-model="from_day" no-title scrollable :max="new Date().toISOString().substr(0, 10)">
+											<v-spacer></v-spacer>
+											<v-btn color="primary" @click="menu = false">Cancel</v-btn>
+											<v-btn color="warning" @click="$refs.menu.save(from_day)">OK</v-btn>
+										</v-date-picker>
+									</v-menu>
+								
+
 							</div>
 						</div>
 						
@@ -103,8 +127,28 @@
 							<!-- Fom day -->
 							<div class="style-card">
 								<p>End</p>
-								<date-picker v-model="to_day" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200" 
-								 ></date-picker> 
+								<!-- <date-picker v-model="to_day" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200" 
+								 ></date-picker> -->
+
+								 <v-menu 
+										ref="menu2" 
+										lazy 
+										:close-on-content-click="false" 
+										v-model="menu2" 
+										transition="scale-transition" 
+										offset-y 
+										full-width 
+										:nudge-right="40" 
+										min-width="290px" 
+										:return-value.sync="to_day"
+										>
+										<v-text-field slot="activator" label="End Day" v-model="to_day" prepend-icon="event" readonly></v-text-field>
+										<v-date-picker v-model="to_day" no-title scrollable :max="new Date().toISOString().substr(0, 10)">
+											<v-spacer></v-spacer>
+											<v-btn color="primary" @click="menu2 = false">Cancel</v-btn>
+											<v-btn color="warning" @click="$refs.menu2.save(to_day)">OK</v-btn>
+										</v-date-picker>
+									</v-menu>
 							</div>
 						</div>
 					
@@ -120,8 +164,29 @@
 							<!-- Fom day -->
 							<div class="style-card">
 								<p>Start</p>
-								<date-picker v-model="from_month" :append-to-body="true" lang="en" format="YYYY-MM" width="200" type="month" placeholder="Select Month"
-								 ></date-picker>
+								<!-- <date-picker v-model="from_month" :append-to-body="true" lang="en" format="YYYY-MM" width="200" type="month" placeholder="Select Month"
+								 ></date-picker> -->
+
+								  <v-menu 
+										ref="menu3" 
+										lazy 
+										:close-on-content-click="false" 
+										v-model="menu3" 
+										transition="scale-transition" 
+										offset-y 
+										full-width 
+										:nudge-right="40" 
+										min-width="290px" 
+										:return-value.sync="from_month"
+										>
+										<v-text-field slot="activator" label="Start Month" v-model="from_month" prepend-icon="event" readonly></v-text-field>
+										<v-date-picker v-model="from_month" no-title scrollable :max="new Date().toISOString().substr(0, 10)"type="month">
+											<v-spacer></v-spacer>
+											<v-btn color="primary" @click="menu3 = false">Cancel</v-btn>
+											<v-btn color="warning" @click="$refs.menu3.save(from_month)">OK</v-btn>
+										</v-date-picker>
+									</v-menu>
+
 							</div>
 						</div>
 						
@@ -129,8 +194,28 @@
 							<!-- Fom day -->
 							<div class="style-card">
 								<p>End</p>
-								<date-picker v-model="to_month" :append-to-body="true" lang="en" format="YYYY-MM" width="200"  type="month"  placeholder="Select Month"
-								 ></date-picker> 
+								<!-- <date-picker v-model="to_month" :append-to-body="true" lang="en" format="YYYY-MM" width="200"  type="month"  placeholder="Select Month"
+								 ></date-picker>  -->
+
+								 <v-menu 
+										ref="menu4" 
+										lazy 
+										:close-on-content-click="false" 
+										v-model="menu4" 
+										transition="scale-transition" 
+										offset-y 
+										full-width 
+										:nudge-right="40" 
+										min-width="290px" 
+										:return-value.sync="to_month"
+										>
+										<v-text-field slot="activator" label="End Month" v-model="to_month" prepend-icon="event" readonly></v-text-field>
+										<v-date-picker v-model="to_month" no-title scrollable :max="new Date().toISOString().substr(0, 10)"type="month">
+											<v-spacer></v-spacer>
+											<v-btn color="primary" @click="menu4 = false">Cancel</v-btn>
+											<v-btn color="warning" @click="$refs.menu4.save(to_month)">OK</v-btn>
+										</v-date-picker>
+									</v-menu>
 							</div>
 						</div>
 
@@ -145,8 +230,40 @@
 							<!-- Fom day -->
 							<div class="style-card">
 								<p>Start</p>
-								<date-picker v-model="from_year" :append-to-body="true" lang="en" format="YYYY" width="200" type="year" placeholder="Select Year"
-								 ></date-picker>
+								<!-- <date-picker v-model="from_year" :append-to-body="true" lang="en" format="YYYY" width="200" type="year" placeholder="Select Year"
+								 ></date-picker> -->
+
+								 <v-menu
+								      ref="menu5"
+								      :close-on-content-click="false"
+								      v-model="menu5"
+								      :nudge-right="40"
+								      lazy
+								      transition="scale-transition"
+								      offset-y
+								      full-width
+								      min-width="290px"
+								      
+								    >
+								      <v-text-field
+								        slot="activator"
+								        v-model="from_year"
+								        label="Start Year"
+								        prepend-icon="event"
+								        readonly
+								        
+								      ></v-text-field>
+								      <v-date-picker
+								        ref="picker"
+								        v-model="from_year"
+								        @input="saveStartYear"
+								        reactive
+								        no-title
+								        :max="defaultYear"
+								        type="year"
+								      ></v-date-picker>
+								    </v-menu>
+
 							</div>
 						</div>
 						
@@ -154,8 +271,40 @@
 							<!-- Fom day -->
 							<div class="style-card">
 								<p>End</p>
-								<date-picker v-model="to_year" :append-to-body="true" lang="en" format="YYYY" width="200"  type="year"  placeholder="Select Year"
-								 ></date-picker> 
+								<!-- <date-picker v-model="to_year" :append-to-body="true" lang="en" format="YYYY" width="200"  type="year"  placeholder="Select Year"
+								 ></date-picker>  -->
+
+
+								  <v-menu
+								      ref="menu6"
+								      :close-on-content-click="false"
+								      v-model="menu6"
+								      :nudge-right="40"
+								      lazy
+								      transition="scale-transition"
+								      offset-y
+								      full-width
+								      min-width="290px"
+								      
+								    >
+								      <v-text-field
+								        slot="activator"
+								        v-model="to_year"
+								        label="End Year"
+								        prepend-icon="event"
+								        readonly
+								        
+								      ></v-text-field>
+								      <v-date-picker
+								        ref="picker2"
+								        v-model="to_year"
+								        @input="saveEndYear"
+								        reactive
+								        no-title
+								        :max="defaultYear"
+								        type="year"
+								      ></v-date-picker>
+								    </v-menu>
 							</div>
 						</div>
 
@@ -170,8 +319,30 @@
 							<!-- Fom day -->
 							<div class="style-card">
 								<p>Start</p>
-								<date-picker v-model="from_day_week" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200" placeholder="Select date"
-								 ></date-picker>
+								<!-- <date-picker v-model="from_day_week" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200" placeholder="Select date"
+								 ></date-picker> -->
+
+								  <v-menu 
+										ref="menu7" 
+										lazy 
+										:close-on-content-click="false" 
+										v-model="menu7" 
+										transition="scale-transition" 
+										offset-y 
+										full-width 
+										:nudge-right="40" 
+										min-width="290px" 
+										:return-value.sync="from_day_week"
+										>
+										<v-text-field slot="activator" label="Select date" v-model="from_day_week" prepend-icon="event" readonly></v-text-field>
+										<v-date-picker v-model="from_day_week" no-title scrollable :max="new Date().toISOString().substr(0, 10)">
+											<v-spacer></v-spacer>
+											<v-btn color="primary" @click="menu7 = false">Cancel</v-btn>
+											<v-btn color="warning" @click="$refs.menu7.save(from_day_week)">OK</v-btn>
+										</v-date-picker>
+									</v-menu>
+
+
 							</div>
 						</div>
 						
@@ -179,8 +350,28 @@
 							<!-- Fom day -->
 							<div class="style-card">
 								<p>End</p>
-								<date-picker v-model="to_day_week" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200"  placeholder="Select date"
-								 ></date-picker> 
+								<!-- <date-picker v-model="to_day_week" :append-to-body="true" lang="en" format="YYYY-MM-DD" width="200"  placeholder="Select date"
+								 ></date-picker> -->
+
+								 <v-menu 
+										ref="menu8" 
+										lazy 
+										:close-on-content-click="false" 
+										v-model="menu8" 
+										transition="scale-transition" 
+										offset-y 
+										full-width 
+										:nudge-right="40" 
+										min-width="290px" 
+										:return-value.sync="to_day_week"
+										>
+										<v-text-field slot="activator" label="Select date" v-model="to_day_week" prepend-icon="event" readonly></v-text-field>
+										<v-date-picker v-model="to_day_week" no-title scrollable :max="new Date().toISOString().substr(0, 10)">
+											<v-spacer></v-spacer>
+											<v-btn color="primary" @click="menu8 = false">Cancel</v-btn>
+											<v-btn color="warning" @click="$refs.menu8.save(to_day_week)">OK</v-btn>
+										</v-date-picker>
+									</v-menu>
 							</div>
 						</div>
 
@@ -304,7 +495,17 @@ export default {
 	      total:0,
 	      from_day_week:'',
 	      to_day_week:'',
-	      validate:false
+	      validate:false,
+	      menu: false,
+	      menu2:false,
+	      menu3:false,
+	      menu4:false,
+	      menu5:false,
+	      menu6:false,
+	      menu7:false,
+	      menu8:false,
+	      date: '',
+	      defaultYear : new Date().getUTCFullYear() +'/01/01'
 
 	    };
 	},
@@ -314,6 +515,24 @@ export default {
               return moment(date, 'YYYY-MM-DD hh:mm:ss').format('MM/DD/YYYY');
           }
       	},
+
+      	saveStartYear(year) {
+
+  			this.$refs.menu5.save(year);
+	      	this.$refs.picker.activePicker = 'YEAR'
+	      	this.from_year = year.substr(0,4)
+	      	console.clear();
+	      	this.menu5 = false;
+  		},
+
+  		saveEndYear(year2) {
+  			this.$refs.menu6.save(year2);
+	      	this.$refs.picker2.activePicker = 'YEAR'
+	      	this.to_year = year2.substr(0,4)
+	      	console.clear();
+	      	this.menu6 = false;
+  		},
+
 		fetchData(){
 			let url = config.API_URL+'count-packages'
 			get(url)
@@ -561,6 +780,7 @@ export default {
   				this.defaultReportWeek()
   				this.from_day_week=''
 	      		this.to_day_week=''
+	      		console.clear()
   			}
   			
   		},
@@ -632,6 +852,8 @@ export default {
 	    this.$root.$on('totalTransaction', res => {
 	       	this.total = res
 	    });
+
+	    
   	}
 
 

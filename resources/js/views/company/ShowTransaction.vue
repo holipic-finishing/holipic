@@ -264,12 +264,13 @@ export default {
 					let vm = this
 
 					_.forEach(resItem, function(value,key){
+
 						vm.option.push(value)
 					})
 							
 					var total_revenue = 0
 					var total_expenditure = 0
-					 _.forEach(vm.option.data,function(value,key){
+					 _.forEach(vm.option,function(value,key){
 		                if(value.type == true) {
 		                	total_revenue = total_revenue + parseFloat(value.amount)
 		                } else {

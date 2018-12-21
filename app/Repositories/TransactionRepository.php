@@ -885,7 +885,7 @@ class TransactionRepository extends BaseRepository
                                     ->where('company_id', $attributes['companyId'])
                                     ->orderBy('dated', 'desc');
 
-                                    dd($transactions->get()->toArray());
+                                    // dd($transactions->get()->toArray());
         return $transactions->paginate($perPage); 
 
     }

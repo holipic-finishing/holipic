@@ -232,7 +232,7 @@ export default {
 
 
 		showTransaction(items){
-
+			
 			let obj = {
 				typeTime : 'Day',
 				showDrawerRight : true,

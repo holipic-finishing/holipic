@@ -835,4 +835,92 @@ class TransactionRepository extends BaseRepository
     } 
 
 
+     public function transactionHistoryDay($attributes,$perPage) {
+
+        $now     = \Carbon\Carbon::today()->format('Y-m-d');
+
+        $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->where(DB::raw('date(dated)'),$now)
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+
+        return $transactions->paginate($perPage);                            
+
+    }
+
+    public function transactionHistoryWeek($attributes,$perPage) {
+
+        $startDay   = \Carbon\Carbon::today()->subDays(7)->format('Y-m-d');
+
+        $endDay     = \Carbon\Carbon::today()->format('Y-m-d');
+
+        $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+                                    // dd($transactions->get()->toArray());
+        return $transactions->paginate($perPage);                            
+
+    }
+
+    public function transactionHistoryMonth($attributes,$perPage) {
+
+         $month = \Carbon\Carbon::today()->format('Y-m');
+
+         $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+                                    // dd($transactions->get()->toArray());
+        return $transactions->paginate($perPage); 
+
+    }
+
+    public function transactionHistoryYear($attributes,$perPage) {
+
+         $year = \Carbon\Carbon::today()->format('Y');
+
+         $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
+                                    ->where('company_id', $attributes['companyId'])
+                                    ->orderBy('dated', 'desc');
+
+                                    // dd($transactions->get()->toArray());
+        return $transactions->paginate($perPage); 
+
+    }
+
+
+    public function transactionHistory($attributes, $perPage){
+
+        switch ($attributes['time']) {
+            case 'Day':
+                $result = $this->transactionHistoryDay($attributes,$perPage);
+                return $result;
+                break;
+
+            case 'Week':
+                $result = $this->transactionHistoryWeek($attributes,$perPage);
+                return $result;
+                break;
+
+            case 'Month':
+                $result = $this->transactionHistoryMonth($attributes,$perPage);
+                return $result;
+                break;
+
+            case 'Year':
+                $result = $this->transactionHistoryYear($attributes,$perPage);
+                return $result;
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    }
+
+    
+
+
 }

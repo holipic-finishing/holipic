@@ -360,6 +360,7 @@ class TransactionRepository extends BaseRepository
 
     // }
 
+
     private function createLabelsByYear($year, $yearBefore ,$companyId)
     {
         $length = $year - $yearBefore;

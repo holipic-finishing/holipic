@@ -26,7 +26,7 @@ import CompanyChart from '../views/company/information-chart';
 import PackageIndex from '../views/package/Index';
 
 
-import Setting from '../views/setting/setting'
+// import Setting from '../views/setting/setting'
 import UserManagement from '../views/superadmin-user/user-management'
 
 import page404 from '../views/pages/page404'
@@ -123,15 +123,15 @@ routers = [
 		        }
 
 		    }, 
-		    {
-		        path: '/default/setting',
-		        component: Setting,
-		        meta: {
-		        	requiresAuth: true,
-		            title: 'message.settings',
-		            breadcrumb: 'Setting / List'
-		        }
-		    },
+		    // {
+		    //     path: '/default/setting',
+		    //     component: Setting,
+		    //     meta: {
+		    //     	requiresAuth: true,
+		    //         title: 'message.settings',
+		    //         breadcrumb: 'Setting / List'
+		    //     }
+		    // },
 		    {
 		        path: '/default/user-management',
 		        component: UserManagement,

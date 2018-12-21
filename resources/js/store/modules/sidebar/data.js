@@ -32,12 +32,12 @@ export const menus = {
 			// ]
 
 		},
-		{
-			action: 'zmdi-settings',
-			title: 'message.settings',
-			active: false,
-			path: '/setting'
-		},
+		// {
+		// 	action: 'zmdi-settings',
+		// 	title: 'message.settings',
+		// 	active: false,
+		// 	path: '/setting'
+		// },
 		{
 			action: 'zmdi-camera-switch',
 			title: 'message.userManager',

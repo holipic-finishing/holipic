@@ -175,7 +175,6 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
     }
 
-
     public function getTransactionHistory(Request $request) {
 
         $input = $request->all(); 

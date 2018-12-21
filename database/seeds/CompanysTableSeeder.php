@@ -16,7 +16,8 @@ class CompanysTableSeeder extends Seeder
             'description' => 'IT software company',
             'address' => '1331 Nguyen Tat Thanh Da Nang',
             'owner_id' => '2',
-            'logo' => 'blabla.jpg'
+            'logo' => 'blabla.jpg',
+            'phone' => '0789909008'
         ]);
     }
 }

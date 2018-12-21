@@ -780,6 +780,7 @@ export default {
   				this.defaultReportWeek()
   				this.from_day_week=''
 	      		this.to_day_week=''
+	      		console.clear()
   			}
   			
   		},
@@ -852,7 +853,7 @@ export default {
 	       	this.total = res
 	    });
 
-	    alert(this.defaultYear)
+	    
   	}
 
 

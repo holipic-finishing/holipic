@@ -62,4 +62,8 @@ class Company extends Model
     public function transactions(){
         return $this->hasMany('App\Models\Transaction','company_id','id');
     }
+
+    public function coupon_code(){
+        return $this->hasOne('App\Models\CouponCode', 'coupon_codes_id', 'id');
+    }
 }

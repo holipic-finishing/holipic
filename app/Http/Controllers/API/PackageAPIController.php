@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreatePackageAPIRequest;
 use App\Http\Requests\API\UpdatePackageAPIRequest;
 use App\Models\Package;
+use App\Models\Setting;
 use App\Repositories\PackageRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -38,9 +39,10 @@ class PackageAPIController extends AppBaseController
     {
         $this->packageRepository->pushCriteria(new RequestCriteria($request));
         $this->packageRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $packages = $this->packageRepository->orderBy('fee','DESC')->get();
 
-        return $this->sendResponse($packages->toArray(), 'Packages retrieved successfully');
+        $packages = $this->packageRepository->getPackageAndSetting();
+
+        return $this->sendResponse($packages, 'Packages retrieved successfully');
     }
 
     /**
@@ -52,12 +54,39 @@ class PackageAPIController extends AppBaseController
      * @return Response
      */
     public function store(CreatePackageAPIRequest $request)
-    {
+    {       
         $input = $request->all();
 
-        $packages = $this->packageRepository->create($input);
+        $data_packages = [
+            'package_name'      => $input['package_name'],
+            'short_description' => $input['short_description'],
+            'full_description'  => isset($input['full_description']) ? $input['full_description'] : '',
+            'fee'               => $input['fee'],
+            'secure_storage'    => $input['secure_storage'],
+            'file_upload'       => $input['secure_storage'],
+            'minimum_user'      => $input['minimum_user'],
+            'max_user'          => $input['max_user'], 
+        ];
 
-        return $this->sendResponse($packages->toArray(), 'Package saved successfully');
+        $packages_id = $this->packageRepository->create($input)->id;
+
+        $data_setting = [
+            'expiration_date'  => $input['expiration_date'],
+            'fee'              => $input['fee'],
+            'card_fee'         => $input['card_fee'],
+            'bonus'            => $input['bonus'],
+            'sms'              => $input['sms'],
+            'package_id'       => $packages_id,
+        ];
+
+        $setting = Setting::create($data_setting);
+
+        return response()->json([
+                        'success' => true, 
+                        'message' => 'Package saved successfully'
+                ]);
+
+        // return $this->sendResponse($packages->toArray(), 'Package saved successfully');
     }
 
     /**
@@ -93,16 +122,18 @@ class PackageAPIController extends AppBaseController
     {
         $input = $request->all();
 
+        // dd($input);
+
         /** @var Package $package */
-        $package = $this->packageRepository->findWithoutFail($id);
+        $package = $this->packageRepository->updatePackageAndSetting($input);
 
-        if (empty($package)) {
-            return $this->sendError('Package not found');
-        }
+        // if (empty($package)) {
+        //     return $this->sendError('Package not found');
+        // }
 
-        $package = $this->packageRepository->update($input, $id);
+        // $package = $this->packageRepository->update($input, $id);
 
-        return $this->sendResponse($package->toArray(), 'Package updated successfully');
+        return $this->sendResponse($package, 'Package updated successfully');
     }
 
     /**
@@ -153,5 +184,26 @@ class PackageAPIController extends AppBaseController
         $results = Package::select('package_name')->get()->toArray();
         
         return $results;
+    }
+
+    /**
+
+        TODO:
+        - delete package and setting
+
+    */
+    public function deletePackage(Request $request) {
+
+        $setting = Setting::find($request['id_setting']);
+
+        $package = $this->packageRepository->find($request['id_packages']);
+
+        if (empty($package) && empty($setting)) {
+            return $this->sendError('Package not found');
+        }
+        $setting->delete();
+        $package->delete();
+
+        return $this->sendResponse($request['id_packages'], 'Package deleted successfully');
     }
 }

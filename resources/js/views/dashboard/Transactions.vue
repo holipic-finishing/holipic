@@ -275,6 +275,7 @@ export default {
   },
   mounted () {
   	this.$root.$on('loadTransactionsWithTime', res => {
+      console.log("params: =>>>>" + res.params)
   		let params = res.params
       this.paramsSaveForEditSuccess = res.params
 
@@ -360,7 +361,7 @@ export default {
 			return this.itemsTmp
     },
     fetchData(paramsFromToChart){
-    	console.log(paramsFromToChart)
+
     	let paramsToBackEnd = {
 															defaultDay :  'default'
 														}

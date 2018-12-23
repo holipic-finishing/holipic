@@ -35,6 +35,8 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('companies/information', 'CompanyAPIController@showInformationCompany'); //different
 
+	Route::get('transactions/companies/total', 'TransactionAPIController@showTotalCompanies'); //different
+
 	Route::resource('companies', 'CompanyAPIController');
 
 	Route::resource('currencies', 'CurrencyAPIController');
@@ -72,6 +74,8 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('transaction/history', 'TransactionAPIController@getTransactionHistory');
 
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
+
+	Route::get('delete-package', 'PackageAPIController@deletePackage');
 });	
 
 

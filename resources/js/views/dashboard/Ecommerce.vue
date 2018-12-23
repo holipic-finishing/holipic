@@ -383,7 +383,9 @@
 					</app-card>
 				
 			</v-layout>
-			<TransactionHistories></TransactionHistories>
+
+			<transactions></transactions>
+			<!--<TransactionHistories></TransactionHistories>-->
 			<!-- Social Feeds -->
 <!-- 			<v-layout row wrap>
 				<app-card
@@ -468,6 +470,7 @@ import DatePicker from 'vue2-datepicker'
 import moment from 'moment'
 import Vue from 'vue'
 import TransactionHistories from './TransactionHistories'
+import Transactions from './Transactions'
 
 export default {
   components: {
@@ -476,7 +479,8 @@ export default {
     DeviceShare,
     LineChart,
     DatePicker,
-    TransactionHistories
+    TransactionHistories,
+    Transactions
   },
   data() {
 	    return {
@@ -521,7 +525,6 @@ export default {
   			this.$refs.menu5.save(year);
 	      	this.$refs.picker.activePicker = 'YEAR'
 	      	this.from_year = year.substr(0,4)
-	      	console.clear();
 	      	this.menu5 = false;
   		},
 
@@ -529,7 +532,6 @@ export default {
   			this.$refs.menu6.save(year2);
 	      	this.$refs.picker2.activePicker = 'YEAR'
 	      	this.to_year = year2.substr(0,4)
-	      	console.clear();
 	      	this.menu6 = false;
   		},
 
@@ -616,6 +618,7 @@ export default {
 						chooes : 'Day'
 					}
 					this.$root.$emit('companyChart', obj)
+					this.$root.$emit('loadTransactionsWithTime', obj)
 					this.validate = false
 				}
 			}
@@ -659,6 +662,7 @@ export default {
 							chooes : 'Month'
 						}
 					this.$root.$emit('companyChart', obj)
+					this.$root.$emit('loadTransactionsWithTime', obj)
 					this.validate = false
 				}
 			}
@@ -702,6 +706,7 @@ export default {
 							chooes : 'Year'
 					}
 					this.$root.$emit('companyChart', obj)
+					this.$root.$emit('loadTransactionsWithTime', obj)
 					this.validate = false
 				}
 			}
@@ -746,6 +751,7 @@ export default {
 							chooes : 'Week'
 					}
 					this.$root.$emit('companyChart', obj)
+					this.$root.$emit('loadTransactionsWithTime', obj)
 				}
 			}
 		
@@ -780,7 +786,6 @@ export default {
   				this.defaultReportWeek()
   				this.from_day_week=''
 	      		this.to_day_week=''
-	      		console.clear()
   			}
   			
   		},
@@ -796,6 +801,7 @@ export default {
 					chooes : 'SevenDay'
 			}
 			this.$root.$emit('companyChart', obj)
+			this.$root.$emit('loadTransactionsWithTime', obj)
   	
   		},
 
@@ -809,6 +815,7 @@ export default {
 					chooes : 'Month'
 			}
 			this.$root.$emit('companyChart', obj)
+			this.$root.$emit('loadTransactionsWithTime', obj)
   		},
 
   		defaultReportYear(){
@@ -821,6 +828,7 @@ export default {
 					chooes : 'year'
 			}
 			this.$root.$emit('companyChart', obj)
+			this.$root.$emit('loadTransactionsWithTime', obj)
   		},
 
   		defaultReportWeek(){
@@ -833,6 +841,7 @@ export default {
 					chooes : 'Week'
 			}
 			this.$root.$emit('companyChart', obj)
+			this.$root.$emit('loadTransactionsWithTime', obj)
   		}
 
 

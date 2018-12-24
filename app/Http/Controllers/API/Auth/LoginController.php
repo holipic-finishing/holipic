@@ -109,9 +109,9 @@ class LoginController extends BaseApiController
     {
         $credentials = $request->only(['email', 'password']);
         $email = $credentials['email'];
-        
+
         try{
-            $user = $this->userRepo->findUserNotAdminFromEmail($email);
+            $user = $this->userRepo->findUserIsAdminFromEmail($email);
             if (empty($user)) {
 
                 return [

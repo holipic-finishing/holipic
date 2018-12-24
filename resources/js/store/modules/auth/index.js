@@ -5,12 +5,15 @@ import Vue from 'vue'
 import firebase from 'firebase';
 import Nprogress from 'nprogress';
 import router from '../../../router';
-import {
-    facebookAuthProvider,
-    googleAuthProvider,
-    twitterAuthProvider,
-    githubAuthProvider
-} from '../../../firebase';
+import config from '../../../config/index.js'
+// import {
+//     facebookAuthProvider,
+//     googleAuthProvider,
+//     twitterAuthProvider,
+//     githubAuthProvider
+// } from '../../../firebase';
+import  { post } from '../../../api/index.js'
+
 
 const state = {
     user: localStorage.getItem('user'),
@@ -43,63 +46,131 @@ const actions = {
                 context.commit('loginUserFailure', error);
             });
     },
-    logoutUserFromFirebase(context) {
-        Nprogress.start();
-        firebase.auth().signOut()
-            .then(() => {
+    signinUserInDatabase(context, payload) {
+        const { user } = payload;
+        context.commit('loginUser');
+
+        let params = {
+            email: user.email,
+            password: user.password
+        }
+
+        post('/auth/loginSuperAdmin',params)
+        .then(res => {
+            let data = res.data.data.user
+             Nprogress.done();
+                setTimeout(() => {
+                    context.commit('loginUserSuccess', data);
+                }, 500)
+        })
+        .catch(error => {
+                context.commit('loginUserFailure', error);
+        });
+    },
+    changePasswordUserInDatabase(context, payload) {
+        context.commit('loginUser');
+        let url = config.API_URL+'change-password'
+        let params = {
+            access_token : payload.params.access_token,
+            newPassword : payload.params.newPassword,
+            oldPassword : payload.params.oldPassword,
+            confirmPassword : payload.params.confirmPassword,
+            roleId : payload.params.role_id
+        }
+       
+        post(url,params)
+          .then((res) => {
+            if(res.data && res.data.success){
+                let data = res.data.message
                 Nprogress.done();
                 setTimeout(() => {
-                    context.commit('logoutUser');
+                    context.commit('changepasswordSuccess', data);
                 }, 500)
-            })
-            .catch(error => {
-                context.commit('loginUserFailure', error);
-            })
+               //  setTimeout(function(){
+               //      Vue.notify({
+               //          group: 'loggedIn',
+               //          type: 'success',
+               //          text: 'Update Password Success!'
+               //      });
+               // },500);
+               //  this.$router.push('/default/dashboard/index') 
+
+                
+             } else {
+                let data = res.data.message
+               //   setTimeout(function(){
+               //      Vue.notify({
+               //          group: 'loggedIn',
+               //          type: 'error',
+               //          text: res.data.message
+               //      });
+               // },500);
+               context.commit('changepasswordError', data);
+               
+             }
+          })
+          .catch(err =>{
+            console.log(err)
+          
+          })
     },
-    signinUserWithFacebook(context) {
-        context.commit('loginUser');
-        firebase.auth().signInWithPopup(facebookAuthProvider).then((result) => {
-            Nprogress.done();
-            setTimeout(() => {
-                context.commit('loginUserSuccess', result.user);
-            }, 500)
-        }).catch(error => {
-            context.commit('loginUserFailure', error);
-        });
-    },
-    signinUserWithGoogle(context) {
-        context.commit('loginUser');
-        firebase.auth().signInWithPopup(googleAuthProvider).then((result) => {
-            Nprogress.done();
-            setTimeout(() => {
-                context.commit('loginUserSuccess', result.user);
-            }, 500)
-        }).catch(error => {
-            context.commit('loginUserFailure', error);
-        });
-    },
-    signinUserWithTwitter(context) {
-        context.commit('loginUser');
-        firebase.auth().signInWithPopup(twitterAuthProvider).then((result) => {
-            Nprogress.done();
-            setTimeout(() => {
-                context.commit('loginUserSuccess', result.user);
-            }, 500)
-        }).catch(error => {
-            context.commit('loginUserFailure', error);
-        });
-    },
-    signinUserWithGithub(context) {
-        context.commit('loginUser');
-        firebase.auth().signInWithPopup(githubAuthProvider).then((result) => {
-            Nprogress.done();
-            setTimeout(() => {
-                context.commit('loginUserSuccess', result.user);
-            }, 500)
-        }).catch(error => {
-            context.commit('loginUserFailure', error);
-        });
-    },
+    // logoutUserFromFirebase(context) {
+    //     Nprogress.start();
+    //     firebase.auth().signOut()
+    //         .then(() => {
+    //             Nprogress.done();
+    //             setTimeout(() => {
+    //                 context.commit('logoutUser');
+    //             }, 500)
+    //         })
+    //         .catch(error => {
+    //             context.commit('loginUserFailure', error);
+    //         })
+    // },
+    // signinUserWithFacebook(context) {
+    //     context.commit('loginUser');
+    //     firebase.auth().signInWithPopup(facebookAuthProvider).then((result) => {
+    //         Nprogress.done();
+    //         setTimeout(() => {
+    //             context.commit('loginUserSuccess', result.user);
+    //         }, 500)
+    //     }).catch(error => {
+    //         context.commit('loginUserFailure', error);
+    //     });
+    // },
+    // signinUserWithGoogle(context) {
+    //     context.commit('loginUser');
+    //     firebase.auth().signInWithPopup(googleAuthProvider).then((result) => {
+    //         Nprogress.done();
+    //         setTimeout(() => {
+    //             context.commit('loginUserSuccess', result.user);
+    //         }, 500)
+    //     }).catch(error => {
+    //         context.commit('loginUserFailure', error);
+    //     });
+    // },
+    // signinUserWithTwitter(context) {
+    //     context.commit('loginUser');
+    //     firebase.auth().signInWithPopup(twitterAuthProvider).then((result) => {
+    //         Nprogress.done();
+    //         setTimeout(() => {
+    //             context.commit('loginUserSuccess', result.user);
+    //         }, 500)
+    //     }).catch(error => {
+    //         context.commit('loginUserFailure', error);
+    //     });
+    // },
+    // signinUserWithGithub(context) {
+    //     context.commit('loginUser');
+    //     firebase.auth().signInWithPopup(githubAuthProvider).then((result) => {
+    //         Nprogress.done();
+    //         setTimeout(() => {
+    //             context.commit('loginUserSuccess', result.user);
+    //         }, 500)
+    //     }).catch(error => {
+    //         context.commit('loginUserFailure', error);
+    //     });
+    // },
     signupUserInFirebase(context, payload) {
         let { userDetail } = payload;
         context.commit('signUpUser');
@@ -129,9 +200,11 @@ const mutations = {
     },
     loginUserSuccess(state, user) {
         state.user = user;
-        localStorage.setItem('user',JSON.stringify(user));
+        localStorage.setItem('user',JSON.stringify(user))
         state.isUserSigninWithAuth0 = false
-        router.push("/default/dashboard/ecommerce");
+        var access_token = user.access_token        
+        localStorage.setItem('access_token',access_token)     
+        router.push('/default/dashboard/index')
         setTimeout(function(){
             Vue.notify({
                 group: 'loggedIn',
@@ -181,6 +254,22 @@ const mutations = {
     signOutUserFromAuth0Success(state) {
         state.user = null
         localStorage.removeItem('user')
+    },
+    changepasswordSuccess(state, success){
+        Nprogress.done();
+        Vue.notify({
+            group: 'loggedIn',
+            type: 'success',
+            text: message.success
+        });
+    },
+     changepasswordError(state, error){
+        Nprogress.done();
+        Vue.notify({
+            group: 'loggedIn',
+            type: 'error',
+            text: error
+        });
     }
 }
 

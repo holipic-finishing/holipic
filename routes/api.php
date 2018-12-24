@@ -45,13 +45,13 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('transactions', 'TransactionAPIController');
 
-	Route::get('histories/transactions', 'TransactionAPIController@getHistories');
+	Route::post('histories/transactions', 'TransactionAPIController@getHistories');
 
 	Route::post('search/transactions', 'TransactionAPIController@doSearch');
 
 	Route::post('searchdashboard/transactions', 'TransactionAPIController@doSearchDashboard');
 
-	Route::post('edit/transactions', 'TransactionAPIController@editTransaction');
+	Route::post('edit/transaction/{itemId}', 'TransactionAPIController@editTransaction');
 
 	Route::get('company/information', 'TransactionAPIController@getInformationCompany');
 

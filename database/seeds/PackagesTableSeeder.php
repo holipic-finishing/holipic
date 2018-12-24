@@ -11,7 +11,7 @@ class PackagesTableSeeder extends Seeder
      */
     public function run()
     {
-       Package::truncate();
+       	Package::truncate();
 
          $arrPackage = [
         	[

@@ -86,31 +86,15 @@ const actions = {
                 setTimeout(() => {
                     context.commit('changepasswordSuccess', data);
                 }, 500)
-               //  setTimeout(function(){
-               //      Vue.notify({
-               //          group: 'loggedIn',
-               //          type: 'success',
-               //          text: 'Update Password Success!'
-               //      });
-               // },500);
-               //  this.$router.push('/default/dashboard/index') 
-
                 
              } else {
                 let data = res.data.message
-               //   setTimeout(function(){
-               //      Vue.notify({
-               //          group: 'loggedIn',
-               //          type: 'error',
-               //          text: res.data.message
-               //      });
-               // },500);
-               context.commit('changepasswordError', data);
+                context.commit('changepasswordError', data);
                
              }
           })
           .catch(err =>{
-            console.log(err)
+            context.commit('changepasswordError', err);
           
           })
     },
@@ -260,8 +244,9 @@ const mutations = {
         Vue.notify({
             group: 'loggedIn',
             type: 'success',
-            text: message.success
+            text: success
         });
+         router.push('/default/dashboard/index');
     },
      changepasswordError(state, error){
         Nprogress.done();

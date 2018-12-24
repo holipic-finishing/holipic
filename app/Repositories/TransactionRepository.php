@@ -299,65 +299,64 @@ class TransactionRepository extends BaseRepository
         return $arrayWeek;
     }
 
-    // public function loadChartWithWeekDefault($dayWeek, $companyId)
-    // {
-    //     $startDay   = Carbon::today()->subDays(41)->format('Y-m-d');
+    public function loadChartWithWeekDefault($dayWeek, $companyId)
+    {
+        $startDay   = Carbon::today()->subDays(41)->format('Y-m-d');
 
-    //     $endDay     = Carbon::today()->format('Y-m-d');
+        $endDay     = Carbon::today()->format('Y-m-d');
 
-    //     $company = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
-    //                                 ->join('companies', 'companies.id', '=', 'transactions.company_id')
-    //                                 ->join('users', 'users.id', '=', 'companies.owner_id')
-    //                                 ->join('packages', 'packages.id', '=', 'users.package_id')
-    //                                 ->select(DB::raw("sum(amount * packages.fee /100) as total"), DB::raw("DATE_FORMAT(dated,'%Y-%m-%d') as date"), 'currencies.id','currencies.symbol') 
-    //                                 ->where('transactions.company_id', $companyId)
-    //                                 ->where(DB::raw("date(dated)"), '>=', $startDay)
-    //                                 ->where(DB::raw("date(dated)"), '<=', $endDay)
-    //                                 ->where('type', 1)
-    //                                 ->groupBy('date', 'currency_id')
-    //                                 ->orderBy('date', 'asc')
-    //                                 ->get()->toArray(); 
+        $company = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
+                                    ->join('companies', 'companies.id', '=', 'transactions.company_id')
+                                    ->join('users', 'users.id', '=', 'companies.owner_id')
+                                    ->join('packages', 'packages.id', '=', 'users.package_id')
+                                    ->select(DB::raw("sum(amount * packages.fee /100) as total"), DB::raw("DATE_FORMAT(dated,'%Y-%m-%d') as date"), 'currencies.id','currencies.symbol') 
+                                    ->where('transactions.company_id', $companyId)
+                                    ->where(DB::raw("date(dated)"), '>=', $startDay)
+                                    ->where(DB::raw("date(dated)"), '<=', $endDay)
+                                    ->where('type', 1)
+                                    ->groupBy('date', 'currency_id')
+                                    ->orderBy('date', 'asc')
+                                    ->get()->toArray(); 
 
-    //     $arrayCompanyWithKey = [];
+        $arrayCompanyWithKey = [];
 
-    //     foreach($company as $value) {
-    //         $arrayCompanyWithKey[$value['symbol']]
-    //     }
-    //     $data = [];             
+        foreach($company as $value) {
+            $arrayCompanyWithKey[$value['symbol']];
+        }
+        $data = [];             
 
-    //     foreach ($dayWeek as $key => $date) {
+        foreach ($dayWeek as $key => $date) {
 
-    //         $total = 0;
+            $total = 0;
 
-    //         foreach ($company as $index=>$value) {
-    //             $symbol = $value['symbol'];
+            foreach ($company as $index=>$value) {
+                $symbol = $value['symbol'];
                 
-    //             $day = Carbon::parse($value['date'])->format('Y-m-d');
+                $day = Carbon::parse($value['date'])->format('Y-m-d');
 
-    //             if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
-    //                 $total = $total + $company$value['total'];  
-    //             } 
-    //             else {
-    //                 if(!isset($data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']])) {
-    //                     $data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']] = 0;    
-    //                 }
-    //                 $data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']] = $total;  
-    //             }
-    //         }
+                if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
+                    $total = $total + $value['total'];  
+                } 
+                else {
+                    if(!isset($data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']])) {
+                        $data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']] = 0;    
+                    }
+                    $data[$symbol][$date['startOfWeek'].'-'.$date['endOfWeek']] = $total;  
+                }
+            }
 
-    //         //$dayWeek[$key]['total'] = $total;
+            //$dayWeek[$key]['total'] = $total;
 
-    //     }
-
+        }
 
         $weeks = $this->initWeekDays();  
         
-    //     return  [  
-    //         'labels' => $weeks,
-    //         'data' => $dayWeek 
-    //     ];        
+        return  [  
+            'labels' => $weeks,
+            'data' => $dayWeek 
+        ];        
 
-    // }
+    }
 
     private function createLabelsByYear($year, $yearBefore ,$companyId)
     {

@@ -213,7 +213,12 @@ class CompanyRepository extends BaseRepository
                     ->where('companies.id', $companyId)
                     ->first()->toArray();
 
-        $company['total_upload'] = number_format($totalSize->total/1024, 4);
+        if(empty($totalSize)) {
+            $company['total_upload'] = 0;
+        } else{
+
+            $company['total_upload'] = number_format($totalSize->total/1024, 4);
+        }    
 
         $company['capacity'] = number_format($company['file_upload'] - $company['total_upload']/1024, 2);
 
@@ -255,9 +260,9 @@ class CompanyRepository extends BaseRepository
 
         $company['total_income'] = $totalAmount - $totalSystemFee;
 
-        $couponCodes = DB::table('coupon_codes')->where('id', $company['coupon_codes_id'])->where('active', 1)->get();
+        $couponCode = DB::table('coupon_codes')->where('id', $company['coupon_codes_id'])->where('active', 1)->get();
 
-        return [$company, $couponCodes];
+        return [$company, $couponCode];
         
     }
 

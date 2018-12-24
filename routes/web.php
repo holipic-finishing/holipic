@@ -57,6 +57,7 @@ Route::get('test-job', function() {
 });
 
 Route::get('abc', function() {
+	dd(public_path());
 	$array = array(
   'zero'  => '0',
   'one'   => '1',

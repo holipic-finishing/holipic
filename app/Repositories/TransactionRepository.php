@@ -349,8 +349,6 @@ class TransactionRepository extends BaseRepository
 
         }
 
-        dd($data);
-
         $weeks = $this->initWeekDays();  
         
         return  [  
@@ -618,7 +616,7 @@ class TransactionRepository extends BaseRepository
                                     ->where('status','RECIVED')
                                     ->groupBy('dated')
                                     ->get();
-        
+
         foreach ($dates as $key => $date) {
             if(count($transactions)){
                 foreach ($transactions as $k_v => $value) {
@@ -792,18 +790,88 @@ class TransactionRepository extends BaseRepository
     
      */
     
-    public function getHistoriesTransaction(){
-        $now = \Carbon\Carbon::today();
-        $dateBefore7Days = $now->subDays(7); 
+    public function getHistoriesTransaction($params){
+        // $now = \Carbon\Carbon::today();
+        // $dateBefore7Days = $now->subDays(7);
 
-        $results = DB::table('transactions as t')
-                    ->join('users as u', 'u.id', '=', 't.user_id')
-                    ->join('currencies as cu', 'cu.id', '=', 't.currency_id')
-                    ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->where('t.dated', '>=', $dateBefore7Days)
-                    ->orderBy('t.amount', 'asc')
-                    ->select('t.*','cu.symbol', 'cu.country','u.company_name', 'u.email', 'u.first_name', 'u.last_name','p.package_name')
-                    ->get();
+        $results = $this->scopeQuery(function($query) use($params){
+
+            $query = $query->with(['user' => function($q) {
+                                $q->with('package')->with('company');
+                            }])
+                        ->with('currency');
+
+            if (!empty($params['defaultDay'])) {
+
+                $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
+                $endDay     = Carbon::today()->format('Y-m-d');
+
+                $query = $query->whereBetween(DB::raw('date(dated)'), [$startDay,$endDay]);
+            }
+
+            if(!empty($params['start_day']) && !empty($params['end_day']) ){
+
+                $startDay = Carbon::parse($params['start_day'])->format('Y-m-d');
+                $endDay = Carbon::parse($params['end_day'])->format('Y-m-d');
+
+                $query = $query->whereBetween(DB::raw('date(dated)'), [$startDay,$endDay]);
+            }
+
+            if (!empty($params['defaultWeek'])) {
+
+                $startDay = Carbon::today()->subDays(42)->format('Y-m-d');
+                $endDay = Carbon::today()->format('Y-m-d');
+
+                $query = $query->whereBetween(DB::raw('date(dated)'), [$startDay,$endDay]);
+            }
+
+            if(!empty($params['start_day_week']) && !empty($params['end_day_week']) ){
+
+                $startDay = Carbon::parse($params['start_day_week'])->format('Y-m-d');
+                $endDay = Carbon::parse($params['end_day_week'])->format('Y-m-d');
+
+                $query = $query->whereBetween(DB::raw('date(dated)'), [$startDay,$endDay]);
+            }
+
+            if (!empty($params['defaultMonth'])) {
+
+                $fromMonth = Carbon::today()->subMonth(12)->format('Y-m');
+                $toMonth = Carbon::today()->format('Y-m');
+
+                $query = $query->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
+                                ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth);
+            }
+
+            if(!empty($params['start_month']) && !empty($params['end_month'])){
+
+                $fromMonth = Carbon::parse($params['start_month'])->format('Y-m');
+                $toMonth = Carbon::parse($params['end_month'])->format('Y-m');
+
+                $query = $query->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
+                                ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth);
+            }
+
+            if (!empty($params['defaultYear'])) {
+
+                $from_year = Carbon::today()->subYears(2)->format('Y-m');
+                $to_year = Carbon::today()->format('Y-m');
+
+                $query = $query->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $from_year)
+                                ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $to_year);
+            }
+
+            if(!empty($params['start_month']) && !empty($params['end_month']) ){
+
+                $from_year = Carbon::parse($params['start_year'])->format('Y');
+                $to_year = Carbon::parse($params['end_year'])->format('Y');
+
+                $query = $query->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
+                                ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth);
+            }
+
+            return $query;
+        })->all();
+
         $results = $this->transform($results);
 
         return $results;
@@ -819,16 +887,18 @@ class TransactionRepository extends BaseRepository
     public function transform($results){
         foreach ($results as $key => $result) {
 
-            if($result->type == 1){
-                $results[$key]->type = 'Income';
+            if($results[$key]->type){
+                $results[$key]->type_character = 'Income';
             }else{
-                $results[$key]->type = 'Outcome';
+                $results[$key]->type_character = 'Outcome';
             }
 
+            $results[$key]->company_name = $result->user->company->name;
             $results[$key]->amount_with_symbol = $result->amount ." ".$result->symbol;             
             $results[$key]->system_fee_with_symbol = $result->system_fee ." ".$result->symbol;         
             $results[$key]->credit_card_fee_with_symbol = $result->credit_card_fee ." ".$result->symbol;             
-            $results[$key]->fullname = $result->first_name ." ".$result->last_name;             
+            $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
+            if($results[$key]->status === 'BEEN_SEEN') $results[$key]->status = str_replace("_", " ", $results[$key]->status);            
         }
 
         return $results;
@@ -918,6 +988,71 @@ class TransactionRepository extends BaseRepository
                 # code...
                 break;
         }
+    }
+
+    public function checkValueTime($request)
+    {
+        if($request['toTime'] != null && $request['toTime'] != null) {
+
+        }
+    }
+
+    public function handleShowTotalCompanies($request)
+    {
+        $companies = $this->model;
+
+        if($request['choose'] && $request['fromTime'] != null && $request['toTime'] != null) {
+            $time = $request['toTime'];
+            $timeBefore =  $request['fromTime'];
+        }
+
+        if($request['choose'] == 'day') {
+
+            if($request['toTime'] == null && $request['toTime'] == null) {
+                $time = Carbon::today()->format('Y-m-d');
+                $timeBefore = Carbon::today()->subDays(7)->format('Y-m-d');
+            }
+            
+            $companies = $companies->where('dated', '>=', $timeBefore)
+                                    ->where('dated', '<=', $time); 
+            }
+
+        if($request['choose'] == 'month') {
+            if($request['fromTime'] == null && $request['toTime'] == null) {
+                $timeBefore = Carbon::today()->subMonth(12)->format('Y-m');
+                $time = Carbon::today()->format('Y-m');
+            }
+
+            $companies = $companies->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $timeBefore)
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $time);
+        }
+
+        if($request['choose'] == 'year') {
+
+            if($request['fromTime'] == null && $request['toTime'] == null) { 
+                $time = Carbon::now()->year;
+                $timeBefore = Carbon::now()->subYears(4)->year;
+            }
+            
+            $companies = $companies->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $timeBefore)
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $time);
+        }
+
+        if($request['choose'] == 'week') {
+
+            if($request['fromTime'] == null && $request['toTime'] == null) { 
+                $time = Carbon::today()->format('Y-m-d');
+                $timeBefore = Carbon::today()->subDays(42)->format('Y-m-d');
+            }
+            
+            $companies = $companies->where('dated', '>=', $timeBefore)
+                                    ->where('dated', '<=', $time);
+        }
+
+        $companies = $companies->distinct()->get(['company_id'])->toArray();
+
+        return count($companies);
+
     }
 
     

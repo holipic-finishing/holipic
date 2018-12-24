@@ -164,6 +164,7 @@ import config from '../../config/index.js'
 <style>
 	.fix-navigation{
 		padding: 10px 0px;
+		overflow: hidden;
 		
 	}
 

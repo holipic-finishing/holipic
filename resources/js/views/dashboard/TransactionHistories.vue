@@ -114,6 +114,7 @@
 		        </v-list-tile>
 	      	</v-list>
 	    </v-navigation-drawer>
+	    
 	    <v-navigation-drawer
 	      fixed
 	      v-model="drawerRightEdit"
@@ -172,6 +173,7 @@
 	           	<v-btn color="primary" @click="editTransaction()" :disabled="!itemEdit.amount">Edit</v-btn>
             </v-list-tile>
 	    </v-navigation-drawer>
+	    
 	      	<v-toolbar flat color="white">
 		        <v-toolbar-title ><a href="admin#/mini/transaction/histories"> Transaction Histories Table</a></v-toolbar-title>
 		        <v-divider
@@ -198,21 +200,21 @@
 		        <v-btn @click="doSearch" color="primary" dark class="mb-2">Search</v-btn>
 	      	</v-toolbar>
 	      	<v-data-table
-	        :headers="headers"
-	        :items="desserts"
-	        class="elevation-1"
-	        :disable-initial-sort="true"
-	        :pagination.sync="pagination"
-			:rows-per-page-items="rows_per_page"
+				:headers="headers"
+      			:items="desserts"
+      			:pagination.sync="pagination"
+      			:total-items="totalDesserts"
+      			:loading="loading"
+      			class="elevation-1"
 	      	>
 		      	<template slot="items" slot-scope="props">
 		    		<td>{{ props.item.id }}</td>
-		    		<td>{{ props.item.company_name }}</td>
+		    		<td>{{ props.item.user.company.name }}</td>
 		    		<td>{{ props.item.invoice }}</td>
 					<td>{{ props.item.dated }}</td>
 		    		<td>{{ props.item.title }}</td>
 		    		<td>
-		    			<div v-if="props.item.type == 1" style="color:green">
+		    			<div v-if="props.item.type" style="color:green">
 		    				+{{ props.item.amount_with_symbol}} 
 		    			</div>
 		    			<div v-else>
@@ -264,27 +266,22 @@ export default {
 
   	data () {
 	    return {
+	    	totalDesserts: 0,
+	    	loading: true,
 	    	headers: [	        
 		        { text: 'ID', value: 'id' },	
 		        { text: 'Company Name',value: 'company_name'},	       
 		        { text: 'Invoice', value: 'invoice' },	
 		        { text: 'Date', value: 'dated' },       
-		        { text: 'Transaction', value: 'title' },
+		        { text: 'Transaction', value: 'title', align: 'left'},
 		        { text: 'Amount', value: 'amount_with_symbol' , width: '15%'},
 		        { text: 'Status', value: 'status' },	
-		        { text: 'Action'},	   
+		        { text: 'Action', align: 'center'},	   
 		  	],
 		  	desserts:[],
 		  	pagination:{
-		  		rowsPerPage: 10,
+
 		  	},
-		  	rows_per_page:[
-		  		10, 
-		  		20, 
-		  		40,
-		  		80, 
-		  		{ "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }
-		  	],
 
 		  	search:{
 		  		keywords : ''
@@ -316,22 +313,91 @@ export default {
 	    }
   	},
 
+  	watch: {
+      	pagination: {
+	        handler () {
+          		this.getDataFromApi()
+	            .then(data => {
+	              	this.desserts = data.items
+	              	this.totalDesserts = data.total
+	            })
+        	},
+        	deep: true
+      	}
+    },
+
   	created(){
 		this.fetchData();	
 	},
 
+	mounted () {
+      	this.getDataFromApi()
+        .then(data => {
+          	this.desserts = data.items
+          	this.totalDesserts = data.total
+        })
+    },
+
   	methods:{
+  		getDataFromApi () {
+	        this.loading = true
+	        return new Promise((resolve, reject) => {
+	          	const { sortBy, descending, page, rowsPerPage } = this.pagination
+
+	          	var items = this.getDesserts()	
+
+	          	console.log(items)
+	          	const total = items.length
+
+	          	if (this.pagination.sortBy) {
+	            	items = items.sort((a, b) => {
+	              		const sortA = a[sortBy]
+	              		const sortB = b[sortBy]
+
+	              		if (descending) {
+	                		if (sortA < sortB) return 1
+	                		if (sortA > sortB) return -1
+	                		return 0
+          				} else {
+           					if (sortA < sortB) return -1
+        					if (sortA > sortB) return 1
+      						return 0
+          				}
+	            	})
+	         	}
+
+	          	if (rowsPerPage > 0) {
+	            	items = items.slice((page - 1) * rowsPerPage, page * rowsPerPage)
+	          	}
+
+	          	setTimeout(() => {
+	            	this.loading = false
+	            	resolve({
+		              items,
+		              total
+	            	})
+	          	}, 1000)
+	        })
+	    },
+
+	    getDesserts () {
+      		this.fetchData()
+
+      		return this.desserts
+    	},
+
   		fetchData() {
-			get(config.API_URL+'histories/transactions')
+			get(config.API_URL + 'histories/transactions')
 			.then((res) => {
 				if(res.data && res.data.success){
-					this.desserts = res.data.data
+					let data = res.data.data
+					this.desserts = data
 				}
 				
 			})
 			.catch((e) =>{
 				console.log(e)
-			}) 
+			})
 		},
 
   		doSearch(){
@@ -402,11 +468,8 @@ export default {
 				console.log(e)
 			})
 		}
-
-
-
   	}
-}
+};
 </script>
 
 <style lang="css" scoped>

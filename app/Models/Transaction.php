@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Transaction extends Model
 {
+    use LogsActivity;
 
     public $table = 'transactions';
 
@@ -31,6 +33,10 @@ class Transaction extends Model
         'company_id',
         'dated'
     ];
+
+    protected static $logAttributes = ['name', 'text'];
+
+    protected static $logFillable = true
 
     /**
      * The attributes that should be casted to native types.

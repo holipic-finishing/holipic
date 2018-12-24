@@ -428,7 +428,9 @@
 				</div>
 				
 			</v-layout>
-			<TransactionHistories></TransactionHistories>
+
+			<transactions></transactions>
+			<!--<TransactionHistories></TransactionHistories>-->
 			<!-- Social Feeds -->
 <!-- 			<v-layout row wrap>
 				<app-card
@@ -514,6 +516,7 @@ import DatePicker from 'vue2-datepicker'
 import moment from 'moment'
 import Vue from 'vue'
 import TransactionHistories from './TransactionHistories'
+import Transactions from './Transactions'
 import StatsCardV3 from '../../components/StatsCardV3/StatsCardV3.vue'
 
 export default {
@@ -524,6 +527,7 @@ export default {
     LineChart,
     DatePicker,
     TransactionHistories,
+    Transactions,
     StatsCardV3
   },
   data() {
@@ -570,7 +574,6 @@ export default {
   			this.$refs.menu5.save(year);
 	      	this.$refs.picker.activePicker = 'YEAR'
 	      	this.from_year = year.substr(0,4)
-	      	console.clear();
 	      	this.menu5 = false;
   		},
 
@@ -578,7 +581,6 @@ export default {
   			this.$refs.menu6.save(year2);
 	      	this.$refs.picker2.activePicker = 'YEAR'
 	      	this.to_year = year2.substr(0,4)
-	      	console.clear();
 	      	this.menu6 = false;
   		},
 
@@ -665,6 +667,7 @@ export default {
 						chooes : 'Day'
 					}
 					this.$root.$emit('companyChart', obj)
+					this.$root.$emit('loadTransactionsWithTime', obj)
 					this.validate = false
 				}
 			}
@@ -708,9 +711,9 @@ export default {
 							chooes : 'Month'
 						}
 					this.$root.$emit('companyChart', obj)
+					this.$root.$emit('loadTransactionsWithTime', obj)
 
 					this.getTotalCompanies(this.typeTime, this.from_month, this.to_month)
-
 					this.validate = false
 				}
 			}
@@ -754,6 +757,7 @@ export default {
 							chooes : 'Year'
 					}
 					this.$root.$emit('companyChart', obj)
+					this.$root.$emit('loadTransactionsWithTime', obj)
 					this.validate = false
 				}
 			}
@@ -798,6 +802,7 @@ export default {
 							chooes : 'Week'
 					}
 					this.$root.$emit('companyChart', obj)
+					this.$root.$emit('loadTransactionsWithTime', obj)
 				}
 			}
 		
@@ -832,7 +837,6 @@ export default {
   				this.defaultReportWeek()
   				this.from_day_week=''
 	      		this.to_day_week=''
-	      		console.clear()
   			}
 
   			this.getTotalCompanies(this.typeTime)
@@ -850,8 +854,7 @@ export default {
 					chooes : 'SevenDay'
 			}
 			this.$root.$emit('companyChart', obj)
-
-			
+			this.$root.$emit('loadTransactionsWithTime', obj)
   	
   		},
 
@@ -865,6 +868,7 @@ export default {
 					chooes : 'Month'
 			}
 			this.$root.$emit('companyChart', obj)
+			this.$root.$emit('loadTransactionsWithTime', obj)
   		},
 
   		defaultReportYear(){
@@ -877,6 +881,7 @@ export default {
 					chooes : 'year'
 			}
 			this.$root.$emit('companyChart', obj)
+			this.$root.$emit('loadTransactionsWithTime', obj)
   		},
 
   		defaultReportWeek(){
@@ -889,12 +894,13 @@ export default {
 					chooes : 'Week'
 			}
 			this.$root.$emit('companyChart', obj)
+			this.$root.$emit('loadTransactionsWithTime', obj)
   		},
 
   		getTotalCompanies(typeTime, fromTime = '', toTime = '') {
   			axios.get(config.API_URL+'transactions/companies/total?choose='+typeTime+'&fromTime='+fromTime+'&toTime='+toTime)
 			.then(response => {
-				console.log(response)
+				
 				if(response && response.data.success) {
 					this.totalCompany = response.data.data					
 				}

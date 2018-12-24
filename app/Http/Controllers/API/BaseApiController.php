@@ -79,7 +79,6 @@ class BaseApiController extends Controller
 
             // Save user logged in
         }
-        dd($data);
         
         return $data;
     }

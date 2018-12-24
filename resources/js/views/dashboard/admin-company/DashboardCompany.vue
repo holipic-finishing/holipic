@@ -51,6 +51,10 @@ export default {
 
   data () {
     return {
+    	count_pack_company:20,
+    	count_pack_basic:20,
+    	count_pack_pro:20
+
 
     }
   }

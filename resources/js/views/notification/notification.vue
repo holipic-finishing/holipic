@@ -15,7 +15,7 @@
 								<!-- <vue-perfect-scrollbar style="height:280px" :settings="settings"> -->
 									<v-list two-line>
 										<template v-for="(notification, index) in notifications">
-											<v-list-tile :key="index" :class="!notification.is_read ? 'not-read' : ''">
+											<v-list-tile :key="index" :class="!notification.is_read ? 'style-content not-read' : 'style-content'">
 												<div class="product-img mr-3">
 												 <v-tooltip bottom v-if="notification.is_read == true">
 												 	<v-btn 
@@ -27,7 +27,7 @@
 												      >
 												        <v-icon>fiber_manual_record</v-icon>
 												      </v-btn>
-									               <span>{{ $t('message.hidingRead') }}</span>
+									               <!-- <span>{{ $t('message.hidingRead') }}</span> -->
 									            </v-tooltip>
 									             <v-tooltip bottom v-if="notification.is_read == false">
 												 	<v-btn 
@@ -39,7 +39,7 @@
 												      >
 												        <v-icon>fiber_manual_record</v-icon>
 												      </v-btn>
-									              	 <!-- <span>{{ $t('message.hidingRead') }}</span> -->
+									              	 <span>{{ $t('message.hidingRead') }}</span>
 									            </v-tooltip>
 												</div>
 												<v-list-tile-content>
@@ -292,5 +292,8 @@ export default {
 }
 .pagination-info {
 	font-size:13px;
+}
+.style-content{
+	border-bottom:1px solid #ccc
 }
 </style>

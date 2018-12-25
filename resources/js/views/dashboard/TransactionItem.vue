@@ -223,9 +223,11 @@ export default {
   		this.$root.$emit('closeDrawerItem', false)
   	},
   	editItem(){
+      var user = JSON.parse(localStorage.getItem('user'))
   		let params = {
   			amount: this.itemToLoad.amount,
-  			status: this.itemToLoad.status
+  			status: this.itemToLoad.status,
+        userId: user.id
   		}
   		post(config.API_URL + 'edit/transaction/' + this.itemToLoad.id, params)
 			.then((res) => {

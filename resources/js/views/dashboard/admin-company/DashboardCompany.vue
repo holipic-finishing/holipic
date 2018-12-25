@@ -1,5 +1,6 @@
 <template>
-	<v-container fluid pt-0 grid-list-xl>
+	<div>
+		<v-container fluid pt-0 grid-list-xl>
 			<section-tooltip :title="$t('message.overview')" :tooltip="$t('message.dashboardOverview')"></section-tooltip>
 			<!-- Dash Cards -->
 			<v-layout row wrap border-rad-sm overflow-hidden>
@@ -41,13 +42,22 @@
 				>
 				</stats-card-v2>
 			</v-layout>
+
+			<active-log></active-log>
+			
 		</v-container>		
+	</div>
+	
 </template>
 
 <script>
+import ActiveLog from '../ActiveLog'
 export default {
 
   name: 'DashboardCompany',
+  components: {
+  	ActiveLog
+  },
 
   data () {
     return {

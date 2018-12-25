@@ -36,9 +36,8 @@ class Transaction extends Model
         'invoice'
     ];
 
-    protected static $logAttributes = ['name', 'text'];
 
-    protected static $logFillable = true
+    protected static $logFillable = true;
 
     /**
      * The attributes that should be casted to native types.

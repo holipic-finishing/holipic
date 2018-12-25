@@ -45,7 +45,7 @@ Route::prefix('/admin')->group(function () {
 // Route::get('/{any}', function () {
 // 		  return view('welcome');
 // })->where('any', '^(?!api).*$');
-
+Route::get('active', 'API\ActiveLogController@getActiveLog');
 Route::post('users/signup', 'UserController@signUp')->name('users.signup');
 Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');
 

@@ -1,5 +1,6 @@
 <template>
 	<v-container fluid pt-0 grid-list-xl>
+		<active-log></active-log>
 			<section-tooltip :title="$t('message.overview')" :tooltip="$t('message.dashboardOverview')"></section-tooltip>
 			<!-- Dash Cards -->
 			<v-layout row wrap border-rad-sm overflow-hidden>
@@ -518,6 +519,7 @@ import Vue from 'vue'
 import TransactionHistories from './TransactionHistories'
 import Transactions from './Transactions'
 import StatsCardV3 from '../../components/StatsCardV3/StatsCardV3.vue'
+import ActiveLog from './ActiveLog'
 
 export default {
   components: {
@@ -528,7 +530,8 @@ export default {
     DatePicker,
     TransactionHistories,
     Transactions,
-    StatsCardV3
+    StatsCardV3,
+    ActiveLog
   },
   data() {
 	    return {

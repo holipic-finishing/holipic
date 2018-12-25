@@ -11,6 +11,8 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Spatie\Activitylog\Models\Activity;
+
 
 /**
  * Class TransactionController
@@ -173,6 +175,12 @@ class TransactionAPIController extends AppBaseController
         }
 
         $results = $this->transactionRepository->update($input, $itemId);
+
+        $log = Activity::all()->last();
+
+        $log['user_id'] = $input['userId'];
+
+        $log->save();
 
         if($results){
 

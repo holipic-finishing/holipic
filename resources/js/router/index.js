@@ -206,7 +206,8 @@ routers = [
 		            title: 'message.couponCode',
 		            breadcrumb: 'Coupon Code / Histories List'
 		        }
-		    },
+		    }
+		    
       	]	
 	},
 	{

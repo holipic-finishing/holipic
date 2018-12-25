@@ -31,31 +31,31 @@ import InstantSearch from 'vue-instantsearch'
 import VueVideoPlayer from 'vue-video-player';
 import Croppa from 'vue-croppa';
 
-// config URL
-import config from './config/index.js'
+// Import config api URL
+import config from './config'
 
-// global components
+// Import global components
 import GlobalComponents from './globalComponents'
 
-// app.vue
+// Import App.vue
 import App from './App.vue'
 
-// router
+// Import router
 import router from './router'
 
-// themes
+// Import themes
 import primaryTheme from './themes/primaryTheme';
 
-// store
+// Import store
 import { store } from './store/store';
 
-// // firebase
+// Import firebase
 // import './firebase'
 
-// include script file
+// Include script file
 import './lib/VuelyScript'
 
-// include all css files
+// Include all css files
 import './lib/VuelyCss'
 
 // messages
@@ -63,6 +63,12 @@ import messages from './lang';
 
 // Header
 var access_token = localStorage.getItem('access_token')
+
+// Import Icon
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import '@mdi/font/css/materialdesignicons.css'
+import '@fortawesome/fontawesome-free/css/all.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 axios.defaults.baseURL = config.BASE_URL;
 axios.defaults.headers.common['Authorization'] = access_token;
@@ -108,9 +114,10 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 // })
 
 
-// plugins
+// Use Plugins
 Vue.use(Vuetify, {
-	theme: store.getters.selectedTheme.theme
+	theme: store.getters.selectedTheme.theme,
+	iconfont: 'md' || 'mdi' || 'fa' || 'fa4'
 });
 Vue.use(InstantSearch);
 Vue.use(VueI18n)

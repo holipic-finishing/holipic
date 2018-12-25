@@ -7,8 +7,7 @@
 			:reloadable="true"
 			:closeable="false"
 		>
-      <v-navigation-drawer
-        absolute 
+      <v-navigation-drawer 
         fixed
         v-model="drawer" 
         :right="!rtlLayout" 
@@ -19,6 +18,13 @@
       >
         <transaction-item :eventType="eventType" :item="item"></transaction-item>
       </v-navigation-drawer>
+
+      <v-toolbar flat color="white">
+        <v-toolbar-title>
+          <router-link :to="{ path: '/default/transaction/histories' }">Transactions</router-link>
+        </v-toolbar-title>
+      </v-toolbar>
+      <v-divider></v-divider>
 
 			<!--Search Component -->
 			<v-card-title>
@@ -38,7 +44,7 @@
 				v-model="selected"
 			  :headers="headers"
 			  :items="itemsToView"
-			  class="elevation-1"
+			  class="elevation-5"
 			  :pagination.sync="pagination"
 			  :loading="loadingCom"
 			  :total-items="totalDesserts"
@@ -96,7 +102,7 @@
 						<td class="text-right">{{ props.item.dated | moment("DD/MM/YYYY") }}</td>
 		    		<td>{{ props.item.title }}</td>
 		    		<td class="text-right">
-		    			<div v-if="props.item.type" style="color:green">
+		    			<div v-if="props.item.status === 'RECIVED'" style="color:green">
 		    				+ {{ props.item.amount_with_symbol }} 
 		    			</div>
 		    			<div v-else>
@@ -399,6 +405,7 @@ export default {
     },
     transactionEvent(event, item){
     	this.drawer = true
+      this.$root.$emit('disabled-transaction-item')
       this.eventType = event
       this.item = item
     },

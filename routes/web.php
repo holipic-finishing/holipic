@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('weeks', 'API\TransactionAPIController@week');
 
 Route::get('','API\PackageAPIController@listPackage');
 
@@ -39,6 +40,8 @@ Route::prefix('/admin')->group(function () {
 });
 
 
+
+
 // Route::get('/{any}', function () {
 // 		  return view('welcome');
 // })->where('any', '^(?!api).*$');
@@ -54,6 +57,7 @@ Route::get('test-job', function() {
 });
 
 Route::get('abc', function() {
+	dd(public_path());
 	$array = array(
   'zero'  => '0',
   'one'   => '1',

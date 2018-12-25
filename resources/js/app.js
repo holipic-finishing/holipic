@@ -133,6 +133,7 @@ Vue.use(VueGoogleMaps, {
 		key: 'AIzaSyBtdO5k6CRntAMJCF-H5uZjTCoSGX95cdk' // Add your here your google map api key
 	}
 })
+Vue.use(require('vue-moment'))
 
 // Create VueI18n instance with options
 const i18n = new VueI18n({

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Package;
+use App\Models\Setting;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -81,6 +82,50 @@ class PackageRepository extends BaseRepository
         $array_data['total_count_company'] = $count_packages;
 
         return $array_data;
+
+    }
+
+    public function getPackageAndSetting() {
+
+        $packages  =  $this->model->with('setting')->orderBy('fee','DESC')->get()->toArray();
+
+        foreach ($packages as $key => $value) {
+            $packages[$key]['setting_id'] = $value['setting']['id'];
+            $packages[$key]['expiration_date'] = $value['setting']['expiration_date'];
+            $packages[$key]['card_fee'] = $value['setting']['card_fee'];
+            $packages[$key]['bonus'] = $value['setting']['bonus'];
+            $packages[$key]['sms'] = $value['setting']['sms'];  
+            $packages[$key]['package_id'] = $value['setting']['package_id'];  
+        }
+
+
+        return $packages;
+    }
+
+
+    public function updatePackageAndSetting($attributes){
+
+        $packages = $this->model->where('id',$attributes['id'])->update([
+                    'package_name'      => $attributes['package_name'],
+                    'short_description' => $attributes['short_description'],
+                    'full_description'  => isset($attributes['full_description']) ? $attributes['full_description'] : '',
+                    'fee'               => $attributes['fee'],
+                    'secure_storage'    => $attributes['secure_storage'],
+                    'file_upload'       => $attributes['secure_storage'],
+                    'minimum_user'      => $attributes['minimum_user'],
+                    'max_user'          => $attributes['max_user'] 
+            ]);
+
+        $setting = Setting::where('id',$attributes['setting_id'])->update([
+                    'expiration_date'  => $attributes['expiration_date'],
+                    'fee'              => $attributes['fee'],
+                    'card_fee'         => $attributes['card_fee'],
+                    'bonus'            => $attributes['bonus'],
+                    'sms'              => $attributes['sms'],
+                    'package_id'       => $attributes['package_id']
+                ]);
+
+        return $packages;
 
     }
 

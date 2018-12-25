@@ -7,36 +7,37 @@ import Nprogress from 'nprogress'
 import AppLogin from '../views/session/AppLogin.vue';
 import SignUpOne from '../views/session/SignUpOne.vue';
 import LoginOne from '../views/session/LoginOne.vue';
-// import LockScreen from '../views/session/LockScreen.vue';
+
 import ForgotPassword from '../views/session/ForgotPassword.vue';
 import ResetPassword from '../views/session/ResetPassword.vue';
-// import Auth0CallBack from '../components/Auth0Callback/Auth0Callback.vue';
 
 
-// dashboard components
+
+//-----------------------------------------
+//----  File Component of Super Admin   ---
+//-----------------------------------------
+//** All File Components will import below
+
 import mini from '../container/MiniSidebarLayout.vue'
 import Ecommerce   from'../views/dashboard/Ecommerce';
-
-// view users 
-
-// import UserWidgets   from'../views/users/UsersList';
 import Company from '../views/company/index';
 import CompanyChart from '../views/company/information-chart';
-
 import PackageIndex from '../views/package/Index';
 
-
-import Setting from '../views/setting/setting'
+// import Setting from '../views/setting/setting'
 import UserManagement from '../views/superadmin-user/user-management'
-
 import page404 from '../views/pages/page404'
 import UserPass from '../views/users/ChangePassword'
-
 import HistoriesTransaction from '../views/transactions/Histories.vue'
-
 import IndexCoupon from '../views/coupon-code/Index.vue'
 
 
+//-----------------------------------------
+//----  File Component of Admin Company  --
+//-----------------------------------------
+//** All File Components will import below
+
+import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
 
 Vue.use(Router)
 
@@ -74,126 +75,140 @@ routers = [
 	{
 		path: '/',
    		component: mini,
-		redirect: '/mini/dashboard/index',
+		redirect: '/default/dashboard/index',
 		meta: { requiresAuth: true },
 		children: [
+			//-------------------------------
+			//----- Router Company Admin ----
+			//-------------------------------
+			{
+				path: '/default/company/dashboard/index',
+	         	component: DashboardCompany,
+	         	meta: {
+	         		requiresAuth: true,
+	         		adminAuth:false,
+	         		companyAuth:true,
+		            title: 'message.ecommerce',
+		            breadcrumb: 'Dashboard / Ecommerce'
+	        	}
+			},
+			{
+		        path: '/default/users/change-password',
+		        component: UserPass,
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:false,
+	         		companyAuth:true,
+		            title: 'message.changePassword',
+		            breadcrumb: 'Users / Change Password'
+		        }
+		    },
+
+
+
+			//-------------------------------
+			//----- Router Super Admin  -----
+			//-------------------------------
       		{
-	         	path: '/mini/dashboard/index',
+	         	path: '/default/dashboard/index',
 	         	component: Ecommerce,
 	         	meta: {
 	         		requiresAuth: true,
+	         		adminAuth:true,
+	         		companyAuth:false,
 		            title: 'message.ecommerce',
 		            breadcrumb: 'Dashboard / Ecommerce'
 	        	}
       		},
-      // 		{
-		    //     path: '/default/users/user-list',
-		    //     component: UserWidgets,
-		    //     meta: {
-		    //     	requiresAuth: true,
-		    //         title: 'message.user',
-		    //         breadcrumb: 'Users / List'
-		    //     }
-		    // },
 		    {
-		        path: '/mini/widgets/mana-company',
+		        path: '/default/widgets/mana-company',
 		        component: Company,
 		        meta: {
 		        	requiresAuth: true,
+		        	adminAuth:true,
+	         		companyAuth:false,
 		            title: 'message.company',
 		            breadcrumb: 'Company / List'
 		        }
 		    },
 		    {
-		        path: '/mini/widgets/mana-company-chart',
+		        path: '/default/widgets/mana-company-chart',
 		        component: CompanyChart,
 		        meta: {
 		        	requiresAuth: true,
+		        	adminAuth:true,
+	         		companyAuth:false,
 		            title: 'message.chartCompany',
 		            breadcrumb: 'Company / Information /Chart'
 		        }
 		    },
 		    {
-		        path: '/mini/packages/index',
+		        path: '/default/packages/index',
 		        component: PackageIndex,
 		        meta: {
 		        	requiresAuth: true,
+		        	adminAuth:true,
+	         		companyAuth:false,
 		            title: 'message.package',
 		            breadcrumb: 'Packages / List'
 		        }
 
 		    }, 
+		    // {
+		    //     path: '/default/setting',
+		    //     component: Setting,
+		    //     meta: {
+		    //     	requiresAuth: true,
+		    //         title: 'message.settings',
+		    //         breadcrumb: 'Setting / List'
+		    //     }
+		    // },
 		    {
-		        path: '/mini/setting',
-		        component: Setting,
-		        meta: {
-		        	requiresAuth: true,
-		            title: 'message.settings',
-		            breadcrumb: 'Setting / List'
-		        }
-		    },
-		    {
-		        path: '/mini/user-management',
+		        path: '/default/user-management',
 		        component: UserManagement,
 		        meta: {
 		        	requiresAuth: true,
+		        	adminAuth:true,
+	         		companyAuth:false,
 		            title: 'message.userManager',
 		            breadcrumb: 'User / Manager'
 		        }
 		    },
 		    {
-		        path: '/mini/users/change-password',
+		        path: '/default/users/change-password',
 		        component: UserPass,
 		        meta: {
 		            requiresAuth: true,
+		            adminAuth:true,
+	         		companyAuth:false,
 		            title: 'message.changePassword',
 		            breadcrumb: 'Users / Change Password'
 		        }
 		    },
 		    {
-		        path: '/mini/transaction/histories',
+		        path: '/default/transaction/histories',
 		        component: HistoriesTransaction,
 		        meta: {
 		            requiresAuth: true,
+		            adminAuth:true,
+	         		companyAuth:false,
 		            title: 'message.histories',
 		            breadcrumb: 'Transaction / Histories List'
 		        }
 		    },
 		    {
-		        path: '/mini/coupon-code/index',
+		        path: '/default/coupon-code/index',
 		        component: IndexCoupon,
 		        meta: {
 		            requiresAuth: true,
+		            adminAuth:true,
+	         		companyAuth:false,
 		            title: 'message.couponCode',
 		            breadcrumb: 'Coupon Code / Histories List'
 		        }
 		    },
       	]	
 	},
-	// {
-	// 	path:'/',
-	// 	name:'Dashboard',
-	// 	component: Dashboard,
-	// 	meta: { requiresAuth: true },
-	// 	children : [
-	// 		{
-	// 			path:'/users',
-	// 			name:'indexUser',
-	// 			component:User
-	// 		},
-	// 		{
-	// 			path:'/slide',
-	// 			name:'Slide',
-	// 			component:Slide
-	// 		},
-	// 		{
-	// 			path:'/user-dash',
-	// 			name:'UserDash',
-	// 			component:UserDash
-	// 		}
-
-	// 	]
-	// },
 	{
     // not found handler
     	path: '*',
@@ -208,22 +223,64 @@ var router = new Router({
 });
 
 // navigation guards before each
+// router.beforeEach((to, from, next) => { 
+// 	Nprogress.start()
+// 	// if (to.path !== '/login' && !access_token) {
+// 	if (to.matched.some(record => record.meta.requiresAuth) && (localStorage.getItem('access_token') === null)) {
+//     	next({
+// 				path: '/session/login',
+// 				// query: { redirect: to.fullPath }
+// 			})
+//   	}else if(to.path === '/session/login' && (localStorage.getItem('access_token') !== null)){
+//   		next({
+// 				path:'/default/dashboard/index',
+// 			})
+//   	} 
+//   	else {
+//     	next();
+//   	}
+
+//   	Nprogress.done()
+// });
+
+
+// ----------------------------------------------
+// -- Config Navigations guards before each v2 --
+// ----------------------------------------------
+
 router.beforeEach((to, from, next) => { 
 	Nprogress.start()
-	// if (to.path !== '/login' && !access_token) {
-	if (to.matched.some(record => record.meta.requiresAuth) && (localStorage.getItem('access_token') === null)) {
-    	next({
-				path: '/session/login',
-				// query: { redirect: to.fullPath }
+
+	if(to.meta.requiresAuth) {
+		const authUser = JSON.parse(localStorage.getItem('user'))
+		const token = localStorage.getItem('access_token')
+		if(!authUser || !token) {
+				next({
+				path: '/session/login'
 			})
-  	}else if(to.path === '/session/login' && (localStorage.getItem('access_token') !== null)){
-  		next({
-				path:'/default/dashboard/index',
-			})
-  	} 
-  	else {
-    	next();
-  	}
+		}
+		else if(to.meta.adminAuth) {
+			const authUser = JSON.parse(localStorage.getItem('user'))
+			if(authUser.role_id == "1"){
+				next()
+			} else {
+				next({
+					path:'/default/company/dashboard/index',
+				})
+			}
+		} else if(to.meta.companyAuth) {
+			const authUser = JSON.parse(localStorage.getItem('user'))
+			if(authUser.role_id == "2"){
+				next()
+			} else {
+  				next({
+					path:'/default/dashboard/index',
+				})
+			}
+		}
+	} else {
+		next()
+	}
 
   	Nprogress.done()
 });
@@ -249,57 +306,4 @@ router.afterEach((to, from) => {
 
 export default router;
 
-// export default new Router({
-// 	mode: 'history',
-// 	routes: [
-// 		defaultRoutes,
-// 		horizontalRoutes,
-// 		boxedRoutes,
-// 		mini,
-// 		boxedV2,
-// 		{
-// 			path: '/callback',
-// 			component: Auth0CallBack
-// 		},
-// 		{
-// 			path: '/session/sign-up',
-// 			component: SignUpOne,
-// 			meta: {
-// 				title: 'message.signUp',
-// 				breadcrumb: 'Session / Sign Up'
-// 			}
-// 		},
-// 		{
-// 			path: '/session/login',
-// 			component: LoginOne,
-// 			meta: {
-// 				title: 'message.login',
-// 				breadcrumb: 'Session / Login'
-// 			}
-// 		},
-// 		{
-// 			path: '	',
-// 			component: LockScreen,
-// 			meta: {
-// 				title: 'Lock Screen',
-// 				breadcrumb: 'Session / Lock Screen'
-// 			}
-// 		},
-// 		{
-// 			path: '/session/forgot-password',
-// 			component: ForgotPassword,
-// 			meta: {
-// 				title: 'message.forgotPassword',
-// 				breadcrumb: 'Session / Forgot Password'
-// 			}
-// 		},
-// 		{
-// 			path: '/session/reset-password',
-// 			component: ResetPassword,
-// 			meta: {
-// 				title: 'message.resetPassword',
-// 				breadcrumb: 'Session / Reset Password'
-// 			}
-// 		}
-// 	]
-// })
+

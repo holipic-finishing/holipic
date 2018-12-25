@@ -15,4 +15,5 @@ yarn-error.log
 .phpunit.result.cache
 /public/bower_components/
 /public/js/app.js
-
+/resources/js/views/dashboard/.fuse_hidden0000980400002570
+/public/logos/

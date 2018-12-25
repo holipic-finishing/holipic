@@ -444,5 +444,10 @@ export default {
   hardware: 'Matériel',
   directional: 'Directionnel',
   mapAliases: 'Carte (Alias)',
-  dateAndTime: 'Date et l "heure"'
+  dateAndTime: 'Date et l "heure"',
+
+  changePasswordSuccess: "Changer le mot de passe de la réussite de l'utilisateur",
+  changePassword : "Changer le mot de passe",
+  olePasswordAndNewPassword: "Ancien mot de passe et confirmation du mot de passe incorrect",
+  oldPassword : "Ancien mot de passe dans incorrect",
 }

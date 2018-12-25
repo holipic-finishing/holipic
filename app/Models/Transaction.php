@@ -31,7 +31,9 @@ class Transaction extends Model
         'currency_id',
         'status',
         'company_id',
-        'dated'
+        'dated',
+        'title',
+        'invoice'
     ];
 
     protected static $logAttributes = ['name', 'text'];
@@ -50,7 +52,9 @@ class Transaction extends Model
         'currency_id' => 'integer',
         'status' => 'string',
         'company_id' => 'integer',
-        'dated' => 'datetime'
+        'dated' => 'datetime',
+        'title' => 'string',
+        'invoice' => 'string'
     ];
 
     /**
@@ -65,8 +69,16 @@ class Transaction extends Model
         'dated' => 'required'
     ];
 
+    public function user(){
+        return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
+    }
+
+    public function company(){
+        return $this->belongsTo(\App\Models\Company::class, 'company_id');
+    }
+
     public function packages(){
-        return $this->hasOne('App\Model\Package','company_id','id');
+        return $this->hasOne(App\Model\Package::class, 'company_id');
     }
 
     public function currency()

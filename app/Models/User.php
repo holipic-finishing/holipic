@@ -74,6 +74,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\File','user_id','id');
     }
 
+    public function company(){
+        return $this->hasOne(\App\Models\Company::class, 'owner_id');
+    }
+
     public function package(){
         return $this->hasOne('App\Models\Package','id','package_id');
     }

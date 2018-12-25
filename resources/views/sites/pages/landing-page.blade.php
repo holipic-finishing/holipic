@@ -609,7 +609,7 @@ Holipic
 							</div>
 							
 							<div class="account-right text-right">
-								<a href="#" class="forget-password">Forget Password?</a>
+								<a href="#" class="forget-password">Forgot Password?</a>
 							</div>
 						</div>
 						
@@ -927,14 +927,7 @@ Holipic
 		           	} else {
 		           		window.localStorage.setItem('access_token', data.data.user.access_token)
 
-		           		var object = {
-		           			'userId': data.data.user.id, 
-		           			'fullname': data.data.user.last_name+' '+data.data.user.first_name, 
-		           			'email': data.data.user.email, 
-		           			'roleId': data.data.user.role_id
-		           			}
-
-		           		window.localStorage.setItem('user', JSON.stringify(object))
+		           		window.localStorage.setItem('user', JSON.stringify(data.data.user))          		
 
 		           		window.location.href = "/admin";
 		           	}

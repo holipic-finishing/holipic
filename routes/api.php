@@ -33,6 +33,10 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('change-password', 'UserAPIController@changePassWord');
 
+	Route::get('companies/information', 'CompanyAPIController@showInformationCompany'); //different
+
+	Route::get('transactions/companies/total', 'TransactionAPIController@showTotalCompanies'); //different
+
 	Route::resource('companies', 'CompanyAPIController');
 
 	Route::resource('currencies', 'CurrencyAPIController');
@@ -41,13 +45,13 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('transactions', 'TransactionAPIController');
 
-	Route::get('histories/transactions', 'TransactionAPIController@getHistories');
+	Route::post('histories/transactions', 'TransactionAPIController@getHistories');
 
 	Route::post('search/transactions', 'TransactionAPIController@doSearch');
 
 	Route::post('searchdashboard/transactions', 'TransactionAPIController@doSearchDashboard');
 
-	Route::post('edit/transactions', 'TransactionAPIController@editTransaction');
+	Route::post('edit/transaction/{itemId}', 'TransactionAPIController@editTransaction');
 
 	Route::get('company/information', 'TransactionAPIController@getInformationCompany');
 
@@ -57,7 +61,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
 	
-	Route::get('transaction/history', 'CompanyAPIController@getTransactionHistory');
+	// Route::get('transaction/history', 'CompanyAPIController@getTransactionHistory');
 
 	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
 
@@ -66,6 +70,12 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('files', 'FileAPIController');
 
 	Route::resource('coupon_codes', 'CouponCodeAPIController');
+
+	Route::get('transaction/history', 'TransactionAPIController@getTransactionHistory');
+
+	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
+
+	Route::get('delete-package', 'PackageAPIController@deletePackage');
 });	
 
 

@@ -464,5 +464,8 @@ export default {
   settingPackageSystem: "Setting Packages System",
   transaction: "Transaction",
   histories : "Histories",
-  couponCode : "Coupon Code"
+  couponCode : "Coupon Code",
+  changePasswordSuccess : "Change Password User Success",
+  olePasswordAndNewPassword: "Old Password or Confirm Password Incorrect",
+  oldPassword : "Old Password In Incorrect"
 }

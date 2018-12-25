@@ -150,12 +150,25 @@ class CompanyAPIController extends AppBaseController
 
     public function getTransactionHistory(Request $request){
         
-        $results = $this->companyRepository->handleTransaction($request['companyId']);
+        $input = $request->all();
+
+        // if($input['params'] == 'day'){
+        //     $results = $this->companyRepository->transactionHistoryDay($input);
+        // }
+
+        
         return $this->sendResponse($results->toArray(), 'Transaction History successfully');
     }
     
     public function exportExcel(Request $request){
         return \Excel::download(new ListCompaniesExport($request->all()), 'ListCompany.xlsx');
 
+    }
+
+    public function showInformationCompany(Request $request) 
+    {
+        $companyInfo = $this->companyRepository->handleShowInformationCompany(request('companyId'));
+
+        return $this->sendResponse($companyInfo, 'Get Information Company Completed');
     }
 }

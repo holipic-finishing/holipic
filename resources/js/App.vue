@@ -11,17 +11,15 @@
       <router-view></router-view>
       <notifications 
         group="loggedIn" 
-        position="top right"
+        position="bottom right"
         animation-type="velocity"
       />
-      <transaction-history></transaction-history>
+
   </v-app>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-
-import TransactionHistory from './views/company/TransactionHistory.vue'
 
 // import AuthService from "./auth/AuthService";
 
@@ -68,7 +66,7 @@ export default {
     ])
   },
   components: {
-    'transaction-history': TransactionHistory
+
   }
 };
 </script>

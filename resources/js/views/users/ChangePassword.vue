@@ -32,6 +32,8 @@
 import config from '../../config/index.js'
 import { post } from '../../api/index.js'
 import Vue from 'vue'
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -51,38 +53,18 @@ export default {
   methods: {
     savePassword() {
       if (this.$refs.form.validate()) {
-          let url = config.API_URL+'change-password'
-          let params = {
+          const authUser = JSON.parse(localStorage.getItem('user'))
+          const params = {
             access_token : localStorage.getItem('access_token'),
             newPassword : this.newPassword,
             oldPassword : this.oldPassword,
             confirmPassword : this.confirmPassword,
+            roleId : authUser.role_id
           }
-          post(url,params)
-          .then((res) => {
-            if(res.data && res.data.success){
-                setTimeout(function(){
-                    Vue.notify({
-                        group: 'loggedIn',
-                        type: 'success',
-                        text: 'Update Password Success!'
-                    });
-               },500);
-                this.$router.push('/default/dashboard/index') 
-             } else {
-                 setTimeout(function(){
-                    Vue.notify({
-                        group: 'loggedIn',
-                        type: 'error',
-                        text: res.data.message
-                    });
-               },500);
-             }
-          })
-          .catch(err =>{
-            console.log(err)
-          
-          })
+
+          this.$store.dispatch("changePasswordUserInDatabase", {
+            params
+          });  
       }
     } 
   }

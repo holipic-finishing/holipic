@@ -143,9 +143,16 @@ class TransactionAPIController extends AppBaseController
     }
 
     public function getHistories(Request $request){
-        $transactions = $this->transactionRepository->getHistoriesTransaction();
+        $params = $request->all();
 
-        return $this->sendResponse($transactions->toArray(), 'Transactions retrieved successfully');
+        $transactions = $this->transactionRepository->getHistoriesTransaction($params);
+
+        if ($transactions) {
+            return $this->sendResponse($transactions->toArray(), 'Transactions retrieved successfully');
+        }else{
+            return $this->sendError('Data not found');
+        }
+
     }
 
     public function doSearch(Request $request){
@@ -157,13 +164,22 @@ class TransactionAPIController extends AppBaseController
 
     }
 
-    public function editTransaction(Request $request){
+    public function editTransaction(Request $request, $itemId){
+
         $input =  $request->all();
 
-        $results = $this->transactionRepository->update($input, $input['id']);
+        if ($input['status'] === "BEEN SEEN") {
+            $input['status'] = "BEEN_SEEN";
+        }
 
-        return $this->sendResponse($results->toArray(), 'Transaction updated successfully');
+        $results = $this->transactionRepository->update($input, $itemId);
 
+        if($results){
+
+            return $this->sendResponse($results->toArray(), 'Transaction updated successfully');
+        }else{
+            return $this->sendError('System Error Occurred');
+        }
 
     }
 
@@ -173,6 +189,42 @@ class TransactionAPIController extends AppBaseController
         $results =  $this->transactionRepository->searchDashboard($input);
 
         return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
+    }
+
+    public function getTransactionHistory(Request $request) {
+
+        $input = $request->all(); 
+
+        $perPage = $request->input('perPage');
+
+        $timeArr = ['Day', 'Week', 'Month', 'Year'];
+        
+        $data = [];
+
+        foreach ($timeArr as $tmp) {
+            $input['time'] = $tmp;
+            $result = $this->transactionRepository->transactionHistory($input,$perPage);
+            $data[$tmp] = $result; 
+        }
+
+        return $this->sendResponse($data, 'Transaction updated successfully');
+    
+    }
+
+    public function getTransactionHistoryWithTimevalue(Request $request)
+    {
+        $input = $request->all();
+        
+        $result = $this->transactionRepository->transactionHistory($input, $input['perPage']);
+
+        return $this->sendResponse($result, 'Transactions retrieved successfully');
+    }
+
+    public function showTotalCompanies(Request $request)
+    {   
+        $totalCompanies = $this->transactionRepository->handleShowTotalCompanies($request->all());
+
+        return $this->sendResponse($totalCompanies, 'Get Transaction Total Companies with '.$request['choose'].' completed');
     }
 
 }

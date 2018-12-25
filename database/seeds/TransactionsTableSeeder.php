@@ -11,65 +11,40 @@ class TransactionsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('transactions')->insert(
-        [
-        	[
-	            'user_id' => 1,
-	            'type' => '1', //incomece
-	            'currency_id' => '1',
-	            'amount' => 6500,
-	            'status' => 'completed',
-	            'company_id' => 1,
-	            'dated' => '2018-12-11',
-                'system_fee' => '1000',
-                'credit_card_fee' => '2000',
-                'invoice' => '11520'
+        Schema::disableForeignKeyConstraints();
 
-        	],
+        $faker = Faker\Factory::create();
 
-        	[
-	            'user_id' => 1,
-	            'type' => '1', //incomece
-	            'currency_id' => '1',
-	            'amount' => 3400,
-	            'status' => 'completed',
-	            'company_id' => 1,
-	            'dated' => '2018-12-11',
-                'system_fee' => '1200',
-                'credit_card_fee' => '205',
-                'invoice' => 'A5B20'
+        \App\Models\Transaction::truncate();
 
-        	],
+        $status = ['RECIVED', 'BEEN_SEEN'];
 
-            [
-                'user_id' => 1,
-                'type' => '2', //incomece
-                'currency_id' => '1',
-                'amount' => 4000,
-                'status' => 'completed',
-                'company_id' => 1,
-                'dated' => '2018-12-9',
-                'system_fee' => '800',
-                'credit_card_fee' => '1800',
-                'invoice' => '8520'
+        $packages = \App\Models\Package::all();
+        $feeArr = [];
 
-            ],
+        foreach ($packages as $p) {
+            $feeArr[] = $p['fee'];
+        }
 
-            [
-                'user_id' => 1,
-                'type' => '1', //incomece
-                'currency_id' => '1',
-                'amount' => 1800,
-                'status' => 'completed',
-                'company_id' => 1,
-                'dated' => '2018-11-30',
-                'system_fee' => '250',
-                'credit_card_fee' => '200',
-                'invoice' => '2366'
-            ],
+        for ($i=0; $i < 200 ; $i++) {
+            $id_rand = $faker->numberBetween(1, 51);
+            $amount = $faker->randomNumber(4);
+            $fee = $faker->randomElement($feeArr);
+            $system_fee = $amount*$fee/100;
 
-        ]
-        	
-    	);
+            \App\Models\Transaction::create([
+                'user_id' => $id_rand,
+                'type' => $faker->numberBetween(0, 1), //incomece
+                'currency_id' => $faker->numberBetween(1, 3),
+                'amount' => $amount,
+                'status' => $faker->randomElement($status),
+                'company_id' => $id_rand,
+                'dated' => $faker->dateTimeThisYear(),
+                'system_fee' => $system_fee,
+                'credit_card_fee' => $faker->randomNumber(3),
+                'invoice' => $faker->ean13,
+                'title' => $faker->sentence(4)
+            ]);
+        }
     }
 }

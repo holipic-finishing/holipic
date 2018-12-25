@@ -12,7 +12,8 @@
 	      v-model="drawerRight"
 	      right
 	      clipped
-	      app>
+	      app
+	      :width="400">
 	      	<v-list dense>
 		        <v-list-tile @click.stop="drawerRight = !drawerRight">
 			          	<v-list-tile-action>
@@ -24,49 +25,50 @@
 		        </v-list-tile>
 	      	</v-list>
 	      	<v-list-tile>
-              	<v-list-tile-content>
-                	<v-list-tile-title >ID : {{ items.id }}</v-list-tile-title>
+              	<v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Company ID</v-list-tile-title>
+                	<v-list-tile-sub-title class="font-weight-thin ">{{ items.id }}</v-list-tile-sub-title>
                 </v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Company Name :</v-list-tile-title>
+                <v-list-tile-content  class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Company Name </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.company_name }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Invoice :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Invoice </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.invoice }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Date :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Date </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.dated }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Transaction :</v-list-tile-title>
-                	<v-list-tile-sub-title class="font-weight-thin">{{ items.type }}</v-list-tile-sub-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Transaction </v-list-tile-title>
+                	<v-list-tile-sub-title class="font-weight-thin">{{ items.title }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Amount :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Amount </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.amount_with_symbol }}</v-list-tile-sub-title>
-              	</v-list-tile-content>
+              	</v-list-tile-content class="drawer-info">
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Credit Card Fee :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Credit Card Fee </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.credit_card_fee_with_symbol }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Status :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Status </v-list-tile-title>
                 	<v-list-tile-sub-title>
 	                	<v-btn color="success" small v-if="items.status === 'RECIVED'">{{ items.status }}</v-btn>
 						<v-btn color="error" small v-else>{{ items.status }}</v-btn>
@@ -74,26 +76,26 @@
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Package Name :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Package Name </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.package_name }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Email:</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Email </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.email }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Fullname :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Fullname </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.fullname }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Country :</v-list-tile-title>
+                <v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile">Country </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.country }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
@@ -101,13 +103,25 @@
                 <v-list-tile-content>
               	</v-list-tile-content>
             </v-list-tile>
+            <v-list dense>
+		        <v-list-tile @click.stop="drawerRight = !drawerRight">
+			          	<v-list-tile-action>
+			            	<v-icon>exit_to_app</v-icon>
+			          	</v-list-tile-action>
+			          	<v-list-tile-content>
+			            	<v-list-tile-title>Exit Your Drawer</v-list-tile-title>
+			          	</v-list-tile-content>
+		        </v-list-tile>
+	      	</v-list>
 	    </v-navigation-drawer>
+	    
 	    <v-navigation-drawer
 	      fixed
 	      v-model="drawerRightEdit"
 	      right
 	      clipped
-	      app>
+	      app
+	      :width="400">
 	      	<v-list dense>
 		        <v-list-tile @click.stop="drawerRightEdit = !drawerRightEdit">
 			          	<v-list-tile-action>
@@ -119,37 +133,49 @@
 		        </v-list-tile>
 	      	</v-list>
 	      	<v-list-tile>
-              	<v-list-tile-content>
-                	<v-list-tile-title >ID : {{ items.id }}</v-list-tile-title>
+              	<v-list-tile-content class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Company ID</v-list-tile-title>
+                	<v-list-tile-sub-title class="font-weight-thin ">{{ items.id }}</v-list-tile-sub-title>
                 </v-list-tile-content>
             </v-list-tile>
-            <v-list-tile >
-                <v-list-tile-content>
-                	<v-list-tile-title class="font-weight-regular">Company Name :</v-list-tile-title>
+           	<v-list-tile >
+                <v-list-tile-content  class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Company Name </v-list-tile-title>
                 	<v-list-tile-sub-title class="font-weight-thin">{{ items.company_name }}</v-list-tile-sub-title>
+              	</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile >
+                <v-list-tile-content  class="drawer-info">
+                	<v-list-tile-title class="font-weight-regular drawer-info-tile" >Currency </v-list-tile-title>
+                	<v-list-tile-sub-title class="font-weight-thin">{{ items.symbol }}</v-list-tile-sub-title>
               	</v-list-tile-content>
             </v-list-tile>
 	      	<v-list-tile >
                 <v-list-tile-content>
               	</v-list-tile-content>
             </v-list-tile>
-	      	<v-list-tile>
-	            <v-text-field label="Amount" v-model="itemEdit.amount"></v-text-field>
+	      	<v-list-tile>	      			
+	      		<v-text-field label="Amount" v-model="itemEdit.amount" :rules="[rules.number]"></v-text-field>
             </v-list-tile>
             <v-list-tile>
-	            <v-select
+    			<v-select
 		            :items="listStatus"
 		            label="Status"
 		            v-model="itemEdit.status"
-		        ></v-select>
+		        ></v-select>		    	
+            </v-list-tile>
+             <v-list-tile>
+    			<v-list-tile-content>
+              	</v-list-tile-content>		    	
             </v-list-tile>
             <v-list-tile>
             	<v-spacer></v-spacer>
-	           	<v-btn color="primary" @click="editTransaction()">Edit</v-btn>
+	           	<v-btn color="primary" @click="editTransaction()" :disabled="!itemEdit.amount">Edit</v-btn>
             </v-list-tile>
 	    </v-navigation-drawer>
+	    
 	      	<v-toolbar flat color="white">
-		        <v-toolbar-title ><a href="admin#/default/transaction/histories"> Transacsion Histories Table</a></v-toolbar-title>
+		        <v-toolbar-title ><a href="admin#/mini/transaction/histories"> Transaction Histories Table</a></v-toolbar-title>
 		        <v-divider
 		          class="mx-2"
 		          inset
@@ -174,20 +200,28 @@
 		        <v-btn @click="doSearch" color="primary" dark class="mb-2">Search</v-btn>
 	      	</v-toolbar>
 	      	<v-data-table
-	        :headers="headers"
-	        :items="desserts"
-	        class="elevation-1"
-	        :disable-initial-sort="true"
-	        :pagination.sync="pagination"
-			:rows-per-page-items="rows_per_page"
+				:headers="headers"
+      			:items="desserts"
+      			:pagination.sync="pagination"
+      			:total-items="totalDesserts"
+      			:loading="loading"
+      			class="elevation-1"
 	      	>
 		      	<template slot="items" slot-scope="props">
 		    		<td>{{ props.item.id }}</td>
-		    		<td>{{ props.item.company_name }}</td>
+		    		<td>{{ props.item.user.company.name }}</td>
 		    		<td>{{ props.item.invoice }}</td>
 					<td>{{ props.item.dated }}</td>
-		    		<td>{{ props.item.type }}</td>
-		    		<td>{{ props.item.amount_with_symbol }}</td>
+		    		<td>{{ props.item.title }}</td>
+		    		<td>
+		    			<div v-if="props.item.type" style="color:green">
+		    				+{{ props.item.amount_with_symbol}} 
+		    			</div>
+		    			<div v-else>
+		    				-{{ props.item.amount_with_symbol}} 
+		    			</div>
+
+		    		</td>
 		    		<td>
 						<v-btn color="success" small v-if="props.item.status === 'RECIVED'">{{ props.item.status }}</v-btn>
 						 <v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
@@ -218,10 +252,6 @@
 		    		</td>
 		    	</template>
 	      	</v-data-table>	
-	      	<v-snackbar v-model="snack" :timeout="3000" :color="snackColor" right bottom>
-		        {{ snackText }}
-		        <v-btn flat @click="snack = false">Close</v-btn>
-		    </v-snackbar>			
 	   	</app-card>
 	</v-layout>
 </template>
@@ -236,27 +266,22 @@ export default {
 
   	data () {
 	    return {
+	    	totalDesserts: 0,
+	    	loading: true,
 	    	headers: [	        
 		        { text: 'ID', value: 'id' },	
 		        { text: 'Company Name',value: 'company_name'},	       
 		        { text: 'Invoice', value: 'invoice' },	
 		        { text: 'Date', value: 'dated' },       
-		        { text: 'Transaction', value: 'type' },
-		        { text: 'Amount', value: 'amount_with_symbol' },
+		        { text: 'Transaction', value: 'title', align: 'left'},
+		        { text: 'Amount', value: 'amount_with_symbol' , width: '15%'},
 		        { text: 'Status', value: 'status' },	
-		        { text: 'Action'},	   
+		        { text: 'Action', align: 'center'},	   
 		  	],
 		  	desserts:[],
 		  	pagination:{
-		  		rowsPerPage: 10,
+
 		  	},
-		  	rows_per_page:[
-		  		10, 
-		  		20, 
-		  		40,
-		  		80, 
-		  		{ "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }
-		  	],
 
 		  	search:{
 		  		keywords : ''
@@ -264,38 +289,115 @@ export default {
 	      	drawerRight: false,
 	      	drawerRightEdit : false,
 		  	right: null,
-		  	snack: false,
-	        snackColor: '',
-	        snackText: '',
-
+		  	
 	        items:{},
 
 	        itemEdit: {
 	        	'amount' : '',
 	        	'status' : '',
-	        	'id' : ''
+	        	'id' : '',
+	        	'symbol' : ''
 	        },
 
-	        listStatus: ['RECIVED', 'BEEN SEEN']
+	        listStatus: ['RECIVED', 'BEEN SEEN'],
+
+	        rules: {
+	          	number: value => {
+		            const abc = /^([0-9]*|\d*\.\d{1}?\d*)$/
+		            return abc.test(value) || 'Please input number.'
+	          	},
+
+        	},
+
+
 	    }
   	},
+
+  	watch: {
+      	pagination: {
+	        handler () {
+          		this.getDataFromApi()
+	            .then(data => {
+	              	this.desserts = data.items
+	              	this.totalDesserts = data.total
+	            })
+        	},
+        	deep: true
+      	}
+    },
 
   	created(){
 		this.fetchData();	
 	},
 
+	mounted () {
+      	this.getDataFromApi()
+        .then(data => {
+          	this.desserts = data.items
+          	this.totalDesserts = data.total
+        })
+    },
+
   	methods:{
+  		getDataFromApi () {
+	        this.loading = true
+	        return new Promise((resolve, reject) => {
+	          	const { sortBy, descending, page, rowsPerPage } = this.pagination
+
+	          	var items = this.getDesserts()	
+
+	          	console.log(items)
+	          	const total = items.length
+
+	          	if (this.pagination.sortBy) {
+	            	items = items.sort((a, b) => {
+	              		const sortA = a[sortBy]
+	              		const sortB = b[sortBy]
+
+	              		if (descending) {
+	                		if (sortA < sortB) return 1
+	                		if (sortA > sortB) return -1
+	                		return 0
+          				} else {
+           					if (sortA < sortB) return -1
+        					if (sortA > sortB) return 1
+      						return 0
+          				}
+	            	})
+	         	}
+
+	          	if (rowsPerPage > 0) {
+	            	items = items.slice((page - 1) * rowsPerPage, page * rowsPerPage)
+	          	}
+
+	          	setTimeout(() => {
+	            	this.loading = false
+	            	resolve({
+		              items,
+		              total
+	            	})
+	          	}, 1000)
+	        })
+	    },
+
+	    getDesserts () {
+      		this.fetchData()
+
+      		return this.desserts
+    	},
+
   		fetchData() {
-			get(config.API_URL+'histories/transactions')
+			get(config.API_URL + 'histories/transactions')
 			.then((res) => {
 				if(res.data && res.data.success){
-					this.desserts = res.data.data
+					let data = res.data.data
+					this.desserts = data
 				}
 				
 			})
 			.catch((e) =>{
 				console.log(e)
-			}) 
+			})
 		},
 
   		doSearch(){
@@ -320,9 +422,13 @@ export default {
 				del(config.API_URL+'transactions/'+id)
 				.then((res) => {
 					this.fetchData()
-					this.snack = true,
-	                this.snackColor = 'success',
-	                this.snackText = 'Data deleted'
+	                setTimeout(function(){
+	                    Vue.notify({
+	                        group: 'loggedIn',
+	                        type: 'success',
+	                        text: 'Data deleted'
+	                    });
+	               	},500);
 					
 				})
 				.catch((e) =>{
@@ -342,6 +448,7 @@ export default {
 			this.itemEdit.id = items.id
 			this.itemEdit.amount = items.amount
 			this.itemEdit.status = items.status
+			this.itemEdit.symbol = items.symbol
 		},
 
 		editTransaction(){
@@ -349,20 +456,27 @@ export default {
 			.then((res) => {
 				this.drawerRightEdit = false
 				this.fetchData()
-				this.snack = true,
-                this.snackColor = 'success'
-                this.snackText = 'Data edited'
+                setTimeout(function(){
+                    Vue.notify({
+                        group: 'loggedIn',
+                        type: 'success',
+                        text: 'Data edited'
+                    });
+               	},500);
 			})
 			.catch((e) =>{
 				console.log(e)
 			})
 		}
-
-
-
   	}
-}
+};
 </script>
 
 <style lang="css" scoped>
+	.drawer-info{
+		flex-direction:row
+	}
+	.drawer-info-tile{
+		flex: 0 0 40%
+	}
 </style>

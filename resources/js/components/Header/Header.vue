@@ -58,7 +58,7 @@
 					<v-icon color="grey">forum</v-icon>
 				</v-btn> -->
 
-				<!-- <notifications></notifications> -->
+				<notifications></notifications>
 				<!-- <cart :horizontal="horizontal"></cart> -->
 				<language-provider></language-provider>
 				<!-- <user></user> -->

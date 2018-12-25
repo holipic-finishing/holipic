@@ -76,6 +76,13 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
 	Route::get('delete-package', 'PackageAPIController@deletePackage');
+	
+	Route::resource('notifications', 'NotificationAPIController');
+
+	Route::get('count-notification', 'NotificationAPIController@getCountNotification');
+
+	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 });	
+
 
 

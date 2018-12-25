@@ -38,6 +38,7 @@ import IndexCoupon from '../views/coupon-code/Index.vue'
 //** All File Components will import below
 
 import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
+import Notification from '../views/notification/notification.vue'
 
 Vue.use(Router)
 
@@ -103,7 +104,18 @@ routers = [
 		            breadcrumb: 'Users / Change Password'
 		        }
 		    },
-
+			{
+				path: '/default/company/show-notification/:id',
+		        component: Notification,
+		        name : 'CompnayNotification',
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:false,
+	         		companyAuth:true,
+		            title: 'message.notification',
+		            breadcrumb: 'Users / Notification'
+		        }
+			},
 
 
 			//-------------------------------
@@ -207,6 +219,18 @@ routers = [
 		            breadcrumb: 'Coupon Code / Histories List'
 		        }
 		    },
+		    {
+				path: '/default/users/show-notification/:id',
+		        component: Notification,
+		        name : 'AdminNotification',
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:true,
+	         		companyAuth:false,
+		            title: 'message.notification',
+		            breadcrumb: 'Users / Notification'
+		        }
+			},
       	]	
 	},
 	{

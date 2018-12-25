@@ -1,45 +1,151 @@
 <template>
-	<v-menu offset-y left origin="right top" z-index="99" content-class="notification-dropdown" transition="slide-y-transition" nudge-top="-10">
-		<v-btn class="notification-icon ma-0"  icon large slot="activator">
+<v-menu
+		:close-on-content-click="false"
+		offset-y
+		left
+		origin="right top" z-index="99" content-class="cart-dropdown" transition="slide-y-transition" nudge-top="-20"
+	>
+		<v-badge right overlap slot="activator">
+			<span slot="badge">{{count}}</span>
 			<i class="zmdi grey--text zmdi-notifications-active animated infinite wobble zmdi-hc-fw font-lg"></i>
-		</v-btn>
-		<div class="dropdown-content">
+		</v-badge>
+		<v-card>
 			<div class="dropdown-top d-custom-flex justify-space-between primary">
 				<span class="white--text fw-bold">Notifications</span>
-				<span class="v-badge warning">4 NEW</span>
+				<span class="v-badge warning">{{count}} NEW</span>
 			</div>
-			<v-list class="dropdown-list">
-				<v-list-tile v-for="notification in notifications" :key="notification.title" @click="">
-					<i class="mr-3 zmdi" :class="notification.icon"></i>
-					<span>{{ $t(notification.title) }}</span>
-				</v-list-tile>
-			</v-list>
-		</div>
-	</v-menu>
+			<div class="dropdown-content">
+				<vue-perfect-scrollbar style="height:280px" :settings="settings">
+					<v-list two-line>
+						<template v-for="(notification, index) in notifications">
+							<v-list-tile :key="index">
+								<div class="product-img mr-3">
+								 <v-tooltip bottom>
+								 	<v-btn
+								        slot="activator"
+								        flat icon color="#00c2e0"
+								        @click="updateIsReadById(notification)"
+								      >
+								        <v-icon>fiber_manual_record</v-icon>
+								      </v-btn>
+					               <span>{{ $t('message.hidingRead') }}</span>
+					            </v-tooltip>
+								</div>
+								<v-list-tile-content>
+									<span class="fs-14">{{ $t(notification.message) }}</span>
+									<span class="fs-12 grey--text text-sx-right">
+										{{notification.created_at}}
+									</span>
+								</v-list-tile-content>
+								
+							</v-list-tile>
+						</template>
+					</v-list>
+				</vue-perfect-scrollbar>
+			</div>
+			<v-card-actions>
+                <v-btn small color="primary" @click="showAllnotification()">{{ $t('message.viewnotifition') }}</v-btn>
+            </v-card-actions>
+		</v-card>
+</v-menu>
 </template>
 
 <script>
+import { getWithData, put } from '../../api/index.js'
+import config from '../../config/index.js'
+import { getCurrentAppLayout } from "../../helpers/helpers.js";
+
 	export default {
 		data() {
 			return {
-				notifications: [{
-						title: "message.totalAppMemory",
-						icon: "zmdi-storage primary--text"
-					},
-					{
-						title: "message.totalMemoryUsed",
-						icon: "zmdi-memory warning--text"
-					},
-					{
-						title: "message.unreadMail",
-						icon: "zmdi-email error--text"
-					},
-					{
-						title: "message.feedback",
-						icon: "zmdi-edit success--text"
-					}
-				]
+				notifications: [],
+				settings: {
+			        maxScrollbarLength: 160
+			    },
+			    count:0,
+			    user:{}
 			};
+		},
+		methods:{
+			fetchData(){
+				this.user = JSON.parse(localStorage.getItem('user'))
+				let url = config.API_URL + 'notifications'
+				let params = {
+					user_id : this.user.id
+				}
+				getWithData(url,params)
+				.then(res => {
+					if(res.data && res.data.success){
+						let data = res.data.data
+						this.notifications = data 
+					}
+				})	
+				.catch(err => {
+					console.log(err)
+				})
+			},
+			getCurrentAppLayoutHandler() {
+				return getCurrentAppLayout(this.$router);
+			},
+			updateIsReadById(item) {
+				let url = config.API_URL + 'notifications/'+item.id
+				put(url,item)
+				.then(res => {
+					if(res.data && res.data.success){
+						this.fetchData()
+						this.fetchCountData()
+					}
+				})	
+				.catch(err => {
+					console.log(err)
+				})
+			},
+			fetchCountData(){
+				let url = config.API_URL + 'count-notification'
+				let params = {
+					user_id : this.user.id
+				}
+				getWithData(url,params)
+				.then(res => {
+					if(res.data && res.data.success){
+						let data = res.data.data[0].count
+						this.count = data 
+					}
+				})	
+				.catch(err => {
+					console.log(err)
+				})
+			},
+			showAllnotification(){
+				var useAut = this.user
+				var user_id = useAut.id
+				if (useAut.role_id == 2) {
+
+					this.$router.push({
+						name: 'CompnayNotification',
+						params: { id : user_id }
+					});
+
+				} else {
+
+					this.$router.push({
+						name: 'AdminNotification',
+						params: { id: user_id }
+					});
+
+				}
+			}
+
+		},
+		created(){
+			this.fetchData()
+			this.fetchCountData()
 		}
 	};
 </script>
+
+<style lang="css" scoped>
+.v-card__actions {
+	justify-content: center !important
+}
+</style>

@@ -50,26 +50,15 @@ Route::post('users/signup', 'UserController@signUp')->name('users.signup');
 Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');
 
 
-Route::get('test', 'TestController@test');
 
 Route::get('test-job', function() {
-	App\Jobs\CronJobRemoveFile::dispatch();
+	$lang = 'en';
+	\App::setLocale($lang);
+	$l = app()->getLocale();
+	$d = trans('auth.failed');
+	dd($d);
 });
 
-Route::get('abc', function() {
-	dd(public_path());
-	$array = array(
-  'zero'  => '0',
-  'one'   => '1',
-  'two'   => '2',
-  'three' => '3',
-);
-$res = array_slice($array, 0, 3, true) +
-    array("asda" => "my_value") +
-    array_slice($array, 3, count($array) - 1, true) ;
-dd($res);
-
-});
 
 
 

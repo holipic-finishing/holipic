@@ -100,7 +100,6 @@
 					                lazy
 					                transition="scale-transition"
 					                offset-y
-					                full-width
 								>
 									<v-text-field 
 										slot="activator"
@@ -132,7 +131,6 @@
 					                lazy
 					                transition="scale-transition"
 					                offset-y
-					                full-width
 								>
 									<v-text-field 
 										slot="activator"
@@ -169,7 +167,6 @@
 					                lazy
 					                transition="scale-transition"
 					                offset-y
-					                full-width
 								>
 									<v-text-field 
 										slot="activator"
@@ -202,7 +199,6 @@
 					                lazy
 					                transition="scale-transition"
 					                offset-y
-					                full-width
 								>
 									<v-text-field 
 										slot="activator"
@@ -242,8 +238,6 @@
 									lazy
 									transition="scale-transition"
 									offset-y
-									full-width
-									min-width="290px"
 								>
 								    <v-text-field
 								        slot="activator"
@@ -278,8 +272,6 @@
 									lazy
 									transition="scale-transition"
 									offset-y
-									full-width
-									min-width="290px"
 								>
 									<v-text-field
 										slot="activator"
@@ -319,7 +311,6 @@
 					                lazy
 					                transition="scale-transition"
 					                offset-y
-					                full-width
 								>
 									<v-text-field 
 										slot="activator"
@@ -352,7 +343,6 @@
 					                lazy
 					                transition="scale-transition"
 					                offset-y
-					                full-width
 								>
 									<v-text-field 
 										slot="activator"
@@ -891,7 +881,7 @@ export default {
 }
 
 .total-default{
-	margin-top:22px;
+	margin-top:28px;
 }
 
 .btn-success{

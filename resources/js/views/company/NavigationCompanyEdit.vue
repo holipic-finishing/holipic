@@ -1,91 +1,129 @@
 <template>	
 	<v-layout row wrap>
-	
-	
-	<v-navigation-drawer
-      fixed
-      v-model="drawerRight"
-      right
-      clipped
-      app
-      :width="400"
-      temporary
-      class="chat-sidebar-wrap"
-      style="overflow: auto;">
-      	<v-list dense>
-	        <v-list-tile @click.stop="drawerRight = !drawerRight">
-		          	<v-list-tile-action>
-		            	<v-icon>exit_to_app</v-icon>
-		          	</v-list-tile-action>
-		          	<v-list-tile-content>
-		            	<!-- <v-list-tile-title>Exit Your Drawer</v-list-tile-title> -->
-		          	</v-list-tile-content>
-	        </v-list-tile>
-      	</v-list>
-      	<div class="container fix-navigation">
-      		<div class="row image-company">
-      			<div class="col-sm-12">
-			    <img src="images/HOLIPIC-LOGO.png" alt="" width="170px">
-      			</div>
-			</div>
-		    <div class="title-company"> {{company.name}}</div>
-		        <v-list two-line>
-		        	<div class="container">
-			          	<div class="row">
-			          		<div class="col-sm-12">
-			          			<v-form ref="form" lazy-validation>
-							    <v-text-field
-							      :rules="nameRules"
-							      :counter="10"
-							      label="Company name"
-							      data-vv-name="name"
-							      v-model="company.name"
-							      required
-							    ></v-text-field>
-							     <v-text-field
-							      :rules="descriptionRules"
-							      label="Address"
-							      data-vv-name="address"
-							      v-model="company.address"
 
-							      required
-							    ></v-text-field>
-							    <v-text-field
-							      :rules="descriptionRules"
-							      label="Description"
-							      data-vv-name="description"
-							      v-model="company.description"
+	<v-navigation-drawer 
+    fixed
+    v-model="drawerRight" 
+    right
+    temporary 
+    app 
+    class="chat-sidebar-wrap"
+    width="450"
+  	>
+      	<v-card class="h-100 position-relative">
+			<v-toolbar>
+	      		<v-toolbar-title class="text-capitalize">{{company.name}}</v-toolbar-title>
+	      		<v-spacer></v-spacer>
+	     		<v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
+		      		<v-icon>
+		          		fas fa-times
+		        	</v-icon>
+	      		</v-toolbar-side-icon>
+	    	</v-toolbar>
+		    <v-divider class="no-mg-bottom"></v-divider>
 
-							      required
-							    ></v-text-field>
+		    <v-list>
 
-							    <v-text-field
-							      :rules="phoneRules"
-							      label="Phone"
-							      v-model="company.phone"
-							
-							      data-vv-name="phone"
-							      required
-							    ></v-text-field>
+		      <v-alert  v-model="alertStt" type="success" dismissible>......</v-alert>
 
-							    <v-btn @click="updateCompany">Update</v-btn>
-							   
-							  </v-form>
-			          		</div>
-			          		  
+		    	<v-list-tile class="height-80">
+			        <v-list-tile-content class="h-100">
+			          <v-list-tile-title class="content-flex-end h-100">
+			            <span class="font-weight-bold item-title position-item">Company Name</span>
+			            <span class="contain-text-field">
+			              <v-text-field
+			                class="font-weight-bold height-input"
+			                placeholder="Enter Company Name"
+			                v-model="company.name"
+			                outline
+			                :disabled="key == 1 ? false : true"
+			              ></v-text-field>
+			            </span>
+			            <span class="position-item">
+			              <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
+			            </span>
+			          </v-list-tile-title>
+			        </v-list-tile-content>
+		      	</v-list-tile>
+		      	<v-divider class="no-mg-bottom"></v-divider>
 
-			          	</div>
-		      		</div>
-			          <button class="btn btn-primary btn-company"  type="submit" @click.stop="drawerRight = !drawerRight"> Close </button>
-		        </v-list>    
-      		</div>
-      	
+		      	<v-list-tile class="height-80">
+			        <v-list-tile-content class="h-100">
+			          <v-list-tile-title class="content-flex-end h-100">
+			            <span class="font-weight-bold item-title position-item">Address</span>
+			            <span class="contain-text-field">
+			              <v-text-field
+			                class="font-weight-bold height-input"
+			                placeholder="Enter Invoice"
+			                v-model="company.address"
+			                outline
+			                :disabled="key == 2 ? false : true"
+			                
+			              ></v-text-field>
+			            </span>
+			            <span class="position-item">
+			              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
+			            </span>
+			          </v-list-tile-title>
+			        </v-list-tile-content>
+		     	</v-list-tile>
+		      	<v-divider class="no-mg-bottom"></v-divider>
+
+
+		      	<v-list-tile class="height-80">
+			        <v-list-tile-content class="h-100">
+			          <v-list-tile-title class="content-flex-end h-100">
+			            <span class="font-weight-bold item-title position-item">Description:</span>
+			            <span class="contain-text-field">
+			              <v-text-field
+			                class="font-weight-bold height-input"
+			                placeholder="Enter Invoice"
+			                v-model="company.description"
+			                outline
+			                :disabled="key == 3 ? false : true"
+			                
+			              ></v-text-field>
+			            </span>
+			            <span class="position-item">
+			              <v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
+			            </span>
+			          </v-list-tile-title>
+			        </v-list-tile-content>
+		     	</v-list-tile>
+		      	<v-divider class="no-mg-bottom"></v-divider>
+
+		      	<v-list-tile class="height-80">
+			        <v-list-tile-content class="h-100">
+			          <v-list-tile-title class="content-flex-end h-100">
+			            <span class="font-weight-bold item-title position-item">Phone:</span>
+			            <span class="contain-text-field">
+			              <v-text-field
+			                class="font-weight-bold height-input"
+			                placeholder="Enter Invoice"
+			                v-model="company.phone"
+			                outline
+			                :disabled="key == 4 ? false : true"
+			                
+			              ></v-text-field>
+			            </span>
+			            <span class="position-item">
+			              <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
+			            </span>
+			          </v-list-tile-title>
+			        </v-list-tile-content>
+		     	</v-list-tile>
+		      	<v-divider class="no-mg-bottom"></v-divider>
+
+
+		      <v-spacer></v-spacer>
+		      	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
+			      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
+			    </v-card-actions>
+
+		    </v-list>
+		</v-card>      	
     </v-navigation-drawer>
-	    
-	
 </v-layout>
-
-
 </template>
 <script>
 import config from '../../config/index.js'
@@ -105,7 +143,9 @@ export default {
       		phoneRules: [
         		v =>  /^[0-9]+$/.test(v) || 'Phone is required and is number'
         		
-      		]
+      		],
+      		alertStt:false,
+      		key: 0
 
 		}
 	},
@@ -117,6 +157,10 @@ export default {
 	},
 
 	methods: {
+		unDisableItem(key) {
+			this.key = key
+		},
+
 		updateCompany() {
 			if (this.$refs.form.validate()) {
   				axios.put(config.API_URL+'companies/'+this.company.id, {params: {name: this.company.name, address: this.company.address, description: this.company.description, phone: this.company.phone}})

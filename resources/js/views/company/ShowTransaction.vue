@@ -5,19 +5,24 @@
       right
       clipped
       app
-	  :width="400"
+	  :width="450"
+	  temporary
       >
   		<v-list dense>
-	        <v-list-tile @click.stop="stopdrawerRight()">
-		          	<v-list-tile-action>
-		            	<v-icon>exit_to_app</v-icon>
-		          	</v-list-tile-action>
-		          	<v-list-tile-content>
-		            	<v-list-tile-title>Exit Your Drawer</v-list-tile-title>
-		          	</v-list-tile-content>
-	        </v-list-tile>
+	        <v-toolbar>
+	      		<v-toolbar-title class="text-capitalize">Transaction History</v-toolbar-title>
+	      		<v-spacer></v-spacer>
+	     		<v-text-field
+					v-model="currentFilterValue"
+					append-icon="search"
+					
+					single-line
+					hide-details
+					@keyup="searchFilter()"
+					></v-text-field>
+	    	</v-toolbar>
 	 	</v-list>
-	 	<v-list two-line>
+	 	<!-- <v-list two-line>
           <v-list-tile >
             <v-list-tile-content>
               	Transaction History
@@ -33,17 +38,17 @@
             	</v-btn>         
             </v-list-tile-action>
           </v-list-tile>
-        </v-list> 
+        </v-list>  -->
  
 		 	  <v-list-tile >
             <v-list-tile-content>
          
 					<div class="custom-flex">
 					<nav class="nav nav-bar-chart">
-					  <a class="nav-link" :class="typeTimeReturn === 'Day' ? 'active' : '' " @click="activeTypeTime('Day')">Day</a>
-					  <a class="nav-link" :class="typeTimeReturn === 'Week' ? 'active' : '' " @click="activeTypeTime('Week')">Week</a>
-					  <a class="nav-link" :class="typeTimeReturn === 'Month' ? 'active' : '' " @click="activeTypeTime('Month')">Month</a>
-					  <a class="nav-link" :class="typeTimeReturn === 'Year' ? 'active' : '' " @click="activeTypeTime('Year')">Year</a>
+					  <a class="nav-link nav-time" :class="typeTimeReturn === 'Day' ? 'active' : '' " @click="activeTypeTime('Day')">D</a>
+					  <a class="nav-link nav-time" :class="typeTimeReturn === 'Week' ? 'active' : '' " @click="activeTypeTime('Week')">W</a>
+					  <a class="nav-link nav-time" :class="typeTimeReturn === 'Month' ? 'active' : '' " @click="activeTypeTime('Month')">M</a>
+					  <a class="nav-link nav-time" :class="typeTimeReturn === 'Year' ? 'active' : '' " @click="activeTypeTime('Year')">Y</a>
 					</nav>
 					<div class="justify-space-between w-30">
 						<div class="text-total text-xs-right">
@@ -77,7 +82,12 @@
 					<button type="button" @click="addTenItem(typeTime)" class="btn btn-primary">More (50+) </button>
 				</v-list-tile-content>
 			</v-list-tile>
-        </v-list> 
+        </v-list>
+
+        <v-spacer></v-spacer>
+      	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
+	      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
+	    </v-card-actions> 
         
  </v-navigation-drawer>
 	   			 <!-- end -->
@@ -392,5 +402,11 @@ export default {
 }
 .btn-style {
 	align-items: center !important;
+}
+.text-capitalize{
+	font-size:17px !important;
+}
+.nav-time{
+	font-size:18px !important;
 }
 </style>

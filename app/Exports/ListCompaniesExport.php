@@ -15,8 +15,9 @@ class ListCompaniesExport implements FromCollection,WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
+    protected $input;
 
-    public function __construct($input)
+    public function __construct($input=null)
     {
         $this->input = $input;
 
@@ -29,7 +30,7 @@ class ListCompaniesExport implements FromCollection,WithHeadings
                     ->join('packages as p', 'p.id', '=', 'u.package_id');
 
 
-        if($input['keywords'] != null){
+        if(isset($input['keywords']) && $input['keywords'] != null){
             $results = $results->where(function($query) use ($input){
                 $query->orwhere('name', 'like', '%'.$input['keywords'].'%')
                                 ->orwhere('email', 'like', '%'.$input['keywords'].'%')
@@ -42,7 +43,7 @@ class ListCompaniesExport implements FromCollection,WithHeadings
             }
                                
         }else{
-            if($input['filterPackage'] != null){
+            if(isset($input['filterPackage']) && $input['filterPackage'] != null){
                 if($input['filterPackage'] != "All"){
                     $results = $results->where('p.package_name','=', $input['filterPackage']);
                 }

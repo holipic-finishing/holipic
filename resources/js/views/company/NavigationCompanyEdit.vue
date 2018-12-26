@@ -12,7 +12,7 @@
   	>
       	<v-card class="h-100 position-relative">
 			<v-toolbar>
-	      		<v-toolbar-title class="text-capitalize">{{company.name}}</v-toolbar-title>
+	      		<v-toolbar-title class="text-capitalize">{{companyName}}</v-toolbar-title>
 	      		<v-spacer></v-spacer>
 	     		<v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
 		      		<v-icon>
@@ -24,12 +24,12 @@
 
 		    <v-list>
 
-		      <v-alert  v-model="alertStt" type="success" dismissible>......</v-alert>
+      			<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 
 		    	<v-list-tile class="height-80">
 			        <v-list-tile-content class="h-100">
 			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Company Name</span>
+			            <span class="font-weight-bold item-title position-item">Company Name:</span>
 			            <span class="contain-text-field">
 			              <v-text-field
 			                class="font-weight-bold height-input"
@@ -37,6 +37,7 @@
 			                v-model="company.name"
 			                outline
 			                :disabled="key == 1 ? false : true"
+			                @keyup.enter="updateCompany('name', company.name)"
 			              ></v-text-field>
 			            </span>
 			            <span class="position-item">
@@ -50,15 +51,15 @@
 		      	<v-list-tile class="height-80">
 			        <v-list-tile-content class="h-100">
 			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Address</span>
+			            <span class="font-weight-bold item-title position-item">Address:</span>
 			            <span class="contain-text-field">
 			              <v-text-field
 			                class="font-weight-bold height-input"
-			                placeholder="Enter Invoice"
+			                placeholder="Enter address"
 			                v-model="company.address"
 			                outline
 			                :disabled="key == 2 ? false : true"
-			                
+			                @keyup.enter="updateCompany('address', company.address)"
 			              ></v-text-field>
 			            </span>
 			            <span class="position-item">
@@ -77,10 +78,11 @@
 			            <span class="contain-text-field">
 			              <v-text-field
 			                class="font-weight-bold height-input"
-			                placeholder="Enter Invoice"
+			                placeholder="Enter description"
 			                v-model="company.description"
 			                outline
 			                :disabled="key == 3 ? false : true"
+			                @keyup.enter="updateCompany('description', company.description)"
 			                
 			              ></v-text-field>
 			            </span>
@@ -99,10 +101,11 @@
 			            <span class="contain-text-field">
 			              <v-text-field
 			                class="font-weight-bold height-input"
-			                placeholder="Enter Invoice"
+			                placeholder="Enter phone"
 			                v-model="company.phone"
 			                outline
 			                :disabled="key == 4 ? false : true"
+			                @keyup.enter="updateCompany('phone', company.phone)"
 			                
 			              ></v-text-field>
 			            </span>
@@ -141,11 +144,14 @@ export default {
         		v => !!v || 'Description is required'
       		],
       		phoneRules: [
-        		v =>  /^[0-9]+$/.test(v) || 'Phone is required and is number'
+        		v =>  /^([0-9]*|\d*\.\d{1}?\d*)$/.test(v) || 'Phone is required and is number'
         		
       		],
-      		alertStt:false,
-      		key: 0
+      		alertType: 'success',
+      		alertMes: '',
+      		key: 0,
+      		alertStt: false,
+      		companyName: ''
 
 		}
 	},
@@ -153,6 +159,7 @@ export default {
 		this.$root.$on('sendEventCompanyEdit', response => {
 			this.drawerRight =  response.showNavigation
 			this.company = response.data
+			this.companyName = response.data.name
 		});
 	},
 
@@ -160,32 +167,78 @@ export default {
 		unDisableItem(key) {
 			this.key = key
 		},
+		checkValue(){
+			if(this.company.name == '' || this.company.address == '' || this.company.description == '' || this.company.phone == '')
+			{
+				this.alertStt = true
+		        this.alertType = 'error'
+		        this.alertMes = 'System Error Occurred'         
+		        setTimeout(() => {
+		          this.alertStt = false
+		        }, 1500)
+				this.$root.$emit('editCompanySuccess')
+				this.key = 0
+				return false
+			}
+			return true
+		},
 
-		updateCompany() {
-			if (this.$refs.form.validate()) {
-  				axios.put(config.API_URL+'companies/'+this.company.id, {params: {name: this.company.name, address: this.company.address, description: this.company.description, phone: this.company.phone}})
-  				.then (response => {
-  					if(response && response.data.success) {
-	  					this.company = response.data.data
-	  					 setTimeout(function(){	
-	  					 	Vue.notify({
-	  					 	 group: 'loggedIn',
-	  					 	 type: 'success',
-	  					 	 text: 'Update success'
-	  					 	});
-	  					 },500);
+		updateCompany(field, value) {
+			
+			let params = {}
 
-  				}
-  				})
-  			} else {
-  				setTimeout(function(){	
-	  					 	Vue.notify({
-	  					 	 group: 'loggedIn',
-	  					 	 type: 'error',
-	  					 	 text: 'Please check textfield'
-	  					 	});
-	  			},500);
-  			}	
+			switch(field) {
+			  case "name":
+			    params = {name: this.company.name};
+			    break;
+			  case "address":
+			    params = {address: this.company.address};
+			    break;
+			  case "description":
+			     params = {description: this.company.description};
+			    break;
+			  default:
+			    params = {phone: this.company.phone};
+			}
+
+			if(this.checkValue())
+			{
+				axios.put(config.API_URL+'companies/'+this.company.id, {params: params})
+				.then (response => {
+					if(response && response.data.success) {
+						this.company = response.data.data
+						this.alertStt = true
+			          	this.alertType = 'success'
+			          	this.alertMes = 'Update Successfully'					
+			          	setTimeout(() => {
+			            	this.alertStt = false
+						}, 1500)
+						this.key = 0
+						this.$root.$emit('editCompanySuccess')
+
+						 // setTimeout(function(){	
+						 // 	Vue.notify({
+						 // 	 group: 'loggedIn',
+						 // 	 type: 'success',
+						 // 	 text: 'Update success'
+						 // 	});
+						 // },500);
+					}
+				})
+
+				.catch((e) =>{
+					this.alertStt = true
+			        this.alertType = 'error'
+			        this.alertMes = 'System Error Occurred'         
+			        setTimeout(() => {
+			          this.alertStt = false
+			        }, 1500)
+					this.$root.$emit('editCompanySuccess')
+					this.key = 0
+				})	
+
+			}	
+			
 		}
 	}
 	

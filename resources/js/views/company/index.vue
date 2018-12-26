@@ -7,7 +7,7 @@
 				<v-app id="inspire">
 					<div>
 						<v-toolbar flat color="white">
-							<h3 class="h3-title-company">Companies Table</h3>
+							<h3 class="h3-title-company">Companies List</h3>
 							<v-divider
 							class="mx-2"
 							inset
@@ -50,7 +50,7 @@
 									<!-- <v-btn @click="doSearch" color="primary" dark class="mb-2">Search</v-btn> -->
 									
 									<v-flex xs2>
-										<v-btn color="primary" dark class="mb-2"><a :href="urlExport+'?keywords='+search.keywords+'&filterPackage='+search.filterPackage" target="_blank"> <v-icon>import_export</v-icon></a></v-btn>		
+										<v-btn color="primary" dark class="mb-2"><a :href="urlExport" target="_blank"> <v-icon>import_export</v-icon></a></v-btn>		
 									</v-flex>
 								</v-flex> 
 						</v-toolbar>
@@ -191,6 +191,11 @@
 			this.fetchData();	
 			this.getListPackage();
 		},
+		
+		mounted() {
+			this.$root.$on('editCompanySuccess', res => this.fetchData())
+
+		},
 
 
 		methods:{
@@ -277,6 +282,10 @@
 					showNavigation: true,
 					data: item
 				});
+			},
+
+			deleteTransaction(id) {
+				alert(id)
 			}
 
 		},

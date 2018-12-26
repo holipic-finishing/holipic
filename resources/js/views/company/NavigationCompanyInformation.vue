@@ -1,13 +1,6 @@
 <template>
-		<v-layout row wrap>
-		<app-card
-			colClasses="xl12 lg12 md12 sm12 xs12"
-			customClasses="mb-0 sales-widget"
-			:fullScreen="true"
-			:reloadable="true"
-			:closeable="false"
-			
-		>
+	<v-layout row wrap>
+		
 		<v-navigation-drawer
 	      fixed
 	      v-model="drawerRight"
@@ -39,8 +32,8 @@
 			        	<div class="container container-company">
 				          	<div class="row">
 
-				          		<div class="col-sm-4 text-value-company-left">Company ID:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{company.id}}</div>
+				          		<div class="col-sm-4 text-value-company-left">Package:</div>
+					          	<div class="col-sm-8 " id="text-value-company-right">{{company.package_name}}</div>
 				          		
 					          	<div class="col-sm-4 text-value-company-left">Email:</div>
 					          	<div class="col-sm-8 " id="text-value-company-right">{{company.email}}</div>
@@ -48,8 +41,8 @@
 					          	<div class="col-sm-4 text-value-company-left">Address:</div>
 					          	<div class="col-sm-8 " id="text-value-company-right">{{company.address}}</div>
 
-					          	<div class="col-sm-4 text-value-company-left">Description:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{company.description}}</div>
+					          <!-- 	<div class="col-sm-4 text-value-company-left">Description:</div>
+					          	<div class="col-sm-8 " id="text-value-company-right">{{company.description}}</div> -->
 
 					          	<div class="col-sm-4 text-value-company-left">Date join:</div>
 					          	<div class="col-sm-8 " id="text-value-company-right">{{company.created_at}}</div>
@@ -59,19 +52,19 @@
 					          	<div class="col-sm-4 text-value-company-left">Package:</div>
 					          	<div class="col-sm-8 " id="text-value-company-right">{{company.package_name}}</div>
 
-					          	<div class="col-sm-4 text-value-company-left">Storage:</div>
+					          	<div class="col-sm-4 text-value-company-left">Total Storage:</div>
 					          	<div class="col-sm-8 text-size" id="text-value-company-right" >{{company.file_upload}}GB</div>
 
-					          	<div class="col-sm-4 text-value-company-left">Uploaded:</div>
-					          	<div class="col-sm-8 text-size" id="text-value-company-right">{{company.total_upload}}GB</div>
+					          	<!-- <div class="col-sm-4 text-value-company-left">Uploaded:</div>
+					          	<div class="col-sm-8 text-size" id="text-value-company-right">{{company.total_upload}}GB</div> -->
 
-					          	<div class="col-sm-4 text-value-company-left">Capacity:</div>
-					          	<div class="col-sm-8 text-size" id="text-value-company-right">{{company.capacity}} GB</div>
+					          <!-- 	<div class="col-sm-4 text-value-company-left">Capacity:</div>
+					          	<div class="col-sm-8 text-size" id="text-value-company-right">{{company.capacity}} GB</div> -->
 
 					          	<div class="line-company"></div>
 
-					          	<div class="col-sm-4 text-value-company-left">Total Income Fee:</div>
-					          	<div class="col-sm-8 text-size" id="text-value-company-right" >{{company.total_income_fee}}</div>
+					          	<!-- <div class="col-sm-4 text-value-company-left">Total Income Fee:</div>
+					          	<div class="col-sm-8 text-size" id="text-value-company-right" >{{company.total_income_fee}}</div> -->
 
 					          	<div class="col-sm-4 text-value-company-left">Total Income:</div>
 					          	<div class="col-sm-8 text-size" id="text-value-company-right">{{company.total_income}}</div>
@@ -111,7 +104,6 @@
 	      	
 	    </v-navigation-drawer>
 	    
-	   	</app-card>
 	</v-layout>
 
 </template>

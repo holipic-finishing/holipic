@@ -1,12 +1,6 @@
 <template>	
 	<v-layout row wrap>
-	<app-card
-		colClasses="xl12 lg12 md12 sm12 xs12"
-		customClasses="mb-0 sales-widget"
-		:fullScreen="true"
-		:reloadable="true"
-		:closeable="false"
-	>
+	
 	
 	<v-navigation-drawer
       fixed
@@ -88,7 +82,7 @@
       	
     </v-navigation-drawer>
 	    
-	</app-card>
+	
 </v-layout>
 
 

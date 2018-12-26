@@ -79,8 +79,6 @@ Route::group(['namespace' => 'API'],function(){
 	
 	Route::resource('notifications', 'NotificationAPIController');
 
-	Route::get('count-notification', 'NotificationAPIController@getCountNotification');
-
 	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 });	
 

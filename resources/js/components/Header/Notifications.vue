@@ -6,18 +6,18 @@
 		origin="right top" z-index="99" content-class="cart-dropdown" transition="slide-y-transition" nudge-top="-20"
 	>
 		<v-badge right overlap slot="activator">
-			<span slot="badge">{{count}}</span>
+			<span slot="badge">{{countNotifications}}</span>
 			<i class="zmdi grey--text zmdi-notifications-active animated infinite wobble zmdi-hc-fw font-lg"></i>
 		</v-badge>
 		<v-card>
 			<div class="dropdown-top d-custom-flex justify-space-between primary">
 				<span class="white--text fw-bold">Notifications</span>
-				<span class="v-badge warning">{{count}} NEW</span>
+				<span class="v-badge warning">{{countNotifications}} NEW </span>
 			</div>
 			<div class="dropdown-content">
 				<vue-perfect-scrollbar style="height:280px" :settings="settings">
 					<v-list two-line>
-						<template v-for="(notification, index) in notifications">
+						<template v-for="(notification, index) in computeNewNotification">
 							<v-list-tile :key="index">
 								<div class="product-img mr-3">
 								 <v-tooltip bottom>
@@ -51,9 +51,12 @@
 </template>
 
 <script>
+
 import { getWithData, put } from '../../api/index.js'
 import config from '../../config/index.js'
 import { getCurrentAppLayout } from "../../helpers/helpers.js";
+import Notification from '../../views/notification/notification.vue'
+
 
 	export default {
 		data() {
@@ -62,9 +65,13 @@ import { getCurrentAppLayout } from "../../helpers/helpers.js";
 				settings: {
 			        maxScrollbarLength: 160
 			    },
-			    count:0,
-			    user:{}
+			    count:10,
+			    user:{},
+			    newnotification : global_notification
 			};
+		},
+		components:{
+			Notification
 		},
 		methods:{
 			fetchData(){
@@ -77,7 +84,7 @@ import { getCurrentAppLayout } from "../../helpers/helpers.js";
 				.then(res => {
 					if(res.data && res.data.success){
 						let data = res.data.data
-						this.notifications = data 
+						this.notifications = data
 					}
 				})	
 				.catch(err => {
@@ -93,29 +100,14 @@ import { getCurrentAppLayout } from "../../helpers/helpers.js";
 				.then(res => {
 					if(res.data && res.data.success){
 						this.fetchData()
-						this.fetchCountData()
+						this.$root.$emit('refresh-datav2', true)
 					}
 				})	
 				.catch(err => {
 					console.log(err)
 				})
 			},
-			fetchCountData(){
-				let url = config.API_URL + 'count-notification'
-				let params = {
-					user_id : this.user.id
-				}
-				getWithData(url,params)
-				.then(res => {
-					if(res.data && res.data.success){
-						let data = res.data.data[0].count
-						this.count = data 
-					}
-				})	
-				.catch(err => {
-					console.log(err)
-				})
-			},
+	
 			showAllnotification(){
 				var useAut = this.user
 				var user_id = useAut.id
@@ -135,11 +127,29 @@ import { getCurrentAppLayout } from "../../helpers/helpers.js";
 
 				}
 			}
+	
 
 		},
 		created(){
 			this.fetchData()
-			this.fetchCountData()
+		},
+		computed:{
+			countNotifications(){
+				if(this.newnotification && this.newnotification.length){
+					this.notifications.push(this.newnotification)
+				}
+				
+				return this.notifications.length
+			},
+
+			computeNewNotification(){
+				return this.notifications
+			}
+		},
+		mounted() {
+			this.$root.$on('refresh-data', (data) => {
+ 				this.fetchData()
+ 	 		})
 		}
 	};
 </script>

@@ -160,7 +160,6 @@ class UserAPIController extends AppBaseController
                                 'password' => Hash::make($request['newPassword'])
                         ]);
             }
-           
 
             return $this->sendResponse($user, 'changePasswordSuccess');
         }

@@ -42,7 +42,7 @@ class NotificationAPIController extends AppBaseController
         $input = $request->all();
         $this->notificationRepository->pushCriteria(new RequestCriteria($request));
         $this->notificationRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $notifications = $this->notificationRepository->getNotificationByIsRead(self::NOT_IS_READ,$input['user_id'],6);
+        $notifications = $this->notificationRepository->getNotificationByIsRead(self::NOT_IS_READ,$input['user_id'],NULL);
 
         return $this->sendResponse($notifications->toArray(), 'Notifications retrieved successfully');
     }
@@ -133,14 +133,6 @@ class NotificationAPIController extends AppBaseController
         $notification->delete();
 
         return $this->sendResponse($id, 'Notification deleted successfully');
-    }
-
-
-    public function getCountNotification(Request $request) {
-        $input = $request->all();
-        $notifications = $this->notificationRepository->getNotificationByIsRead(self::NOT_IS_READ,$input['user_id'],NULL);
-
-        return $this->sendResponse($notifications->toArray(), 'Notifications retrieved successfully');
     }
 
     public function getNotificationWithParams(Request $request){

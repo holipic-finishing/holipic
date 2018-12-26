@@ -1,7 +1,7 @@
 <template>
 <v-container grid-list-xl fluid>
-		<v-layout row wrap>
-			<v-flex xl12 md9 lg7 mx-auto pa-0>
+	<v-layout row wrap>
+			<v-flex xl12 md12 lg12 mx-auto pa-0>
 				<div>
 					<div class="pricing-wrapper">
 						<div class="pricing-top mb-70">
@@ -11,36 +11,50 @@
 									<hr />
 								</v-flex>
 							</v-layout>
-							<div class="dropdown-content ">
-								<!-- <vue-perfect-scrollbar style="height:280px" :settings="settings"> -->
-									<v-list two-line>
-										<template v-for="(notification, index) in notifications">
-											<v-list-tile :key="index" :class="!notification.is_read ? 'style-content not-read' : 'style-content'">
+							<v-container>
+						      <v-layout row wrap>
+
+						        <v-flex xs12 sm6>
+						          <v-text-field
+						          
+						        
+						            label="Title"
+						            counter
+						            maxlength="20"
+						          ></v-text-field>
+						        </v-flex>
+
+						        <v-flex xs12 sm6>
+									<div class="dropdown-content ">
+									<!-- <vue-perfect-scrollbar style="height:280px" :settings="settings"> -->
+										<v-list two-line>
+											<template v-for="(notification, index) in notifications">
+												<v-list-tile :key="index" :class="!notification.is_read ? 'style-content not-read' : 'style-content'">
 												<div class="product-img mr-3">
-												 <v-tooltip bottom v-if="notification.is_read == true">
-												 	<v-btn 
-												        slot="activator"
-												        flat 
-												        icon 
-												        color="#000000"
-												       
-												      >
-												        <v-icon>fiber_manual_record</v-icon>
-												      </v-btn>
-									               <!-- <span>{{ $t('message.hidingRead') }}</span> -->
-									            </v-tooltip>
-									             <v-tooltip bottom v-if="notification.is_read == false">
-												 	<v-btn 
-												        slot="activator"
-												        flat 
-												        icon 
-												        color="#00c2e0"
-												        @click="updateIsReadById(notification)"
-												      >
-												        <v-icon>fiber_manual_record</v-icon>
-												      </v-btn>
-									              	 <span>{{ $t('message.hidingRead') }}</span>
-									            </v-tooltip>
+													<v-tooltip bottom v-if="notification.is_read == true">
+														<v-btn 
+														slot="activator"
+														flat 
+														icon 
+														color="#000000"
+
+														>
+															<v-icon>fiber_manual_record</v-icon>
+														</v-btn>
+													<!-- <span>{{ $t('message.hidingRead') }}</span> -->
+													</v-tooltip>
+													<v-tooltip bottom v-if="notification.is_read == false">
+														<v-btn 
+														slot="activator"
+														flat 
+														icon 
+														color="#00c2e0"
+														@click="updateIsReadById(notification)"
+														>
+															<v-icon>fiber_manual_record</v-icon>
+														</v-btn>
+														<span>{{ $t('message.hidingRead') }}</span>
+													</v-tooltip>
 												</div>
 												<v-list-tile-content>
 													<span class="fs-14">{{ $t(notification.message) }}</span>
@@ -48,57 +62,60 @@
 														{{notification.created_at}}
 													</span>
 												</v-list-tile-content>
-												
-											</v-list-tile>
-										</template>
-									</v-list>
-								<!-- </vue-perfect-scrollbar> -->
-							</div>
-							<!-- paginator -->
-		                    <div class="paging">
-		                    	<div class="paging-top ntf-pagination ">
-		                            <span class="pr-2">Rows per page</span>
-		                            <select class="form-control notification-dropdown-form-control" v-model="paginator.perPage" v-on:change="changePerPage()">
-		                                <option v-for="(r, key) in rowsPerPage" :value="r">
-		                                    {{r}}
-		                                </option>
-		                            </select>
-		                        </div>
-		                        <!-- <div class="paging-bottom" v-if="participants.data && participants.data.length"> -->
-		                         <div class="paging-bottom">
-		                            <div class="pagination-info">{{ paginationInfo }}</div>
-		                            <div class="pagination-style">
-		                                <a class="btn-nav link disabled" @click="goToPage(1)">
-		                                   <i class="ti-angle-double-left"></i>
-		                                </a>
-		                                <a class="btn-nav link disabled secondary-color" @click="goToPreviousPage()">
-		                    				<i class="ti-angle-left"></i>
-		                    			</a>
-		                                <template v-if="isNotLongPage">
-		                                    <template v-for="n in paginator.lastPage">
-		                                        <a class="page" @click="goToPage(n)" :class="isCurrentPage(n) ? 'secondary-color' : ''">{{ n }}</a>
-		                                    </template>
-		                                </template>
 
-		                                <template v-else>
-		                                    <span v-if="existPageBefore">...</span>
-		                                    <template v-for="n in longPaginatorSize">
-		                                        <a class="page" @click="goToPage(longPaginatorStart + n - 1)" :class="isCurrentPage(longPaginatorStart + n - 1) ? 'secondary-color ': ''">{{ longPaginatorStart + n - 1 }}</a>
-		                                    </template>
-		                                    <span v-if="existPageAfter">...</span>
-		                                </template>
+												</v-list-tile>
+											</template>
+										</v-list>
+									<!-- </vue-perfect-scrollbar> -->
+									</div>
+									<!-- paginator -->
+									<div class="paging">
+									<!-- 		                    	<div class="paging-top ntf-pagination ">
+										<span class="pr-2">Rows per page</span>
+										<select class="form-control notification-dropdown-form-control" v-model="paginator.perPage" v-on:change="changePerPage()">
+											<option v-for="(r, key) in rowsPerPage" :value="r">
+												{{r}}
+											</option>
+										</select>
+									</div> -->
+									<!-- <div class="paging-bottom" v-if="participants.data && participants.data.length"> -->
+										<div class="paging-bottom">
+											<div class="pagination-info">{{ paginationInfo }}</div>
+											<div class="pagination-style">
+												<a class="btn-nav link disabled" @click="goToPage(1)">
+													<i class="ti-angle-double-left"></i>
+												</a>
+											<a class="btn-nav link disabled secondary-color" @click="goToPreviousPage()">
+												<i class="ti-angle-left"></i>
+											</a>
+											<template v-if="isNotLongPage">
+												<template v-for="n in paginator.lastPage">
+													<a class="page" @click="goToPage(n)" :class="isCurrentPage(n) ? 'secondary-color' : ''">{{ n }}</a>
+												</template>
+											</template>
 
-		                    			<a class="btn-nav link disabled secondary-color" @click="goToNextPage()">
-		                    				<i class="ti-angle-right"></i>
-		                    			</a>
+											<template v-else>
+												<template v-for="n in longPaginatorSize">
+													<a class="page" @click="goToPage(longPaginatorStart + n - 1)" :class="isCurrentPage(longPaginatorStart + n - 1) ? 'secondary-color ': ''">{{ longPaginatorStart + n - 1 }}</a>
+												</template>
+											</template>
 
-		                                <a class="btn-nav link disabled" @click="goToPage(paginator.lastPage)">
-		                    				<i class="ti-angle-double-right"></i>
-		                    			</a>
-		                            </div>
-		                        </div>
-		                    </div>
-               <!-- end paginator -->
+												<a class="btn-nav link disabled secondary-color" @click="goToNextPage()">
+													<i class="ti-angle-right"></i>
+												</a>
+
+												<a class="btn-nav link disabled" @click="goToPage(paginator.lastPage)">
+													<i class="ti-angle-double-right"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+									<!-- end paginator -->
+						        </v-flex>
+
+						      </v-layout>
+						    </v-container>
+
 						</div>
 					</div>	
 				</div>
@@ -111,6 +128,7 @@
 <script>
 import { get, put, getWithData } from '../../api/index.js'
 import config from '../../config/index.js'
+import HeadNotification from '../../components/Header/Notifications.vue'
 export default {
 
   name: 'notification',
@@ -121,7 +139,7 @@ export default {
     		notifications:{},
     		rowsPerPage: [10, 20, 30, 40, 50],
 	    	paginator: {
-	                perPage: 10,
+	                perPage: 15,
 	                currentPage: 1,
 	                lastPage: 1,
 	                total: 0,
@@ -133,6 +151,9 @@ export default {
             existPageBefore: false,
             existPageAfter: false,
     	}
+  	},
+  	components:{
+  		HeadNotification
   	},
   	created(){
   		this.fetchData()
@@ -169,6 +190,7 @@ export default {
 				.then(res => {
 					if(res.data && res.data.success){
 						this.fetchData()
+						this.$root.$emit('refresh-data', true)
 					}
 				})	
 				.catch(err => {
@@ -176,16 +198,16 @@ export default {
 				})
   		},
 
-  		changePerPage(){
+  		// changePerPage(){
 
-  			let lastPage = _.ceil(this.paginator.total/this.paginator.perPage)
+  		// 	let lastPage = _.ceil(this.paginator.total/this.paginator.perPage)
 
-            if(this.paginator.currentPage > lastPage){
-                this.paginator.currentPage = 1
-            }
+    //         if(this.paginator.currentPage > lastPage){
+    //             this.paginator.currentPage = 1
+    //         }
 
-            this.fetchData()
-  		},
+    //         this.fetchData()
+  		// },
 
   		goToPage (page) {
             if(page > 0 && page <= this.paginator.lastPage && page != this.paginator.currentPage){
@@ -243,7 +265,12 @@ export default {
             this.existPageAfter = true
             return this.paginator.currentPage - this.longPaginatorEachSize
         }
-  	}
+  	},
+  	mounted() {
+		this.$root.$on('refresh-datav2', (data) => {
+ 				this.fetchData()
+ 	 		})
+		}
 }
 </script>
 
@@ -259,20 +286,18 @@ export default {
 .pagination-style  a{
 	 color: black;
     float: left;
-    padding: 8px 15px;
+    padding: 8px 13px;
     text-decoration: none;
 }
 
 .pagination-style a:hover:not(.active) {background-color: #ddd;}
 
 .pagination-style a {
-   border-radius: 8px;
+   border-radius: 6px;
 }
 
 .paging-bottom {
 	text-align: center;
-	width :50%;
-	float: right;
 }
 
 .page.secondary-color {

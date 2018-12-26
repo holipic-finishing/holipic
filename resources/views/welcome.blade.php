@@ -18,7 +18,20 @@
 
 <body>
   <div id="app"></div>
-  <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
-</body>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  
+    <script>
+        var socket = io(':6001');
 
+        var global_notification = [];
+        socket.on('view-listings',function(data){
+             global_notification.push(data)
+        });
+    </script>
+
+
+  <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+
+</body>
+  
 </html>

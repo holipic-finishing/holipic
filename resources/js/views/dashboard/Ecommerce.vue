@@ -91,7 +91,7 @@
 					<div class="row">
 						<!-- Start day -->
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default"  >	
-							<div class="style-card start-day">
+							<div class="style-card start-day w-100">
 								<p>Start</p>
 								<v-menu 
 									:close-on-content-click="false"
@@ -123,7 +123,7 @@
 						
 						<!-- End Day -->
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default"  >	
-							<div class="style-card">
+							<div class="style-card w-100">
 								<p>End</p>
 								 <v-menu 
 									:close-on-content-click="false"
@@ -160,7 +160,7 @@
 					<div class="row">
 						<!-- Star Month -->
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-							<div class="style-card">
+							<div class="style-card w-100">
 								<p>Start</p>
 								<v-menu
 									:close-on-content-click="false"
@@ -193,7 +193,7 @@
 						
 						<!-- End Month -->
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-							<div class="style-card">
+							<div class="style-card w-100">
 								<p>End</p>
 								<v-menu 
 									:close-on-content-click="false"
@@ -231,7 +231,7 @@
 					<div class="row">
 						<!-- Start Year -->
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-							<div class="style-card">
+							<div class="style-card w-100">
 								<p>Start</p>
 
 								<v-menu
@@ -267,7 +267,7 @@
 					
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
 							<!-- End Year -->
-							<div class="style-card">
+							<div class="style-card w-100">
 								<p>End</p>
 
 								<v-menu
@@ -310,7 +310,7 @@
 					<div class="row">
 						<!-- Start Week -->
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-							<div class="style-card">
+							<div class="style-card w-100">
 								<p>Start</p>
 								<v-menu
 									:close-on-content-click="false"
@@ -342,7 +342,7 @@
 						<!-- Start End Week -->
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
 							<!-- Fom day -->
-							<div class="style-card">
+							<div class="style-card w-100">
 								<p>End</p>
 
 								<v-menu 
@@ -378,11 +378,7 @@
 				<div class="card-body">
 					<div class="row total-default">
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
-							<!-- Fom day -->
-							<div class="style-card">
-								<!-- <app-card> -->
-								
-
+							<div class="style-card w-100">
 								<div class="d-custom-flex justify-space-between fix-total-storage-company">
 									<div class="title-total">
 										<h2>{{totalCompany}}</h2>
@@ -394,13 +390,10 @@
 										</span>
 									</div>
 								</div>
-							<!-- </app-card> -->
-
 							</div>
 						</div>
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
-							<!-- Fom day -->
-							<div class="style-card">
+							<div class="style-card w-100">
 								<div class="d-custom-flex justify-space-between fix-total-storage-company">
 									<div class="title-total">
 										<h2>14,200</h2>

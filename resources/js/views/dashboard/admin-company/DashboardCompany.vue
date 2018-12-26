@@ -43,20 +43,20 @@
 				</stats-card-v2>
 			</v-layout>
 
-			<active-log></active-log>
-			
+			<activity-log></activity-log>
+
 		</v-container>		
 	</div>
 	
 </template>
 
 <script>
-import ActiveLog from '../ActiveLog'
+import ActivityLog from '../ActivityLog'
 export default {
 
   name: 'DashboardCompany',
   components: {
-  	ActiveLog
+  	ActivityLog
   },
 
   data () {

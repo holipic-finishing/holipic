@@ -77,7 +77,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('delete-package', 'PackageAPIController@deletePackage');
 
-	Route::get('active-log/show', 'ActiveLogController@getActiveLog');
+	Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 });	
 
 

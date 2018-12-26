@@ -1,7 +1,6 @@
 <?php
 namespace App\Repositories;
 
-use InfyOm\Generator\Common\BaseRepository;
 use DB ;
 use Spatie\Activitylog\Models\Activity;
 use App\Models\Company;
@@ -15,7 +14,7 @@ use App\Models\Company;
  * @method Company find($id, $columns = ['*'])
  * @method Company first($columns = ['*'])
 */
-class ActiveLogRepository extends BaseRepository
+class ActivityLogRepository extends BaseRepo
 {
     /**
      * @var array
@@ -30,18 +29,18 @@ class ActiveLogRepository extends BaseRepository
         return Activity::class;
     }
 
-    public function handleShowActiveLog($request)
+    public function handleShowActivityLog($request)
     {
         $company = Company::where('owner_id', $request['userId'])->first()->toArray();
 
-        $activeLog = $this->model->select('id', 'subject_type' , 'description', 'properties', 
+        $activityLog = $this->model->select('id', 'subject_type' , 'description', 'properties', 
                                     DB::raw("DATE_FORMAT(updated_at,'%Y-%c-%d') as date"), 'updated_at', 'user_id')
                                  ->where('user_id', $request['userId'])
                                  ->orderBy('date', 'desc')->get()->toArray();
 
         $array = [];
 
-        foreach($activeLog as $value) 
+        foreach($activityLog as $value) 
         {
             $value['subject_type'] = substr($value['subject_type'], 11, strlen($value['subject_type']));
             $value['name'] = $company['name'];
@@ -91,18 +90,22 @@ class ActiveLogRepository extends BaseRepository
         return $array;
     }
 
-    public function groupTimeActivityLog($request)
+    public function groupTimeActivityLog($limit = null)
     {
+        $query = $this->model->when(request('userId'), function($q){
+            return $q->whereUserId(request('userId'));
+        })
+        ->latest(DB::raw("DATE_FORMAT(updated_at,'%Y-%c-%d')"))
+        ->groupBy(DB::raw("DATE_FORMAT(updated_at,'%Y-%c-%d')"))
+        ->selectRaw("DATE_FORMAT(updated_at,'%Y-%c-%d') as date")
+        ->paginate($this->getLimit(request('perPage')));
 
-        $date = $this->model->distinct()->select(DB::raw("DATE_FORMAT(updated_at,'%Y-%c-%d') as date"))
-                            ->where('user_id', $request['userId'])
-                            ->orderBy('date', 'desc')->groupBy('updated_at');
+        // $date = $this->model->orderBy(DB::raw("DATE_FORMAT(updated_at,'%Y-%c-%d')"), 'desc')
+        //                     ->groupBy(DB::raw("DATE_FORMAT(updated_at,'%Y-%c-%d')"))
+        //                     ->selectRaw("DATE_FORMAT(updated_at,'%Y-%c-%d') as date")
+        //                     ->where('user_id', request('userId'));
 
-        $date = $date->paginate($request['perPage']);
-
-        return $date;
+        // $date = $date->paginate(request('perPage'));
+        return $query;
     }
-    
-
-
 }

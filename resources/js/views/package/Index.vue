@@ -23,12 +23,34 @@
 	    	<template slot="items" slot-scope="props">
 	    		<td>{{ props.item.package_name }}</td>
 		        <td class="text-xs-left">{{ props.item.short_description }}</td>
-		        <td class="text-xs-center">{{ props.item.fee }}</td>
 		        <td class="text-xs-center">{{ props.item.secure_storage }}</td>
 		        <td class="text-xs-center">{{ props.item.file_upload }}</td>
-		        <td class="text-xs-center">{{ props.item.minimum_user }}</td>
+		        <td class="text-xs-center">
+		        	<div v-if="props.item.email_service == true">
+		        		YES
+		        	</div>
+		        	<div v-else>
+		        		NO
+		        	</div>
+		        </td>
+		        <td class="text-xs-center">
+		        	<div v-if="props.item.sms == true">
+		        		YES
+		        	</div>
+		        	<div v-else>
+		        		NO
+		        	</div>
+		        </td>
+		        <td class="text-xs-center">{{ props.item.fee }}</td>
 		        <td class="text-xs-center">{{ props.item.max_user }}</td>
-		        <td>
+		        <td class="text-xs-left">
+		          <v-icon
+		            small
+		            class="mr-2"
+		            @click="editItem(props.item)"
+		          >
+		            settings
+		          </v-icon>
 		          <v-icon
 		            small
 		            class="mr-2"
@@ -38,6 +60,7 @@
 		          </v-icon>
 		          <v-icon
 		            small
+		            class="mr-2"
 		            @click="deleteItem(props.item.id,props.item.setting_id)"
 		          >
 		            delete
@@ -75,12 +98,13 @@ export default {
 		          value: 'package_name'
 		        },
 		        { text: 'Short Description', value: 'short_description',sortable: false },
-		        { text: 'Fee (%)', value: 'fee' },
 		        { text: 'Storage (GB)', value: 'secure_storage' },
 		        { text: 'File Upload (GB)', value: 'file_upload' },
-		        { text: 'Minimum User', value: 'minimum_user' },
-		        { text: 'Max User', value: 'max_user' },
-		        { text: 'Actions', value: 'name', sortable: false }
+		        { text: 'Email Service', value: 'minimum_user' },
+		        { text: 'SMS', value: 'minimum_user' },
+		        { text: 'Fee (%)', value: 'fee' },
+		        { text: 'Max Branch', value: 'max_user' },
+		        { text: 'Actions', sortable: false }
 	      	],
 	      	desserts: [],
 	      	pagination: {

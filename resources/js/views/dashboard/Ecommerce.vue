@@ -374,6 +374,49 @@
 						<!-- End Week -->
 					</div>
 				</div>
+
+				<div class="card-body">
+					<div class="row total-default">
+						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
+							<!-- Fom day -->
+							<div class="style-card">
+								<!-- <app-card> -->
+								
+
+								<div class="d-custom-flex justify-space-between fix-total-storage-company">
+									<div class="title-total">
+										<h2>{{totalCompany}}</h2>
+										Total companies
+									</div>
+									<div> 
+										<span class="icon-style fix-icon-storage-company">
+											<i class="material-icons font-2x primary--text">store</i>
+										</span>
+									</div>
+								</div>
+							<!-- </app-card> -->
+
+							</div>
+						</div>
+						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
+							<!-- Fom day -->
+							<div class="style-card">
+								<div class="d-custom-flex justify-space-between fix-total-storage-company">
+									<div class="title-total">
+										<h2>14,200</h2>
+										Total Storage MB
+									</div>
+									<div> 
+										<span class="icon-style fix-icon-storage-company">
+											<i class="material-icons font-2x success--text">cloud_upload</i>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</v-layout>
 		<transactions></transactions>

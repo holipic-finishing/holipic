@@ -153,7 +153,6 @@
 			<!--End Data Table Component -->
 		</app-card>
     <v-dialog v-model="dialog" persistent max-width="450">
-      <v-btn slot="activator" color="primary" dark>System Message</v-btn>
       <v-card>
         <v-card-title class="headline font-weight-bold grey lighten-2">
           <v-icon x-large color="yellow accent-3">

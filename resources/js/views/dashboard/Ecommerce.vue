@@ -454,14 +454,14 @@ export default {
       	saveStartYear(from_year) {
   			this.$refs.menu5.save(from_year);
 	      	this.$refs.picker.activePicker = 'YEAR'
-	      	// this.from_year = from_year.substr(0,4)
+	      	this.from_year = from_year.substr(0,4)
 	      	this.menu5 = false;
   		},
 
   		saveEndYear(to_year) {
   			this.$refs.menu6.save(to_year);
 	      	this.$refs.picker2.activePicker = 'YEAR'
-	      	// this.to_year = to_year.substr(0,4)
+	      	this.to_year = to_year.substr(0,4)
 	      	this.menu6 = false;
 	      	this.reportByYear()
   		},

@@ -69,7 +69,7 @@
 					<div class="d-custom-flex ">
 						<div class="">
 							<h3 class="info--text mb-0 active">$ {{total}}</h3>
-							<p class="fs-12 grey--text mb-0 total-transaction">Total Transaction</p>
+							<p class="fs-12 grey--text mb-0 total-transaction">Total Income</p>
 						</div>
 					</div>
 				</div>
@@ -484,29 +484,11 @@ export default {
 		validations(from,to,value){
 
 			if(!from && !to){
-				setTimeout(function(){
-		            Vue.notify({
-		                group: 'loggedIn',
-		                type: 'error',
-		                text: 'No '+value+' Yet'
-		            });
-				},500);
+				this.errorAlert('No ' + value + ' Yet')
 			} else if (!to) {
-				setTimeout(function(){
-		            Vue.notify({
-		                group: 'loggedIn',
-		                type: 'error',
-		                text: 'To '+value+' Required'
-		            });
-				},500);
+				this.errorAlert('To '+ value + ' Required')
 			} else if(!from) {
-				setTimeout(function(){
-		            Vue.notify({
-		                group: 'loggedIn',
-		                type: 'error',
-		                text: 'From '+value+' Required'
-		            });
-				},500);
+				this.errorAlert('From '+ value +' Required')
 			} else { 
 				this.validate = true
 			}

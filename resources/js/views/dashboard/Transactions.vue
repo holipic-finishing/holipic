@@ -51,6 +51,7 @@
 			  select-all
 			  item-key="id"
 			  :search="search"
+        :rows-per-page-items="rowsPerPageItems"
 			>
 				<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
 				<!--Header -->
@@ -234,7 +235,8 @@ export default {
           sortable: false
         }
       ],
-      pagination: {},
+      pagination: {
+      },
       loading: true,
       search: '',
       selected: [],
@@ -244,6 +246,7 @@ export default {
       eventType: '',
       paramsSaveForEditSuccess: null,
       itemIdToDelete: null,
+      rowsPerPageItems: [ 20, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 } ]
     }
   },
   watch: {
@@ -281,7 +284,6 @@ export default {
   },
   mounted () {
   	this.$root.$on('loadTransactionsWithTime', res => {
-      console.log("params: =>>>>" + res.params)
   		let params = res.params
       this.paramsSaveForEditSuccess = res.params
 

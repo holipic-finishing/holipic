@@ -1,198 +1,283 @@
 <template>
-	<v-card>
-	  <v-toolbar color="indigo" dark>
+	<v-card class="h-100 position-relative">
+	  <v-toolbar>
+      <v-toolbar-title class="text-capitalize">{{ eventType }} Transactions</v-toolbar-title>
+      <v-spacer></v-spacer>
       <v-toolbar-side-icon @click="closeDrawer">
-      	<v-icon>exit_to_app</v-icon>
+      	<v-icon>
+          fas fa-times
+        </v-icon>
       </v-toolbar-side-icon>
-      <v-toolbar-title class="text-capitalize">{{ eventType }} Company</v-toolbar-title>
     </v-toolbar>
+    <v-divider class="no-mg-bottom"></v-divider>
 	  
 	  <!-- Show Item -->
     <v-list v-if="itemToLoad && eventType === 'show'">
-    	<v-list-tile>
-      	<v-list-tile-content>
-          <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Company ID</span>
-          	<span>{{ itemToLoad.id }}</span>
-          </v-list-tile-title>
-      	</v-list-tile-content>
-      </v-list-tile>
 			
 			<v-list-tile>
 				<v-list-tile-content>
           <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Company Name</span>
+          	<span class="font-weight-bold item-title">Company Name</span>
           	<span>{{ itemToLoad.company_name }}</span>
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
 			
 			<v-list-tile>
 				<v-list-tile-content>
           <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Invoice</span>
+          	<span class="font-weight-bold item-title">Invoice</span>
           	<span>{{ itemToLoad.invoice }}</span>
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
 
 			<v-list-tile>
 				<v-list-tile-content>
           <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Date</span>
+          	<span class="font-weight-bold item-title">Date</span>
           	<span>{{ itemToLoad.dated }}</span>
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
 
 			<v-list-tile>
 				<v-list-tile-content>
           <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Transaction</span>
+          	<span class="font-weight-bold item-title">Transaction</span>
           	<span>{{ itemToLoad.title }}</span>
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
 	
 			<v-list-tile>
 				<v-list-tile-content>
           <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Amount</span>
+          	<span class="font-weight-bold item-title">Amount</span>
           	<span>{{ itemToLoad.amount_with_symbol }}</span>
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
 				
 			<v-list-tile>
 				<v-list-tile-content>
           <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Credit Card Fee</span>
+          	<span class="font-weight-bold item-title">Credit Card Fee</span>
           	<span>{{ itemToLoad.credit_card_fee_with_symbol }}</span>
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
 
 			<v-list-tile>
 				<v-list-tile-content>
-          <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Status</span>
+          <v-list-tile-title class="content-flex h-100">
+          	<span class="font-weight-bold item-title">Status</span>
           	<span>
-          		<v-btn color="success" small v-if="itemToLoad.status === 'RECIVED'">{{ itemToLoad.status }}</v-btn>
-							<v-btn color="error" small v-else>{{ itemToLoad.status }}</v-btn>
+          		<v-btn class="no-mg-horizontal" color="success" dark v-if="itemToLoad.status === 'RECIVED'">{{ itemToLoad.status }}</v-btn>
+							<v-btn class="no-mg-horizontal" color="error" dark v-else>{{ itemToLoad.status }}</v-btn>
           	</span>
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
 
 			<v-list-tile v-if="itemToLoad.user && itemToLoad.user.package">
 				<v-list-tile-content>
           <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Package Name</span>
+          	<span class="font-weight-bold item-title">Package Name</span>
           	<span>{{ itemToLoad.user.package.package_name }}</span>
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
 
 			<v-list-tile v-if="itemToLoad.user">
 				<v-list-tile-content>
           <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Email</span>
+          	<span class="font-weight-bold item-title">Email</span>
           	<span>{{ itemToLoad.user.email }}</span>
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
 
 			<v-list-tile>
 				<v-list-tile-content>
           <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Fullname</span>
+          	<span class="font-weight-bold item-title">Fullname</span>
           	<span class="text-capitalize">{{ itemToLoad.fullname }}</span>
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
 
 			<v-list-tile v-if="itemToLoad.currency">
 				<v-list-tile-content>
           <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Country</span>
+          	<span class="font-weight-bold item-title">Country</span>
           	<span>{{ itemToLoad.currency.country }}</span>
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
 
     </v-list>
     <!-- End Item Show -->
 
 		<!-- Edit Item -->
 		<v-list v-if="itemToLoad && eventType === 'edit'">
+      <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 
-    	<v-list-tile>
-      	<v-list-tile-content>
-          <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Company ID</span>
-          	<span>{{ itemToLoad.id }}</span>
-          </v-list-tile-title>
-      	</v-list-tile-content>
-      </v-list-tile>
-
-      <v-list-tile>
-				<v-list-tile-content>
-          <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Company Name</span>
-          	<span>{{ itemToLoad.company_name }}</span>
-          </v-list-tile-title>
-				</v-list-tile-content>
-			</v-list-tile>
-
-			<v-list-tile v-if="itemToLoad.currency">
-				<v-list-tile-content>
-          <v-list-tile-title class="content-flex">
-          	<span class="font-weight-bold">Currency</span>
-          	<span>{{ itemToLoad.currency.symbol }}</span>
+    	<v-list-tile class="height-80">
+        <v-list-tile-content class="h-100">
+          <v-list-tile-title class="content-flex-end h-100">
+            <span class="font-weight-bold item-title position-item">Company Name</span>
+            <span class="contain-text-field">
+              <v-text-field
+                class="font-weight-bold height-input"
+                placeholder="Enter Company Name"
+                v-model="itemToLoad.company_name"
+                outline
+                :disabled="key == 1 ? false : true"
+                @blur="editItem('company_name', itemToLoad.company_name)"
+                @keyup.enter="editItem('company_name', itemToLoad.company_name)"
+              ></v-text-field>
+            </span>
+            <span class="position-item">
+              <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
+            </span>
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
 
-      <v-list-tile class="custom-title">
-				<v-list-tile-content class="custom-title">
-          <v-list-tile-title class="content-flex custom-height">
-          	<span class="font-weight-bold">Amount</span>
-          	<v-text-field 
-          		class="ml-5 custom-input" 
-          		label="Enter Amount" 
-          		v-model="itemToLoad.amount" 
-          		:rules="[rules.number]"
-          		box
-          	>
-          	</v-text-field>
+      <v-list-tile class="height-80">
+        <v-list-tile-content class="h-100">
+          <v-list-tile-title class="content-flex-end h-100">
+            <span class="font-weight-bold item-title position-item">Invoice</span>
+            <span class="contain-text-field">
+              <v-text-field
+                class="font-weight-bold height-input"
+                placeholder="Enter Invoice"
+                v-model="itemToLoad.invoice"
+                outline
+                :disabled="key == 2 ? false : true"
+                @blur="editItem('invoice', itemToLoad.invoice)"
+                @keyup.enter="editItem('invoice', itemToLoad.invoice)"
+              ></v-text-field>
+            </span>
+            <span class="position-item">
+              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
+            </span>
           </v-list-tile-title>
-				</v-list-tile-content>
-			</v-list-tile>
-
-			<v-list-tile class="custom-title">
-				<v-list-tile-content class="custom-title">
-          <v-list-tile-title class="content-flex custom-height">
-          	<span class="font-weight-bold">Status</span>
-          	<v-select
-          			class="ml-5 custom-input"
-          			box
-		            :items="listStatus"
-		            label="Chosse Status"
-		            v-model="item.status"
-		        >
-		        </v-select>
-          </v-list-tile-title>
-				</v-list-tile-content>
-			</v-list-tile>
-
-      <v-spacer></v-spacer>
-
-			<v-list-tile class="float-right">
-       	<v-btn color="success" :disabled="!itemToLoad.amount" @click="editItem">Save</v-btn>
+        </v-list-tile-content>
       </v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
+      <v-list-tile class="height-80">
+        <v-list-tile-content class="h-100">
+          <v-list-tile-title class="content-flex-end h-100">
+            <span class="font-weight-bold item-title position-item">Date</span>
+            <span class="contain-text-field">
+              <v-menu
+                :close-on-content-click="false"
+                v-model="menu"
+                :nudge-right="40"
+                lazy
+                transition="scale-transition"
+                offset-y
+                full-width
+              >
+                <v-text-field
+                  slot="activator"
+                  v-model="computedDateFormatted"
+                  readonly
+                  class="font-weight-bold height-input"
+                  placeholder="Enter date"
+                  outline
+                  :disabled="key == 3 ? false : true"
+                ></v-text-field>
+                <v-date-picker v-model="date" no-title  @input="editItem('dated', date)" :max="new Date().toISOString().substr(0, 10)"></v-date-picker>
+              </v-menu>
+            </span>
+            <span class="position-item">
+              <v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-calendar-day</v-icon></v-btn>
+            </span>
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
+      <v-list-tile class="height-80">
+        <v-list-tile-content class="h-100">
+          <v-list-tile-title class="content-flex-end h-100">
+            <span class="font-weight-bold item-title position-item">Transaction</span>
+            <span class="contain-text-field">
+              <v-select
+                class="font-weight-bold height-input"
+                outline
+                :items="listStatus"
+                v-model="itemToLoad.status"
+                :disabled="key == 4 ? false : true"
+                @change="editItem('status', itemToLoad.status)"
+              ></v-select>
+            </span>
+            <span class="position-item">
+              <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
+            </span>
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+
+      <v-list-tile class="height-80">
+        <v-list-tile-content class="h-100">
+          <v-list-tile-title class="content-flex-end h-100">
+            <span class="font-weight-bold item-title position-item">Amount</span>
+            <span class="contain-text-field">
+              <v-text-field
+                class="font-weight-bold height-input"
+                v-model="itemToLoad.amount"
+                :rules="[rules.number]"
+                outline
+                :disabled="key == 5 ? false : true"
+                @blur="editItem('amount', itemToLoad.amount)"
+                @keyup.enter="editItem('amount', itemToLoad.amount)"
+              ></v-text-field>
+            </span>
+            <span class="position-item">
+              <v-btn flat icon @click="unDisableItem(5)"><v-icon small>fas fa-marker</v-icon></v-btn>
+            </span>
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-divider class="no-mg-bottom"></v-divider>
+      <v-spacer></v-spacer>
 
     </v-list>
 		<!-- End Item Edit -->
+
+    <!-- Close drawer button -->
+    <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
+      <v-btn @click="closeDrawer">Close</v-btn>
+    </v-card-actions>
+    <!-- End close drawer button -->
 
 	</v-card>
 </template>
@@ -216,62 +301,86 @@ export default {
           return abc.test(value) || 'Please input number.'
       	},
     	},
+      key: 0,
+      alertStt: false,
+      alertType: 'success',
+      alertMes: '',
+      date: '',
+      menu: false
     }
   },
   methods:{
   	closeDrawer(){
   		this.$root.$emit('closeDrawerItem', false)
   	},
-  	editItem(){
-  		let params = {
-  			amount: this.itemToLoad.amount,
-  			status: this.itemToLoad.status
-  		}
-  		post(config.API_URL + 'edit/transaction/' + this.itemToLoad.id, params)
+    unDisableItem(key){
+      this.key = key
+    },
+    editItem(field_name, value){
+
+      var field = {
+        field_name: field_name,
+        value: value
+      }
+
+      if(field_name === 'dated'){
+        let date = new Date(value)
+        let dateFormated = this.$moment(date).format('YYYY-MM-DD')
+        field.value = dateFormated
+        this.menu = false
+      }
+
+      this.fetchData(field)
+
+    },
+    fetchData(field){
+  		post(config.API_URL + 'edit/transaction/' + this.itemToLoad.id, field)
 			.then((res) => {
 				if(res.data && res.data.success){
-					setTimeout(() => {
-						Vue.notify({
-	                        type: 'success',
-	                        title: 'Edit Item Successfully',
-	                        position: 'top right'
-		                    });
-						
-					}, 1000)
-
+          this.alertStt = true
+          this.alertType = 'success'
+          this.alertMes = 'Update Successfully'					
+          setTimeout(() => {
+            this.alertStt = false
+					}, 1500)
+          this.key = 0
 					this.$root.$emit('editItemSucess')
-					this.$root.$emit('closeDrawerItem', false)
+					// this.$root.$emit('closeDrawerItem', false)
 				}
 			})
 			.catch((e) =>{
-				Vue.notify({
-                      type: 'error',
-                      title: 'System Error Occurred',
-                      position: 'top right'
-                    });
+				this.alertStt = true
+        this.alertType = 'error'
+        this.alertMes = 'System Error Occurred'         
+        setTimeout(() => {
+          this.alertStt = false
+        }, 1500)
 			})
-  	}
+
+    }
   },
   computed:{
   	itemToLoad(){
   		return this.item
-  	}
+  	},
+    computedDateFormatted(){
+      if(this.date){
+        this.item.dated = this.date
+      }
+
+      var dateFormated = this.$moment(this.item.dated).format("DD/MM/YYYY")
+      return dateFormated
+    }
+  },
+  mounted(){
+    this.$root.$on('disabled-transaction-item', res => {
+      this.key = 0
+      this.date = ''
+    })
   }
 };
 </script>
 
 <style lang="scss" scoped>
-	.content-flex{
-		display: flex;
-    justify-content: space-between;
-    align-items: center;
-	}
 
-	.custom-title{
-		align-items: end;
-		height: 60px !important;
-	}
-	.custom-height{
-		height: 100% !important;
-	}
 </style>

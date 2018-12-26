@@ -94,7 +94,7 @@ routers = [
 	        	}
 			},
 			{
-		        path: '/default/users/change-password',
+		        path: '/default/company/change-password',
 		        component: UserPass,
 		        meta: {
 		            requiresAuth: true,

@@ -17,14 +17,14 @@
 			<div class="dropdown-content">
 				<vue-perfect-scrollbar style="height:280px" :settings="settings">
 					<v-list two-line>
-						<template v-for="(notification, index) in computeNewNotification">
+						<template v-for="(notification, index) in notifications">
 							<v-list-tile :key="index">
 								<div class="product-img mr-3">
 								 <v-tooltip bottom>
 								 	<v-btn
 								        slot="activator"
 								        flat icon color="#00c2e0"
-								        @click="updateIsReadById(notification)"
+								        @click="updateIsReadById(index)"
 								      >
 								        <v-icon>fiber_manual_record</v-icon>
 								      </v-btn>
@@ -85,6 +85,7 @@ import Notification from '../../views/notification/notification.vue'
 					if(res.data && res.data.success){
 						let data = res.data.data
 						this.notifications = data
+						console.log(this.notifications)
 					}
 				})	
 				.catch(err => {
@@ -95,17 +96,38 @@ import Notification from '../../views/notification/notification.vue'
 				return getCurrentAppLayout(this.$router);
 			},
 			updateIsReadById(item) {
-				let url = config.API_URL + 'notifications/'+item.id
-				put(url,item)
-				.then(res => {
-					if(res.data && res.data.success){
-						this.fetchData()
-						this.$root.$emit('refresh-datav2', true)
-					}
-				})	
-				.catch(err => {
-					console.log(err)
-				})
+				// let url = config.API_URL + 'notifications/'+item.id
+				// put(url,item)
+				// .then(res => {
+				// 	if(res.data && res.data.success){
+				// 		var index = _.findIndex(this.notifications, function(val) {
+    //                     	return val.id == item.id;
+	   //                  });
+				
+	   //                  if (index > -1) {
+	   //                      this.notifications.splice(index, 1);
+	   //                  }
+	   //                  console.log(index)
+	   //                  console.log(this.notifications)
+				// 		this.$root.$emit('refresh-datav2', true)
+				// 	}
+				// })	
+				// .catch(err => {
+				// 	console.log(err)
+				// })
+				console.log(item)
+				// var index = _.findIndex(this.notifications, function(val) {
+
+    //                     	return val.id === item.id;
+	   //                  });
+				
+	                    // if (index > -1) {
+	                        this.notifications.splice(item, 1);
+	                    // }
+	                    // console.log(index)
+	                    // console.log(this.notifications)
+						// this.$root.$emit('refresh-datav2', true)
+
 			},
 	
 			showAllnotification(){
@@ -136,19 +158,27 @@ import Notification from '../../views/notification/notification.vue'
 		computed:{
 			countNotifications(){
 				if(this.newnotification && this.newnotification.length){
-					this.notifications.push(this.newnotification)
+					this.notifications.unshift(this.newnotification[0])
+					console.log(this.notifications)
+					console.log(this.newnotification[0])
+					console.log(this.notifications)
 				}
-				
 				return this.notifications.length
 			},
 
-			computeNewNotification(){
-				return this.notifications
-			}
 		},
 		mounted() {
 			this.$root.$on('refresh-data', (data) => {
- 				this.fetchData()
+ 				
+ 				var index = _.findIndex(this.notifications, function(val) {
+                        	return val.id == data;
+	                   });
+				console.log(data)
+				console.log(index)
+				console.log(this.notifications)
+                if (index > -1) {
+                    this.notifications.splice(index, 1);
+                }
  	 		})
 		}
 	};

@@ -190,7 +190,7 @@ export default {
 				.then(res => {
 					if(res.data && res.data.success){
 						this.fetchData()
-						this.$root.$emit('refresh-data', true)
+						this.$root.$emit('refresh-data', item.id)
 					}
 				})	
 				.catch(err => {

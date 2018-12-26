@@ -13,6 +13,7 @@
         group="loggedIn" 
         position="bottom right"
         animation-type="velocity"
+        class="z-index"
       />
 
   </v-app>
@@ -70,3 +71,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+  .z-index{
+    z-index: 9999 !important;
+  }
+</style>

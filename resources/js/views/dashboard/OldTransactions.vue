@@ -25,6 +25,7 @@
         </v-toolbar-title>
       </v-toolbar>
       <v-divider></v-divider>
+
 			<!--Search Component -->
 			<v-card-title>
 	      Search
@@ -46,6 +47,7 @@
 			  class="elevation-5"
 			  :pagination.sync="pagination"
 			  :loading="loadingCom"
+			  :total-items="totalDesserts"
 			  select-all
 			  item-key="id"
 			  :search="search"
@@ -152,17 +154,16 @@
 		</app-card>
     <v-dialog v-model="dialog" persistent max-width="450">
       <v-card>
-        <v-card-title class="headline font-weight-bold">
-          <v-icon x-large color="yellow accent-3" class="mr-2">
+        <v-card-title class="headline font-weight-bold grey lighten-2">
+          <v-icon x-large color="yellow accent-3">
             warning
           </v-icon>
           Do you want delete this item ?
         </v-card-title>
-        <v-divider class="mt-0"></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat @click="dialog = false">Disagree</v-btn>
-          <v-btn flat @click="deleteItem">Agree</v-btn>
+          <v-btn color="green darken-1" flat @click="dialog = false">Disagree</v-btn>
+          <v-btn color="green darken-1" flat @click="deleteItem">Agree</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -188,6 +189,7 @@ export default {
     return {
       dialog: false,
     	desserts: [],
+    	totalDesserts: 0,
     	headers: [
         {
           text: 'ID',
@@ -219,8 +221,7 @@ export default {
         {
           text: 'Amount',
           align: 'right',
-          value: 'amount_with_symbol',
-          sortable: false
+          value: 'amount_with_symbol'
         },
         {
           text: 'Status',
@@ -238,32 +239,58 @@ export default {
       loading: true,
       search: '',
       selected: [],
+      itemsTmp: [],
       drawer: false,
       item: null,
       eventType: '',
-      params: {
-      	defaultDay: 'default'
-      },
+      paramsSaveForEditSuccess: null,
       itemIdToDelete: null,
       rowsPerPageItems: [ 20, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 } ]
+    }
+  },
+  watch: {
+    params: {
+      handler() {
+          this.getDataFromApi()
+          .then(data => {
+              this.desserts = data.items;
+              this.totalDesserts = data.total;
+          });
+      },
+      deep: true
     }
   },
   computed: {
     ...mapGetters([
       "rtlLayout",
     ]),
+    params(nv) {
+      return {
+          ...this.pagination,
+          query: this.search
+      }
+    },
     loadingCom(){
     	return this.loading
     },
     itemsToView(){
-    	return this.desserts
+    	if (this.desserts === undefined || this.desserts.length == 0) {
+    		return this.itemsTmp
+    	}else{
+    		return this.desserts
+    	}
     }
   },
   mounted () {
   	this.$root.$on('loadTransactionsWithTime', res => {
   		let params = res.params
-  		this.params = params
-  		this.fetchData(params)
+      this.paramsSaveForEditSuccess = res.params
+
+	    this.getDataFromApi(params)
+		    .then(data => {
+		      this.items = data.items
+		      this.totalItems = data.total
+		    })
   	})
 
     this.$root.$on('closeDrawerItem', res => {
@@ -271,16 +298,88 @@ export default {
     })
 
     this.$root.$on('editItemSucess', res => {
-    	this.fetchData(this.params)
+      this.getDataFromApi(this.paramsSaveForEditSuccess)
+        .then(data => {
+          this.items = data.items
+          this.totalItems = data.total
+        })
     })
 
   },
   methods: {
-    fetchData(params){
-    	post(config.API_URL + 'histories/transactions', params)
+  	getDataFromApi(params) {
+  		this.loading = true
+      return new Promise((resolve, reject) => {
+        const {
+            sortBy,
+            descending,
+            page,
+            rowsPerPage
+        } = this.pagination
+        
+        let search = this.search.trim().toLowerCase()
+        let items = this.getItems(params)
+
+        if (search) {
+          items = items.filter(item => {
+            return Object.values(item)
+                .join(",")
+                .toLowerCase()
+                .includes(search)
+          })
+        }
+
+        if (this.pagination.sortBy) {
+          items = items.sort((a, b) => {
+              const sortA = a[sortBy]
+              const sortB = b[sortBy]
+
+              if (descending) {
+                if (sortA < sortB) return 1
+                if (sortA > sortB) return -1
+                return 0
+              } else {
+                if (sortA < sortB) return -1
+                if (sortA > sortB) return 1
+                return 0
+              }
+          })
+        }
+
+        if (rowsPerPage > 0) {
+          items = items.slice(
+            (page - 1) * rowsPerPage,
+            page * rowsPerPage
+          )
+        }
+        const total = items.length
+          
+        setTimeout(() => {
+            this.loading = false
+            resolve({
+              items,
+              total
+            })
+        }, 1000)
+      })
+    },
+    getItems (params) {
+			this.fetchData(params)
+			return this.itemsTmp
+    },
+    fetchData(paramsFromToChart){
+
+    	let paramsToBackEnd = {
+															defaultDay :  'default'
+														}
+			if (paramsFromToChart) {
+				paramsToBackEnd = paramsFromToChart
+			}
+
+    	post(config.API_URL + 'histories/transactions', paramsToBackEnd)
 				.then((res) => {
 					if(res.data && res.data.success){
-						this.desserts = res.data.data
+						this.itemsTmp = res.data.data
 					}
 				})
 				.catch((e) =>{
@@ -290,7 +389,11 @@ export default {
     toggleAll () {
       if (this.selected.length) this.selected = []
       else{
-	    	this.selected = this.desserts.slice()
+      	if (this.desserts === undefined || this.desserts.length == 0) {
+	    		this.selected = this.itemsTmp.slice()
+	    	}else{
+	    		this.selected = this.desserts.slice()
+	    	}
       }
     },
     changeSort (column) {
@@ -321,7 +424,12 @@ export default {
                         position: 'top right'
                       })
 
-          this.fetchData(this.params)
+          this.getDataFromApi(this.paramsSaveForEditSuccess)
+          .then(data => {
+            this.items = data.items
+            this.totalItems = data.total
+          })
+
           this.dialog = false
         }
         
@@ -333,7 +441,7 @@ export default {
   },
 
   created(){
-  	this.fetchData(this.params)
+  	this.fetchData()
   }
 
 };

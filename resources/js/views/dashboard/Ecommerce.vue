@@ -283,7 +283,7 @@
 									<v-date-picker
 										ref="picker2"
 										v-model="to_year"
-										@input="reportByYear"
+										@input="saveEndYear"
 										reactive
 										no-title
 										:max="defaultYear"
@@ -466,7 +466,7 @@ export default {
 			menu7:false,
 			menu8:false,
 			date: '',
-			defaultYear : new Date().getUTCFullYear() +'/31/12',
+			defaultYear : new Date().getUTCFullYear() + '/31/12',
 			totalCompany:''
 	    }
 	},
@@ -624,7 +624,7 @@ export default {
 				} else {
 					var year = {
 	      				start_year:moment(this.from_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
-	      				end_year:moment(this.to_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM')		
+	      				end_year:moment(this.to_year, 'YYYY-MM-DD hh:mm:ss').add(12, 'M').format('YYYY-MM')		
 			      	}
 					let obj = {
 						params : year,

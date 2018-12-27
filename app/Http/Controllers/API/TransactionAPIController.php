@@ -232,13 +232,5 @@ class TransactionAPIController extends AppBaseController
 
         return $this->sendResponse($result, 'Transactions retrieved successfully');
     }
-
-    public function showTotalCompanies(Request $request)
-    {   
-        $totalCompanies = $this->transactionRepository->handleShowTotalCompanies($request->all());
-
-        return $this->sendResponse($totalCompanies, 'Get Transaction Total Companies with '.$request['choose'].' completed');
-    }
-
 }
 

@@ -35,8 +35,6 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('companies/information', 'CompanyAPIController@showInformationCompany'); //different
 
-	Route::get('transactions/companies/total', 'TransactionAPIController@showTotalCompanies'); //different
-
 	Route::resource('companies', 'CompanyAPIController');
 
 	Route::resource('currencies', 'CurrencyAPIController');

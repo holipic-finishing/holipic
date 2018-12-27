@@ -95,7 +95,7 @@
 								<p>Start</p>
 								<v-menu 
 									:close-on-content-click="false"
-					                v-model="menu"
+					                v-model="menu1"
 					                :nudge-right="40"
 					                lazy
 					                transition="scale-transition"
@@ -113,7 +113,7 @@
 										no-title
 										scrollable 
 										:max="new Date().toISOString().substr(0, 10)"
-										@input="menu = false"
+										@input="reportByRangeDay"
 									></v-date-picker>
 								</v-menu>
 							</div>
@@ -124,7 +124,7 @@
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default"  >	
 							<div class="style-card w-100">
 								<p>End</p>
-								 <v-menu 
+								<v-menu 
 									:close-on-content-click="false"
 					                v-model="menu2"
 					                :nudge-right="40"
@@ -180,7 +180,7 @@
 										no-title 
 										scrollable 
 										:max="new Date().toISOString().substr(0, 10)"
-										@input="menu3 = false"
+										@input="reportByMonth"
 										type="month"
 									></v-date-picker>
 								</v-menu>
@@ -324,7 +324,7 @@
 										no-title 
 										scrollable 
 										:max="new Date().toISOString().substr(0, 10)"
-										@input="menu7 = false"
+										@input="reportByWeek"
 									></v-date-picker>
 								</v-menu>
 							</div>
@@ -371,7 +371,7 @@
 							<div class="style-card w-100">
 								<div class="d-custom-flex justify-space-between fix-total-storage-company">
 									<div class="title-total">
-										<h2>{{totalCompany}}</h2>
+										<h2>{{ computedTotalCompany }}</h2>
 										Total companies
 									</div>
 									<div> 
@@ -457,7 +457,7 @@ export default {
 			from_day_week:'',
 			to_day_week:'',
 			validate:false,
-			menu: false,
+			menu1:false,
 			menu2:false,
 			menu3:false,
 			menu4:false,
@@ -467,7 +467,8 @@ export default {
 			menu8:false,
 			date: '',
 			defaultYear : new Date().getUTCFullYear() + '/31/12',
-			totalCompany:''
+			totalCompany:0,
+			tweenedNumber: 0,
 	    }
 	},
 	methods:{
@@ -478,17 +479,18 @@ export default {
       	},
 
       	saveStartYear(from_year) {
-  			this.$refs.menu5.save(from_year);
+  			this.$refs.menu5.save(from_year)
 	      	this.$refs.picker.activePicker = 'YEAR'
 	      	this.from_year = from_year.substr(0,4)
 	      	this.menu5 = false;
+	      	this.reportByYear()
   		},
 
   		saveEndYear(to_year) {
-  			this.$refs.menu6.save(to_year);
+  			this.$refs.menu6.save(to_year)
 	      	this.$refs.picker2.activePicker = 'YEAR'
 	      	this.to_year = to_year.substr(0,4)
-	      	this.menu6 = false;
+	      	this.menu6 = false
 	      	this.reportByYear()
   		},
 
@@ -512,9 +514,9 @@ export default {
 			if(!from && !to){
 				this.errorAlert('No ' + value + ' Yet')
 			} else if (!to) {
-				this.errorAlert('To '+ value + ' Required')
+				this.errorAlert('Please choose End ' + value)
 			} else if(!from) {
-				this.errorAlert('From '+ value +' Required')
+				this.errorAlert('Please choose Start ' + value)
 			} else { 
 				this.validate = true
 			}
@@ -523,29 +525,34 @@ export default {
 		errorAlert(errorMesg){
 			this.alertStt = true
           	this.alertType = 'error'
-          	this.alertMes = errorMesg					
+          	this.alertMes = errorMesg
+          	setTimeout(() => {this.alertStt = false}, 1500)					
 		},
 
 		resetTime(){
+			this.menu1 = false
 			this.menu2 = false
-			this.from_day = ''
-			this.to_day = ''
+			// this.from_day = ''
+			// this.to_day = ''
 
+			this.menu3 = false
 			this.menu4 = false
-			this.from_month = ''
-			this.to_month = ''
+			// this.from_month = ''
+			// this.to_month = ''
 
+			this.menu5 = false
 			this.menu6 = false
-			this.from_year = ''
-			this.to_year = ''
+			// this.from_year = ''
+			// this.to_year = ''
 
+			this.menu7 = false
 			this.menu8 = false
-			this.from_day_week = ''
-			this.to_day_week = ''
+			// this.from_day_week = ''
+			// this.to_day_week = ''
 		},
 
 		reportByRangeDay() {
-			this.validations(this.from_day, this.to_day, 'Days')
+			this.validations(this.from_day, this.to_day, 'Day')
 
 			if(this.validate == true){
 
@@ -576,10 +583,9 @@ export default {
 		},
 
 		reportByMonth(){
-			this.validations(this.from_month,this.to_month,'Month')
+			this.validations(this.from_month, this.to_month, 'Month')
 
 			if(this.validate == true){
-
 				var	start_month = moment(this.from_month)
 				var	end_month =  moment(this.to_month)
 				var month = end_month.diff(start_month,'month')
@@ -600,7 +606,6 @@ export default {
 					this.$root.$emit('companyChart', obj)
 					this.$root.$emit('loadTransactionsWithTime', obj)
 
-					this.getTotalCompanies(this.typeTime, this.from_month, this.to_month)
 					this.validate = false
 				}
 			}
@@ -609,7 +614,7 @@ export default {
 		},
 
 		reportByYear(){
-			this.validations(this.from_year,this.to_year,'Year')
+			this.validations(this.from_year, this.to_year, 'Year')
 
 			if(this.validate == true){
 
@@ -639,7 +644,7 @@ export default {
 		},
 
 		reportByWeek(){
-			this.validations(this.from_day_week, this.to_day_week, 'Days')
+			this.validations(this.from_day_week, this.to_day_week, 'Day')
 
 			if(this.validate == true){
 
@@ -693,10 +698,7 @@ export default {
   				this.defaultReportWeek()
   				this.from_day_week=''
 	      		this.to_day_week=''
-  			}
-
-  			this.getTotalCompanies(this.typeTime)
-  			
+  			}  			
   		},
 
   		defaultReportSevenDay(){
@@ -751,24 +753,10 @@ export default {
 			}
 			this.$root.$emit('companyChart', obj)
 			this.$root.$emit('loadTransactionsWithTime', obj)
-  		},
-
-  		getTotalCompanies(typeTime, fromTime = '', toTime = '') {
-  			axios.get(config.API_URL+'transactions/companies/total?choose='+typeTime+'&fromTime='+fromTime+'&toTime='+toTime)
-			.then(response => {
-				
-				if(response && response.data.success) {
-					this.totalCompany = response.data.data					
-				}
-			})
   		}
 	},
 	created(){
-		this.fetchData()
-
-		this.getTotalCompanies(this.typeTime)
-		
-		//this.typeTime = "revenue"
+		this.fetchData()		
 	},
 	computed:{
 	  	typeTimeReturn(){
@@ -787,22 +775,29 @@ export default {
 	  		return this.to_month
 	  	},
 	  	computedStartYear(){
-	  		return this.from_day
+	  		return this.from_year
 	  	},
 	  	computedEndYear(){
-	  		return this.from_year
+	  		return this.to_year
 	  	},
 	  	computedStartWeek(){
 	  		return this.from_day_week
 	  	},
 	  	computedEndWeek(){
-	  		return this.end_day_week
+	  		return this.to_day_week
+	  	},
+	  	computedTotalCompany(){
+	  		return this.tweenedNumber.toFixed(0);
 	  	}
 	},
 	mounted() {
 	    this.$root.$on('totalTransaction', res => {
 	       	this.total = res
 	    });
+
+	    this.$root.$on('total-companies', res => {
+	    	this.totalCompany = res
+	    })
   	},
 
   	watch: {
@@ -811,6 +806,9 @@ export default {
 	    },
 	    menu6 (val) {
 	      val && this.$nextTick(() => (this.$refs.picker2.activePicker = 'YEAR'))
+	    },
+	    totalCompany: function(newValue) {
+	      TweenLite.to(this.$data, 0.5, { tweenedNumber: newValue })
 	    }
 	},
 

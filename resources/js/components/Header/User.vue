@@ -1,5 +1,5 @@
 <template>
-   <v-menu offset-y origin="right top" left content-class="language-dropdown" transition="slide-y-transition" nudge-top="-10" class="user-block-wrap d-none">
+   <v-menu offset-y origin="right top" left content-class="language-dropdown" transition="slide-y-transition" nudge-top="-10" class="user-block-wrap">
 		<v-btn icon large slot="activator">
 			<img src="/static/avatars/user-13.jpg" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" />
 		</v-btn>
@@ -10,7 +10,7 @@
          </div>
          <v-list class="dropdown-list">
             <template v-for="userLink in userLinks" v-if="userLink.id !== 4">
-               <v-list-tile :to="getMenuLink(userLink.path)" :key="userLink.id">
+               <v-list-tile :to="role_id == '1' ? getMenuLink(userLink.path) : getMenuLink(userLink.pathCom)" :key="userLink.id">
                   <i :class="userLink.icon"></i>
                   <span>{{$t(userLink.title)}}</span>
                </v-list-tile>
@@ -54,17 +54,31 @@
                   id: 4,
                   title: 'message.logOut',
                   icon: 'ti-power-off mr-3 error--text'
-               }
-            ]
+               },
+               {
+                  id: 5,
+                  title: 'message.changePassword',
+                  icon: 'ti-lock mr-3 info--text',
+                  path: '/users/change-password',
+                  pathCom : '/company/change-password'
+               },
+            ],
+            role_id : '',
          }
       },
       methods: {
          logoutUser() {
-            this.$store.dispatch("logoutUserFromFirebase", this.$router);
+            // this.$store.dispatch("logoutUserFromFirebase", this.$router);
+            localStorage.removeItem('access_token')
+            this.$router.push('/session/login')
          },
          getMenuLink(path) {
-            return '/' + getCurrentAppLayout(this.$router) +  path;
+            return '/' + getCurrentAppLayout(this.$router) +  path
          }
+      },
+      created(){
+         var userAuth = JSON.parse(localStorage.getItem('user'))
+         this.role_id = userAuth.role_id
       }
    }
 </script>

@@ -5,7 +5,6 @@
         <v-toolbar flat class="transparent scroll-area navigation">
           <v-list>
 				<app-logo></app-logo>
-            <user-block></user-block>
 				<template v-for="(category, key) in menus">
 					<div :key="key">
 						<div class="sidebar-title px-3">
@@ -66,7 +65,6 @@
 </template>
 
 <script>
-import UserBlock from "./UserBlock";
 import { textTruncate, getCurrentAppLayout } from "../../helpers/helpers";
 import { mapGetters } from "vuex";
 import AppLogo from "../../components/AppLogo/AppLogo";
@@ -81,7 +79,6 @@ export default {
     };
   },
   	components: {
-    	UserBlock,
     	AppLogo
   	},
   	computed: {     

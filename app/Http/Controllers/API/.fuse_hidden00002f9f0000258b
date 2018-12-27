@@ -11,8 +11,6 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-use Spatie\Activitylog\Models\Activity;
-
 
 /**
  * Class TransactionController
@@ -189,13 +187,7 @@ class TransactionAPIController extends AppBaseController
             $input['field_name'] => $input['value']
         ], $itemId);
 
-        $log = Activity::all()->last();
-
-        $log['user_id'] = $input['userId'];
-
-        $log->save();
-
-        if($results){
+        if($result){
 
             return $this->sendResponse([], 'Transaction updated successfully');
         }else{
@@ -240,5 +232,13 @@ class TransactionAPIController extends AppBaseController
 
         return $this->sendResponse($result, 'Transactions retrieved successfully');
     }
+
+    public function showTotalCompanies(Request $request)
+    {   
+        $totalCompanies = $this->transactionRepository->handleShowTotalCompanies($request->all());
+
+        return $this->sendResponse($totalCompanies, 'Get Transaction Total Companies with '.$request['choose'].' completed');
+    }
+
 }
 

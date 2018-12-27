@@ -6,6 +6,7 @@ use App\Http\Requests\API\CreateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserAPIRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use App\Repositories\NotificationRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
@@ -23,10 +24,12 @@ class UserAPIController extends AppBaseController
 {
     /** @var  UserRepository */
     private $userRepository;
+    private $notificationRepository;
 
-    public function __construct(UserRepository $userRepo)
+    public function __construct(UserRepository $userRepo,NotificationRepository $notificationRepo)
     {
         $this->userRepository = $userRepo;
+        $this->notificationRepository = $notificationRepo;
     }
 
     /**
@@ -132,10 +135,11 @@ class UserAPIController extends AppBaseController
     public function changePassWord(Request $request) {
 
         try {
-             $token = (new Parser())->parse((string) $request['access_token']);           
+
+            $token = (new Parser())->parse((string) $request['access_token']);           
             $email=  $token->getClaim('email');
             $user = User::where('email',$email)->first();
-          
+            
 
             if (!password_verify($request['oldPassword'], $user->password)) {   
                 return response()->json(['success' => false, 'message' => 'OldPassword']);
@@ -149,6 +153,8 @@ class UserAPIController extends AppBaseController
                
             }
 
+            $this->notificationRepository->createNotifi($user->id,'changePasswordSuccess');
+            
             if($user){
                 $user = User::where('email',$email)->first()->update([
                                 'password' => Hash::make($request['newPassword'])

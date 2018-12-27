@@ -42,21 +42,28 @@
 				>
 				</stats-card-v2>
 			</v-layout>
-
-			<activity-log></activity-log>
+			<div class="row" style="margin-top:20px">
+				<activity-log></activity-log>
+				<notification-dashboard></notification-dashboard>
+				
+			</div>
 
 		</v-container>		
-	</div>
-	
+	</div>	
+
 </template>
 
 <script>
 import ActivityLog from '../ActivityLog'
+import Notification from '../../notification/notification'
+import NotificationDashboard from '../../notification/notification-dashboard'
+
 export default {
 
   name: 'DashboardCompany',
   components: {
-  	ActivityLog
+  	ActivityLog,
+  	NotificationDashboard
   },
 
   data () {

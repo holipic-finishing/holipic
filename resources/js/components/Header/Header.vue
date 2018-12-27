@@ -57,11 +57,11 @@
 				<!-- <v-btn class="ma-0" icon large @click.stop="chatSidebar = !chatSidebar">
 					<v-icon color="grey">forum</v-icon>
 				</v-btn> -->
-
-				<!-- <notifications></notifications> -->
+				
+				<notifications v-show="role_id =='2'"></notifications>
 				<!-- <cart :horizontal="horizontal"></cart> -->
 				<language-provider></language-provider>
-				<!-- <user></user> -->
+				<user></user>
 			</div>
 		</v-toolbar>
 		<!-- Chat Searchbar -->
@@ -97,7 +97,8 @@ export default {
 			drawer: null, // sidebar drawer default true
 			chatSidebar: false, // chat component right sidebar
 			sidebarImages: "", // sidebar background images
-			enableDefaultSidebar: false
+			enableDefaultSidebar: false,
+			role_id:''
 		};
 	},
 	computed: {
@@ -125,6 +126,10 @@ export default {
 			// this.$store.dispatch('toggleSearchForm');
 		}
 	},
+	created(){
+         var userAuth = JSON.parse(localStorage.getItem('user'))
+         this.role_id = userAuth.role_id
+    },
 	components: {
 		appSidebar: Sidebar,
 		LanguageProvider,

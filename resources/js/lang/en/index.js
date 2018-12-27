@@ -467,5 +467,11 @@ export default {
   couponCode : "Coupon Code",
   changePasswordSuccess : "Change Password User Success",
   olePasswordAndNewPassword: "Old Password or Confirm Password Incorrect",
-  oldPassword : "Old Password In Incorrect"
+  oldPassword : "Old Password In Incorrect",
+  viewnotifition: "Show all",
+  hidingRead : "Hiding read",
+  mailSentSuccessfully : 'Mail sent successfully',
+  notification : "Notification",
+  yourNotification: "Your notification",
+  activityLog: "Activity Log"
 }

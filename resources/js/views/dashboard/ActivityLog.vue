@@ -1,119 +1,87 @@
 <template>
-	
-		<div class="row" style="margin-top:20px">
+	<div class="col-sm-8" >
+	    <app-card
+			:heading="$t('message.activityLog')"
+			:fullBlock="true"
+			:closeable="true"
+			:reloadable="true"
+			:fullScreen="true"	
+			colClasses="xl12 lg12 md12 sm12 xs12"
+		>
+			<v-divider></v-divider>      
+	          	<div v-for="valueTime,indexTime in times">
+	          		 <v-container fluid grid-list-lg>
+			            <v-layout row>
+
+			                <v-flex xs5>
+			                  <v-card-title primary-title>
+			                    <div>
+			                      <div class="headline">{{ valueTime.date | moment(" MMM Do YYYY") }}</div>
+			                      <div>{{valueTime.date | moment('dddd')}}</div> 
+			                    </div>
+			                  </v-card-title>
+			                </v-flex>
+
+			                <v-flex xs7>
+			                		<div v-for="valueLog, indexLog in activityLog" class="bottom-activelog" v-if="valueLog.date == valueTime.date">
+			                			<v-icon small color="black darken-2" v-if="valueLog.description == 'updated'">edit</v-icon>
+			                			<v-icon small color="black darken-2" v-if="valueLog.description == 'deleted'">delete</v-icon>
+			                			<v-icon small color="black darken-2" v-if="valueLog.description == 'created'">add_circle</v-icon>
+			                			<v-btn round :color="valueLog.description == 'updated' ? 'warning' : valueLog.description == 'created' ? 'primary' : 'error'" dark small @click="detailLog(valueLog.id)">Form</v-btn> <b>{{valueLog.name}}</b>
+			                			{{valueLog.description}} <span>form</span> <b>{{valueLog.subject_type}}</b> at {{valueLog.updated_at}}
+			                		</div>
+			                </v-flex>
+
+			            </v-layout>
+		            </v-container>
+
+		            <v-divider></v-divider>
+		        </div>
+
+		        <v-container fluid grid-list-lg>
+		        <div class="more">
+				    <div class="row pagination-fl">
+				    	<div class="paging">
+
+				    		<div class="paging-bottom">
+				    			<div class="pagination-style">
+				    				<a class="btn-nav link disabled" @click="moreActiveLog(1)">
+				    					<i class="ti-angle-double-left"></i>
+				    				</a>
+
+				    				<a class="btn-nav link disabled secondary-color" @click="moreActiveLog(pagination.current_page - 1)">
+				    					<i class="ti-angle-left"></i>
+				    				</a>
+
+				    				<template>
+				    					<template v-for="n in pagination.last_page">
+				    						<a class="page" @click="moreActiveLog(n)" :class="{'secondary-color': pagination.current_page == n}">{{ n }}</a>
+				    					</template>
+				    				</template>
+
+									<a class="btn-nav link disabled secondary-color" @click="moreActiveLog(pagination.current_page + 1)">
+										<i class="ti-angle-right"></i>
+									</a>
+
+									<a class="btn-nav link disabled" @click="moreActiveLog(pagination.last_page)">
+										<i class="ti-angle-double-right"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+
+				    	<div>
+				    		Total: <b>{{pagination.total_page}}</b> Days
+				    	</div>
+
+				    </div>  
+	        		
+	        	</div> 
+	        	</v-container>
+		    	
+		</app-card>	
+	</div>
 			
-			<div class="col-sm-8" >
-				
-				    <v-toolbar color="#d1cfcf" dark>
-				      <v-toolbar-side-icon></v-toolbar-side-icon>
-				      <v-toolbar-title color="black">Activity Log</v-toolbar-title>
-				      <v-spacer></v-spacer>
-				      
-				    </v-toolbar>
-				    <!-- <app-card
-						:heading="$t('message.recentSale')"
-						colClasses="xl12 lg12 md12 sm12 xs12"
-						customClasses="mb-0"
-						
-					>
-					</app-card> -->
-				    <v-card>
-				      <v-container fluid grid-list-lg>
-				        <v-layout row wrap>
-					        <v-flex xs12 >
-					          	<div v-for="valueTime,indexTime in times">
-					          		 <v-card color="white" class="black--text" >
-							            <v-layout row>
-							                <v-flex xs5>
-							                  <v-card-title primary-title>
-							                    <div>
-							                      <div class="headline">{{ valueTime.date | moment(" MMM Do YYYY") }}</div>
-							                      <div>{{valueTime.date | moment('dddd')}}</div> 
-							                    </div>
-							                  </v-card-title>
-							                </v-flex>
-							                <v-flex xs7>
-							                	
-							                		<div v-for="valueLog, indexLog in activityLog" class="bottom-activelog" v-if="valueLog.date == valueTime.date">
-							                			<v-icon small color="black darken-2" v-if="valueLog.description == 'updated'">edit</v-icon>
-							                			<v-icon small color="black darken-2" v-if="valueLog.description == 'deleted'">delete</v-icon>
-							                			<v-icon small color="black darken-2" v-if="valueLog.description == 'created'">add_circle</v-icon>
-							                			<v-btn round :color="valueLog.description == 'updated' ? 'warning' : valueLog.description == 'created' ? 'primary' : 'error'" dark small @click="detailLog(valueLog.id)">Form</v-btn> <b>{{valueLog.name}}</b>
-							                			{{valueLog.description}} <span>form</span> <b>{{valueLog.subject_type}}</b> at {{valueLog.updated_at}}
-							                		</div>
-							                </v-flex>
-							            </v-layout>
-						              
-						              <!-- <v-card-actions class="pa-3">
-						                Rate this album
-						                <v-spacer></v-spacer>
-						                <v-icon>star_border</v-icon>
-						                <v-icon>star_border</v-icon>
-						                <v-icon>star_border</v-icon>
-						                <v-icon>star_border</v-icon>
-						                <v-icon>star_border</v-icon>
-						              </v-card-actions> -->
-						            </v-card>
-						            <v-divider></v-divider> <br>
-
-						        </div>
-						        <div class="more">
-					          		<!-- <v-btn fab dark color="blue" small @click="moreActiveLog()">
-								      <v-icon dark small>add</v-icon>
-								    </v-btn> -->
-								    <div class="row pagination-fl">
-								    	<div class="paging">
-
-								    		<div class="paging-bottom">
-								    			<div class="pagination-style">
-								    				<a class="btn-nav link disabled" @click="moreActiveLog(1)">
-								    					<i class="ti-angle-double-left"></i>
-								    				</a>
-
-								    				<a class="btn-nav link disabled secondary-color" @click="moreActiveLog(pagination.current_page - 1)">
-								    					<i class="ti-angle-left"></i>
-								    				</a>
-
-								    				<template>
-								    					<template v-for="n in pagination.last_page">
-								    						<a class="page" @click="moreActiveLog(n)" :class="{'secondary-color': pagination.current_page == n}">{{ n }}</a>
-								    					</template>
-								    				</template>
-
-													<a class="btn-nav link disabled secondary-color" @click="moreActiveLog(pagination.current_page + 1)">
-														<i class="ti-angle-right"></i>
-													</a>
-
-													<a class="btn-nav link disabled" @click="moreActiveLog(pagination.last_page)">
-														<i class="ti-angle-double-right"></i>
-													</a>
-												</div>
-											</div>
-										</div>
-
-								    	<div>
-								    		Total: <b>{{pagination.total_page}}</b> Days
-								    	</div>
-
-								    </div>
-
-
-								    
-					        		
-					        	</div> 
-						    	 
-					        </v-flex>
-				        </v-layout>
-				      </v-container>
-				    </v-card>	
-			</div>
-
-			<div class="col-sm-6 ">
-				
-			</div>
-		</div>
-	
-	
 </template>
 
 <script>

@@ -14,11 +14,28 @@
   <link rel="stylesheet" type="text/css" href="{{asset('css/holipic.css')}}">
 
   <title>Holipic Admin</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+
 </head>
+
 
 <body>
   <div id="app"></div>
-  <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
-</body>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  
+    <script>
+        var socket = io(':6001');
 
+        var global_notification = [];
+        // socket.on('view-listings',function(data){
+        //      global_notification.unshift(data)
+        // });
+
+    </script>
+
+
+  <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+
+</body>
+  
 </html>

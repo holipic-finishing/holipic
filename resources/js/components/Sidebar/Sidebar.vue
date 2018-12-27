@@ -11,7 +11,7 @@
 							<span>{{$t(key)}}</span>
 						</div>
 						<template v-for="item in category">
-							<template v-if="item.items!= null">
+							<template v-if="item.items!= null && item.role_id == user.role_id">
 								<v-list-group
 									:key="item.title"
 									prepend-icon="arrow_right"
@@ -39,7 +39,7 @@
 									</v-list-tile>
 								</v-list-group>
 							</template>
-							<template v-else>
+							<template v-else-if="item.role_id == user.role_id">
 								<v-list-tile
 									:to="!item.exact ? `/${getCurrentAppLayoutHandler() + item.path}` : item.path"
 									:key="item.path"
@@ -58,7 +58,7 @@
 						</template>
 					</div>
 				</template>     
-          </v-list>
+          	</v-list>
         </v-toolbar>
     	</vue-perfect-scrollbar>
   	</div>
@@ -70,29 +70,31 @@ import { mapGetters } from "vuex";
 import AppLogo from "../../components/AppLogo/AppLogo";
 
 export default {
-  data() {
-    return {
-      settings: {
-        maxScrollbarLength: 160
-      }
-    };
-  },
-  components: {
-    AppLogo
-  },
-  computed: {
-    ...mapGetters(["sidebarSelectedFilter", "menus"])
-  },
+  	data() {
+    	return {
+			settings: {
+				maxScrollbarLength: 160
+			},
+			user:{}
+    	};
+  	},
+  	components: {
+    	AppLogo
+  	},
+  	computed: {
+    	...mapGetters(["sidebarSelectedFilter", "menus"])
+  	},
 	mounted(){
 		this.$store.dispatch("setActiveMenuGroup", this.$router);
+		this.user = JSON.parse(localStorage.getItem('user'))
 	},
-  methods: {
-    textTruncate(text) {
-      return textTruncate(text, 18);
-    },
-    getCurrentAppLayoutHandler() {
-      return getCurrentAppLayout(this.$router);
-    }
-  }
+    methods: {
+	    textTruncate(text) {
+	      	return textTruncate(text, 18);
+	    },
+	    getCurrentAppLayoutHandler() {
+	      	return getCurrentAppLayout(this.$router);
+	    }
+  	}
 };
 </script>

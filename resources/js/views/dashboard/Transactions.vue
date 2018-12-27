@@ -21,13 +21,14 @@
 
       <v-toolbar flat color="white">
         <v-toolbar-title>
-          <router-link :to="{ path: '/default/transaction/histories' }">Transactions</router-link>
+          <v-hover>
+            <router-link slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 2}`" class="black--text" :to="{ path: '/default/transaction/histories' }">Transactions</router-link>
+          </v-hover>
         </v-toolbar-title>
       </v-toolbar>
       <v-divider></v-divider>
 			<!--Search Component -->
 			<v-card-title>
-	      Search
 	      <v-spacer></v-spacer>
 	      <v-text-field
 	        v-model="search"
@@ -55,7 +56,7 @@
 				<!--Header -->
 				<template slot="headers" slot-scope="props">
           <tr>
-            <th>
+            <!-- <th>
               <v-checkbox
                 :input-value="props.all"
                 :indeterminate="props.indeterminate"
@@ -63,7 +64,7 @@
                 hide-details
                 @click.native="toggleAll"
               ></v-checkbox>
-            </th>
+            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -87,14 +88,14 @@
 
 				<!--Prop data -->
 				<template slot="items" slot-scope="props">
-					<tr :active="props.selected" @click="props.selected = !props.selected">
-						<td>
+					<!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
+						<!-- <td>
               <v-checkbox
                 :input-value="props.selected"
                 primary
                 hide-details
               ></v-checkbox>
-            </td>
+            </td> -->
 		    		<td>{{ props.item.id }}</td>
 		    		<td>{{ props.item.company_name }}</td>
 		    		<td class="text-right">{{ props.item.invoice }}</td>
@@ -112,27 +113,30 @@
 								<v-btn color="success" small v-if="props.item.status === 'RECIVED'">{{ props.item.status }}</v-btn>
 							 	<v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
 			    	</td>
-		    		<td> 
+		    		<td class="action-width"> 
 		    			<v-icon
-				    		class="mr-2"
+                small
+				    		class="mr-2 hover-icon"
 				    		@click="transactionEvent('show', props.item)"
 				    	>
 				    		visibility
 				    	</v-icon>
 				      <v-icon
-				    		class="mr-2"
+                small
+				    		class="mr-2 hover-icon"
 				    		@click="transactionEvent('edit', props.item)"
 				      >
 				        edit
 				      </v-icon>
 				      <v-icon
-				    		class="mr-2"
+                small
+				    		class="mr-2 hover-icon"
 				    		@click="showDialog(props.item.id)"
 				      >
 				        delete
 				      </v-icon>
 		    		</td>
-					</tr>
+					<!-- </tr> -->
 	    	</template>
 
 				<!--No data -->
@@ -230,7 +234,7 @@ export default {
         {
           text: 'Action',
           align: 'center',
-          sortable: false
+          sortable: false,
         }
       ],
       pagination: {
@@ -263,6 +267,7 @@ export default {
   	this.$root.$on('loadTransactionsWithTime', res => {
   		let params = res.params
   		this.params = params
+  		this.loading = true
   		this.fetchData(params)
   	})
 
@@ -271,6 +276,7 @@ export default {
     })
 
     this.$root.$on('editItemSucess', res => {
+    	this.loading = true
     	this.fetchData(this.params)
     })
 
@@ -281,6 +287,8 @@ export default {
 				.then((res) => {
 					if(res.data && res.data.success){
 						this.desserts = res.data.data
+						this.loading = false
+            this.$root.$emit('total-companies', this.desserts.length)
 					}
 				})
 				.catch((e) =>{
@@ -320,7 +328,7 @@ export default {
                         title: 'Delete Item Successfully',
                         position: 'top right'
                       })
-
+          this.loading = true
           this.fetchData(this.params)
           this.dialog = false
         }
@@ -333,6 +341,7 @@ export default {
   },
 
   created(){
+  	this.loading = true
   	this.fetchData(this.params)
   }
 
@@ -345,4 +354,15 @@ export default {
 		justify-content:center;
 		align-items:center;
 	}
+
+  .action-width{
+    min-width: 130px;
+    width: 130px;
+  }
+
+  .hover-icon{
+    &:hover{
+      color: blue;
+    }
+  }
 </style>

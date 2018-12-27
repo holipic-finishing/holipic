@@ -55,11 +55,11 @@ class UserRepository extends BaseRepository
         return User::class;
     }
 
-    public function findUserIsAdminFromEmail($email)
+    public function findUserIsExits($email)
     {
         $this->skipPresenter();
         return $this->scopeQuery(function($query) use ($email){
-            return $query->where('email', $email)->where('role_id', 0);
+            return $query->where('email', $email);
         })->first();
     }
 
@@ -67,7 +67,7 @@ class UserRepository extends BaseRepository
     {
         $this->skipPresenter();
         return $this->scopeQuery(function($query) use ($email){
-            return $query->where('email', $email)->where('role_id', 1);
+            return $query->where('email', $email)->where('role_id', 2);
         })->first();
     }  
 }

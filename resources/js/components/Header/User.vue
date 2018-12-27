@@ -1,5 +1,5 @@
 <template>
-   <v-menu offset-y origin="right top" left content-class="language-dropdown" transition="slide-y-transition" nudge-top="-10" class="user-block-wrap d-none">
+   <v-menu offset-y origin="right top" left content-class="language-dropdown" transition="slide-y-transition" nudge-top="-10" class="user-block-wrap">
 		<v-btn icon large slot="activator">
 			<img src="/static/avatars/user-13.jpg" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" />
 		</v-btn>
@@ -54,16 +54,24 @@
                   id: 4,
                   title: 'message.logOut',
                   icon: 'ti-power-off mr-3 error--text'
-               }
+               },
+               {
+                  id: 5,
+                  title: 'message.changePassword',
+                  icon: 'ti-lock mr-3 info--text',
+                  path: '/users/change-password'
+               },
             ]
          }
       },
       methods: {
          logoutUser() {
-            this.$store.dispatch("logoutUserFromFirebase", this.$router);
+            // this.$store.dispatch("logoutUserFromFirebase", this.$router);
+            localStorage.removeItem('access_token')
+            this.$router.push('/session/login')
          },
          getMenuLink(path) {
-            return '/' + getCurrentAppLayout(this.$router) +  path;
+            return '/' + getCurrentAppLayout(this.$router) +  path
          }
       }
    }

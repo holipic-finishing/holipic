@@ -168,15 +168,28 @@ class TransactionAPIController extends AppBaseController
 
         $input =  $request->all();
 
-        if ($input['status'] === "BEEN SEEN") {
-            $input['status'] = "BEEN_SEEN";
+        $result = null;
+
+        if ($input['field_name'] == 'company_name') {
+            $transaction = $this->transactionRepository->find($itemId);
+            $user = $transaction->user()->first();
+            $company = $user->company()->first();
+            $result = app(\App\Repositories\CompanyRepository::class)->update([
+                'name' => $input['value']
+            ], $company->id);
         }
 
-        $results = $this->transactionRepository->update($input, $itemId);
+        if ($input['field_name'] == 'status' && $input['value'] === "BEEN SEEN") {
+            $input['value'] = "BEEN_SEEN";
+        }
 
-        if($results){
+        $result = $this->transactionRepository->update([
+            $input['field_name'] => $input['value']
+        ], $itemId);
 
-            return $this->sendResponse($results->toArray(), 'Transaction updated successfully');
+        if($result){
+
+            return $this->sendResponse([], 'Transaction updated successfully');
         }else{
             return $this->sendError('System Error Occurred');
         }

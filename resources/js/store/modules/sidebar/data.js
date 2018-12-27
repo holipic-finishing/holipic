@@ -48,9 +48,7 @@ export const menus = {
 			action: 'zmdi-card',
 			title: 'message.transaction',
 			active: false,
-			items: [
-				{ title: 'message.histories', path: '/transaction/histories' },
-			]
+			path: '/transaction/histories'
 		},
 		{
 			action: 'zmdi zmdi-ticket-star',

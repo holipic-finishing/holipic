@@ -1,19 +1,34 @@
 <template>
-	<div>
-		<page-title-bar></page-title-bar>
+	<div class="margin-table">
+		<!-- <page-title-bar></page-title-bar> -->
 		<v-container fluid grid-list-xl pt-0>
 			<div id="app">
 			  <v-app id="inspire">
 			    <div>
 			      	<v-toolbar flat color="white">
-				        <v-toolbar-title>Transaction Histories Table</v-toolbar-title>
+				        <h3 class="h3-title">Transactions History</h3>
 				        <v-divider
 				          class="mx-2"
 				          inset
 				          vertical
 				        ></v-divider>
+
+				        <v-flex xs12 class="row"> 
+				        	<v-flex xs7></v-flex>
+		                    <v-flex xs5>
+		                     	 <v-text-field
+							        append-icon="search"
+							        label="Search"
+							        v-model= "search.keywords"
+							        single-line
+							        hide-details
+							        @keyup.enter="doSearch"
+							       	@keydown.esc="doReset"
+						        ></v-text-field>
+		                    </v-flex>
+		                </v-flex> 
 			      	</v-toolbar>
-			      	<v-toolbar flat color="white">       
+			      	<!-- <v-toolbar flat color="white">       
 				        <v-flex xs12 class="row"> 
 		                    <v-flex xs5>
 		                     	 <v-text-field
@@ -29,7 +44,7 @@
 		                </v-flex> 
 				        <v-spacer></v-spacer>
 				        <v-btn @click="doSearch" color="primary" dark class="mb-2">Search</v-btn>
-			      	</v-toolbar>
+			      	</v-toolbar> -->
 			      	<v-data-table
 			        :headers="headers"
 			        :items="desserts"
@@ -168,5 +183,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+.h3-title-transaction{
+	width: 290px;
+}
 </style>
 

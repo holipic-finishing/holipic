@@ -860,13 +860,13 @@ class TransactionRepository extends BaseRepository
                                 ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $to_year);
             }
 
-            if(!empty($params['start_month']) && !empty($params['end_month']) ){
+            if(!empty($params['start_year']) && !empty($params['end_year']) ){
 
                 $from_year = Carbon::parse($params['start_year'])->format('Y');
                 $to_year = Carbon::parse($params['end_year'])->format('Y');
 
-                $query = $query->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
-                                ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth);
+                $query = $query->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $from_year)
+                                ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $to_year);
             }
 
             return $query;

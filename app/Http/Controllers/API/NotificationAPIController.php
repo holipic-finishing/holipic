@@ -11,6 +11,7 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Events\RedisEventDeleteNotification;
 
 /**
  * Class NotificationController
@@ -64,6 +65,7 @@ class NotificationAPIController extends AppBaseController
         return $this->sendResponse($notifications->toArray(), 'Notification saved successfully');
     }
 
+
     /**
      * Display the specified Notification.
      * GET|HEAD /notifications/{id}
@@ -84,6 +86,7 @@ class NotificationAPIController extends AppBaseController
 
         return $this->sendResponse($notification->toArray(), 'Notification retrieved successfully');
     }
+
 
     /**
      * Update the specified Notification in storage.
@@ -135,6 +138,13 @@ class NotificationAPIController extends AppBaseController
         return $this->sendResponse($id, 'Notification deleted successfully');
     }
 
+
+    /*
+    *  Targer  : Function get data Notification with params and paginate
+    *  GET /notifications
+    *  @params : Request
+    *  @return : Response 
+    */ 
     public function getNotificationWithParams(Request $request){
 
         $perPage = $request->input('perPage', 10);

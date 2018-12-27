@@ -70,7 +70,7 @@
 									</div>
 									<!-- paginator -->
 									<div class="paging">
-									<!-- 		                    	<div class="paging-top ntf-pagination ">
+									<!--<div class="paging-top ntf-pagination ">
 										<span class="pr-2">Rows per page</span>
 										<select class="form-control notification-dropdown-form-control" v-model="paginator.perPage" v-on:change="changePerPage()">
 											<option v-for="(r, key) in rowsPerPage" :value="r">
@@ -78,7 +78,7 @@
 											</option>
 										</select>
 									</div> -->
-									<!-- <div class="paging-bottom" v-if="participants.data && participants.data.length"> -->
+									<div class="paging-bottom" v-if="notifications && notifications.length">
 										<div class="paging-bottom">
 											<div class="pagination-info">{{ paginationInfo }}</div>
 											<div class="pagination-style">
@@ -108,7 +108,11 @@
 													<i class="ti-angle-double-right"></i>
 												</a>
 											</div>
+											</div>
 										</div>
+									</div>
+									<div v-if="notifications && !notifications.length">
+										<p style="text-align:center">No data available</p>
 									</div>
 									<!-- end paginator -->
 						        </v-flex>
@@ -190,7 +194,7 @@ export default {
 				.then(res => {
 					if(res.data && res.data.success){
 						this.fetchData()
-						this.$root.$emit('refresh-data', item.id)
+						this.$root.$emit('refresh-data', item)
 					}
 				})	
 				.catch(err => {
@@ -202,11 +206,10 @@ export default {
 
   		// 	let lastPage = _.ceil(this.paginator.total/this.paginator.perPage)
 
-    //         if(this.paginator.currentPage > lastPage){
-    //             this.paginator.currentPage = 1
-    //         }
-
-    //         this.fetchData()
+        //     if(this.paginator.currentPage > lastPage){
+        //             this.paginator.currentPage = 1
+        //     }
+        //       this.fetchData()
   		// },
 
   		goToPage (page) {
@@ -286,7 +289,7 @@ export default {
 .pagination-style  a{
 	 color: black;
     float: left;
-    padding: 8px 13px;
+    padding: 6px 10px;
     text-decoration: none;
 }
 

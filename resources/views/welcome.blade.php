@@ -14,7 +14,7 @@
   <link rel="stylesheet" type="text/css" href="{{asset('css/holipic.css')}}">
 
   <title>Holipic Admin</title>
-</head>
+</head>   
 
 <body>
   <div id="app"></div>
@@ -24,9 +24,10 @@
         var socket = io(':6001');
 
         var global_notification = [];
-        socket.on('view-listings',function(data){
-             global_notification.push(data)
-        });
+        // socket.on('view-listings',function(data){
+        //      global_notification.unshift(data)
+        // });
+
     </script>
 
 

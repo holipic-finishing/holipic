@@ -73,7 +73,7 @@ class NotificationRepository extends BaseRepository
 
     }
 
-     /**
+    /**
     * Target: Get all data in table Notification where by user_id
     * @params:  $user_id
     * @return : json

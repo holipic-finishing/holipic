@@ -24,7 +24,7 @@
 								 	<v-btn
 								        slot="activator"
 								        flat icon color="#00c2e0"
-								        @click="updateIsReadById(index)"
+								        @click="updateIsReadById(notification)"
 								      >
 								        <v-icon>fiber_manual_record</v-icon>
 								      </v-btn>
@@ -56,8 +56,6 @@ import { getWithData, put } from '../../api/index.js'
 import config from '../../config/index.js'
 import { getCurrentAppLayout } from "../../helpers/helpers.js";
 import Notification from '../../views/notification/notification.vue'
-
-
 	export default {
 		data() {
 			return {
@@ -85,7 +83,6 @@ import Notification from '../../views/notification/notification.vue'
 					if(res.data && res.data.success){
 						let data = res.data.data
 						this.notifications = data
-						console.log(this.notifications)
 					}
 				})	
 				.catch(err => {
@@ -96,38 +93,19 @@ import Notification from '../../views/notification/notification.vue'
 				return getCurrentAppLayout(this.$router);
 			},
 			updateIsReadById(item) {
-				// let url = config.API_URL + 'notifications/'+item.id
-				// put(url,item)
-				// .then(res => {
-				// 	if(res.data && res.data.success){
-				// 		var index = _.findIndex(this.notifications, function(val) {
-    //                     	return val.id == item.id;
-	   //                  });
-				
-	   //                  if (index > -1) {
-	   //                      this.notifications.splice(index, 1);
-	   //                  }
-	   //                  console.log(index)
-	   //                  console.log(this.notifications)
-				// 		this.$root.$emit('refresh-datav2', true)
-				// 	}
-				// })	
-				// .catch(err => {
-				// 	console.log(err)
-				// })
-				console.log(item)
-				// var index = _.findIndex(this.notifications, function(val) {
+				let url = config.API_URL + 'notifications/'+item.id
+				put(url,item)
+				.then(res => {
+					if(res.data && res.data.success){
+						this.removeNotification(item)
+						this.$root.$emit('refresh-datav2', true)
 
-    //                     	return val.id === item.id;
-	   //                  });
-				
-	                    // if (index > -1) {
-	                        this.notifications.splice(item, 1);
-	                    // }
-	                    // console.log(index)
-	                    // console.log(this.notifications)
-						// this.$root.$emit('refresh-datav2', true)
-
+						
+					}
+				})	
+				.catch(err => {
+					console.log(err)
+				})
 			},
 	
 			showAllnotification(){
@@ -148,37 +126,41 @@ import Notification from '../../views/notification/notification.vue'
 					});
 
 				}
+			},
+			removeNotification(item) {
+				if(this.newnotification.length){
+					var index1 = this.newnotification.findIndex(function(value){
+						return value.id == item.id
+					});
+					this.newnotification.splice(index1, 1);
+				}
+				
+				var index2 = this.notifications.findIndex(function(value){
+					return value.id == item.id
+				});
+                this.notifications.splice(index2, 1);
 			}
 	
 
 		},
 		created(){
 			this.fetchData()
+			var noti = this
+			socket.on('view-listings',function(data){
+			        noti.notifications.unshift(data)
+			    });
 		},
 		computed:{
 			countNotifications(){
 				if(this.newnotification && this.newnotification.length){
 					this.notifications.unshift(this.newnotification[0])
-					console.log(this.notifications)
-					console.log(this.newnotification[0])
-					console.log(this.notifications)
 				}
 				return this.notifications.length
 			},
-
 		},
 		mounted() {
 			this.$root.$on('refresh-data', (data) => {
- 				
- 				var index = _.findIndex(this.notifications, function(val) {
-                        	return val.id == data;
-	                   });
-				console.log(data)
-				console.log(index)
-				console.log(this.notifications)
-                if (index > -1) {
-                    this.notifications.splice(index, 1);
-                }
+ 				this.removeNotification(data)
  	 		})
 		}
 	};

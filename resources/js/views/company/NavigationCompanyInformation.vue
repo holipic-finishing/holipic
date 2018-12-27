@@ -1,117 +1,176 @@
 <template>
-		<v-layout row wrap>
-		<app-card
-			colClasses="xl12 lg12 md12 sm12 xs12"
-			customClasses="mb-0 sales-widget"
-			:fullScreen="true"
-			:reloadable="true"
-			:closeable="false"
-			
-		>
-		<v-navigation-drawer
-	      fixed
-	      v-model="drawerRight"
-	      right
-	      clipped
-	      app
-	      :width="400"
-	      temporary
-	      class="chat-sidebar-wrap"
-	      style="overflow: auto;">
-	      	<v-list dense>
-		        <v-list-tile @click.stop="drawerRight = !drawerRight">
-			          	<v-list-tile-action>
-			            	<v-icon>exit_to_app</v-icon>
-			          	</v-list-tile-action>
-			          	<v-list-tile-content>
-			            	<!-- <v-list-tile-title>Exit Your Drawer</v-list-tile-title> -->
-			          	</v-list-tile-content>
-		        </v-list-tile>
-	      	</v-list>
-	      	<div class="container fix-navigation">
-	      		<div class="row image-company">
-	      			<div class="col-sm-12">
-				    <img src="images/HOLIPIC-LOGO.png" alt="" width="170px">
-	      			</div>
-				</div>
-			    <div class="title-company"> {{company.name}}</div>
-			        <v-list two-line>
-			        	<div class="container container-company">
-				          	<div class="row">
+		
+    <v-navigation-drawer 
+    fixed
+    v-model="drawerRight" 
+    right
+    temporary 
+    app 
+    class="chat-sidebar-wrap"
+    width="450"
+  	>
 
-				          		<div class="col-sm-4 text-value-company-left">Company ID:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{company.id}}</div>
-				          		
-					          	<div class="col-sm-4 text-value-company-left">Email:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{company.email}}</div>
+	    <v-card class="h-100 position-relative">
+			<v-toolbar>
+	      		<v-toolbar-title class="text-capitalize">{{company.name}}</v-toolbar-title>
+	      		<v-spacer></v-spacer>
+	     		<v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
+		      		<v-icon>
+		          		fas fa-times
+		        	</v-icon>
+	      		</v-toolbar-side-icon>
+	    	</v-toolbar>
+		    <v-divider class="no-mg-bottom"></v-divider>
+			  
+			  <!-- Show information -->
+		    <v-list>
+				
+				<v-list-tile>
+					<v-list-tile-content>
+			          	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">Package name:</span>
+				          	<span>{{company.package_name}}</span>
+	          			</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+	     		 <v-divider class="no-mg-bottom"></v-divider>
 
-					          	<div class="col-sm-4 text-value-company-left">Address:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{company.address}}</div>
+				
+				<v-list-tile>
+					<v-list-tile-content>
+			          	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">Email login:</span>
+				          	<span>{{company.email}}</span>
+			         	</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+	      		<v-divider class="no-mg-bottom"></v-divider>
 
-					          	<div class="col-sm-4 text-value-company-left">Description:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{company.description}}</div>
 
-					          	<div class="col-sm-4 text-value-company-left">Date join:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{company.created_at}}</div>
+				<v-list-tile>
+					<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">Address:</span>
+				          	<span>{{company.address}}</span>
+			          	</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+	      		<v-divider class="no-mg-bottom"></v-divider>
 
-					          	<div class="line-company"></div>
+	      		<v-list-tile>
+					<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">Added date:</span>
+				          	<span>{{company.created_at}}</span>
+			          	</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+	      		<v-divider class="no-mg-bottom"></v-divider>
 
-					          	<div class="col-sm-4 text-value-company-left">Package:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{company.package_name}}</div>
+	      		<v-list-tile>
+					<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">Total customer:</span>
+				          	<span>...</span>
+			          	</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+	      		<v-divider class="no-mg-bottom"></v-divider>
 
-					          	<div class="col-sm-4 text-value-company-left">Storage:</div>
-					          	<div class="col-sm-8 text-size" id="text-value-company-right" >{{company.file_upload}}GB</div>
+	      		<v-list-tile>
+					<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">Total storage:</span>
+				          	<span>{{company.file_upload}}GB</span>
+			          	</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+	      		<v-divider class="no-mg-bottom"></v-divider>	
 
-					          	<div class="col-sm-4 text-value-company-left">Uploaded:</div>
-					          	<div class="col-sm-8 text-size" id="text-value-company-right">{{company.total_upload}}GB</div>
+	      		<v-list-tile>
+					<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">Total income :</span>
+				          	<span>{{company.total_income}}</span>
+			          	</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+	      		<v-divider class="no-mg-bottom"></v-divider>
 
-					          	<div class="col-sm-4 text-value-company-left">Capacity:</div>
-					          	<div class="col-sm-8 text-size" id="text-value-company-right">{{company.capacity}} GB</div>
+	      		<v-list-tile>
+					<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">Signature :</span>
+				          	<span>...</span>
+			          	</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+	      		<v-divider class="no-mg-bottom"></v-divider>	
 
-					          	<div class="line-company"></div>
+	    </v-list>
+	    <v-list v-if="lengthCode > 0">
+	    	
+	    	<v-list-tile>
+				<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">COUPON CODE</span>
+			          	</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
 
-					          	<div class="col-sm-4 text-value-company-left">Total Income Fee:</div>
-					          	<div class="col-sm-8 text-size" id="text-value-company-right" >{{company.total_income_fee}}</div>
+			<v-list-tile>
+				<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">Name Code:</span>
+				          	<span>{{couponCode.name}}</span>
+			          	</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+			<v-divider class="no-mg-bottom"></v-divider>
 
-					          	<div class="col-sm-4 text-value-company-left">Total Income:</div>
-					          	<div class="col-sm-8 text-size" id="text-value-company-right">{{company.total_income}}</div>
+			<v-list-tile>
+				<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">Discount:</span>
+				          	<span>{{couponCode.discount}}</span>
+			          	</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+			<v-divider class="no-mg-bottom"></v-divider>
 
-					          	<div class="line-company"></div>
+			<v-list-tile>
+				<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">From Date:</span>
+				          	<span>{{couponCode.from_date}}</span>
+			          	</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+			<v-divider class="no-mg-bottom"></v-divider>
 
-					          	<div class="col-sm-4 text-value-company-left">Signature:</div>
+			<v-list-tile>
+				<v-list-tile-content>
+			         	<v-list-tile-title class="content-flex">
+				          	<span class="font-weight-bold item-title">To Date:</span>
+				          	<span>{{couponCode.to_date}}</span>
+			          	</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+			<v-divider class="no-mg-bottom"></v-divider>
 
-					          	<div class="line-company"></div>
+	    </v-list>
+	    <!-- End show information -->
 
-				          </div>
-			      		</div>
+	    <!-- Close drawer button -->
+	    <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
+	      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
+	    </v-card-actions>
+	    <!-- End close drawer button -->
 
-			      		<div class="container container-company2" v-if="lengthCode > 0 ">
-				          	<div class="row">
-				          		<div class="col-sm-12 signature ">Coupon Code</div>
-				          		<div class="col-sm-4 text-value-company-left coupon-left">Name Code:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{couponCode.name}}</div>
-				          		
-					          	<div class="col-sm-4 text-value-company-left coupon-left">Discount:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{couponCode.discount}}</div>
+		</v-card>
 
-					          	<div class="col-sm-4 text-value-company-left coupon-left">From Date:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{couponCode.from_date}}</div>
-
-					          	<div class="col-sm-4 text-value-company-left coupon-left">To Date:</div>
-					          	<div class="col-sm-8 " id="text-value-company-right">{{couponCode.to_date}}</div>
-
-				          	</div>
-
-				          </div>
-				          <button class="btn btn-primary btn-company" type="submit" @click.stop="drawerRight = !drawerRight"> Close </button>
-			      		<!-- <div class="text-center signature">Signature</div> -->
-			        </v-list>    
-  			
-	      	</div>
-	      	
-	    </v-navigation-drawer>
+  		</v-navigation-drawer>
 	    
-	   	</app-card>
 	</v-layout>
 
 </template>
@@ -164,6 +223,7 @@ import config from '../../config/index.js'
 <style>
 	.fix-navigation{
 		padding: 10px 0px;
+		overflow: hidden;
 		
 	}
 

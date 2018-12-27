@@ -26,7 +26,9 @@ class Company extends Model
         'description',
         'address',
         'owner_id',
-        'logo'
+        'logo',
+        'coupon_codes_id',
+        'phone'
     ];
 
     /**

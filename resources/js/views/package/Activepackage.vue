@@ -19,9 +19,17 @@
 	        </v-list-tile>
 	 	</v-list>
 	 	<v-list two-line>
-          <h4><v-icon>{{ check ? 'add' : 'edit'}}</v-icon> &nbsp;{{ check ? 'Add Package Admin' : 'Update Package Admin'}}</h4>
+          <!-- <h4>
+          	<v-icon>{{ check ? 'add' : 'edit'}}</v-icon> &nbsp;{{ check ? 'Add Package Admin' : 'Update Package Admin'}}
+          </h4> -->
+          <h4 v-show="check == 'add'">
+          	<v-icon>add</v-icon> &nbsp;Add Package Admin
+          </h4>
+          <h4 v-show="check == 'edit'">
+          	<v-icon>edit</v-icon> &nbsp;Update Package Admin
+          </h4>
         </v-list> 
- 		<v-form ref="form" @submit.prevent="savePackageAdd" v-show="check">
+ 		<v-form ref="form" @submit.prevent="savePackageAdd" v-show="check == 'add'">
 			<v-list two-line>
 	            <v-list-tile>
 	              <v-list-tile-content>
@@ -101,7 +109,8 @@
 				     </v-flex>
 				     <v-flex xs12 sm12  class="style-flex">
 			         	<v-textarea label="Full Description" 
-		                 	v-model="item.full_description"       
+		                 	v-model="item.full_description"
+		                 	:rules="[rules.required]"       
 							auto-grow
 			                rows="3"		         
 		                   	>
@@ -152,12 +161,81 @@
 					</v-flex>
 
 					<v-flex xs12 sm12 class="style-flex">
+						<p>4.On/off email services Basic</p>	
+						<v-switch
+			              v-model="item.email_service"
+			              color="red"
+			              hide-details></v-switch>
+					</v-flex>
+
+					<v-flex xs12 sm12 class="style-flex">
 						<v-btn color="info" type="submit">SAVE</v-btn>
 					</v-flex>
 				</v-layout>	
 	        </v-list> 
    		 </v-form>
-   		<v-form ref="form1" @submit.prevent="savePackagesUpdate" v-show="!check"> 
+   		<v-form ref="form1" @submit.prevent="savePackagesSetting" v-show="check == 'setting'"> 
+	        <v-list two-line>
+				<v-layout wrap class="style-content">
+					<h4><v-icon>settings</v-icon> &nbsp;Setting Packages System</h4>
+					<v-flex xs12 sm12 class="style-flex">
+						<p>1.Cronjob expiry timing for deleting images files from company clouds to reduce space Packages (Day)</p>	
+						<v-text-field
+				            solo
+				            :rules="[rules.required, rules.number]"	
+				            v-model="data.expiration_date"
+				            placeholder="Day"
+				            counter="4"
+				            maxlength="4"
+				            append-outer-icon="edit"
+				          ></v-text-field>		
+					</v-flex>
+
+					<v-flex xs12 sm12 class="style-flex">
+						<p>2.Manage Credit Card fees Packages</p>	
+						<v-text-field
+				            solo
+				            :rules="[rules.required, rules.decimal]"
+				            v-model="data.card_fee"
+				             placeholder="0.00"
+				             append-outer-icon="edit"	
+				          ></v-text-field>
+					</v-flex>
+
+					<v-flex xs12 sm12 class="style-flex">
+						<p>3.Manage complimentary bonus to TopUp Packages</p>	
+						<v-text-field
+				            solo
+				            :rules="[rules.required, rules.decimal]"
+				            v-model="data.bonus"
+				             placeholder="0.00"
+				             append-outer-icon="edit"	
+				          ></v-text-field>
+					</v-flex>
+
+					<v-flex xs12 sm12 class="style-flex">
+						<p>4.On/off sms services Basic</p>	
+						<v-switch
+			              v-model="data.sms"
+			              color="red"
+			              hide-details></v-switch>
+					</v-flex>
+
+					<v-flex xs12 sm12 class="style-flex">
+						<p>5.On/off email services Basic</p>	
+						<v-switch
+			              v-model="data.email_service"
+			              color="red"
+			              hide-details></v-switch>
+					</v-flex>
+
+					<v-flex xs12 sm12 class="style-flex">
+						<v-btn color="info" type="submit">SAVE</v-btn>
+					</v-flex>
+				</v-layout>	
+	        </v-list> 
+	    </v-form>    
+   		<v-form ref="form2" @submit.prevent="savePackagesUpdate" v-show="check == 'edit'"> 
 	        <v-list two-line>
 	            <v-list-tile>
 	              <v-list-tile-content>
@@ -224,6 +302,7 @@
 				          ></v-text-field>
 				        </v-flex>
 	              </v-list-tile-content>
+
 	            </v-list-tile>
 				<v-layout wrap class="style-content">
 					<v-flex xs12 sm12 class="style-flex">
@@ -235,6 +314,7 @@
 			                 >
 			                </v-textarea>
 				     </v-flex>
+
 				     <v-flex xs12 sm12  class="style-flex">
 			         	<v-textarea label="Full Description" 
 		                 	v-model="data.full_description"       
@@ -242,57 +322,14 @@
 			                rows="3"		         
 		                   	>
 		                </v-textarea>
-				        </v-flex>   
-					<h4><v-icon>settings</v-icon> &nbsp;Setting Packages System</h4>
-					<v-flex xs12 sm12 class="style-flex">
-						<p>1.Cronjob expiry timing for deleting images files from company clouds to reduce space Packages (Day)</p>	
-						<v-text-field
-				            solo
-				            :rules="[rules.required, rules.number]"	
-				            v-model="data.expiration_date"
-				            placeholder="Day"
-				            counter="4"
-				            maxlength="4"
-				            append-outer-icon="edit"
-				          ></v-text-field>		
-					</v-flex>
-
-					<v-flex xs12 sm12 class="style-flex">
-						<p>2.Manage Credit Card fees Packages</p>	
-						<v-text-field
-				            solo
-				            :rules="[rules.required, rules.decimal]"
-				            v-model="data.card_fee"
-				             placeholder="0.00"
-				             append-outer-icon="edit"	
-				          ></v-text-field>
-					</v-flex>
-
-					<v-flex xs12 sm12 class="style-flex">
-						<p>3.Manage complimentary bonus to TopUp Packages</p>	
-						<v-text-field
-				            solo
-				            :rules="[rules.required, rules.decimal]"
-				            v-model="data.bonus"
-				             placeholder="0.00"
-				             append-outer-icon="edit"	
-				          ></v-text-field>
-					</v-flex>
-
-					<v-flex xs12 sm12 class="style-flex">
-						<p>4.On/off sms services Basic</p>	
-						<v-switch
-			              v-model="data.sms"
-			              color="red"
-			              hide-details></v-switch>
-					</v-flex>
+			        </v-flex>   
 
 					<v-flex xs12 sm12 class="style-flex">
 						<v-btn color="info" type="submit">SAVE</v-btn>
 					</v-flex>
 				</v-layout>	
 	        </v-list> 
-	    </v-form>    
+	    </v-form>
         <v-list dense>
 	        <v-list-tile @click.stop="stopdrawerRight()">
 		          	<v-list-tile-action>
@@ -315,7 +352,7 @@ export default {
 	data () {
 	    return {
 	    	drawerRight: false,
-		    check: false,
+		    check: '',
 	    	rules: {
 		        required: value => !!value || 'Required.',
 	          	number: value => {
@@ -323,12 +360,15 @@ export default {
 		            return abc.test(value) || 'Please input number.'
 	          	},
 	          	decimal: value => {
-		            const abc = /^[1-9]\d*(\.\d+)?$/
+		            const abc = /^[0-9]\d*(\.\d+)?$/
 		            return abc.test(value) || 'Please input number.'
 	          	},
 
 	        },
-	        item:{},
+	        item:{
+	        	sms: false,
+	        	email_service: false
+	        },
 	        data:{}
 	    }
 	},
@@ -347,7 +387,34 @@ export default {
 				            Vue.notify({
 				                group: 'loggedIn',
 				                type: 'success',
-				                text: 'Add Success!'
+				                text: 'Add Package Success!'
+				            });
+					    },500);
+	                    this.drawerRight = false
+	                    this.$root.$emit('reload-table', true)
+	                    this.item = {
+	                    	sms: false,
+	        				email_service: false
+	                    }
+                	}
+      		 	})
+      		 	.catch((err) =>{
+      		 		console.log(err)
+      		 	})
+      		}
+      	},
+
+      	savePackagesSetting(){
+      		if (this.$refs.form1.validate()) {
+      			let url = config.API_URL+'packages/'+this.data.id
+      		 	put(url,this.data)
+      		 	.then((res) => {
+      		 		 if(res.data && res.data.success){
+	                    setTimeout(function(){
+				            Vue.notify({
+				                group: 'loggedIn',
+				                type: 'success',
+				                text: 'Setting Package Success!'
 				            });
 					    },500);
 	                    this.drawerRight = false
@@ -361,7 +428,7 @@ export default {
       	},
 
       	savePackagesUpdate(){
-      		if (this.$refs.form1.validate()) {
+      		if (this.$refs.form2.validate()) {
       			let url = config.API_URL+'packages/'+this.data.id
       		 	put(url,this.data)
       		 	.then((res) => {
@@ -370,7 +437,7 @@ export default {
 				            Vue.notify({
 				                group: 'loggedIn',
 				                type: 'success',
-				                text: 'Update Packages Success!'
+				                text: 'Update Package Success!'
 				            });
 					    },500);
 	                    this.drawerRight = false
@@ -387,8 +454,8 @@ export default {
 		this.$root.$on('change-status', res => {
           	this.drawerRight = res.showDialog
     		this.check = res.check
-    		this.item = {
-    		}
+    		// this.item = {
+    		// }
       	})
 
       	this.$root.$on('data-packages', res => {

@@ -21,11 +21,11 @@
 
 	    >
 	    	<template slot="items" slot-scope="props">
-	    		<td>{{ props.item.package_name }}</td>
+	    		<td class="text-xs-left">{{ props.item.package_name }}</td>
 		        <td class="text-xs-left">{{ props.item.short_description }}</td>
-		        <td class="text-xs-center">{{ props.item.secure_storage }}</td>
+		        <td class="text-xs-left">{{ props.item.secure_storage }}</td>
 		        <td class="text-xs-center">{{ props.item.file_upload }}</td>
-		        <td class="text-xs-center">
+		        <td class="text-xs-left">
 		        	<div v-if="props.item.email_service == true">
 		        		YES
 		        	</div>
@@ -33,7 +33,7 @@
 		        		NO
 		        	</div>
 		        </td>
-		        <td class="text-xs-center">
+		        <td class="text-xs-left">
 		        	<div v-if="props.item.sms == true">
 		        		YES
 		        	</div>
@@ -47,7 +47,7 @@
 		          <v-icon
 		            small
 		            class="mr-2"
-		            @click="editItem(props.item)"
+		            @click="settingItem(props.item)"
 		          >
 		            settings
 		          </v-icon>
@@ -109,7 +109,7 @@ export default {
 	      	desserts: [],
 	      	pagination: {
 		      page: 1,
-		      rowsPerPage: 25,
+		      rowsPerPage: 5,
 		      totalItems: 0,
 		      // rowsPerPageItems: [5,10, 15, 20, 25, 30]
 		    },
@@ -137,16 +137,25 @@ export default {
 
 		showAddItem(){
 			let obj = {
-	  				check : true,
+	  				check : 'add',
 	  				showDialog: true,
 	  		}
   			this.$root.$emit('change-status', obj)
   			// this.$root.$emit('data-add-packages', this.item)
 		},
 
+		settingItem(item){
+			let obj = {
+	  				check : 'setting',
+	  				showDialog: true,
+	  		}
+  			this.$root.$emit('change-status', obj)
+  			this.$root.$emit('data-packages', item)
+		},
+
 		editItem(item){
 			let obj = {
-	  				check : false,
+	  				check : 'edit',
 	  				showDialog: true,
 	  			}
 
@@ -201,4 +210,5 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 </style>

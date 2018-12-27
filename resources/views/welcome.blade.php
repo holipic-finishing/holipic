@@ -14,7 +14,10 @@
   <link rel="stylesheet" type="text/css" href="{{asset('css/holipic.css')}}">
 
   <title>Holipic Admin</title>
-</head>   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+
+</head>
+
 
 <body>
   <div id="app"></div>

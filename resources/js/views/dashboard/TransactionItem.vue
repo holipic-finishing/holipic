@@ -155,6 +155,7 @@
                 v-model="itemToLoad.company_name"
                 outline
                 :disabled="key == 1 ? false : true"
+                :rules="[rules.required]"
                 @blur="editItem('company_name', itemToLoad.company_name)"
                 @keyup.enter="editItem('company_name', itemToLoad.company_name)"
               ></v-text-field>
@@ -177,6 +178,7 @@
                 placeholder="Enter Invoice"
                 v-model="itemToLoad.invoice"
                 outline
+                :rules="[rules.required]"
                 :disabled="key == 2 ? false : true"
                 @blur="editItem('invoice', itemToLoad.invoice)"
                 @keyup.enter="editItem('invoice', itemToLoad.invoice)"
@@ -254,7 +256,7 @@
               <v-text-field
                 class="font-weight-bold height-input"
                 v-model="itemToLoad.amount"
-                :rules="[rules.number]"
+                :rules="[rules.required, rules.number]"
                 outline
                 :disabled="key == 5 ? false : true"
                 @blur="editItem('amount', itemToLoad.amount)"
@@ -296,9 +298,10 @@ export default {
     return {
     	listStatus: [ 'RECIVED', 'BEEN SEEN'],
     	rules: {
+        required: value => !!value || 'This field is required.',
       	number: value => {
-          const abc = /^([0-9]*|\d*\.\d{1}?\d*)$/
-          return abc.test(value) || 'Please input number.'
+          const pattern = /^([0-9]*|\d*\.\d{1}?\d*)$/
+          return pattern.test(value) || 'Please input number.'
       	},
     	},
       key: 0,

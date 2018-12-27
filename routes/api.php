@@ -53,6 +53,7 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('change-password', 'UserAPIController@changePassWord');
 
 
+
 	/***********************************************
 	**********	ROUTER COMPANY ADMIN   *************
 	************************************************

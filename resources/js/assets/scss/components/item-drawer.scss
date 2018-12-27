@@ -1,9 +1,8 @@
 .position-relative{
-  position: relative;
-}
-
-.no-mg-bottom{
-  margin-bottom: 0 !important;
+  position: relative !important;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .item-title{
@@ -43,11 +42,6 @@
 	height: 100% !important;
 }
 
-.bottom-position{
-  position: absolute;
-  bottom: 10px;
-}
-
 .flex-end{
   justify-content: flex-end;
 }
@@ -72,4 +66,18 @@
 .position-item{
   position:relative;
   top: -10px;
+}
+
+.heigth-list-title{
+  flex:1;
+  overflow: auto;
+  .v-list__tile{
+    height: 43px;
+  }
+}
+
+.contain-text-field{
+  .v-input__slot{
+    margin-bottom: 5px !important;
+  }
 }

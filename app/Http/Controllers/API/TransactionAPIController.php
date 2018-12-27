@@ -168,6 +168,10 @@ class TransactionAPIController extends AppBaseController
 
         $input =  $request->all();
 
+        if (!$input['value']) {
+            return $this->sendError('This field could be not null');
+        }
+
         $result = null;
 
         if ($input['field_name'] == 'company_name') {

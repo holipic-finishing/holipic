@@ -1,14 +1,20 @@
 <template>
-<div>
-	<page-title-bar></page-title-bar>
+<div class="margin-table">
+	<!-- <page-title-bar></page-title-bar> -->
 	<v-container fluid grid-list-xl pt-0>
 		<v-toolbar flat color="white">
-			<v-toolbar-title><v-icon>zmdi zmdi-dropbox</v-icon></v-toolbar-title>
+			<!-- <v-toolbar-title><v-icon>zmdi zmdi-dropbox</v-icon></v-toolbar-title>
 		    <v-divider
 		        class="mx-2"
 		        inset
 		        vertical
-		    ></v-divider>
+		    ></v-divider> -->
+		    <h3 class="h3-title-package">Packages List</h3>
+	        <v-divider
+	          class="mx-2"
+	          inset
+	          vertical
+	        ></v-divider>
 		    <v-btn @click="showAddItem()" color="primary" dark class="mb-2">Add</v-btn>
 		</v-toolbar>
 		<active-package></active-package>
@@ -177,4 +183,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.h3-title-package{
+	width: 200px;
+}
 </style>

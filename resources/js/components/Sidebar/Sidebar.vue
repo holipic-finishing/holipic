@@ -5,7 +5,6 @@
         <v-toolbar flat class="transparent scroll-area navigation">
           <v-list>
 				<app-logo></app-logo>
-            <user-block></user-block>
 				<template v-for="(category, key) in menus">
 					<div :key="key">
 						<div class="sidebar-title px-3">
@@ -59,34 +58,31 @@
 						</template>
 					</div>
 				</template>     
-          </v-list>
+          	</v-list>
         </v-toolbar>
     	</vue-perfect-scrollbar>
   	</div>
 </template>
 
 <script>
-import UserBlock from "./UserBlock";
 import { textTruncate, getCurrentAppLayout } from "../../helpers/helpers";
 import { mapGetters } from "vuex";
 import AppLogo from "../../components/AppLogo/AppLogo";
 
 export default {
-  data() {
-    return {
-      settings: {
-        maxScrollbarLength: 160
-      },
-      user:{}
-    };
-  },
+  	data() {
+    	return {
+			settings: {
+				maxScrollbarLength: 160
+			},
+			user:{}
+    	};
+  	},
   	components: {
-    	UserBlock,
     	AppLogo
   	},
-  	computed: {     
-    	...mapGetters(["sidebarSelectedFilter", "menus", "getUser"])
-
+  	computed: {
+    	...mapGetters(["sidebarSelectedFilter", "menus"])
   	},
 	mounted(){
 		this.$store.dispatch("setActiveMenuGroup", this.$router);
@@ -94,10 +90,10 @@ export default {
 	},
     methods: {
 	    textTruncate(text) {
-	      return textTruncate(text, 18);
+	      	return textTruncate(text, 18);
 	    },
 	    getCurrentAppLayoutHandler() {
-	      return getCurrentAppLayout(this.$router);
+	      	return getCurrentAppLayout(this.$router);
 	    }
   	}
 };

@@ -26,12 +26,12 @@ export const menus = {
 			action: 'zmdi-widgets',
 			title: 'message.companymanagement',
 			active: false,
-			role_id : 1,
-			items: [
-				// { title: 'message.user', path: '/users/user-list' },
-				{ title: 'message.company', path: '/widgets/mana-company' },
-				{ title: 'message.chartCompany', path: '/widgets/mana-company-chart' }
-			]
+			path: '/widgets/companies'
+			// items: [
+			// 	// { title: 'message.user', path: '/users/user-list' },
+			// 	{ title: 'message.company', path: '/widgets/mana-company' }
+			// 	// { title: 'message.chartCompany', path: '/widgets/mana-company-chart' }
+			// ]
 		},
 		{
 			action: 'zmdi zmdi-dropbox',

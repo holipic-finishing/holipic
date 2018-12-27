@@ -86,7 +86,7 @@ class CompanyRepository extends BaseRepository
         $results = DB::table('companies as c')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->select('c.id as id', 'c.name','c.phone' ,'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name')
+                    ->select('c.id as id', 'c.name','c.phone' ,'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name')->orderBy('c.id', 'desc')
                     ->get();
        
         $results = $this->transform($results);
@@ -158,7 +158,7 @@ class CompanyRepository extends BaseRepository
      */
     
     public function transform($results){
-
+        
         foreach ($results as $key => $result) {      
             $results[$key]->fullname = $result->first_name ." ".$result->last_name;             
         }
@@ -213,7 +213,12 @@ class CompanyRepository extends BaseRepository
                     ->where('companies.id', $companyId)
                     ->first()->toArray();
 
-        $company['total_upload'] = number_format($totalSize->total/1024, 4);
+        if(empty($totalSize)) {
+            $company['total_upload'] = 0;
+        } else{
+
+            $company['total_upload'] = number_format($totalSize->total/1024, 4);
+        }    
 
         $company['capacity'] = number_format($company['file_upload'] - $company['total_upload']/1024, 2);
 
@@ -255,9 +260,9 @@ class CompanyRepository extends BaseRepository
 
         $company['total_income'] = $totalAmount - $totalSystemFee;
 
-        $couponCodes = DB::table('coupon_codes')->where('id', $company['coupon_codes_id'])->where('active', 1)->get();
+        $couponCode = DB::table('coupon_codes')->where('id', $company['coupon_codes_id'])->where('active', 1)->get();
 
-        return [$company, $couponCodes];
+        return [$company, $couponCode];
         
     }
 

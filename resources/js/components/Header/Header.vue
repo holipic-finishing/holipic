@@ -61,7 +61,7 @@
 				<!-- <notifications></notifications> -->
 				<!-- <cart :horizontal="horizontal"></cart> -->
 				<language-provider></language-provider>
-				<!-- <user></user> -->
+				<user></user>
 			</div>
 		</v-toolbar>
 		<!-- Chat Searchbar -->

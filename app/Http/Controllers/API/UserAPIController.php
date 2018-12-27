@@ -138,13 +138,13 @@ class UserAPIController extends AppBaseController
           
 
             if (!password_verify($request['oldPassword'], $user->password)) {   
-                return response()->json(['success' => false, 'message' => 'Old Password In Incorrect']);
+                return response()->json(['success' => false, 'message' => 'OldPassword']);
             }
 
             if(strcmp($request['newPassword'], $request['confirmPassword']) != 0 ) {
                  return response()->json([
                         'success' => false, 
-                        'message' => 'Old Password or Confirm Password Incorrect'
+                        'message' => 'olePasswordAndNewPassword'
                     ]);
                
             }
@@ -155,7 +155,7 @@ class UserAPIController extends AppBaseController
                         ]);
             }
 
-            return $this->sendResponse($user, 'Change Password successfully');
+            return $this->sendResponse($user, 'changePasswordSuccess');
         }
         
          catch (Exception $e) {

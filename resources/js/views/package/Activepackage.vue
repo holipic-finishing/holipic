@@ -164,7 +164,7 @@
 			            <span class="contain-text-field fix-contain-text-field">
 			              <v-text-field
 			                class="font-weight-bold height-input"
-			                placeholder="0.00"
+			                placeholder="0"
 			              	:rules="[rules.required, rules.number]"	
 				            v-model="item.expiration_date"
 			                outline               

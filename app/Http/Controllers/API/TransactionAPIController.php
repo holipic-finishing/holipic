@@ -168,15 +168,32 @@ class TransactionAPIController extends AppBaseController
 
         $input =  $request->all();
 
-        if ($input['status'] === "BEEN SEEN") {
-            $input['status'] = "BEEN_SEEN";
+        if (!$input['value']) {
+            return $this->sendError('This field could be not null');
         }
 
-        $results = $this->transactionRepository->update($input, $itemId);
+        $result = null;
 
-        if($results){
+        if ($input['field_name'] == 'company_name') {
+            $transaction = $this->transactionRepository->find($itemId);
+            $user = $transaction->user()->first();
+            $company = $user->company()->first();
+            $result = app(\App\Repositories\CompanyRepository::class)->update([
+                'name' => $input['value']
+            ], $company->id);
+        }
 
-            return $this->sendResponse($results->toArray(), 'Transaction updated successfully');
+        if ($input['field_name'] == 'status' && $input['value'] === "BEEN SEEN") {
+            $input['value'] = "BEEN_SEEN";
+        }
+
+        $result = $this->transactionRepository->update([
+            $input['field_name'] => $input['value']
+        ], $itemId);
+
+        if($result){
+
+            return $this->sendResponse([], 'Transaction updated successfully');
         }else{
             return $this->sendError('System Error Occurred');
         }
@@ -219,13 +236,5 @@ class TransactionAPIController extends AppBaseController
 
         return $this->sendResponse($result, 'Transactions retrieved successfully');
     }
-
-    public function showTotalCompanies(Request $request)
-    {   
-        $totalCompanies = $this->transactionRepository->handleShowTotalCompanies($request->all());
-
-        return $this->sendResponse($totalCompanies, 'Get Transaction Total Companies with '.$request['choose'].' completed');
-    }
-
 }
 

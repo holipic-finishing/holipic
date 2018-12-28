@@ -15,7 +15,7 @@ export default {
   dashboardOverview: 'Dashboard Overview',
   dashboardv1: 'Dashboard V1',
   dashboardv2: 'Dashboard V2',
-  companymanagement: 'Company Management',
+  companymanagement: 'Companies Management',
   horizontalMenu: 'Horizontal Menu',
   pages: 'Pages',
   gallery: 'Gallery',
@@ -464,5 +464,13 @@ export default {
   settingPackageSystem: "Setting Packages System",
   transaction: "Transaction",
   histories : "Histories",
-  couponCode : "Coupon Code"
+  couponCode : "Coupon Code",
+  changePasswordSuccess : "Change Password User Success",
+  olePasswordAndNewPassword: "Old Password or Confirm Password Incorrect",
+  oldPassword : "Old Password In Incorrect",
+  viewnotifition: "Show all",
+  hidingRead : "Hiding read",
+  mailSentSuccessfully : 'Mail sent successfully',
+  notification : "Notification",
+  yourNotification: "Your notification"
 }

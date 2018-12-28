@@ -95,7 +95,7 @@ class CompanyAPIController extends AppBaseController
     public function update($id, UpdateCompanyAPIRequest $request)
     {
         $input = $request->all();
-        // dd($input['params']);
+        // dd($input);
 
         /** @var Company $company */
         $company = $this->companyRepository->findWithoutFail($id);
@@ -161,6 +161,7 @@ class CompanyAPIController extends AppBaseController
     }
     
     public function exportExcel(Request $request){
+
         return \Excel::download(new ListCompaniesExport($request->all()), 'ListCompany.xlsx');
 
     }

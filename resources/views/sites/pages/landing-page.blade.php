@@ -519,7 +519,7 @@ Holipic
 													@if($value->package_name=="Basic")
 														{{$value->secure_storage}} GB secure storage
 													@else
-														{{$value->secure_storage}} storage
+														{{$value->secure_storage}} secure storage
 													@endif		 
 												</li>
 												<li>{{$value->file_upload}} GB file upload</li>
@@ -527,7 +527,7 @@ Holipic
 												<li>
 													Minimum {{$value->minimum_user}} users ,
 													@if($value->package_name=="Basic")
-														max {{$value->max_user}} users
+														maximum {{$value->max_user}} users
 													@else 
 														{{$value->max_user}} maximum
 													@endif	
@@ -927,14 +927,7 @@ Holipic
 		           	} else {
 		           		window.localStorage.setItem('access_token', data.data.user.access_token)
 
-		           		var object = {
-		           			'userId': data.data.user.id, 
-		           			'fullname': data.data.user.last_name+' '+data.data.user.first_name, 
-		           			'email': data.data.user.email, 
-		           			'roleId': data.data.user.role_id
-		           			}
-
-		           		window.localStorage.setItem('user', JSON.stringify(object))
+		           		window.localStorage.setItem('user', JSON.stringify(data.data.user))          		
 
 		           		window.location.href = "/admin";
 		           	}

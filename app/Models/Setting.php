@@ -27,6 +27,7 @@ class Setting extends Model
         'card_fee',
         'bonus',
         'sms',
+        'email_service',
         'package_id'
     ];
 
@@ -37,7 +38,8 @@ class Setting extends Model
      */
     protected $casts = [
         'expiration_date' => 'integer',
-        'sms' => 'boolean'
+        'sms' => 'boolean',
+        'email_service' => 'boolean',
     ];
 
     /**

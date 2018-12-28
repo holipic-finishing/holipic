@@ -7,8 +7,7 @@
 			:reloadable="true"
 			:closeable="false"
 		>
-      <v-navigation-drawer
-        absolute 
+      <v-navigation-drawer 
         fixed
         v-model="drawer" 
         :right="!rtlLayout" 
@@ -20,9 +19,16 @@
         <transaction-item :eventType="eventType" :item="item"></transaction-item>
       </v-navigation-drawer>
 
+      <v-toolbar flat color="white">
+        <v-toolbar-title>
+          <v-hover>
+            <router-link slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 2}`" class="black--text" :to="{ path: '/default/transaction/histories' }">Transactions</router-link>
+          </v-hover>
+        </v-toolbar-title>
+      </v-toolbar>
+      <v-divider></v-divider>
 			<!--Search Component -->
 			<v-card-title>
-	      Search
 	      <v-spacer></v-spacer>
 	      <v-text-field
 	        v-model="search"
@@ -38,19 +44,19 @@
 				v-model="selected"
 			  :headers="headers"
 			  :items="itemsToView"
-			  class="elevation-1"
+			  class="elevation-5"
 			  :pagination.sync="pagination"
 			  :loading="loadingCom"
-			  :total-items="totalDesserts"
 			  select-all
 			  item-key="id"
 			  :search="search"
+        :rows-per-page-items="rowsPerPageItems"
 			>
 				<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
 				<!--Header -->
 				<template slot="headers" slot-scope="props">
           <tr>
-            <th>
+            <!-- <th>
               <v-checkbox
                 :input-value="props.all"
                 :indeterminate="props.indeterminate"
@@ -58,7 +64,7 @@
                 hide-details
                 @click.native="toggleAll"
               ></v-checkbox>
-            </th>
+            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -82,21 +88,21 @@
 
 				<!--Prop data -->
 				<template slot="items" slot-scope="props">
-					<tr :active="props.selected" @click="props.selected = !props.selected">
-						<td>
+					<!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
+						<!-- <td>
               <v-checkbox
                 :input-value="props.selected"
                 primary
                 hide-details
               ></v-checkbox>
-            </td>
+            </td> -->
 		    		<td>{{ props.item.id }}</td>
 		    		<td>{{ props.item.company_name }}</td>
 		    		<td class="text-right">{{ props.item.invoice }}</td>
 						<td class="text-right">{{ props.item.dated | moment("DD/MM/YYYY") }}</td>
 		    		<td>{{ props.item.title }}</td>
 		    		<td class="text-right">
-		    			<div v-if="props.item.type" style="color:green">
+		    			<div v-if="props.item.status === 'RECIVED'" style="color:green">
 		    				+ {{ props.item.amount_with_symbol }} 
 		    			</div>
 		    			<div v-else>
@@ -107,27 +113,30 @@
 								<v-btn color="success" small v-if="props.item.status === 'RECIVED'">{{ props.item.status }}</v-btn>
 							 	<v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
 			    	</td>
-		    		<td> 
+		    		<td class="action-width"> 
 		    			<v-icon
-				    		class="mr-2"
+                small
+				    		class="mr-2 hover-icon"
 				    		@click="transactionEvent('show', props.item)"
 				    	>
 				    		visibility
 				    	</v-icon>
 				      <v-icon
-				    		class="mr-2"
+                small
+				    		class="mr-2 hover-icon"
 				    		@click="transactionEvent('edit', props.item)"
 				      >
 				        edit
 				      </v-icon>
 				      <v-icon
-				    		class="mr-2"
+                small
+				    		class="mr-2 hover-icon"
 				    		@click="showDialog(props.item.id)"
 				      >
 				        delete
 				      </v-icon>
 		    		</td>
-					</tr>
+					<!-- </tr> -->
 	    	</template>
 
 				<!--No data -->
@@ -146,18 +155,18 @@
 			<!--End Data Table Component -->
 		</app-card>
     <v-dialog v-model="dialog" persistent max-width="450">
-      <v-btn slot="activator" color="primary" dark>System Message</v-btn>
       <v-card>
-        <v-card-title class="headline font-weight-bold grey lighten-2">
-          <v-icon x-large color="yellow accent-3">
+        <v-card-title class="headline font-weight-bold">
+          <v-icon x-large color="yellow accent-3" class="mr-2">
             warning
           </v-icon>
           Do you want delete this item ?
         </v-card-title>
+        <v-divider class="mt-0"></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat @click="dialog = false">Disagree</v-btn>
-          <v-btn color="green darken-1" flat @click="deleteItem">Agree</v-btn>
+          <v-btn flat @click="dialog = false">Disagree</v-btn>
+          <v-btn flat @click="deleteItem">Agree</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -183,7 +192,6 @@ export default {
     return {
       dialog: false,
     	desserts: [],
-    	totalDesserts: 0,
     	headers: [
         {
           text: 'ID',
@@ -215,7 +223,8 @@ export default {
         {
           text: 'Amount',
           align: 'right',
-          value: 'amount_with_symbol'
+          value: 'amount_with_symbol',
+          sortable: false
         },
         {
           text: 'Status',
@@ -225,65 +234,41 @@ export default {
         {
           text: 'Action',
           align: 'center',
-          sortable: false
+          sortable: false,
         }
       ],
-      pagination: {},
+      pagination: {
+      },
       loading: true,
       search: '',
       selected: [],
-      itemsTmp: [],
       drawer: false,
       item: null,
       eventType: '',
-      paramsSaveForEditSuccess: null,
-      itemIdToDelete: null,
-    }
-  },
-  watch: {
-    params: {
-      handler() {
-          this.getDataFromApi()
-          .then(data => {
-              this.desserts = data.items;
-              this.totalDesserts = data.total;
-          });
+      params: {
+      	defaultDay: 'default'
       },
-      deep: true
+      itemIdToDelete: null,
+      rowsPerPageItems: [ 20, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 } ]
     }
   },
   computed: {
     ...mapGetters([
       "rtlLayout",
     ]),
-    params(nv) {
-      return {
-          ...this.pagination,
-          query: this.search
-      }
-    },
     loadingCom(){
     	return this.loading
     },
     itemsToView(){
-    	if (this.desserts === undefined || this.desserts.length == 0) {
-    		return this.itemsTmp
-    	}else{
-    		return this.desserts
-    	}
+    	return this.desserts
     }
   },
   mounted () {
   	this.$root.$on('loadTransactionsWithTime', res => {
-      console.log("params: =>>>>" + res.params)
   		let params = res.params
-      this.paramsSaveForEditSuccess = res.params
-
-	    this.getDataFromApi(params)
-		    .then(data => {
-		      this.items = data.items
-		      this.totalItems = data.total
-		    })
+  		this.params = params
+  		this.loading = true
+  		this.fetchData(params)
   	})
 
     this.$root.$on('closeDrawerItem', res => {
@@ -291,88 +276,19 @@ export default {
     })
 
     this.$root.$on('editItemSucess', res => {
-      this.getDataFromApi(this.paramsSaveForEditSuccess)
-        .then(data => {
-          this.items = data.items
-          this.totalItems = data.total
-        })
+    	this.loading = true
+    	this.fetchData(this.params)
     })
 
   },
   methods: {
-  	getDataFromApi(params) {
-  		this.loading = true
-      return new Promise((resolve, reject) => {
-        const {
-            sortBy,
-            descending,
-            page,
-            rowsPerPage
-        } = this.pagination
-        
-        let search = this.search.trim().toLowerCase()
-        let items = this.getItems(params)
-
-        if (search) {
-          items = items.filter(item => {
-            return Object.values(item)
-                .join(",")
-                .toLowerCase()
-                .includes(search)
-          })
-        }
-
-        if (this.pagination.sortBy) {
-          items = items.sort((a, b) => {
-              const sortA = a[sortBy]
-              const sortB = b[sortBy]
-
-              if (descending) {
-                if (sortA < sortB) return 1
-                if (sortA > sortB) return -1
-                return 0
-              } else {
-                if (sortA < sortB) return -1
-                if (sortA > sortB) return 1
-                return 0
-              }
-          })
-        }
-
-        if (rowsPerPage > 0) {
-          items = items.slice(
-            (page - 1) * rowsPerPage,
-            page * rowsPerPage
-          )
-        }
-        const total = items.length
-          
-        setTimeout(() => {
-            this.loading = false
-            resolve({
-              items,
-              total
-            })
-        }, 1000)
-      })
-    },
-    getItems (params) {
-			this.fetchData(params)
-			return this.itemsTmp
-    },
-    fetchData(paramsFromToChart){
-
-    	let paramsToBackEnd = {
-															defaultDay :  'default'
-														}
-			if (paramsFromToChart) {
-				paramsToBackEnd = paramsFromToChart
-			}
-
-    	post(config.API_URL + 'histories/transactions', paramsToBackEnd)
+    fetchData(params){
+    	post(config.API_URL + 'histories/transactions', params)
 				.then((res) => {
 					if(res.data && res.data.success){
-						this.itemsTmp = res.data.data
+						this.desserts = res.data.data
+						this.loading = false
+            this.$root.$emit('total-companies', this.desserts.length)
 					}
 				})
 				.catch((e) =>{
@@ -382,11 +298,7 @@ export default {
     toggleAll () {
       if (this.selected.length) this.selected = []
       else{
-      	if (this.desserts === undefined || this.desserts.length == 0) {
-	    		this.selected = this.itemsTmp.slice()
-	    	}else{
-	    		this.selected = this.desserts.slice()
-	    	}
+	    	this.selected = this.desserts.slice()
       }
     },
     changeSort (column) {
@@ -399,6 +311,7 @@ export default {
     },
     transactionEvent(event, item){
     	this.drawer = true
+      this.$root.$emit('disabled-transaction-item')
       this.eventType = event
       this.item = item
     },
@@ -415,13 +328,8 @@ export default {
                         title: 'Delete Item Successfully',
                         position: 'top right'
                       })
-
-          this.getDataFromApi(this.paramsSaveForEditSuccess)
-          .then(data => {
-            this.items = data.items
-            this.totalItems = data.total
-          })
-
+          this.loading = true
+          this.fetchData(this.params)
           this.dialog = false
         }
         
@@ -433,7 +341,8 @@ export default {
   },
 
   created(){
-  	this.fetchData()
+  	this.loading = true
+  	this.fetchData(this.params)
   }
 
 };
@@ -445,4 +354,15 @@ export default {
 		justify-content:center;
 		align-items:center;
 	}
+
+  .action-width{
+    min-width: 130px;
+    width: 130px;
+  }
+
+  .hover-icon{
+    &:hover{
+      color: blue;
+    }
+  }
 </style>

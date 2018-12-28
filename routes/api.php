@@ -74,6 +74,10 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
 	Route::get('delete-package', 'PackageAPIController@deletePackage');
+
+	Route::post('edit/package/{itemId}', 'PackageAPIController@editPackage');
+
+	Route::post('edit/setting/{itemId}', 'SettingAPIController@editSetting');
 });	
 
 

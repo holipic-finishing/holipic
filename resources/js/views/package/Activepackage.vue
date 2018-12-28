@@ -1,4 +1,5 @@
 <template>
+	<v-card class="h-100 position-relative">
 	<v-navigation-drawer
       fixed
       v-model="drawerRight"
@@ -26,7 +27,6 @@
         </v-list>  -->
  		<v-form ref="form" @submit.prevent="savePackageAdd" v-show="check == 'add'">
 			<v-list two-line>
-	           <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 	           	<v-list-tile class="height-80">
 			        <v-list-tile-content class="h-100">
 			          <v-list-tile-title class="content-flex-end h-100">
@@ -244,14 +244,15 @@
 			    <v-divider class="no-mg-bottom"></v-divider>
 			   	
 			    <v-flex xs12 sm12 class="style-flex fix-style-flex">
-					<v-btn color="info" type="submit">SAVE</v-btn>							
-					<v-btn @click.stop="stopdrawerRight()">Close</v-btn>
+					<v-btn color="info" type="submit">SAVE</v-btn>	
 				</v-flex>
+
 	        </v-list>  
    		</v-form>
 
    		<v-form ref="form1" @submit.prevent="savePackagesSetting" v-show="check == 'setting'"> 
 	        <v-list two-line>
+	        	<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 				<v-list-tile class="height-80">
 					<v-list-tile-content class="h-100">
 						<v-list-tile-title class="content-flex-end h-100">
@@ -262,12 +263,14 @@
 								placeholder="0.00"
 								:rules="[rules.required, rules.number]"	
 								v-model="data.expiration_date"
-								:disabled="key == 8 ? false : true"
+								:disabled="key == 1 ? false : true"
+								@blur="editSetting('expiration_date', data.expiration_date)"
+								@keyup.enter="editSetting('expiration_date', data.expiration_date)"
 								outline
 								></v-text-field>	
 							</span>
 							<span class="position-item fix-position-item">
-								<v-btn flat icon @click="unDisableItem(8)"><v-icon small>fas fa-marker</v-icon></v-btn>
+								<v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
 							</span>
 						</v-list-tile-title>
 					</v-list-tile-content>
@@ -284,12 +287,14 @@
 								placeholder="0.00"
 								:rules="[rules.required, rules.decimal]"
 								v-model="data.card_fee"
-								:disabled="key == 9 ? false : true"
+								:disabled="key == 2 ? false : true"
+								@blur="editSetting('card_fee', data.card_fee)"
+								@keyup.enter="editSetting('card_fee', data.card_fee)"
 								outline
 								></v-text-field>
 							</span>
 							<span class="position-item fix-position-item">
-								<v-btn flat icon @click="unDisableItem(9)"><v-icon small>fas fa-marker</v-icon></v-btn>
+								<v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
 							</span>
 						</v-list-tile-title>
 					</v-list-tile-content>
@@ -306,12 +311,14 @@
 								placeholder="0.00"
 								:rules="[rules.required, rules.decimal]"
 								v-model="data.bonus"
-								:disabled="key ==10 ? false : true"
+								:disabled="key == 3 ? false : true"
+								@blur="editSetting('bonus', data.bonus)"
+								@keyup.enter="editSetting('bonus', data.bonus)"
 								outline
 								></v-text-field>
 							</span>
 							<span class="position-item fix-position-item">
-								<v-btn flat icon @click="unDisableItem(10)"><v-icon small>fas fa-marker</v-icon></v-btn>
+								<v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
 							</span>
 						</v-list-tile-title>
 					</v-list-tile-content>
@@ -326,8 +333,14 @@
 								<v-switch
 								v-model="data.sms"
 								color="red"
-								hide-details>
+								hide-details
+								:disabled="key == 4 ? false : true"
+								@change="editSetting('sms', data.sms)"
+								>
 								</v-switch>
+							</span>
+							<span class="position-item fix-position-item">
+								<v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
 							</span>
 						</v-list-tile-title>
 					</v-list-tile-content>
@@ -342,22 +355,26 @@
 								<v-switch
 								v-model="data.email_service"
 								color="red"
-								hide-details>
+								hide-details
+								:disabled="key == 5 ? false : true"
+								@change="editSetting('email_service', data.email_service)"
+								>
 								</v-switch>
+							</span>
+							<span class="position-item fix-position-item">
+								<v-btn flat icon @click="unDisableItem(5)"><v-icon small>fas fa-marker</v-icon></v-btn>
 							</span>
 						</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 				<v-divider class="no-mg-bottom"></v-divider>
 
-			<v-flex xs12 sm12 class="style-flex fix-style-flex">	
-				<v-btn color="info" type="submit">SAVE</v-btn>						
-				<v-btn @click.stop="stopdrawerRight()">Close</v-btn>
-			</v-flex>
 	        </v-list> 
 	    </v-form> 
+
 	    <v-form ref="form2"  v-show="check == 'edit'"> 
 	        <v-list two-line>
+	        	<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 				<v-list-tile class="height-80">
 					<v-list-tile-content class="h-100">
 						<v-list-tile-title class="content-flex-end h-100">
@@ -370,7 +387,8 @@
 								outline
 								:disabled="key == 1 ? false : true"
 								:rules="[rules.required, rules.decimal]"
-								@keyup.enter="savePackagesUpdate('fee', data.fee)"
+								@blur="editItem('fee', data.fee)"
+								@keyup.enter="editItem('fee', data.fee)"
 								></v-text-field>
 							</span>
 							<span class="position-item">
@@ -393,6 +411,8 @@
 								:rules="[rules.required]"
 								:disabled="key == 2 ? false : true"
 								outline
+								@blur="editItem('package_name', data.package_name)"
+								@keyup.enter="editItem('package_name', data.package_name)"
 								></v-text-field>
 							</span>
 							<span class="position-item">
@@ -415,6 +435,8 @@
 								:rules="[rules.required]"
 								:disabled="key == 3 ? false : true"
 								outline
+								@blur="editItem('secure_storage', data.secure_storage)"
+								@keyup.enter="editItem('secure_storage', data.secure_storage)"
 								></v-text-field>
 							</span>
 							<span class="position-item">
@@ -437,6 +459,8 @@
 								:rules="[rules.required, rules.number]"
 								:disabled="key == 4 ? false : true"
 								outline
+								@blur="editItem('file_upload', data.file_upload)"
+								@keyup.enter="editItem('file_upload', data.file_upload)"
 								></v-text-field>
 							</span>
 							<span class="position-item">
@@ -459,6 +483,8 @@
 								:rules="[rules.required, rules.number]"
 								:disabled="key == 5 ? false : true"
 								outline
+								@blur="editItem('minimum_user', data.minimum_user)"
+								@keyup.enter="editItem('minimum_user', data.minimum_user)"
 								></v-text-field>
 							</span>
 							<span class="position-item">
@@ -481,6 +507,8 @@
 								:rules="[rules.required]"
 								:disabled="key == 6 ? false : true"
 								outline
+								@blur="editItem('max_user', data.max_user)"
+								@keyup.enter="editItem('max_user', data.max_user)"
 								></v-text-field>
 							</span>
 							<span class="position-item">
@@ -503,6 +531,8 @@
 								:rules="[rules.required]"
 								:disabled="key == 7 ? false : true"
 								outline
+								@blur="editItem('short_description', data.short_description)"
+								@keyup.enter="editItem('short_description', data.short_description)"
 								></v-text-field>
 							</span>
 							<span class="position-item">
@@ -513,10 +543,6 @@
 				</v-list-tile>
 				<v-divider class="no-mg-bottom"></v-divider>
 
-			<v-flex xs12 sm12 class="style-flex fix-style-flex">
-				<v-btn color="info" type="submit">SAVE</v-btn>							
-				<v-btn @click.stop="stopdrawerRight()">Close</v-btn>
-			</v-flex>
 	        </v-list> 
 	    </v-form>   
         <!-- <v-list dense>
@@ -527,8 +553,12 @@
 		          	</v-list-tile-action>
 	        </v-list-tile>
 	 	</v-list> -->
- </v-navigation-drawer>
+	 	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">						
+			<v-btn @click.stop="stopdrawerRight()">Close</v-btn>
+		</v-card-actions>
 
+ </v-navigation-drawer>
+</v-card>
 </template>
 
 <script>
@@ -601,52 +631,124 @@ export default {
       		this.key = key
       	},
 
-      	savePackagesSetting(){
-      		if (this.$refs.form1.validate()) {
-      			let url = config.API_URL+'packages/'+this.data.id
-      		 	put(url,this.data)
-      		 	.then((res) => {
-      		 		 if(res.data && res.data.success){
-	                    setTimeout(function(){
-				            Vue.notify({
-				                group: 'loggedIn',
-				                type: 'success',
-				                text: 'Setting Package Success!'
-				            });
-					    },500);
-	                    this.drawerRight = false
-	                    this.$root.$emit('reload-table', true)
-                	}
-      		 	})
-      		 	.catch((err) =>{
-      		 		console.log(err)
-      		 	})
-      		}
-      	},
+      	editItem(field_name, value){
+
+	      var field = {
+	        field_name: field_name,
+	        value: value
+	      }
+
+	      // if(field_name === 'dated'){
+	      //   let date = new Date(value)
+	      //   let dateFormated = this.$moment(date).format('YYYY-MM-DD')
+	      //   field.value = dateFormated
+	      //   this.menu = false
+	      // }
+
+	      this.fetchData(field)
+
+	    },
+      	
+	    fetchData(field){
+	    	post(config.API_URL + 'edit/package/' + this.data.id, field)
+			.then((res) => {
+				if(res.data && res.data.success){
+		            this.alertStt = true
+		            this.alertType = 'success'
+		            this.alertMes = 'Update Successfully'					
+		            setTimeout(() => {this.alertStt = false}, 1500)
+		            this.key = 0
+							this.$root.$emit('editItemSucess')
+							// this.$root.$emit('closeDrawerItem', false)
+						}
+					})
+			.catch((e) =>{
+						this.alertStt = true
+		                this.alertType = 'error'
+		                this.alertMes = 'System Error Occurred'         
+		        		setTimeout(() => {this.alertStt = false}, 1500)
+					})
+
+	    },
+
+	    editSetting(field_name, value){
+	    	var field = {
+	    		field_name: field_name,
+	    		value: value
+	    	}
+
+	    	this.fetchDataSetting(field)
+	    },
+
+	    fetchDataSetting(field){
+	    	post(config.API_URL + 'edit/setting/' + this.data.id, field)
+			.then((res) => {
+				if(res.data && res.data.success){
+		            this.alertStt = true
+		            this.alertType = 'success'
+		            this.alertMes = 'Update Successfully'					
+		            setTimeout(() => {this.alertStt = false}, 1500)
+		            this.key = 0
+							this.$root.$emit('editItemSucess')
+							// this.$root.$emit('closeDrawerItem', false)
+						}
+					})
+			.catch((e) =>{
+						this.alertStt = true
+		                this.alertType = 'error'
+		                this.alertMes = 'System Error Occurred'         
+		        		setTimeout(() => {this.alertStt = false}, 1500)
+					})
+	    },
+
+      	// savePackagesSetting(){
+      	// 	if (this.$refs.form1.validate()) {
+      	// 		let url = config.API_URL+'packages/'+this.data.id
+      	// 	 	put(url,this.data)
+      	// 	 	.then((res) => {
+      	// 	 		 if(res.data && res.data.success){
+	      //               setTimeout(function(){
+				   //          Vue.notify({
+				   //              group: 'loggedIn',
+				   //              type: 'success',
+				   //              text: 'Setting Package Success!'
+				   //          });
+					  //   },500);
+	      //               this.drawerRight = false
+	      //               this.$root.$emit('reload-table', true)
+	      //               this.alertMes = 'Setting Package Success!'
+       //          	}
+      	// 	 	})
+      	// 	 	.catch((err) =>{
+      	// 	 		console.log(err)
+      	// 	 	})
+      	// 	}
+      	// },
       
-      	savePackagesUpdate(field, value){
+      	// savePackagesUpdate(field, value){
       		
-      		if (this.$refs.form2.validate()) {
-      			let url = config.API_URL+'packages/'+this.data.id
-      		 	put(url,this.data)
-      		 	.then((res) => {
-      		 		 if(res.data && res.data.success){
-	                    setTimeout(function(){
-				            Vue.notify({
-				                group: 'loggedIn',
-				                type: 'success',
-				                text: 'Update Packages Success!'
-				            });
-					    },500);
-	                    this.drawerRight = false
-	                    this.$root.$emit('reload-table', true)
-                	}
-      		 	})
-      		 	.catch((err) =>{
-      		 		console.log(err)
-      		 	})
-      		}
-      	}
+      	// 	if (this.$refs.form2.validate()) {
+      	// 		let url = config.API_URL+'packages/'+this.data.id
+      	// 	 	put(url,this.data)
+      	// 	 	.then((res) => {
+      	// 	 		 if(res.data && res.data.success){
+	      //               setTimeout(function(){
+				   //          Vue.notify({
+				   //              group: 'loggedIn',
+				   //              type: 'success',
+				   //              text: 'Update Packages Success!'
+				   //          });
+					  //   },500);
+	      //               this.drawerRight = false
+	      //               this.$root.$emit('reload-table', true)
+	      //               this.alertMes = 'Update Packages Success!'
+       //          	}
+      	// 	 	})
+      	// 	 	.catch((err) =>{
+      	// 	 		console.log(err)
+      	// 	 	})
+      	// 	}
+      	// }
 	},
 	mounted(){
 		this.$root.$on('change-status', res => {
@@ -664,6 +766,7 @@ export default {
  
     	})
 	}
+
 }
 </script>
 

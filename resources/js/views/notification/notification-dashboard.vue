@@ -6,7 +6,6 @@
 			:closeable="true"
 			:reloadable="true"
 			:fullScreen="true"
-			
 			colClasses="xl12 lg12 md12 sm12 xs12"
 		>
 		

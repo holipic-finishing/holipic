@@ -55,7 +55,7 @@ class UserRepository extends BaseRepository
         return User::class;
     }
 
-    public function findUserIsAdminFromEmail($email)
+    public function findUserIsExits($email)
     {
         $this->skipPresenter();
         return $this->scopeQuery(function($query) use ($email){

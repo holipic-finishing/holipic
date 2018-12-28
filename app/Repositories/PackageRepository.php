@@ -95,11 +95,11 @@ class PackageRepository extends BaseRepository
             $packages[$key]['card_fee'] = $value['setting']['card_fee'];
             $packages[$key]['bonus'] = $value['setting']['bonus'];
             $packages[$key]['sms'] = $value['setting']['sms'];  
+            $packages[$key]['email_service'] = $value['setting']['email_service'];  
             $packages[$key]['package_id'] = $value['setting']['package_id'];  
         }
 
-
-        return $packages;
+        return $packages; 
     }
 
 
@@ -111,7 +111,7 @@ class PackageRepository extends BaseRepository
                     'full_description'  => isset($attributes['full_description']) ? $attributes['full_description'] : '',
                     'fee'               => $attributes['fee'],
                     'secure_storage'    => $attributes['secure_storage'],
-                    'file_upload'       => $attributes['secure_storage'],
+                    'file_upload'       => $attributes['file_upload'],
                     'minimum_user'      => $attributes['minimum_user'],
                     'max_user'          => $attributes['max_user'] 
             ]);
@@ -122,10 +122,11 @@ class PackageRepository extends BaseRepository
                     'card_fee'         => $attributes['card_fee'],
                     'bonus'            => $attributes['bonus'],
                     'sms'              => $attributes['sms'],
+                    'email_service'    => $attributes['email_service'],
                     'package_id'       => $attributes['package_id']
                 ]);
 
-        return $packages;
+        return $packages; 
 
     }
 

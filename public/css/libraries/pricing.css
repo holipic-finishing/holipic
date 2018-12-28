@@ -38,6 +38,9 @@
     right: 20px;
     bottom: 35px;
 }
+.section-pricing .common-pricing-box .btn-buynow:hover {
+	opacity: 0.8;
+}
 .section-pricing .common-pricing-box .btn-buynow.btn-enterprise {
 	background-color: #ffb70d;
 }

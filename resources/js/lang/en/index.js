@@ -15,7 +15,7 @@ export default {
   dashboardOverview: 'Dashboard Overview',
   dashboardv1: 'Dashboard V1',
   dashboardv2: 'Dashboard V2',
-  companymanagement: 'Company Management',
+  companymanagement: 'Companies Management',
   horizontalMenu: 'Horizontal Menu',
   pages: 'Pages',
   gallery: 'Gallery',

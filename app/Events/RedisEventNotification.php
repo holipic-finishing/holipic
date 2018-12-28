@@ -22,9 +22,10 @@ class RedisEventNotification implements ShouldBroadcast
      */
 
     public $notification;
-    public function __construct(Notification $mNotification)
+    
+    public function __construct(Notification $notification)
     {
-        $this->notification = $mNotification;
+        $this->notification = $notification;
     }
 
     /**

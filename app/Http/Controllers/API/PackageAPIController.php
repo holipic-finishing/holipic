@@ -63,7 +63,7 @@ class PackageAPIController extends AppBaseController
             'full_description'  => isset($input['full_description']) ? $input['full_description'] : '',
             'fee'               => $input['fee'],
             'secure_storage'    => $input['secure_storage'],
-            'file_upload'       => $input['secure_storage'],
+            'file_upload'       => $input['file_upload'],
             'minimum_user'      => $input['minimum_user'],
             'max_user'          => $input['max_user'], 
         ];
@@ -76,6 +76,7 @@ class PackageAPIController extends AppBaseController
             'card_fee'         => $input['card_fee'],
             'bonus'            => $input['bonus'],
             'sms'              => $input['sms'],
+            'email_service'    => $input['email_service'],
             'package_id'       => $packages_id,
         ];
 

@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Nprogress from 'nprogress'
-
 // session components
-
 import AppLogin from '../views/session/AppLogin.vue';
 import SignUpOne from '../views/session/SignUpOne.vue';
 import LoginOne from '../views/session/LoginOne.vue';
@@ -11,17 +9,15 @@ import LoginOne from '../views/session/LoginOne.vue';
 import ForgotPassword from '../views/session/ForgotPassword.vue';
 import ResetPassword from '../views/session/ResetPassword.vue';
 
-
-
-//-----------------------------------------
-//----  File Component of Super Admin   ---
-//-----------------------------------------
-//** All File Components will import below
-
+// Dashboard components
 import mini from '../container/MiniSidebarLayout.vue'
 import Ecommerce   from'../views/dashboard/Ecommerce';
-import Company from '../views/company/index';
-import CompanyChart from '../views/company/information-chart';
+
+// Companies Component
+// import UserWidgets   from'../views/users/UsersList';
+import Companies from '../views/companies/Companies';
+import CompanyChart from '../views/companies/information-chart';
+
 import PackageIndex from '../views/package/Index';
 
 // import Setting from '../views/setting/setting'
@@ -30,7 +26,6 @@ import page404 from '../views/pages/page404'
 import UserPass from '../views/users/ChangePassword'
 import HistoriesTransaction from '../views/transactions/Histories.vue'
 import IndexCoupon from '../views/coupon-code/Index.vue'
-
 
 //-----------------------------------------
 //----  File Component of Admin Company  --
@@ -41,7 +36,6 @@ import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.
 import Notification from '../views/notification/notification.vue'
 
 Vue.use(Router)
-
 
 var routers = [];
 routers = [
@@ -133,8 +127,8 @@ routers = [
 	        	}
       		},
 		    {
-		        path: '/default/widgets/mana-company',
-		        component: Company,
+		        path: '/default/widgets/companies',
+		        component: Companies,
 		        meta: {
 		        	requiresAuth: true,
 		        	adminAuth:true,

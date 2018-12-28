@@ -99,9 +99,15 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
 	Route::get('delete-package', 'PackageAPIController@deletePackage');
+
+	Route::resource('exchange_rates', 'ExchangeRateAPIController');
+
+	Route::resource('transaction_exchanges', 'TransactionExchangeAPIController');
 	
 
 });	
+
+
 
 
 

@@ -1,7 +1,11 @@
 // Sidebar Routers
 export const menus = {
 	'message.general': [
-		//Sidebar Router Admin Company 
+		    /////////////////////////////////////////////
+		   ///////								  //////
+		  ///////  SIDEBAR ROUTER ADMIN COMPANY  //////
+		 ///////							    //////
+		/////////////////////////////////////////////
 		{
 			action: 'zmdi-view-dashboard',
 			title: 'message.dashboard',
@@ -11,9 +15,12 @@ export const menus = {
 			role_id : 2
 		},
 		
-		
+		 	/////////////////////////////////////////////
+		   ///////								  //////
+		  ///////  SIDEBAR ROUTER SUPER ADMIN    //////
+		 ///////							    //////
+		/////////////////////////////////////////////
 
-		// Sidebar Router Super Admin 
 		{
 			action: 'zmdi-view-dashboard',
 			title: 'message.dashboard',

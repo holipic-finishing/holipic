@@ -41,7 +41,7 @@
 				>
 				</stats-card-v2>
 			</v-layout>
-		</v-container>		
+	</v-container>		
 </template>
 
 <script>

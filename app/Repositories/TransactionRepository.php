@@ -874,7 +874,7 @@ class TransactionRepository extends BaseRepository
 
         $results = $this->transform($results);
 
-        return $results;
+        return $results; 
     }  
 
     /**

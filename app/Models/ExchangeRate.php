@@ -18,7 +18,9 @@ class ExchangeRate extends Model
 {
 
     public $table = 'exchange_rates';
-    
+
+    public $timestamps = false;
+
 
     public $fillable = [
         'from_currency_id',

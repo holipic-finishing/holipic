@@ -18,7 +18,7 @@ class TransactionExchange extends Model
 
     public $table = 'transaction_exchanges';
     
-
+    public $timestamps = false;
     public $fillable = [
         'transaction_id',
         'exchange_rate_to_dollar'

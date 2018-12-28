@@ -874,7 +874,7 @@ class TransactionRepository extends BaseRepository
 
         $results = $this->transform($results);
 
-        return $results;
+        return $results; 
     }  
 
     /**
@@ -1004,8 +1004,6 @@ class TransactionRepository extends BaseRepository
                                     ->orderBy('dated', 'desc');
 
         }                            
-
-        // dd($transactions->toSql(), $transactions->getBindings());
         return $transactions->paginate($perPage); 
 
     }

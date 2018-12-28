@@ -14,18 +14,19 @@ import mini from '../container/MiniSidebarLayout.vue'
 import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // Companies Component
-// import UserWidgets   from'../views/users/UsersList';
+
 import Companies from '../views/companies/Companies';
 import CompanyChart from '../views/companies/information-chart';
 
 import PackageIndex from '../views/package/Index';
 
-// import Setting from '../views/setting/setting'
+
 import UserManagement from '../views/superadmin-user/user-management'
 import page404 from '../views/pages/page404'
 import UserPass from '../views/users/ChangePassword'
 import HistoriesTransaction from '../views/transactions/Histories.vue'
 import IndexCoupon from '../views/coupon-code/Index.vue'
+
 
 //-----------------------------------------
 //----  File Component of Admin Company  --
@@ -33,6 +34,7 @@ import IndexCoupon from '../views/coupon-code/Index.vue'
 //** All File Components will import below
 
 import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
+import Notification from '../views/notification/notification.vue'
 
 Vue.use(Router)
 
@@ -72,9 +74,9 @@ routers = [
 		redirect: '/default/dashboard/index',
 		meta: { requiresAuth: true },
 		children: [
-			//-------------------------------
-			//----- Router Company Admin ----
-			//-------------------------------
+			//------------------------------------------------------------------------------------
+			//---------------------------- ROUTER COMPANY ADMIN ----------------------------------
+			//------------------------------------------------------------------------------------
 			{
 				path: '/default/company/dashboard/index',
 	         	component: DashboardCompany,
@@ -87,7 +89,7 @@ routers = [
 	        	}
 			},
 			{
-		        path: '/default/users/change-password',
+		        path: '/default/company/change-password',
 		        component: UserPass,
 		        meta: {
 		            requiresAuth: true,
@@ -97,12 +99,23 @@ routers = [
 		            breadcrumb: 'Users / Change Password'
 		        }
 		    },
+			{
+				path: '/default/company/show-notification/:id',
+		        component: Notification,
+		        name : 'CompnayNotification',
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:false,
+	         		companyAuth:true,
+		            title: 'message.notification',
+		            breadcrumb: 'Users / Notification'
+		        }
+			},
 
 
-
-			//-------------------------------
-			//----- Router Super Admin  -----
-			//-------------------------------
+			//--------------------------------------------------------------------------
+			//------------------------- ROUTER SUPER ADMIN  ----------------------------
+			//--------------------------------------------------------------------------
       		{
 	         	path: '/default/dashboard/index',
 	         	component: Ecommerce,
@@ -201,6 +214,18 @@ routers = [
 		            breadcrumb: 'Coupon Code / Histories List'
 		        }
 		    },
+		    {
+				path: '/default/users/show-notification/:id',
+		        component: Notification,
+		        name : 'AdminNotification',
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:true,
+	         		companyAuth:false,
+		            title: 'message.notification',
+		            breadcrumb: 'Users / Notification'
+		        }
+			},
       	]	
 	},
 	{
@@ -238,9 +263,9 @@ var router = new Router({
 // });
 
 
-// ----------------------------------------------
-// -- Config Navigations guards before each v2 --
-// ----------------------------------------------
+// ------------------------------------------------------------------------------------
+// ------------------ Config Navigations guards before each v2 ------------------------
+// ------------------------------------------------------------------------------------
 
 router.beforeEach((to, from, next) => { 
 	Nprogress.start()

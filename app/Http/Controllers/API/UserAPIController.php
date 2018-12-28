@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Response;
-use Lcobucci\JWT\Parser;
 use \Illuminate\Support\Facades\Hash;
+use Lcobucci\JWT\Parser;
+use Response;
 
 /**
  * Class UserController
@@ -26,7 +26,7 @@ class UserAPIController extends AppBaseController
     private $userRepository;
     private $notificationRepository;
 
-    public function __construct(UserRepository $userRepo,NotificationRepository $notificationRepo)
+    public function __construct(UserRepository $userRepo, NotificationRepository $notificationRepo)
     {
         $this->userRepository = $userRepo;
         $this->notificationRepository = $notificationRepo;

@@ -51,7 +51,7 @@ class LoginController extends BaseApiController
         $email = $credentials['email'];
 
         try{
-            $user = $this->userRepo->findUserIsAdminFromEmail($email);
+            $user = $this->userRepo->findUserIsExits($email);
             if (empty($user)) {
 
                 return [
@@ -111,7 +111,7 @@ class LoginController extends BaseApiController
         $email = $credentials['email'];
 
         try{
-            $user = $this->userRepo->findUserIsAdminFromEmail($email);
+            $user = $this->userRepo->findUserIsExits($email);
             if (empty($user)) {
 
                 return [

@@ -9,10 +9,10 @@
         </v-icon>
       </v-toolbar-side-icon>
     </v-toolbar>
-    <v-divider class="no-mg-bottom"></v-divider>
+    <v-divider class="mt-0 mb-0"></v-divider>
 	  
 	  <!-- Show Item -->
-    <v-list v-if="itemToLoad && eventType === 'show'">
+    <v-list v-if="itemToLoad && eventType === 'show'" class="heigth-list-title">
 			
 			<v-list-tile>
 				<v-list-tile-content>
@@ -22,7 +22,7 @@
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
 			
 			<v-list-tile>
@@ -33,7 +33,7 @@
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
 
 			<v-list-tile>
@@ -44,7 +44,7 @@
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
 
 			<v-list-tile>
@@ -55,7 +55,7 @@
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
 	
 			<v-list-tile>
@@ -66,7 +66,7 @@
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
 				
 			<v-list-tile>
@@ -77,7 +77,7 @@
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
 
 			<v-list-tile>
@@ -91,7 +91,7 @@
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
 
 			<v-list-tile v-if="itemToLoad.user && itemToLoad.user.package">
@@ -102,7 +102,7 @@
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
 
 			<v-list-tile v-if="itemToLoad.user">
@@ -113,7 +113,7 @@
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
 
 			<v-list-tile>
@@ -124,7 +124,7 @@
           </v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
 
 			<v-list-tile v-if="itemToLoad.currency">
@@ -135,13 +135,13 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
     </v-list>
     <!-- End Item Show -->
 
 		<!-- Edit Item -->
-		<v-list v-if="itemToLoad && eventType === 'edit'">
+		<v-list v-if="itemToLoad && eventType === 'edit'" class="heigth-list-title">
       <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 
     	<v-list-tile class="height-80">
@@ -166,7 +166,7 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
       <v-list-tile class="height-80">
         <v-list-tile-content class="h-100">
@@ -190,7 +190,7 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
       <v-list-tile class="height-80">
         <v-list-tile-content class="h-100">
@@ -224,7 +224,7 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
       <v-list-tile class="height-80">
         <v-list-tile-content class="h-100">
@@ -246,7 +246,7 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
 
       <v-list-tile class="height-80">
         <v-list-tile-content class="h-100">
@@ -269,7 +269,7 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-divider class="no-mg-bottom"></v-divider>
+      <v-divider class="mt-0 mb-0"></v-divider>
       <v-spacer></v-spacer>
 
     </v-list>
@@ -343,9 +343,7 @@ export default {
           this.alertStt = true
           this.alertType = 'success'
           this.alertMes = 'Update Successfully'					
-          setTimeout(() => {
-            this.alertStt = false
-					}, 1500)
+          setTimeout(() => {this.alertStt = false}, 1500)
           this.key = 0
 					this.$root.$emit('editItemSucess')
 					// this.$root.$emit('closeDrawerItem', false)
@@ -355,9 +353,7 @@ export default {
 				this.alertStt = true
         this.alertType = 'error'
         this.alertMes = 'System Error Occurred'         
-        setTimeout(() => {
-          this.alertStt = false
-        }, 1500)
+        setTimeout(() => {this.alertStt = false}, 1500)
 			})
 
     }

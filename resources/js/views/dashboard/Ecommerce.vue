@@ -60,7 +60,7 @@
 				</div>
 			</stats-card-v2>
 
-		</v-layout> -->
+		</v-layout>
 		<!-- End Dash Cards -->
 
 			<!-- Sales -->
@@ -375,6 +375,7 @@
 				</div>
 
 				<div class="card-body">
+					
 					<div class="row total-default">
 						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
 							<div class="style-card w-100">

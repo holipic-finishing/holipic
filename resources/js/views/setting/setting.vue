@@ -48,6 +48,7 @@
 						            v-model="pp.setting.fee"	
 						            placeholder="0.00"
 						            append-outer-icon="edit"
+						            disabled
 						          ></v-text-field></td>
 						    </tr>
 						    <tr>
@@ -190,7 +191,7 @@ export default {
 	    rules: {
 		        required: value => !!value || 'Required.',
 	          	decimal: value => {
-		            const abc = /^[1-9]\d*(\.\d+)?$/
+		            const abc = /^[0-9]\d*(\.\d+)?$/
 		            return abc.test(value) || 'Please input number.'
 	          	},
 	          	number: value => {

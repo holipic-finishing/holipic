@@ -90,6 +90,12 @@ class Transaction extends Model
         return $this->belongsTo(\App\Models\Currency::class, 'currency_id', 'id');
     }
     
+
+    public function transactionexchange()
+    {
+        return $this->hasOne(\App\Models\TransactionExchange::class, 'transaction_id', 'id');
+    }
+    
     public static function exchange($model){
 
         if($model->currency_id == 1){

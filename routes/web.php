@@ -57,17 +57,16 @@ Route::get('test-job', function() {
 });
 
 Route::get('abc', function() {
-	dd(public_path());
-	$array = array(
-  'zero'  => '0',
-  'one'   => '1',
-  'two'   => '2',
-  'three' => '3',
-);
-$res = array_slice($array, 0, 3, true) +
-    array("asda" => "my_value") +
-    array_slice($array, 3, count($array) - 1, true) ;
-dd($res);
+    // $transactions = \App\Models\Transaction::select('id','title','dated','amount','type')->
+    // 									whereHas('companyUser', function($query) {
+    //                                         $query->where('owner_id',51);
+    //                                     })
+    // 									->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '2018')
+                                        
+    // 									->get()->toArray();
+    // dd($transactions);
+    //                                     // ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
+    //                                     // ->orderBy('dated', 'desc');
 
 });
 

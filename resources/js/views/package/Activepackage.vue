@@ -264,7 +264,7 @@
 								v-model="data.expiration_date"
 								:disabled="key == 8 ? false : true"
 								outline
-								></v-text-field>
+								></v-text-field>	
 							</span>
 							<span class="position-item fix-position-item">
 								<v-btn flat icon @click="unDisableItem(8)"><v-icon small>fas fa-marker</v-icon></v-btn>
@@ -356,7 +356,7 @@
 			</v-flex>
 	        </v-list> 
 	    </v-form> 
-	    <v-form ref="form2" @submit.prevent="savePackagesUpdate" v-show="check == 'edit'"> 
+	    <v-form ref="form2"  v-show="check == 'edit'"> 
 	        <v-list two-line>
 				<v-list-tile class="height-80">
 					<v-list-tile-content class="h-100">
@@ -625,9 +625,7 @@ export default {
       	},
       
       	savePackagesUpdate(field, value){
-      		if(field == 'fee'){
-      			alert(field)
-      		}
+      		
       		if (this.$refs.form2.validate()) {
       			let url = config.API_URL+'packages/'+this.data.id
       		 	put(url,this.data)
@@ -719,6 +717,14 @@ h4 {
 .fix-position-item{
 	right: 0px;
     position: absolute;
+}
+
+.content-flex-end {
+    display: flex;
+    justify-content: start;
+    align-items: baseline;
+    padding-top: 6px;
+    position: relative;
 }
 
 </style>

@@ -8,7 +8,8 @@
 			:fullScreen="true"	
 			colClasses="xl12 lg12 md12 sm12 xs12"
 		>
-			<v-divider></v-divider>      
+			<v-divider></v-divider>
+			<vue-perfect-scrollbar style="height:404px" :settings="settings">      
 	          	<div v-for="valueTime,indexTime in times">
 	          		 <v-container fluid grid-list-lg>
 			            <v-layout row>
@@ -37,6 +38,7 @@
 
 		            <v-divider></v-divider>
 		        </div>
+		    </vue-perfect-scrollbar>
 
 		        <v-container fluid grid-list-lg>
 		        <div class="more">
@@ -98,19 +100,19 @@ export default {
 			activityLog: [],
 			times: [],
 			sheet:'',
-			paginator: {
-                perPageDay: 2,
-                page: 1,
-
-        	},
-
+			perPage: 2,
         	firstpage: {
         		firstPageDay:1,
         		firstPageWeek:1,
         		firstPageMonth:1,
         		firstPageYear:1,
         	},
-        	pagination:{}
+        	pagination:{},
+        	settings: {
+		        maxScrollbarLength: 160
+		    },
+		    user: JSON.parse(localStorage.getItem('user')),
+		    url: config.API_URL+'activity-log/show'
 		}
 	},
 
@@ -125,21 +127,18 @@ export default {
 	methods: {
 
 		getActiveLog() {
-			var user = JSON.parse(localStorage.getItem('user'))
-			
-			let url = config.API_URL+'activity-log/show'
-
+		
 			let params = {
-                perPage: this.paginator.perPageDay,
-                userId: user.id,
-                page: this.paginator.page
+                perPage: this.perPage,
+                userId: this.user.id,
+                page: 1
             }	
 
-			getWithData(url, params)
+			getWithData(this.url, params)
 			.then(response =>{
 				if(response && response.data.success) {
-
 					this.activityLog = response.data.data[0]
+
 					this.times = response.data.data[1].data
 					
 					this.pagination = {
@@ -148,11 +147,11 @@ export default {
 						from_page: response.data.data[1].from,
 						to_page: response.data.data[1].to,
 						total_page: response.data.data[1].total,
-						path_page: response.data.data[1].path,
-						first_link: response.data.data[1].first_page_url,
-						last_link: response.data.data[1].last_page_url,
-						prev_link: response.data.data[1].prev_page_url,
-						next_link: response.data.data[1].next_page_url
+						// path_page: response.data.data[1].path,
+						// first_link: response.data.data[1].first_page_url,
+						// last_link: response.data.data[1].last_page_url,
+						// prev_link: response.data.data[1].prev_page_url,
+						// next_link: response.data.data[1].next_page_url
 
 					}
 					console.log(response.data.data[1].current_page)
@@ -165,23 +164,23 @@ export default {
 		},
 
 		moreActiveLog(n){
-			this.firstpage.firstPageDay = n 
-			var page = this.firstpage.firstPageDay
 
-			var user = JSON.parse(localStorage.getItem('user'))
-
-			let url = config.API_URL+'activity-log/show'
+			if(n > this.pagination.last_page)
+			{
+				n = this.pagination.last_page
+			}
 
 			let params = {
-                perPage: this.paginator.perPageDay,
-                userId: user.id,
+                perPage: this.perPage,
+                userId: this.user.id,
                 page: n
             }
 
-            getWithData(url, params)
+            getWithData(this.url, params)
 			.then(response =>{
 				if(response && response.data.success) {
 					this.activityLog = response.data.data[0]
+
 					this.times = response.data.data[1].data
 					
 					this.pagination = {
@@ -191,7 +190,6 @@ export default {
 						to_page: response.data.data[1].to,
 						total_page: response.data.data[1].total,
 						path_page: response.data.data[1].path,
-
 						first_link: response.data.data[1].first_page_url,
 						last_link: response.data.data[1].last_page_url,
 						prev_link: response.data.data[1].prev_page_url,
@@ -199,10 +197,6 @@ export default {
 
 					}
 
-					// if(response.data.data[1].data.length > 0) {
-					// 	this.times.push(response.data.data[1].data[0])
-						
-					// }
 				}
 			})	
 		}

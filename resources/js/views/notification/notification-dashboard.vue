@@ -9,7 +9,9 @@
 			
 			colClasses="xl12 lg12 md12 sm12 xs12"
 		>
+		
 			<v-list two-line>
+				<vue-perfect-scrollbar style="height:447px" :settings="settings">
 				<template v-for="(notification, index) in notifications">
 					<v-list-tile :key="index" :class="!notification.is_read ? 'style-content not-read' : 'style-content'">
 					<div class="product-img mr-3">
@@ -47,7 +49,7 @@
 
 					</v-list-tile>
 				</template>
-
+				</vue-perfect-scrollbar>
 					<div class="paging">
 					
 					<div class="paging-bottom" v-if="notifications && notifications.length">
@@ -89,6 +91,7 @@
 					</div>
 					
 			</v-list>
+		
 		</app-card>
 
 	</div>
@@ -119,6 +122,9 @@ export default {
         	longPaginatorEachSize: 2,
             existPageBefore: false,
             existPageAfter: false,
+            settings: {
+		        maxScrollbarLength: 160
+		    }
     	}
   	},
   	components:{

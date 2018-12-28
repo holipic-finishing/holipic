@@ -147,7 +147,7 @@ class NotificationAPIController extends AppBaseController
     */ 
     public function getNotificationWithParams(Request $request){
 
-        $perPage = $request->input('perPage', 10);
+        $perPage = $request->input('perPage', 6);
 
          $notifications = $this->notificationRepository->getNotificationByUserId($perPage,$request['user_id']);
 

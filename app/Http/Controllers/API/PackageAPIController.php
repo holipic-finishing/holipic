@@ -207,4 +207,27 @@ class PackageAPIController extends AppBaseController
 
         return $this->sendResponse($request['id_packages'], 'Package deleted successfully');
     }
+
+    public function editPackage(Request $request, $itemId){
+
+        $input =  $request->all();
+
+        if (!$input['value']) {
+            return $this->sendError('This field could be not null');
+        }
+
+        $result = null;
+
+        $result = $this->packageRepository->update([
+            $input['field_name'] => $input['value']
+        ], $itemId);
+
+        if($result){
+
+            return $this->sendResponse([], 'Package updated successfully');
+        }else{
+            return $this->sendError('System Error Occurred');
+        }
+
+    }
 }

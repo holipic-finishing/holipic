@@ -905,82 +905,166 @@ class TransactionRepository extends BaseRepository
     } 
 
 
-     public function transactionHistoryDay($attributes,$perPage) {
+    /*
+    *  Target  : Function get all data in table transactions history by Day and, user_id
+    *  @params : array $attribute, int $perPage, array $serchBy
+    *  @return : Collection
+    */
+    public function transactionHistoryDay($attributes,$perPage,$searchBy) {
 
         $now     = \Carbon\Carbon::today()->format('Y-m-d');
+        
+        $user_id = $attributes['userId'];
 
-        $transactions = $this->model->select('id','title','dated','amount','type')
-                                    ->where(DB::raw('date(dated)'),$now)
-                                    ->where('company_id', $attributes['companyId'])
-                                    ->orderBy('dated', 'desc');
+        if(!empty($searchBy['title'])){
+            $transactions = $this->model->select('id','title','dated','amount','type')
+                                         ->whereHas('companyUser', function($query) use ($user_id){
+                                            $query->where('owner_id',$user_id);
+                                        })
+                                        ->where('title','LIKE', '%'.$searchBy['title'].'%')
+                                        ->where(DB::raw('date(dated)'),$now)
+                                        ->orderBy('dated', 'desc');
 
+        }
+        else {
+            $transactions = $this->model->select('id','title','dated','amount','type')
+                                         ->whereHas('companyUser', function($query) use ($user_id){
+                                            $query->where('owner_id',$user_id);
+                                        })
+                                        ->where(DB::raw('date(dated)'),$now)
+                                        ->orderBy('dated', 'desc');
+        }
         return $transactions->paginate($perPage);                            
 
     }
 
-    public function transactionHistoryWeek($attributes,$perPage) {
+    /*
+    *  Target  : Function get all data in table transactions history by week and, user_id
+    *  @params : array $attribute, int $perPage, array $serchBy
+    *  @return : Collection
+    */
+    public function transactionHistoryWeek($attributes,$perPage ,$searchBy) {
 
         $startDay   = \Carbon\Carbon::today()->subDays(7)->format('Y-m-d');
 
         $endDay     = \Carbon\Carbon::today()->format('Y-m-d');
 
-        $transactions = $this->model->select('id','title','dated','amount','type')
-                                    ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                                    ->where('company_id', $attributes['companyId'])
-                                    ->orderBy('dated', 'desc');
-                                    // dd($transactions->get()->toArray());
+        $user_id = $attributes['userId'];
+
+        if(!empty($searchBy['title'])){
+             $transactions = $this->model->select('id','title','dated','amount','type')
+                                        ->whereHas('companyUser', function($query) use ($user_id){
+                                                $query->where('owner_id',$user_id);
+                                         })
+                                        ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+                                        ->where('title','LIKE', '%'.$searchBy['title'].'%')
+                                        ->orderBy('dated', 'desc');
+        }
+        else {
+            $transactions = $this->model->select('id','title','dated','amount','type')
+                                        ->whereHas('companyUser', function($query) use ($user_id){
+                                                $query->where('owner_id',$user_id);
+                                         })
+                                        ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+                                        ->orderBy('dated', 'desc');
+        }
         return $transactions->paginate($perPage);                            
 
     }
 
-    public function transactionHistoryMonth($attributes,$perPage) {
 
-         $month = \Carbon\Carbon::today()->format('Y-m');
+    /*
+    *  Target  : Function get all data in table transactions history by Month and, user_id
+    *  @params : array $attribute, int $perPage, array $serchBy
+    *  @return : Collection
+    */
+    public function transactionHistoryMonth($attributes,$perPage, $searchBy) {
+
+        $month = \Carbon\Carbon::today()->format('Y-m');
+
+        $user_id = $attributes['userId'];
+
+        if(!empty($searchBy['title'])){
+
+            $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->whereHas('companyUser', function($query) use ($user_id){
+                                        $query->where('owner_id',$user_id);
+                                    })
+                                    ->where('title','LIKE', '%'. $searchBy['title'] . '%')
+                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
+                                    ->orderBy('dated', 'desc');
+        }
+        else {
 
          $transactions = $this->model->select('id','title','dated','amount','type')
+                                    ->whereHas('companyUser', function($query) use ($user_id){
+                                        $query->where('owner_id',$user_id);
+                                    })
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
-                                    ->where('company_id', $attributes['companyId'])
                                     ->orderBy('dated', 'desc');
-                                    // dd($transactions->get()->toArray());
+
+        }                            
         return $transactions->paginate($perPage); 
 
     }
 
-    public function transactionHistoryYear($attributes,$perPage) {
+
+    /*
+    *  Target  : Function get all data in table transactions history by Year and, user_id
+    *  @params : array $attribute, int $perPage, array $serchBy
+    *  @return : Collection
+    */
+    public function transactionHistoryYear($attributes,$perPage, $searchBy) {
 
          $year = \Carbon\Carbon::today()->format('Y');
+         $user_id = $attributes['userId'];
+        if(!empty($searchBy['title'])){
 
-         $transactions = $this->model->select('id','title','dated','amount','type')
-                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
-                                    ->where('company_id', $attributes['companyId'])
-                                    ->orderBy('dated', 'desc');
+             $transactions = $this->model->select('id','title','dated','amount','type')
+                                        ->whereHas('companyUser', function($query) use ($user_id){
+                                            $query->where('owner_id',$user_id);
+                                        })
+                                        ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
+                                        ->where('title','LIKE', '%'.$searchBy['title'].'%')
+                                        ->orderBy('dated', 'desc');
 
-                                    // dd($transactions->get()->toArray());
+        } else { 
+            $transactions = $this->model->select('id','title','dated','amount','type')
+                                        ->whereHas('companyUser', function($query) use ($user_id){
+                                            $query->where('owner_id',$user_id);
+                                        })
+                                        ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
+                                        ->orderBy('dated', 'desc');
+        }
         return $transactions->paginate($perPage); 
 
     }
 
-
-    public function transactionHistory($attributes, $perPage){
+    /*
+    *  Target : Get all data in transaction history in array with key by "Day", "Week", "Month", "Year"
+    *  From : func: transactionHistoryDay, func:transactionHistoryWeek, func:transactionHistoryMonth, func:transactionHistoryYear
+    *  To : array $attributes, int $prerPage, array $searchBy
+    */ 
+    public function transactionHistory($attributes, $perPage, $searchBy){
 
         switch ($attributes['time']) {
             case 'Day':
-                $result = $this->transactionHistoryDay($attributes,$perPage);
+                $result = $this->transactionHistoryDay($attributes,$perPage, $searchBy);
                 return $result;
                 break;
 
             case 'Week':
-                $result = $this->transactionHistoryWeek($attributes,$perPage);
+                $result = $this->transactionHistoryWeek($attributes,$perPage, $searchBy);
                 return $result;
                 break;
 
             case 'Month':
-                $result = $this->transactionHistoryMonth($attributes,$perPage);
+                $result = $this->transactionHistoryMonth($attributes,$perPage, $searchBy);
                 return $result;
                 break;
 
             case 'Year':
-                $result = $this->transactionHistoryYear($attributes,$perPage);
+                $result = $this->transactionHistoryYear($attributes,$perPage, $searchBy);
                 return $result;
                 break;
             

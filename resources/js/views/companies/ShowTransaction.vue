@@ -18,29 +18,11 @@
 					
 					single-line
 					hide-details
-					@keyup="searchFilter()"
+					@blur="searchFilter(typeTime)"
 					></v-text-field>
 	    	</v-toolbar>
 	 	</v-list>
-	 	<!-- <v-list two-line>
-          <v-list-tile >
-            <v-list-tile-content>
-              	Transaction History
-            </v-list-tile-content>
-
-            <v-list-tile-content>
-              <input type="text" v-model="currentFilterValue" class="form-control input-style" placeholder="Search" @keyup="searchFilter()">
-            </v-list-tile-content>
-
-            <v-list-tile-action>
-            	<v-btn color="primary" fab small dark>
-            		<v-icon>search</v-icon>
-            	</v-btn>         
-            </v-list-tile-action>
-          </v-list-tile>
-        </v-list>  -->
- 
-		 	  <v-list-tile >
+		 	<v-list-tile >
             <v-list-tile-content>
          
 					<div class="custom-flex">
@@ -52,8 +34,7 @@
 					</nav>
 					<div class="justify-space-between w-30">
 						<div class="text-total text-xs-right">
-							<h4 class="primary--text mb-0">{{total}}$</h4>
-							
+							<h4 class="primary--text mb-0">{{ (!searchResult.length && on_search ==1) ? 0 : total}}$</h4>
 						</div>
 						</div>			
 					</div>
@@ -76,10 +57,10 @@
               </v-list-tile-action>
             </v-list-tile>
 
-            <v-list-tile>
+            <v-list-tile v-if="optionLoadView && optionLoadView.length">
             	<v-list-tile-content class="btn-style">
             		<app-section-loader :status="reload"></app-section-loader>
-					<button type="button" @click="addTenItem(typeTime)" class="btn btn-primary">More (50+) </button>
+					<button type="button" @click="addTenItem(typeTime)" class="btn btn-primary">More... </button>
 				</v-list-tile-content>
 			</v-list-tile>
         </v-list>
@@ -131,12 +112,22 @@ export default {
         		firstPageYear:1,
         	},
 
+        	first_page_search: {
+        		searchPageDay:0,
+        		searchPageWeek:0,
+        		searchPageMonth:0,
+        		searchPageYear:0,
+        	},
+
         	searchResult: [],
+        	user_id:'',
+        	search:'',
+        	on_search:0
 
     	}
   	},
   	created(){
-		this.typeTime = "Day"
+		this.typeTime = "Year"
 	},
 
   	mounted () {
@@ -146,21 +137,22 @@ export default {
   			this.typeTime = "Day"
   			this.reset()
   			this.company_id = data.companyId
-  			this.getData(data.companyId, this.paginator.page)
+  			this.user_id = data.userId
+  			this.makeParams()
+  			this.getData(data.userId, this.paginator.page, this.search)
   		})
   	},
 
   	methods: {
-
-
-		getData(id, page){
+		getData(id, page, search){
 
 			let url = config.API_URL+'transaction/history'
 
 			let params = {
                 perPage: this.paginator.perPageDay,
-                companyId: id,
-                page: page
+                userId: id,
+                page: page,
+                search:search
             }	
             
 			getWithData(url,params)
@@ -185,8 +177,6 @@ export default {
 					 		})
 					 		vm.total = total_revenue - total_expenditure
 					 	}
-
-		               
 		             });
 				}
 			})
@@ -198,38 +188,53 @@ export default {
 
 		switchTime(timevalue){
 			
-			let page = 0;
-
 			switch (timevalue) {
 			    case 'Day':
-			       		this.firstpage.firstPageDay = this.firstpage.firstPageDay + 1 
-			       		page = this.firstpage.firstPageDay
+			    		if(this.currentFilterValue == ''){
+			      	 		this.firstpage.firstPageDay = this.firstpage.firstPageDay + 1 
+			       			return this.firstpage.firstPageDay
+			    		} else {
+			    			this.first_page_search.searchPageDay = this.first_page_search.searchPageDay + 1
+			    			return this.first_page_search.searchPageDay
+			    		}
 			        break;
 			    case 'Week':
-			        	this.firstpage.firstPageWeek = this.firstpage.firstPageWeek + 1 
-			       		page = this.firstpage.firstPageWeek
+			    		if(this.currentFilterValue==''){
+				        	this.firstpage.firstPageWeek = this.firstpage.firstPageWeek + 1 
+				       		return this.firstpage.firstPageWeek
+			    		} else {
+			    			this.first_page_search.searchPageWeek = this.first_page_search.searchPageWeek + 1
+			    			return this.first_page_search.searchPageWeek
+			    		}
 			        break;
 			    case 'Month':
-			       		this.firstpage.firstPageMonth = this.firstpage.firstPageMonth + 1 
-			       		page = this.firstpage.firstPageMonth
+			    		if(this.currentFilterValue==''){	
+				       		this.firstpage.firstPageMonth = this.firstpage.firstPageMonth + 1 
+				       		return this.firstpage.firstPageMonth
+			    		} else {
+							this.first_page_search.searchPageMonth = this.first_page_search.searchPageMonth + 1
+			    			return this.first_page_search.searchPageMonth			    			
+			    		}
 			        break;
 			    case 'Year':
-			        	this.firstpage.firstPageYear = this.firstpage.firstPageYear + 1 
-			       		page = this.firstpage.firstPageYear
+			    		if(this.currentFilterValue==''){	
+				        	this.firstpage.firstPageYear = this.firstpage.firstPageYear + 1 
+				       		return this.firstpage.firstPageYear
+			    		} else {
+			    			this.first_page_search.searchPageYear = this.first_page_search.searchPageYear + 1
+			    			return this.first_page_search.searchPageYear
+			    		}
 			        break;
 			    default:
 			        console.log("Something went horribly wrong...")
 			}
-
-			return page
 		},
 
   		activeTypeTime(timevalue) {
 
-			this.currentFilterValue = ''
-			this.searchResult = []
+  			this.resetPageSreach()
 			this.typeTime = timevalue
-
+			
 			let option
 
 			let total_revenue = 0
@@ -252,44 +257,66 @@ export default {
 			})
 
 			this.option = option
-
 		},
 
-		getDataWithTimeValue(value,page){
+		getDataWithTimeValue(value,page,search){
 
 			let url = config.API_URL+'transaction/history/item'
 
 			let params = {
                 perPage: this.paginator.perPageDay,
-                companyId: this.company_id,
+                userId: this.user_id,
+                search:search,
                 page: page,
                 time: value
             }	
-          
+       
 			getWithData(url, params)
 			.then((res)=>{
 				if (res.data && res.data.success) {
 
 					let resItem = res.data.data.data
 					let vm = this
+				
+					if(this.currentFilterValue !==''){	
+						this.on_search = 1
+						var total_revenue = 0
+						var total_expenditure = 0
+						if(resItem.length) {
+							_.forEach(resItem, function(value,key){
 
-					_.forEach(resItem, function(value,key){
+								vm.searchResult.push(value)
+							})
+									
+							 _.forEach(vm.searchResult,function(value,key){
+				                if(value.type == true) {
+				                	total_revenue = total_revenue + parseFloat(value.amount)
+				                } else {
+				                	total_expenditure =total_expenditure + parseFloat(value.amount)
+				                }
+				             });
+				             vm.total = total_revenue - total_expenditure
+				        } else {
+				        	this.on_search = 1
+				        }
 
-						vm.option.push(value)
-					})
-							
-					var total_revenue = 0
-					var total_expenditure = 0
-					 _.forEach(vm.option,function(value,key){
-		                if(value.type == true) {
-		                	total_revenue = total_revenue + parseFloat(value.amount)
-		                } else {
-		                	total_expenditure =total_expenditure + parseFloat(value.amount)
-		                }
-		             });
-		             vm.total = total_revenue - total_expenditure
-					
- 
+					} else {
+						var total_revenue = 0
+						var total_expenditure = 0
+						_.forEach(resItem, function(value,key){
+
+							vm.option.push(value)
+						})
+								
+						 _.forEach(vm.option,function(value,key){
+			                if(value.type == true) {
+			                	total_revenue = total_revenue + parseFloat(value.amount)
+			                } else {
+			                	total_expenditure =total_expenditure + parseFloat(value.amount)
+			                }
+			             });
+			             vm.total = total_revenue - total_expenditure
+					}
 				}
 			})
 			.catch((e) =>{
@@ -299,47 +326,50 @@ export default {
 		},
 
 		addTenItem(timevalue){
-
-			this.currentFilterValue = ''
-			this.searchResult = []
-
-			let page = this.switchTime(timevalue)
-		
-			this.reload = true;
-		      let self = this;
-		      setTimeout(() => {
-		        self.reload = false;
-		        self.getDataWithTimeValue(timevalue,page)
-		      }, 1500);
-			
+			this.makeParams()
+			if(this.currentFilterValue !==''){	
+				this.searchFilter(timevalue)
+			}
+			else {
+				let page = this.switchTime(timevalue)
+				this.reload = true;
+			      let self = this;
+			      setTimeout(() => {
+			        self.reload = false;
+			        self.getDataWithTimeValue(timevalue,page,this.search)
+			      }, 1500);
+			}	
 		},
 
 		stopdrawerRight(){
 			this.drawerRight = false
 			this.reset()
+			this.resetPageSreach()
+		},
+		
+		makeParams(){
 
+			let searchValues = []
+			var setsearch = ''
+			if(_.trim(this.currentFilterValue)){
+                searchValues.push('title:' + this.currentFilterValue)
+            }
+
+			this.search = searchValues.join(";")
 		},
 
-		searchFilter(){
-			var self = this;
-	        // Add condition for currentFilterProperty == 'Name'
-	    	if(this.currentFilterValue != undefined && this.currentFilterValue != ''){
- 
-	    		var result = this.option.filter(function(d){
-	        		
-	        		if(d.title.indexOf(self.currentFilterValue) > -1){
-	        			return d
-	        		}
-	      		})
-
-	      		this.searchResult = result
-
-	      		return this.searchResult
-
-	      	}else{
-	      		this.searchResult = []	
-	      		return this.option
-	      	}  
+		searchFilter(timevalue){
+			
+           	this.makeParams()
+            if(this.currentFilterValue ==''){	
+            	this.resetPageSreach()
+            }
+            else {
+            	this.on_search = 1;
+	            let page = this.switchTime(timevalue)
+	            this.getDataWithTimeValue(timevalue,page,this.search)
+            }
+	  	
 	    },
 
 	    reset(){
@@ -348,6 +378,16 @@ export default {
 			this.firstpage.firstPageMonth =1
 			this.firstpage.firstPageYear = 1
 			this.option = []
+	    },
+
+	    resetPageSreach(){
+	    	this.first_page_search.searchPageDay = 0
+	    	this.first_page_search.searchPageWeek = 0
+	    	this.first_page_search.searchPageMonth = 0
+	    	this.first_page_search.searchPageYear = 0
+	    	this.searchResult = []
+	    	this.currentFilterValue = ''
+	    	this.on_search = 0;
 	    }  	
 
   	},
@@ -358,11 +398,10 @@ export default {
 	  	},
 
 	  	optionLoadView(){
-
-	  		if(this.searchResult && this.searchResult.length){
+	  		if(this.on_search == 1){
 	  			return this.searchResult
-	  		}else{
-	      		return this.option
+	  		} else {
+	  			return this.option
 	  		}
 	  	}
 	},

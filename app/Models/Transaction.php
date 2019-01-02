@@ -85,4 +85,8 @@ class Transaction extends Model
         return $this->belongsTo(\App\Models\Currency::class, 'currency_id', 'id');
     }
     
+
+     public function companyUser(){
+        return $this->hasMany(\App\Models\Company::class,'owner_id','user_id');
+    }
 }

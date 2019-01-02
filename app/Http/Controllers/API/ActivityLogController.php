@@ -9,8 +9,6 @@ use App\Models\User;
 use Auth;
 use Spatie\Activitylog\Models\Activity;
 
-
-
 class ActivityLogController extends AppBaseController
 {
 	private $activityLogRepository;

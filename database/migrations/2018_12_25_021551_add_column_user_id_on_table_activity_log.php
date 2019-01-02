@@ -13,7 +13,7 @@ class AddColumnUserIdOnTableActivityLog extends Migration
      */
     public function up()
     {
-        Schema::table('activity_log', function (Blueprint $table) {
+        Schema::table(config('activitylog.table_name'), function (Blueprint $table) {
             $table->integer('user_id')->nullable();
         });
     }
@@ -25,8 +25,8 @@ class AddColumnUserIdOnTableActivityLog extends Migration
      */
     public function down()
     {
-        Schema::table('activity_log', function (Blueprint $table) {
-            $table->dropColumn('phone');   
+        Schema::table(config('activitylog.table_name'), function (Blueprint $table) {
+            $table->dropColumn('user_id');   
             
         });
     }

@@ -193,10 +193,9 @@ class TransactionAPIController extends AppBaseController
             $input['field_name'] => $input['value']
         ], $itemId);
 
+        // Save activity log
         $log = Activity::all()->last();
-
         $log['user_id'] = $input['userId'];
-
         $log->save();
 
         if($results){

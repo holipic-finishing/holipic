@@ -6,9 +6,13 @@ use Eloquent as Model;
 
 use Lcobucci\JWT\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
+    use LogsActivity;
+
+    protected static $logFillable = true;
 
     public $table = 'users';
 

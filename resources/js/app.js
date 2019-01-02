@@ -30,6 +30,8 @@ import fullscreen from 'vue-fullscreen'
 import InstantSearch from 'vue-instantsearch'
 import VueVideoPlayer from 'vue-video-player';
 import Croppa from 'vue-croppa';
+import VeeValidate from 'vee-validate';
+
 
 // Import config api URL
 import config from './config'
@@ -140,6 +142,7 @@ Vue.use(VueGoogleMaps, {
 		key: 'AIzaSyBtdO5k6CRntAMJCF-H5uZjTCoSGX95cdk' // Add your here your google map api key
 	}
 })
+Vue.use(VeeValidate);
 Vue.use(require('vue-moment'))
 
 // Create VueI18n instance with options

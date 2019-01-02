@@ -19,21 +19,23 @@ import Companies from '../views/companies/Companies';
 import CompanyChart from '../views/companies/information-chart';
 
 import PackageIndex from '../views/package/Index';
-
-// import Setting from '../views/setting/setting'
 import UserManagement from '../views/superadmin-user/user-management'
 import page404 from '../views/pages/page404'
 import UserPass from '../views/users/ChangePassword'
 import HistoriesTransaction from '../views/transactions/Histories.vue'
 import IndexCoupon from '../views/coupon-code/Index.vue'
 
-//-----------------------------------------
-//----  File Component of Admin Company  --
-//-----------------------------------------
+
+//-------------------------------------------------------------------
+//----------------  File Component of Admin Company  ----------------
+//-------------------------------------------------------------------
 //** All File Components will import below
 
 import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
 import Notification from '../views/notification/notification.vue'
+import ContentManagement from '../views/company-admin/content-management-system/Index.vue'
+
+
 
 Vue.use(Router)
 
@@ -73,9 +75,11 @@ routers = [
 		redirect: '/default/dashboard/index',
 		meta: { requiresAuth: true },
 		children: [
-			//-------------------------------
-			//----- Router Company Admin ----
-			//-------------------------------
+
+			//--------------------------------------------------------------
+			//-------------------- ROUTER COMPANY ADMIN --------------------
+			//--------------------------------------------------------------
+
 			{
 				path: '/default/company/dashboard/index',
 	         	component: DashboardCompany,
@@ -110,11 +114,23 @@ routers = [
 		            breadcrumb: 'Users / Notification'
 		        }
 			},
+			{
+				path:'/default/company/content-pages',
+				component: ContentManagement,
+		        name : 'ContentManagement',
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:false,
+	         		companyAuth:true,
+		            title: 'message.contenPages',
+		            breadcrumb: 'Users / Content Pages'
+		        }
+			},
 
 
-			//-------------------------------
-			//----- Router Super Admin  -----
-			//-------------------------------
+			//-------------------------------------------------------------------
+			//------------------------- ROUTER SUPER ADMIN  ---------------------
+			//-------------------------------------------------------------------
       		{
 	         	path: '/default/dashboard/index',
 	         	component: Ecommerce,

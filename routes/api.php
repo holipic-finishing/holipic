@@ -45,6 +45,23 @@ Route::group(['namespace' => 'API'],function(){
 	
 	Route::resource('notifications', 'NotificationAPIController');
 
+	/***********************************************
+	**********	ROUTER COMPANY ADMIN   *************
+	************************************************
+	*/
+	
+	Route::namespace('CompanyAdmin')->group(function(){
+	
+		Route::resource('pages', 'PagesAPIController');
+
+		Route::post('edit/page/{itemId}','PagesAPIController@editPage');
+	
+	});
+
+	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
+
+
+
 
 	/***************************************************
 	**********	ROUTER COMPANY AND ADMIN   *************
@@ -54,11 +71,6 @@ Route::group(['namespace' => 'API'],function(){
 
 
 
-	/***********************************************
-	**********	ROUTER COMPANY ADMIN   *************
-	************************************************
-	*/
-	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
 
 	/***********************************************
@@ -102,6 +114,4 @@ Route::group(['namespace' => 'API'],function(){
 	
 
 });	
-
-
 

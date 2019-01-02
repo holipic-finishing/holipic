@@ -6,6 +6,7 @@ export const menus = {
 		  ///////  SIDEBAR ROUTER ADMIN COMPANY  //////
 		 ///////							    //////
 		/////////////////////////////////////////////
+		
 		{
 			action: 'zmdi-view-dashboard',
 			title: 'message.dashboard',
@@ -14,6 +15,15 @@ export const menus = {
 			items:null,
 			role_id : 2
 		},
+		{
+			action: 'zmdi zmdi-google-pages',
+			title: 'message.sibarContentPages',
+			active: true,
+			path: '/company/content-pages',
+			items:null,
+			role_id : 2
+		},
+
 		
 		 	/////////////////////////////////////////////
 		   ///////								  //////

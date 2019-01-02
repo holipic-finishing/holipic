@@ -34,6 +34,8 @@ import IndexCoupon from '../views/coupon-code/Index.vue'
 
 import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
 import Notification from '../views/notification/notification.vue'
+import Branch from '../views/dashboard/admin-company/BranchCompany.vue'
+
 
 Vue.use(Router)
 
@@ -108,6 +110,18 @@ routers = [
 	         		companyAuth:true,
 		            title: 'message.notification',
 		            breadcrumb: 'Users / Notification'
+		        }
+			},
+			{
+				path: '/default/company/branch',
+		        component: Branch,
+		        name : 'CompanyBranch',
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:false,
+	         		companyAuth:true,
+		            title: 'message.branch'
+		            // breadcrumb: 'Users / Notification'
 		        }
 			},
 

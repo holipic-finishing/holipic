@@ -60,6 +60,11 @@ Route::group(['namespace' => 'API'],function(){
 	*/
 	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
+	Route::resource('branches', 'BranchAPIController');
+
+	Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
+
+	Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
 
 	/***********************************************
 	**********	ROUTER SUPER ADMIN   *************
@@ -102,6 +107,8 @@ Route::group(['namespace' => 'API'],function(){
 	
 
 });	
+
+
 
 
 

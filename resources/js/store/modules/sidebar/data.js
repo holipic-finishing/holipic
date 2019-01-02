@@ -14,6 +14,14 @@ export const menus = {
 			items:null,
 			role_id : 2
 		},
+		{
+			action: 'zmdi-assignment-account',
+			title: 'message.branch',
+			active: false,
+			path: '/company/branch',
+			items:null,
+			role_id : 2
+		},
 		
 		 	/////////////////////////////////////////////
 		   ///////								  //////

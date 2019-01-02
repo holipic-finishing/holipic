@@ -38,7 +38,22 @@ Route::prefix('/admin')->group(function () {
 });
 
 
+/****************************************
+*********  ROUTER TEST  *****************
+*****************************************/
 
+
+Route::get('test-job', function() {
+	// $lang = 'en';
+	// \App::setLocale($lang);
+	// $l = app()->getLocale();
+	// $d = trans('auth.failed');
+	// dd($d);
+
+	// $a =  event(
+ //            $e = new \App\Events\RedisEventNotification()
+ //        );
+});
 
 
 

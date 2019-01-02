@@ -475,5 +475,6 @@ export default {
   yourNotification: "Your notification",
   contenPages : "Content Management System",
   sibarContentPages:"Cms",
+  activityLog: "Activity Log"
 
 }

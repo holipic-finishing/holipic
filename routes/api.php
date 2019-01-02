@@ -45,6 +45,7 @@ Route::group(['namespace' => 'API'],function(){
 	
 	Route::resource('notifications', 'NotificationAPIController');
 
+
 	/***********************************************
 	**********	ROUTER COMPANY ADMIN   *************
 	************************************************
@@ -60,23 +61,23 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
+	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
+
+	Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
 
 
 	/***************************************************
 	**********	ROUTER COMPANY AND ADMIN   *************
-	****************************************************
-	*/
+	****************************************************/
 	Route::post('change-password', 'UserAPIController@changePassWord');
 
 
 
 
-
 	/***********************************************
-	**********	ROUTER SUPER ADMIN   *************
-	************************************************
-	*/
+	**********	ROUTER SUPER ADMIN   ***************
+	************************************************/
 
 	Route::get('list/packages', 'PackageAPIController@getListNamePackage');
 	
@@ -111,7 +112,14 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
 	Route::get('delete-package', 'PackageAPIController@deletePackage');
-	
+
+	Route::resource('exchange_rates', 'ExchangeRateAPIController');
+
+	Route::resource('transaction_exchanges', 'TransactionExchangeAPIController');
+
+	Route::post('edit/package/{itemId}', 'PackageAPIController@editPackage');
+
+	Route::post('edit/setting/{itemId}', 'SettingAPIController@editSetting');
 
 });	
 

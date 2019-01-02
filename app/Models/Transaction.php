@@ -68,6 +68,16 @@ class Transaction extends Model
         'dated' => 'required'
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::created(function($model)
+        {
+            static::exchange($model);
+        });
+
+    }
+
     public function user(){
         return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
     }
@@ -86,7 +96,36 @@ class Transaction extends Model
     }
     
 
-     public function companyUser(){
+    public function transactionexchange()
+    {
+        return $this->hasOne(\App\Models\TransactionExchange::class, 'transaction_id', 'id');
+    }
+    
+    public static function exchange($model){
+
+        if($model->currency_id == 1){
+
+            $exchangeRateToDollar = 1;
+
+        }else{
+
+            $exchangeRateToDollar = ExchangeRate::select('rate')
+                        ->where('from_currency_id', $model->currency_id)
+                        ->where('to_currency_id', 1)
+                        ->first()->toArray();
+
+            $exchangeRateToDollar = (double) $exchangeRateToDollar['rate'];
+
+        }
+                                              
+
+        return TransactionExchange::create([
+            'transaction_id' => $model->id,
+            'exchange_rate_to_dollar' => $exchangeRateToDollar
+        ]);
+    }
+        
+    public function companyUser(){
         return $this->hasMany(\App\Models\Company::class,'owner_id','user_id');
     }
 }

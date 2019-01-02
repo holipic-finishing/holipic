@@ -610,32 +610,14 @@ class TransactionRepository extends BaseRepository
             $endDay     = Carbon::today()->format('Y-m-d');
         }
        
-        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
-                                    ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                                    ->where('type','1')
-                                    ->where('status','RECIVED')
-                                    ->groupBy('dated')
-                                    ->get();
 
-        foreach ($dates as $key => $date) {
-            if(count($transactions)){
-                foreach ($transactions as $k_v => $value) {
-            
-                    $day = Carbon::parse($value->dated)->format('Y-m-d');
+        $transactions = Transaction::with('transactionexchange')
+                        ->where('status','RECIVED')
+                        ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+                        ->get()->toArray();
 
-                    if($key == $day) {
-                        $dates[$key]['total'] = $value->total;
-                        break;
 
-                    } else {
-                        $dates[$key]['total'] = 0;
-                    }
-                }  
-            } else {
-                 $dates[$key]['total'] = 0;
-            }
-                        
-        }
+        $dates = $this->sumSystemFee($dates, $transactions, 'day');
        
         return $dates;
     }
@@ -655,32 +637,15 @@ class TransactionRepository extends BaseRepository
             $toMonth = Carbon::today()->format('Y-m');
         }
 
-        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total'),
-                                            DB::raw("DATE_FORMAT(dated,'%Y-%m') as date"))
-                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
-                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth)
-                                    ->where('type','1')
-                                    ->where('status','RECIVED')
-                                    ->groupBy('date')->get();
-        foreach ($InMonth as $key => $date) {
-            if(count($transactions)){
-                 foreach ($transactions as $k_v => $value) {
-            
-                    $month = Carbon::parse($value->date)->format('Y-m');
+        $transactions = Transaction::with('transactionexchange')
+                        ->where('status','RECIVED')
+                        ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
+                        ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth)
+                        ->get()->toArray();
 
-                    if($key == $month) {
-                        $InMonth[$key]['total'] = $value->total;
-                        break;
 
-                    } else {
-                        $InMonth[$key]['total'] = 0;
-                    }
-                }   
-            } else {
-                $InMonth[$key]['total'] = 0;
-            }
-                      
-        }
+        $InMonth = $this->sumSystemFee($InMonth, $transactions, 'month');
+
         return $InMonth;
     }
 
@@ -700,34 +665,16 @@ class TransactionRepository extends BaseRepository
         }
 
 
-        $transactions = $this->model->select(
-                                        DB::raw('SUM(system_fee) AS total'),
-                                        DB::raw("DATE_FORMAT(dated,'%Y') as date")
-                                    )
-                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $from_year)
-                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $to_year)
-                                    ->where('type','1')
-                                    ->where('status','RECIVED')
-                                    ->groupBy('date')->get();
+        $transactions = Transaction::with('transactionexchange')
+                        ->where('status','RECIVED')
+                        ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $from_year)
+                        ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $to_year)
+                        ->get()->toArray();
 
-        foreach ($InYear as $key => $date) {
-            if(count($transactions)) {
-                foreach ($transactions as $k_v => $value) {
-                
-                    if($key == $value->date) {
-                        $InYear[$key]['total'] = $value->total;
-                        break;
+        $InYear = $this->sumSystemFee($InYear, $transactions, 'year');
 
-                    } else {
-                        $InYear[$key]['total'] = 0;
-                    }
-                }              
-            } else {
-                $InYear[$key]['total'] = 0;
-            }
-        }
 
-       return $InYear;
+        return $InYear;
 
     }
 
@@ -756,22 +703,35 @@ class TransactionRepository extends BaseRepository
                                 ->where('status','RECIVED')
                                 ->get();                
 
+        $transactions = Transaction::with('transactionexchange')
+                        ->where('status','RECIVED')
+                        ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+                        ->get()->toArray();                       
+
+
         foreach ($dayWeek as $key => $date) {
 
-            $total = 0;
+            $count=0;
             if(count($transactions)) {
                 foreach ($transactions as $k_v => $value) {
                     
-                    $day = Carbon::parse($value->dated)->format('Y-m-d');
+                    $day = Carbon::parse($value['dated'])->format('Y-m-d');
+
                     if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
-                        $total = $total + $value->total;  
+
+                        $system_fee = $value['system_fee'];
+
+                        $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
+
+                        $count = $count + $system_fee *  $exchange_rate_to_dollar;  
                     } 
                     else {
                         $dayWeek[$key]['total'] = 0;
                        
                     }
                 }
-                $dayWeek[$key]['total'] = $total;
+
+                $dayWeek[$key]['total'] = $count;
             }  else {
                 $dayWeek[$key]['total'] = 0;
             }
@@ -779,8 +739,9 @@ class TransactionRepository extends BaseRepository
            
        
         }    
-        return $dayWeek;        
+            
 
+        return $dayWeek;
     }
 
     /**
@@ -1079,5 +1040,45 @@ class TransactionRepository extends BaseRepository
         if($request['toTime'] != null && $request['toTime'] != null) {
 
         }
+    }
+
+    public function sumSystemFee($dates, $transactions, $timevalue){
+
+        foreach ($dates as $key => $date) {
+            $count=0;
+            if(count($transactions)){
+                foreach ($transactions as $k_v => $value) {
+
+                        if($timevalue == 'day'){
+
+                            $time_value = Carbon::parse($value['dated'])->format('Y-m-d');
+                        }
+                        if($timevalue == 'month'){
+                            $time_value = Carbon::parse($value['dated'])->format('Y-m');
+                        }
+                        if($timevalue == 'year'){
+                            $time_value = Carbon::parse($value['dated'])->format('Y');
+                        }                    
+                    
+                    if($key == $time_value) {
+
+                        $system_fee = $value['system_fee'];
+
+                        $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
+
+                        $count = $count + $system_fee *  $exchange_rate_to_dollar;
+                                     
+
+                    } else {
+                        $dates[$key]['total'] = 0;
+                    }
+                }  
+                 $dates[$key]['total'] = $count;
+                    
+            } else {
+                 $dates[$key]['total'] = 0;
+            }           
+        }
+        return $dates;
     }
 }

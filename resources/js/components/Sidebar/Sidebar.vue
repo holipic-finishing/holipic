@@ -70,6 +70,7 @@ import { mapGetters } from "vuex";
 import AppLogo from "../../components/AppLogo/AppLogo";
 
 export default {
+
   	data() {
     	return {
 			settings: {

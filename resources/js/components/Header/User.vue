@@ -10,7 +10,7 @@
          </div>
          <v-list class="dropdown-list">
             <template v-for="userLink in userLinks" v-if="userLink.id !== 4">
-               <v-list-tile :to="getMenuLink(userLink.path)" :key="userLink.id">
+               <v-list-tile :to="role_id == '1' ? getMenuLink(userLink.path) : getMenuLink(userLink.pathCom)" :key="userLink.id">
                   <i :class="userLink.icon"></i>
                   <span>{{$t(userLink.title)}}</span>
                </v-list-tile>
@@ -59,9 +59,11 @@
                   id: 5,
                   title: 'message.changePassword',
                   icon: 'ti-lock mr-3 info--text',
-                  path: '/users/change-password'
+                  path: '/users/change-password',
+                  pathCom : '/company/change-password'
                },
-            ]
+            ],
+            role_id : '',
          }
       },
       methods: {
@@ -73,6 +75,10 @@
          getMenuLink(path) {
             return '/' + getCurrentAppLayout(this.$router) +  path
          }
+      },
+      created(){
+         var userAuth = JSON.parse(localStorage.getItem('user'))
+         this.role_id = userAuth.role_id
       }
    }
 </script>

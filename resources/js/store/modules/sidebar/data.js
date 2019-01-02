@@ -1,7 +1,11 @@
 // Sidebar Routers
 export const menus = {
 	'message.general': [
-		//Sidebar Router Admin Company 
+		    /////////////////////////////////////////////
+		   ///////								  //////
+		  ///////  SIDEBAR ROUTER ADMIN COMPANY  //////
+		 ///////							    //////
+		/////////////////////////////////////////////
 		{
 			action: 'zmdi-view-dashboard',
 			title: 'message.dashboard',
@@ -11,9 +15,12 @@ export const menus = {
 			role_id : 2
 		},
 		
-		
+		 	/////////////////////////////////////////////
+		   ///////								  //////
+		  ///////  SIDEBAR ROUTER SUPER ADMIN    //////
+		 ///////							    //////
+		/////////////////////////////////////////////
 
-		// Sidebar Router Super Admin 
 		{
 			action: 'zmdi-view-dashboard',
 			title: 'message.dashboard',
@@ -27,12 +34,8 @@ export const menus = {
 			title: 'message.companymanagement',
 			active: false,
 			path: '/widgets/companies',
-			role_id : 1
-			// items: [
-			// 	// { title: 'message.user', path: '/users/user-list' },
-			// 	{ title: 'message.company', path: '/widgets/mana-company' }
-			// 	// { title: 'message.chartCompany', path: '/widgets/mana-company-chart' }
-			// ]
+			role_id : 1,
+			items: null
 		},
 		{
 			action: 'zmdi zmdi-dropbox',
@@ -55,15 +58,15 @@ export const menus = {
 			role_id : 1,
 			path: '/user-management'
 		},
-		{
-			action: 'zmdi-card',
-			title: 'message.transaction',
-			active: false,
-			role_id : 1,
-			items: [
-				{ title: 'message.histories', path: '/transaction/histories' },
-			]
-		},
+		// {
+		// 	action: 'zmdi-card',
+		// 	title: 'message.transaction',
+		// 	active: false,
+		// 	role_id : 1,
+		// 	items: [
+		// 		{ title: 'message.histories', path: '/transaction/histories' },
+		// 	]
+		// },
 		{
 			action: 'zmdi zmdi-ticket-star',
 			title: 'message.couponCode',

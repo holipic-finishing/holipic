@@ -18,30 +18,58 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'API'],function(){
-	
+	/***********************************************
+	**********	LIST ROUTER RESOURCE   *************
+	************************************************
+	*/
+
 	Route::resource('packages', 'PackageAPIController');
 
-	Route::get('list/packages', 'PackageAPIController@getListNamePackage');
-	
 	Route::resource('roles', 'roleAPIController');
 
 	Route::resource('user_roles', 'UserRoleAPIController');
 
 	Route::resource('users', 'UserAPIController');
 
-	Route::get('count-packages','PackageAPIController@CountPackages');
-
-	Route::post('change-password', 'UserAPIController@changePassWord');
-
-	Route::get('companies/information', 'CompanyAPIController@showInformationCompany'); //different
-
 	Route::resource('companies', 'CompanyAPIController');
 
 	Route::resource('currencies', 'CurrencyAPIController');
 
-	Route::post('search/companies', 'CompanyAPIController@doSearch');
-
 	Route::resource('transactions', 'TransactionAPIController');
+
+	Route::resource('settings', 'SettingAPIController');
+	
+	Route::resource('files', 'FileAPIController');
+
+	Route::resource('coupon_codes', 'CouponCodeAPIController');
+	
+	Route::resource('notifications', 'NotificationAPIController');
+
+	/***************************************************
+	**********	ROUTER COMPANY AND ADMIN   *************
+	****************************************************/
+	Route::post('change-password', 'UserAPIController@changePassWord');
+
+	/***********************************************
+	**********	ROUTER COMPANY ADMIN   *************
+	************************************************/
+	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
+
+	Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
+
+	/***********************************************
+	**********	ROUTER SUPER ADMIN   ***************
+	************************************************/
+
+	Route::get('list/packages', 'PackageAPIController@getListNamePackage');
+	
+	Route::get('count-packages','PackageAPIController@CountPackages');
+
+	Route::get('companies/information', 'CompanyAPIController@showInformationCompany'); //different
+
+	Route::get('transactions/companies/total', 'TransactionAPIController@showTotalCompanies'); //different
+
+	Route::post('search/companies', 'CompanyAPIController@doSearch');
 
 	Route::post('histories/transactions', 'TransactionAPIController@getHistories');
 
@@ -55,25 +83,25 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('company/load-chart', 'TransactionAPIController@loadChartCompanyByTime');
 
-	Route::resource('settings', 'SettingAPIController');
-
 	Route::get('get-package', 'SettingAPIController@getPackage');
-	
-	// Route::get('transaction/history', 'CompanyAPIController@getTransactionHistory');
 
 	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
 
 	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
-
-	Route::resource('files', 'FileAPIController');
-
-	Route::resource('coupon_codes', 'CouponCodeAPIController');
 
 	Route::get('transaction/history', 'TransactionAPIController@getTransactionHistory');
 
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
 	Route::get('delete-package', 'PackageAPIController@deletePackage');
+
+	Route::resource('exchange_rates', 'ExchangeRateAPIController');
+
+	Route::resource('transaction_exchanges', 'TransactionExchangeAPIController');
+
 });	
+
+
+
 
 

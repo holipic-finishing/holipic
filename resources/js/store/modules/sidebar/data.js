@@ -62,15 +62,15 @@ export const menus = {
 			role_id : 1,
 			path: '/user-management'
 		},
-		{
-			action: 'zmdi-card',
-			title: 'message.transaction',
-			active: false,
-			role_id : 1,
-			items: [
-				{ title: 'message.histories', path: '/transaction/histories' },
-			]
-		},
+		// {
+		// 	action: 'zmdi-card',
+		// 	title: 'message.transaction',
+		// 	active: false,
+		// 	role_id : 1,
+		// 	items: [
+		// 		{ title: 'message.histories', path: '/transaction/histories' },
+		// 	]
+		// },
 		{
 			action: 'zmdi zmdi-ticket-star',
 			title: 'message.couponCode',

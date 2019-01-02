@@ -260,7 +260,8 @@ import config from '../../config/index.js'
 import moment from 'moment'
 export default {
 
-	name: 'ActiveCouponCode',
+	name: 'CouponCodeItem',
+	props: ['itemPr', 'eventType'],
 
 	data () {
 	    return {
@@ -409,7 +410,7 @@ export default {
     		// console.log(this.data)
     	})
 	}
-}
+};
 </script>
 
 <style lang="css" scoped>

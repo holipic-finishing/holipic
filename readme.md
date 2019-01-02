@@ -15,8 +15,8 @@ cp .env.example .env
 php artisan key:generate
 
 # Step 5: Install redis server
-Follow link Ubuntu: https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
-Follow link Window: https://github.com/tporadowski/redis/releases
++ Follow link Ubuntu: https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
++ Follow link Window: https://github.com/tporadowski/redis/releases
 
 # Step 6: Install composer, npm, redis server, bower 
 + composer install

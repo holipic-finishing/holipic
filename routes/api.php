@@ -20,8 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'API'],function(){
 	/***********************************************
 	**********	LIST ROUTER RESOURCE   *************
-	************************************************
-	*/
+	************************************************/
 
 	Route::resource('packages', 'PackageAPIController');
 
@@ -48,23 +47,20 @@ Route::group(['namespace' => 'API'],function(){
 
 	/***************************************************
 	**********	ROUTER COMPANY AND ADMIN   *************
-	****************************************************
-	*/
+	****************************************************/
 	Route::post('change-password', 'UserAPIController@changePassWord');
 
 
 
 	/***********************************************
 	**********	ROUTER COMPANY ADMIN   *************
-	************************************************
-	*/
+	************************************************/
 	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
 
 	/***********************************************
-	**********	ROUTER SUPER ADMIN   *************
-	************************************************
-	*/
+	**********	ROUTER SUPER ADMIN   ***************
+	************************************************/
 
 	Route::get('list/packages', 'PackageAPIController@getListNamePackage');
 	
@@ -100,7 +96,6 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('delete-package', 'PackageAPIController@deletePackage');
 	
-
 });	
 
 

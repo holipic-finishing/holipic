@@ -123,6 +123,9 @@ class Transaction extends Model
             'transaction_id' => $model->id,
             'exchange_rate_to_dollar' => $exchangeRateToDollar
         ]);
+    }
         
+    public function companyUser(){
+        return $this->hasMany(\App\Models\Company::class,'owner_id','user_id');
     }
 }

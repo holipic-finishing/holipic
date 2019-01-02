@@ -215,6 +215,14 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
     }
 
+
+    /*
+    *   Target : Search tranctions history by time value
+    *   GET /transaction/history
+    *
+    *   @param  Request
+    *   return Json
+    */
     public function getTransactionHistory(Request $request) {
 
         $input = $request->all(); 
@@ -225,9 +233,25 @@ class TransactionAPIController extends AppBaseController
         
         $data = [];
 
+        $searchBy = [];
+
+        if($request->has('search') && $request->input('search')){
+
+            $searchValues = explode(';', $request->input('search'));
+            
+            foreach ($searchValues as $val) {
+            $tmp = explode(':', $val);
+
+                if(count($tmp) > 1){
+                    $searchBy[$tmp[0]] = $tmp[1];
+                }
+            }
+
+        }
+  
         foreach ($timeArr as $tmp) {
             $input['time'] = $tmp;
-            $result = $this->transactionRepository->transactionHistory($input,$perPage);
+            $result = $this->transactionRepository->transactionHistory($input,$perPage, $searchBy);
             $data[$tmp] = $result; 
         }
 
@@ -235,11 +259,35 @@ class TransactionAPIController extends AppBaseController
     
     }
 
+
+    /*
+    *   Target : Search tranctions history by time and where by like title
+    *   GET /transaction/history/item
+    *
+    *   @param  Request
+    *   return Json
+    */
     public function getTransactionHistoryWithTimevalue(Request $request)
     {
         $input = $request->all();
         
-        $result = $this->transactionRepository->transactionHistory($input, $input['perPage']);
+        $searchBy = [];
+
+        if($request->has('search') && $request->input('search')){
+
+            $searchValues = explode(';', $request->input('search'));
+            
+            foreach ($searchValues as $val) {
+            $tmp = explode(':', $val);
+
+                if(count($tmp) > 1){
+                    $searchBy[$tmp[0]] = $tmp[1];
+                }
+            }
+
+        }
+
+        $result = $this->transactionRepository->transactionHistory($input, $input['perPage'], $searchBy);
 
         return $this->sendResponse($result, 'Transactions retrieved successfully');
     }

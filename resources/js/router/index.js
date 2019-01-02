@@ -14,18 +14,19 @@ import mini from '../container/MiniSidebarLayout.vue'
 import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // Companies Component
-// import UserWidgets   from'../views/users/UsersList';
+
 import Companies from '../views/companies/Companies';
 import CompanyChart from '../views/companies/information-chart';
 
 import PackageIndex from '../views/package/Index';
 
-// import Setting from '../views/setting/setting'
+
 import UserManagement from '../views/superadmin-user/user-management'
 import page404 from '../views/pages/page404'
 import UserPass from '../views/users/ChangePassword'
 import HistoriesTransaction from '../views/transactions/Histories.vue'
 import IndexCoupon from '../views/coupon-code/Index.vue'
+
 
 //-----------------------------------------
 //----  File Component of Admin Company  --
@@ -73,9 +74,9 @@ routers = [
 		redirect: '/default/dashboard/index',
 		meta: { requiresAuth: true },
 		children: [
-			//-------------------------------
-			//----- Router Company Admin ----
-			//-------------------------------
+			//------------------------------------------------------------------------------------
+			//---------------------------- ROUTER COMPANY ADMIN ----------------------------------
+			//------------------------------------------------------------------------------------
 			{
 				path: '/default/company/dashboard/index',
 	         	component: DashboardCompany,
@@ -112,9 +113,9 @@ routers = [
 			},
 
 
-			//-------------------------------
-			//----- Router Super Admin  -----
-			//-------------------------------
+			//--------------------------------------------------------------------------
+			//------------------------- ROUTER SUPER ADMIN  ----------------------------
+			//--------------------------------------------------------------------------
       		{
 	         	path: '/default/dashboard/index',
 	         	component: Ecommerce,
@@ -262,9 +263,9 @@ var router = new Router({
 // });
 
 
-// ----------------------------------------------
-// -- Config Navigations guards before each v2 --
-// ----------------------------------------------
+// ------------------------------------------------------------------------------------
+// ------------------ Config Navigations guards before each v2 ------------------------
+// ------------------------------------------------------------------------------------
 
 router.beforeEach((to, from, next) => { 
 	Nprogress.start()

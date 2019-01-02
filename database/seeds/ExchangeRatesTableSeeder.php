@@ -11,6 +11,8 @@ class ExchangeRatesTableSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+        
         \App\Models\ExchangeRate::truncate();
 
         DB::table('exchange_rates')->insert(

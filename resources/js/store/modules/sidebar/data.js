@@ -29,14 +29,14 @@ export const menus = {
 			items:null,
 			role_id : 1
 		},
-		// {
-		// 	action: 'zmdi-widgets',
-		// 	title: 'message.companymanagement',
-		// 	active: false,
-		// 	path: '/widgets/companies',
-		// 	role_id : 1,
-		// 	items: null
-		// },
+		{
+			action: 'zmdi-widgets',
+			title: 'message.companymanagement',
+			active: false,
+			path: '/widgets/companies',
+			role_id : 1,
+			items: null
+		},
 		{
 			action: 'zmdi zmdi-dropbox',
 			title: 'message.package',
@@ -51,13 +51,13 @@ export const menus = {
 		// 	active: false,
 		// 	path: '/setting'
 		// },
-		{
-			action: 'zmdi-camera-switch',
-			title: 'message.userManager',
-			active: false,
-			role_id : 1,
-			path: '/user-management'
-		},
+		// {
+		// 	action: 'zmdi-camera-switch',
+		// 	title: 'message.userManager',
+		// 	active: false,
+		// 	role_id : 1,
+		// 	path: '/user-management'
+		// },
 		// {
 		// 	action: 'zmdi-card',
 		// 	title: 'message.transaction',

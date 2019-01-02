@@ -472,5 +472,6 @@ export default {
   hidingRead : "Hiding read",
   mailSentSuccessfully : 'Mail sent successfully',
   notification : "Notification",
-  yourNotification: "Your notification"
+  yourNotification: "Your notification",
+  activityLog: "Activity Log"
 }

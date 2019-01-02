@@ -1,5 +1,6 @@
 <template>
-	<v-container fluid pt-0 grid-list-xl>
+	<div>
+		<v-container fluid pt-0 grid-list-xl>
 			<section-tooltip :title="$t('message.overview')" :tooltip="$t('message.dashboardOverview')"></section-tooltip>
 			<!-- Dash Cards -->
 			<v-layout row wrap border-rad-sm overflow-hidden>
@@ -41,13 +42,29 @@
 				>
 				</stats-card-v2>
 			</v-layout>
-	</v-container>		
+			<div class="row" style="margin-top:20px">
+				<activity-log></activity-log>
+				<notification-dashboard></notification-dashboard>
+				
+			</div>
+
+		</v-container>		
+	</div>	
+
 </template>
 
 <script>
+import ActivityLog from '../ActivityLog'
+import Notification from '../../notification/notification'
+import NotificationDashboard from '../../notification/notification-dashboard'
+
 export default {
 
   name: 'DashboardCompany',
+  components: {
+  	ActivityLog,
+  	NotificationDashboard
+  },
 
   data () {
     return {

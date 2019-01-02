@@ -213,18 +213,18 @@ routers = [
 		            breadcrumb: 'Coupon Code / Histories List'
 		        }
 		    },
-		    {
-				path: '/default/users/show-notification/:id',
-		        component: Notification,
-		        name : 'AdminNotification',
-		        meta: {
-		            requiresAuth: true,
-		            adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.notification',
-		            breadcrumb: 'Users / Notification'
-		        }
-			},
+		 //    {
+			// 	path: '/default/users/show-notification/:id',
+		 //        component: Notification,
+		 //        name : 'AdminNotification',
+		 //        meta: {
+		 //            requiresAuth: true,
+		 //            adminAuth:true,
+	  //        		companyAuth:false,
+		 //            title: 'message.notification',
+		 //            breadcrumb: 'Users / Notification'
+		 //        }
+			// },
       	]	
 	},
 	{

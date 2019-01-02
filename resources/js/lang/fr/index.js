@@ -450,4 +450,7 @@ export default {
   changePassword : "Changer le mot de passe",
   olePasswordAndNewPassword: "Ancien mot de passe et confirmation du mot de passe incorrect",
   oldPassword : "Ancien mot de passe dans incorrect",
+  viewnotifition: "Montre tout",
+  mailSentSuccessfully : "Courrier envoyé avec succès",
+  yourNotification : "Vos notifications"
 }

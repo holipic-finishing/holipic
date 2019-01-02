@@ -99,6 +99,10 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('transaction_exchanges', 'TransactionExchangeAPIController');
 
+	Route::post('edit/package/{itemId}', 'PackageAPIController@editPackage');
+
+	Route::post('edit/setting/{itemId}', 'SettingAPIController@editSetting');
+
 });	
 
 

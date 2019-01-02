@@ -129,9 +129,32 @@ class SettingAPIController extends AppBaseController
     }
 
     public function getPackage(){
-        // dd('123');
+        
         $result = Package::with('setting')->get();
 
         return $this->sendResponse($result, 'Packages successfully');
+    }
+
+    public function editSetting(Request $request, $itemId){
+
+        $input =  $request->all();
+
+        if (!$input['value'] && $input['field_name'] != 'sms' && $input['field_name'] != 'email_service') {
+            return $this->sendError('This field could be not null');
+        }
+
+        $result = null;
+
+        $result = $this->settingRepository->update([
+            $input['field_name'] => $input['value']
+        ], $itemId);
+
+        if($result){
+
+            return $this->sendResponse([], 'Setting updated successfully');
+        }else{
+            return $this->sendError('System Error Occurred');
+        }
+
     }
 }

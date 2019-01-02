@@ -24,7 +24,7 @@
 	      class="elevation-1"
 	      :disable-initial-sort="true"
 	      :pagination.sync="pagination"
-
+		  :loading="loadingCom"
 	    >
 	    	<template slot="items" slot-scope="props">
 	    		<td class="text-xs-left">{{ props.item.package_name }}</td>
@@ -64,10 +64,17 @@
 		          >
 		            edit
 		          </v-icon>
-		          <v-icon
+		          <!-- <v-icon
 		            small
 		            class="mr-2"
 		            @click="deleteItem(props.item.id,props.item.setting_id)"
+		          >
+		            delete
+		          </v-icon> -->
+		          <v-icon
+		            small
+		            class="mr-2"
+		            @click="showDialog(props.item.id, props.item.setting_id)"
 		          >
 		            delete
 		          </v-icon>
@@ -78,6 +85,22 @@
         		
       		</template>
 		</v-data-table>
+		<v-dialog v-model="dialog" persistent max-width="450">
+	      <v-card>
+	        <v-card-title class="headline font-weight-bold">
+	          <v-icon x-large color="yellow accent-3" class="mr-2">
+	            warning
+	          </v-icon>
+	          Do you want delete this item ?
+	        </v-card-title>
+	        <v-divider class="mt-0"></v-divider>
+	        <v-card-actions>
+	          <v-spacer></v-spacer>
+	          <v-btn flat @click="dialog = false">Disagree</v-btn>
+	          <v-btn flat @click="deleteItem">Agree</v-btn>
+	        </v-card-actions>
+	      </v-card>
+	    </v-dialog>
 	</v-container>
 </div>	
 </template>
@@ -113,16 +136,26 @@ export default {
 		        { text: 'Actions', sortable: false }
 	      	],
 	      	desserts: [],
+	      	dialog: false,
 	      	pagination: {
 		      page: 1,
-		      rowsPerPage: 5,
+		      rowsPerPage: 25,
 		      totalItems: 0,
 		      // rowsPerPageItems: [5,10, 15, 20, 25, 30]
 		    },
+		    itemIdToDelete: {
+		    	id: null,
+		    	setting_id:null
+		    },
+		    loading: true,
 	      	// item : {}
 
-
 	    }
+	},
+	computed: {
+	    loadingCom(){
+	    	return this.loading
+	    },
 	},
 	methods:{
 		fetchData() {
@@ -132,6 +165,7 @@ export default {
 				// console.log(res.data.data)
 				if(res.data && res.data.success){
 					this.desserts = res.data.data
+					this.loading = false
 					// console.log(res.data.data)
 				}
 				
@@ -169,36 +203,41 @@ export default {
   			this.$root.$emit('data-packages', item)
 		},
 
+		showDialog(id, setting_id){
+	      this.dialog = true
+	      this.itemIdToDelete.id = id
+	      this.itemIdToDelete.setting_id = setting_id
+	    },
+
 		deleteItem(id,setting_id){
-			if(confirm('Are you sure you want to delete this item?')){
 				let url = config.API_URL+'delete-package'
 
 				let params = {
-					id_packages : id,
-					id_setting : setting_id
+					id_packages : this.itemIdToDelete.id,
+					id_setting : this.itemIdToDelete.setting_id
 				}
 
 				getWithData(url,params)
 				.then((res) => {
-					this.fetchData();	
-					setTimeout(function(){
+					this.loading = true;
+					this.fetchData();
+					this.dialog = false;	
+					// setTimeout(function(){
 			            Vue.notify({
 			                group: 'loggedIn',
 			                type: 'success',
 			                text: 'Delete Item Success!'
 			            });
-			       },500);
+			       // },500);
 				})
 				.catch((err) =>{
 					console.log(err)
 				})
-			}
-			
 		}
-
 	},
 	mounted(){
       this.$root.$on('reload-table', res => {
+      	  this.loading = true
           this.fetchData();	
       })
     },

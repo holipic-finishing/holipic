@@ -14,6 +14,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use \Illuminate\Support\Facades\Hash;
 use Lcobucci\JWT\Parser;
 use Response;
+use Spatie\Activitylog\Models\Activity;
 
 /**
  * Class UserController
@@ -160,6 +161,11 @@ class UserAPIController extends AppBaseController
                                 'password' => Hash::make($request['newPassword'])
                         ]);
             }
+
+            // Save activity logs
+            $log = Activity::all()->last();
+            $log['user_id'] = User::where('email',$email)->first()->id;
+            $log->save();
 
             return $this->sendResponse($user, 'changePasswordSuccess');
         }

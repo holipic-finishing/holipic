@@ -46,6 +46,8 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('notifications', 'NotificationAPIController');
 
 
+	
+
 	/***************************************************
 	**********	ROUTER COMPANY AND ADMIN   *************
 	****************************************************
@@ -54,11 +56,18 @@ Route::group(['namespace' => 'API'],function(){
 
 
 
+
+
 	/***********************************************
 	**********	ROUTER COMPANY ADMIN   *************
 	************************************************
 	*/
 	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
+
+	Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
+
+	
+
 
 
 	/***********************************************
@@ -99,8 +108,8 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
 	Route::get('delete-package', 'PackageAPIController@deletePackage');
-	
 
+	
 });	
 
 

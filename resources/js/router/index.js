@@ -191,17 +191,17 @@ routers = [
 		            breadcrumb: 'Users / Change Password'
 		        }
 		    },
-		    {
-		        path: '/default/transaction/histories',
-		        component: HistoriesTransaction,
-		        meta: {
-		            requiresAuth: true,
-		            adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.histories',
-		            breadcrumb: 'Transaction / Histories List'
-		        }
-		    },
+		    // {
+		    //     path: '/default/transaction/histories',
+		    //     component: HistoriesTransaction,
+		    //     meta: {
+		    //         requiresAuth: true,
+		    //         adminAuth:true,
+	     //     		companyAuth:false,
+		    //         title: 'message.histories',
+		    //         breadcrumb: 'Transaction / Histories List'
+		    //     }
+		    // },
 		    {
 		        path: '/default/coupon-code/index',
 		        component: IndexCoupon,
@@ -213,18 +213,18 @@ routers = [
 		            breadcrumb: 'Coupon Code / Histories List'
 		        }
 		    },
-		    {
-				path: '/default/users/show-notification/:id',
-		        component: Notification,
-		        name : 'AdminNotification',
-		        meta: {
-		            requiresAuth: true,
-		            adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.notification',
-		            breadcrumb: 'Users / Notification'
-		        }
-			},
+		 //    {
+			// 	path: '/default/users/show-notification/:id',
+		 //        component: Notification,
+		 //        name : 'AdminNotification',
+		 //        meta: {
+		 //            requiresAuth: true,
+		 //            adminAuth:true,
+	  //        		companyAuth:false,
+		 //            title: 'message.notification',
+		 //            breadcrumb: 'Users / Notification'
+		 //        }
+			// },
       	]	
 	},
 	{

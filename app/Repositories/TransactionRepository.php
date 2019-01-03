@@ -731,7 +731,7 @@ class TransactionRepository extends BaseRepository
                     }
                 }
 
-                $dayWeek[$key]['total'] = $count;
+                $dayWeek[$key]['total'] = round($count,2);
             }  else {
                 $dayWeek[$key]['total'] = 0;
             }
@@ -878,18 +878,47 @@ class TransactionRepository extends BaseRepository
         $user_id = $attributes['userId'];
 
         if(!empty($searchBy['title'])){
-            $transactions = $this->model->select('id','title','dated','amount','type')
-                                         ->whereHas('companyUser', function($query) use ($user_id){
-                                            $query->where('owner_id',$user_id);
-                                        })
-                                        ->where('title','LIKE', '%'.$searchBy['title'].'%')
-                                        ->where(DB::raw('date(dated)'),$now)
+            // $transactions = $this->model->select('id','title','dated','amount','type')
+            //                              ->whereHas('companyUser', function($query) use ($user_id){
+            //                                 $query->where('owner_id',$user_id);
+            //                             })
+            //                             ->where('title','LIKE', '%'.$searchBy['title'].'%')
+            //                             ->where(DB::raw('date(dated)'),$now)
+            //                             ->orderBy('dated', 'desc');
+
+
+            $search = $searchBy['title'];
+
+          
+            $transactions = $this->scopeQuery(function($query) use($search, $user_id, $now){
+
+                $query = $query->select('id','title','dated','amount','type')
+                                    ->with(['transactionexchange' => function($query){
+                                        $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                    }])
+                                    ->whereHas('companyUser', function($query) use ($user_id){
+                                        $query->where('owner_id',$user_id);
+                                    });
+
+                $query = $query->where(function($query) use ($search){
+                                        $query->where('title','LIKE', '%'. $search . '%')
+                                            ->orWhere('dated','LIKE', '%'. $search . '%');
+                                    });
+
+                $query = $query->where(DB::raw('date(dated)'),$now)
                                         ->orderBy('dated', 'desc');
+
+                return $query;
+
+            });
 
         }
         else {
             $transactions = $this->model->select('id','title','dated','amount','type')
-                                         ->whereHas('companyUser', function($query) use ($user_id){
+                                        ->with(['transactionexchange' => function($query){
+                                            $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                        }])
+                                        ->whereHas('companyUser', function($query) use ($user_id){
                                             $query->where('owner_id',$user_id);
                                         })
                                         ->where(DB::raw('date(dated)'),$now)
@@ -913,16 +942,44 @@ class TransactionRepository extends BaseRepository
         $user_id = $attributes['userId'];
 
         if(!empty($searchBy['title'])){
-             $transactions = $this->model->select('id','title','dated','amount','type')
-                                        ->whereHas('companyUser', function($query) use ($user_id){
-                                                $query->where('owner_id',$user_id);
-                                         })
-                                        ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                                        ->where('title','LIKE', '%'.$searchBy['title'].'%')
+             // $transactions = $this->model->select('id','title','dated','amount','type')
+             //                            ->whereHas('companyUser', function($query) use ($user_id){
+             //                                    $query->where('owner_id',$user_id);
+             //                             })
+             //                            ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+             //                            ->where('title','LIKE', '%'.$searchBy['title'].'%')
+             //                            ->orderBy('dated', 'desc');
+
+            $search = $searchBy['title'];
+
+          
+            $transactions = $this->scopeQuery(function($query) use($search, $user_id, $startDay, $endDay){
+
+                $query = $query->select('id','title','dated','amount','type')
+                                    ->with(['transactionexchange' => function($query){
+                                        $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                    }])
+                                    ->whereHas('companyUser', function($query) use ($user_id){
+                                        $query->where('owner_id',$user_id);
+                                    });
+
+                $query = $query->where(function($query) use ($search){
+                                        $query->where('title','LIKE', '%'. $search . '%')
+                                            ->orWhere('dated','LIKE', '%'. $search . '%');
+                                    });
+
+                $query = $query->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
                                         ->orderBy('dated', 'desc');
+
+                return $query;
+
+            });
         }
         else {
             $transactions = $this->model->select('id','title','dated','amount','type')
+                                        ->with(['transactionexchange' => function($query){
+                                            $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                        }])
                                         ->whereHas('companyUser', function($query) use ($user_id){
                                                 $query->where('owner_id',$user_id);
                                          })
@@ -947,24 +1004,55 @@ class TransactionRepository extends BaseRepository
 
         if(!empty($searchBy['title'])){
 
-            $transactions = $this->model->select('id','title','dated','amount','type')
-                                    ->whereHas('companyUser', function($query) use ($user_id){
-                                        $query->where('owner_id',$user_id);
-                                    })
-                                    ->where('title','LIKE', '%'. $searchBy['title'] . '%')
-                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
-                                    ->orderBy('dated', 'desc');
+            // $transactions = $this->model->select('id','title','dated','amount','type')
+             //                            ->whereHas('companyUser', function($query) use ($user_id){
+             //                                $query->where('owner_id',$user_id);
+             //                            })
+             //                            ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
+             //                            ->where('title','LIKE', '%'. $searchBy['title'] .'%')
+             //                            ->orderBy('dated', 'desc');
+
+            $search = $searchBy['title'];
+
+          
+            $transactions = $this->scopeQuery(function($query) use($search, $user_id, $month){
+
+                $query = $query->select('id','title','dated','amount','type','status')
+                                ->with(['transactionexchange' => function($query){
+                                    $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                }])
+                                ->whereHas('companyUser', function($query) use ($user_id){
+                                    $query->where('owner_id',$user_id);
+                                });
+
+                $query = $query->where(function($query) use ($search){
+                                        $query->where('title','LIKE', '%'. $search . '%')
+                                            ->orWhere('dated','LIKE', '%'. $search . '%');
+                                    });
+
+                $query = $query->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
+                                        ->orderBy('dated', 'desc');
+
+                return $query;
+
+            });
+
+                                              
         }
         else {
 
-         $transactions = $this->model->select('id','title','dated','amount','type')
+         $transactions = $this->model->select('id','title','dated','amount','type','status')
+                                    ->with(['transactionexchange' => function($query){
+                                        $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                    }])
                                     ->whereHas('companyUser', function($query) use ($user_id){
                                         $query->where('owner_id',$user_id);
                                     })
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
                                     ->orderBy('dated', 'desc');
 
-        }                            
+        }       
+
         return $transactions->paginate($perPage); 
 
     }
@@ -977,20 +1065,48 @@ class TransactionRepository extends BaseRepository
     */
     public function transactionHistoryYear($attributes,$perPage, $searchBy) {
 
-         $year = \Carbon\Carbon::today()->format('Y');
-         $user_id = $attributes['userId'];
+        $year = \Carbon\Carbon::today()->format('Y');
+        $user_id = $attributes['userId'];
         if(!empty($searchBy['title'])){
 
-             $transactions = $this->model->select('id','title','dated','amount','type')
-                                        ->whereHas('companyUser', function($query) use ($user_id){
-                                            $query->where('owner_id',$user_id);
-                                        })
-                                        ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
-                                        ->where('title','LIKE', '%'.$searchBy['title'].'%')
+             // $transactions = $this->model->select('id','title','dated','amount','type')
+             //                            ->whereHas('companyUser', function($query) use ($user_id){
+             //                                $query->where('owner_id',$user_id);
+             //                            })
+             //                            ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
+             //                            ->where('title','LIKE', '%'. $searchBy['title'] .'%')
+             //                            ->orderBy('dated', 'desc');
+
+            $search = $searchBy['title'];
+
+          
+            $transactions = $this->scopeQuery(function($query) use($search, $user_id, $year){
+
+                $query = $query->select('id','title','dated','amount','type')
+                                    ->with(['transactionexchange' => function($query){
+                                        $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                    }])
+                                    ->whereHas('companyUser', function($query) use ($user_id){
+                                        $query->where('owner_id',$user_id);
+                                    });
+
+                $query = $query->where(function($query) use ($search){
+                                        $query->where('title','LIKE', '%'. $search . '%')
+                                            ->orWhere('dated','LIKE', '%'. $search . '%');
+                                    });
+
+                $query = $query->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
                                         ->orderBy('dated', 'desc');
+
+                return $query;
+
+            });
 
         } else { 
             $transactions = $this->model->select('id','title','dated','amount','type')
+                                        ->with(['transactionexchange' => function($query){
+                                            $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                        }])
                                         ->whereHas('companyUser', function($query) use ($user_id){
                                             $query->where('owner_id',$user_id);
                                         })
@@ -1073,7 +1189,7 @@ class TransactionRepository extends BaseRepository
                         $dates[$key]['total'] = 0;
                     }
                 }  
-                 $dates[$key]['total'] = $count;
+                 $dates[$key]['total'] = round($count,2);
                     
             } else {
                  $dates[$key]['total'] = 0;
@@ -1081,4 +1197,5 @@ class TransactionRepository extends BaseRepository
         }
         return $dates;
     }
+
 }

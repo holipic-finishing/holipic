@@ -29,7 +29,7 @@
 						<v-list-tile-content>
 				          	<v-list-tile-title class="content-flex">
 					          	<span class="font-weight-bold item-title">Branch name:</span>
-					          	<span v-if="photographer.branch">{{photographer.branch.branch_name}}</span>
+					          	<span v-if="photographer.branch" class="max-value">{{photographer.branch.branch_name}}</span>
 		          			</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
@@ -39,7 +39,7 @@
 						<v-list-tile-content>
 				          	<v-list-tile-title class="content-flex">
 					          	<span class="font-weight-bold item-title">Name:</span>
-					          	<span>{{photographer.name}}</span>
+					          	<span class="max-value">{{photographer.name}}</span>
 		          			</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
@@ -49,7 +49,7 @@
 						<v-list-tile-content>
 				          	<v-list-tile-title class="content-flex">
 					          	<span class="font-weight-bold item-title">Phone:</span>
-					          	<span>{{photographer.phone_number}}</span>
+					          	<span class="max-value">{{photographer.phone_number}}</span>
 		          			</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
@@ -59,7 +59,7 @@
 						<v-list-tile-content>
 				          	<v-list-tile-title class="content-flex">
 					          	<span class="font-weight-bold item-title">Address:</span>
-					          	<span>{{photographer.address}}</span>
+					          	<span class="max-value">{{photographer.address}}</span>
 		          			</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
@@ -69,7 +69,7 @@
 						<v-list-tile-content>
 				          	<v-list-tile-title class="content-flex">
 					          	<span class="font-weight-bold item-title">Added Date:</span>
-					          	<span>{{photographer.created_at}}</span>
+					          	<span class="max-value">{{photographer.created_at}}</span>
 		          			</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
@@ -79,7 +79,7 @@
 						<v-list-tile-content>
 				          	<v-list-tile-title class="content-flex">
 					          	<span class="font-weight-bold item-title">Status:</span>
-					          	<span>{{photographer.status == true ? 'Active': 'Inactive'}}</span>
+					          	<span class="max-value">{{photographer.status == true ? 'Active': 'Inactive'}}</span>
 		          			</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
@@ -124,5 +124,13 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+.content-flex{
+	height: auto !important;
+	white-space: inherit !important;
+}
+.max-value{
+	max-width: 63%;
+	flex: 0 0 63%;
+}
 </style>

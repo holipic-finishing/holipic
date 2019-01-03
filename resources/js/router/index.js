@@ -14,13 +14,13 @@ import mini from '../container/MiniSidebarLayout.vue'
 import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // Companies Component
-// import UserWidgets   from'../views/users/UsersList';
+
 import Companies from '../views/companies/Companies';
 import CompanyChart from '../views/companies/information-chart';
 
 import PackageIndex from '../views/package/Index';
 
-// import Setting from '../views/setting/setting'
+
 import UserManagement from '../views/superadmin-user/user-management'
 import page404 from '../views/pages/page404'
 import UserPass from '../views/users/ChangePassword'
@@ -30,6 +30,7 @@ import Transactions from '../views/transactions/Histories.vue'
 
 // Coupon Code Session
 import CouponCodes from '../views/coupon-codes/CouponCodes'
+
 
 //-----------------------------------------
 //----  File Component of Admin Company  --
@@ -77,9 +78,9 @@ routers = [
 		redirect: '/default/dashboard/index',
 		meta: { requiresAuth: true },
 		children: [
-			//-------------------------------
-			//----- Router Company Admin ----
-			//-------------------------------
+			//------------------------------------------------------------------------------------
+			//---------------------------- ROUTER COMPANY ADMIN ----------------------------------
+			//------------------------------------------------------------------------------------
 			{
 				path: '/default/company/dashboard/index',
 	         	component: DashboardCompany,
@@ -116,9 +117,9 @@ routers = [
 			},
 
 
-			//-------------------------------
-			//----- Router Super Admin  -----
-			//-------------------------------
+			//--------------------------------------------------------------------------
+			//------------------------- ROUTER SUPER ADMIN  ----------------------------
+			//--------------------------------------------------------------------------
       		{
 	         	path: '/default/dashboard/index',
 	         	component: Ecommerce,
@@ -217,18 +218,18 @@ routers = [
 		            breadcrumb: 'Coupon Code / Histories List'
 		        }
 		    },
-		    {
-				path: '/default/users/show-notification/:id',
-		        component: Notification,
-		        name : 'AdminNotification',
-		        meta: {
-		            requiresAuth: true,
-		            adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.notification',
-		            breadcrumb: 'Users / Notification'
-		        }
-			},
+		 //    {
+			// 	path: '/default/users/show-notification/:id',
+		 //        component: Notification,
+		 //        name : 'AdminNotification',
+		 //        meta: {
+		 //            requiresAuth: true,
+		 //            adminAuth:true,
+	  //        		companyAuth:false,
+		 //            title: 'message.notification',
+		 //            breadcrumb: 'Users / Notification'
+		 //        }
+			// },
       	]	
 	},
 	{
@@ -266,9 +267,9 @@ var router = new Router({
 // });
 
 
-// ----------------------------------------------
-// -- Config Navigations guards before each v2 --
-// ----------------------------------------------
+// ------------------------------------------------------------------------------------
+// ------------------ Config Navigations guards before each v2 ------------------------
+// ------------------------------------------------------------------------------------
 
 router.beforeEach((to, from, next) => { 
 	Nprogress.start()

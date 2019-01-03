@@ -26,7 +26,7 @@ class TransactionsTableSeeder extends Seeder
             $feeArr[] = $p['fee'];
         }
 
-        for ($i=0; $i < 400 ; $i++) {
+        for ($i=0; $i < 1000 ; $i++) {
             $id_rand = $faker->numberBetween(1, 51);
             $amount = $faker->randomNumber(4);
             $fee = $faker->randomElement($feeArr);

@@ -25,232 +25,234 @@
 	 	<!-- <v-list two-line>
           <h4><v-icon>{{ check ? 'add' : 'edit'}}</v-icon> &nbsp;{{ check ? 'Add Package Admin' : 'Update Package Admin'}}</h4>
         </v-list>  -->
- 		<v-form ref="form" @submit.prevent="savePackageAdd" v-show="check == 'add'">
-			<v-list two-line>
-	           	<v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Fee:</span>
-			            <span class="contain-text-field">
-			              <v-text-field
-			                class="font-weight-bold height-input"
-			                placeholder="Enter fee"
-			                v-model="item.fee"
-			                outline
-			                :rules="[rules.required, rules.decimal]"
-			              ></v-text-field>
-			            </span>
-			           <!--  <span class="position-item">
-			              <v-btn flat icon><v-icon small>fas fa-marker</v-icon></v-btn>
-			            </span> -->
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+        <v-list v-show="check == 'add'" class="heigth-list-title">
+	 		<v-form ref="form" @submit.prevent="savePackageAdd">
+				<v-list two-line>
+		           	<v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Fee:</span>
+				            <span class="contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Enter fee"
+				                v-model="item.fee"
+				                outline
+				                :rules="[rules.required, rules.decimal]"
+				              ></v-text-field>
+				            </span>
+				           <!--  <span class="position-item">
+				              <v-btn flat icon><v-icon small>fas fa-marker</v-icon></v-btn>
+				            </span> -->
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Package name:</span>
-			            <span class="contain-text-field">
-			              <v-text-field
-			                class="font-weight-bold height-input"
-			                placeholder="Enter package name"
-			                v-model="item.package_name"
-	 			            :rules="[rules.required]"
-			                outline       
-			              ></v-text-field>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Package name:</span>
+				            <span class="contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Enter package name"
+				                v-model="item.package_name"
+		 			            :rules="[rules.required]"
+				                outline       
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Secure Storage:</span>
-			            <span class="contain-text-field">
-			              <v-text-field
-			                class="font-weight-bold height-input"
-			                placeholder="Enter secure storage"
-			               	v-model="item.secure_storage"
-		                    :rules="[rules.required]"
-			                outline                
-			              ></v-text-field>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Secure Storage:</span>
+				            <span class="contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Enter secure storage"
+				               	v-model="item.secure_storage"
+			                    :rules="[rules.required]"
+				                outline                
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">File upload:</span>
-			            <span class="contain-text-field">
-			              <v-text-field
-			                class="font-weight-bold height-input"
-			                placeholder="Enter file upload"
-			               	v-model="item.file_upload"
-	                    	:rules="[rules.required, rules.number]"
-			                outline                
-			              ></v-text-field>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">File upload:</span>
+				            <span class="contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Enter file upload"
+				               	v-model="item.file_upload"
+		                    	:rules="[rules.required, rules.number]"
+				                outline                
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Minimum User:</span>
-			            <span class="contain-text-field">
-			              <v-text-field
-			                class="font-weight-bold height-input"
-			                placeholder="Minimum user"
-			              	v-model="item.minimum_user"
-		                    :rules="[rules.required, rules.number]"
-			                outline               
-			              ></v-text-field>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Minimum User:</span>
+				            <span class="contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Minimum user"
+				              	v-model="item.minimum_user"
+			                    :rules="[rules.required, rules.number]"
+				                outline               
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Maximum User:</span>
-			            <span class="contain-text-field">
-			              <v-text-field
-			                class="font-weight-bold height-input"
-			                placeholder="Minimum user"
-			              	v-model="item.max_user"
-		                    :rules="[rules.required]"
-			                outline
-			                			                
-			              ></v-text-field>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Maximum User:</span>
+				            <span class="contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Minimum user"
+				              	v-model="item.max_user"
+			                    :rules="[rules.required]"
+				                outline
+				                			                
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Short Description:</span>
-			            <span class="contain-text-field">
-			              <v-text-field
-			                class="font-weight-bold height-input"
-			                placeholder="Minimum user"
-			              	v-model="item.short_description"
-			                :rules="[rules.required]"
-			                outline          
-			              ></v-text-field>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Short Description:</span>
+				            <span class="contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Minimum user"
+				              	v-model="item.short_description"
+				                :rules="[rules.required]"
+				                outline          
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Expiry for deleting images files:</span>
-			            <span class="contain-text-field fix-contain-text-field">
-			              <v-text-field
-			                class="font-weight-bold height-input"
-			                placeholder="0"
-			              	:rules="[rules.required, rules.number]"	
-				            v-model="item.expiration_date"
-			                outline               
-			              ></v-text-field>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Expiry for deleting images files:</span>
+				            <span class="contain-text-field fix-contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="0"
+				              	:rules="[rules.required, rules.number]"	
+					            v-model="item.expiration_date"
+				                outline               
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Manage Credit Card fees:</span>
-			            <span class="contain-text-field fix-contain-text-field">
-			              <v-text-field
-			                class="font-weight-bold height-input"
-			               placeholder="0.00"
-			              	:rules="[rules.required, rules.decimal]"
-				            v-model="item.card_fee"
-			                outline           
-			              ></v-text-field>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Manage Credit Card fees:</span>
+				            <span class="contain-text-field fix-contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				               placeholder="0.00"
+				              	:rules="[rules.required, rules.decimal]"
+					            v-model="item.card_fee"
+				                outline           
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Complimentary bonus to TopUp:</span>
-			            <span class="contain-text-field fix-contain-text-field">
-			              <v-text-field
-			                class="font-weight-bold height-input"
-			                placeholder="0.00"
-			              	:rules="[rules.required, rules.decimal]"
-				            v-model="item.bonus"
-			                outline         
-			              ></v-text-field>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Complimentary bonus to TopUp:</span>
+				            <span class="contain-text-field fix-contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="0.00"
+				              	:rules="[rules.required, rules.decimal]"
+					            v-model="item.bonus"
+				                outline         
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">On/off SMS services Basic:</span>
-			            <span class="contain-text-field fix-contain-text-field fix-switch">
-			            	<v-switch
-				              v-model="item.sms"
-				              color="red"
-				              hide-details>
-				            </v-switch>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">On/off SMS services Basic:</span>
+				            <span class="contain-text-field fix-contain-text-field fix-switch">
+				            	<v-switch
+					              v-model="item.sms"
+					              color="red"
+					              hide-details>
+					            </v-switch>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
 
-			    <v-list-tile class="height-80">
-			        <v-list-tile-content class="h-100">
-			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">On/off Email services Basic:</span>
-			            <span class="contain-text-field fix-contain-text-field fix-switch">
-			            	<v-switch
-				              v-model="item.email_service"
-				              color="red"
-				              hide-details>
-				            </v-switch>
-			            </span>
-			          </v-list-tile-title>
-			        </v-list-tile-content>
-			    </v-list-tile>
-			    <v-divider class="no-mg-bottom"></v-divider>
-			   	
-			    <v-flex xs12 sm12 class="style-flex fix-style-flex">
-					<v-btn color="info" type="submit">SAVE</v-btn>	
-				</v-flex>
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">On/off Email services Basic:</span>
+				            <span class="contain-text-field fix-contain-text-field fix-switch">
+				            	<v-switch
+					              v-model="item.email_service"
+					              color="red"
+					              hide-details>
+					            </v-switch>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
+				   	
+				    <v-flex xs12 sm12 class="style-flex fix-style-flex">
+						<v-btn color="info" type="submit">SAVE</v-btn>	
+					</v-flex>
 
-	        </v-list>  
-   		</v-form>
+		        </v-list>  
+	   		</v-form>
+   		</v-list>
 
-   		<v-form ref="form1" @submit.prevent="savePackagesSetting" v-show="check == 'setting'"> 
+		<v-list v-show="check == 'setting'" class="heigth-list-title">
 	        <v-list two-line>
 	        	<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 				<v-list-tile class="height-80">
@@ -370,9 +372,9 @@
 				<v-divider class="no-mg-bottom"></v-divider>
 
 	        </v-list> 
-	    </v-form> 
-
-	    <v-form ref="form2"  v-show="check == 'edit'"> 
+	    </v-list>
+		
+		<v-list v-show="check == 'edit'" class="heigth-list-title">
 	        <v-list two-line>
 	        	<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 				<v-list-tile class="height-80">
@@ -543,8 +545,8 @@
 				</v-list-tile>
 				<v-divider class="no-mg-bottom"></v-divider>
 
-	        </v-list> 
-	    </v-form>   
+	        </v-list>   
+	    </v-list> 
         <!-- <v-list dense>
 
 	        <v-list-tile @click.stop="stopdrawerRight()">

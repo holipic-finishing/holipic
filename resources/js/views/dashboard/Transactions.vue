@@ -80,7 +80,7 @@
 	                  {{ header.text }}
 	                </span>
 	              </v-tooltip>
-	              <v-icon>arrow_upward</v-icon>
+	              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
             	</div>
             </th>
           </tr>
@@ -233,6 +233,7 @@ export default {
         },
         {
           text: 'Action',
+          value: 'actions',
           align: 'center',
           sortable: false,
         }
@@ -302,12 +303,18 @@ export default {
       }
     },
     changeSort (column) {
+      var columnsNoSearch = ['actions']
+      if (columnsNoSearch.indexOf(column) > -1) {
+        return
+      }
+      this.loading = true
       if (this.pagination.sortBy === column) {
         this.pagination.descending = !this.pagination.descending
       } else {
         this.pagination.sortBy = column
         this.pagination.descending = false
       }
+      this.loading = false
     },
     transactionEvent(event, item){
     	this.drawer = true
@@ -349,11 +356,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.custom-header{
-		display:flex;
-		justify-content:center;
-		align-items:center;
-	}
 
   .action-width{
     min-width: 130px;

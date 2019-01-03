@@ -194,11 +194,11 @@ class TransactionAPIController extends AppBaseController
         ], $itemId);
 
         // Save activity log
-        $log = Activity::all()->last();
-        $log['user_id'] = $input['userId'];
-        $log->save();
+        // $log = Activity::all()->last();
+        // $log['user_id'] = $input['userId'];
+        // $log->save();
 
-        if($results){
+        if($result){
 
             return $this->sendResponse([], 'Transaction updated successfully');
         }else{

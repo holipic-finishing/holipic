@@ -145,7 +145,8 @@ class LoginController extends BaseApiController
 
         } catch (\Exception $e){
 
-            return ('An unexpected error occurred. Please try again...');
+            // return ('An unexpected error occurred. Please try again...');
+            return $e;
             
         }
 

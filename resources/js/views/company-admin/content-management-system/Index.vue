@@ -41,7 +41,6 @@
 				class="elevation-5"  
 				:pagination.sync="pagination" 
 				:rows-per-page-items="rowsPerPageItems" 
-				default-sort="id:desc"
 				:search="search"
 				>
 					<template slot="items" slot-scope="props">
@@ -85,7 +84,7 @@ export default {
     		pagination: {
 				  	rowsPerPage: 25,
 				  	sortBy: 'id', 
-				  	descending: true
+				  	descending: false
 		    },
 		    item: null,
       		eventType: '',
@@ -121,6 +120,11 @@ export default {
 			this.eventType = event
 			this.item = item
   		},
+  		doReset(){
+				this.search.keywords = ''
+				this.search.filterPackage =''
+				this.fetchData()
+		},
 
   	},
   	computed: {

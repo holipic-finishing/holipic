@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrenciesTableSeeder::class);
         $this->call(TransactionsTableSeeder::class);
         $this->call(ExchangeRatesTableSeeder::class);
+        $this->call(PageTableSeed::class);
 
     }
 }

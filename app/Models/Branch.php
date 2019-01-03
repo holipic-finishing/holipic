@@ -43,5 +43,10 @@ class Branch extends Model
         
     ];
 
+    public function photgrapher()
+    {
+        return $this->hasOne('App\Models\Photographer', 'branch_id', 'id');
+    }
+
     
 }

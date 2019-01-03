@@ -136,7 +136,7 @@ export default {
 
 	},
 	mounted() {
-		this.$root.$on('editBranchSuccess', res => this.fetchData())
+		this.$root.$on('reloadTableBranch', res => this.fetchData())
 	},
 	methods: {
 		fetchData()
@@ -187,12 +187,18 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 	.add-btn{
 		right: 0px;
     	position: absolute;
+    	top: 8px;
 	}
 	.branch-table{
 		margin-top:30px;
 	}
+	.hover-icon{
+    &:hover{
+      color: blue !important;
+    }
+}
 </style>

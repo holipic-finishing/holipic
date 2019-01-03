@@ -18,7 +18,15 @@ export const menus = {
 			action: 'zmdi-assignment-account',
 			title: 'message.branch',
 			active: false,
-			path: '/company/branch',
+			path: '/company/branches',
+			items:null,
+			role_id : 2
+		},
+		{
+			action: 'zmdi-pin-assistant',
+			title: 'message.photographer',
+			active: false,
+			path: '/company/photographers',
 			items:null,
 			role_id : 2
 		},

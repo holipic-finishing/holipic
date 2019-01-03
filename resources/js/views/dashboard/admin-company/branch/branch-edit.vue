@@ -162,11 +162,11 @@ export default {
 			{
 				this.alertStt = true
 		        this.alertType = 'error'
-		        this.alertMes = 'System Error Occurred'         
+		        this.alertMes = 'Please type text'         
 		        setTimeout(() => {
 		          this.alertStt = false
 		        }, 1500)
-				this.$root.$emit('editBranchSuccess')
+				this.$root.$emit('reloadTableBranch')
 				this.key = 0
 				return false
 			}
@@ -203,7 +203,7 @@ export default {
 			            	this.alertStt = false
 						}, 1500)
 						this.key = 0
-						this.$root.$emit('editBranchSuccess')
+						this.$root.$emit('reloadTableBranch')
 						
 					}
 				})
@@ -215,7 +215,7 @@ export default {
 			        setTimeout(() => {
 			          this.alertStt = false
 			        }, 1500)
-					this.$root.$emit('editBranchSuccess')
+					this.$root.$emit('reloadTableBranch')
 					this.key = 0
 				})	
 

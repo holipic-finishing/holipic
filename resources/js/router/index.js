@@ -35,6 +35,7 @@ import IndexCoupon from '../views/coupon-code/Index.vue'
 import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
 import Notification from '../views/notification/notification.vue'
 import Branch from '../views/dashboard/admin-company/BranchCompany.vue'
+import Photographer from '../views/dashboard/admin-company/Photographer.vue'
 
 
 Vue.use(Router)
@@ -113,7 +114,7 @@ routers = [
 		        }
 			},
 			{
-				path: '/default/company/branch',
+				path: '/default/company/branches',
 		        component: Branch,
 		        name : 'CompanyBranch',
 		        meta: {
@@ -122,6 +123,17 @@ routers = [
 	         		companyAuth:true,
 		            title: 'message.branch'
 		            // breadcrumb: 'Users / Notification'
+		        }
+			},
+			{
+				path: '/default/company/photographers',
+		        component: Photographer,
+		        name : 'CompanyPhotographer',
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:false,
+	         		companyAuth:true,
+		            title: 'message.photographer'
 		        }
 			},
 

@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(CurrenciesTableSeeder::class);
         // $this->call(TransactionsTableSeeder::class);
         $this->call(BranchesTableSeeder::class);
+        $this->call(PhotographersTableSeeder::class);
     }
 }

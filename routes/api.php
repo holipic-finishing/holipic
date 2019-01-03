@@ -66,6 +66,16 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
 
+	// Route::resource('photographers', 'PhotographerAPIController');
+
+	Route::get('photographers', 'PhotographerAPIController@getPhotographers');
+
+	Route::delete('photographer/{id}', 'PhotographerAPIController@destroy');
+
+	Route::post('photographer', 'PhotographerAPIController@savePhotographer');
+
+	Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
+
 	/***********************************************
 	**********	ROUTER SUPER ADMIN   *************
 	************************************************
@@ -107,6 +117,8 @@ Route::group(['namespace' => 'API'],function(){
 	
 
 });	
+
+
 
 
 

@@ -143,10 +143,10 @@ class BranchAPIController extends AppBaseController
         $branch = $this->branchRepository->handleSaveBranchCompany();
 
         if(!$branch) {
-            return $this->sendError('Create Branch Error');
+            return $this->sendError('Add branch error');
 
         }
 
-        return $this->sendResponse($branch, 'Branches retrieved successfully');
+        return $this->sendResponse($branch, 'Add branches successfully');
     }
 }

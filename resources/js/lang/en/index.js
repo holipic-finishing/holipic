@@ -475,5 +475,7 @@ export default {
   yourNotification: "Your notification",
 
   //Company Admin
-  branch: "Branches"
+  branch: "Branches",
+  photographer: "Photographers"
+
 }

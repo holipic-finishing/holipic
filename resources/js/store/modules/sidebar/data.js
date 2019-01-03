@@ -14,6 +14,14 @@ export const menus = {
 			items:null,
 			role_id : 2
 		},
+		{
+			action: 'zmdi-comment-list',
+			title: 'message.package',
+			active: true,
+			path: '/company/packages',
+			items:null,
+			role_id : 2
+		},
 		
 		 	/////////////////////////////////////////////
 		   ///////								  //////

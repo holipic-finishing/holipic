@@ -52,6 +52,12 @@
   }
 }
 
+.height-200{
+  .v-list__tile{
+    height: 200px !important;
+  }
+}
+
 .height-input{
   .v-input__slot{
     min-height: 47px !important;

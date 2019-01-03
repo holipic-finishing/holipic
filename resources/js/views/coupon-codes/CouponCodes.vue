@@ -58,10 +58,10 @@
             <th
               v-for="header in props.headers"
               :key="header.text"
-              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+              :class="['column sortable ', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
               @click="changeSort(header.value)"
             >
-            	<div class="custom-header">
+            	<div class="custom-header text-center">
 	              <v-tooltip bottom>
 	                <span slot="activator" class="text-capitalize subheading font-weight-bold">
 	                  {{ header.text }}
@@ -78,23 +78,23 @@
 		    <!--Prop data -->
 		    <template slot="items" slot-scope="props">
 	    		<td>{{ props.item.name }}</td>
-	        <td class="text-left">{{ props.item.code }}</td>
-	        <td class="text-right">{{ props.item.discount }}</td>
-	        <td class="text-center">{{ formatDate(props.item.from_date) }}</td>
-	        <td class="text-center">{{ formatDate(props.item.to_date) }}</td>
-	        <td class="text-left" v-if="props.item.active == '0' ">Inactive</td>
-	        <td class="text-left" v-if="props.item.active == '1' ">Active</td>
-	        <td class="action-width text-right">
+	        <td>{{ props.item.code }}</td>
+	        <td>{{ props.item.discount }}</td>
+	        <td>{{ props.item.from_date | moment("DD/MM/YYYY") }}</td>
+	        <td>{{ props.item.to_date | moment("DD/MM/YYYY") }}</td>
+	        <td v-if="props.item.active == '0' ">Inactive</td>
+	        <td v-if="props.item.active == '1' ">Active</td>
+	        <td class="action-width">
           	<v-icon
             	small
             	class="mr-2"
-            	@click="editItem(props.item)"
+            	@click="couponCodeEvent('edit', props.item)"
           	>
             	edit
           	</v-icon>
           	<v-icon
             	small
-            	@click="deleteItem(props.item.id)"
+            	@click="showDialog(props.item.id)"
           	>
             	delete
           	</v-icon>
@@ -115,6 +115,22 @@
 
 			</v-data-table>
 		</app-card>
+		<v-dialog v-model="dialog" persistent max-width="450">
+      <v-card>
+        <v-card-title class="headline font-weight-bold">
+          <v-icon x-large color="yellow accent-3" class="mr-2">
+            warning
+          </v-icon>
+          Do you want delete this item ?
+        </v-card-title>
+        <v-divider class="mt-0"></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn flat @click="dialog = false">Disagree</v-btn>
+          <v-btn flat @click="deleteItem">Agree</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 	</v-container>
 </template>
 
@@ -131,26 +147,28 @@ export default {
 	name: 'CouponCodes',
 
 	data () {
-	    return {
-	    	search: '',
-	    	desserts:[],
-	    	headers: [
-		        { text:'Name', value:'name', width: '20%', align:'left' },
-		        { text:'Code', value:'code', width: '10%', sortable: false },
-		        { text:'Discount (%)', value:'discount', width:'10%' },
-		        { text:'From Date', value:'from_date', width: '15%', align:'center' },
-		        { text:'To Date', value:'to_date', width: '15%', align:'center' },
-		        { text:'Active', value: 'active' },
-		        { text:'Actions', value:'actions', sortable: false }
-	      	],
-	      	pagination: {
-		    },
-		    loading: true,
-		    search: '',
-		    rowsPerPageItems: [ 20, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 } ],
-		    drawer: false,
-		    item: null,
-      	eventType: '',
+    return {
+    	search: '',
+    	desserts:[],
+    	headers: [
+	        { text:'Name', value:'name', width: '20%'},
+	        { text:'Code', value:'code', width: '10%', sortable: false },
+	        { text:'Discount (%)', value:'discount', width:'10%'},
+	        { text:'From Date', value:'from_date', width: '15%'},
+	        { text:'To Date', value:'to_date', width: '15%'},
+	        { text:'Active', value: 'active' },
+	        { text:'Actions', value:'actions', sortable: false }
+      	],
+      	pagination: {
+	    },
+	    loading: true,
+	    search: '',
+	    rowsPerPageItems: [ 20, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 } ],
+	    drawer: false,
+	    item: null,
+    	eventType: '',
+    	dialog: false,
+    	itemIdToDelete: 0,
 		}
 	},
 	created(){
@@ -187,49 +205,34 @@ export default {
 		},
 		couponCodeEvent(event, item){
 			this.drawer = true
-      this.$root.$emit('disabled-transaction-item')
+      this.$root.$emit('disabled-coupon-code-item')
       this.eventType = event
+      if(this.eventType === 'add-new'){
+      	this.$root.$emit('reset-form')
+      }
       this.item = item
 		},
-		addNewCouponCode() {
-			let obj = {
-  				check : true,
-  				showDialog: true,
-	  		}
-  			this.$root.$emit('change-status', obj)
+    deleteItem(){
+			let url = config.API_URL + 'coupon_codes/' + this.itemIdToDelete
+			del(url)
+			.then((res) => {
+				this.dialog = false
+				this.fetchData()
+				setTimeout(function(){
+          Vue.notify({
+              type: 'success',
+              text: 'Delete Item Success!'
+          })
+		    },1000)
+			})
+			.catch((err) =>{
+				console.log(err)
+			})
 		},
-		editItem(item){
-			let obj = {
-	  				check : false,
-	  				showDialog: true,
-	  			}
-  			this.$root.$emit('change-status', obj)
-  			this.$root.$emit('data-packages', item)
-		},
-		formatDate(date) {
-      if(date){
-          return moment(date, 'YYYY-MM-DD hh:mm:ss').format('MM/DD/YYYY');
-      }
-  	},
-    deleteItem(id){
-			if(confirm('Are you sure you want to delete this item?')){
-				let url = config.API_URL+'coupon_codes/'+id
-				del(url)
-				.then((res) => {
-					this.fetchData();	
-					setTimeout(function(){
-			            Vue.notify({
-			                group: 'loggedIn',
-			                type: 'success',
-			                text: 'Delete Item Success!'
-			            });
-			       },500);
-				})
-				.catch((err) =>{
-					console.log(err)
-				})
-			}
-		}
+		showDialog(id){
+      this.dialog = true
+      this.itemIdToDelete = id
+    },
 	},
 	components:{
 		'coupon-code-item' : CouponCodeItem
@@ -240,7 +243,12 @@ export default {
     })
 
     this.$root.$on('reload-table', res => {
-        this.fetchData();	
+      this.fetchData()	
+    })
+
+    this.$root.$on('editItemSucess', res => {
+    	this.loading = true
+    	this.fetchData()
     })
   },
   computed:{

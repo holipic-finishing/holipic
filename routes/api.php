@@ -60,15 +60,26 @@ Route::group(['namespace' => 'API'],function(){
 	**********	ROUTER SUPER ADMIN   ***************
 	************************************************/
 
+	/*************PackageAPIController**************/
 	Route::get('list/packages', 'PackageAPIController@getListNamePackage');
 	
 	Route::get('count-packages','PackageAPIController@CountPackages');
 
+	Route::get('delete-package', 'PackageAPIController@deletePackage');
+
+	Route::post('edit/package/{itemId}', 'PackageAPIController@editPackage');
+
+	/*************CompanyAPIController**************/
+	
 	Route::get('companies/information', 'CompanyAPIController@showInformationCompany'); //different
 
-	Route::get('transactions/companies/total', 'TransactionAPIController@showTotalCompanies'); //different
-
 	Route::post('search/companies', 'CompanyAPIController@doSearch');
+
+	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
+
+	/*************TransactionAPIController**************/
+
+	Route::get('transactions/companies/total', 'TransactionAPIController@showTotalCompanies'); //different
 
 	Route::post('histories/transactions', 'TransactionAPIController@getHistories');
 
@@ -82,26 +93,25 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('company/load-chart', 'TransactionAPIController@loadChartCompanyByTime');
 
-	Route::get('get-package', 'SettingAPIController@getPackage');
-
-	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
-
-	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
-
 	Route::get('transaction/history', 'TransactionAPIController@getTransactionHistory');
 
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
-	Route::get('delete-package', 'PackageAPIController@deletePackage');
+	/*************SettingAPIController**************/
+
+	Route::get('get-package', 'SettingAPIController@getPackage');
+
+	Route::post('edit/setting/{itemId}', 'SettingAPIController@editSetting');
+
+	/*************Different Controllers**************/
+
+	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
 
 	Route::resource('exchange_rates', 'ExchangeRateAPIController');
 
 	Route::resource('transaction_exchanges', 'TransactionExchangeAPIController');
 
-	Route::post('edit/package/{itemId}', 'PackageAPIController@editPackage');
-
-	Route::post('edit/setting/{itemId}', 'SettingAPIController@editSetting');
-	
+	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 });	
 
 

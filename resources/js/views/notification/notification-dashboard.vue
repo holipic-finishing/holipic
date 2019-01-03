@@ -7,12 +7,12 @@
 			:reloadable="true"
 			:fullScreen="true"
 			colClasses="xl12 lg12 md12 sm12 xs12"
+			width="200"
 		>
-		
 			<v-list two-line>
-				<vue-perfect-scrollbar style="height:447px" :settings="settings">
+				<vue-perfect-scrollbar style="height:392px" :settings="settings">
 				<template v-for="(notification, index) in notifications">
-					<v-list-tile :key="index" :class="!notification.is_read ? 'style-content not-read' : 'style-content'">
+					<v-list-tile :key="index" :class="!notification.is_read ? 'style-content not-read' : 'style-content'" @click="updateIsReadById(notification)">
 					<div class="product-img mr-3">
 						<v-tooltip bottom v-if="notification.is_read == true">
 							<v-btn 
@@ -32,7 +32,6 @@
 							flat 
 							icon 
 							color="#00c2e0"
-							@click="updateIsReadById(notification)"
 							>
 								<v-icon>fiber_manual_record</v-icon>
 							</v-btn>

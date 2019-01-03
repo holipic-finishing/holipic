@@ -10,7 +10,7 @@
 			width="200"
 		>
 			<v-divider></v-divider>
-			<vue-perfect-scrollbar style="height:404px" :settings="settings">      
+			<vue-perfect-scrollbar style="height:350px" :settings="settings">      
 	          	<div v-for="valueTime,indexTime in times">
 	          		 <v-container fluid grid-list-lg>
 			            <v-layout row>

@@ -50,12 +50,8 @@ export const menus = {
 			title: 'message.companymanagement',
 			active: false,
 			path: '/widgets/companies',
-			role_id : 1
-			// items: [
-			// 	// { title: 'message.user', path: '/users/user-list' },
-			// 	{ title: 'message.company', path: '/widgets/mana-company' }
-			// 	// { title: 'message.chartCompany', path: '/widgets/mana-company-chart' }
-			// ]
+			role_id : 1,
+			items: null
 		},
 		{
 			action: 'zmdi zmdi-dropbox',
@@ -71,22 +67,22 @@ export const menus = {
 		// 	active: false,
 		// 	path: '/setting'
 		// },
-		{
-			action: 'zmdi-camera-switch',
-			title: 'message.userManager',
-			active: false,
-			role_id : 1,
-			path: '/user-management'
-		},
-		{
-			action: 'zmdi-card',
-			title: 'message.transaction',
-			active: false,
-			role_id : 1,
-			items: [
-				{ title: 'message.histories', path: '/transaction/histories' },
-			]
-		},
+		// {
+		// 	action: 'zmdi-camera-switch',
+		// 	title: 'message.userManager',
+		// 	active: false,
+		// 	role_id : 1,
+		// 	path: '/user-management'
+		// },
+		// {
+		// 	action: 'zmdi-card',
+		// 	title: 'message.transaction',
+		// 	active: false,
+		// 	role_id : 1,
+		// 	items: [
+		// 		{ title: 'message.histories', path: '/transaction/histories' },
+		// 	]
+		// },
 		{
 			action: 'zmdi zmdi-ticket-star',
 			title: 'message.couponCode',

@@ -11,6 +11,8 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Spatie\Activitylog\Models\Activity;
+
 
 /**
  * Class TransactionController
@@ -191,7 +193,12 @@ class TransactionAPIController extends AppBaseController
             $input['field_name'] => $input['value']
         ], $itemId);
 
-        if($result){
+        // Save activity log
+        $log = Activity::all()->last();
+        $log['user_id'] = $input['userId'];
+        $log->save();
+
+        if($results){
 
             return $this->sendResponse([], 'Transaction updated successfully');
         }else{
@@ -208,6 +215,14 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
     }
 
+
+    /*
+    *   Target : Search tranctions history by time value
+    *   GET /transaction/history
+    *
+    *   @param  Request
+    *   return Json
+    */
     public function getTransactionHistory(Request $request) {
 
         $input = $request->all(); 
@@ -218,9 +233,25 @@ class TransactionAPIController extends AppBaseController
         
         $data = [];
 
+        $searchBy = [];
+
+        if($request->has('search') && $request->input('search')){
+
+            $searchValues = explode(';', $request->input('search'));
+            
+            foreach ($searchValues as $val) {
+            $tmp = explode(':', $val);
+
+                if(count($tmp) > 1){
+                    $searchBy[$tmp[0]] = $tmp[1];
+                }
+            }
+
+        }
+  
         foreach ($timeArr as $tmp) {
             $input['time'] = $tmp;
-            $result = $this->transactionRepository->transactionHistory($input,$perPage);
+            $result = $this->transactionRepository->transactionHistory($input,$perPage, $searchBy);
             $data[$tmp] = $result; 
         }
 
@@ -228,11 +259,35 @@ class TransactionAPIController extends AppBaseController
     
     }
 
+
+    /*
+    *   Target : Search tranctions history by time and where by like title
+    *   GET /transaction/history/item
+    *
+    *   @param  Request
+    *   return Json
+    */
     public function getTransactionHistoryWithTimevalue(Request $request)
     {
         $input = $request->all();
         
-        $result = $this->transactionRepository->transactionHistory($input, $input['perPage']);
+        $searchBy = [];
+
+        if($request->has('search') && $request->input('search')){
+
+            $searchValues = explode(';', $request->input('search'));
+            
+            foreach ($searchValues as $val) {
+            $tmp = explode(':', $val);
+
+                if(count($tmp) > 1){
+                    $searchBy[$tmp[0]] = $tmp[1];
+                }
+            }
+
+        }
+
+        $result = $this->transactionRepository->transactionHistory($input, $input['perPage'], $searchBy);
 
         return $this->sendResponse($result, 'Transactions retrieved successfully');
     }

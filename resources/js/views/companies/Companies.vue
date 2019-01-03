@@ -190,7 +190,8 @@
 				let obj = {
 					typeTime : 'Day',
 					showDrawerRight : true,
-					companyId : items.id
+					companyId : items.id,
+					userId: items.owner_id
 				}
 
 				this.$root.$emit('showTransactionStatus', obj)

@@ -45,19 +45,14 @@ Route::group(['namespace' => 'API'],function(){
 	
 	Route::resource('notifications', 'NotificationAPIController');
 
-
 	/***************************************************
 	**********	ROUTER COMPANY AND ADMIN   *************
-	****************************************************
-	*/
+	****************************************************/
 	Route::post('change-password', 'UserAPIController@changePassWord');
-
-
 
 	/***********************************************
 	**********	ROUTER COMPANY ADMIN   *************
-	************************************************
-	*/
+	************************************************/
 	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
 	Route::resource('branches', 'BranchAPIController');
@@ -76,10 +71,12 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
 
+	Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
+
+
 	/***********************************************
-	**********	ROUTER SUPER ADMIN   *************
-	************************************************
-	*/
+	**********	ROUTER SUPER ADMIN   ***************
+	************************************************/
 
 	Route::get('list/packages', 'PackageAPIController@getListNamePackage');
 	
@@ -114,10 +111,16 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
 	Route::get('delete-package', 'PackageAPIController@deletePackage');
-	
+
+	Route::resource('exchange_rates', 'ExchangeRateAPIController');
+
+	Route::resource('transaction_exchanges', 'TransactionExchangeAPIController');
+
+	Route::post('edit/package/{itemId}', 'PackageAPIController@editPackage');
+
+	Route::post('edit/setting/{itemId}', 'SettingAPIController@editSetting');
 
 });	
-
 
 
 

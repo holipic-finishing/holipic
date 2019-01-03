@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Nprogress from 'nprogress'
-// session components
+// Session components
 import AppLogin from '../views/session/AppLogin.vue';
 import SignUpOne from '../views/session/SignUpOne.vue';
 import LoginOne from '../views/session/LoginOne.vue';
@@ -24,8 +24,12 @@ import PackageIndex from '../views/package/Index';
 import UserManagement from '../views/superadmin-user/user-management'
 import page404 from '../views/pages/page404'
 import UserPass from '../views/users/ChangePassword'
-import HistoriesTransaction from '../views/transactions/Histories.vue'
-import IndexCoupon from '../views/coupon-code/Index.vue'
+
+// Transactions Session
+import Transactions from '../views/transactions/Histories.vue'
+
+// Coupon Code Session
+import CouponCodes from '../views/coupon-codes/CouponCodes'
 
 
 //-----------------------------------------
@@ -192,20 +196,20 @@ routers = [
 		            breadcrumb: 'Users / Change Password'
 		        }
 		    },
-		    // {
-		    //     path: '/default/transaction/histories',
-		    //     component: HistoriesTransaction,
-		    //     meta: {
-		    //         requiresAuth: true,
-		    //         adminAuth:true,
-	     //     		companyAuth:false,
-		    //         title: 'message.histories',
-		    //         breadcrumb: 'Transaction / Histories List'
-		    //     }
-		    // },
 		    {
-		        path: '/default/coupon-code/index',
-		        component: IndexCoupon,
+		        path: '/default/transaction/histories',
+		        component: Transactions,
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:true,
+	         		companyAuth:false,
+		            title: 'message.histories',
+		            breadcrumb: 'Transaction / Histories List'
+		        }
+		    },
+		    {
+		        path: '/default/coupon-codes',
+		        component: CouponCodes,
 		        meta: {
 		            requiresAuth: true,
 		            adminAuth:true,

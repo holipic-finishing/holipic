@@ -55,7 +55,8 @@
 import { getWithData, put } from '../../api/index.js'
 import config from '../../config/index.js'
 import { getCurrentAppLayout } from "../../helpers/helpers.js";
-import Notification from '../../views/notification/notification.vue'
+import Notification from '../../views/company-admin/notification/notification.vue'
+
 	export default {
 		data() {
 			return {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\CompanyAdmin;
 use App\Http\Requests\API\CreatePagesAPIRequest;
 use App\Http\Requests\API\UpdatePagesAPIRequest;
 use App\Models\CompanyAdmin\Pages;
-use App\Repositories\PagesRepository;
+use App\Repositories\CompanyAdminRepositories\PagesRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;

@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\CompanyAdmin\Pages;
-use App\Repositories\PagesRepository;
+use App\Repositories\CompanyAdminRepositories\PagesRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PagesRepositoryTest extends TestCase

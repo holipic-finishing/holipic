@@ -2,7 +2,7 @@
 
 use Faker\Factory as Faker;
 use App\Models\CompanyAdmin\Pages;
-use App\Repositories\PagesRepository;
+use App\Repositories\CompanyAdminRepositories\PagesRepository;
 
 trait MakePagesTrait
 {

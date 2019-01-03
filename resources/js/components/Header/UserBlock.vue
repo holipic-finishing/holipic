@@ -86,7 +86,7 @@ export default {
     	// console.log('123123')
     	localStorage.removeItem('access_token');
     	localStorage.removeItem('user');
-    	this.$router.push('/session/login')
+    	this.$router.push('/auth/login')
       // this.$store.dispatch("logoutUserFromFirebase", this.$router);
 	 },
 	 getMenuLink(path) {

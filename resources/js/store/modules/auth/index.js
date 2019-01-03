@@ -208,7 +208,7 @@ const mutations = {
     logoutUser(state) {
         state.user = null
         localStorage.removeItem('user');
-        router.push("/session/login");
+        router.push("/auth/login");
     },
     signUpUser(state) {
         Nprogress.start();

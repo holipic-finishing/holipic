@@ -1,29 +1,40 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Nprogress from 'nprogress'
-// session components
-import AppLogin from '../views/session/AppLogin.vue';
-import SignUpOne from '../views/session/SignUpOne.vue';
-import LoginOne from '../views/session/LoginOne.vue';
+// auth components
+import AppLogin from '../views/auth/AppLogin.vue';
+import SignUpOne from '../views/auth/SignUpOne.vue';
+import LoginOne from '../views/auth/LoginOne.vue';
 
-import ForgotPassword from '../views/session/ForgotPassword.vue';
-import ResetPassword from '../views/session/ResetPassword.vue';
+import ForgotPassword from '../views/auth/ForgotPassword.vue';
+import ResetPassword from '../views/auth/ResetPassword.vue';
 
-// Dashboard components
 import mini from '../container/MiniSidebarLayout.vue'
-import Ecommerce   from'../views/dashboard/Ecommerce';
 
-// Companies Component
 
-import Companies from '../views/companies/Companies';
-import CompanyChart from '../views/companies/information-chart';
 
-import PackageIndex from '../views/package/Index';
-import UserManagement from '../views/superadmin-user/user-management'
-import page404 from '../views/pages/page404'
-import UserPass from '../views/users/ChangePassword'
-import HistoriesTransaction from '../views/transactions/Histories.vue'
+//-------------------------------------------------------------------
+//----------------  File Component of Super Admin  ------------------
+//-------------------------------------------------------------------
+//** All File Components will import belo
+
+import Ecommerce   from'../views/super-admin/dashboard/Ecommerce.vue';
+import Companies from '../views/super-admin/companies/Companies';
+// import CompanyChart from '../views/super-admin/companies/information-chart';
+import PackageIndex from '../views/super-admin/package/Index';
+import HistoriesTransaction from '../views/super-admin/transactions/Histories.vue'
 import IndexCoupon from '../views/coupon-code/Index.vue'
+
+
+
+//-------------------------------------------------------------------
+//----------------  File Component of Partials  ---------------------
+//-------------------------------------------------------------------
+//** All File Components will import below
+
+import page404 from '../views/partials/pages/page404'
+import UserPass from '../views/partials/users/ChangePassword'
+
 
 
 //-------------------------------------------------------------------
@@ -31,9 +42,8 @@ import IndexCoupon from '../views/coupon-code/Index.vue'
 //-------------------------------------------------------------------
 //** All File Components will import below
 
-
-import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
-import Notification from '../views/notification/notification.vue'
+import DashboardCompany from '../views/company-admin/dashboard/DashboardCompany.vue'
+import Notification from '../views/company-admin/notification/notification.vue'
 import ContentManagement from '../views/company-admin/content-management-system/Index.vue'
 
 
@@ -43,16 +53,16 @@ Vue.use(Router)
 var routers = [];
 routers = [
 	{
-		path: '/session/login',
+		path: '/auth/login',
 		component:AppLogin,
 		children:[
 			{
-				path:'/session/login',
+				path:'/auth/login',
 				name:'LoginIndex',
 				component:LoginOne
 			},
 			{
-				path:'/session/sign-up',
+				path:'/auth/sign-up',
 				name:'Register',
 				component: SignUpOne,
 				meta: {
@@ -61,7 +71,7 @@ routers = [
 				}
 			},
 			{
-				path: '/session/forgot-password',
+				path: '/auth/forgot-password',
 				component: ForgotPassword,
 				meta: {
 					title: 'message.forgotPassword',
@@ -155,17 +165,17 @@ routers = [
 		            breadcrumb: 'Company / List'
 		        }
 		    },
-		    {
-		        path: '/default/widgets/mana-company-chart',
-		        component: CompanyChart,
-		        meta: {
-		        	requiresAuth: true,
-		        	adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.chartCompany',
-		            breadcrumb: 'Company / Information /Chart'
-		        }
-		    },
+		    // {
+		    //     path: '/default/widgets/mana-company-chart',
+		    //     component: CompanyChart,
+		    //     meta: {
+		    //     	requiresAuth: true,
+		    //     	adminAuth:true,
+	     //     		companyAuth:false,
+		    //         title: 'message.chartCompany',
+		    //         breadcrumb: 'Company / Information /Chart'
+		    //     }
+		    // },
 		    {
 		        path: '/default/packages/index',
 		        component: PackageIndex,
@@ -187,17 +197,6 @@ routers = [
 		    //         breadcrumb: 'Setting / List'
 		    //     }
 		    // },
-		    {
-		        path: '/default/user-management',
-		        component: UserManagement,
-		        meta: {
-		        	requiresAuth: true,
-		        	adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.userManager',
-		            breadcrumb: 'User / Manager'
-		        }
-		    },
 		    {
 		        path: '/default/users/change-password',
 		        component: UserPass,
@@ -292,7 +291,7 @@ router.beforeEach((to, from, next) => {
 		const token = localStorage.getItem('access_token')
 		if(!authUser || !token) {
 				next({
-				path: '/session/login'
+				path: '/auth/login'
 			})
 		}
 		else if(to.meta.adminAuth) {

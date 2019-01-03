@@ -43,8 +43,6 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('coupon_codes', 'CouponCodeAPIController');
 	
-	Route::resource('notifications', 'NotificationAPIController');
-
 
 	/***********************************************
 	**********	ROUTER COMPANY ADMIN   *************
@@ -55,13 +53,12 @@ Route::group(['namespace' => 'API'],function(){
 	
 		Route::resource('pages', 'PagesAPIController');
 
+		Route::resource('notifications', 'NotificationAPIController');
+
 		Route::post('edit/page/{itemId}','PagesAPIController@editPage');
 	
+		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 	});
-
-	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
-
-	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
 	Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 

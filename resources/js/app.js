@@ -51,9 +51,6 @@ import primaryTheme from './themes/primaryTheme';
 // Import store
 import { store } from './store/store';
 
-// Import firebase
-// import './firebase'
-
 // Include script file
 import './lib/VuelyScript'
 
@@ -76,44 +73,6 @@ axios.defaults.baseURL = config.BASE_URL;
 axios.defaults.headers.common['Authorization'] = access_token;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-
-// navigation guards before each
-// router.beforeEach((to, from, next) => {
-// 	Nprogress.start()
-// 	if (to.matched.some(record => record.meta.requiresAuth)) {
-// 		// this route requires auth, check if logged in
-// 		// if not, redirect to login page.
-// 		if (localStorage.getItem('user') === null) {
-// 			next({
-// 				path: '/session/login',
-// 				query: { redirect: to.fullPath }
-// 			})
-// 		} else {
-// 			next()
-// 		}
-// 	} else {
-// 		next() // make sure to always call next()!
-// 	}
-// })
-
-// navigation guard after each
-// router.afterEach((to, from) => {
-// 	Nprogress.done()
-// 	setTimeout(() => {
-// 		const contentWrapper = document.querySelector(".v-content__wrap");
-// 		if(contentWrapper !== null){
-// 			contentWrapper.scrollTop = 0;
-// 		}
-// 		const boxedLayout = document.querySelector('.app-boxed-layout .app-content');
-// 		if(boxedLayout !==  null){
-// 			boxedLayout.scrollTop = 0;
-// 		}
-// 		const miniLayout = document.querySelector('.app-mini-layout .app-content');
-// 		if(miniLayout !== null){
-// 			miniLayout.scrollTop = 0;
-// 		}
-// 	}, 200);
-// })
 
 
 // Use Plugins

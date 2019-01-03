@@ -7,6 +7,7 @@
 			:reloadable="true"
 			:fullScreen="true"	
 			colClasses="xl12 lg12 md12 sm12 xs12"
+			width="200"
 		>
 			<v-divider></v-divider>
 			<vue-perfect-scrollbar style="height:404px" :settings="settings">      
@@ -14,7 +15,7 @@
 	          		 <v-container fluid grid-list-lg>
 			            <v-layout row>
 
-			                <v-flex xs5>
+			                <v-flex xs6>
 			                  <v-card-title primary-title>
 			                    <div>
 			                      <div class="headline">{{ valueTime.date | moment(" MMM Do YYYY") }}</div>
@@ -23,13 +24,14 @@
 			                  </v-card-title>
 			                </v-flex>
 
-			                <v-flex xs7>
+			                <v-flex xs6>
 			                		<div v-for="valueLog, indexLog in activityLog" class="bottom-activelog" v-if="valueLog.date == valueTime.date">
-			                			<v-icon small color="black darken-2" v-if="valueLog.description == 'updated'">edit</v-icon>
-			                			<v-icon small color="black darken-2" v-if="valueLog.description == 'deleted'">delete</v-icon>
-			                			<v-icon small color="black darken-2" v-if="valueLog.description == 'created'">add_circle</v-icon>
-			                			<v-btn round :color="valueLog.description == 'updated' ? 'warning' : valueLog.description == 'created' ? 'primary' : 'error'" dark small @click="detailLog(valueLog.id)">Form</v-btn> <b>{{valueLog.name}}</b>
+			                			<v-icon  color="orange darken-2" v-if="valueLog.description == 'updated'" class="mr-2 hover-icon">edit</v-icon>
+			                			<v-icon  color="red lighten-2" v-if="valueLog.description == 'deleted'" class="mr-2 hover-icon">delete</v-icon>
+			                			<v-icon  color="primary darken-2" v-if="valueLog.description == 'created'" class="mr-2 hover-icon">add_circle</v-icon>
+			                			<!-- <v-btn round :color="valueLog.description == 'updated' ? 'warning' : valueLog.description == 'created' ? 'primary' : 'error'" dark small @click="detailLog(valueLog.id)">Form</v-btn> --> <b>{{valueLog.name}}</b>
 			                			{{valueLog.description}} <span>form</span> <b>{{valueLog.subject_type}}</b> at {{valueLog.updated_at}}
+
 			                		</div>
 			                </v-flex>
 
@@ -220,6 +222,7 @@ export default {
 
 	.bottom-activelog{
 		margin-bottom: 10px;
+		font-size: 0.875rem !important;
 	}
 
 	/*.more{
@@ -227,10 +230,6 @@ export default {
 		position: absolute;
 		margin-right:20px;
 	}*/
-
-	.total-paginate{
-
-	}
 
 	.pagination-fl{
 		display: flex !important;
@@ -257,11 +256,8 @@ export default {
 	   border-radius: 8px;
 	}
 
-	
-
 	.page.secondary-color {
 		background-color: #5d92f4;
 	}
-
 	
 </style>

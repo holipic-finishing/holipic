@@ -1,29 +1,39 @@
 <template>
-	<div>
-		 <page-title-bar></page-title-bar>
-     <v-container fluid grid-list-xl pt-0>
-      <v-form ref="form" @submit.prevent="savePassword">
-        <v-text-field 
-          label="Old Password" 
-          v-model="oldPassword" 
-          type="password" 
-          :rules="[rules.required]"
-        ></v-text-field>
-        <v-text-field 
-          label="New Password" 
-          v-model="newPassword" 
-          type="password" 
-         :rules="[rules.required]"
-        ></v-text-field>
-        <v-text-field 
-          label="Confirm Password" 
-          v-model="confirmPassword" 
-          type="password" 
-          :rules="[rules.required]"
-        ></v-text-field>
-        <v-btn large type="submit" block color="primary">{{$t('message.resetPassword')}}</v-btn>
-      </v-form>
-      </v-container>  
+	<div class="container fix-container">
+		 <!-- <page-title-bar></page-title-bar> -->
+         <div class="content-row">
+                <app-card
+                  :heading="$t('message.changePassword')"
+                  :fullScreen="true"  
+                  colClasses="xl12 lg12 md12 sm12 xs12"
+                    >
+                    <v-divider></v-divider>
+                    <v-container fluid grid-list-xl pt-0>
+                        <v-form ref="form" @submit.prevent="savePassword">
+                            <v-text-field 
+                              label="Current password" 
+                              v-model="oldPassword" 
+                              type="password" 
+                              :rules="[rules.required]"
+                            ></v-text-field>
+                            <v-text-field 
+                              label="New password" 
+                              v-model="newPassword" 
+                              type="password" 
+                             :rules="[rules.required]"
+                            ></v-text-field>
+                            <v-text-field 
+                              label="Confirm password" 
+                              v-model="confirmPassword" 
+                              type="password" 
+                              :rules="[rules.required]"
+                            ></v-text-field>
+                            <v-btn large type="submit" block color="primary">Submit Change</v-btn>
+                        </v-form>
+                    </v-container> 
+                </app-card> 
+         </div>
+       
 	</div>
 </template>
 
@@ -70,3 +80,18 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+    .fix-container {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+
+    }
+    .content-row {
+
+        position: relative;
+        top: 25%;
+        padding: 0px 150px;
+    }
+    
+</style>

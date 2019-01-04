@@ -143,18 +143,17 @@ class UserAPIController extends AppBaseController
             
 
             if (!password_verify($request['oldPassword'], $user->password)) {   
-                return response()->json(['success' => false, 'message' => 'OldPassword']);
+                return response()->json(['success' => false, 'message' => 'Password current incorrect']);
             }
 
             if(strcmp($request['newPassword'], $request['confirmPassword']) != 0 ) {
                  return response()->json([
                         'success' => false, 
-                        'message' => 'olePasswordAndNewPassword'
+                        'message' => 'The new password does not match'
                     ]);
-               
             }
 
-            $this->notificationRepository->createNotifi($user->id,'changePasswordSuccess');
+            $this->notificationRepository->createNotifi($user->id, 'changePasswordSuccess');
             
             if($user){
                 $user = User::where('email',$email)->first()->update([
@@ -167,7 +166,7 @@ class UserAPIController extends AppBaseController
             $log['user_id'] = User::where('email',$email)->first()->id;
             $log->save();
 
-            return $this->sendResponse($user, 'changePasswordSuccess');
+            return $this->sendResponse($user, 'Change password success');
         }
         
          catch (Exception $e) {

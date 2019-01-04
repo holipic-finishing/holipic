@@ -67,6 +67,12 @@
     width: auto !important;
 }
 
+.height-120{
+  .v-list__tile{
+    height: 120px !important;
+  }
+}
+
 .height-200{
   .v-list__tile{
     height: 200px !important;

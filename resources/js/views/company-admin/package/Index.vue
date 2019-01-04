@@ -78,6 +78,7 @@
 	      :headers="headers2"
 	      :items="desserts2"
 	      class="elevation-1"
+	      :pagination.sync="pagination"
 	      :disable-initial-sort="true"
 		  :loading="loadingCom"
 	    >

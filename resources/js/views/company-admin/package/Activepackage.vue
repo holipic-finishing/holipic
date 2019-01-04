@@ -80,7 +80,7 @@
 				    </v-list-tile>
 				    <v-divider class="no-mg-bottom"></v-divider>
 
-				    <v-list-tile class="height-200">
+				    <v-list-tile class="height-120">
 				        <v-list-tile-content class="h-100">
 				          <v-list-tile-title class="content-flex-end h-100">
 				            <span class="font-weight-bold item-title position-item">Package Detail:</span>
@@ -115,6 +115,7 @@
 			          	<span class="font-weight-bold item-title position-item">Package Name</span>
 			          	<span class="contain-text-field">
 			          		<v-text-field
+			          			class="text-field-padding"
 				            	v-model="data.package_name"
 				            	readonly
 				            	solo
@@ -132,6 +133,7 @@
 			          	<span class="font-weight-bold item-title position-item">Package Price</span>
 			          	<span class="contain-text-field">
 			          		<v-text-field
+			          			class="text-field-padding"
 				            	v-model="data.price"
 				            	readonly
 				            	solo
@@ -149,6 +151,7 @@
 			          	<span class="font-weight-bold item-title position-item">Package Offer</span>
 			          	<span class="contain-text-field">
 			          		<v-text-field
+			          			class="text-field-padding"
 				            	v-model="data.offer"
 				            	readonly
 				            	solo
@@ -166,7 +169,7 @@
 			          	<span class="font-weight-bold item-title position-item">Package Detail</span>
 			          	<span class="contain-text-field">
 			                <v-textarea 
-			              	    class="font-weight-bold"
+			              	    class="font-weight-bold text-field-padding"
 					            v-model="data.detail"
 					            readonly
 					            auto-grow
@@ -480,6 +483,11 @@ h4 {
     align-items: baseline;
     padding-top: 6px;
     position: relative;
+}
+
+
+.text-field-padding {
+	padding-left: 25px;
 }
 
 </style>

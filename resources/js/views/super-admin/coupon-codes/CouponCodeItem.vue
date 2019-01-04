@@ -345,8 +345,8 @@
 </template>
 
 <script>
-import { post, put } from '../../api'
-import config from '../../config'
+import { post, put } from '../../../api'
+import config from '../../../config'
 
 export default {
 

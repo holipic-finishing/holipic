@@ -255,8 +255,8 @@
 </template>
 
 <script>
-import { post, put } from '../../api/index.js'
-import config from '../../config/index.js'
+import { post, put } from '../../../api/index.js'
+import config from '../../../config/index.js'
 import moment from 'moment'
 export default {
 

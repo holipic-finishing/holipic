@@ -135,8 +135,8 @@
 </template>
 
 <script>
-import  { get, del } from '../../api/index.js'
-import config from '../../config/index.js'
+import  { get, del } from '../../../api/index.js'
+import config from '../../../config/index.js'
 import Vue from 'vue'
 import CouponCodeItem from './CouponCodeItem'	
 import moment from 'moment'

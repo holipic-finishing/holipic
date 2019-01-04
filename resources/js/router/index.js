@@ -26,7 +26,7 @@ import HistoriesTransaction from '../views/super-admin/transactions/Histories.vu
 // Transactions Session
 import Transactions from '../views/super-admin/transactions/Histories.vue'
 // Coupon Code Session
-import CouponCodes from '../views/coupon-codes/CouponCodes.vue'
+import CouponCodes from '../views/super-admin/coupon-codes/CouponCodes.vue'
 
 
 //-------------------------------------------------------------------

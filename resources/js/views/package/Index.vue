@@ -3,12 +3,6 @@
 	<!-- <page-title-bar></page-title-bar> -->
 	<v-container fluid grid-list-xl pt-0>
 		<v-toolbar flat color="white">
-			<!-- <v-toolbar-title><v-icon>zmdi zmdi-dropbox</v-icon></v-toolbar-title>
-		    <v-divider
-		        class="mx-2"
-		        inset
-		        vertical
-		    ></v-divider> -->
 		    <h3 class="h3-title-package">Packages List</h3>
 	        <v-divider
 	          class="mx-2"
@@ -17,7 +11,9 @@
 	        ></v-divider>
 		    <v-btn @click="showAddItem()" color="primary" dark class="mb-2">Add</v-btn>
 		</v-toolbar>
+
 		<active-package></active-package>
+		
 		<v-data-table
 	      :headers="headers"
 	      :items="desserts"
@@ -33,18 +29,18 @@
 		        <td class="text-xs-center">{{ props.item.file_upload }}</td>
 		        <td class="text-xs-left">
 		        	<div v-if="props.item.email_service == true">
-		        		YES
+		        		yes
 		        	</div>
 		        	<div v-else>
-		        		NO
+		        		no
 		        	</div>
 		        </td>
 		        <td class="text-xs-left">
 		        	<div v-if="props.item.sms == true">
-		        		YES
+		        		yes
 		        	</div>
 		        	<div v-else>
-		        		NO
+		        		no
 		        	</div>
 		        </td>
 		        <td class="text-xs-center">{{ props.item.fee }}</td>
@@ -159,7 +155,7 @@ export default {
 	},
 	methods:{
 		fetchData() {
-			let url = config.API_URL+'packages';
+			let url = config.API_URL + 'packages';
 			get(url)
 			.then((res) => {
 				// console.log(res.data.data)
@@ -210,48 +206,39 @@ export default {
 	    },
 
 		deleteItem(id,setting_id){
-				let url = config.API_URL+'delete-package'
+			let url = config.API_URL+'delete-package'
 
-				let params = {
-					id_packages : this.itemIdToDelete.id,
-					id_setting : this.itemIdToDelete.setting_id
-				}
+			let params = {
+				id_packages : this.itemIdToDelete.id,
+				id_setting : this.itemIdToDelete.setting_id
+			}
 
-				getWithData(url,params)
-				.then((res) => {
-					this.loading = true;
-					this.fetchData();
-					this.dialog = false;	
-					// setTimeout(function(){
-			            Vue.notify({
-			                group: 'loggedIn',
-			                type: 'success',
-			                text: 'Delete Item Success!'
-			            });
-			       // },500);
-				})
-				.catch((err) =>{
-					console.log(err)
-				})
+			getWithData(url,params)
+			.then((res) => {
+				this.loading = true;
+				this.fetchData();
+				this.dialog = false;	
+	            Vue.notify({
+	                group: 'loggedIn',
+	                type: 'success',
+	                text: 'Delete Item Success!'
+	            });
+			})
+			.catch((err) =>{
+				console.log(err)
+			})
 		}
 	},
 	mounted(){
-      this.$root.$on('reload-table', res => {
-      	  this.loading = true
-          this.fetchData();	
-      })
+      	this.$root.$on('reload-table', res => {
+      	  	this.loading = true
+          	this.fetchData();	
+      	})
     },
 	created(){
-		// setTimeout(function(){
-  //           Vue.notify({
-  //               group: 'loggedIn',
-  //               type: 'success',
-  //               text: 'User Logged In Success!'
-  //           });
-  //      },1500);
-  			this.fetchData();	
+  		this.fetchData();	
 	}
-}
+};
 </script>
 
 <style lang="css" scoped>

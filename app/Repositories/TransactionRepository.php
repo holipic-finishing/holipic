@@ -758,7 +758,9 @@ class TransactionRepository extends BaseRepository
         $results = $this->scopeQuery(function($query) use($params){
 
             $query = $query->with(['user' => function($q) {
-                                $q->with('package')->with('company');
+                                $q->with('package')->with(['company' => function($que) {
+                                    $que->withTrashed();
+                                }]);
                             }])
                         ->with('currency');
 
@@ -831,7 +833,7 @@ class TransactionRepository extends BaseRepository
             }
 
             return $query;
-        })->all();
+        })->get();
 
         $results = $this->transform($results);
 
@@ -847,7 +849,7 @@ class TransactionRepository extends BaseRepository
     
     public function transform($results){
         foreach ($results as $key => $result) {
-
+           
             if($results[$key]->type){
                 $results[$key]->type_character = 'Income';
             }else{
@@ -859,9 +861,9 @@ class TransactionRepository extends BaseRepository
             $results[$key]->system_fee_with_symbol = $result->system_fee ." ".$result->symbol;         
             $results[$key]->credit_card_fee_with_symbol = $result->credit_card_fee ." ".$result->symbol;             
             $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
-            if($results[$key]->status === 'BEEN_SEEN') $results[$key]->status = str_replace("_", " ", $results[$key]->status);            
-        }
-
+            if($results[$key]->status === 'BEEN_SEEN') $results[$key]->status = str_replace("_", " ", $results[$key]->status);     
+            }
+        
         return $results;
     } 
 

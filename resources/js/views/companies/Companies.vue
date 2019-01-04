@@ -72,7 +72,7 @@
 									<v-icon
 										small
 										class="mr-2 hover-icon"
-										@click="deleteTransaction(props.item.id)"
+										@click="showDialog(props.item.id)"
 									>
 										delete
 									</v-icon>
@@ -83,6 +83,22 @@
 						<company-information></company-information>
 						<company-edit></company-edit>
 					</v-card>
+					<v-dialog v-model="dialog" persistent max-width="450">
+				      <v-card>
+				        <v-card-title class="headline font-weight-bold">
+				          <v-icon x-large color="yellow accent-3" class="mr-2">
+				            warning
+				          </v-icon>
+				          Do you want delete this item ?
+				        </v-card-title>
+				        <v-divider class="mt-0"></v-divider>
+				        <v-card-actions>
+				          <v-spacer></v-spacer>
+				          <v-btn flat @click="dialog = false">Disagree</v-btn>
+				          <v-btn flat @click="deleteItem">Agree</v-btn>
+				        </v-card-actions>
+				      </v-card>
+				    </v-dialog>
 				</v-app>
 				<show-transaction></show-transaction>
 			</div>
@@ -121,6 +137,8 @@
 		        ],
 		        desserts:[],
 		        search: '',
+		        dialog: false,
+		        itemIdToDelete: '',
 		        listPackage : [],
 		        urlExport:config.API_URL+'exportexcel/companies',
 		        drawerRight: false,
@@ -211,9 +229,20 @@
 					data: item
 				});
 			},
+			showDialog(item)
+			{
+				this.dialog = true
+				this.itemIdToDelete = item
+			},
+			deleteItem() {
+				del(config.API_URL+'companies/'+this.itemIdToDelete)
+				.then(response => {
+					if(response && response.data.success) {
+						this.fetchData()
+						this.dialog = false
+					}
+				})
 
-			deleteTransaction(id) {
-				alert(id)
 			}
 		},
 	};

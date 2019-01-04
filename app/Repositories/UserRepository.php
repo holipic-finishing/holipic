@@ -69,5 +69,16 @@ class UserRepository extends BaseRepository
         return $this->scopeQuery(function($query) use ($email){
             return $query->where('email', $email)->where('role_id', 2);
         })->first();
-    }  
+    }
+
+    public function checkUserCommpanyExits($user)
+    {
+        $company = \App\Models\Company::onlyTrashed()->whereOwnerId($user->id)->first();
+
+        if(!empty($company)) {
+            return false;
+        }
+
+        return true;
+    }
 }

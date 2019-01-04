@@ -2,15 +2,15 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Nprogress from 'nprogress'
 // Session components
-import AppLogin from '../views/session/AppLogin.vue';
-import SignUpOne from '../views/session/SignUpOne.vue';
-import LoginOne from '../views/session/LoginOne.vue';
+import AppLogin from '../views/session/AppLogin';
+import SignUpOne from '../views/session/SignUpOne';
+import LoginOne from '../views/session/LoginOne';
 
-import ForgotPassword from '../views/session/ForgotPassword.vue';
-import ResetPassword from '../views/session/ResetPassword.vue';
+import ForgotPassword from '../views/session/ForgotPassword';
+import ResetPassword from '../views/session/ResetPassword';
 
 // Dashboard components
-import mini from '../container/MiniSidebarLayout.vue'
+import mini from '../container/MiniSidebarLayout'
 import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // Companies Component
@@ -18,7 +18,8 @@ import Ecommerce   from'../views/dashboard/Ecommerce';
 import Companies from '../views/companies/Companies';
 import CompanyChart from '../views/companies/information-chart';
 
-import PackageIndex from '../views/package/Index';
+// Package
+import Packages from '../views/packages/Packages';
 
 
 import UserManagement from '../views/superadmin-user/user-management'
@@ -155,7 +156,7 @@ routers = [
 		    },
 		    {
 		        path: '/default/packages/index',
-		        component: PackageIndex,
+		        component: Packages,
 		        meta: {
 		        	requiresAuth: true,
 		        	adminAuth:true,

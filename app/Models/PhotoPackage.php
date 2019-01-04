@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class PhotoPackage extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
 
     public $table = 'photo_packages';
     

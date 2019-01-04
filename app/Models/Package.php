@@ -28,7 +28,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class Package extends Model
 {
-    use LogsActivity;
+    // use LogsActivity;
     
     public $table = 'packages';
 

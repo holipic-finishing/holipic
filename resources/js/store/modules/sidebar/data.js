@@ -82,7 +82,7 @@ export const menus = {
 			title: 'message.couponCode',
 			active: false,
 			role_id : 1,
-			path: '/coupon-code/index'
+			path: '/coupon-codes'
 		}
 		// {
 		// 	action: 'zmdi-shopping-cart',

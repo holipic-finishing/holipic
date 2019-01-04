@@ -18,7 +18,7 @@
     <v-list-tile class="height-80">
         <v-list-tile-content class="h-100">
           <v-list-tile-title class="content-flex-end h-100">
-            <span class="font-weight-bold item-title position-item">Page Title</span>
+            <span class="font-weight-bold item-title-style position-item">Page Title</span>
             <span class="contain-text-field">
               <v-text-field
                 class="font-weight-bold height-input"
@@ -43,20 +43,21 @@
     <v-list-tile class="height-100">
         <v-list-tile-content class="h-100">
           <v-list-tile-title class="content-flex-end h-100">
-            <span class="font-weight-bold item-title position-item">Page Content
+            <span class="font-weight-bold item-title-style position-item">Page Content
 				 <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
             </span>
            
           </v-list-tile-title>
           <v-list-tile-title class="content-flex-end h-100">
 				<ckeditor 
-				  id="editor1"
+				    id="editor1"
 			      v-model="itemToLoad.page_content" 
 			      :config="config"
 			      v-validate="'required'"
 			      name="page_content"	  
 			     :readOnlyMode="key == 2 ? false : true"
 			     @blur="editItem('page_content', itemToLoad.page_content)"
+           class="style-ckeditor"
 			      >
 			    </ckeditor>
           </v-list-tile-title>
@@ -184,8 +185,18 @@ export default {
 </script>
 
 <style lang="css" scoped>
-/*.item-title {
-	width: 10% !important;
-}*/
 
+.item-title-style {
+    margin-right:15px;
+}
+.contain-text-field {
+    width: 50%  !important;
+}
+.content-flex-end {
+    justify-content: center !important;
+    align-items: center !important;
+}
+.style-ckeditor{
+  width: 100%
+}
 </style>

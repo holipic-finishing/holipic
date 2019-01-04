@@ -5,17 +5,14 @@
 	<div id="app">
 		<v-app id="inspire">
 			<v-card class="p-4">
-				<v-navigation-drawer 
+				<v-dialog 
 					fixed
 					v-model="drawer" 
 					:right="!rtlLayout" 
-					temporary 
-					app 
-					class="chat-sidebar-wrap"
-					width="800"
+					fullscreen hide-overlay transition="slide-x-reverse-transition"
 				>
 				<cms-item :eventType="eventType" :item="item"></cms-item>
-				</v-navigation-drawer>
+				</v-dialog>
 				<v-toolbar flat color="white">
 			        <v-toolbar-title>
 			          	Content Management System

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Nprogress from 'nprogress'
+
 // auth components
 import AppLogin from '../views/auth/AppLogin.vue';
 import SignUpOne from '../views/auth/SignUpOne.vue';
@@ -10,7 +11,6 @@ import ForgotPassword from '../views/auth/ForgotPassword.vue';
 import ResetPassword from '../views/auth/ResetPassword.vue';
 
 import mini from '../container/MiniSidebarLayout.vue'
-
 
 
 //-------------------------------------------------------------------
@@ -23,8 +23,10 @@ import Companies from '../views/super-admin/companies/Companies';
 // import CompanyChart from '../views/super-admin/companies/information-chart';
 import PackageIndex from '../views/super-admin/package/Index';
 import HistoriesTransaction from '../views/super-admin/transactions/Histories.vue'
-import IndexCoupon from '../views/coupon-code/Index.vue'
-
+// Transactions Session
+import Transactions from '../views/super-admin/transactions/Histories.vue'
+// Coupon Code Session
+import CouponCodes from '../views/coupon-codes/CouponCodes.vue'
 
 
 //-------------------------------------------------------------------
@@ -208,20 +210,20 @@ routers = [
 		            breadcrumb: 'Users / Change Password'
 		        }
 		    },
-		    // {
-		    //     path: '/default/transaction/histories',
-		    //     component: HistoriesTransaction,
-		    //     meta: {
-		    //         requiresAuth: true,
-		    //         adminAuth:true,
-	     //     		companyAuth:false,
-		    //         title: 'message.histories',
-		    //         breadcrumb: 'Transaction / Histories List'
-		    //     }
-		    // },
 		    {
-		        path: '/default/coupon-code/index',
-		        component: IndexCoupon,
+		        path: '/default/transaction/histories',
+		        component: Transactions,
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:true,
+	         		companyAuth:false,
+		            title: 'message.histories',
+		            breadcrumb: 'Transaction / Histories List'
+		        }
+		    },
+		    {
+		        path: '/default/coupon-codes',
+		        component: CouponCodes,
 		        meta: {
 		            requiresAuth: true,
 		            adminAuth:true,

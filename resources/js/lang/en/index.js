@@ -476,6 +476,6 @@ export default {
 
   //Company Admin
   branch: "Branches",
-  photographer: "Photographers"
+  photographer: "Photographers",
   activityLog: "Activity Log"
 }

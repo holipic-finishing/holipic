@@ -88,10 +88,17 @@ export default {
 
     }
     .content-row {
-
+        display:flex;
         position: relative;
         top: 25%;
         padding: 0px 150px;
     }
+   @media (max-width: 760px) {
+        .content-row {
+            padding:0px 30px;
+        }
+    }
+
+
     
 </style>

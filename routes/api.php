@@ -45,6 +45,18 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('notifications', 'NotificationAPIController');
 
 	/***************************************************
+	**********	LIST ROUTER RESOURCE COMPANY ADMIN   *************
+	****************************************************
+	*/
+	Route::group(['namespace' => 'CompanyAdmin'], function() {
+		Route::resource('company_packages', 'CompanyPackageAPIController');
+
+		Route::resource('photo_packages', 'PhotoPackageAPIController');
+	});
+	
+
+
+	/***************************************************
 	**********	ROUTER COMPANY AND ADMIN   *************
 	****************************************************/
 	Route::post('change-password', 'UserAPIController@changePassWord');
@@ -54,7 +66,19 @@ Route::group(['namespace' => 'API'],function(){
 	************************************************/
 	Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
+
 	Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
+
+	Route::group(['namespace' => 'CompanyAdmin'], function() {
+
+		Route::post('edit/companyPackage/{itemId}', 'CompanyPackageAPIController@editPackage');
+
+		Route::get('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
+
+		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
+		
+	});
+
 
 	/***********************************************
 	**********	ROUTER SUPER ADMIN   ***************

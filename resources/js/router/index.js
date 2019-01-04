@@ -39,6 +39,7 @@ import CouponCodes from '../views/coupon-codes/CouponCodes'
 
 import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
 import Notification from '../views/notification/notification.vue'
+import CompanyPackage from '../views/company-admin/package/Index.vue'
 
 Vue.use(Router)
 
@@ -115,6 +116,17 @@ routers = [
 		            breadcrumb: 'Users / Notification'
 		        }
 			},
+			{
+		        path: '/default/company/packages',
+		        component: CompanyPackage,
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:false,
+	         		companyAuth:true,
+		            title: 'message.package',
+		            breadcrumb: 'Users / Package'
+		        }
+		    },
 
 
 			//--------------------------------------------------------------------------

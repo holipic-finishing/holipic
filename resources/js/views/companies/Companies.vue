@@ -74,7 +74,7 @@
 					</td>
 				</template>
 			</v-data-table>
-			
+			<show-transaction></show-transaction>
 		</app-card>
 	</v-container>	
 </template>

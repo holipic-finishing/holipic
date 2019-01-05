@@ -270,6 +270,7 @@ class TransactionAPIController extends AppBaseController
     public function getTransactionHistoryWithTimevalue(Request $request)
     {
         $input = $request->all();
+
         
         $searchBy = [];
 
@@ -279,12 +280,12 @@ class TransactionAPIController extends AppBaseController
             
             foreach ($searchValues as $val) {
             $tmp = explode(':', $val);
-
+    
                 if(count($tmp) > 1){
                     $searchBy[$tmp[0]] = $tmp[1];
                 }
             }
-
+     
         }
 
         $result = $this->transactionRepository->transactionHistory($input, $input['perPage'], $searchBy);

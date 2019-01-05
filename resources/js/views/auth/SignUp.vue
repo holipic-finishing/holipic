@@ -2,7 +2,7 @@
 <div>
 	<h2 class="mb-3">{{$t('message.signUp')}}</h2>
 	<p class="fs-14">{{$t('message.havingAnAccount')}}
-		<router-link to="/auth/login">{{$t('message.login')}}</router-link>
+		<router-link to="/session/login">{{$t('message.login')}}</router-link>
 	</p>
 	<v-form v-model="valid" class="mb-4">
 		<v-text-field 
@@ -61,6 +61,7 @@
 import AppConfig from "../../constants/AppConfig";
 
 export default {
+  name: 'SignUp',
   components: {
     // SessionSliderWidget
   },

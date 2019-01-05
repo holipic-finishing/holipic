@@ -11,7 +11,7 @@ export const menus = {
 			action: 'zmdi-view-dashboard',
 			title: 'message.dashboard',
 			active: true,
-			path: '/company/dashboard/index',
+			path: '/dashboard',
 			items:null,
 			role_id : 2
 		},
@@ -19,7 +19,7 @@ export const menus = {
 			action: 'zmdi zmdi-google-pages',
 			title: 'message.sibarContentPages',
 			active: true,
-			path: '/company/content-pages',
+			path: '/content-pages',
 			items:null,
 			role_id : 2
 		},
@@ -35,7 +35,7 @@ export const menus = {
 			action: 'zmdi-view-dashboard',
 			title: 'message.dashboard',
 			active: true,
-			path: '/dashboard/index',
+			path: '/dashboard',
 			items:null,
 			role_id : 1
 		},
@@ -43,7 +43,7 @@ export const menus = {
 			action: 'zmdi-widgets',
 			title: 'message.companymanagement',
 			active: false,
-			path: '/widgets/companies',
+			path: '/companies',
 			role_id : 1,
 			items: null
 		},
@@ -53,23 +53,8 @@ export const menus = {
 			active: false,
 			items:null,
 			role_id : 1,
-			path : '/packages/index'
+			path : '/packages'
 		},
-		// {
-		// 	action: 'zmdi-settings',
-		// 	title: 'message.settings',
-		// 	active: false,
-		// 	path: '/setting'
-		// },
-		// {
-		// 	action: 'zmdi-card',
-		// 	title: 'message.transaction',
-		// 	active: false,
-		// 	role_id : 1,
-		// 	items: [
-		// 		{ title: 'message.histories', path: '/transaction/histories' },
-		// 	]
-		// },
 		{
 			action: 'zmdi zmdi-ticket-star',
 			title: 'message.couponCode',

@@ -10,11 +10,30 @@
   margin-left: 10px !important;
 }
 
+.item-title-setting{
+  width: 63% !important;
+  margin-left: 10px !important;
+}
+
+.contain-text-field-setting{
+  width: 25% !important;
+  .v-input--selection-controls {
+    margin-top: 0 !important; 
+    padding-top: 0 !important; 
+  }
+  .v-input__slot{
+    margin-bottom: 5px !important;
+  }
+}
+
 .contain-text-field{
   width: 65%;
   .v-input--selection-controls {
     margin-top: 0 !important; 
     padding-top: 0 !important; 
+  }
+  .v-input__slot{
+    margin-bottom: 5px !important;
   }
 }
 
@@ -56,6 +75,12 @@
   }
 }
 
+.height-150{
+  .v-list__tile{
+    height: 150px !important;
+  }
+}
+
 .height-50{
   .v-list__tile{
     height: 50px !important;
@@ -90,11 +115,14 @@
   }
 }
 
-.contain-text-field{
+.height-area{
   .v-input__slot{
-    margin-bottom: 5px !important;
+    min-height: 115px !important;
+    height: 115px !important;
+    textarea{
+      padding-top: 5px !important;
+    }
   }
-
 }
 
 .height-100{

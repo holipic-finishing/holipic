@@ -138,7 +138,7 @@ export default {
 
   data () {
     return {
-    		user_id : this.$route.params.id,
+    		user_id : this.$route.params.userId,
     		notifications:{},
     		rowsPerPage: [10, 20, 30, 40, 50],
 	    	paginator: {

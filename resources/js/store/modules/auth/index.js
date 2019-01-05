@@ -12,7 +12,7 @@ import config from '../../../config/index.js'
 //     twitterAuthProvider,
 //     githubAuthProvider
 // } from '../../../firebase';
-import  { post } from '../../../api/index.js'
+import  { post, get } from '../../../api/index.js'
 
 
 const state = {
@@ -98,19 +98,21 @@ const actions = {
           
           })
     },
-    // logoutUserFromFirebase(context) {
-    //     Nprogress.start();
-    //     firebase.auth().signOut()
-    //         .then(() => {
-    //             Nprogress.done();
-    //             setTimeout(() => {
-    //                 context.commit('logoutUser');
-    //             }, 500)
-    //         })
-    //         .catch(error => {
-    //             context.commit('loginUserFailure', error);
-    //         })
-    // },
+    logoutUserFromDatabase(context) {
+        Nprogress.start();
+        let url = '/auth/logout'
+        get(url)
+            .then((res) => {
+                Nprogress.done();
+                    setTimeout(() => {
+                        context.commit('logoutUser');
+                    }, 500)
+            })
+            .catch(error => {
+                console.log(error);
+                context.commit('loginUserFailure', error);
+            })
+    },
     // signinUserWithFacebook(context) {
     //     context.commit('loginUser');
     //     firebase.auth().signInWithPopup(facebookAuthProvider).then((result) => {
@@ -187,8 +189,13 @@ const mutations = {
         localStorage.setItem('user',JSON.stringify(user))
         state.isUserSigninWithAuth0 = false
         var access_token = user.access_token        
-        localStorage.setItem('access_token',access_token)     
-        router.push('/default/dashboard/index')
+        localStorage.setItem('access_token',access_token)    
+        if(user.role_id == "1"){
+            router.push('/super-admin/dashboard')
+        }
+        if(user.role_id == "2"){
+            router.push('/company-admin/dashboard')
+        }
         setTimeout(function(){
             Vue.notify({
                 group: 'loggedIn',
@@ -207,15 +214,16 @@ const mutations = {
     },
     logoutUser(state) {
         state.user = null
-        localStorage.removeItem('user');
-        router.push("/auth/login");
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('user')
+        router.push("/login");
     },
     signUpUser(state) {
         Nprogress.start();
     },
     signUpUserSuccess(state, user) {
         state.user = localStorage.setItem('user', user);
-        router.push("/default/dashboard/ecommerce");
+        router.push("/super-admin/dashboard");
         Vue.notify({
             group: 'loggedIn',
             type: 'success',
@@ -246,7 +254,7 @@ const mutations = {
             type: 'success',
             text: success
         });
-         router.push('/default/dashboard/index');
+         router.push('/super-admin/dashboard');
     },
      changepasswordError(state, error){
         Nprogress.done();

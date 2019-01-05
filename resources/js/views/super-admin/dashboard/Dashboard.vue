@@ -1,7 +1,6 @@
 <template>
 
 	<v-container fluid pt-0 grid-list-xl>
-		<!-- <activity-log></activity-log> -->
 		<!-- <section-tooltip :title="$t('message.overview')" :tooltip="$t('message.dashboardOverview')"></section-tooltip> -->
 		<!-- Dash Cards -->
 		<!-- <v-layout row wrap border-rad-sm overflow-hidden>
@@ -429,6 +428,8 @@ import StatsCardV3 from '../../../components/StatsCardV3/StatsCardV3.vue'
 
 export default {
 
+	name: 'Dashboard',
+
   components: {
     SocialFeeds,
     NewPost,
@@ -436,11 +437,11 @@ export default {
     LineChart,
     DatePicker,
     Transactions,
-    StatsCardV3,
+    StatsCardV3
   },
   data() {
-	    return {
-	     	alertStt: false,
+    return {
+     	alertStt: false,
 			alertType: 'success',
 			alertMes: '',
 			ChartConfig,
@@ -470,7 +471,7 @@ export default {
 			defaultYear : new Date().getUTCFullYear() + '/31/12',
 			totalCompany:0,
 			tweenedNumber: 0,
-	    }
+	  }
 	},
 	methods:{
 		formatDate(date) {

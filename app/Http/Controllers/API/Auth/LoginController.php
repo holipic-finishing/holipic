@@ -152,4 +152,11 @@ class LoginController extends BaseApiController
 
     }
 
+    public function logoutAuth(){
+        auth()->logout();
+        return [
+                "success" => true
+            ];
+    }
+
 }

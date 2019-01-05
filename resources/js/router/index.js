@@ -1,272 +1,37 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Nprogress from 'nprogress'
-// Session components
-import AppLogin from '../views/session/AppLogin';
-import SignUpOne from '../views/session/SignUpOne';
-import LoginOne from '../views/session/LoginOne';
 
-import ForgotPassword from '../views/session/ForgotPassword';
-import ResetPassword from '../views/session/ResetPassword';
+/////////////////////////////////////////////////////////////////////
+////////////////////////////  ROUTES  ///////////////////////////////
+/////////////////////////////////////////////////////////////////////
+import AuthRoutes from './auth';
+import SuperAdminRoutes from './super-admin';
+import CompanyAdminRoutes from './company-admin';
+import BranchAdminRoutes from './branch-admin';
+import CustomerRoutes from './customer';
 
-// Dashboard components
-import mini from '../container/MiniSidebarLayout'
-import Ecommerce   from'../views/dashboard/Ecommerce';
-
-// Companies Component
-
-import Companies from '../views/companies/Companies';
-import CompanyChart from '../views/companies/information-chart';
-
-// Package
-import Packages from '../views/packages/Packages';
-
-
-import UserManagement from '../views/superadmin-user/user-management'
-import page404 from '../views/pages/page404'
-import UserPass from '../views/users/ChangePassword'
-
-// Transactions Session
-import Transactions from '../views/transactions/Histories.vue'
-
-// Coupon Code Session
-import CouponCodes from '../views/coupon-codes/CouponCodes'
-
-
-//-----------------------------------------
-//----  File Component of Admin Company  --
-//-----------------------------------------
-//** All File Components will import below
-
-import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
-import Notification from '../views/notification/notification.vue'
+import PageNotFound from '../views/pages/page404'
 
 Vue.use(Router)
 
 var routers = [];
 routers = [
+	AuthRoutes,
+	SuperAdminRoutes,
+	CompanyAdminRoutes,
 	{
-		path: '/session/login',
-		component:AppLogin,
-		children:[
-			{
-				path:'/session/login',
-				name:'LoginIndex',
-				component:LoginOne
-			},
-			{
-				path:'/session/sign-up',
-				name:'Register',
-				component: SignUpOne,
-				meta: {
-					title: 'message.signUp',
-					breadcrumb: 'Session / Sign Up'
-				}
-			},
-			{
-				path: '/session/forgot-password',
-				component: ForgotPassword,
-				meta: {
-					title: 'message.forgotPassword',
-					breadcrumb: 'Session / Forgot Password'
-				}
-			},
-		]
-	},
-	{
-		path: '/',
-   		component: mini,
-		redirect: '/default/dashboard/index',
-		meta: { requiresAuth: true },
-		children: [
-			//------------------------------------------------------------------------------------
-			//---------------------------- ROUTER COMPANY ADMIN ----------------------------------
-			//------------------------------------------------------------------------------------
-			{
-				path: '/default/company/dashboard/index',
-	         	component: DashboardCompany,
-	         	meta: {
-	         		requiresAuth: true,
-	         		adminAuth:false,
-	         		companyAuth:true,
-		            title: 'message.ecommerce',
-		            breadcrumb: 'Dashboard / Ecommerce'
-	        	}
-			},
-			{
-		        path: '/default/company/change-password',
-		        component: UserPass,
-		        meta: {
-		            requiresAuth: true,
-		            adminAuth:false,
-	         		companyAuth:true,
-		            title: 'message.changePassword',
-		            breadcrumb: 'Users / Change Password'
-		        }
-		    },
-			{
-				path: '/default/company/show-notification/:id',
-		        component: Notification,
-		        name : 'CompnayNotification',
-		        meta: {
-		            requiresAuth: true,
-		            adminAuth:false,
-	         		companyAuth:true,
-		            title: 'message.notification',
-		            breadcrumb: 'Users / Notification'
-		        }
-			},
-
-
-			//--------------------------------------------------------------------------
-			//------------------------- ROUTER SUPER ADMIN  ----------------------------
-			//--------------------------------------------------------------------------
-      		{
-	         	path: '/default/dashboard/index',
-	         	component: Ecommerce,
-	         	meta: {
-	         		requiresAuth: true,
-	         		adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.ecommerce',
-		            breadcrumb: 'Dashboard / Ecommerce'
-	        	}
-      		},
-		    {
-		        path: '/default/widgets/companies',
-		        component: Companies,
-		        meta: {
-		        	requiresAuth: true,
-		        	adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.company',
-		            breadcrumb: 'Company / List'
-		        }
-		    },
-		    {
-		        path: '/default/widgets/mana-company-chart',
-		        component: CompanyChart,
-		        meta: {
-		        	requiresAuth: true,
-		        	adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.chartCompany',
-		            breadcrumb: 'Company / Information /Chart'
-		        }
-		    },
-		    {
-		        path: '/default/packages/index',
-		        component: Packages,
-		        meta: {
-		        	requiresAuth: true,
-		        	adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.package',
-		            breadcrumb: 'Packages / List'
-		        }
-
-		    }, 
-		    // {
-		    //     path: '/default/setting',
-		    //     component: Setting,
-		    //     meta: {
-		    //     	requiresAuth: true,
-		    //         title: 'message.settings',
-		    //         breadcrumb: 'Setting / List'
-		    //     }
-		    // },
-		    {
-		        path: '/default/user-management',
-		        component: UserManagement,
-		        meta: {
-		        	requiresAuth: true,
-		        	adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.userManager',
-		            breadcrumb: 'User / Manager'
-		        }
-		    },
-		    {
-		        path: '/default/users/change-password',
-		        component: UserPass,
-		        meta: {
-		            requiresAuth: true,
-		            adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.changePassword',
-		            breadcrumb: 'Users / Change Password'
-		        }
-		    },
-		    {
-		        path: '/default/transaction/histories',
-		        component: Transactions,
-		        meta: {
-		            requiresAuth: true,
-		            adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.histories',
-		            breadcrumb: 'Transaction / Histories List'
-		        }
-		    },
-		    {
-		        path: '/default/coupon-codes',
-		        component: CouponCodes,
-		        meta: {
-		            requiresAuth: true,
-		            adminAuth:true,
-	         		companyAuth:false,
-		            title: 'message.couponCode',
-		            breadcrumb: 'Coupon Code / Histories List'
-		        }
-		    },
-		 //    {
-			// 	path: '/default/users/show-notification/:id',
-		 //        component: Notification,
-		 //        name : 'AdminNotification',
-		 //        meta: {
-		 //            requiresAuth: true,
-		 //            adminAuth:true,
-	  //        		companyAuth:false,
-		 //            title: 'message.notification',
-		 //            breadcrumb: 'Users / Notification'
-		 //        }
-			// },
-      	]	
-	},
-	{
-    // not found handler
+    	// Page Not Found
     	path: '*',
-    	component: page404
+    	component: PageNotFound
   	}
 
 ];
 
 var router = new Router({
-    // mode: 'history',
+    mode: 'history',
     routes: routers,
 });
-
-// navigation guards before each
-// router.beforeEach((to, from, next) => { 
-// 	Nprogress.start()
-// 	// if (to.path !== '/login' && !access_token) {
-// 	if (to.matched.some(record => record.meta.requiresAuth) && (localStorage.getItem('access_token') === null)) {
-//     	next({
-// 				path: '/session/login',
-// 				// query: { redirect: to.fullPath }
-// 			})
-//   	}else if(to.path === '/session/login' && (localStorage.getItem('access_token') !== null)){
-//   		next({
-// 				path:'/default/dashboard/index',
-// 			})
-//   	} 
-//   	else {
-//     	next();
-//   	}
-
-//   	Nprogress.done()
-// });
-
 
 // ------------------------------------------------------------------------------------
 // ------------------ Config Navigations guards before each v2 ------------------------
@@ -280,7 +45,7 @@ router.beforeEach((to, from, next) => {
 		const token = localStorage.getItem('access_token')
 		if(!authUser || !token) {
 				next({
-				path: '/session/login'
+				path: '/login'
 			})
 		}
 		else if(to.meta.adminAuth) {
@@ -289,7 +54,7 @@ router.beforeEach((to, from, next) => {
 				next()
 			} else {
 				next({
-					path:'/default/company/dashboard/index',
+					path:'/company-admin/dashboard',
 				})
 			}
 		} else if(to.meta.companyAuth) {
@@ -298,7 +63,7 @@ router.beforeEach((to, from, next) => {
 				next()
 			} else {
   				next({
-					path:'/default/dashboard/index',
+					path:'/super-admin/dashboard',
 				})
 			}
 		}
@@ -309,7 +74,7 @@ router.beforeEach((to, from, next) => {
   	Nprogress.done()
 });
 
-// // navigation guard after each
+// Navigation guard after each
 router.afterEach((to, from) => {
 // 	Nprogress.done()
 	setTimeout(() => {

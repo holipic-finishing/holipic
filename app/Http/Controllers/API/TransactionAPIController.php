@@ -271,7 +271,6 @@ class TransactionAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        
         $searchBy = [];
 
         if($request->has('search') && $request->input('search')){

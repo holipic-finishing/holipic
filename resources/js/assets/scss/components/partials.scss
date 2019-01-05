@@ -12,7 +12,7 @@
 }
 
 .app-changepass{
-    padding: 225px 0px;
+    padding: 100px 0px;
     overflow:none;
 }
 
@@ -21,9 +21,16 @@
 	margin: 0 auto;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 767px) {
     .row-changepass{
 		width: 60%;
+		margin: 0 auto;
+	}
+}
+
+@media (max-width: 565px) {
+    .row-changepass{
+		width: 70%;
 		margin: 0 auto;
 	}
 }

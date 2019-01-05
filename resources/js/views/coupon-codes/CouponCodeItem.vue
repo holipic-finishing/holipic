@@ -317,12 +317,8 @@
               <span class="contain-text-field">
                 <v-switch
                   v-model="itemToLoad.active"
-                  :disabled="key == 6 ? false : true"
                   @change="editItem('active', itemToLoad.active)"
                 ></v-switch>
-              </span>
-              <span class="position-item">
-                <v-btn flat icon @click="unDisableItem(6)"><v-icon small>fas fa-marker</v-icon></v-btn>
               </span>
             </v-list-tile-title>
           </v-list-tile-content>

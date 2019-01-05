@@ -59,8 +59,8 @@
                   id: 5,
                   title: 'message.changePassword',
                   icon: 'ti-lock mr-3 info--text',
-                  path: '/super-admin/change-password',
-                  pathCom : '/company-admin/change-password'
+                  path: '/change-password',
+                  pathCom : '/change-password'
                },
             ],
             role_id : '',

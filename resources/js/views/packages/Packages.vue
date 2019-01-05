@@ -32,12 +32,12 @@
 			<v-data-table
 	      :headers="headers"
 	      :items="desserts"
-	      class="elevation-1"
+	      class="elevation-1 custom-table"
 	      :disable-initial-sort="true"
 	      :pagination.sync="pagination"
 			  :loading="loadingCom"
 			  :search="search"
-		    >
+		  >
 		    	<template slot="items" slot-scope="props">
 		    		<td class="text-xs-left">{{ props.item.package_name }}</td>
 			        <td class="text-xs-left">{{ props.item.short_description }}</td>
@@ -61,7 +61,7 @@
 			        </td>
 			        <td class="text-xs-center">{{ props.item.fee }}</td>
 			        <td class="text-xs-center">{{ props.item.max_user }}</td>
-			        <td class="text-xs-left action-width">
+			        <td class="text-right action-width">
 			          <v-icon
 			            small
 			            class="mr-2"
@@ -136,15 +136,15 @@ export default {
 	data () {
     return {
     	headers: [
-        { text: 'Package Name', align: 'left', value: 'package_name' },
-        { text: 'Short Description', value: 'short_description',sortable: false },
-        { text: 'Storage (GB)', value: 'secure_storage' },
-        { text: 'File Upload (GB)', value: 'file_upload' },
-        { text: 'Email Service', value: 'minimum_user' },
-        { text: 'SMS', value: 'minimum_user' },
-        { text: 'Fee (%)', value: 'fee' },
-        { text: 'Max Branch', value: 'max_user' },
-        { text: 'Actions', sortable: false }
+        { text: 'Package Name', align: 'left', value: 'package_name', width: '10%' },
+        { text: 'Short Description', value: 'short_description',sortable: false, width: '20%' },
+        { text: 'Storage (GB)', value: 'secure_storage', width: '10%' },
+        { text: 'File Upload (GB)', value: 'file_upload', width: '10%' },
+        { text: 'Email Service', value: 'minimum_user', width: '10%' },
+        { text: 'SMS', value: 'minimum_user', width: '10%' },
+        { text: 'Fee (%)', value: 'fee', width: '10%' },
+        { text: 'Max Branch', value: 'max_user', width: '10%' },
+        { text: 'Actions', sortable: false, width: '10%', align: 'right' }
     	],
     	desserts: [],
     	dialog: false,

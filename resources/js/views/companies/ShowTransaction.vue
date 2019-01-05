@@ -139,7 +139,6 @@ export default {
 
   	mounted () {
   		this.$root.$on('showTransactionStatus', (data) => {
-  		
   			this.drawerRight = data.showDrawerRight
   			this.typeTime = "Day"
   			this.reset()

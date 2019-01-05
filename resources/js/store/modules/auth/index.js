@@ -244,7 +244,9 @@ const mutations = {
         Vue.notify({
             group: 'loggedIn',
             type: 'success',
-            text: success
+            title: 'Message',
+            text: success,
+            duration: 5000
         });
          router.push('/default/dashboard/index');
     },
@@ -253,6 +255,7 @@ const mutations = {
         Vue.notify({
             group: 'loggedIn',
             type: 'error',
+
             text: error
         });
     }

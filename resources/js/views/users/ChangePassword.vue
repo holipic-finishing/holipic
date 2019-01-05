@@ -1,40 +1,68 @@
 <template>
-	<div class="container fix-container">
-		 <!-- <page-title-bar></page-title-bar> -->
-         <div class="content-row">
-                <app-card
-                  :heading="$t('message.changePassword')"
-                  :fullScreen="true"  
-                  colClasses="xl12 lg12 md12 sm12 xs12"
+    <v-container fluid pt-0 grid-list-xl>
+        <div class="panel-changepass">
+             <v-layout row wrap >
+                  <app-card
+                      colClasses="xl12 lg12 md12 sm12 xs12"
+                      customClasses="mb-0 sales-widget app-changepass"
+                      :fullScreen="true"
+                      :reloadable="true"
+                      :closeable="false"
                     >
-                    <v-divider></v-divider>
-                    <v-container fluid grid-list-xl pt-0>
-                        <v-form ref="form" @submit.prevent="savePassword">
-                            <v-text-field 
-                              label="Current password" 
-                              v-model="oldPassword" 
-                              type="password" 
-                              :rules="[rules.required]"
-                            ></v-text-field>
-                            <v-text-field 
-                              label="New password" 
-                              v-model="newPassword" 
-                              type="password" 
-                             :rules="[rules.required]"
-                            ></v-text-field>
-                            <v-text-field 
-                              label="Confirm password" 
-                              v-model="confirmPassword" 
-                              type="password" 
-                              :rules="[rules.required]"
-                            ></v-text-field>
-                            <v-btn large type="submit" block color="primary">Submit Change</v-btn>
-                        </v-form>
-                    </v-container> 
-                </app-card> 
-         </div>
+                    <!-- <div class="container fix-container"> -->
+                         <!-- <page-title-bar></page-title-bar> -->
+                        <!--  <div class="content-row"> -->
+                               <!--  <app-card
+                                  :heading="$t('message.changePassword')"
+                                  :fullScreen="true"  
+                                  colClasses="xl12 lg12 md12 sm12 xs12"
+                                    > -->
+                                   <!--  <v-divider></v-divider> -->
+                                   <div class="row-changepass elevation-5">
+                                       <v-toolbar flat color="white">
+                                        <v-toolbar-title>
+                                          <span>Change Password</span>
+                                          
+                                        </v-toolbar-title>
+                                        </v-toolbar>
+                                      <v-divider></v-divider>
+                                        <v-container fluid grid-list-xl pt-0>
+                                            <v-form ref="form" @submit.prevent="savePassword">
+                                                <v-text-field 
+                                                  label="Current password" 
+                                                  v-model="oldPassword" 
+                                                  type="password" 
+                                                  :rules="[rules.required]"
+                                                ></v-text-field>
+                                                <v-text-field 
+                                                  label="New password" 
+                                                  v-model="newPassword" 
+                                                  type="password" 
+                                                 :rules="[rules.required]"
+                                                ></v-text-field>
+                                                <v-text-field 
+                                                  label="Confirm password" 
+                                                  v-model="confirmPassword" 
+                                                  type="password" 
+                                                  :rules="[rules.required]"
+                                                ></v-text-field>
+                                                <v-btn large type="submit" block color="primary">Submit Change</v-btn>
+                                            </v-form>
+                                        </v-container> 
+
+                                   </div>
+                                   
+                                <!-- </app-card>  -->
+                         <!-- </div> -->
+                       
+                    <!-- </div> -->
+                    </app-card>
+        </v-layout>
+
+        </div>
        
-	</div>
+    </v-container>
+
 </template>
 
 <script>
@@ -99,6 +127,8 @@ export default {
         }
     }
 
-
-    
+    .panel-changepass{
+        margin-top:30px;
+       
+    }    
 </style>

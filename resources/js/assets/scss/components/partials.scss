@@ -10,3 +10,20 @@
 	// justify-content:center;
 	align-items:center;
 }
+
+.app-changepass{
+    padding: 225px 0px;
+    overflow:none;
+}
+
+.row-changepass{
+	width: 40%;
+	margin: 0 auto;
+}
+
+ @media (max-width: 760px) {
+    .row-changepass{
+		width: 60%;
+		margin: 0 auto;
+	}
+}

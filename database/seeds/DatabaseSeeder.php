@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TransactionsTableSeeder::class);
         $this->call(CouponCodeTableSeeder::class);
         $this->call(ExchangeRatesTableSeeder::class);
+        $this->call(SettingsTableSeeder::class);
     }
 }

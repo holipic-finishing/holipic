@@ -119,6 +119,12 @@ export default {
         		searchPageYear:0,
         	},
 
+        	total : {
+        		day:0,
+        		week:0,
+        		month:0,
+        		year:0
+        	},
         	searchResult: [],
         	user_id:'',
         	search:'',
@@ -162,27 +168,13 @@ export default {
 
 					this.transactionHistories = res.data.data
 					
-					let total_revenue = 0
-					let total_expenditure = 0
 					let vm = this
 					 _.forEach(res.data.data,function(value,key){
-					
+						
 					 	if(key == "Day") {
 					 		vm.option = value.data
-					 		_.forEach(vm.option,function(v_1,k_1){
-						 		if(v_1.type == true) {
-						 			var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(2)
-
-				                	total_revenue = total_revenue + parseFloat(new_amount)
-				                	vm.option[k_1]['new_amount'] = new_amount
-				                } else {
-				                	var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(2)
-
-				                	total_expenditure =total_expenditure + parseFloat(new_amount)
-				                	vm.option[k_1]['new_amount'] = new_amount
-				                }
-					 		})
-					 		vm.total = (total_revenue - total_expenditure).toFixed(2)
+					 		vm.total.day = 	value.total
+					 		vm.totalAmount(vm.option)
 					 	}
 		             });
 				}
@@ -244,25 +236,12 @@ export default {
 			
 			let option
 
-			let total_revenue = 0
-			let total_expenditure = 0
 			let vm = this
 
 			_.forEach(vm.transactionHistories, function(value, key){
 				if(timevalue == key){
 					option = value.data
-					_.forEach(option, function(v_1, k_1){
-						if(v_1.type == true) {
-							var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(2)
-		                	total_revenue = total_revenue + parseFloat(new_amount)
-		                	option[k_1]['new_amount'] = new_amount
-		                } else {
-		                	var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(2)
-		                	total_expenditure =total_expenditure + parseFloat(new_amount) 
-		                	option[k_1]['new_amount'] = new_amount
-		                }
-					})
-					vm.total = (total_revenue - total_expenditure).toFixed(2)
+					vm.totalAmount(value.data)
 				}
 
 			})
@@ -291,56 +270,26 @@ export default {
 				
 					if(this.currentFilterValue !==''){	
 						this.on_search = 1
-						var total_revenue = 0
-						var total_expenditure = 0
 						if(resItem.length) {
 							_.forEach(resItem, function(value,key){
 
 								vm.searchResult.push(value)
 							})
-									
-							 _.forEach(vm.searchResult,function(value,key){
-				                if(value.type == true) {
-				                	var new_amount = parseFloat(value.amount * value.transactionexchange.exchange_rate_to_dollar).toFixed(2)
-
-				                	total_revenue = total_revenue + parseFloat(new_amount)
-				                	vm.searchResult[key]['new_amount'] = new_amount
-				                } else {
-				                	var new_amount = parseFloat(value.amount * value.transactionexchange.exchange_rate_to_dollar).toFixed(2)
-
-				                	total_expenditure =total_expenditure + parseFloat(new_amount)
-				                	vm.searchResult[key]['new_amount'] = new_amount
-				                }
-
-				             });
-				             vm.total = (total_revenue - total_expenditure).toFixed(2)
+						
+							vm.totalAmount(vm.searchResult)
+				    
 				        } else {
 				        	this.on_search = 1
 				        }
 
 					} else {
-						var total_revenue = 0
-						var total_expenditure = 0
 						
 						_.forEach(resItem, function(value,key){
 
 							vm.option.push(value)
 						})
 								
-						 _.forEach(vm.option,function(value,key){
-			                if(value.type == true) {
-			                	var new_amount = parseFloat(value.amount * value.transactionexchange.exchange_rate_to_dollar).toFixed(2)
-
-			                	total_revenue = total_revenue + parseFloat(new_amount)
-			                	vm.option[key]['new_amount'] = new_amount
-			                } else {
-			                	var new_amount = parseFloat(value.amount * value.transactionexchange.exchange_rate_to_dollar).toFixed(2)
-
-			                	total_expenditure =total_expenditure + parseFloat(new_amount)
-			                	vm.option[key]['new_amount'] = new_amount
-			                }
-			             });
-			             vm.total = (total_revenue - total_expenditure).toFixed(2)
+						vm.totalAmount(vm.option)
 					}
 				}
 			})
@@ -413,6 +362,26 @@ export default {
 	    	this.searchResult = []
 	    	this.currentFilterValue = ''
 	    	this.on_search = 0;
+	    },
+
+	    totalAmount(data){
+	    	var total_revenue = 0
+			var total_expenditure = 0    	
+	    	_.forEach(data, function(v_1, k_1){
+				if(v_1.type == true) {
+					var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(2)
+
+                	total_revenue = total_revenue + parseFloat(new_amount)
+
+                	data[k_1]['new_amount'] = new_amount
+                } else {
+                	var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(2)
+                	total_expenditure =total_expenditure + parseFloat(new_amount) 
+
+                	data[k_1]['new_amount'] = new_amount
+                }
+			})
+			this.total = (total_revenue - total_expenditure).toFixed(2)
 	    }  	
 
   	},

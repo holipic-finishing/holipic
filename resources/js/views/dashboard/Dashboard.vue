@@ -54,352 +54,360 @@
 
 			<!-- Sales -->
 		<v-layout row wrap>
+			<app-card
+				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="mb-0 sales-widget"
+				:fullScreen="true"
+				:reloadable="true"
+				:closeable="false"
+			>
+				<div class="visitor-area-chart background-transparent col-sm-12">
+					<div class="d-custom-flex justify-space-between label-wrap pt-2">
+						<nav class="nav navbar-chart-text">
+						  <a class="nav-link no-point pdl">Revenue:</a>
+						  <a class="nav-link" :class="typeTimeReturn === 'day' ? 'active' : '' " @click="activeTypeTime('day')">Day</a>
+						  <a class="nav-link" :class="typeTimeReturn === 'week' ? 'active' : '' " @click="activeTypeTime('week')">Week</a>
+						  <a class="nav-link" :class="typeTimeReturn === 'month' ? 'active' : '' " @click="activeTypeTime('month')">Month</a>
+						  <a class="nav-link" :class="typeTimeReturn === 'year' ? 'active' : '' " @click="activeTypeTime('year')">Year</a>
+						</nav>
+						<div class="d-custom-flex ">
+							<div class="">
+								<h3 class="info--text mb-0 active">$ {{total}}</h3>
+								<p class="fs-12 grey--text mb-0 total-transaction">Total Income</p>
+							</div>
+						</div>
+					</div>
+					<!-- Line Chart -->
+					<line-chart :width="300"></line-chart>
+					<!-- End Line Chart -->
+				</div>
+
+				<!-- Alert -->
+				<div class="pl-4">
+					<v-alert class="subheading"  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
+				</div>
+				<!-- End Alert -->
+
+				<div class="wrap-card-body">
+					<!-- Start Day -->
+					<div class="card-body" v-if="typeTime == 'day'">
+						<p class="text-primary">(*) Please No choose more than 15 days</p>
+						<div class="row">
+							<!-- Start day -->
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 form-inline btn-date time-default">	
+								<div class="style-card start-day w-100">
+									<p>Start</p>
+									<v-menu 
+										:close-on-content-click="false"
+						                v-model="menu1"
+						                :nudge-right="40"
+						                lazy
+						                transition="scale-transition"
+						                offset-y
+									>
+										<v-text-field 
+											slot="activator"
+											v-model="computedStartDay"
+											prepend-icon="event"
+											readonly
+	                  						placeholder="Enter Start Date"
+										></v-text-field>
+										<v-date-picker 
+											v-model="from_day"
+											no-title
+											scrollable 
+											:max="new Date().toISOString().substr(0, 10)"
+											@input="reportByRangeDay"
+										></v-date-picker>
+									</v-menu>
+								</div>
+							</div>
+							<!-- End Start Day -->
+							
+							<!-- End Day -->
+							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
+								<div class="style-card w-100">
+									<p>End</p>
+									<v-menu 
+										:close-on-content-click="false"
+						                v-model="menu2"
+						                :nudge-right="40"
+						                lazy
+						                transition="scale-transition"
+						                offset-y
+									>
+										<v-text-field 
+											slot="activator"
+											v-model="computedEndDay"
+											prepend-icon="event"
+											readonly
+	                  						placeholder="Enter End Date"
+										></v-text-field>
+										<v-date-picker 
+											v-model="to_day" 
+											no-title 
+											scrollable 
+											:max="new Date().toISOString().substr(0, 10)"
+											@input="reportByRangeDay"
+										></v-date-picker>
+									</v-menu>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End Day  -->
+
+					<div class="card-body" v-if="typeTime == 'month'">
+						<p class="text-primary">(*) Please No choose more than 12 month</p>
+						<div class="row">
+							<!-- Star Month -->
+							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
+								<div class="style-card w-100">
+									<p>Start</p>
+									<v-menu
+										:close-on-content-click="false"
+						                v-model="menu3"
+						                :nudge-right="40"
+						                lazy
+						                transition="scale-transition"
+						                offset-y
+									>
+										<v-text-field 
+											slot="activator"
+											v-model="computedStartMonth"
+											prepend-icon="event"
+											readonly
+	                  						placeholder="Enter Start Month"
+										></v-text-field>
+										<v-date-picker 
+											v-model="from_month" 
+											no-title 
+											scrollable 
+											:max="new Date().toISOString().substr(0, 10)"
+											@input="reportByMonth"
+											type="month"
+										></v-date-picker>
+									</v-menu>
+								</div>
+							</div>
+							<!--End Star Month -->
+							
+							<!-- End Month -->
+							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
+								<div class="style-card w-100">
+									<p>End</p>
+									<v-menu 
+										:close-on-content-click="false"
+						                v-model="menu4"
+						                :nudge-right="40"
+						                lazy
+						                transition="scale-transition"
+						                offset-y
+									>
+										<v-text-field 
+											slot="activator"
+											v-model="computedEndMonth"
+											prepend-icon="event"
+											readonly
+	                  						placeholder="Enter End Month"
+										></v-text-field>
+										<v-date-picker 
+											v-model="to_month" 
+											no-title 
+											scrollable 
+											:max="new Date().toISOString().substr(0, 10)"
+											@input="reportByMonth"
+											type="month"
+										></v-date-picker>
+									</v-menu>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End Month -->
+
+					<div class="card-body" v-if="typeTime == 'year'">
+						<p class="text-primary">(*) Please No choose more than 5 year</p>
+						<div class="row">
+							<!-- Start Year -->
+							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
+								<div class="style-card w-100">
+									<p>Start</p>
+
+									<v-menu
+										ref="menu5"
+										:close-on-content-click="false"
+										v-model="menu5"
+										:nudge-right="40"
+										lazy
+										transition="scale-transition"
+										offset-y
+									>
+									    <v-text-field
+									        slot="activator"
+									        v-model="from_year"
+									        label="Start Year"
+									        prepend-icon="event"
+									        readonly
+									    ></v-text-field>
+								      	<v-date-picker
+									        ref="picker"
+									        v-model="from_year"
+									        @input="saveStartYear"
+									        reactive
+									        no-title
+									        :max="defaultYear"
+								      	></v-date-picker>
+									</v-menu>
+								</div>
+							</div>
+							<!-- End Start Year -->
+						
+							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
+								<!-- End Year -->
+								<div class="style-card w-100">
+									<p>End</p>
+
+									<v-menu
+										ref="menu6"
+										:close-on-content-click="false"
+										v-model="menu6"
+										:nudge-right="40"
+										lazy
+										transition="scale-transition"
+										offset-y
+									>
+										<v-text-field
+											slot="activator"
+											v-model="to_year"
+											label="End Year"
+											prepend-icon="event"
+											readonly
+										></v-text-field>
+										<v-date-picker
+											ref="picker2"
+											v-model="to_year"
+											@input="saveEndYear"
+											reactive
+											no-title
+											:max="defaultYear"
+										></v-date-picker>
+									</v-menu>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End Year -->
+
+					<!-- Week -->
+					<div class="card-body" v-if="typeTime == 'week'">
+						<p class="text-primary">(*) Please No choose more than 6 week</p>
+						
+						<div class="row">
+							<!-- Start Week -->
+							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
+								<div class="style-card w-100">
+									<p>Start</p>
+									<v-menu
+										:close-on-content-click="false"
+						                v-model="menu7"
+						                :nudge-right="40"
+						                lazy
+						                transition="scale-transition"
+						                offset-y
+									>
+										<v-text-field 
+											slot="activator"
+											v-model="computedStartWeek"
+											prepend-icon="event"
+											readonly
+		              						placeholder="Enter Start Week"
+										></v-text-field>
+										<v-date-picker 
+											v-model="from_day_week" 
+											no-title 
+											scrollable 
+											:max="new Date().toISOString().substr(0, 10)"
+											@input="reportByWeek"
+										></v-date-picker>
+									</v-menu>
+								</div>
+							</div>
+							<!-- End Start Week -->
+							<!-- Start End Week -->
+							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
+								<!-- Fom day -->
+								<div class="style-card w-100">
+									<p>End</p>
+
+									<v-menu 
+										:close-on-content-click="false"
+						                v-model="menu8"
+						                :nudge-right="40"
+						                lazy
+						                transition="scale-transition"
+						                offset-y
+									>
+										<v-text-field 
+											slot="activator"
+											v-model="computedEndWeek"
+											prepend-icon="event"
+											readonly
+	                  						placeholder="Enter End Week"
+										></v-text-field>
+										<v-date-picker 
+											v-model="to_day_week" 
+											no-title 
+											scrollable 
+											:max="new Date().toISOString().substr(0, 10)"
+											@input="reportByWeek"
+										></v-date-picker>
+									</v-menu>
+								</div>
+							</div>
+							<!-- End Week -->
+						</div>
+					</div>
+
+					<div class="card-body">
+						
+						<div class="row total-default">
+							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
+								<div class="style-card w-100">
+									<div class="d-custom-flex justify-space-between fix-total-storage-company">
+										<div class="title-total">
+											<h2>{{ computedTotalCompany }}</h2>
+											Total companies
+										</div>
+										<div> 
+											<span class="icon-style fix-icon-storage-company">
+												<i class="material-icons font-2x primary--text">store</i>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
+								<div class="style-card w-100">
+									<div class="d-custom-flex justify-space-between fix-total-storage-company">
+										<div class="title-total">
+											<h2>14,200</h2>
+											Total Storage MB
+										</div>
+										<div> 
+											<span class="icon-style fix-icon-storage-company">
+												<i class="material-icons font-2x success--text">cloud_upload</i>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</app-card>
 			
-			<div class="mt-12 visitor-area-chart background-transparent col-sm-12">
-				<div class="d-custom-flex justify-space-between label-wrap">
-					<nav class="nav navbar-chart-text">
-					  <a class="nav-link no-point pdl">Revenue:</a>
-					  <a class="nav-link" :class="typeTimeReturn === 'day' ? 'active' : '' " @click="activeTypeTime('day')">Day</a>
-					  <a class="nav-link" :class="typeTimeReturn === 'week' ? 'active' : '' " @click="activeTypeTime('week')">Week</a>
-					  <a class="nav-link" :class="typeTimeReturn === 'month' ? 'active' : '' " @click="activeTypeTime('month')">Month</a>
-					  <a class="nav-link" :class="typeTimeReturn === 'year' ? 'active' : '' " @click="activeTypeTime('year')">Year</a>
-					</nav>
-					<div class="d-custom-flex ">
-						<div class="">
-							<h3 class="info--text mb-0 active">$ {{total}}</h3>
-							<p class="fs-12 grey--text mb-0 total-transaction">Total Income</p>
-						</div>
-					</div>
-				</div>
-				<!-- Line Chart -->
-				<line-chart :width="300"></line-chart>
-				<!-- End Line Chart -->
-			</div>
-
-			<!-- Alert -->
-			<div class="pl-4">
-				<v-alert class="subheading"  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
-			</div>
-			<!-- End Alert -->
-
-			<div class="wrap-card-body">
-				<!-- Start Day -->
-				<div class="card-body" v-if="typeTime == 'day'">
-					<p class="text-primary">(*) Please No choose more than 15 days</p>
-					<div class="row">
-						<!-- Start day -->
-						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default"  >	
-							<div class="style-card start-day w-100">
-								<p>Start</p>
-								<v-menu 
-									:close-on-content-click="false"
-					                v-model="menu1"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-								>
-									<v-text-field 
-										slot="activator"
-										v-model="computedStartDay"
-										prepend-icon="event"
-										readonly
-                  						placeholder="Enter Start Date"
-									></v-text-field>
-									<v-date-picker 
-										v-model="from_day"
-										no-title
-										scrollable 
-										:max="new Date().toISOString().substr(0, 10)"
-										@input="reportByRangeDay"
-									></v-date-picker>
-								</v-menu>
-							</div>
-						</div>
-						<!-- End Start Day -->
-						
-						<!-- End Day -->
-						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default"  >	
-							<div class="style-card w-100">
-								<p>End</p>
-								<v-menu 
-									:close-on-content-click="false"
-					                v-model="menu2"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-								>
-									<v-text-field 
-										slot="activator"
-										v-model="computedEndDay"
-										prepend-icon="event"
-										readonly
-                  						placeholder="Enter End Date"
-									></v-text-field>
-									<v-date-picker 
-										v-model="to_day" 
-										no-title 
-										scrollable 
-										:max="new Date().toISOString().substr(0, 10)"
-										@input="reportByRangeDay"
-									></v-date-picker>
-								</v-menu>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End Day  -->
-
-				<div class="card-body" v-if="typeTime == 'month'">
-					<p class="text-primary">(*) Please No choose more than 12 month</p>
-					<div class="row">
-						<!-- Star Month -->
-						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-							<div class="style-card w-100">
-								<p>Start</p>
-								<v-menu
-									:close-on-content-click="false"
-					                v-model="menu3"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-								>
-									<v-text-field 
-										slot="activator"
-										v-model="computedStartMonth"
-										prepend-icon="event"
-										readonly
-                  						placeholder="Enter Start Month"
-									></v-text-field>
-									<v-date-picker 
-										v-model="from_month" 
-										no-title 
-										scrollable 
-										:max="new Date().toISOString().substr(0, 10)"
-										@input="reportByMonth"
-										type="month"
-									></v-date-picker>
-								</v-menu>
-							</div>
-						</div>
-						<!--End Star Month -->
-						
-						<!-- End Month -->
-						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-							<div class="style-card w-100">
-								<p>End</p>
-								<v-menu 
-									:close-on-content-click="false"
-					                v-model="menu4"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-								>
-									<v-text-field 
-										slot="activator"
-										v-model="computedEndMonth"
-										prepend-icon="event"
-										readonly
-                  						placeholder="Enter End Month"
-									></v-text-field>
-									<v-date-picker 
-										v-model="to_month" 
-										no-title 
-										scrollable 
-										:max="new Date().toISOString().substr(0, 10)"
-										@input="reportByMonth"
-										type="month"
-									></v-date-picker>
-								</v-menu>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End Month -->
-
-				<div class="card-body" v-show="typeTime == 'year'">
-					<p class="text-primary">(*) Please No choose more than 5 year</p>
-					<div class="row">
-						<!-- Start Year -->
-						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-							<div class="style-card w-100">
-								<p>Start</p>
-
-								<v-menu
-									ref="menu5"
-									:close-on-content-click="false"
-									v-model="menu5"
-									:nudge-right="40"
-									lazy
-									transition="scale-transition"
-									offset-y
-								>
-								    <v-text-field
-								        slot="activator"
-								        v-model="from_year"
-								        label="Start Year"
-								        prepend-icon="event"
-								        readonly
-								    ></v-text-field>
-							      	<v-date-picker
-								        ref="picker"
-								        v-model="from_year"
-								        @input="saveStartYear"
-								        reactive
-								        no-title
-								        :max="defaultYear"
-							      	></v-date-picker>
-								</v-menu>
-							</div>
-						</div>
-						<!-- End Start Year -->
-					
-						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-							<!-- End Year -->
-							<div class="style-card w-100">
-								<p>End</p>
-
-								<v-menu
-									ref="menu6"
-									:close-on-content-click="false"
-									v-model="menu6"
-									:nudge-right="40"
-									lazy
-									transition="scale-transition"
-									offset-y
-								>
-									<v-text-field
-										slot="activator"
-										v-model="to_year"
-										label="End Year"
-										prepend-icon="event"
-										readonly
-									></v-text-field>
-									<v-date-picker
-										ref="picker2"
-										v-model="to_year"
-										@input="saveEndYear"
-										reactive
-										no-title
-										:max="defaultYear"
-									></v-date-picker>
-								</v-menu>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End Year -->
-
-				<!-- Week -->
-				<div class="card-body" v-show="typeTime == 'week'">
-					<p class="text-primary">(*) Please No choose more than 6 week</p>
-					
-					<div class="row">
-						<!-- Start Week -->
-						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-							<div class="style-card w-100">
-								<p>Start</p>
-								<v-menu
-									:close-on-content-click="false"
-					                v-model="menu7"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-								>
-									<v-text-field 
-										slot="activator"
-										v-model="computedStartWeek"
-										prepend-icon="event"
-										readonly
-	              						placeholder="Enter Start Week"
-									></v-text-field>
-									<v-date-picker 
-										v-model="from_day_week" 
-										no-title 
-										scrollable 
-										:max="new Date().toISOString().substr(0, 10)"
-										@input="reportByWeek"
-									></v-date-picker>
-								</v-menu>
-							</div>
-						</div>
-						<!-- End Start Week -->
-						<!-- Start End Week -->
-						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-							<!-- Fom day -->
-							<div class="style-card w-100">
-								<p>End</p>
-
-								<v-menu 
-									:close-on-content-click="false"
-					                v-model="menu8"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-								>
-									<v-text-field 
-										slot="activator"
-										v-model="computedEndWeek"
-										prepend-icon="event"
-										readonly
-                  						placeholder="Enter End Week"
-									></v-text-field>
-									<v-date-picker 
-										v-model="to_day_week" 
-										no-title 
-										scrollable 
-										:max="new Date().toISOString().substr(0, 10)"
-										@input="reportByWeek"
-									></v-date-picker>
-								</v-menu>
-							</div>
-						</div>
-						<!-- End Week -->
-					</div>
-				</div>
-
-				<div class="card-body">
-					
-					<div class="row total-default">
-						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
-							<div class="style-card w-100">
-								<div class="d-custom-flex justify-space-between fix-total-storage-company">
-									<div class="title-total">
-										<h2>{{ computedTotalCompany }}</h2>
-										Total companies
-									</div>
-									<div> 
-										<span class="icon-style fix-icon-storage-company">
-											<i class="material-icons font-2x primary--text">store</i>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
-							<div class="style-card w-100">
-								<div class="d-custom-flex justify-space-between fix-total-storage-company">
-									<div class="title-total">
-										<h2>14,200</h2>
-										Total Storage MB
-									</div>
-									<div> 
-										<span class="icon-style fix-icon-storage-company">
-											<i class="material-icons font-2x success--text">cloud_upload</i>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
 		</v-layout>
 		<transactions></transactions>
 	</v-container>

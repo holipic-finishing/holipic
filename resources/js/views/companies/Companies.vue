@@ -93,7 +93,7 @@
 
 		name: 'Companies',
 		components: {
-			ShowTransaction,
+			'show-transaction' : ShowTransaction,
 			'company-information' : CompanyInformation,
 			'company-edit' : CompanyEdit
 		},

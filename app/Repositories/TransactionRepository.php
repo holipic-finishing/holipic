@@ -731,7 +731,7 @@ class TransactionRepository extends BaseRepository
                     }
                 }
 
-                $dayWeek[$key]['total'] = round($count,2);
+                $dayWeek[$key]['total'] = round($count,3);
             }  else {
                 $dayWeek[$key]['total'] = 0;
             }
@@ -739,7 +739,7 @@ class TransactionRepository extends BaseRepository
            
        
         }    
-            
+    
 
         return $dayWeek;
     }
@@ -892,7 +892,7 @@ class TransactionRepository extends BaseRepository
           
             $transactions = $this->scopeQuery(function($query) use($search, $user_id, $now){
 
-                $query = $query->select('id','title','dated','amount','type')
+                $query = $query->select('id','title','dated','amount','type','status')
                                     ->with(['transactionexchange' => function($query){
                                         $query->select(['exchange_rate_to_dollar','transaction_id']);
                                     }])
@@ -914,7 +914,7 @@ class TransactionRepository extends BaseRepository
 
         }
         else {
-            $transactions = $this->model->select('id','title','dated','amount','type')
+            $transactions = $this->model->select('id','title','dated','amount','type','status')
                                         ->with(['transactionexchange' => function($query){
                                             $query->select(['exchange_rate_to_dollar','transaction_id']);
                                         }])
@@ -924,6 +924,7 @@ class TransactionRepository extends BaseRepository
                                         ->where(DB::raw('date(dated)'),$now)
                                         ->orderBy('dated', 'desc');
         }
+
         return $transactions->paginate($perPage);                            
 
     }
@@ -955,7 +956,7 @@ class TransactionRepository extends BaseRepository
           
             $transactions = $this->scopeQuery(function($query) use($search, $user_id, $startDay, $endDay){
 
-                $query = $query->select('id','title','dated','amount','type')
+                $query = $query->select('id','title','dated','amount','type','status')
                                     ->with(['transactionexchange' => function($query){
                                         $query->select(['exchange_rate_to_dollar','transaction_id']);
                                     }])
@@ -976,7 +977,7 @@ class TransactionRepository extends BaseRepository
             });
         }
         else {
-            $transactions = $this->model->select('id','title','dated','amount','type')
+            $transactions = $this->model->select('id','title','dated','amount','type','status')
                                         ->with(['transactionexchange' => function($query){
                                             $query->select(['exchange_rate_to_dollar','transaction_id']);
                                         }])
@@ -1082,7 +1083,7 @@ class TransactionRepository extends BaseRepository
           
             $transactions = $this->scopeQuery(function($query) use($search, $user_id, $year){
 
-                $query = $query->select('id','title','dated','amount','type')
+                $query = $query->select('id','title','dated','amount','type','status')
                                     ->with(['transactionexchange' => function($query){
                                         $query->select(['exchange_rate_to_dollar','transaction_id']);
                                     }])
@@ -1103,7 +1104,7 @@ class TransactionRepository extends BaseRepository
             });
 
         } else { 
-            $transactions = $this->model->select('id','title','dated','amount','type')
+            $transactions = $this->model->select('id','title','dated','amount','type','status')
                                         ->with(['transactionexchange' => function($query){
                                             $query->select(['exchange_rate_to_dollar','transaction_id']);
                                         }])
@@ -1189,7 +1190,7 @@ class TransactionRepository extends BaseRepository
                         $dates[$key]['total'] = 0;
                     }
                 }  
-                 $dates[$key]['total'] = round($count,2);
+                 $dates[$key]['total'] = round($count,3);
                     
             } else {
                  $dates[$key]['total'] = 0;

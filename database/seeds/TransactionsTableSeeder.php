@@ -17,7 +17,7 @@ class TransactionsTableSeeder extends Seeder
 
         \App\Models\Transaction::truncate();
 
-        $status = ['RECIVED', 'BEEN_SEEN'];
+        $status = ['RECIVED', 'DONE'];
 
         $packages = \App\Models\Package::all();
         $feeArr = [];

@@ -188,7 +188,7 @@ const mutations = {
         state.isUserSigninWithAuth0 = false
         var access_token = user.access_token        
         localStorage.setItem('access_token',access_token)     
-        router.push('/default/dashboard/index')
+        router.push('/super-admin/dashboard')
         setTimeout(function(){
             Vue.notify({
                 group: 'loggedIn',
@@ -208,14 +208,14 @@ const mutations = {
     logoutUser(state) {
         state.user = null
         localStorage.removeItem('user');
-        router.push("/session/login");
+        router.push("/login");
     },
     signUpUser(state) {
         Nprogress.start();
     },
     signUpUserSuccess(state, user) {
         state.user = localStorage.setItem('user', user);
-        router.push("/default/dashboard/ecommerce");
+        router.push("/super-admin/dashboard");
         Vue.notify({
             group: 'loggedIn',
             type: 'success',
@@ -246,7 +246,7 @@ const mutations = {
             type: 'success',
             text: success
         });
-         router.push('/default/dashboard/index');
+         router.push('/super-admin/dashboard');
     },
      changepasswordError(state, error){
         Nprogress.done();

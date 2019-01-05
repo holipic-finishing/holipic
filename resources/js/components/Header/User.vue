@@ -59,8 +59,8 @@
                   id: 5,
                   title: 'message.changePassword',
                   icon: 'ti-lock mr-3 info--text',
-                  path: '/users/change-password',
-                  pathCom : '/company/change-password'
+                  path: '/change-password',
+                  pathCom : '/change-password'
                },
             ],
             role_id : '',
@@ -70,7 +70,7 @@
          logoutUser() {
             // this.$store.dispatch("logoutUserFromFirebase", this.$router);
             localStorage.removeItem('access_token')
-            this.$router.push('/session/login')
+            this.$router.push('/login')
          },
          getMenuLink(path) {
             return '/' + getCurrentAppLayout(this.$router) +  path

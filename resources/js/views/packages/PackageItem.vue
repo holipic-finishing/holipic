@@ -330,14 +330,13 @@
 								<span class="contain-text-field-setting">
 									<v-switch
 										v-model="data.sms"
-										:disabled="key == 4 ? false : true"
 										@change="editSetting('sms', data.sms)"
 									>
 									</v-switch>
 								</span>
-								<span class="position-item">
+<!-- 								<span class="position-item">
 									<v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
-								</span>
+								</span> -->
 							</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
@@ -350,14 +349,13 @@
 								<span class="contain-text-field-setting">
 									<v-switch
 										v-model="data.email_service"
-										:disabled="key == 5 ? false : true"
 										@change="editSetting('email_service', data.email_service)"
 									>
 									</v-switch>
 								</span>
-								<span class="position-item">
+								<!-- <span class="position-item">
 									<v-btn flat icon @click="unDisableItem(5)"><v-icon small>fas fa-marker</v-icon></v-btn>
-								</span>
+								</span> -->
 							</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>

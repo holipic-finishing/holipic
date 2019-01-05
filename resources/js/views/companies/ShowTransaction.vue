@@ -60,7 +60,9 @@
             <v-list-tile v-if="optionLoadView && optionLoadView.length">
             	<v-list-tile-content class="btn-style">
             		<app-section-loader :status="reload"></app-section-loader>
-					<button type="button" @click="addTenItem(typeTime)" class="btn btn-primary">More... </button>
+            		<div v-if=" check == 0 ">
+						<button type="button" @click="addTenItem(typeTime)" class="btn btn-primary">More... </button>
+					</div>
 				</v-list-tile-content>
 			</v-list-tile>
         </v-list>
@@ -129,7 +131,7 @@ export default {
         	user_id:'',
         	search:'',
         	on_search:0,
-
+        	check : 0
 
     	}
   	},
@@ -166,11 +168,17 @@ export default {
 				if (res.data && res.data.success) {
 
 					this.transactionHistories = res.data.data
-					
+
 					let vm = this
+
+
 					 _.forEach(res.data.data,function(value,key){
-						
+
 					 	if(key == "Day") {
+							
+							vm.check = 0
+							vm.invisibleButtonLoadMore(value)
+
 					 		vm.option = value.data
 					 		vm.total.day = 	value.total
 					 		vm.totalAmount(vm.option)
@@ -239,6 +247,8 @@ export default {
 
 			_.forEach(vm.transactionHistories, function(value, key){
 				if(timevalue == key){
+					vm.check = 0
+					vm.invisibleButtonLoadMore(value)
 					option = value.data
 					vm.totalAmount(value.data)
 				}
@@ -266,12 +276,15 @@ export default {
 
 					let resItem = res.data.data.data
 					let vm = this
-				
+
+					this.check = 0
+					vm.invisibleButtonLoadMore(res.data.data)
+
 					if(this.currentFilterValue !==''){	
 						this.on_search = 1
 						if(resItem.length) {
 							_.forEach(resItem, function(value,key){
-
+								
 								vm.searchResult.push(value)
 							})
 						
@@ -381,7 +394,15 @@ export default {
                 }
 			})
 			this.total = (total_revenue - total_expenditure).toFixed(2)
-	    }  	
+	    },
+
+	    invisibleButtonLoadMore(value){   	
+
+	    	if(value.to == value.total){
+	    		this.check = 1
+	    	}
+	    	
+	    }
 
   	},
 

@@ -62,7 +62,7 @@ class AuthService {
     this.userProfile = null
     this.authNotifier.emit('authChange', false)
     // navigate to the home route
-    router.push('/session/login')
+    router.push('/auth/login')
   }
 
   isAuthenticated() {

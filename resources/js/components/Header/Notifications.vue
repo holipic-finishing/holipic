@@ -65,7 +65,8 @@
 import { getWithData, put } from '../../api/index.js'
 import config from '../../config/index.js'
 import { getCurrentAppLayout } from "../../helpers/helpers.js";
-import Notification from '../../views/notification/notification.vue'
+import Notifications from '../../views/company-admin/notifications/Notifications'
+
 	export default {
 		data() {
 			return {
@@ -80,7 +81,7 @@ import Notification from '../../views/notification/notification.vue'
 			};
 		},
 		components:{
-			Notification
+			Notifications
 		},
 		methods:{
 			fetchData(){
@@ -127,14 +128,14 @@ import Notification from '../../views/notification/notification.vue'
 					this.menu = false
 					this.$router.push({
 						name: 'CompnayNotification',
-						params: { id : user_id }
+						params: { userId : user_id }
 					});
 				} else {
 
 					this.menu = false
 					this.$router.push({
 						name: 'AdminNotification',
-						params: { id: user_id }
+						params: { userId: user_id }
 					});
 				}
 			},
@@ -156,9 +157,12 @@ import Notification from '../../views/notification/notification.vue'
 		},
 		created(){
 			this.fetchData()
+			var userAuth = JSON.parse(localStorage.getItem('user'))
 			var noti = this
 			socket.on('view-listings',function(data){
-			        noti.notifications.unshift(data)
+					if (data.user_id == userAuth.id) {
+			        	noti.notifications.unshift(data)
+					}
 			    });
 			console.log(this.notifications)
 		},

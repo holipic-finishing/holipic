@@ -9,7 +9,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use \App\Models\Notification;
+use \App\Models\CompanyAdmin\Notification;
 
 class RedisEventNotification implements ShouldBroadcast
 {

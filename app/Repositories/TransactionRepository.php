@@ -672,7 +672,7 @@ class TransactionRepository extends BaseRepository
                         ->get()->toArray();
 
         $InYear = $this->sumSystemFee($InYear, $transactions, 'year');
-
+        // dd($InYear);
 
         return $InYear;
 
@@ -731,7 +731,7 @@ class TransactionRepository extends BaseRepository
                     }
                 }
 
-                $dayWeek[$key]['total'] = round($count,3);
+                $dayWeek[$key]['total'] = $count;
             }  else {
                 $dayWeek[$key]['total'] = 0;
             }
@@ -1193,7 +1193,7 @@ class TransactionRepository extends BaseRepository
                         $dates[$key]['total'] = 0;
                     }
                 }  
-                 $dates[$key]['total'] = round($count,3);
+                 $dates[$key]['total'] = $count;
                     
             } else {
                  $dates[$key]['total'] = 0;

@@ -11,7 +11,7 @@ class PageTableSeed extends Seeder
      */
     public function run()
     {
-         Schema::disableForeignKeyConstraints();
+        Schema::disableForeignKeyConstraints();
         
         \App\Models\CompanyAdmin\Pages::truncate();
 
@@ -34,7 +34,7 @@ class PageTableSeed extends Seeder
                 'page_content' =>  '<h1>DIGITAL IMAGE REFUND &amp; RETURN POLICY</h1><p><strong>When purchasing a product, you are agreeing to these terms:</strong></p><p>By purchasing a digital background from ,Holipic Holiday Imaging (HHI) you acknowledge that all digital products are non-refundable and not returnable, under any circumstances. You understand that prior to purchasing to read the full description and view product images to ensure that the product you are purchasing is what you want. If you do not agree, or feel in any way that you will not be happy with your product please do not purchase.</p><p>&middot;&nbsp;I understand that all products are digital and will be delivered online as a download.</p><p>&middot;&nbsp;I understand &nbsp;all sales are final and that refunds and exchanges are not available.</p><p>&middot;&nbsp;I understand that it is up to me to ensure to have the proper software and skill to use these products.</p><p>&middot;&nbsp;I understand that products cannot be returned or exchanged based on the level of difficulty.</p><p>&middot;&nbsp;I understand that it is my responsibility to download and save my products files.</p><p>&middot; I understand that it is my responsibility to have basic knowledge of downloading, loading and using products.</p><p>&nbsp;</p><p><strong>Shipping</strong></p><p>You will be responsible for paying your own shipping costs for returning your item. Shipping costs are non-refundable. If you receive a refund, the cost of return shipping will be deducted from your refund.&nbsp;</p><p>&nbsp;</p><p><strong>Contact Us</strong></p><p>If you have any questions on how to return your item to us, please email smile@holipic.com</p>',
                 'sort_content' => 'DIGITAL IMAGE REFUND &amp; RETURN POLICY When purchasing a product, you are agreeing to these terms:By purchasing a digital background from ,Holipic Holiday Imaging (HHI) you acknowledge that all digital products are non-refundable and not returnable, under any circumstances. You understand that prior to purchasing to read the full description and view product images to ensure that the product you are purchasing is what you want. If you do not agree, or feel in any way that you will not be happy with your product please do not purchase.&middot;I understand that all products are digital and will be delivered online as a download.&middot;I understand all sales are final and that refunds and exchanges are not available.&middot;I understand that it is up to me to ensure to have the proper software and skill to use these products.&middot;I understand that products cannot be returned or exchanged based on the level of difficulty.&middot;I understand that it is my responsibility to download and save my products files.&middot; I understand that it is my responsibility to have basic knowledge of downloading, loading and using products.Shipping You will be responsible for paying your own shipping costs for returning your item. Shipping costs are non-refundable. If you receive a refund, the cost of return shipping will be deducted from your refund.Contact Us 	If you have any questions on how to return your item to us, please email smile@holipic.com'
         	],     	
-        ]
+        ]);
 
     }
 }

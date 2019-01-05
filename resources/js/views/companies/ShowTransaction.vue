@@ -24,18 +24,17 @@
 	 	</v-list>
 		 	<v-list-tile >
             <v-list-tile-content>
-         
 					<div class="custom-flex">
-					<nav class="nav nav-bar-chart">
-					  <a class="nav-link nav-time" :class="typeTimeReturn === 'Day' ? 'active' : '' " @click="activeTypeTime('Day')">D</a>
-					  <a class="nav-link nav-time" :class="typeTimeReturn === 'Week' ? 'active' : '' " @click="activeTypeTime('Week')">W</a>
-					  <a class="nav-link nav-time" :class="typeTimeReturn === 'Month' ? 'active' : '' " @click="activeTypeTime('Month')">M</a>
-					  <a class="nav-link nav-time" :class="typeTimeReturn === 'Year' ? 'active' : '' " @click="activeTypeTime('Year')">Y</a>
-					</nav>
-					<div class="justify-space-between w-30">
-						<div class="text-total text-xs-right">
-							<h4 class="primary--text mb-0">{{ (!searchResult.length && on_search ==1) ? 0 : total}}$</h4>
-						</div>
+						<nav class="nav nav-bar-chart">
+						  <a class="nav-link nav-time" :class="typeTimeReturn === 'Day' ? 'active' : '' " @click="activeTypeTime('Day')">D</a>
+						  <a class="nav-link nav-time" :class="typeTimeReturn === 'Week' ? 'active' : '' " @click="activeTypeTime('Week')">W</a>
+						  <a class="nav-link nav-time" :class="typeTimeReturn === 'Month' ? 'active' : '' " @click="activeTypeTime('Month')">M</a>
+						  <a class="nav-link nav-time" :class="typeTimeReturn === 'Year' ? 'active' : '' " @click="activeTypeTime('Year')">Y</a>
+						</nav>
+						<div class="justify-space-between w-30">
+							<div class="text-total text-xs-right">
+								<h4 class="primary--text mb-0">{{ (!searchResult.length && on_search ==1) ? 0 : total}}$</h4>
+							</div>
 						</div>			
 					</div>
           	</v-list-tile-content>
@@ -46,14 +45,14 @@
 				:key="item.id"
 				class="style-list"
             >
-              <v-list-tile-content>
+              <v-list-tile-content >
                 <v-list-tile-title v-text="item.title"></v-list-tile-title>
                 <v-list-tile-sub-title v-text="item.dated" class="text-style"></v-list-tile-sub-title>
               </v-list-tile-content>
   
               <v-list-tile-action>
-                <p class="success--text mb-0" v-if="item.type == true">+{{item.new_amount}}</p>
-                <p class="mb-0" v-if="item.type == false">-{{item.new_amount}}</p>
+                <p class="success--text mb-0" v-if="item.status == 'RECIVED'">+{{item.new_amount}}</p>
+                <p class="mb-0" v-else>-{{item.new_amount}}</p>
               </v-list-tile-action>
             </v-list-tile>
 
@@ -380,20 +379,20 @@ export default {
 	    	var total_revenue = 0
 			var total_expenditure = 0    	
 	    	_.forEach(data, function(v_1, k_1){
-				if(v_1.type == true) {
-					var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(2)
+				if(v_1.status == 'RECIVED') {
+					var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(3)
 
                 	total_revenue = total_revenue + parseFloat(new_amount)
 
                 	data[k_1]['new_amount'] = new_amount
                 } else {
-                	var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(2)
+                	var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(3)
                 	total_expenditure =total_expenditure + parseFloat(new_amount) 
 
                 	data[k_1]['new_amount'] = new_amount
                 }
 			})
-			this.total = (total_revenue - total_expenditure).toFixed(2)
+			this.total = (total_revenue - total_expenditure).toFixed(3)
 	    },
 
 	    invisibleButtonLoadMore(value){   	

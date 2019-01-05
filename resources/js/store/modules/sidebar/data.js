@@ -3,6 +3,21 @@ export const menus = {
 	'message.general': [
 		    /////////////////////////////////////////////
 		   ///////								  //////
+		  ///////  SIDEBAR ROUTER BRANCH ADMIN   //////
+		 ///////							    //////
+		/////////////////////////////////////////////
+		{
+			action: 'zmdi-view-dashboard',
+			title: 'message.dashboard',
+			active: true,
+			path: '/dashboard',
+			items:null,
+			role_id : 3
+		},
+
+
+		    /////////////////////////////////////////////
+		   ///////								  //////
 		  ///////  SIDEBAR ROUTER ADMIN COMPANY  //////
 		 ///////							    //////
 		/////////////////////////////////////////////

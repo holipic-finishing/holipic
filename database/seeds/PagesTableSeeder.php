@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PageTableSeed extends Seeder
+class PagesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

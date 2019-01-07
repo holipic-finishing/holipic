@@ -144,7 +144,7 @@ class CustomerAPIController extends AppBaseController
         $customer = $this->customerRepository->handleUpdateCustomer($id);
 
         if(!$customer) {
-            return $this->sendError('Customer not found');
+            return $this->sendError('Error update customer');
         }
 
         return $this->sendResponse($customer, 'Update customer successfully');

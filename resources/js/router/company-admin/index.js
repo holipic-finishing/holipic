@@ -17,10 +17,13 @@ import ChangePassword from '../../views/partials/users/ChangePassword'
 import ContentManSystem from '../../views/company-admin/cms/Index'
 
 //Branches
-import Branch from '../../views/dashboard/admin-company/BranchCompany'
+import Branch from '../../views/company-admin/branch/Branch'
+
+//Photographers
+import Photographer from '../../views/company-admin/photographer/Photographer'
 
 //Customers
-import Customer from '../../views/dashboard/admin-company/Customer'
+import Customer from '../../views/company-admin/customer/Customer'
 
 export default {
 	path: '/company-admin',
@@ -70,7 +73,17 @@ export default {
 		            adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.branch'
-		            // breadcrumb: 'Users / Notification'
+		        }
+		},
+		{
+				path: '/company-admin/photographers',
+		        component: Photographer,
+		        name : 'CompanyBranchPhotographer',
+		        meta: {
+		            requiresAuth: true,
+		            adminAuth:false,
+	         		companyAuth:true,
+		            title: 'message.photographer'
 		        }
 		},
 		{

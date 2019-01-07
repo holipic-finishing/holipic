@@ -11,23 +11,20 @@ import CompanyAdminRoutes from './company-admin';
 import BranchAdminRoutes from './branch-admin';
 import CustomerRoutes from './customer';
 
-<<<<<<< HEAD
+
 // Dashboard components
 import mini from '../container/MiniSidebarLayout.vue'
 //import Ecommerce   from'../views/dashboard/Ecommerce';
 
 // Companies Component
 
-import Companies from '../views/companies/Companies';
-import CompanyChart from '../views/companies/information-chart';
-
+// import Companies from '../views/companies/Companies';
+// import CompanyChart from '../views/companies/information-chart';
 // import PackageIndex from '../views/package/Index';
-
-
-import UserManagement from '../views/superadmin-user/user-management'
-import page404 from '../views/pages/page404'
-import UserPass from '../views/users/ChangePassword'
-import HistoriesTransaction from '../views/transactions/Histories.vue'
+// import UserManagement from '../views/superadmin-user/user-management'
+// import page404 from '../views/pages/page404'
+// import UserPass from '../views/users/ChangePassword'
+// import HistoriesTransaction from '../views/transactions/Histories.vue'
 // import IndexCoupon from '../views/coupon-code/Index.vue'
 
 
@@ -41,11 +38,10 @@ import HistoriesTransaction from '../views/transactions/Histories.vue'
 import Branch from '../views/dashboard/admin-company/BranchCompany.vue'
 import Photographer from '../views/dashboard/admin-company/Photographer.vue'
 
-import PageNotFound from '../views/pages/page404'
-=======
+// import PageNotFound from '../views/pages/page404'
+
 import PageNotFound from '../views/partials/pages/page404'
 
->>>>>>> 31ef44ad182c7050c8a9139b8cfeee7c3a78ed1e
 
 
 Vue.use(Router)
@@ -55,221 +51,8 @@ routers = [
 	AuthRoutes,
 	SuperAdminRoutes,
 	CompanyAdminRoutes,
-	/*{
-
-		path: '/session/login',
-		component:AppLogin,
-		children:[
-			{
-				path:'/session/login',
-				name:'LoginIndex',
-				component:LoginOne
-			},
-			{
-				path:'/session/sign-up',
-				name:'Register',
-				component: SignUpOne,
-				meta: {
-					title: 'message.signUp',
-					breadcrumb: 'Session / Sign Up'
-				}
-			},
-			{
-				path: '/session/forgot-password',
-				component: ForgotPassword,
-				meta: {
-					title: 'message.forgotPassword',
-					breadcrumb: 'Session / Forgot Password'
-				}
-			},
-		]
-	},*/
-	// {
-	// 	path: '/',
- //   		component: mini,
-	// 	redirect: '/default/dashboard/index',
-	// 	meta: { requiresAuth: true },
-	// 	children: [
-	// 		//------------------------------------------------------------------------------------
-	// 		//---------------------------- ROUTER COMPANY ADMIN ----------------------------------
-	// 		//------------------------------------------------------------------------------------
-	// 		{
-	// 			path: '/default/company/dashboard/index',
-	//          	component: DashboardCompany,
-	//          	meta: {
-	//          		requiresAuth: true,
-	//          		adminAuth:false,
-	//          		companyAuth:true,
-	// 	            title: 'message.ecommerce',
-	// 	            breadcrumb: 'Dashboard / Ecommerce'
-	//         	}
-	// 		},
-	// 		{
-	// 	        path: '/default/company/change-password',
-	// 	        component: UserPass,
-	// 	        meta: {
-	// 	            requiresAuth: true,
-	// 	            adminAuth:false,
-	//          		companyAuth:true,
-	// 	            title: 'message.changePassword',
-	// 	            breadcrumb: 'Users / Change Password'
-	// 	        }
-	// 	    },
-	// 		{
-	// 			path: '/default/company/show-notification/:id',
-	// 	        component: Notification,
-	// 	        name : 'CompnayNotification',
-	// 	        meta: {
-	// 	            requiresAuth: true,
-	// 	            adminAuth:false,
-	//          		companyAuth:true,
-	// 	            title: 'message.notification',
-	// 	            breadcrumb: 'Users / Notification'
-	// 	        }
-	// 		},
-	// 		{
-	// 			path: '/default/company/branches',
-	// 	        component: Branch,
-	// 	        name : 'CompanyBranch',
-	// 	        meta: {
-	// 	            requiresAuth: true,
-	// 	            adminAuth:false,
-	//          		companyAuth:true,
-	// 	            title: 'message.branch'
-	// 	            // breadcrumb: 'Users / Notification'
-	// 	        }
-	// 		},
-	// 		{
-	// 			path: '/default/company/photographers',
-	// 	        component: Photographer,
-	// 	        name : 'CompanyPhotographer',
-	// 	        meta: {
-	// 	            requiresAuth: true,
-	// 	            adminAuth:false,
-	//          		companyAuth:true,
-	// 	            title: 'message.photographer'
-	// 	        }
-	// 		},
-
-
-	// 		//--------------------------------------------------------------------------
-	// 		//------------------------- ROUTER SUPER ADMIN  ----------------------------
-	// 		//--------------------------------------------------------------------------
- //      		{
-	//          	path: '/default/dashboard/index',
-	//          	component: Ecommerce,
-	//          	meta: {
-	//          		requiresAuth: true,
-	//          		adminAuth:true,
-	//          		companyAuth:false,
-	// 	            title: 'message.ecommerce',
-	// 	            breadcrumb: 'Dashboard / Ecommerce'
-	//         	}
- //      		},
-	// 	    {
-	// 	        path: '/default/widgets/companies',
-	// 	        component: Companies,
-	// 	        meta: {
-	// 	        	requiresAuth: true,
-	// 	        	adminAuth:true,
-	//          		companyAuth:false,
-	// 	            title: 'message.company',
-	// 	            breadcrumb: 'Company / List'
-	// 	        }
-	// 	    },
-	// 	    {
-	// 	        path: '/default/widgets/mana-company-chart',
-	// 	        component: CompanyChart,
-	// 	        meta: {
-	// 	        	requiresAuth: true,
-	// 	        	adminAuth:true,
-	//          		companyAuth:false,
-	// 	            title: 'message.chartCompany',
-	// 	            breadcrumb: 'Company / Information /Chart'
-	// 	        }
-	// 	    },
-	// 	    {
-	// 	        path: '/default/packages/index',
-	// 	        component: PackageIndex,
-	// 	        meta: {
-	// 	        	requiresAuth: true,
-	// 	        	adminAuth:true,
-	//          		companyAuth:false,
-	// 	            title: 'message.package',
-	// 	            breadcrumb: 'Packages / List'
-	// 	        }
-
-	// 	    }, 
-	// 	    // {
-	// 	    //     path: '/default/setting',
-	// 	    //     component: Setting,
-	// 	    //     meta: {
-	// 	    //     	requiresAuth: true,
-	// 	    //         title: 'message.settings',
-	// 	    //         breadcrumb: 'Setting / List'
-	// 	    //     }
-	// 	    // },
-	// 	    {
-	// 	        path: '/default/user-management',
-	// 	        component: UserManagement,
-	// 	        meta: {
-	// 	        	requiresAuth: true,
-	// 	        	adminAuth:true,
-	//          		companyAuth:false,
-	// 	            title: 'message.userManager',
-	// 	            breadcrumb: 'User / Manager'
-	// 	        }
-	// 	    },
-	// 	    {
-	// 	        path: '/default/users/change-password',
-	// 	        component: UserPass,
-	// 	        meta: {
-	// 	            requiresAuth: true,
-	// 	            adminAuth:true,
-	//          		companyAuth:false,
-	// 	            title: 'message.changePassword',
-	// 	            breadcrumb: 'Users / Change Password'
-	// 	        }
-	// 	    },
-	// 	    // {
-	// 	    //     path: '/default/transaction/histories',
-	// 	    //     component: HistoriesTransaction,
-	// 	    //     meta: {
-	// 	    //         requiresAuth: true,
-	// 	    //         adminAuth:true,
-	//      //     		companyAuth:false,
-	// 	    //         title: 'message.histories',
-	// 	    //         breadcrumb: 'Transaction / Histories List'
-	// 	    //     }
-	// 	    // },
-	// 	    {
-	// 	        path: '/default/coupon-code/index',
-	// 	        component: IndexCoupon,
-	// 	        meta: {
-	// 	            requiresAuth: true,
-	// 	            adminAuth:true,
-	//          		companyAuth:false,
-	// 	            title: 'message.couponCode',
-	// 	            breadcrumb: 'Coupon Code / Histories List'
-	// 	        }
-	// 	    },
-	// 	 //    {
-	// 		// 	path: '/default/users/show-notification/:id',
-	// 	 //        component: Notification,
-	// 	 //        name : 'AdminNotification',
-	// 	 //        meta: {
-	// 	 //            requiresAuth: true,
-	// 	 //            adminAuth:true,
-	//   //        		companyAuth:false,
-	// 	 //            title: 'message.notification',
-	// 	 //            breadcrumb: 'Users / Notification'
-	// 	 //        }
-	// 		// },
- //      	]	
-	// },
 	{
     	// Page Not Found
-
     	path: '*',
     	component: PageNotFound
   	}

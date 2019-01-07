@@ -28,7 +28,7 @@ export const menus = {
 			action: 'zmdi-pin-assistant',
 			title: 'message.photographer',
 			active: false,
-			path: '/company/photographers',
+			path: '/photographers',
 			items:null,
 			role_id : 2
 		},
@@ -40,7 +40,7 @@ export const menus = {
 			items:null,
 			role_id : 2
 		},
-
+		{
 			action: 'zmdi zmdi-google-pages',
 			title: 'message.sibarContentPages',
 			active: true,

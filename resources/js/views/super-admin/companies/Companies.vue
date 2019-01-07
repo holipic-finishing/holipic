@@ -74,7 +74,7 @@
 					</td>
 				</template>
 			</v-data-table>
-			<show-transaction></show-transaction>.
+			<show-transaction></show-transaction>
 		</app-card>
 	</v-container>	
 </template>
@@ -93,7 +93,7 @@
 
 		name: 'Companies',
 		components: {
-			ShowTransaction,
+			'show-transaction' : ShowTransaction,
 			'company-information' : CompanyInformation,
 			'company-edit' : CompanyEdit
 		},

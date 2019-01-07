@@ -13,14 +13,13 @@
 			<!-- <v-btn color="primary" block @click="submitPassword" to="/session/reset-password"	>Send Email</v-btn> -->
 		</v-form>
 		<div>
-			<router-link to="/session/login">{{$t('message.backToSignIn')}}</router-link>
+			<router-link to="/auth/login">{{$t('message.backToSignIn')}}</router-link>
 		</div>
 	</div>
 </template>
 
 
 <script>
-import SessionSliderWidget from "../../components/Widgets/SessionSlider";
 import AppConfig from "../../constants/AppConfig";
 import { post } from '../../api/index.js'
 import config from '../../config/index.js'

@@ -1,12 +1,20 @@
 <template>
-<v-menu
+	<v-menu
 		v-model="menu"
 		:close-on-content-click="false"
 		offset-y
 		left
-		origin="right top" z-index="99" content-class="cart-dropdown" transition="slide-y-transition" nudge-top="-20"
+		origin="right top" 
+		z-index="99" 
+		content-class="cart-dropdown" 
+		transition="slide-y-transition" 
+		nudge-top="-20"
 	>
-		<v-badge right overlap slot="activator" >
+		<v-badge
+			right 
+			overlap 
+			slot="activator"
+		>
 			<span slot="badge" v-if="countNotifications != 0">{{countNotifications}}</span>
 			<i class="zmdi grey--text zmdi-notifications-active animated infinite wobble zmdi-hc-fw font-lg"></i>
 		</v-badge>
@@ -23,14 +31,13 @@
 								<div class="product-img mr-3">
 								 <v-tooltip bottom>
 								 	<v-btn
-								        slot="activator"
-								        flat icon color="#00c2e0"
-						
-								      >
-								        <v-icon>fiber_manual_record</v-icon>
-								      </v-btn>
-					               <span>{{ $t('message.hidingRead') }}</span>
-					            </v-tooltip>
+						        slot="activator"
+						        flat icon color="#00c2e0"
+						      >
+						        <v-icon>fiber_manual_record</v-icon>
+						      </v-btn>
+			               <span>{{ $t('message.hidingRead') }}</span>
+			            </v-tooltip>
 								</div>
 								<v-list-tile-content>
 									<span class="fs-14">{{ $t(notification.message) }}</span>
@@ -54,8 +61,14 @@
 				</vue-perfect-scrollbar>
 			</div>
 			<v-card-actions>
-                <v-btn small color="primary" @click="showAllnotification()">{{ $t('message.viewnotifition') }}</v-btn>
-            </v-card-actions>
+        <v-btn 
+        	small 
+        	color="primary" 
+        	@click="showAllnotification()"
+        >
+      		{{ $t('message.viewnotifition') }}
+      	</v-btn>
+      </v-card-actions>
 		</v-card>
 </v-menu>
 </template>

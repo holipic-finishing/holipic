@@ -34,11 +34,10 @@
 										<div class="product-img mr-3">
 											<v-tooltip bottom v-if="notification.is_read == true">
 												<v-btn 
-												slot="activator"
-												flat 
-												icon 
-												color="#000000"
-
+													slot="activator"
+													flat 
+													icon 
+													color="#000000"
 												>
 													<v-icon>fiber_manual_record</v-icon>
 												</v-btn>

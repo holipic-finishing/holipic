@@ -62,7 +62,6 @@ export default {
     });
 
     this.$root.$on('load-total-transactions', res => {
-        alert('ok');
         this.getData(res.params)
     })
   },

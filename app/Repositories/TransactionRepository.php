@@ -710,7 +710,7 @@ class TransactionRepository extends BaseRepository
                     }
                 }
 
-                $dayWeek[$key]['total'] = $count;
+                $dayWeek[$key]['total'] = round($count,3);
             }  else {
                 $dayWeek[$key]['total'] = 0;
             }
@@ -1097,7 +1097,7 @@ class TransactionRepository extends BaseRepository
                         $dates[$key]['total'] = 0;
                     }
                 }  
-                 $dates[$key]['total'] = $count;
+                 $dates[$key]['total'] = round($count,3);
                     
             } else {
                  $dates[$key]['total'] = 0;

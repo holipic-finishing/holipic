@@ -256,12 +256,12 @@
             <span class="contain-text-field">
               <v-text-field
                 class="font-weight-bold height-input"
-                v-model="itemToLoad.amount"
-                :rules="[rules.required, rules.number]"
+                v-model="itemToLoad.amount_with_symbol"
+                :rules="[rules.required]"
                 outline
                 :disabled="key == 5 ? false : true"
-                @blur="editItem('amount', itemToLoad.amount)"
-                @keyup.enter="editItem('amount', itemToLoad.amount)"
+                @blur="editItem('amount', itemToLoad.amount_with_symbol)"
+                @keyup.enter="editItem('amount', itemToLoad.amount_with_symbol)"
               ></v-text-field>
             </span>
             <span class="position-item">
@@ -297,13 +297,17 @@ export default {
   props: ['eventType', 'item'],
   data () {
     return {
-    	listStatus: [ 'RECIVED', 'BEEN SEEN'],
+    	listStatus: [ 'RECIVED', 'DONE'],
     	rules: {
         required: value => !!value || 'This field is required.',
       	number: value => {
           const pattern = /^([0-9]*|\d*\.\d{1}?\d*)$/
           return pattern.test(value) || 'Please input number.'
       	},
+        decimal: value => {
+          const pattern = /^[\d]+[\.][\d]{3}$/
+          return pattern.test(value) || 'Please input discount format. E.g:12.000'
+        },
     	},
       key: 0,
       alertStt: false,

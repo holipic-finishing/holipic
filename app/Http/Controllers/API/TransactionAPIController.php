@@ -185,8 +185,10 @@ class TransactionAPIController extends AppBaseController
             ], $company->id);
         }
 
-        if ($input['field_name'] == 'status' && $input['value'] === "BEEN SEEN") {
-            $input['value'] = "BEEN_SEEN";
+        if ($input['field_name'] == 'amount') {
+            $transaction = $this->transactionRepository->with('transactionexchange')->find($itemId);
+            $exchange_rate_to_dollar = $transaction->transactionexchange->exchange_rate_to_dollar;
+            $input['value'] = $input['value']/$exchange_rate_to_dollar;
         }
 
         $result = $this->transactionRepository->update([

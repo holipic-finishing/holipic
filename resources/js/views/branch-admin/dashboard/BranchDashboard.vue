@@ -5,17 +5,17 @@
 		<v-layout row wrap border-rad-sm overflow-hidden>
 			<stats-card-v2
 				colClasses="xl6 lg6 md6 sm6 xs12"
-				:heading="$t('message.totalpackagebasic')"
+				:heading="$t('message.photographers')"
 				:amount="120"
-				:icon="$t('zmdi zmdi-card')"
+				:icon="$t('zmdi zmdi-chart')"
 				customClasses="style-card-basic"
 				
 			></stats-card-v2>
 			<stats-card-v2
 				colClasses="xl6 lg6 md6 sm6 xs12"
-				:heading="$t('message.totalpackagepro')"
+				:heading="$t('message.customer')"
 				:amount="131"
-				:icon="$t('zmdi zmdi-card-membership')"
+				:icon="$t('zmdi zmdi-account-add')"
 				customClasses="style-card-pro"
 			></stats-card-v2>
 		</v-layout>

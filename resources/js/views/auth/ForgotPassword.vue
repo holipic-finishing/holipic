@@ -26,7 +26,7 @@ import config from '../../config/index.js'
 
 export default {
   components: {
-    SessionSliderWidget
+    // SessionSliderWidget
   },
   data() {
     return {

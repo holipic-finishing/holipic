@@ -7,6 +7,11 @@ import MiniSidebarLayout from '../../container/MiniSidebarLayout'
 // Dashboard
 import CompanyDashboard from '../../views/branch-admin/dashboard/BranchDashboard.vue'
 
+// Change Password
+import ChangePassword from '../../views/partials/users/ChangePassword'
+
+//photographers
+import Photographers from '../../views/branch-admin/photographers/Photographers'
 
 export default {
 	path: '/branch-admin',
@@ -23,5 +28,25 @@ export default {
 	            breadcrumb: 'Branch / Dashboard'
 	        }
 	    },
+	    {
+	    	path:'/branch-admin/change-password',
+	    	component: ChangePassword,
+	        meta: {
+	        	requiresAuth:true,
+         		branchAuth:true,
+	            title: 'message.changePassword',
+	            breadcrumb: 'Branch / Change Password'
+	        }
+	    },
+	    {
+	    	path:'/branch-admin/photographers',
+	    	component: Photographers,
+	    	meta : {
+	    		requiresAuth:true,
+         		branchAuth:true,
+	            title: 'message.photographers',
+	            breadcrumb: 'Branch / Photographers'
+	    	}
+	    }
    	]
 }

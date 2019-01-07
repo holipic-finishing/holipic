@@ -7,6 +7,7 @@ use App\Repositories\UserRepository;
 use App\Http\Requests\API\UserLoginAPIRequest;
 use Lcobucci\JWT\Parser;
 use App\Http\Controllers\API\BaseApiController;
+use App\Models\Company;
 
 class LoginController extends BaseApiController
 {
@@ -128,10 +129,11 @@ class LoginController extends BaseApiController
                     "message"=> 'Password provider was incorrect'
                 ];
             }
+            $userInfo = $this->informationUser(auth()->user());
 
             $data = [
                 'status' => $token,
-                'user' => auth()->user(),
+                'user' => $userInfo,
             ];
             // dd( $data);
             $this->reNewToken();
@@ -157,6 +159,46 @@ class LoginController extends BaseApiController
         return [
                 "success" => true
             ];
+    }
+
+    public function informationUser($user){
+
+        if($user->role_id == '1') {
+            $data = [
+                'role_id'      => $user->role_id,
+                'full_name'    => $user->first_name . ' ' .  $user->last_name,
+                'access_token' => $user->access_token,
+                'email'        => $user->email,
+                'id'           => $user->id
+            ];
+        }
+        if($user->role_id == '2') {
+            $company = Company::where('owner_id',$user->id)->first();
+            $data = [
+                'role_id'      => $user->role_id,
+                'full_name'    => $user->first_name . ' ' .  $user->last_name,
+                'access_token' => $user->access_token,
+                'email'        => $user->email,
+                'id'           => $user->id,
+                'company_id'   => $company->id,
+                'company_name' => $company->name
+            ];
+        }
+        if($user->role_id == '3') {
+            $company = Company::where('owner_id',$user->id)->first();
+            $data = [
+                'role_id'      => $user->role_id,
+                'full_name'    => $user->first_name . ' ' .  $user->last_name,
+                'access_token' => $user->access_token,
+                'email'        => $user->email,
+                'id'           => $user->id,
+                'company_id'   => $company->id,
+                'company_name' => $company->name
+            ];
+        }
+
+        return $data;
+
     }
 
 }

@@ -14,6 +14,14 @@ export const menus = {
 			items:null,
 			role_id : 3
 		},
+		{
+			action: 'zmdi zmdi-account-add',
+			title: 'message.photographers',
+			active: true,
+			path: '/photographers',
+			items:null,
+			role_id : 3
+		},
 
 
 		    /////////////////////////////////////////////

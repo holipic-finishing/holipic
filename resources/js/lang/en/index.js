@@ -471,5 +471,8 @@ export default {
   mailSentSuccessfully : 'Mail sent successfully',
   notification : "Notification",
   yourNotification: "Your notification",
+  contenPages : "Content Management System",
+  sibarContentPages:"Cms",
   activityLog: "Activity Log"
+
 }

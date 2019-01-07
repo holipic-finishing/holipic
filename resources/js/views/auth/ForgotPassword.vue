@@ -13,7 +13,7 @@
 			<!-- <v-btn color="primary" block @click="submitPassword" to="/session/reset-password"	>Send Email</v-btn> -->
 		</v-form>
 		<div>
-			<router-link to="/session/login">{{$t('message.backToSignIn')}}</router-link>
+			<router-link to="/auth/login">{{$t('message.backToSignIn')}}</router-link>
 		</div>
 	</div>
 </template>

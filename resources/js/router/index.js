@@ -11,7 +11,8 @@ import CompanyAdminRoutes from './company-admin';
 import BranchAdminRoutes from './branch-admin';
 import CustomerRoutes from './customer';
 
-import PageNotFound from '../views/pages/page404'
+import PageNotFound from '../views/partials/pages/page404'
+
 
 Vue.use(Router)
 
@@ -50,7 +51,7 @@ router.beforeEach((to, from, next) => {
 		}
 		else if(to.meta.adminAuth) {
 			const authUser = JSON.parse(localStorage.getItem('user'))
-			if(authUser.role_id == "1"){
+			if(authUser.role_id == "1" ){
 				next()
 			} else {
 				next({
@@ -66,9 +67,27 @@ router.beforeEach((to, from, next) => {
 					path:'/super-admin/dashboard',
 				})
 			}
-		}
+		} 
 	} else {
+		if(to.path === '/login'){
+			const authUser = JSON.parse(localStorage.getItem('user'))
+			const token = localStorage.getItem('access_token')
+			if(authUser || token) {
+				if(authUser.role_id == "1" ){
+					next({
+						path:'/super-admin/dashboard',
+					})
+				} else {
+					if(authUser.role_id == "2"){
+						next({
+							path:'/company-admin/dashboard',
+						})
+					}
+				}
+			}	
+		} 
 		next()
+		
 	}
 
   	Nprogress.done()

@@ -25,7 +25,7 @@
 <body>
   <div id="app"></div>
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-  
+  <script src="//cdn.ckeditor.com/4.6.2/full/ckeditor.js"></script>
     <script>
       const SOCKET_IO_PORT = '{!! $SOCKET_IO_PORT !!}';
       console.log(SOCKET_IO_PORT);

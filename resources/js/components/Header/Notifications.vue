@@ -55,7 +55,8 @@
 import { getWithData, put } from '../../api/index.js'
 import config from '../../config/index.js'
 import { getCurrentAppLayout } from "../../helpers/helpers.js";
-import Notifications from '../../views/notifications/Notifications'
+import Notifications from '../../views/company-admin/notifications/Notifications'
+
 	export default {
 		data() {
 			return {
@@ -115,14 +116,14 @@ import Notifications from '../../views/notifications/Notifications'
 
 					this.$router.push({
 						name: 'CompnayNotification',
-						params: { id : user_id }
+						params: { userId : user_id }
 					});
 
 				} else {
 
 					this.$router.push({
 						name: 'AdminNotification',
-						params: { id: user_id }
+						params: { userId: user_id }
 					});
 
 				}
@@ -145,9 +146,12 @@ import Notifications from '../../views/notifications/Notifications'
 		},
 		created(){
 			this.fetchData()
+			var userAuth = JSON.parse(localStorage.getItem('user'))
 			var noti = this
 			socket.on('view-listings',function(data){
-			        noti.notifications.unshift(data)
+					if (data.user_id == userAuth.id) {
+			        	noti.notifications.unshift(data)
+					}
 			    });
 		},
 		computed:{

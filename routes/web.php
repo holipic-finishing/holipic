@@ -19,6 +19,8 @@ Route::namespace('API')->group(function(){
 	Route::namespace('Auth')->prefix('auth')->group(function(){
 		
 		Route::post('loginSuperAdmin','LoginController@loginSuperAdmin');
+
+		Route::get('logout','LoginController@logoutAuth');
 		
 	});
 });

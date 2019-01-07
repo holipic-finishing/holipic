@@ -68,9 +68,9 @@
       },
       methods: {
          logoutUser() {
-            // this.$store.dispatch("logoutUserFromFirebase", this.$router);
-            localStorage.removeItem('access_token')
-            this.$router.push('/login')
+            this.$store.dispatch("logoutUserFromDatabase", this.$router);
+           
+
          },
          getMenuLink(path) {
             return '/' + getCurrentAppLayout(this.$router) +  path

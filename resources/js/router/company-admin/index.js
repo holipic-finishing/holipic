@@ -14,7 +14,7 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 import ChangePassword from '../../views/partials/users/ChangePassword'
 
 // Content Manager Systems
-import ContentManSystem from '../../views/company-admin/content-management-system/Index'
+import ContentManSystem from '../../views/company-admin/cms/Index'
 
 export default {
 	path: '/company-admin',
@@ -35,7 +35,7 @@ export default {
 	    {
 	        path: '/company-admin/notifications/:userId',
 	        component: Notifications,
-	        name:'CompnayNotification',
+        	name:'CompnayNotification',
 	        meta: {
 	        	requiresAuth:true,
 	        	// adminAuth:false,
@@ -63,7 +63,7 @@ export default {
 	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.contenPages',
-	            breadcrumb: 'Company / Content Pages'
+	            breadcrumb: 'Company / CMS'
 	        }
 	    }
    	]

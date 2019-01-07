@@ -73,6 +73,7 @@
             localStorage.removeItem('user')
            // this.$router.push('/session/login')
             this.$router.push('/login')
+            this.$store.dispatch("logoutUserFromDatabase", this.$router);
 
          },
          getMenuLink(path) {

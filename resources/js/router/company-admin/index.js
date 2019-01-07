@@ -5,13 +5,16 @@ import MiniSidebarLayout from '../../container/MiniSidebarLayout'
 ///////////////////////////////////////////////////
 
 // Dashboard
-import CompanyDashboard from '../../views/dashboard/admin-company/CompanyDashboard'
+import CompanyDashboard from '../../views/company-admin/dashboard/CompanyDashboard'
 
 // Notifications
-import Notifications from '../../views/notifications/Notifications'
+import Notifications from '../../views/company-admin/notifications/Notifications'
 
 // Change Password
-import ChangePassword from '../../views/users/ChangePassword'
+import ChangePassword from '../../views/partials/users/ChangePassword'
+
+// Content Manager Systems
+import ContentManSystem from '../../views/company-admin/cms/Index'
 
 //Branches
 import Branch from '../../views/dashboard/admin-company/BranchCompany'
@@ -38,6 +41,7 @@ export default {
 	    {
 	        path: '/company-admin/notifications/:userId',
 	        component: Notifications,
+        	name:'CompnayNotification',
 	        meta: {
 	        	requiresAuth:true,
 	        	adminAuth:false,
@@ -81,7 +85,16 @@ export default {
 		            
 		        }
 		},
-		
-
+		{
+	        path: '/company-admin/content-pages',
+	        component: ContentManSystem,
+	        meta: {
+	        	requiresAuth:true,
+	        	adminAuth:false,
+         		companyAuth:true,
+	            title: 'message.contenPages',
+	            breadcrumb: 'Company / CMS'
+	        }
+	    }
    	]
 }

@@ -6,6 +6,7 @@ export const menus = {
 		  ///////  SIDEBAR ROUTER ADMIN COMPANY  //////
 		 ///////							    //////
 		/////////////////////////////////////////////
+		
 		{
 			action: 'zmdi-view-dashboard',
 			title: 'message.dashboard',
@@ -15,6 +16,7 @@ export const menus = {
 			role_id : 2
 		},
 		{
+
 			action: 'zmdi-assignment-account',
 			title: 'message.branch',
 			active: false,
@@ -35,6 +37,14 @@ export const menus = {
 			title: 'message.customer',
 			active: false,
 			path: '/customers',
+			items:null,
+			role_id : 2
+		},
+
+			action: 'zmdi zmdi-google-pages',
+			title: 'message.sibarContentPages',
+			active: true,
+			path: '/content-pages',
 			items:null,
 			role_id : 2
 		},
@@ -77,4 +87,20 @@ export const menus = {
 			path: '/coupon-codes'
 		}
 	],
+	// 'message.modules': [
+	// 	{
+	// 		action: 'zmdi-email',
+	// 		title: 'message.inbox',
+	// 		active: false,
+	// 		items: null,
+	// 		path: '/inbox'
+	// 	},
+	// 	{
+	// 		action: 'zmdi-comments',
+	// 		title: 'message.chat',
+	// 		active: false,
+	// 		items: null,
+	// 		path: '/chat'
+	// 	}
+	// ],
 }

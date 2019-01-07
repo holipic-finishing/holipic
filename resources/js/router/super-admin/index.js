@@ -5,19 +5,19 @@ import MiniSidebarLayout from '../../container/MiniSidebarLayout'
 ///////////////////////////////////////////////////
 
 // Dashboard
-import Dashboard from'../../views/dashboard/Dashboard';
+import Dashboard from '../../views/super-admin/dashboard/Dashboard';
 
 // Company manager
-import Companies from '../../views/companies/Companies';
+import Companies from '../../views/super-admin/companies/Companies';
 
 // Packages
-import Packages from '../../views/packages/Packages';
+import Packages from '../../views/super-admin/packages/Packages';
 
 // Coupon Codes
-import CouponCodes from '../../views/coupon-codes/CouponCodes'
+import CouponCodes from '../../views/super-admin/coupon-codes/CouponCodes'
 
 // Change Password
-import ChangePassword from '../../views/users/ChangePassword'
+import ChangePassword from '../../views/partials/users/ChangePassword'
 
 export default {
 	path: '/super-admin',

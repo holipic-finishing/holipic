@@ -128,4 +128,3 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 });	
-

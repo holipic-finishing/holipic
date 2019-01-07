@@ -439,7 +439,6 @@ export default {
     font-weight: bold;
     width: 60%;
 }
-
 .nav-link {
 		color: #6b6d70 !important;
 }

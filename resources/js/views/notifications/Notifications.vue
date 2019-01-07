@@ -135,7 +135,7 @@ import config from '../../config/index.js'
 import HeadNotification from '../../components/Header/Notifications.vue'
 export default {
 
-  name: 'notification',
+  name: 'Notifications',
 
   data () {
     return {
@@ -274,10 +274,10 @@ export default {
  				this.fetchData()
  	 		})
 		}
-}
+};
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .not-read {
 	background-color: #edf2fa !important;
 }

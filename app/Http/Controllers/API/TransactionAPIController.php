@@ -194,11 +194,11 @@ class TransactionAPIController extends AppBaseController
         ], $itemId);
 
         // Save activity log
-        $log = Activity::all()->last();
-        $log['user_id'] = $input['userId'];
-        $log->save();
+        // $log = Activity::all()->last();
+        // $log['user_id'] = $input['userId'];
+        // $log->save();
 
-        if($results){
+        if($result){
 
             return $this->sendResponse([], 'Transaction updated successfully');
         }else{
@@ -270,7 +270,7 @@ class TransactionAPIController extends AppBaseController
     public function getTransactionHistoryWithTimevalue(Request $request)
     {
         $input = $request->all();
-        
+
         $searchBy = [];
 
         if($request->has('search') && $request->input('search')){
@@ -279,12 +279,12 @@ class TransactionAPIController extends AppBaseController
             
             foreach ($searchValues as $val) {
             $tmp = explode(':', $val);
-
+    
                 if(count($tmp) > 1){
                     $searchBy[$tmp[0]] = $tmp[1];
                 }
             }
-
+     
         }
 
         $result = $this->transactionRepository->transactionHistory($input, $input['perPage'], $searchBy);

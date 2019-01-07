@@ -193,7 +193,7 @@ import config from '../../config/index.js'
 		mounted() {
 			this.$root.$on('sendEventCompanyInformation', response => {
 				this.drawerRight = response.showNavigation
-				this.company = response.data
+				//this.company = response.data
 				this.companyId = response.data.id
 
 				this.informationCompany(this.companyId)

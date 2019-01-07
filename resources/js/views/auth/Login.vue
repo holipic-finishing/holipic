@@ -44,48 +44,53 @@ import AppConfig from "../../constants/AppConfig";
 
 
 export default {
+	name: 'Login',
 	components: {
     // SessionSliderWidget
 	},
-data() {
-	return {
-		checkbox: false,
-		valid: true,
-		email: "admin@gmail.com",
-		emailRules: [
-		v => !!v || "E-mail is required",
-		v =>
-		/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-		"E-mail must be valid"
-		],
-		password: "",
-		passwordRules: [v => !!v || "Password is required"],
-		appLogo: AppConfig.appLogo2,
-		brand: AppConfig.brand
-	};
-},
-methods: {
-	submit() {
-		const user = {
-			email: this.email,
-			password: this.password
+
+	data() {
+		return {
+			checkbox: false,
+			valid: true,
+			email: "admin@gmail.com",
+			emailRules: [
+			v => !!v || "E-mail is required",
+			v =>
+			/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+			"E-mail must be valid"
+			],
+			password: "",
+			passwordRules: [v => !!v || "Password is required"],
+			appLogo: AppConfig.appLogo2,
+			brand: AppConfig.brand
 		};
-
-		this.$router.push({
-			path: '/default/dashboard/ecommerce'
-		});
 	},
-  	login () {
-  		if(this.$refs.form.validate()) {
-	  		const user = {
-	        email: this.email,
-	        password: this.password
-	      	};
+	methods: {
+		submit() 
+		{
+			const user = {
+				email: this.email,
+				password: this.password
+			};
 
-	      	this.$store.dispatch("signinUserInDatabase", {user});
-  		}
-  }
-}
+			this.$router.push({
+				path: '/default/dashboard/ecommerce'
+			});
+		},
+
+	  	login () {
+	  		if(this.$refs.form.validate()) {
+		  		const user = {
+		        email: this.email,
+		        password: this.password
+		      	};
+
+		      	this.$store.dispatch("signinUserInDatabase", {user});
+	  		}
+	  	}
+	}
+
 };
 </script>
 

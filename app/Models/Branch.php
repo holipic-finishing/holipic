@@ -48,5 +48,10 @@ class Branch extends Model
         return $this->hasOne('App\Models\Photographer', 'branch_id', 'id');
     }
 
+    public function customers()
+    {
+        return $this->hasMany('App\Models\Customer', 'branch_id', 'id');
+    }
+
     
 }

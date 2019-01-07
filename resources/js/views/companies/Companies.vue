@@ -1,109 +1,102 @@
 <template>
-	<div class="company-table">
-		<!-- <page-title-bar></page-title-bar> -->
-		<v-container fluid grid-list-xl pt-0>
-			<div id="app">
-				<v-app id="inspire">
-					<v-card class="p-4">
-						<v-toolbar flat color="white">
-					        <v-toolbar-title>
-					          	Company List
-					        </v-toolbar-title>
-					    </v-toolbar>
-					    <v-divider></v-divider>
-						<v-card-title>
-				      		<v-spacer></v-spacer>
-				      		<v-text-field
-				        		v-model="search"
-						        append-icon="search"
-						        label="Enter search value"
-						        single-line
-						        hide-details
-						    ></v-text-field>
-						    <v-tooltip bottom>
-						    	<a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3">
-									<v-icon small>fas fa-file-excel</v-icon>
-								</a>
-								<span>Export companies</span>
-						    </v-tooltip>
-				    	</v-card-title>
+	<v-container fluid>
+		<app-card>
+			<company-information></company-information>
+			<company-edit></company-edit>
+			<page-title-bar></page-title-bar>
 
-						<v-data-table 
-							:headers="headers" 
-							:items="desserts" 
-							class="elevation-5"  
-							:pagination.sync="pagination" 
-							:rows-per-page-items="rowsPerPageItems" 
-							default-sort="id:desc"
-							:search="search"
+			<v-toolbar flat color="white" class="plr-0">
+				<v-spacer></v-spacer>
+				<v-text-field
+		        v-model="search"
+		        append-icon="search"
+		        label="Enter Search Value"
+		        single-line
+		        hide-details
+		        class="mr-3"
+			    ></v-text-field>
+			    <v-tooltip bottom>
+				    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3">
+							<v-icon small>fas fa-file-excel</v-icon>
+						</a>
+				    <span>Export companies</span>
+			    </v-tooltip>
+			</v-toolbar>
+
+			<v-data-table 
+				:headers="headers" 
+				:items="desserts" 
+				class="elevation-5"  
+				:pagination.sync="pagination" 
+				:rows-per-page-items="rowsPerPageItems" 
+				default-sort="id:desc"
+				:search="search"
+				>
+				<template slot="items" slot-scope="props">
+					<td>{{ props.item.id }}</td>
+					<td class="text-xs-left">{{ props.item.name }}</td>
+					<td class="text-xs-left">{{ props.item.fullname }}</td>
+					<td class="text-xs-left">{{ props.item.email }}</td>
+					<td class="text-xs-left">{{ props.item.phone }}</td>
+		        	<td class="text-xs-left action-width">
+				        <v-icon
+					        small
+					        class="mr-2 hover-icon"
+					        @click.stop="drawerRight = !drawerRight"
+					        @click="showTransaction(props.item)"
+					    >
+					    	monetization_on
+						</v-icon>
+
+					    <v-icon
+						    small
+						    class="mr-2 hover-icon"
+						    @click="showInfo(props.item)"
+					    >
+					    	visibility
+						</v-icon>
+
+						<v-icon
+							small
+							class="mr-2 hover-icon"
+							@click="showFormEdit(props.item)"
 						>
-							<template slot="items" slot-scope="props">
-								<td>{{ props.item.id }}</td>
-								<td class="text-xs-left">{{ props.item.name }}</td>
-								<td class="text-xs-left">{{ props.item.fullname }}</td>
-								<td class="text-xs-left">{{ props.item.email }}</td>
-								<td class="text-xs-left">{{ props.item.phone }}</td>
-					        	<td class="text-xs-left action-width">
-							        <v-icon
-								        small
-								        class="mr-2 hover-icon"
-								        @click.stop="drawerRight = !drawerRight"
-								        @click="showTransaction(props.item)"
-								    >
-								    	monetization_on
-									</v-icon>
+							edit
+						</v-icon>
 
-								    <v-icon
-									    small
-									    class="mr-2 hover-icon"
-									    @click="showInfo(props.item)"
-								    >
-								    	visibility
-									</v-icon>
+						<v-icon
+							small
+							class="mr-2 hover-icon"
+							@click="showDialog(props.item.id)"
+						>
+							delete
+						</v-icon>
 
-									<v-icon
-										small
-										class="mr-2 hover-icon"
-										@click="showFormEdit(props.item)"
-									>
-										edit
-									</v-icon>
+					</td>
+				</template>
+			</v-data-table>
+				
+			<v-dialog v-model="dialog" persistent max-width="450">
+		      <v-card>
+		        <v-card-title class="headline font-weight-bold">
+		          <v-icon x-large color="yellow accent-3" class="mr-2">
+		            warning
+		          </v-icon>
+		          Do you want delete this item ?
+		        </v-card-title>
+		        <v-divider class="mt-0"></v-divider>
+		        <v-card-actions>
+		          <v-spacer></v-spacer>
+		          <v-btn flat @click="dialog = false">Disagree</v-btn>
+		          <v-btn flat @click="deleteItem">Agree</v-btn>
+		        </v-card-actions>
+		      </v-card>
+		    </v-dialog>
+		    
+			<show-transaction></show-transaction>
+		</app-card>
+	</v-container>	
 
-									<v-icon
-										small
-										class="mr-2 hover-icon"
-										@click="showDialog(props.item.id)"
-									>
-										delete
-									</v-icon>
-
-								</td>
-							</template>
-						</v-data-table>
-						<company-information></company-information>
-						<company-edit></company-edit>
-					</v-card>
-					<v-dialog v-model="dialog" persistent max-width="450">
-				      <v-card>
-				        <v-card-title class="headline font-weight-bold">
-				          <v-icon x-large color="yellow accent-3" class="mr-2">
-				            warning
-				          </v-icon>
-				          Do you want delete this item ?
-				        </v-card-title>
-				        <v-divider class="mt-0"></v-divider>
-				        <v-card-actions>
-				          <v-spacer></v-spacer>
-				          <v-btn flat @click="dialog = false">Disagree</v-btn>
-				          <v-btn flat @click="deleteItem">Agree</v-btn>
-				        </v-card-actions>
-				      </v-card>
-				    </v-dialog>
-				</v-app>
-				<show-transaction></show-transaction>
-			</div>
-		</v-container>		
-	</div>	
 </template>
 
 <script>
@@ -120,7 +113,7 @@
 
 		name: 'Companies',
 		components: {
-			ShowTransaction,
+			'show-transaction' : ShowTransaction,
 			'company-information' : CompanyInformation,
 			'company-edit' : CompanyEdit
 		},

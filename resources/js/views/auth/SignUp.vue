@@ -61,6 +61,7 @@
 import AppConfig from "../../constants/AppConfig";
 
 export default {
+  name: 'SignUp',
   components: {
     // SessionSliderWidget
   },

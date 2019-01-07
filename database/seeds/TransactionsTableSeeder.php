@@ -17,7 +17,7 @@ class TransactionsTableSeeder extends Seeder
 
         \App\Models\Transaction::truncate();
 
-        $status = ['RECIVED', 'BEEN_SEEN'];
+        $status = ['RECIVED', 'DONE'];
 
         $packages = \App\Models\Package::all();
         $feeArr = [];
@@ -26,7 +26,7 @@ class TransactionsTableSeeder extends Seeder
             $feeArr[] = $p['fee'];
         }
 
-        for ($i=0; $i < 1000 ; $i++) {
+        for ($i=0; $i < 2000 ; $i++) {
             $id_rand = $faker->numberBetween(1, 51);
             $amount = $faker->randomNumber(4);
             $fee = $faker->randomElement($feeArr);
@@ -39,7 +39,8 @@ class TransactionsTableSeeder extends Seeder
                 'amount' => $amount,
                 'status' => $faker->randomElement($status),
                 'company_id' => $id_rand,
-                'dated' => $faker->dateTimeThisYear(),
+                // 'dated' => $faker->dateTimeThisYear(),
+                'dated' => $faker->dateTimeBetween($startDate = '-6 months', $endDate = '+6 months', $timezone = null),
                 'system_fee' => $system_fee,
                 'credit_card_fee' => $faker->randomNumber(3),
                 'invoice' => $faker->ean13,

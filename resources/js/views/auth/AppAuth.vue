@@ -23,14 +23,14 @@
 import AppConfig from "../../constants/AppConfig";
 export default {
 
-  name: 'AppLogin',
+  name: 'AppAuth',
 
   data () {
     return {
     	appLogo: AppConfig.appLogo2
     }
   }
-}
+};
 </script>
 
 <style lang="css" scoped>

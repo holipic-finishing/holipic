@@ -42,12 +42,12 @@
 
 <script>
 import ActivityLog from '../ActivityLog'
-import Notification from '../../notification/notification'
-import NotificationDashboard from '../../notification/notification-dashboard'
+import Notification from '../../notifications/Notifications'
+import NotificationDashboard from '../../notifications/notification-dashboard'
 
 export default {
 
-  name: 'DashboardCompany',
+  name: 'CompanyDashboard',
   components: {
   	ActivityLog,
   	NotificationDashboard

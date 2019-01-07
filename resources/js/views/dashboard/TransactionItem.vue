@@ -205,6 +205,7 @@
                 transition="scale-transition"
                 offset-y
                 full-width
+                :disabled="key == 3 ? false : true"
               >
                 <v-text-field
                   slot="activator"

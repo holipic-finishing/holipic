@@ -126,5 +126,12 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('transaction_exchanges', 'TransactionExchangeAPIController');
 
-	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
+	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode'
+
+	/*************Order Controllers**************/
+
+	Route::resource('orders', 'OrderAPIController');
+
+	);
 });	
+

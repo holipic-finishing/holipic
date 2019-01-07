@@ -32,31 +32,12 @@
 						<img src="/images/HOLIPIC-LOGO.png" alt="site logo" width="100" height="30">
 					</router-link>
 				</div>
-				<!-- component quick link -->
-					<!-- <quick-links></quick-links> -->
-				<!--  end component quick link -->
-
-				<!-- <v-text-field flat solo prepend-icon="search" :placeholder="$t('message.search')" class="search-bar"></v-text-field> -->
-
-				<!-- <div class="mobile-search d-none"> -->
-					<!-- Input search -->
-						<!-- <v-btn flat icon  small class="mobile-search-btn" @click="toggleSearchForm">
-							<v-icon class="font-md">search</v-icon>
-						</v-btn> -->
-					<!-- end input search  -->
-				<!-- </div> -->
 			</div>
 			<div class="navbar-right">
-
-				<!-- <v-btn class="v-step-2 upgrade-btn" color="primary" tag="link" :to="getMenuLink('/pages/pricing-1')">{{ $t('message.plans') }}</v-btn> -->
 
 				<v-btn icon large @click="toggleFullScreen" class="full-screen ma-0">
 					<v-icon color="grey">fullscreen</v-icon>
 				</v-btn>
-				<!-- click show chat searchbar -->
-				<!-- <v-btn class="ma-0" icon large @click.stop="chatSidebar = !chatSidebar">
-					<v-icon color="grey">forum</v-icon>
-				</v-btn> -->
 				
 				<notifications v-show="role_id =='2'"></notifications>
 				<!-- <cart :horizontal="horizontal"></cart> -->
@@ -64,11 +45,6 @@
 				<user></user>
 			</div>
 		</v-toolbar>
-		<!-- Chat Searchbar -->
-		<!-- <v-navigation-drawer fixed v-model="chatSidebar" :right="!rtlLayout" temporary app class="chat-sidebar-wrap">
-			<chat-sidebar></chat-sidebar>
-		</v-navigation-drawer>
-		<mobile-search-form></mobile-search-form> -->
 	</div>
 </template>
 
@@ -78,13 +54,16 @@ import screenfull from "screenfull";
 import LanguageProvider from "./LanguageProvider";
 import Notifications from "./Notifications";
 import User from "./User";
-import Cart from "./Cart";
-import QuickLinks from "./QuickLinks";
-import MobileSearchForm from "./MobileSearchForm";
 import { getCurrentAppLayout } from "../../helpers/helpers";
 import { mapGetters } from "vuex";
 
 export default {
+	components: {
+		appSidebar: Sidebar,
+		LanguageProvider,
+		Notifications,
+		User
+	},
 	props: {
 		horizontal: {
 			default: false,
@@ -119,9 +98,6 @@ export default {
 			screenfull.toggle();
 			}
 		},
-		// getMenuLink(link) {
-		// 	return "/" + getCurrentAppLayout(this.$router) + link;
-		// },
 		toggleSearchForm() {
 			// this.$store.dispatch('toggleSearchForm');
 		}
@@ -130,14 +106,6 @@ export default {
          var userAuth = JSON.parse(localStorage.getItem('user'))
          this.role_id = userAuth.role_id
     },
-	components: {
-		appSidebar: Sidebar,
-		LanguageProvider,
-		Notifications,
-		Cart,
-		QuickLinks,
-		MobileSearchForm,
-		User
-	}
+	
 };
 </script>

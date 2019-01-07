@@ -413,39 +413,23 @@
 </template>
 
 <script>
+import Vue from 'vue'
 // charts component
 import LineChart from './LineChart.js'
-
-// widgets
-import SocialFeeds from "../../../components/Widgets/SocialFeeds";
-import NewPost from "../../../components/Widgets/AddNewBlog";
-import DeviceShare from "../../../components/Widgets/DeviceShare";
-
 import { ChartConfig } from "../../../constants/chart-config";
-
 //config 
 import config from '../../../config/index.js'
-
 import { get, getWithData } from '../../../api/index.js'
-import DatePicker from 'vue2-datepicker'
 import moment from 'moment'
-import Vue from 'vue'
 import Transactions from './Transactions'
-import StatsCardV3 from '../../../components/StatsCardV3/StatsCardV3.vue'
-
 
 export default {
 
 	name: 'Dashboard',
 
   components: {
-    SocialFeeds,
-    NewPost,
-    DeviceShare,
     LineChart,
-    DatePicker,
     Transactions,
-    StatsCardV3
   },
   data() {
     return {

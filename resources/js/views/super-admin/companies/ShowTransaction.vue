@@ -179,7 +179,6 @@ export default {
 							vm.invisibleButtonLoadMore(value)
 
 					 		vm.option = value.data
-					 		// vm.total.day = 	value.total
 					 		vm.totalAmount(vm.option)
 					 	}
 		             });

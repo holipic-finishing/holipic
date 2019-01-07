@@ -252,7 +252,9 @@ const mutations = {
         Vue.notify({
             group: 'loggedIn',
             type: 'success',
-            text: success
+            title: 'Message',
+            text: success,
+            duration: 5000
         });
          router.push('/super-admin/dashboard');
     },
@@ -261,6 +263,7 @@ const mutations = {
         Vue.notify({
             group: 'loggedIn',
             type: 'error',
+
             text: error
         });
     }

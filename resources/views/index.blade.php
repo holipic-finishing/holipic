@@ -1,3 +1,6 @@
+<?php 
+  $SOCKET_IO_PORT = env('SOCKET_IO_PORT', 6001);
+?>
 <!DOCTYPE html>
 <html>
 
@@ -24,12 +27,12 @@
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
   <script src="//cdn.ckeditor.com/4.6.2/full/ckeditor.js"></script>
     <script>
-        var socket = io(':6001');
+      const SOCKET_IO_PORT = '{!! $SOCKET_IO_PORT !!}';
+      console.log(SOCKET_IO_PORT);
+      
+      var socket = io(':' + SOCKET_IO_PORT);
 
-        var global_notification = [];
-        // socket.on('view-listings',function(data){
-        //      global_notification.unshift(data)
-        // });
+      var global_notification = [];
 
     </script>
 

@@ -252,12 +252,15 @@
       <v-list-tile class="height-80">
         <v-list-tile-content class="h-100">
           <v-list-tile-title class="content-flex-end h-100">
-            <span class="font-weight-bold item-title position-item">Amount</span>
+            <span class="font-weight-bold item-title position-item-amount mr-2">
+              <div>Amount</div>
+              <div>{{ itemToLoad.currency.name }}</div>
+            </span>
             <span class="contain-text-field">
               <v-text-field
                 class="font-weight-bold height-input"
                 v-model="itemToLoad.amount"
-                :rules="[rules.required, rules.number]"
+                :rules="[rules.required]"
                 outline
                 :disabled="key == 5 ? false : true"
                 @blur="editItem('amount', itemToLoad.amount)"
@@ -297,13 +300,17 @@ export default {
   props: ['eventType', 'item'],
   data () {
     return {
-    	listStatus: [ 'RECIVED', 'BEEN SEEN'],
+    	listStatus: [ 'RECIVED', 'DONE'],
     	rules: {
         required: value => !!value || 'This field is required.',
       	number: value => {
           const pattern = /^([0-9]*|\d*\.\d{1}?\d*)$/
           return pattern.test(value) || 'Please input number.'
       	},
+        decimal: value => {
+          const pattern = /^[\d]+[\.][\d]{3}$/
+          return pattern.test(value) || 'Please input discount format. E.g:12.000'
+        },
     	},
       key: 0,
       alertStt: false,

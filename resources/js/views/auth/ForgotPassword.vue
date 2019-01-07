@@ -20,15 +20,11 @@
 
 
 <script>
-import SessionSliderWidget from "../../components/Widgets/SessionSlider";
 import AppConfig from "../../constants/AppConfig";
 import { post } from '../../api/index.js'
 import config from '../../config/index.js'
 
 export default {
-  components: {
-    SessionSliderWidget
-  },
   data() {
     return {
 		email: '',

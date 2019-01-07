@@ -185,10 +185,6 @@ class TransactionAPIController extends AppBaseController
             ], $company->id);
         }
 
-        if ($input['field_name'] == 'status' && $input['value'] === "BEEN SEEN") {
-            $input['value'] = "BEEN_SEEN";
-        }
-
         $result = $this->transactionRepository->update([
             $input['field_name'] => $input['value']
         ], $itemId);
@@ -270,7 +266,7 @@ class TransactionAPIController extends AppBaseController
     public function getTransactionHistoryWithTimevalue(Request $request)
     {
         $input = $request->all();
-        
+
         $searchBy = [];
 
         if($request->has('search') && $request->input('search')){
@@ -279,12 +275,12 @@ class TransactionAPIController extends AppBaseController
             
             foreach ($searchValues as $val) {
             $tmp = explode(':', $val);
-
+    
                 if(count($tmp) > 1){
                     $searchBy[$tmp[0]] = $tmp[1];
                 }
             }
-
+     
         }
 
         $result = $this->transactionRepository->transactionHistory($input, $input['perPage'], $searchBy);

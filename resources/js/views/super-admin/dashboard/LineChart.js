@@ -56,10 +56,14 @@ export default {
   mounted() {
     
     this.$root.$on('companyChart', res => {
-        console.log(res)
+        console.log(res.params)
        	this.getData(res.params)
        	this.chooes = res.chooes
     });
+
+    this.$root.$on('load-total-transactions', res => {
+        this.getData(res.params)
+    })
   },
 
   methods: {
@@ -108,19 +112,25 @@ export default {
 					if(this.chooes == "Week") {
 						var dataWeek =[]
 						var total = 0
-		                _.forEach(res.data.data,function(value,key){
-		                  dataWeek.unshift(value);
-		                  total = total + parseFloat(value.total)
-		                });
-		                this.$root.$emit('totalTransaction', total)
-                		this.handleDataWeek(dataWeek);
+              _.forEach(res.data.data,function(value,key){
+                dataWeek.unshift(value);
+                total = total + parseFloat(value.total)
+
+              });
+              total = total.toFixed(3)
+
+              this.$root.$emit('totalTransaction', total)
+          		this.handleDataWeek(dataWeek);
+
 
 					}else {
 						var total = 0
 						_.forEach(res.data.data,function(value,key){
-		                  	total = total + parseFloat(value.total)
-		                });
-		                this.$root.$emit('totalTransaction', total)
+		            total = total + parseFloat(value.total)
+   
+		          });
+              total = total.toFixed(3)
+		        this.$root.$emit('totalTransaction', total)
 						this.handleDataDaily(res.data.data);
 					}
 				}

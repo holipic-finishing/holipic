@@ -651,7 +651,7 @@ class TransactionRepository extends BaseRepository
                         ->get()->toArray();
 
         $InYear = $this->sumSystemFee($InYear, $transactions, 'year');
-
+ 
 
         return $InYear;
 
@@ -836,6 +836,7 @@ class TransactionRepository extends BaseRepository
 
 
             $results[$key]->company_name = $result->user->company->name;
+
             // $results[$key]->amount_with_symbol = $result->amount ." ".$result->symbol;             
             // $results[$key]->system_fee_with_symbol = $result->system_fee ." ".$result->symbol;         
             // $results[$key]->credit_card_fee_with_symbol = $result->credit_card_fee ." ".$result->symbol;

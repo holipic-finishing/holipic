@@ -221,7 +221,7 @@ export default {
           value: 'title'
         },
         {
-          text: 'Amount',
+          text: 'Amount($)',
           align: 'right',
           value: 'amount_with_symbol',
           sortable: false
@@ -279,6 +279,9 @@ export default {
     this.$root.$on('editItemSucess', res => {
     	this.loading = true
     	this.fetchData(this.params)
+      this.$root.$emit('load-total-transactions', {
+        params : this.params
+      })
     })
 
   },
@@ -330,14 +333,12 @@ export default {
       del(config.API_URL + 'transactions/' + this.itemIdToDelete)
       .then((res) => {
         if(res.data && res.data.success){
-          Vue.notify({
-                        type: 'success',
-                        title: 'Delete Item Successfully',
-                        position: 'top right'
-                      })
           this.loading = true
           this.fetchData(this.params)
           this.dialog = false
+          this.$root.$emit('load-total-transactions', {
+            params : this.params
+          })
         }
         
       })

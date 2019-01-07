@@ -651,7 +651,7 @@ class TransactionRepository extends BaseRepository
                         ->get()->toArray();
 
         $InYear = $this->sumSystemFee($InYear, $transactions, 'year');
-
+ 
 
         return $InYear;
 

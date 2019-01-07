@@ -15,10 +15,9 @@
 	     		<v-text-field
 					v-model="currentFilterValue"
 					append-icon="search"
-					
 					single-line
 					hide-details
-					@blur="searchFilter(typeTime)"
+					@keyup.enter="searchFilter(typeTime)"
 					></v-text-field>
 	    	</v-toolbar>
 	 	</v-list>
@@ -143,6 +142,7 @@ export default {
   			this.drawerRight = data.showDrawerRight
   			this.typeTime = "Day"
   			this.reset()
+  			this.resetPageSreach()
   			this.company_id = data.companyId
   			this.user_id = data.userId
   			this.makeParams()
@@ -179,7 +179,7 @@ export default {
 							vm.invisibleButtonLoadMore(value)
 
 					 		vm.option = value.data
-					 		vm.total.day = 	value.total
+					 		// vm.total.day = 	value.total
 					 		vm.totalAmount(vm.option)
 					 	}
 		             });
@@ -279,6 +279,11 @@ export default {
 					this.check = 0
 					vm.invisibleButtonLoadMore(res.data.data)
 
+					if(res.data.data.total == 0){
+						this.check = 1
+						this.searchResult = []
+					}
+
 					if(this.currentFilterValue !==''){	
 						this.on_search = 1
 						if(resItem.length) {
@@ -363,6 +368,8 @@ export default {
 			this.firstpage.firstPageMonth =1
 			this.firstpage.firstPageYear = 1
 			this.option = []
+			this.total = 0.00
+
 	    },
 
 	    resetPageSreach(){
@@ -395,12 +402,10 @@ export default {
 			this.total = (total_revenue - total_expenditure).toFixed(3)
 	    },
 
-	    invisibleButtonLoadMore(value){   	
-
+	    invisibleButtonLoadMore(value){   		    	
 	    	if(value.to == value.total){
 	    		this.check = 1
-	    	}
-	    	
+	    	}	    	
 	    }
 
   	},

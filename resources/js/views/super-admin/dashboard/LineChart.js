@@ -56,9 +56,14 @@ export default {
   mounted() {
     
     this.$root.$on('companyChart', res => {
+        console.log(res.params)
        	this.getData(res.params)
        	this.chooes = res.chooes
     });
+
+    this.$root.$on('load-total-transactions', res => {
+        this.getData(res.params)
+    })
   },
 
   methods: {

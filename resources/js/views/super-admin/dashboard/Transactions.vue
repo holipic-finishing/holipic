@@ -221,7 +221,7 @@ export default {
           value: 'title'
         },
         {
-          text: 'Amount',
+          text: 'Amount($)',
           align: 'right',
           value: 'amount_with_symbol',
           sortable: false

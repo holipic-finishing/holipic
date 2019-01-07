@@ -252,16 +252,19 @@
       <v-list-tile class="height-80">
         <v-list-tile-content class="h-100">
           <v-list-tile-title class="content-flex-end h-100">
-            <span class="font-weight-bold item-title position-item">Amount</span>
+            <span class="font-weight-bold item-title position-item-amount mr-2">
+              <div>Amount</div>
+              <div>{{ itemToLoad.currency.name }}</div>
+            </span>
             <span class="contain-text-field">
               <v-text-field
                 class="font-weight-bold height-input"
-                v-model="itemToLoad.amount_with_symbol"
+                v-model="itemToLoad.amount"
                 :rules="[rules.required]"
                 outline
                 :disabled="key == 5 ? false : true"
-                @blur="editItem('amount', itemToLoad.amount_with_symbol)"
-                @keyup.enter="editItem('amount', itemToLoad.amount_with_symbol)"
+                @blur="editItem('amount', itemToLoad.amount)"
+                @keyup.enter="editItem('amount', itemToLoad.amount)"
               ></v-text-field>
             </span>
             <span class="position-item">

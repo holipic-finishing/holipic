@@ -26,7 +26,6 @@ class UserSignupRequest extends FormRequest
          return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'company_name' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:5', 
             'checkbox' => 'required'    
@@ -38,7 +37,6 @@ class UserSignupRequest extends FormRequest
         return [
             'first_name.required'   => 'The first name field is require',
             'last_name.required'    => 'The last name field is require',
-            'company_name.required' => 'The company name field is require',
 
             'email.required'        => 'The email field is require',
             'email.email'           => 'The email must be a valid email address',

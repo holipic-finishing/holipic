@@ -1,89 +1,87 @@
 <template>
-	<div class="col-sm-8" >
-	    <app-card
-			:heading="$t('message.activityLog')"
-			:fullBlock="true"
-			:closeable="true"
-			:reloadable="true"
-			:fullScreen="true"	
-			colClasses="xl12 lg12 md12 sm12 xs12"
-		>
-			<v-divider></v-divider>
-			<vue-perfect-scrollbar style="height:404px" :settings="settings">      
-	          	<div v-for="valueTime,indexTime in times">
-	          		 <v-container fluid grid-list-lg>
-			            <v-layout row>
+    <app-card
+		:heading="$t('message.activityLog')"
+		:fullBlock="true"
+		:closeable="true"
+		:reloadable="true"
+		:fullScreen="true"	
+		colClasses="xl12 lg12 md12 sm12 xs12"
+	>
+		<v-divider></v-divider>
+		<vue-perfect-scrollbar class="custom-height" :settings="settings">      
+          	<div v-for="valueTime,indexTime in times">
+          		 <v-container fluid grid-list-lg>
+		            <v-layout row>
 
-			                <v-flex xs5>
-			                  <v-card-title primary-title>
-			                    <div>
-			                      <div class="headline">{{ valueTime.date | moment(" MMM Do YYYY") }}</div>
-			                      <div>{{valueTime.date | moment('dddd')}}</div> 
-			                    </div>
-			                  </v-card-title>
-			                </v-flex>
+		                <v-flex xs6>
+		                  <v-card-title primary-title>
+		                    <div>
+		                      <div class="headline">{{ valueTime.date | moment(" MMM Do YYYY") }}</div>
+		                      <div>{{valueTime.date | moment('dddd')}}</div> 
+		                    </div>
+		                  </v-card-title>
+		                </v-flex>
 
-			                <v-flex xs7>
-			                		<div v-for="valueLog, indexLog in activityLog" class="bottom-activelog" v-if="valueLog.date == valueTime.date">
-			                			<v-icon small color="black darken-2" v-if="valueLog.description == 'updated'">edit</v-icon>
-			                			<v-icon small color="black darken-2" v-if="valueLog.description == 'deleted'">delete</v-icon>
-			                			<v-icon small color="black darken-2" v-if="valueLog.description == 'created'">add_circle</v-icon>
-			                			<v-btn round :color="valueLog.description == 'updated' ? 'warning' : valueLog.description == 'created' ? 'primary' : 'error'" dark small @click="detailLog(valueLog.id)">Form</v-btn> <b>{{valueLog.name}}</b>
-			                			{{valueLog.description}} <span>form</span> <b>{{valueLog.subject_type}}</b> at {{valueLog.updated_at}}
-			                		</div>
-			                </v-flex>
+		                <v-flex xs6>
+		                		<div v-for="valueLog, indexLog in activityLog" class="bottom-activelog" v-if="valueLog.date == valueTime.date">
+		                			<v-icon  color="orange darken-2" v-if="valueLog.description == 'updated'" class="mr-2 hover-icon">edit</v-icon>
+		                			<v-icon  color="red lighten-2" v-if="valueLog.description == 'deleted'" class="mr-2 hover-icon">delete</v-icon>
+		                			<v-icon  color="primary darken-2" v-if="valueLog.description == 'created'" class="mr-2 hover-icon">add_circle</v-icon>
+		                			<!-- <v-btn round :color="valueLog.description == 'updated' ? 'warning' : valueLog.description == 'created' ? 'primary' : 'error'" dark small @click="detailLog(valueLog.id)">Form</v-btn> --> <b>{{valueLog.name}}</b>
+		                			{{valueLog.description}} <span>form</span> <b>{{valueLog.subject_type}}</b> at {{valueLog.updated_at}}
 
-			            </v-layout>
-		            </v-container>
+		                		</div>
+		                </v-flex>
 
-		            <v-divider></v-divider>
-		        </div>
-		    </vue-perfect-scrollbar>
+		            </v-layout>
+	            </v-container>
 
-		        <v-container fluid grid-list-lg>
-		        <div class="more">
-				    <div class="row pagination-fl">
-				    	<div class="paging">
+	            <v-divider></v-divider>
+	        </div>
+	    </vue-perfect-scrollbar>
 
-				    		<div class="paging-bottom">
-				    			<div class="pagination-style">
-				    				<a class="btn-nav link disabled" @click="moreActiveLog(1)">
-				    					<i class="ti-angle-double-left"></i>
-				    				</a>
+	        <v-container fluid grid-list-lg>
+	        <div class="more">
+			    <div class="row pagination-fl">
+			    	<div class="paging">
 
-				    				<a class="btn-nav link disabled secondary-color" @click="moreActiveLog(pagination.current_page - 1)">
-				    					<i class="ti-angle-left"></i>
-				    				</a>
+			    		<div class="custom-pt">
+			    			<div class="pagination-style">
+			    				<a class="btn-nav link disabled" @click="moreActiveLog(1)">
+			    					<i class="ti-angle-double-left"></i>
+			    				</a>
 
-				    				<template>
-				    					<template v-for="n in pagination.last_page">
-				    						<a class="page" @click="moreActiveLog(n)" :class="{'secondary-color': pagination.current_page == n}">{{ n }}</a>
-				    					</template>
-				    				</template>
+			    				<a class="btn-nav link disabled secondary-color" @click="moreActiveLog(pagination.current_page - 1)">
+			    					<i class="ti-angle-left"></i>
+			    				</a>
 
-									<a class="btn-nav link disabled secondary-color" @click="moreActiveLog(pagination.current_page + 1)">
-										<i class="ti-angle-right"></i>
-									</a>
+			    				<template>
+			    					<template v-for="n in pagination.last_page">
+			    						<a class="page" @click="moreActiveLog(n)" :class="{'secondary-color': pagination.current_page == n}">{{ n }}</a>
+			    					</template>
+			    				</template>
 
-									<a class="btn-nav link disabled" @click="moreActiveLog(pagination.last_page)">
-										<i class="ti-angle-double-right"></i>
-									</a>
-								</div>
+								<a class="btn-nav link disabled secondary-color" @click="moreActiveLog(pagination.current_page + 1)">
+									<i class="ti-angle-right"></i>
+								</a>
+
+								<a class="btn-nav link disabled" @click="moreActiveLog(pagination.last_page)">
+									<i class="ti-angle-double-right"></i>
+								</a>
 							</div>
 						</div>
+					</div>
 
-				    	<div>
-				    		Total: <b>{{pagination.total_page}}</b> Days
-				    	</div>
+			    	<div>
+			    		Total: <b>{{pagination.total_page}}</b> Days
+			    	</div>
 
-				    </div>  
-	        		
-	        	</div> 
-	        	</v-container>
-		    	
-		</app-card>	
-	</div>
-			
+			    </div>  
+        		
+        	</div> 
+        	</v-container>
+	    	
+	</app-card>				
 </template>
 
 <script>
@@ -220,6 +218,7 @@ export default {
 
 	.bottom-activelog{
 		margin-bottom: 10px;
+		font-size: 0.875rem !important;
 	}
 
 	/*.more{
@@ -228,15 +227,11 @@ export default {
 		margin-right:20px;
 	}*/
 
-	.total-paginate{
-
-	}
-
 	.pagination-fl{
 		display: flex !important;
 	    justify-content: space-between !important;
 	    padding: 0 15px !important;
-	    align-items: baseline !important;
+	    align-items: center !important;
 	}
 
 	.pagination-style {
@@ -257,11 +252,15 @@ export default {
 	   border-radius: 8px;
 	}
 
-	
-
 	.page.secondary-color {
 		background-color: #5d92f4;
 	}
-
 	
+	.custom-height{
+		height: 350px !important;
+	}
+
+	.custom-pt{
+		padding-top: 6px !important;
+	}
 </style>

@@ -1,12 +1,21 @@
 <template>
-<v-menu
+	<v-menu
+		v-model="menu"
 		:close-on-content-click="false"
 		offset-y
 		left
-		origin="right top" z-index="99" content-class="cart-dropdown" transition="slide-y-transition" nudge-top="-20"
+		origin="right top" 
+		z-index="99" 
+		content-class="cart-dropdown" 
+		transition="slide-y-transition" 
+		nudge-top="-20"
 	>
-		<v-badge right overlap slot="activator">
-			<span slot="badge">{{countNotifications}}</span>
+		<v-badge
+			right 
+			overlap 
+			slot="activator"
+		>
+			<span slot="badge" v-if="countNotifications != 0">{{countNotifications}}</span>
 			<i class="zmdi grey--text zmdi-notifications-active animated infinite wobble zmdi-hc-fw font-lg"></i>
 		</v-badge>
 		<v-card>
@@ -15,21 +24,20 @@
 				<span class="v-badge warning">{{countNotifications}} NEW </span>
 			</div>
 			<div class="dropdown-content">
-				<vue-perfect-scrollbar style="height:280px" :settings="settings">
+				<vue-perfect-scrollbar :settings="settings">
 					<v-list two-line>
 						<template v-for="(notification, index) in notifications">
-							<v-list-tile :key="index">
+							<v-list-tile :key="index"  @click="updateIsReadById(notification)">
 								<div class="product-img mr-3">
 								 <v-tooltip bottom>
 								 	<v-btn
-								        slot="activator"
-								        flat icon color="#00c2e0"
-								        @click="updateIsReadById(notification)"
-								      >
-								        <v-icon>fiber_manual_record</v-icon>
-								      </v-btn>
-					               <span>{{ $t('message.hidingRead') }}</span>
-					            </v-tooltip>
+						        slot="activator"
+						        flat icon color="#00c2e0"
+						      >
+						        <v-icon>fiber_manual_record</v-icon>
+						      </v-btn>
+			               <span>{{ $t('message.hidingRead') }}</span>
+			            </v-tooltip>
 								</div>
 								<v-list-tile-content>
 									<span class="fs-14">{{ $t(notification.message) }}</span>
@@ -41,11 +49,26 @@
 							</v-list-tile>
 						</template>
 					</v-list>
+					<v-list two-line v-if="notifications && !notifications.length">
+						<v-list-tile>
+							<v-list-tile-content>
+								<v-list-tile-title class="style-data">
+									No New Notifications Found
+								</v-list-tile-title>
+							</v-list-tile-content>
+						</v-list-tile>
+					</v-list>
 				</vue-perfect-scrollbar>
 			</div>
 			<v-card-actions>
-                <v-btn small color="primary" @click="showAllnotification()">{{ $t('message.viewnotifition') }}</v-btn>
-            </v-card-actions>
+        <v-btn 
+        	small 
+        	color="primary" 
+        	@click="showAllnotification()"
+        >
+      		{{ $t('message.viewnotifition') }}
+      	</v-btn>
+      </v-card-actions>
 		</v-card>
 </v-menu>
 </template>
@@ -66,7 +89,8 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 			    },
 			    count:10,
 			    user:{},
-			    newnotification : global_notification
+			    newnotification : global_notification,
+			     menu: false
 			};
 		},
 		components:{
@@ -114,18 +138,18 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 				var user_id = useAut.id
 				if (useAut.role_id == 2) {
 
+					this.menu = false
 					this.$router.push({
 						name: 'CompnayNotification',
 						params: { userId : user_id }
 					});
-
 				} else {
 
+					this.menu = false
 					this.$router.push({
 						name: 'AdminNotification',
 						params: { userId: user_id }
 					});
-
 				}
 			},
 			removeNotification(item) {
@@ -153,6 +177,7 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 			        	noti.notifications.unshift(data)
 					}
 			    });
+			console.log(this.notifications)
 		},
 		computed:{
 			countNotifications(){
@@ -173,5 +198,8 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 <style lang="css" scoped>
 .v-card__actions {
 	justify-content: center !important
+}
+.style-data {
+	text-align: center !important
 }
 </style>

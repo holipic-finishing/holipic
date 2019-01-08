@@ -90,7 +90,7 @@ class NotificationRepository extends BaseRepository
     **/
     public function getNotificationByUserId($perPage,$user_id){
         
-        $results = $this->model->where('user_id',$user_id)->orderBy('updated_at', 'desc');
+        $results = $this->model->where('user_id',$user_id)->orderBy('created_at', 'desc');
 
         return $results->paginate($perPage);
     }

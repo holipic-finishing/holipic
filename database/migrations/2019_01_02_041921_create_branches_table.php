@@ -17,9 +17,9 @@ class CreateBranchesTable extends Migration
             $table->increments('id');
             $table->integer('company_id')->nullable()->unsigned();
             $table->string('branch_name');
-            $table->string('username');
+            // $table->string('username');
             $table->integer('user_id')->nullable()->unsigned();
-            $table->string('password');
+            // $table->string('password');
             $table->string('branch_address')->nullable();
             $table->string('branch_phone_number', 50);
             $table->foreign('company_id')->references('id')->on('companies');

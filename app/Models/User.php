@@ -17,7 +17,6 @@ class User extends Authenticatable
     public $table = 'users';
 
     public $fillable = [
-        'company_name',
         'first_name',
         'last_name',
         'email',

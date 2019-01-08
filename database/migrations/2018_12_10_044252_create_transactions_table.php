@@ -15,18 +15,18 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->boolean('type');
-            $table->decimal('amount',8,2);
-            $table->integer('currency_id')->unsigned();
+            $table->string('title');
+            $table->decimal('amount',20,10);
             $table->string('status');
-            $table->integer('company_id')->unsigned();
+            $table->decimal('system_fee',20,10);
+            $table->decimal('credit_card_fee',8,2);
+            $table->string('invoice');
+            $table->integer('user_id');
+            $table->integer('currency_id');
+            $table->integer('company_id');
             $table->datetime('dated');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('currency_id')->references('id')->on('currencies');
         });
     }
 

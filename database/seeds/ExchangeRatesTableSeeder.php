@@ -15,8 +15,7 @@ class ExchangeRatesTableSeeder extends Seeder
         
         \App\Models\ExchangeRate::truncate();
 
-        DB::table('exchange_rates')->insert(
-        [
+        DB::table('exchange_rates')->insert([
         	[
                 'from_currency_id' =>  1,
                 'to_currency_id' =>  2,
@@ -52,10 +51,6 @@ class ExchangeRatesTableSeeder extends Seeder
                 'to_currency_id' =>  2,
                 'rate' => (float) 0.0000599
         	],
-
-        	
-        ]
-        	
-    	);
+        ]);
     }
 }

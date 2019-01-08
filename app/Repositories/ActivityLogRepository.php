@@ -56,7 +56,7 @@ class ActivityLogRepository extends BaseRepository
         ->latest(DB::raw("DATE_FORMAT(updated_at,'%Y-%c-%d')"))
         ->groupBy(DB::raw("DATE_FORMAT(updated_at,'%Y-%c-%d')"))
         ->selectRaw("DATE_FORMAT(updated_at,'%Y-%c-%d') as date")
-        ->paginate();
+        ->paginate(request('perPage'));
 
         return $query;
     }

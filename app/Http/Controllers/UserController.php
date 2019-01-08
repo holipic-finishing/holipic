@@ -33,7 +33,6 @@ class UserController extends Controller
         }
         
         $user = User::create([
-            'company_name' => $request['company_name'],
             'first_name' => $request['first_name'],
             'last_name' => $request['last_name'],
             'email' => $request['email'],
@@ -43,7 +42,7 @@ class UserController extends Controller
         ]);
 
         $company  = Company::create([
-            'name' => $user->company_name,
+            'name' => $request['company_name'],
             'owner_id' => $user->id
         ]);
 

@@ -51,7 +51,7 @@ class Setting extends Model
         
     ];
 
-    // public function package(){
-    //     return $this->hasOne('App\Models\Package','id','package_id');
-    // }
+    public function package(){
+        return $this->belongsTo(\App\Models\Package::class, 'package_id');
+    }
 }

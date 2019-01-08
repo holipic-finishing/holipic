@@ -18,8 +18,10 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('address')->nullable();
-            $table->integer('owner_id');
             $table->text('logo')->nullable();
+            $table->string('phone')->nullable();
+            $table->integer('owner_id');
+            $table->integer('coupon_codes_id')->nullable();
             $table->timestamps();
         });
     }

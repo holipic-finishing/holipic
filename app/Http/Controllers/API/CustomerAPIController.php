@@ -11,6 +11,8 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Maatwebsite\Excel\Excel;
+use App\Exports\ListEmailCustomers;
 
 /**
  * Class CustomerController
@@ -148,5 +150,10 @@ class CustomerAPIController extends AppBaseController
         }
 
         return $this->sendResponse($customer, 'Update customer successfully');
+    }
+
+    public function exportEmailCustomers()
+    {
+        return \Excel::download(new ListEmailCustomers(request('userId')), 'ListEmailCustomers.xlsx');
     }
 }

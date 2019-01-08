@@ -76,8 +76,6 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
 
-	// Route::resource('photographers', 'PhotographerAPIController');
-
 	Route::get('photographers', 'PhotographerAPIController@getPhotographers');
 
 	Route::delete('photographer/{id}', 'PhotographerAPIController@destroy');
@@ -88,11 +86,11 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
-	// Route::resource('customers', 'CustomerAPIController');
-
 	Route::get('company/branches/customers', 'CustomerAPIController@getCustomers');
 
 	Route::patch('company/branches/customer/{id}', 'CustomerAPIController@updateCustomer');
+
+	Route::get('company/branches/customers/export', 'CustomerAPIController@exportEmailCustomers');
 
 
 	/***********************************************

@@ -359,6 +359,7 @@
 			</app-card>
 			
 		</v-layout>
+		<transactions></transactions>
 		</div>
 	</v-container>		
 </template>
@@ -372,6 +373,7 @@ import { ChartConfig } from "../../../constants/chart-config";
 import config from '../../../config/index.js'
 import { get, getWithData } from '../../../api/index.js'
 import moment from 'moment'
+import Transactions from './Transactions'
 import ActivityLog from './ActivityLog'
 import Notification from '../notifications/Notifications'
 import NotificationDashboard from '../notifications/notification-dashboard'
@@ -384,7 +386,8 @@ export default {
   components: {
     ActivityLog,
   	NotificationDashboard,
-  	LineChart
+  	LineChart,
+  	Transactions
   },
   data() {
     return {

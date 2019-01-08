@@ -16,6 +16,9 @@ import ChangePassword from '../../views/partials/users/ChangePassword'
 // Content Manager Systems
 import ContentManSystem from '../../views/company-admin/cms/Index'
 
+// Sales 
+import Sales from '../../views/company-admin/sales/Sales'
+
 export default {
 	path: '/company-admin',
    	component: MiniSidebarLayout,
@@ -64,6 +67,17 @@ export default {
          		companyAuth:true,
 	            title: 'message.contenPages',
 	            breadcrumb: 'Company / CMS'
+	        }
+	    },
+	    {
+	    	path: '/company-admin/sales',
+	        component: Sales,
+	        meta: {
+	        	requiresAuth:true,
+	        	adminAuth:false,
+         		companyAuth:true,
+	            title: 'message.sales',
+	            breadcrumb: 'Company / Sales'
 	        }
 	    }
    	]

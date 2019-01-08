@@ -68,5 +68,13 @@ class UserRepository extends BaseRepository
         return $this->scopeQuery(function($query) use ($email){
             return $query->where('email', $email)->where('role_id', 2);
         })->first();
-    }  
+    } 
+
+    public function findUserByUserName($userName)
+    {
+        $this->skipPresenter();
+        return $this->scopeQuery(function($query) use ($userName){
+            return $query->where('username', $userName);
+        })->first();
+    } 
 }

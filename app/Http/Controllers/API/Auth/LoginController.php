@@ -107,33 +107,55 @@ class LoginController extends BaseApiController
 
     public function loginSuperAdmin(UserLoginAPIRequest $request)
     {
+        $result = strpos($request['email'],'@');
+
         $credentials = $request->only(['email', 'password']);
         $email = $credentials['email'];
 
         try{
-            $user = $this->userRepo->findUserIsExits($email);
+            if(strpos($request['email'],'@') !== false) {
+                $user = $this->userRepo->findUserIsExits($email);
+            } else {
+                $user = $this->userRepo->findUserByUserName($email);
+                $dataUser = [
+                    'username' => $email,
+                    'password' => $request['password']
+                ];
+            } 
+
             if (empty($user)) {
 
                 return [
                     "success"=> false,
-                    "message"=>'Email address not exist in system',
+                    "message"=>'Email or User Name address not exist in system',
 
                 ];
             }
+           
+            if(strpos($request['email'],'@') !== false) {
+                if (! $token = auth()->attempt($credentials)) {
 
-            if (! $token = auth()->attempt($credentials)) {
+                    return [
+                        "success"=> false,
+                        "message"=> 'Password provider was incorrect'
+                    ];
+                }
+            }
+            else {
+                if (! $token = auth()->attempt($dataUser)) {
 
-                return [
-                    "success"=> false,
-                    "message"=> 'Password provider was incorrect'
-                ];
+                    return [
+                        "success"=> false,
+                        "message"=> 'Password provider was incorrect'
+                    ];
+                }
             }
 
             $data = [
                 'status' => $token,
                 'user' => auth()->user(),
             ];
-            // dd( $data);
+
             $this->reNewToken();
 
             return [

@@ -23,6 +23,14 @@ export const menus = {
 			items:null,
 			role_id : 2
 		},
+		{
+			action: 'zmdi zmdi-chart',
+			title: 'message.sales',
+			active: true,
+			path: '/sales',
+			items:null,
+			role_id : 2
+		},
 
 		
 		 	/////////////////////////////////////////////

@@ -45,12 +45,12 @@ trait MakeOrderTrait
             'branch_id' => $fake->randomDigitNotNull,
             'photographer_id' => $fake->randomDigitNotNull,
             'customer_id' => $fake->randomDigitNotNull,
-            'room_number' => $fake->word,
             'total_amount' => $fake->word,
             'purchase_date' => $fake->date('Y-m-d H:i:s'),
             'download_date' => $fake->date('Y-m-d H:i:s'),
             'payment_method' => $fake->word,
             'purchase_from' => $fake->word,
+            'status' => $fake->randomDigitNotNull,
             'created_at' => $fake->word,
             'updated_at' => $fake->word
         ], $orderFields);

@@ -111,16 +111,20 @@ class LoginController extends BaseApiController
 
         $credentials = $request->only(['email', 'password']);
         $email = $credentials['email'];
-
+        $dataInfoLogin = null;
         try{
             if(strpos($request['email'],'@') !== false) {
                 $user = $this->userRepo->findUserIsExits($email);
+                $dataInfoLogin = $credentials;
+
             } else {
                 $user = $this->userRepo->findUserByUserName($email);
                 $dataUser = [
                     'username' => $email,
                     'password' => $request['password']
                 ];
+
+                $dataInfoLogin = $dataUser;
             } 
 
             if (empty($user)) {
@@ -132,24 +136,14 @@ class LoginController extends BaseApiController
                 ];
             }
            
-            if(strpos($request['email'],'@') !== false) {
-                if (! $token = auth()->attempt($credentials)) {
-
+           
+            if (! $token = auth()->attempt($dataInfoLogin)) {
                     return [
                         "success"=> false,
                         "message"=> 'Password provider was incorrect'
                     ];
                 }
-            }
-            else {
-                if (! $token = auth()->attempt($dataUser)) {
-
-                    return [
-                        "success"=> false,
-                        "message"=> 'Password provider was incorrect'
-                    ];
-                }
-            }
+            
 
             $data = [
                 'status' => $token,

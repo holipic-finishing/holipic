@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string name
  * @property string description
  */
-class role extends Model
+class Role extends Model
 {
     use SoftDeletes;
 

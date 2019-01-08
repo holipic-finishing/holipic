@@ -157,7 +157,7 @@ export default {
 	      	desserts: [],
 	      	headers2: [
 	    		{ text: 'Sl No.', value: 'id' },
-		        { text: 'Size', align: 'left', value: 'package_name', sortable:true},
+		        { text: 'Size', align: 'left', value: 'package_name' },
 		        { text: 'Unit Price', value: 'price', sortable: false },
 		        { text: 'Free Photo', value: 'offer', sortable: false },
 	      	],

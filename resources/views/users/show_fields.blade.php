@@ -5,10 +5,10 @@
 </div>
 
 <!-- Company Name Field -->
-<div class="form-group">
+{{-- <div class="form-group">
     {!! Form::label('company_name', 'Company Name:') !!}
     <p>{!! $user->company_name !!}</p>
-</div>
+</div> --}}
 
 <!-- First Name Field -->
 <div class="form-group">

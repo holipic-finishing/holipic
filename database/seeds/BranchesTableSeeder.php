@@ -24,10 +24,9 @@ class BranchesTableSeeder extends Seeder
 
             \App\Models\Branch::create([
                 'company_id' => $company['id'],
-                'branch_name' => $faker->name,
+                'name' => $faker->name,
                 'user_id' => $user['id'],
-                'username' => $faker->userName,
-                'password' => $faker->password,
+                'branch_password' => $faker->password,
                 'branch_address' => $faker->address,
                 'branch_phone_number' => $faker->phoneNumber,
             ]);

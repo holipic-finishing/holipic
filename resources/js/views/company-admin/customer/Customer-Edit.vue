@@ -56,17 +56,16 @@
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
 									<span class="font-weight-bold item-title position-item">Email:</span>
-									<span class="contain-text-field">
-										<v-text-field
-										class="font-weight-bold height-input"
-										placeholder="Enter Phone"
-										v-model="customer.email"
-										outline
-										
-										:disabled="key == 2 ? false : true"
-										
-										
-										></v-text-field>
+									<span class="contain-text-field" >
+										<template v-if="customer.user">
+											<v-text-field
+											class="font-weight-bold height-input"
+											placeholder="Enter Email"
+											v-model="customer.user.email"
+											outline
+											:disabled="key == 2 ? false : true"
+											></v-text-field>
+										</template>
 									</span>
 									<span class="position-item">
 						              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>

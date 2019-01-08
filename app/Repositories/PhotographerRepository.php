@@ -49,9 +49,21 @@ class PhotographerRepository extends BaseRepository
         $company = $this->getCompany();
 
         if(!empty($company)) {
-            $data = $this->model->with('branch')->whereCompanyId($company['id'])->get()->toArray();
+            // $data = $this->model->with('branch')->whereCompanyId($company['id'])->get()->toArray();
+            $data = $this->model->with(['branch' => function($q) use($company) {
+                                $q->whereCompanyId($company['id']);
+                    }])->get()->toArray();
+
+            $array = [];
+
+            foreach($data as $value) 
+            {
+                if(!is_null($value['branch'])){
+                    $array[] = $value;
+                }
+            }
             
-            return $data;
+            return $array;
         }
 
         return false;
@@ -62,22 +74,17 @@ class PhotographerRepository extends BaseRepository
     {
         $input = request('information');
 
-        $company = $this->getCompany();
+        //$company = $this->getCompany();
 
-        if(!empty($company)) {
-            $data = $this->model->create([
-                'company_id' => $company['id'],
-                'branch_id' => $input['branch_id'],
-                'name' => $input['name'],
-                'phone_number' => $input['phone_number'],
-                'address' => $input['address'],
-                'status' => $input['status'] == 'Active' ? true : false
-            ]);
+        $data = $this->model->create([
+            'branch_id' => $input['branch_id'],
+            'name' => $input['name'],
+            'phone_number' => $input['phone_number'],
+            'address' => $input['address'],
+            'status' => $input['status'] == 'Active' ? true : false
+        ]);
             
-            return $data;
-        }
-
-        return false;
+        return $data;
     }
 
     

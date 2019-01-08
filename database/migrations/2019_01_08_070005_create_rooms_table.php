@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnBranchIdOnTableCustomers extends Migration
+class CreateRoomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddColumnBranchIdOnTableCustomers extends Migration
      */
     public function up()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->integer('branch_id')->nullable();
+        Schema::create('rooms', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('room_number');
+            $table->string('room_hash');
         });
     }
 
@@ -25,8 +27,6 @@ class AddColumnBranchIdOnTableCustomers extends Migration
      */
     public function down()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->dropColumn('branch_id');
-        });
+        Schema::dropIfExists('rooms');
     }
 }

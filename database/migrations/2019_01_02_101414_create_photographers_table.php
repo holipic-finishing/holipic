@@ -15,16 +15,13 @@ class CreatePhotographersTable extends Migration
     {
         Schema::create('photographers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('company_id')->unsigned();
-            $table->integer('branch_id')->unsigned();
             $table->string('name');
             $table->string('phone_number');
             $table->string('address');
             $table->boolean('status')->default(1);
+            $table->integer('branch_id');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('branch_id')->references('id')->on('branches');
         });
     }
 

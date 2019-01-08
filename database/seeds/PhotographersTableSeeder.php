@@ -22,7 +22,7 @@ class PhotographersTableSeeder extends Seeder
             // $company = \App\Models\Company::find($i);
 
             \App\Models\Photographer::create([
-                'company_id' => 2,
+             
                 'branch_id' => 2,
                 'name' => $faker->name,
                 'phone_number' => $faker->phoneNumber,

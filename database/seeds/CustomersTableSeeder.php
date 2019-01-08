@@ -20,9 +20,8 @@ class CustomersTableSeeder extends Seeder
         for ($i=1; $i < 30 ; $i++) {
             \App\Models\Customer::create([
                 'name' => $faker->name,
-                'room' => $faker->randomNumber(5),
-                'email' => $faker->email,
-                'password' => $faker->password,
+                'room_id' => $faker->randomNumber(1),
+                'customer_password' => $faker->password,
                 'avatar' => $faker->image,
                 'branch_id' => 2,
                 'address' => $faker->address,

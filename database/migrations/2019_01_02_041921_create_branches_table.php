@@ -15,15 +15,12 @@ class CreateBranchesTable extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('company_id')->nullable()->unsigned();
-            $table->string('branch_name');
-            // $table->string('username');
-            $table->integer('user_id')->nullable()->unsigned();
-            // $table->string('password');
+            $table->string('name');
+            $table->string('branch_password');
             $table->string('branch_address')->nullable();
-            $table->string('branch_phone_number', 50);
-            $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('branch_phone_number');
+            $table->integer('user_id');
+            $table->integer('company_id');
             $table->timestamps();
             $table->softDeletes();
         });

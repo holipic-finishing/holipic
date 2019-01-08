@@ -39,9 +39,8 @@
 						                outline
 						                :items="branches"
 						                item-value="id"
-		              					item-text="branch_name"
+		              					item-text="name"
 						                v-model="currentSelectBranch"
-						                
 						                :disabled="key == 1 ? false : true"
 						                @change="editPhotographer('branch', currentSelectBranch)"
 						              ></v-select>
@@ -188,7 +187,7 @@ export default {
 			key: 0,
 			currentSelectBranch: {
 		        id: '',
-		        branch_name: '' 
+		        name: '' 
 		    },
 		    selectStatus:''
 	    }
@@ -202,7 +201,7 @@ export default {
 	  		} else {
 	  			this.selectStatus = 'Inactive'
 	  		}
-	  		this.currentSelectBranch = {id: res.data.branch.id, branch_name: res.data.branch.branch_name}
+	  		this.currentSelectBranch = {id: res.data.branch.id, name: res.data.branch.name}
 	  	})
 	  	this.getBranchCompany()
 	},
@@ -224,7 +223,7 @@ export default {
   			this.key = index
   		},
   		checkValue(){
-			if(this.photographer.name == '' || this.photographer.address == '' || this.branch.phone_number == '' || this.branch.status == '')
+			if(this.photographer.name == '' || this.photographer.address == '' || this.photographer.phone_number == '' || this.selectStatus == '')
 			{
 				this.alertStt = true
 		        this.alertType = 'error'

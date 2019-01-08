@@ -34,10 +34,10 @@
 			              <v-text-field
 			                class="font-weight-bold height-input"
 			                placeholder="Enter Branch Name"
-			                v-model="branch.branch_name"
+			                v-model="branch.name"
 			                outline
 			                :disabled="key == 1 ? false : true"
-			                 @keyup.enter="updateBranch('name', branch.branch_name)"
+			                 @keyup.enter="updateBranch('name', branch.name)"
 			              ></v-text-field>
 			            </span>
 			            <span class="position-item">
@@ -56,10 +56,10 @@
 			              <v-text-field
 			                class="font-weight-bold height-input"
 			                placeholder="Enter Password"
-			                v-model="branch.password"
+			                v-model="branch.branch_password"
 			                outline
 			                :disabled="key == 2 ? false : true"
-			                 @keyup.enter="updateBranch('password', branch.password)"
+			                 @keyup.enter="updateBranch('password', branch.branch_password)"
 			                
 			              ></v-text-field>
 			            </span>
@@ -160,7 +160,7 @@ export default {
 			this.key = index
 		},
 		checkValue(){
-			if(this.branch.branch_name == '' || this.branch.branch_address == '' || this.branch.password == '' || this.branch.branch_phone_number == '')
+			if(this.branch.name == '' || this.branch.branch_address == '' || this.branch.branch_password == '' || this.branch.branch_phone_number == '')
 			{
 				this.alertStt = true
 		        this.alertType = 'error'
@@ -180,16 +180,16 @@ export default {
 
 			switch(field) {
 			  case "name":
-			    params = {branch_name: this.branch.branch_name};
+			    params = {name: value};
 			    break;
 			  case "address":
-			    params = {branch_address: this.branch.branch_address};
+			    params = {branch_address: value};
 			    break;
 			  case "password":
-			     params = {password: this.branch.password};
+			     params = {branch_password: value};
 			    break;
 			  default:
-			    params = {branch_phone_number: this.branch.branch_phone_number};
+			    params = {branch_phone_number: value};
 			}
 
 			if(this.checkValue())

@@ -29,7 +29,7 @@
 						<v-list-tile-content>
 				          	<v-list-tile-title class="content-flex">
 					          	<span class="font-weight-bold item-title">Branch name:</span>
-					          	<span v-if="photographer.branch" class="max-value">{{photographer.branch.branch_name}}</span>
+					          	<span v-if="photographer.branch" class="max-value">{{photographer.branch.name}}</span>
 		          			</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>

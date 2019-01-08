@@ -6,6 +6,7 @@ use App\Http\Requests\API\CreateBranchAPIRequest;
 use App\Http\Requests\API\UpdateBranchAPIRequest;
 use App\Models\Branch;
 use App\Repositories\BranchRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
@@ -21,10 +22,13 @@ class BranchAPIController extends AppBaseController
 {
     /** @var  BranchRepository */
     private $branchRepository;
+    private $userRepo;
 
-    public function __construct(BranchRepository $branchRepo)
+    public function __construct(BranchRepository $branchRepo, UserRepository $userRepo)
     {
         $this->branchRepository = $branchRepo;
+        $this->userRepo = $userRepo;
+
     }
 
     /**
@@ -101,6 +105,18 @@ class BranchAPIController extends AppBaseController
         }
 
         $branch = $this->branchRepository->update($input['params'], $id);
+
+        if(isset($input['params']['branch_password'])){
+            $password = $input['params']['branch_password'];
+
+            $user = $this->userRepo->findWithoutFail($branch['user_id']);
+
+            if (empty($user)) {
+                return $this->sendError('User not found');
+            }
+
+            $user = $user->update(['password' => $password]);
+        }
 
         return $this->sendResponse($branch->toArray(), 'Branch updated successfully');
     }

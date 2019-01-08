@@ -42,9 +42,9 @@
 							<template slot="items" slot-scope="props" >
 								<td>{{ props.item.id }}</td>
 								<td class="text-xs-left" >{{ props.item.name }}</td>
-								<td class="text-xs-left">{{ props.item.room }}</td>
-								<td class="text-xs-left">{{ props.item.email }}</td>
-								<td class="text-xs-left">{{ props.item.password }}</td>
+								<td class="text-xs-left">{{ props.item.room.room_hash }}</td>
+								<td class="text-xs-left">{{ props.item.user.email }}</td>
+								<td class="text-xs-left">{{ props.item.customer_password }}</td>
 								<td class="text-xs-left"><img :src="props.item.avatar" width="100%"></td>
 
 								<td class="text-xs-left">
@@ -129,9 +129,9 @@ export default {
     	headers:[
     			{ text: 'ID', value: 'id'},	       
 				{ text: 'Name', value: 'name' },
-				{ text: 'Room', value: 'room'},	
-				{ text: 'Email', value: 'email' },	
-				{ text: 'Password', value: 'password' },		      
+				{ text: 'Room', value: 'room.room_hash'},	
+				{ text: 'Email', value: 'user.email' },	
+				{ text: 'Password', value: 'customer_password' },		      
 				{ text: 'Avatar', value: 'avatar' },
 				{ text: 'Order'},
 				{ text: 'Invoice'},

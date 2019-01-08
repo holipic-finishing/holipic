@@ -28,13 +28,13 @@ class Customer extends Model
 
     public $fillable = [
         'name',
-        'room',
-        'email',
-        'password',
+        'room_id',
+        'customer_password',
         'avatar',
         'branch_id',
         'address',
-        'status'
+        'status',
+        'user_id'
     ];
 
     /**
@@ -44,9 +44,9 @@ class Customer extends Model
      */
     protected $casts = [
         'name' => 'string',
-        'room' => 'string',
-        'email' => 'string',
-        'password' => 'string',
+        'room_id' => 'integer',
+        'user_id' => 'integer',
+        'customer_password' => 'string',
         'avatar' => 'string',
         'branch_id' => 'integer',
         'address' => 'string',
@@ -67,5 +67,16 @@ class Customer extends Model
     {
         return $this->belongsTo('App\Models\Branch', 'branch_id', 'id');
     }
-    
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+    }
+
+    public function room()
+    {
+        return $this->belongsTo('App\Models\Room', 'room_id', 'id');
+    }
+
+
 }

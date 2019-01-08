@@ -25,7 +25,7 @@
 				v-model="valid"
 				lazy-validation
 				>
-					<v-list>
+					<v-list class="heigth-list-title">
 
 						<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 
@@ -39,7 +39,7 @@
 						                outline
 						                :items="branches"
 						                item-value="id"
-		              					item-text="branch_name"
+		              					item-text="name"
 						                v-model="photographer.branch_id"
 						                :rules="[rules.required]"
 						              ></v-select>
@@ -123,6 +123,8 @@
 							</v-list-tile-content>
 						</v-list-tile>
 
+					</v-list>
+				</v-form>
 						<v-spacer></v-spacer>
 
 						<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
@@ -132,8 +134,6 @@
 							<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
 						</v-card-actions>
 
-					</v-list>
-				</v-form>
 			</v-card>      	
 		</v-navigation-drawer>
 	</v-layout>

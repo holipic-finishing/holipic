@@ -33,8 +33,9 @@ class BranchRepository extends BaseRepository
 
     public function handleGetBranchesCompany()
     {
-        $data = $this->model->whereUserId(request('userId'))->get();
-        
+        // $data = $this->model->whereUserId(request('userId'))->get();
+        $data = $this->model->with('user')->whereUserId(request('userId'))->get()->toArray();
+ 
         return $data;
     }
 
@@ -46,12 +47,21 @@ class BranchRepository extends BaseRepository
 
             $branch = $this->model->create(
                 ['company_id' => $company['id'], 
-                 'branch_name' => request('information.branchName'),
-                 'username' => request('information.username'),
-                 'password' => request('information.password'),
+                 'name' => request('information.branchName'),
+                 'branch_password' => request('information.password'),
                  'user_id' => request('userId'),
                  'branch_address' => request('information.address'),
                  'branch_phone_number' => request('information.phone')
+                ]
+            );
+
+            $user = \App\Models\User::create(
+                ['first_name' => 'first_name',
+                 'last_name' => 'last_name',
+                 'email' => str_random(8).'@gmail.com',
+                 'username' => request('information.username'),
+                 'password' => bcrypt(request('information.password')),
+                 'role_id' => '3'
                 ]
             );
             

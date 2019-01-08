@@ -27,7 +27,7 @@ class ListEmailCustomers implements FromCollection, WithHeadings
         $data = [];
         
         if(!empty($company)) {
-            $customers = Customer::with(['branch' => function($q) use ($company) {
+            $customers = Customer::with('user')->with(['branch' => function($q) use ($company) {
                                      $q->whereCompanyId($company['id']);
             }])->get();
 
@@ -36,7 +36,7 @@ class ListEmailCustomers implements FromCollection, WithHeadings
             {
                 if($customer['branch'] != null)
                 {
-                    $data[] = ['number' => $n, 'email' => $customer['email']];
+                    $data[] = ['number' => $n, 'name' => $customer['name'],  'email' => $customer['user']['email']];
                     $n++;
                 }
             }
@@ -52,6 +52,7 @@ class ListEmailCustomers implements FromCollection, WithHeadings
     {
         return [
             'Number',
+            'Name',
             'Email'  
         ];
     } 

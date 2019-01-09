@@ -17,7 +17,7 @@ class RoomsTableSeeder extends Seeder
         \App\Models\Room::truncate();
         
         // create rooms 
-        for ($i=1; $i < 100 ; $i++) {
+        for ($i=0; $i < 100 ; $i++) {
             \App\Models\Room::create([
                 'room_number' => rand(100, 500),
                 'room_hash' => 'R'.$faker->randomNumber(6),

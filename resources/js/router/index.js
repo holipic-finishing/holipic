@@ -11,7 +11,37 @@ import CompanyAdminRoutes from './company-admin';
 import BranchAdminRoutes from './branch-admin';
 import CustomerRoutes from './customer';
 
+
+// Dashboard components
+import mini from '../container/MiniSidebarLayout.vue'
+//import Ecommerce   from'../views/dashboard/Ecommerce';
+
+// Companies Component
+
+// import Companies from '../views/companies/Companies';
+// import CompanyChart from '../views/companies/information-chart';
+// import PackageIndex from '../views/package/Index';
+// import UserManagement from '../views/superadmin-user/user-management'
+// import page404 from '../views/pages/page404'
+// import UserPass from '../views/users/ChangePassword'
+// import HistoriesTransaction from '../views/transactions/Histories.vue'
+// import IndexCoupon from '../views/coupon-code/Index.vue'
+
+
+//-----------------------------------------
+//----  File Component of Admin Company  --
+//-----------------------------------------
+//** All File Components will import below
+
+// import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
+// import Notification from '../views/notification/notification.vue'
+import Branch from '../views/dashboard/admin-company/BranchCompany.vue'
+import Photographer from '../views/dashboard/admin-company/Photographer.vue'
+
+// import PageNotFound from '../views/pages/page404'
+
 import PageNotFound from '../views/partials/pages/page404'
+
 
 
 Vue.use(Router)

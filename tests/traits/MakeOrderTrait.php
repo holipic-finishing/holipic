@@ -50,7 +50,8 @@ trait MakeOrderTrait
             'download_date' => $fake->date('Y-m-d H:i:s'),
             'payment_method' => $fake->word,
             'purchase_from' => $fake->word,
-            'status' => $fake->randomDigitNotNull,
+            'status' => $fake->word,
+            'invoice' => $fake->word,
             'created_at' => $fake->word,
             'updated_at' => $fake->word
         ], $orderFields);

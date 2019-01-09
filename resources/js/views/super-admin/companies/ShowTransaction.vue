@@ -21,7 +21,7 @@
 					></v-text-field>
 	    	</v-toolbar>
 	 	</v-list>
-		 	<v-list-tile >
+		<v-list-tile >
             <v-list-tile-content>
 					<div class="custom-flex">
 						<nav class="nav nav-bar-chart">
@@ -37,8 +37,8 @@
 						</div>			
 					</div>
           	</v-list-tile-content>
-		 	</v-list-tile>
-		 	<v-list two-line>
+		</v-list-tile>
+		<v-list two-line class="heigth-list-title-style">
             <v-list-tile
 				v-for="(item, key) in optionLoadView"
 				:key="item.id"
@@ -48,7 +48,11 @@
                 <v-list-tile-title v-text="item.title"></v-list-tile-title>
                 <v-list-tile-sub-title v-text="item.dated" class="text-style"></v-list-tile-sub-title>
               </v-list-tile-content>
-  
+  			  
+  			  <v-list-tile-action class="content-list">
+              	 <p>&nbsp;</p>
+              </v-list-tile-action>
+              
               <v-list-tile-action>
                 <p class="success--text mb-0" v-if="item.status == 'RECIVED'">+{{item.new_amount}}</p>
                 <p class="mb-0" v-else>-{{item.new_amount}}</p>
@@ -433,9 +437,8 @@ export default {
 .nav-bar-chart{
 	font-size: 14px;
     font-weight: bold;
-    width: 100%;
+    width: 60%;
 }
-
 .nav-link {
 		color: #6b6d70 !important;
 }
@@ -448,7 +451,7 @@ export default {
     width: 100%;
 }
 .text-total {
-	padding: 7px 15px;
+	padding: 12px 15px;
 }.style-list {
 	border-bottom: 1px solid gray;
     margin: 0px 20px;
@@ -464,5 +467,15 @@ export default {
 }
 .nav-time{
 	font-size:18px !important;
+}
+.w-30 {
+	width: 40%  !important;
+}
+.content-list {
+	 min-width: 30px !important;
+}
+.heigth-list-title-style {
+	overflow: auto;
+	flex:1 1 auto;
 }
 </style>

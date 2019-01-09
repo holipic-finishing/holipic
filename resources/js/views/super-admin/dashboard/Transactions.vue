@@ -98,10 +98,10 @@
             </td> -->
 		    		<td>{{ props.item.id }}</td>
 		    		<td>{{ props.item.company_name }}</td>
-		    		<td class="text-right">{{ props.item.invoice }}</td>
-						<td class="text-right">{{ props.item.dated | moment("DD/MM/YYYY") }}</td>
+		    		<td>{{ props.item.invoice }}</td>
+						<td>{{ props.item.dated | moment("DD/MM/YYYY") }}</td>
 		    		<td>{{ props.item.title }}</td>
-		    		<td class="text-right">
+		    		<td>
 		    			<div v-if="props.item.status === 'RECIVED'" style="color:green">
 		    				+ {{ props.item.amount_with_symbol }} 
 		    			</div>
@@ -109,7 +109,7 @@
 		    				{{ - props.item.amount_with_symbol }} 
 		    			</div>
 		    		</td>
-		    		<td class="text-right">
+		    		<td>
 								<v-btn color="success" small v-if="props.item.status === 'RECIVED'">{{ props.item.status }}</v-btn>
 							 	<v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
 			    	</td>
@@ -221,7 +221,7 @@ export default {
           value: 'title'
         },
         {
-          text: 'Amount',
+          text: 'Amount($)',
           align: 'right',
           value: 'amount_with_symbol',
           sortable: false
@@ -279,6 +279,9 @@ export default {
     this.$root.$on('editItemSucess', res => {
     	this.loading = true
     	this.fetchData(this.params)
+      this.$root.$emit('load-total-transactions', {
+        params : this.params
+      })
     })
 
   },
@@ -330,14 +333,12 @@ export default {
       del(config.API_URL + 'transactions/' + this.itemIdToDelete)
       .then((res) => {
         if(res.data && res.data.success){
-          Vue.notify({
-                        type: 'success',
-                        title: 'Delete Item Successfully',
-                        position: 'top right'
-                      })
           this.loading = true
           this.fetchData(this.params)
           this.dialog = false
+          this.$root.$emit('load-total-transactions', {
+            params : this.params
+          })
         }
         
       })

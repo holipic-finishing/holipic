@@ -19,7 +19,6 @@ class CreateTransactionExchangesTable extends Migration
             $table->decimal('exchange_rate_to_dollar',20,15);
         });
     }
-
     /**
      * Reverse the migrations.
      *

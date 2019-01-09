@@ -71,7 +71,7 @@
 						</nav>
 						<div class="d-custom-flex ">
 							<div class="">
-								<h3 class="info--text mb-0 active">$ {{total}}</h3>
+								<h3 class="info--text mb-0 active">$ {{ computedTotalTransactions }}</h3>
 								<p class="fs-12 grey--text mb-0 total-transaction">Total Income</p>
 							</div>
 						</div>
@@ -463,6 +463,7 @@ export default {
 			defaultYear : new Date().getUTCFullYear() + '/31/12',
 			totalCompany:0,
 			tweenedNumber: 0,
+			tweenedNumberTransactions: 0,
 	  }
 	},
 	methods:{
@@ -782,6 +783,9 @@ export default {
 	  	},
 	  	computedTotalCompany(){
 	  		return this.tweenedNumber.toFixed(0);
+	  	},
+	  	computedTotalTransactions(){
+	  		return this.tweenedNumberTransactions.toFixed(3)
 	  	}
 	},
 	mounted() {
@@ -803,6 +807,9 @@ export default {
 	    },
 	    totalCompany: function(newValue) {
 	      TweenLite.to(this.$data, 0.5, { tweenedNumber: newValue })
+	    },
+	    total: function(newValue) {
+	      TweenLite.to(this.$data, 0.5, { tweenedNumberTransactions: newValue })
 	    }
 	},
 

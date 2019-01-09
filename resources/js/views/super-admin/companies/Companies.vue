@@ -8,19 +8,19 @@
 			<v-toolbar flat color="white" class="plr-0">
 				<v-spacer></v-spacer>
 				<v-text-field
-	        v-model="search"
-	        append-icon="search"
-	        label="Enter Search Value"
-	        single-line
-	        hide-details
-	        class="mr-3"
-		    ></v-text-field>
-		    <v-tooltip bottom>
-			    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3">
-						<v-icon small>fas fa-file-excel</v-icon>
-					</a>
-			    <span>Export companies</span>
-		    </v-tooltip>
+		        v-model="search"
+		        append-icon="search"
+		        label="Enter Search Value"
+		        single-line
+		        hide-details
+		        class="mr-3"
+			    ></v-text-field>
+			    <v-tooltip bottom>
+				    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3">
+							<v-icon small>fas fa-file-excel</v-icon>
+						</a>
+				    <span>Export companies</span>
+			    </v-tooltip>
 			</v-toolbar>
 
 			<v-data-table 
@@ -31,29 +31,29 @@
 				:rows-per-page-items="rowsPerPageItems" 
 				default-sort="id:desc"
 				:search="search"
-			>
+				>
 				<template slot="items" slot-scope="props">
 					<td>{{ props.item.id }}</td>
 					<td class="text-xs-left">{{ props.item.name }}</td>
 					<td class="text-xs-left">{{ props.item.fullname }}</td>
 					<td class="text-xs-left">{{ props.item.email }}</td>
 					<td class="text-xs-left">{{ props.item.phone }}</td>
-        	<td class="text-xs-left action-width">
-		        <v-icon
-			        small
-			        class="mr-2 hover-icon"
-			        @click.stop="drawerRight = !drawerRight"
-			        @click="showTransaction(props.item)"
-			    	>
-				    	monetization_on
+		        	<td class="text-xs-left action-width">
+				        <v-icon
+					        small
+					        class="mr-2 hover-icon"
+					        @click.stop="drawerRight = !drawerRight"
+					        @click="showTransaction(props.item)"
+					    >
+					    	monetization_on
 						</v-icon>
 
-				    <v-icon
-					    small
-					    class="mr-2 hover-icon"
-					    @click="showInfo(props.item)"
-				    >
-				    	visibility
+					    <v-icon
+						    small
+						    class="mr-2 hover-icon"
+						    @click="showInfo(props.item)"
+					    >
+					    	visibility
 						</v-icon>
 
 						<v-icon
@@ -67,16 +67,36 @@
 						<v-icon
 							small
 							class="mr-2 hover-icon"
-							@click="deleteTransaction(props.item.id)"
+							@click="showDialog(props.item.id)"
 						>
 							delete
 						</v-icon>
+
 					</td>
 				</template>
 			</v-data-table>
+				
+			<v-dialog v-model="dialog" persistent max-width="450">
+		      <v-card>
+		        <v-card-title class="headline font-weight-bold">
+		          <v-icon x-large color="yellow accent-3" class="mr-2">
+		            warning
+		          </v-icon>
+		          Do you want delete this item ?
+		        </v-card-title>
+		        <v-divider class="mt-0"></v-divider>
+		        <v-card-actions>
+		          <v-spacer></v-spacer>
+		          <v-btn flat @click="dialog = false">Disagree</v-btn>
+		          <v-btn flat @click="deleteItem">Agree</v-btn>
+		        </v-card-actions>
+		      </v-card>
+		    </v-dialog>
+		    
 			<show-transaction></show-transaction>
 		</app-card>
 	</v-container>	
+
 </template>
 
 <script>
@@ -110,6 +130,8 @@
 		        ],
 		        desserts:[],
 		        search: '',
+		        dialog: false,
+		        itemIdToDelete: '',
 		        listPackage : [],
 		        urlExport:config.API_URL+'exportexcel/companies',
 		        drawerRight: false,
@@ -200,9 +222,20 @@
 					data: item
 				});
 			},
+			showDialog(item)
+			{
+				this.dialog = true
+				this.itemIdToDelete = item
+			},
+			deleteItem() {
+				del(config.API_URL+'companies/'+this.itemIdToDelete)
+				.then(response => {
+					if(response && response.data.success) {
+						this.fetchData()
+						this.dialog = false
+					}
+				})
 
-			deleteTransaction(id) {
-				alert(id)
 			}
 		},
 	};

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Order
  * @package App\Models
- * @version January 8, 2019, 2:09 am UTC
+ * @version January 9, 2019, 6:50 am UTC
  *
  * @property integer branch_id
  * @property integer photographer_id
@@ -18,13 +18,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|\Carbon\Carbon download_date
  * @property string payment_method
  * @property string purchase_from
- * @property integer status
+ * @property string status
+ * @property string invoice
  */
 class Order extends Model
 {
 
     public $table = 'orders';
-    
 
     public $fillable = [
         'branch_id',
@@ -35,7 +35,8 @@ class Order extends Model
         'download_date',
         'payment_method',
         'purchase_from',
-        'status'
+        'status',
+        'invoice'
     ];
 
     /**
@@ -49,7 +50,8 @@ class Order extends Model
         'customer_id' => 'integer',
         'payment_method' => 'string',
         'purchase_from' => 'string',
-        'status' => 'integer'
+        'status' => 'string',
+        'invoice' => 'string'
     ];
 
     /**

@@ -25,7 +25,6 @@ class TransactionRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'user_id',
-        'type',
         'amount',
         'status',
         'company_id',
@@ -56,7 +55,7 @@ class TransactionRepository extends BaseRepository
                     ->where('transactions.company_id', $companyId)
                     ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10)->toDateString())
                     ->where(DB::raw('dated'), '<=', Carbon::now()->toDateString())
-                    ->where('type', 1)
+                    ->where('status', 'RECIVED')
                     ->groupBy('date', 'currency_id')
                     ->orderBy('date', 'asc')
                     ->get()->toArray();
@@ -292,7 +291,7 @@ class TransactionRepository extends BaseRepository
                                     ->where('transactions.company_id', $companyId)
                                     ->where(DB::raw("date(dated)"), '>=', $startDay)
                                     ->where(DB::raw("date(dated)"), '<=', $endDay)
-                                    ->where('type', 1)
+                                    ->where('status', 'RECIVED')
                                     ->groupBy('date', 'currency_id')
                                     ->orderBy('date', 'asc')
                                     ->get()->toArray(); 
@@ -382,7 +381,7 @@ class TransactionRepository extends BaseRepository
                                     ->where('transactions.company_id', $companyId)
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth)
-                                    ->where('type', 1)
+                                    ->where('status', 'RECIVED')
                                     ->groupBy('date', 'currency_id')
                                     ->orderBy('date', 'asc')
                                     ->get()->toArray();
@@ -427,7 +426,7 @@ class TransactionRepository extends BaseRepository
                     ->where('transactions.company_id', $companyId)
                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $monthBefore)
                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $month)
-                    ->where('type', 1)
+                    ->where('status', 'RECIVED')
                     ->groupBy('date', 'currency_id')
                     ->orderBy('date', 'asc')
                     ->get()->toArray();
@@ -470,7 +469,7 @@ class TransactionRepository extends BaseRepository
                                 ->where('transactions.company_id', $companyId)
                                 ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $yearBefore)
                                 ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $year)
-                                ->where('type', 1)
+                                ->where('status', 'RECIVED')
                                 ->groupBy('date', 'currency_id')
                                 ->orderBy('date', 'asc')
                                 ->get()->toArray();
@@ -508,7 +507,7 @@ class TransactionRepository extends BaseRepository
                                 ->where('transactions.company_id', $companyId)
                                 ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $startYear)
                                 ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $endYear)
-                                ->where('type', 1)
+                                ->where('status', 'RECIVED')
                                 ->groupBy('date', 'currency_id')
                                 ->orderBy('date', 'asc')
                                 ->get()->toArray();
@@ -671,8 +670,8 @@ class TransactionRepository extends BaseRepository
             $startDay   = Carbon::today()->subDays(42)->format('Y-m-d');
 
             $endDay     = Carbon::today()->format('Y-m-d');
-        }
-      
+
+        }          
 
         $transactions = Transaction::with('transactionexchange')
                         ->where('status','RECIVED')
@@ -726,7 +725,9 @@ class TransactionRepository extends BaseRepository
         $results = $this->scopeQuery(function($query) use($params){
 
             $query = $query->with(['user' => function($q) {
-                                $q->with('package')->with('company');
+                                $q->with('package')->with(['company' => function($que) {
+                                    $que->withTrashed();
+                                }]);
                             }])
                         ->with('currency')
                         ->with('transactionexchange');
@@ -800,7 +801,7 @@ class TransactionRepository extends BaseRepository
             }
 
             return $query;
-        })->all();
+        })->get();
 
         $results = $this->transform($results);
 
@@ -816,9 +817,6 @@ class TransactionRepository extends BaseRepository
         foreach ($results as $key => $result) {
 
             $results[$key]->company_name = $result->user->company->name;
-            $results[$key]->amount_with_symbol = $result->amount ." ".$result->symbol;             
-            $results[$key]->system_fee_with_symbol = $result->system_fee ." ".$result->symbol;         
-            $results[$key]->credit_card_fee_with_symbol = $result->credit_card_fee ." ".$result->symbol;
 
             $results[$key]->amount_with_symbol = round(($result->amount * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol; 
 
@@ -826,7 +824,6 @@ class TransactionRepository extends BaseRepository
             $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
 
             $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
-                    
         }
 
         return $results;
@@ -850,7 +847,7 @@ class TransactionRepository extends BaseRepository
 
         $transactions = $this->scopeQuery(function($query) use($search, $user_id, $now){
 
-            $query = $query->select('id','title','dated','amount','type','status')
+            $query = $query->select('id','title','dated','amount','status')
                                 ->with(['transactionexchange' => function($query){
                                     $query->select(['exchange_rate_to_dollar','transaction_id']);
                                 }])
@@ -896,7 +893,7 @@ class TransactionRepository extends BaseRepository
 
         $transactions = $this->scopeQuery(function($query) use($search, $user_id, $startDay, $endDay){
 
-            $query = $query->select('id','title','dated','amount','type','status')
+            $query = $query->select('id','title','dated','amount','status')
                                 ->with(['transactionexchange' => function($query){
                                     $query->select(['exchange_rate_to_dollar','transaction_id']);
                                 }])
@@ -943,7 +940,7 @@ class TransactionRepository extends BaseRepository
       
         $transactions = $this->scopeQuery(function($query) use($search, $user_id, $month){
 
-            $query = $query->select('id','title','dated','amount','type','status')
+            $query = $query->select('id','title','dated','amount','status')
                             ->with(['transactionexchange' => function($query){
                                 $query->select(['exchange_rate_to_dollar','transaction_id']);
                             }])
@@ -990,7 +987,7 @@ class TransactionRepository extends BaseRepository
 
         $transactions = $this->scopeQuery(function($query) use($search, $user_id, $year){
 
-            $query = $query->select('id','title','dated','amount','type','status')
+            $query = $query->select('id','title','dated','amount','status')
                                 ->with(['transactionexchange' => function($query){
                                     $query->select(['exchange_rate_to_dollar','transaction_id']);
                                 }])

@@ -185,10 +185,6 @@ class TransactionAPIController extends AppBaseController
             ], $company->id);
         }
 
-        if ($input['field_name'] == 'status' && $input['value'] === "BEEN SEEN") {
-            $input['value'] = "BEEN_SEEN";
-        }
-
         $result = $this->transactionRepository->update([
             $input['field_name'] => $input['value']
         ], $itemId);

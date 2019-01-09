@@ -16,10 +16,10 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('expiration_date');
-            $table->decimal('fee',10,2);
-            $table->decimal('card_fee',10,2);
-            $table->decimal('bonus',10,2);
+            $table->decimal('card_fee',8,2);
+            $table->decimal('bonus',8,2);
             $table->boolean('sms')->default('0');
+            $table->boolean('email_service')->default('0');
             $table->integer('package_id');
             $table->timestamps();
         });

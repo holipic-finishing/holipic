@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\CompanyAdmin;
 
 use App\Http\Requests\API\CreateBranchAPIRequest;
 use App\Http\Requests\API\UpdateBranchAPIRequest;

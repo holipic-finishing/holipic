@@ -160,7 +160,7 @@ export default {
 	        required: value => !!value || 'This field is required.'
     	},
     	valid: true,
-    	user: JSON.parse(localStorage.getItem('user')),
+    	company: JSON.parse(localStorage.getItem('user')),
     	alertStt:false,
 		alertType:'success',
 		alertMes: ''
@@ -179,7 +179,7 @@ export default {
   	{
   		console.log(this.branch)
   		if (this.$refs.form.validate()) {
-  			let params = {information: this.branch, userId: this.user.id}
+  			let params = {information: this.branch, companyId: this.company.company_id}
   			post(config.API_URL+'company/branch', params)
   			.then(response => {
   				if(response && response.data.success) {

@@ -49,57 +49,63 @@ Route::group(['namespace' => 'API'],function(){
 	**********	ROUTER COMPANY ADMIN   *************
 	************************************************
 	*/
+
+	Route::post('change-password', 'UserAPIController@changePassWord');
 	
 	Route::namespace('CompanyAdmin')->group(function(){
+
+		/*************PagesAPIController**************/
 	
 		Route::resource('pages', 'PagesAPIController');
 
+		Route::post('edit/page/{itemId}','PagesAPIController@editPage');
+
+		/*************PagesAPIController**************/
+
 		Route::resource('notifications', 'NotificationAPIController');
 
-		Route::post('edit/page/{itemId}','PagesAPIController@editPage');
-	
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
-	});
+		
 
-	Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
+		/************* Photographers APIController**************/
 
+		Route::get('photographers', 'PhotographerAPIController@getPhotographers');
 
+		Route::delete('photographer/{id}', 'PhotographerAPIController@destroy');
 
-	/***************************************************
-	**********	ROUTER COMPANY AND ADMIN   *************
-	****************************************************/
-	Route::post('change-password', 'UserAPIController@changePassWord');
+		Route::post('photographer', 'PhotographerAPIController@savePhotographer');
 
+		Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
 
-	/*************PhotographerAPIController**************/
-	Route::get('photographers', 'PhotographerAPIController@getPhotographers');
+		/*************CustomerAPIController**************/
 
-	Route::delete('photographer/{id}', 'PhotographerAPIController@destroy');
-
-	Route::post('photographer', 'PhotographerAPIController@savePhotographer');
-
-	Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
-
-	Route::get('photographer/photographer-branch','PhotographerAPIController@getPhotographerByBranch');
+		Route::get('photographer/photographer-branch','PhotographerAPIController@getPhotographerByBranch');
 
 
-	/*************BranchAPIController**************/
-	Route::resource('branches', 'BranchAPIController');
+		/*************BranchAPIController**************/
+		Route::resource('branches', 'BranchAPIController');
 
-	Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
+		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
 
-	Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
+		Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
 
-	Route::get('company/branch-company','BranchAPIController@getBranchByCompanyId');
+		Route::get('company/branch-company','BranchAPIController@getBranchByCompanyId');
 
 	
-	/*************CustomerAPIController**************/
-	Route::get('company/branches/customers', 'CustomerAPIController@getCustomers');
+		/*************CustomerAPIController**************/
+		Route::get('company/branches/customers', 'CustomerAPIController@getCustomers');
 
-	Route::patch('company/branches/customer/{id}', 'CustomerAPIController@updateCustomer');
+		Route::patch('company/branches/customer/{id}', 'CustomerAPIController@updateCustomer');
 
-	Route::get('company/branches/customers/export', 'CustomerAPIController@exportEmailCustomers');
+		Route::get('company/branches/customers/export', 'CustomerAPIController@exportEmailCustomers');
 
+
+
+		/*************ActivityLogController**************/
+		
+		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
+
+	});
 
 	/*************Order Controllers**************/
 	Route::resource('orders', 'OrderAPIController');

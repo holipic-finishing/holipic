@@ -483,7 +483,8 @@ export default {
   sales : "Sales",
   photographers : 'Photographers',
   customer: 'Customer',
-  photographers : 'Photographers List'
+  photographers : 'Photographers List',
+  sales: 'Manage Sales'
 
 
 }

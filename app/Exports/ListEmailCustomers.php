@@ -22,13 +22,11 @@ class ListEmailCustomers implements FromCollection, WithHeadings
 	{
 		$input = $this->input;
 
-		$company = Company::whereOwnerId($input)->first();
-
         $data = [];
         
-        if(!empty($company)) {
-            $customers = Customer::with('user')->with(['branch' => function($q) use ($company) {
-                                     $q->whereCompanyId($company['id']);
+        if($input && $input != '') {
+            $customers = Customer::with('user')->with(['branch' => function($q) use ($input) {
+                                     $q->whereCompanyId($input);
             }])->get();
 
             $n = 1;

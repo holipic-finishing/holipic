@@ -53,20 +53,28 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('change-password', 'UserAPIController@changePassWord');
 	
 	Route::namespace('CompanyAdmin')->group(function(){
+
+		/*************PagesAPIController**************/
 	
 		Route::resource('pages', 'PagesAPIController');
 
+		Route::post('edit/page/{itemId}','PagesAPIController@editPage');
+
+		/*************PagesAPIController**************/
+
 		Route::resource('notifications', 'NotificationAPIController');
 
-		Route::post('edit/page/{itemId}','PagesAPIController@editPage');
-	
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
+
+		/*************PagesAPIController**************/
 
 		Route::resource('branches', 'BranchAPIController');
 
 		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
-
+	
 		Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
+
+		/*************PagesAPIController**************/
 
 		Route::get('photographers', 'PhotographerAPIController@getPhotographers');
 
@@ -76,12 +84,17 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
 
+		/*************CustomerAPIController**************/
+
 		Route::get('company/branches/customers', 'CustomerAPIController@getCustomers');
 
 		Route::patch('company/branches/customer/{id}', 'CustomerAPIController@updateCustomer');
 
 		Route::get('company/branches/customers/export', 'CustomerAPIController@exportEmailCustomers');
 
+
+		/*************ActivityLogController**************/
+		
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
 	});

@@ -38,7 +38,7 @@ export default {
 	        component: CompanyDashboard,
 	        meta: {
 	        	requiresAuth:true,
-	        	adminAuth:false,
+	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.ecommerce',
 	            breadcrumb: 'Company / Dashboard'
@@ -50,7 +50,7 @@ export default {
         	name:'CompnayNotification',
 	        meta: {
 	        	requiresAuth:true,
-	        	adminAuth:false,
+	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.notification',
 	            breadcrumb: 'Company / Notifications'
@@ -61,7 +61,7 @@ export default {
 	        component: ChangePassword,
 	        meta: {
 	        	requiresAuth:true,
-	        	adminAuth:false,
+	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.changePassword',
 	            breadcrumb: 'Company / Change Password'
@@ -106,7 +106,7 @@ export default {
 	        component: ContentManSystem,
 	        meta: {
 	        	requiresAuth:true,
-	        	adminAuth:false,
+	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.contenPages',
 	            breadcrumb: 'Company / CMS'

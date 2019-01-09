@@ -41,7 +41,7 @@
 		            <v-icon
 			            small
 			            class="mr-2"
-			            @click="showDialog(props.item.id, props.item.setting_id)"
+			            @click="showDialog(props.item.id)"
 		            >
 		            	delete
 		          	</v-icon>
@@ -185,7 +185,8 @@ export default {
 		    },
 		    loading: true,
 		    key: 0,
-		    key2: 0
+		    key2: 0,
+		    user: JSON.parse(localStorage.getItem('user')),
 
 	    }
 	},
@@ -266,6 +267,7 @@ export default {
 			let obj = {
 	  				check : 'add',
 	  				showDialog: true,
+	  				company_id: this.user.id
 	  		}
   			this.$root.$emit('change-status', obj)
 		},
@@ -296,11 +298,7 @@ export default {
 
 		deleteItem(id,setting_id){
 
-				let params = {
-					id_packages : this.itemIdToDelete.id
-				}
-
-				del(config.API_URL + 'company_packages/' + params.id_packages)
+				del(config.API_URL + 'company_packages/' + this.itemIdToDelete.id)
 				.then((res) => {
 					this.loading = true;
 					this.fetchData();

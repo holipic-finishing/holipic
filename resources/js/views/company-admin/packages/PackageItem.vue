@@ -65,7 +65,7 @@
 				    <v-list-tile class="height-80">
 				        <v-list-tile-content class="h-100">
 				          <v-list-tile-title class="content-flex-end h-100">
-				            <span class="font-weight-bold item-title position-item">Package Offer:</span>
+				            <span class="font-weight-bold item-title position-item">Offer Price:</span>
 				            <span class="contain-text-field">
 				              <v-text-field
 				                class="font-weight-bold height-input"
@@ -80,20 +80,72 @@
 				    </v-list-tile>
 				    <v-divider class="no-mg-bottom"></v-divider>
 
-				    <v-list-tile class="height-120">
+				    <v-list-tile class="height-80">
 				        <v-list-tile-content class="h-100">
 				          <v-list-tile-title class="content-flex-end h-100">
-				            <span class="font-weight-bold item-title position-item">Package Detail:</span>
+				            <span class="font-weight-bold item-title position-item">Total Photo:</span>
 				            <span class="contain-text-field">
-				              <v-textarea 
-				              	    class="font-weight-bold"
-						            v-model="item.detail"
-						            :rules="[rules.required]"
-						            auto-grow
-						            outline
-						            rows="1"
-						            placeholder="Enter package detail"
-						        ></v-textarea>
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Enter package offer"
+				               	v-model="item.total_photo"
+			                    :rules="[rules.required]"
+				                outline                
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
+
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Album:</span>
+				            <span class="contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Enter package offer"
+				               	v-model="item.album"
+			                    :rules="[rules.required]"
+				                outline                
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
+
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Photos on the disc:</span>
+				            <span class="contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Enter package offer"
+				               	v-model="item.photo_on_disc"
+			                    :rules="[rules.required]"
+				                outline                
+				              ></v-text-field>
+				            </span>
+				          </v-list-tile-title>
+				        </v-list-tile-content>
+				    </v-list-tile>
+				    <v-divider class="no-mg-bottom"></v-divider>
+
+				    <v-list-tile class="height-80">
+				        <v-list-tile-content class="h-100">
+				          <v-list-tile-title class="content-flex-end h-100">
+				            <span class="font-weight-bold item-title position-item">Poster (20x30):</span>
+				            <span class="contain-text-field">
+				              <v-text-field
+				                class="font-weight-bold height-input"
+				                placeholder="Enter package offer"
+				               	v-model="item.poster"
+			                    :rules="[rules.required]"
+				                outline                
+				              ></v-text-field>
 				            </span>
 				          </v-list-tile-title>
 				        </v-list-tile-content>
@@ -148,7 +200,7 @@
 	        <v-list-tile class="height-80">
 				<v-list-tile-content>
 		            <v-list-tile-title class="content-flex-end h-100">
-			          	<span class="font-weight-bold item-title position-item">Package Offer</span>
+			          	<span class="font-weight-bold item-title position-item">Offer Price</span>
 			          	<span class="contain-text-field">
 			          		<v-text-field
 			          			class="text-field-padding"
@@ -163,7 +215,80 @@
 			</v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
 
-	        <v-list-tile class="height-200">
+	        <v-list-tile class="height-80">
+				<v-list-tile-content>
+		            <v-list-tile-title class="content-flex-end h-100">
+			          	<span class="font-weight-bold item-title position-item">Total Photo</span>
+			          	<span class="contain-text-field">
+			          		<v-text-field
+			          			class="text-field-padding"
+				            	v-model="data.total_photo"
+				            	readonly
+				            	solo
+				            >  
+				        	</v-text-field>
+				        </span>
+	            	</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+	        <v-divider class="mt-0 mb-0"></v-divider>
+
+	        <v-list-tile class="height-80">
+				<v-list-tile-content>
+		            <v-list-tile-title class="content-flex-end h-100">
+			          	<span class="font-weight-bold item-title position-item">Album</span>
+			          	<span class="contain-text-field">
+			          		<v-text-field
+			          			class="text-field-padding"
+				            	v-model="data.album"
+				            	readonly
+				            	solo
+				            >  
+				        	</v-text-field>
+				        </span>
+	            	</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+	        <v-divider class="mt-0 mb-0"></v-divider>
+
+	        <v-list-tile class="height-80">
+				<v-list-tile-content>
+		            <v-list-tile-title class="content-flex-end h-100">
+			          	<span class="font-weight-bold item-title position-item">Photos on the disc</span>
+			          	<span class="contain-text-field">
+			          		<v-text-field
+			          			class="text-field-padding"
+				            	v-model="data.photo_on_disc"
+				            	readonly
+				            	solo
+				            >  
+				        	</v-text-field>
+				        </span>
+	            	</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+	        <v-divider class="mt-0 mb-0"></v-divider>
+
+	        <v-list-tile class="height-80">
+				<v-list-tile-content>
+		            <v-list-tile-title class="content-flex-end h-100">
+			          	<span class="font-weight-bold item-title position-item">Poster (20x30)</span>
+			          	<span class="contain-text-field">
+			          		<v-text-field
+			          			class="text-field-padding"
+				            	v-model="data.poster"
+				            	readonly
+				            	solo
+				            >  
+				        	</v-text-field>
+				        </span>
+	            	</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+	        <v-divider class="mt-0 mb-0"></v-divider>
+
+
+	        <!-- <v-list-tile class="height-200">
 				<v-list-tile-content class="h-100">
 		            <v-list-tile-title class="content-flex-end h-100">
 			          	<span class="font-weight-bold item-title position-item">Package Detail</span>
@@ -181,7 +306,7 @@
 	            	</v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
-	        <v-divider class="mt-0 mb-0"></v-divider>
+	        <v-divider class="mt-0 mb-0"></v-divider> -->
 			
         </v-list> 
 
@@ -238,7 +363,7 @@
 			<v-list-tile class="height-80">
 				<v-list-tile-content class="h-100">
 					<v-list-tile-title class="content-flex-end h-100">
-						<span class="font-weight-bold item-title position-item">Package Offer:</span>
+						<span class="font-weight-bold item-title position-item">Offer Price:</span>
 						<span class="contain-text-field">
 							<v-text-field
 							class="font-weight-bold height-input"
@@ -259,23 +384,21 @@
 			</v-list-tile>
 			<v-divider class="no-mg-bottom"></v-divider>
 
-			<v-list-tile class="height-200">
+			<v-list-tile class="height-80">
 				<v-list-tile-content class="h-100">
 					<v-list-tile-title class="content-flex-end h-100">
-						<span class="font-weight-bold item-title position-item">Package Detail:</span>
+						<span class="font-weight-bold item-title position-item">Total Photo:</span>
 						<span class="contain-text-field">
-							<v-textarea 
-			              	    class="font-weight-bold"
-					            v-model="data.detail"
-					            :rules="[rules.required]"
-					            :disabled="key == 4 ? false : true"
-					            auto-grow
-					            outline
-					            rows="2"
-					            placeholder="Enter package detail"
-					            @blur="editItem('detail', data.detail)"
-							    @keyup.enter="editItem('detail', data.detail)"
-					        ></v-textarea>
+							<v-text-field
+							class="font-weight-bold height-input"
+							placeholder="Enter package offer"
+							v-model="data.total_photo"
+							:rules="[rules.required]"
+							:disabled="key == 4 ? false : true"
+							outline
+							@blur="editItem('total_photo', data.total_photo)"
+							@keyup.enter="editItem('total_photo', data.total_photo)"
+							></v-text-field>
 						</span>
 						<span class="position-item">
 							<v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
@@ -283,6 +406,79 @@
 					</v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
+			<v-divider class="no-mg-bottom"></v-divider>
+
+			<v-list-tile class="height-80">
+				<v-list-tile-content class="h-100">
+					<v-list-tile-title class="content-flex-end h-100">
+						<span class="font-weight-bold item-title position-item">Album:</span>
+						<span class="contain-text-field">
+							<v-text-field
+							class="font-weight-bold height-input"
+							placeholder="Enter package offer"
+							v-model="data.album"
+							:rules="[rules.required]"
+							:disabled="key == 5 ? false : true"
+							outline
+							@blur="editItem('album', data.album)"
+							@keyup.enter="editItem('album', data.album)"
+							></v-text-field>
+						</span>
+						<span class="position-item">
+							<v-btn flat icon @click="unDisableItem(5)"><v-icon small>fas fa-marker</v-icon></v-btn>
+						</span>
+					</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+			<v-divider class="no-mg-bottom"></v-divider>
+
+			<v-list-tile class="height-80">
+				<v-list-tile-content class="h-100">
+					<v-list-tile-title class="content-flex-end h-100">
+						<span class="font-weight-bold item-title position-item">Photos on the disc:</span>
+						<span class="contain-text-field">
+							<v-text-field
+							class="font-weight-bold height-input"
+							placeholder="Enter package offer"
+							v-model="data.photo_on_disc"
+							:rules="[rules.required]"
+							:disabled="key == 6 ? false : true"
+							outline
+							@blur="editItem('photo_on_disc', data.photo_on_disc)"
+							@keyup.enter="editItem('photo_on_disc', data.photo_on_disc)"
+							></v-text-field>
+						</span>
+						<span class="position-item">
+							<v-btn flat icon @click="unDisableItem(6)"><v-icon small>fas fa-marker</v-icon></v-btn>
+						</span>
+					</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+			<v-divider class="no-mg-bottom"></v-divider>
+
+			<v-list-tile class="height-80">
+				<v-list-tile-content class="h-100">
+					<v-list-tile-title class="content-flex-end h-100">
+						<span class="font-weight-bold item-title position-item">Poster (20x30):</span>
+						<span class="contain-text-field">
+							<v-text-field
+							class="font-weight-bold height-input"
+							placeholder="Enter package offer"
+							v-model="data.poster"
+							:rules="[rules.required]"
+							:disabled="key == 7 ? false : true"
+							outline
+							@blur="editItem('poster', data.poster)"
+							@keyup.enter="editItem('poster', data.poster)"
+							></v-text-field>
+						</span>
+						<span class="position-item">
+							<v-btn flat icon @click="unDisableItem(7)"><v-icon small>fas fa-marker</v-icon></v-btn>
+						</span>
+					</v-list-tile-title>
+				</v-list-tile-content>
+			</v-list-tile>
+			<v-divider class="no-mg-bottom"></v-divider>
 
         </v-list> 
 	    
@@ -318,8 +514,7 @@ export default {
 	          	},
 	        },
 	        item:{
-	        	sms: false,
-	        	email_service: false
+	        	company_id: ''
 	        },
 	        data:{},
 	        alertStt: false,
@@ -334,6 +529,7 @@ export default {
 		},
 
 		savePackageAdd(){
+			console.log(this.item.company_id)
       		if (this.$refs.form.validate()) {
       			let url = config.API_URL+'company_packages'
       		 	post(url,this.item)
@@ -409,6 +605,7 @@ export default {
 		this.$root.$on('change-status', res => {
           	this.drawerRight = res.showDialog
     		this.check = res.check
+    		this.item.company_id = res.company_id
     		// this.item = {
     		// }
       	})

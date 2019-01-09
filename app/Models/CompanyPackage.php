@@ -29,7 +29,11 @@ class CompanyPackage extends Model
         'package_name',
         'price',
         'offer',
-        'detail'
+        'total_photo',
+        'album',
+        'photo_on_disc',
+        'poster',
+        'company_id',
     ];
 
     /**
@@ -41,7 +45,11 @@ class CompanyPackage extends Model
         'package_name' => 'string',
         'price' => 'string',
         'offer' => 'string',
-        'detail' => 'string'
+        'total_photo' => 'integer',
+        'album' => 'string',
+        'photo_on_disc' => 'integer',
+        'poster' => 'integer',
+        'company_id' => 'integer',
     ];
 
     /**
@@ -53,7 +61,11 @@ class CompanyPackage extends Model
         'package_name' => 'required',
         'price' => 'required',
         'offer' => 'required',
-        'detail' => 'required'
+        'total_photo' => 'required',
+        'album' => 'required',
+        'photo_on_disc' => 'required',
+        'poster' => 'required',
+        'company_id' => 'required',
     ];
 
     

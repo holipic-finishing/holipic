@@ -19,48 +19,41 @@ class CompanyPackagesTableSeeder extends Seeder
 	        	'package_name' => 'Package 1', 
 	        	'price' => 'Rp 3000000', 
 	        	'offer' => 'Rp 2500000', 
-	        	'total_photo' => 'Rp 2500000', 
-	        	'offer' => 'Rp 2500000', 
-	        	'offer' => 'Rp 2500000', 
-	        	'detail' => '21 photos 4R Print
-							Mini Album
-							21 photos on the disc', 
+	        	'total_photo' => 21, 
+	        	'album' => 'Mini Album', 
+	        	'photo_on_disc' => 21,
+	        	'poster' => null,
+	        	'company_id' => '1',
 	        ],
 	        [
 	        	'package_name' => 'Package 2', 
 	        	'price' => 'Rp 4500000', 
 	        	'offer' => 'Rp 3500000', 
-	        	'offer' => 'Rp 3500000', 
-	        	'offer' => 'Rp 3500000', 
-	        	'offer' => 'Rp 3500000', 
-	        	'detail' => '30 photos Print
-							1 Photobook
-							30 photos on the disc
-							1 Poster (20x30)', 
+	        	'total_photo' => 30, 
+	        	'album' => '1 Photobook', 
+	        	'photo_on_disc' => 30,
+	        	'poster' => 1,
+	        	'company_id' => '2', 
 	        ],
 	        [
 	        	'package_name' => 'Package 3', 
 	        	'price' => 'Rp 6000000', 
 	        	'offer' => 'Rp 4500000', 
-	        	'offer' => 'Rp 4500000', 
-	        	'offer' => 'Rp 4500000', 
-	        	'offer' => 'Rp 4500000', 
-	        	'detail' => '40 photos 4R Print
-							Handmade Album
-							40 photos on the disc
-							2 Poster (20x30)', 
+	        	'total_photo' => 40, 
+	        	'album' => 'Handmade Album', 
+	        	'photo_on_disc' => 40,
+	        	'poster' => 2,
+	        	'company_id' => '3',  
 	        ],
 	        [
 	        	'package_name' => 'Package 4', 
 	        	'price' => 'Rp 7500000', 
 	        	'offer' => 'Rp 6000000', 
-	        	'offer' => 'Rp 6000000', 
-	        	'offer' => 'Rp 6000000', 
-	        	'offer' => 'Rp 6000000', 
-	        	'detail' => '50 Print
-							Large Album
-							50 photos on the disc
-							2 Poster (20x30)', 
+	        	'total_photo' => 50, 
+	        	'album' => 'Large Album', 
+	        	'photo_on_disc' => 50,
+	        	'poster' => 2,
+	        	'company_id' => '4', 
 	        ],
         ];
 
@@ -70,7 +63,11 @@ class CompanyPackagesTableSeeder extends Seeder
         		'package_name'    => $value['package_name'],
 		        'price'   => $value['price'],
 		        'offer'   => $value['offer'],
-		        'detail'  => $value['detail']
+		        'total_photo'  => $value['total_photo'],
+		        'album'  => $value['album'],
+		        'photo_on_disc'  => $value['photo_on_disc'],
+		        'poster'  => $value['poster'],
+		        'company_id'  => $value['company_id'],
         	]);
         }
     }

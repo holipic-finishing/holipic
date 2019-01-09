@@ -18,10 +18,10 @@ class CreateCompanyPackagesTable extends Migration
             $table->string('package_name');
             $table->string('price');
             $table->string('offer');
-            $table->integer('total_photo');
-            $table->string('album');
-            $table->integer('photo_on_disc');
-            $table->integer('poster');
+            $table->integer('total_photo')->nullable();
+            $table->string('album')->nullable();
+            $table->integer('photo_on_disc')->nullable();
+            $table->integer('poster')->nullable();
             $table->integer('company_id');
             $table->timestamps();
             $table->softDeletes();

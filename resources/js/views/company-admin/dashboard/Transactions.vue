@@ -21,9 +21,7 @@
 
       <v-toolbar flat color="white">
         <v-toolbar-title>
-          <v-hover>
-            <router-link slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 2}`" class="black--text" :to="{ path: '/default/transaction/histories' }">Transactions</router-link>
-          </v-hover>
+            Orders
         </v-toolbar-title>
       </v-toolbar>
       <v-divider></v-divider>

@@ -19,6 +19,9 @@ class CompanyPackagesTableSeeder extends Seeder
 	        	'package_name' => 'Package 1', 
 	        	'price' => 'Rp 3000000', 
 	        	'offer' => 'Rp 2500000', 
+	        	'total_photo' => 'Rp 2500000', 
+	        	'offer' => 'Rp 2500000', 
+	        	'offer' => 'Rp 2500000', 
 	        	'detail' => '21 photos 4R Print
 							Mini Album
 							21 photos on the disc', 
@@ -26,6 +29,9 @@ class CompanyPackagesTableSeeder extends Seeder
 	        [
 	        	'package_name' => 'Package 2', 
 	        	'price' => 'Rp 4500000', 
+	        	'offer' => 'Rp 3500000', 
+	        	'offer' => 'Rp 3500000', 
+	        	'offer' => 'Rp 3500000', 
 	        	'offer' => 'Rp 3500000', 
 	        	'detail' => '30 photos Print
 							1 Photobook
@@ -36,6 +42,9 @@ class CompanyPackagesTableSeeder extends Seeder
 	        	'package_name' => 'Package 3', 
 	        	'price' => 'Rp 6000000', 
 	        	'offer' => 'Rp 4500000', 
+	        	'offer' => 'Rp 4500000', 
+	        	'offer' => 'Rp 4500000', 
+	        	'offer' => 'Rp 4500000', 
 	        	'detail' => '40 photos 4R Print
 							Handmade Album
 							40 photos on the disc
@@ -44,6 +53,9 @@ class CompanyPackagesTableSeeder extends Seeder
 	        [
 	        	'package_name' => 'Package 4', 
 	        	'price' => 'Rp 7500000', 
+	        	'offer' => 'Rp 6000000', 
+	        	'offer' => 'Rp 6000000', 
+	        	'offer' => 'Rp 6000000', 
 	        	'offer' => 'Rp 6000000', 
 	        	'detail' => '50 Print
 							Large Album

@@ -57,11 +57,19 @@ const actions = {
 
         post('/auth/loginSuperAdmin',params)
         .then(res => {
+           if(res && res.data.success) {
+
             let data = res.data.data.user
              Nprogress.done();
                 setTimeout(() => {
                     context.commit('loginUserSuccess', data);
-                }, 500)
+                }, 500)     
+           } else {
+                 setTimeout(() => {
+                    context.commit('loginUserFailure', res.data);
+                }, 500) 
+           }
+            
         })
         .catch(error => {
                 context.commit('loginUserFailure', error);
@@ -185,6 +193,7 @@ const mutations = {
         Nprogress.start();
     },
     loginUserSuccess(state, user) {
+        
         state.user = user;
         localStorage.setItem('user',JSON.stringify(user))
         state.isUserSigninWithAuth0 = false

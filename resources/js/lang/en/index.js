@@ -479,6 +479,9 @@ export default {
   customer: 'Customers',
   contenPages : "Content Management System",
   sibarContentPages:"Cms",
-  activityLog: "Activity Log"
+  activityLog: "Activity Log",
+  photographers : 'Photographers',
+  customer: 'Customer',
+  photographers : 'Photographers List'
 
 }

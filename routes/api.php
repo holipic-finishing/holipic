@@ -150,6 +150,8 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('transaction_exchanges', 'TransactionExchangeAPIController');
 
+	Route::resource('order_exchanges', 'OrderExchangeAPIController');
+
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 
 	/*************Order Controllers**************/
@@ -158,4 +160,6 @@ Route::group(['namespace' => 'API'],function(){
 
 	
 });	
+
+
 

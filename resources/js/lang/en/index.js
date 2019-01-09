@@ -480,6 +480,10 @@ export default {
   contenPages : "Content Management System",
   sibarContentPages:"Cms",
   activityLog: "Activity Log",
-  sales : "Sales"
+  sales : "Sales",
+  photographers : 'Photographers',
+  customer: 'Customer',
+  photographers : 'Photographers List'
+
 
 }

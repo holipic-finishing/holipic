@@ -70,4 +70,11 @@ class BranchRepository extends BaseRepository
 
         return false;
     }
+
+
+    public function handleGetBranchCompanyId($company_id){
+
+       return $this->model->where('company_id',$company_id)->pluck('name','id');
+       
+    }
 }

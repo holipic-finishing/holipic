@@ -70,12 +70,8 @@ Route::group(['namespace' => 'API'],function(){
 	****************************************************/
 	Route::post('change-password', 'UserAPIController@changePassWord');
 
-	Route::resource('branches', 'BranchAPIController');
 
-	Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
-
-	Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
-
+	/*************PhotographerAPIController**************/
 	Route::get('photographers', 'PhotographerAPIController@getPhotographers');
 
 	Route::delete('photographer/{id}', 'PhotographerAPIController@destroy');
@@ -84,8 +80,18 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
 
-	Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
+	/*************BranchAPIController**************/
+	Route::resource('branches', 'BranchAPIController');
+
+	Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
+
+	Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
+
+	Route::get('company/branch-company','BranchAPIController@getBranchByCompanyId');
+
+	
+	/*************CustomerAPIController**************/
 	Route::get('company/branches/customers', 'CustomerAPIController@getCustomers');
 
 	Route::patch('company/branches/customer/{id}', 'CustomerAPIController@updateCustomer');

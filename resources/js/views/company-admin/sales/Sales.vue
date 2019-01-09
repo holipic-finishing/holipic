@@ -144,6 +144,8 @@
 </template>
 
 <script>
+import { get, post, put } from '../../../api/index.js'
+import config from '../../../config/index.js'
 export default {
 
 	name: 'Sales',
@@ -172,9 +174,22 @@ export default {
 		}
 	},
 	created(){
-
+		this.fetchDataBranch()
 	},
 	methods:{
+		fetchDataBranch(){
+			var authUser = JSON.parse(localStorage.getItem('user'))
+			
+			var url = config.API_URL+'company/branch-company?companyId='+authUser.company_id
+
+			get(url)
+			.then(res => {
+				
+			})
+			.catch(err => {
+				console.log(err)
+			})
+		},
 		changeBranh(item){
 			console.log(item)
 		}

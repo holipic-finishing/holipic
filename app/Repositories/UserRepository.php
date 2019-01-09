@@ -79,7 +79,6 @@ class UserRepository extends BaseRepository
         })->first();
     } 
 
-
     public function checkUserCommpanyExits($user)
     {
         $company = \App\Models\Company::onlyTrashed()->whereOwnerId($user->id)->first();

@@ -1004,9 +1004,9 @@ Holipic
 			mainClass: 'mfp-zoom-in',
 			callbacks: {
 				open: function() {
-					$('html').css('margin-right', 0);
-					$('html').css('overflow', 'auto');
-					$('body').css('position', 'fixed');
+					// $('html').css('margin-right', 0);
+					// $('html').css('overflow', 'auto');
+					// $('body').css('position', 'fixed');
 				},
 
 				close: function() {

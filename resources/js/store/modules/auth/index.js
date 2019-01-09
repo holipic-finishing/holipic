@@ -205,6 +205,9 @@ const mutations = {
         if(user.role_id == "2"){
             router.push('/company-admin/dashboard')
         }
+        if(user.role_id == "3"){
+            router.push('/branch-admin/dashboard')
+        }
         setTimeout(function(){
             Vue.notify({
                 group: 'loggedIn',

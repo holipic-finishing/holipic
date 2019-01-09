@@ -51,6 +51,7 @@ routers = [
 	AuthRoutes,
 	SuperAdminRoutes,
 	CompanyAdminRoutes,
+	BranchAdminRoutes,
 	{
     	// Page Not Found
     	path: '*',
@@ -97,6 +98,15 @@ router.beforeEach((to, from, next) => {
 					path:'/super-admin/dashboard',
 				})
 			}
+		} else if(to.meta.branchAuth) {
+			const authUser = JSON.parse(localStorage.getItem('user'))
+			if(authUser.role_id == "3"){
+				next()
+			} else {
+  				next({
+					path:'/branch-admin/dashboard',
+				})
+			}
 		} 
 	} else {
 		if(to.path === '/login'){
@@ -107,12 +117,14 @@ router.beforeEach((to, from, next) => {
 					next({
 						path:'/super-admin/dashboard',
 					})
-				} else {
-					if(authUser.role_id == "2"){
-						next({
-							path:'/company-admin/dashboard',
-						})
-					}
+				} else if(authUser.role_id == "2") {
+					next({
+						path:'/company-admin/dashboard',
+					})
+				} else if(authUser.role_id == "3") {
+					next({
+						path:'/branch-admin/dashboard',
+					})
 				}
 			}	
 		} 

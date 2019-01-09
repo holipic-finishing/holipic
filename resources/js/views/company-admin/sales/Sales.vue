@@ -110,29 +110,60 @@
 		    	</v-card-title>
 		    	<!--End Search Component -->
 				<!--Data Table Component -->
-				<!-- <v-data-table
+				<v-data-table
 				:headers="headers" 
 				:items="desserts" 
-				class="elevation-5"  
+				class="elevation-5 style-table"
+				item-key="id" 
 				:pagination.sync="pagination" 
 				:rows-per-page-items="rowsPerPageItems" 
 				:search="search"
 				>
+				
+				<template slot="headers" slot-scope="props">
+		          <tr>
+		            <!-- <th>
+		              <v-checkbox
+		                :input-value="props.all"
+		                :indeterminate="props.indeterminate"
+		                primary
+		                hide-details
+		                @click.native="toggleAll"
+		              ></v-checkbox>
+		            </th> -->
+		            <th
+		              v-for="header in props.headers"
+		              :key="header.text"
+		              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+		              @click="changeSort(header.value)"
+		            >
+		            	<div class="custom-header">
+			              <v-tooltip bottom>
+			                <span slot="activator" class="text-capitalize subheading font-weight-bold">
+			                  {{ header.text }}
+			                </span>
+			                <span>
+			                  {{ header.text }}
+			                </span>
+			              </v-tooltip>
+			              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
+		            	</div>
+		            </th>
+		          </tr>
+		        </template>
 					<template slot="items" slot-scope="props">
 						<td>{{ props.item.id }}</td>
-						<td class="text-xs-left">{{ props.item.page_title }}</td>
-						<td class="text-xs-left" v-html="props.item.sort_content.substring(0,190)+'....'">...</td>
-			        	<td class="text-xs-left action-width">
-							<v-icon
-								small
-								class="mr-2 hover-icon"
-								@click="showFormEdit('edit',props.item)"
-							>
-								edit
-							</v-icon>
-						</td>
+						<td>{{ props.item.branch_name }}</td>
+						<td>{{ props.item.photographer_name }}</td>
+						<td>{{ props.item.room_has_number }}</td>
+						<td>{{ props.item.total_amount }}</td>
+						<td>{{ props.item.purchase_date }}</td>
+						<td>{{ props.item.download_date }}</td>
+						<td>{{ props.item.customer_email }}</td>
+						<td>{{ props.item.payment_method }}</td>
+
 					</template>
-				</v-data-table> -->
+				</v-data-table>
 		    </v-card>
 		</v-app>
 	</div>
@@ -155,26 +186,33 @@ export default {
 			to_day:'',
 			urlExport:'',
 			search:'',
-			selected: {
-	        	id:'0',
-	        	name:"-- Select Branch --"
-	        },
-	        items: [{
-	        	id:'0',
-	        	name:"-- Select Branch --"
-	        }],
-	        phographer:[{
-	        	id:'0',
-	        	name:'-- Select Photographer --'	
-	        	}
-	        ],
+			selected: {id:'0',name:"-- Select Branch --" },
+	        items: [{id:'0',name:"-- Select Branch --" }],
+	        phographer:[{id:'0',name:'-- Select Photographer --'}],
 			selected1:'',
 			authUser:JSON.parse(localStorage.getItem('user')),
-			filterSearch:''
+			filterSearch:'',
+			pagination: {
+				  	rowsPerPage: 25  	
+		    },
+		    rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
+		    headers:[
+		    	{ text: 'ID', value: 'id',align: 'left',width: '3%'},	       
+				{ text: 'Branch', value: 'branch_name' },
+				{ text: 'Photographer', value: 'photographer_name'},	
+				{ text: 'Room Number', value: 'room_has_number',align: 'left',width: '10%'},	
+				{ text: 'Total Amount', value: 'total_amount' },		      
+				{ text: 'Purchase Date', value: 'purchase_date' },
+				{ text: 'Download Date', value: 'download_date' },	
+				{ text: 'Customer Email', value: 'customer_email' },	
+				{ text: 'Payment Method', value: 'payment_method',align: 'left',width: '3%' },	
+		    ],
+		    desserts:[]
 		}
 	},
 	created(){
 		this.fetchDataBranch()
+		this.fetchData()
 	    this.selected1 = {
 	        	id:'0',
 	        	name:'-- Select Photographer --'	
@@ -223,6 +261,20 @@ export default {
 				}
 			})	
 			.catch(err =>{
+
+			})
+		},
+
+		fetchData(){
+			let url = config.API_URL+'orders'
+			get(url)
+			.then(res => {
+				if(res.data && res.data.success){
+					let data = res.data.data
+					this.desserts = data
+				}
+			})
+			.catch(err => {
 
 			})
 		},
@@ -286,5 +338,8 @@ export default {
 }
 .card-style {
 	padding: 0px !important;
+}
+.style-table{
+	margin-top:15px !important;
 }
 </style>

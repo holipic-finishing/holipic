@@ -101,6 +101,10 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('company/branches/customers/export', 'CustomerAPIController@exportEmailCustomers');
 
 
+	/*************Order Controllers**************/
+	Route::resource('orders', 'OrderAPIController');
+
+
 	/***********************************************
 	**********	ROUTER SUPER ADMIN   ***************
 	************************************************/
@@ -151,12 +155,14 @@ Route::group(['namespace' => 'API'],function(){
 	/*************Different Controllers**************/
 
 	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
+	
+	Route::get('company-admin-chart', 'ReportController@getInfoForChartCompanyAdmin');
 
 	Route::resource('exchange_rates', 'ExchangeRateAPIController');
 
 	Route::resource('transaction_exchanges', 'TransactionExchangeAPIController');
 
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
+	
 });	
-
 

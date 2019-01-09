@@ -75,4 +75,9 @@ class Customer extends Model
     {
         return $this->belongsTo('App\Models\Room', 'room_id', 'id');
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order', 'customer_id', 'id');
+    }
 }

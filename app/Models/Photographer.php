@@ -62,5 +62,10 @@ class Photographer extends Model
         return $this->belongsTo('App\Models\Branch', 'branch_id', 'id');
     }
 
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order', 'photographer_id', 'id');
+    }
+
     
 }

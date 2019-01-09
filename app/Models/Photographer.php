@@ -28,12 +28,11 @@ class Photographer extends Model
 
 
     public $fillable = [
-        'company_id',
-        'branch_id',
         'name',
         'phone_number',
         'address',
-        'status'
+        'status',
+        'branch_id',
     ];
 
     /**
@@ -42,12 +41,11 @@ class Photographer extends Model
      * @var array
      */
     protected $casts = [
-        'company_id' => 'integer',
-        'branch_id' => 'integer',
         'name' => 'string',
         'phone_number' => 'string',
         'address' => 'string',
-        'status' => 'boolean'
+        'status' => 'boolean',
+        'branch_id' => 'integer',
     ];
 
     /**

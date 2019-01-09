@@ -16,21 +16,31 @@ class BranchesTableSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         \App\Models\Branch::truncate();
-        
-        // create branch with company
-        for ($i=1; $i < 20 ; $i++) {
-            $company = \App\Models\Company::find($i);
-            $user = \App\Models\User::find($i);
 
-            \App\Models\Branch::create([
-                'company_id' => $company['id'],
-                'branch_name' => $faker->name,
-                'user_id' => $user['id'],
-                'username' => $faker->userName,
-                'password' => $faker->password,
-                'branch_address' => $faker->address,
-                'branch_phone_number' => $faker->phoneNumber,
-            ]);
+        $companies = \App\Models\Company::all();
+
+        foreach ($companies as $company) {
+            for ($i=0; $i < rand(3,6) ; $i++) {
+                $password = $faker->password;
+
+                $user =  \App\Models\User::create([
+                    'first_name' => $faker->firstName,
+                    'last_name' => $faker->lastName,
+                    'username' => $faker->userName,
+                    'email' => $faker->email,
+                    'password' => bcrypt($password),
+                    'role_id' => 3,
+                ]);
+
+                \App\Models\Branch::create([
+                    'name' => $faker->company,
+                    'branch_password' => $password,
+                    'branch_address' => $faker->address,
+                    'branch_phone_number' => $faker->phoneNumber,
+                    'company_id' => $company->id,
+                    'user_id' => $user['id'],
+                ]);                
+            }
         }
     }
 }

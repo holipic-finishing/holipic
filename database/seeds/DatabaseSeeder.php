@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ExchangeRatesTableSeeder::class);
         $this->call(BranchesTableSeeder::class);
         $this->call(PhotographersTableSeeder::class);
-        $this->call(SettingsTableSeeder::class);
         $this->call(CustomersTableSeeder::class);
         $this->call(PagesTableSeeder::class);   
         $this->call(SettingsTableSeeder::class);

@@ -19,6 +19,7 @@ class User extends Authenticatable
     public $fillable = [
         'first_name',
         'last_name',
+        'username',
         'email',
         'password',
         'access_token',
@@ -37,6 +38,7 @@ class User extends Authenticatable
 
         'first_name' => 'string',
         'last_name' => 'string',
+        'username' => 'string',
         'email' => 'string',
         'password' => 'string',
         'email_verified_at'  => 'string',

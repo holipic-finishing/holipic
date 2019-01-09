@@ -12,12 +12,13 @@ class CustomersTableSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-
         $faker = Faker\Factory::create();
+
         \App\Models\Customer::truncate();
         
-        // create user with user
-        for ($i=1; $i < 30 ; $i++) {
+        $branches = \App\Models\Branch::all();
+
+        foreach ($branches as $branch) {
             \App\Models\Customer::create([
                 'name' => $faker->name,
                 'room' => $faker->randomNumber(5),

@@ -28,12 +28,12 @@ class Customer extends Model
 
     public $fillable = [
         'name',
-        'room',
         'email',
-        'password',
+        'customer_password',
         'avatar',
-        'branch_id',
         'address',
+        'room',
+        'branch_id',
         'status'
     ];
 

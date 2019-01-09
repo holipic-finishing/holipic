@@ -1,5 +1,5 @@
 <template>	
-	<v-layout row wrap>
+	
 
 	<v-navigation-drawer 
     fixed
@@ -22,7 +22,7 @@
 	    	</v-toolbar>
 		    <v-divider class="no-mg-bottom"></v-divider>
 
-		    <v-list>
+		    <v-list class="heigth-list-title">
 
       			<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 
@@ -116,17 +116,17 @@
 			        </v-list-tile-content>
 		     	</v-list-tile>
 		      	<v-divider class="no-mg-bottom"></v-divider>
+		    </v-list>
 
-
-		      <v-spacer></v-spacer>
+		      <!-- <v-spacer></v-spacer> -->
 		      	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
 			      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
 			    </v-card-actions>
 
-		    </v-list>
+		    
 		</v-card>      	
     </v-navigation-drawer>
-</v-layout>
+
 </template>
 <script>
 import config from '../../../config/index.js'

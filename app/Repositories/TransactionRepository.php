@@ -724,7 +724,9 @@ class TransactionRepository extends BaseRepository
         $results = $this->scopeQuery(function($query) use($params){
 
             $query = $query->with(['user' => function($q) {
-                                $q->with('package')->with('company');
+                                $q->with('package')->with(['company' => function($que) {
+                                    $que->withTrashed();
+                                }]);
                             }])
                         ->with('currency')
                         ->with('transactionexchange');
@@ -798,7 +800,7 @@ class TransactionRepository extends BaseRepository
             }
 
             return $query;
-        })->all();
+        })->get();
 
         $results = $this->transform($results);
 
@@ -821,7 +823,6 @@ class TransactionRepository extends BaseRepository
             $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
 
             $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
-                    
         }
 
         return $results;

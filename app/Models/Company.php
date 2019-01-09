@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Company extends Model
 {
+    use SoftDeletes;
 
     public $table = 'companies';
     
@@ -30,6 +31,8 @@ class Company extends Model
         'coupon_codes_id',
         'phone'
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be casted to native types.

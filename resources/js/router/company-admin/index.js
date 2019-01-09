@@ -14,16 +14,16 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 import ChangePassword from '../../views/partials/users/ChangePassword'
 
 // Content Manager Systems
-import ContentManSystem from '../../views/company-admin/cms/Index'
+import CMS from '../../views/company-admin/cms/Index'
 
 //Branches
-import Branch from '../../views/company-admin/branch/Branchs'
+import Branches from '../../views/company-admin/branch/Branches'
 
 //Photographers
-import Photographer from '../../views/company-admin/photographer/Photographers'
+import Photographers from '../../views/company-admin/photographer/Photographers'
 
 //Customers
-import Customer from '../../views/company-admin/customer/Customers'
+import Customers from '../../views/company-admin/customer/Customers'
 
 export default {
 	path: '/company-admin',
@@ -66,8 +66,8 @@ export default {
 	    },
 	    {
 				path: '/company-admin/branches',
-		        component: Branch,
-		        name : 'CompanyBranch',
+		        component: Branches,
+		        name : 'branches',
 		        meta: {
 		            requiresAuth: true,
 		            adminAuth:false,
@@ -77,8 +77,8 @@ export default {
 		},
 		{
 				path: '/company-admin/photographers',
-		        component: Photographer,
-		        name : 'CompanyBranchPhotographer',
+		        component: Photographers,
+		        name : 'photographers',
 		        meta: {
 		            requiresAuth: true,
 		            adminAuth:false,
@@ -88,8 +88,8 @@ export default {
 		},
 		{
 				path: '/company-admin/customers',
-		        component: Customer,
-		        name : 'Customer',
+		        component: Customers,
+		        name : 'customers',
 		        meta: {
 		            requiresAuth: true,
 		            adminAuth:false,
@@ -100,7 +100,8 @@ export default {
 		},
 		{
 	        path: '/company-admin/content-pages',
-	        component: ContentManSystem,
+	        component: CMS,
+	        name: 'cms',
 	        meta: {
 	        	requiresAuth:true,
 	        	// adminAuth:false,

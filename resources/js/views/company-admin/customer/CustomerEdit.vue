@@ -180,7 +180,7 @@ import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 export default {
 
-  name: 'customer-edit',
+  name: 'CustomerEdit',
 
   data () {
     return {

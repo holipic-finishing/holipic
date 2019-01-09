@@ -103,7 +103,7 @@ import Vue from 'vue'
 
 export default {
 
-  name: 'BranchCompany',
+  name: 'Branches',
   components: {
   	BranchEdit, BranchAdd
   },

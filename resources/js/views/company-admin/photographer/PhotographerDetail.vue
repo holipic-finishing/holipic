@@ -108,7 +108,7 @@
 <script>
 export default {
 
-  	name: 'photographer-detail',
+  	name: 'PhotographerDetail',
 
   	data () {
 	    return {

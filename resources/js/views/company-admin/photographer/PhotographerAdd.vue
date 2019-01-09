@@ -145,7 +145,7 @@ import config from '../../../config/index.js'
 
 export default {
 
-  name: 'photographer-add',
+  name: 'PhotographerAdd',
 
   	data () {
 	    return {

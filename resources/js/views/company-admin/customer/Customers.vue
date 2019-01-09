@@ -112,11 +112,11 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
-import CustomerEdit from './Customer-Edit'
+import CustomerEdit from './CustomerEdit'
 
 export default {
 
-  name: 'Customer',
+  name: 'Customers',
   components: {
   	CustomerEdit
   },

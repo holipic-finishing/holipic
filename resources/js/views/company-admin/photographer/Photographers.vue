@@ -109,9 +109,9 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
-import PhotographerDetail from './Photographer-Detail.vue'
-import PhotographerAdd from './Photographer-Add.vue'
-import PhotographerEdit from './Photographer-Edit.vue'
+import PhotographerDetail from './PhotographerDetail'
+import PhotographerAdd from './PhotographerAdd'
+import PhotographerEdit from './PhotographerEdit'
 
 export default {
 

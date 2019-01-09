@@ -168,7 +168,7 @@ import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 export default {
 
-  name: 'photographer-edit',
+  name: 'PhotographerEdit',
 
   	data () {
 	    return {

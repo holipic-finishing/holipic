@@ -16,19 +16,20 @@ class PhotographersTableSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         \App\Models\Photographer::truncate();
-        
-        // create photographer with branch
-        for ($i=1; $i < 20 ; $i++) {
-            // $company = \App\Models\Company::find($i);
 
-            \App\Models\Photographer::create([
-             
-                'branch_id' => 2,
-                'name' => $faker->name,
-                'phone_number' => $faker->phoneNumber,
-                'address' => $faker->address,
-                'status' => $faker->boolean,
-            ]);
+        $branches = \App\Models\Branch::all();
+
+        foreach ($branches as $branch) {
+            for ($i=0; $i < rand(3,8); $i++) { 
+                \App\Models\Photographer::create([    
+                    'branch_id' => 2,
+                    'name' => $faker->name,
+                    'phone_number' => $faker->phoneNumber,
+                    'address' => $faker->address,
+                    'status' => $faker->boolean,
+                    'branch_id' => $branch->id,
+                ]);
+            }
         }
     }
 }

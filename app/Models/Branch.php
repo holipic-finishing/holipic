@@ -22,7 +22,7 @@ class Branch extends Model
 
 
     public $fillable = [
-        'name', 'company_id', 'branch_password', 'user_id', 'branch_address', 'branch_phone_number'
+        'name', 'branch_password', 'branch_address', 'branch_phone_number', 'user_id', 'company_id'
     ];
 
     /**

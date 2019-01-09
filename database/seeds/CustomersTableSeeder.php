@@ -12,21 +12,36 @@ class CustomersTableSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-
         $faker = Faker\Factory::create();
+
         \App\Models\Customer::truncate();
         
-        // create user with user
-        for ($i=1; $i < 30 ; $i++) {
-            \App\Models\Customer::create([
-                'name' => $faker->name,
-                'room_id' => $faker->randomNumber(1),
-                'customer_password' => $faker->password,
-                'avatar' => $faker->image,
-                'branch_id' => 2,
-                'address' => $faker->address,
-                'status' => 1
-            ]);
+        $branches = \App\Models\Branch::all();
+
+        foreach ($branches as $branch) {
+            for ($i=0; $i < rand(3,5) ; $i++) {
+                $password = $faker->password;
+
+                $user =  \App\Models\User::create([
+                    'first_name' => $faker->firstName,
+                    'last_name' => $faker->lastName,
+                    'username' => $faker->userName,
+                    'email' => $faker->email,
+                    'password' => bcrypt($password),
+                    'role_id' => 4,
+                ]);
+
+                \App\Models\Customer::create([
+                    'name' => $faker->name,
+                    'address' => $faker->address,
+                    'status' => 1,
+                    'customer_password' => $password,
+                    'avatar' => $faker->image(public_path() . '/avatars'),
+                    'branch_id' => $branch->id,
+                    'user_id' => $user['id'],
+                    'room_id' => rand(1,100),
+                ]);
+            }
         }
     }
 }

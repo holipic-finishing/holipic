@@ -14,7 +14,7 @@
 			    <!-- Filter Component -->
 			   <v-layout row wrap border-rad-sm overflow-hidden>
 			   	<!-- select box branch -->
-				<v-flex xl2 lg2 md2 sm6 xs12>
+				<v-flex xl3 lg3 md3 sm6 xs12>
 		       <v-select
 		          v-model="selected"
 		          :items="items"
@@ -22,7 +22,7 @@
 	              browserAutocomplete="off"
 	              label="Select Branch"
 	              item-text="name"
-	              item-value="value"
+	              item-value="id"
 	              v-on:change="changeBranh"
 		        ></v-select>
 		      	</v-flex>
@@ -159,12 +159,10 @@ export default {
 			urlExport:'',
 			search:'',
 			selected: '',
-	        items: [
-	        	{name:'Programming',value:'0'},
-	        	{name:'Design',value:'1'},
-	        	{name:'Vue',value:'2'},
-	        	{name:'Vuetify',value:'3'}
-	       	],
+	        items: [{
+	        	id:'0',
+	        	name:"Select Branch"
+	        }],
 	        phographer:[{
 	        	value:'0',
 	        	name:'Select Photographer'	
@@ -184,7 +182,11 @@ export default {
 
 			get(url)
 			.then(res => {
-				
+				console.log(res)
+				if(res.data && res.data.success){
+					var data = res.data.data
+					this.items = data
+				}
 			})
 			.catch(err => {
 				console.log(err)

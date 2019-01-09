@@ -74,7 +74,7 @@ class BranchRepository extends BaseRepository
 
     public function handleGetBranchCompanyId($company_id){
 
-       return $this->model->where('company_id',$company_id)->pluck('name','id');
-       
+       return $this->model->select('id','name')->where('company_id',$company_id)->get();
+
     }
 }

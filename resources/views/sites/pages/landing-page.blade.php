@@ -494,6 +494,9 @@ Holipic
 						<div class="row">
 							<!-- Pricing single start -->
 							@if(!empty($list))
+							@php
+								$amounts = count($list);
+							@endphp
 							@foreach( $list as $value)
 							
 							<div class="col-md-6 common-package-discount">
@@ -537,15 +540,15 @@ Holipic
 									</div>
 									
 									@if($value->package_name=="Basic")
-									<div class="btn-buynow">
-										<a data-package='1' class="has-popup select-package" href="#signup">START TO BASIC</a>
-									</div>
+									
+										<div class="btn-buynow">
+											<a data-package='1' class="select-package" href="#signup" id="{{ $value->id }}">START TO BASIC</a>
+										</div>
 									@else
 
-									<div class="btn-buynow btn-enterprise">
-										<a class="has-popup select-package" data-package='2' href="#signup">UPDATE TO PRO</a>
-									</div>
-
+										<div class="btn-buynow btn-enterprise">
+											<a data-package='2' class="select-package" href="#signup" id="{{ $value->id }}">UPDATE TO PRO</a>
+										</div>
 									@endif
 								</div>
 							</div>
@@ -970,6 +973,56 @@ Holipic
 			    }   
 	         });
 		});
+
+		function reset() {
+	    	var array = [
+	    		$('#message-form-signup-first_name').empty(),
+			   	$('#message-form-signup-last_name').empty(),
+			   	$('#message-form-signup-company_name').empty(),
+			   	$('#message-form-signup-email').empty(),
+			   	$('#message-form-signup-password').empty(),
+			   	$('#message-form-signup-checkbox').empty(),
+           		$('#message-form-signup').empty(),
+           		$('#message-form-signin-email').empty(),
+			   	$('#message-form-signin-password').empty(),
+	    	]
+
+	    	return array;
+	    }
+
+	    function ficPopup(item) {
+	 		$(item).magnificPopup({
+	 		items: {
+		      	src: '#signup',
+		      	type: 'inline'
+		  	},
+			fixedContentPos: true,
+			fixedBgPos: true,
+			overflowY: 'auto',
+			closeBtnInside: true,
+			removalDelay: 300,
+			mainClass: 'mfp-zoom-in',
+			callbacks: {
+				open: function() {
+					$('html').css('margin-right', 0);
+					$('html').css('overflow', 'auto');
+					$('body').css('position', 'fixed');
+				},
+
+				close: function() {
+					$('body').css('position','');
+		  			reset();
+				}
+			}
+			});
+	 	}
+
+        var amounts = "<?php echo($amounts) ?>"
+
+	 	for(i = 1; i <= amounts; i++) {
+	 		var id_button = '#' +i;
+	 		ficPopup(id_button);
+	 	}
 	});
 </script>
 @endsection

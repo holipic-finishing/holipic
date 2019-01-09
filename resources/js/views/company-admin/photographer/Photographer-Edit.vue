@@ -179,7 +179,7 @@ export default {
 	    	},
 	    	valid: true,
 	    	branches: [],
-	    	user: JSON.parse(localStorage.getItem('user')),
+	    	company: JSON.parse(localStorage.getItem('user')),
 			status: ['Active', 'Inactive'],
 			alertStt:false,
 			alertType:'success',
@@ -208,7 +208,7 @@ export default {
 	methods: {
 		getBranchCompany()
   		{
-  			get(config.API_URL+'company/branches?userId='+this.user.id)
+  			get(config.API_URL+'company/branches?companyId='+this.company.company_id)
 			.then(response => {
 				if(response && response.data.success) {
 					this.branches = response.data.data					

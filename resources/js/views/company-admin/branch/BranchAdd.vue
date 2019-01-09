@@ -1,5 +1,5 @@
 <template>
-<v-layout row wrap>
+<!-- <v-layout row wrap> -->
 
 	<v-navigation-drawer 
 	fixed
@@ -26,7 +26,7 @@
 			v-model="valid"
 			lazy-validation
 			>
-			<v-list>
+			<v-list class="heigth-list-title">
 
 				<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 
@@ -123,26 +123,29 @@
 						</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
+				<v-divider class="no-mg-bottom"></v-divider>
 
-				<v-spacer></v-spacer>
+			</v-list>
 
-				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
+				<!-- <v-spacer></v-spacer> -->
+
+				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end fix-flex-end">
 					<v-btn dark color="indigo" class="add-btn" @click="saveBranch()">
 						Save
 					</v-btn>
 					<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
 				</v-card-actions>
 
-			</v-list>
+		
 		</v-form>
 		</v-card>      	
 	</v-navigation-drawer>
-</v-layout>
+<!-- </v-layout> -->
 </template>
 
 <script>
-import  { get, post, put, del, getWithData } from '../../../../api/index.js'
-import config from '../../../../config/index.js'
+import  { get, post, put, del, getWithData } from '../../../api/index.js'
+import config from '../../../config/index.js'
 import Vue from 'vue'
 
 export default {
@@ -157,7 +160,7 @@ export default {
 	        required: value => !!value || 'This field is required.'
     	},
     	valid: true,
-    	user: JSON.parse(localStorage.getItem('user')),
+    	company: JSON.parse(localStorage.getItem('user')),
     	alertStt:false,
 		alertType:'success',
 		alertMes: ''
@@ -176,7 +179,7 @@ export default {
   	{
   		console.log(this.branch)
   		if (this.$refs.form.validate()) {
-  			let params = {information: this.branch, userId: this.user.id}
+  			let params = {information: this.branch, companyId: this.company.company_id}
   			post(config.API_URL+'company/branch', params)
   			.then(response => {
   				if(response && response.data.success) {
@@ -201,5 +204,10 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+	.fix-flex-end{
+		margin-bottom: 0px;
+		position:absolute;
+		bottom: 0px;
+	}
 </style>

@@ -17,13 +17,13 @@ import ChangePassword from '../../views/partials/users/ChangePassword'
 import ContentManSystem from '../../views/company-admin/cms/Index'
 
 //Branches
-import Branch from '../../views/company-admin/branch/Branch'
+import Branch from '../../views/company-admin/branch/Branchs'
 
 //Photographers
-import Photographer from '../../views/company-admin/photographer/Photographer'
+import Photographer from '../../views/company-admin/photographer/Photographers'
 
 //Customers
-import Customer from '../../views/company-admin/customer/Customer'
+import Customer from '../../views/company-admin/customer/Customers'
 
 export default {
 	path: '/company-admin',

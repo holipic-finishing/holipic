@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\CompanyAdmin;
 
 use App\Http\Requests\API\CreateCustomerAPIRequest;
 use App\Http\Requests\API\UpdateCustomerAPIRequest;
@@ -154,6 +154,6 @@ class CustomerAPIController extends AppBaseController
 
     public function exportEmailCustomers()
     {
-        return \Excel::download(new ListEmailCustomers(request('userId')), 'ListEmailCustomers.xlsx');
+        return \Excel::download(new ListEmailCustomers(request('companyId')), 'ListEmailCustomers.xlsx');
     }
 }

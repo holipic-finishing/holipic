@@ -143,8 +143,8 @@ export default {
 				  	rowsPerPage: 25  	
 		    		},
 		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
-		user: JSON.parse(localStorage.getItem('user')),
-		urlExport: config.API_URL+'company/branches/customers/export?userId='+JSON.parse(localStorage.getItem('user')).id
+		company: JSON.parse(localStorage.getItem('user')),
+		urlExport: config.API_URL+'company/branches/customers/export?companyId='+JSON.parse(localStorage.getItem('user')).company_id
 
     }
   },
@@ -158,7 +158,7 @@ export default {
   methods:{
   	fetchData()
   	{
-  		get(config.API_URL+'company/branches/customers?userId='+this.user.id)
+  		get(config.API_URL+'company/branches/customers?companyId='+this.company.company_id)
   		.then(response => {
   			if(response && response.data.success) {
   				this.items = response.data.data

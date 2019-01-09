@@ -80,6 +80,8 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
 
+	Route::get('photographer/photographer-branch','PhotographerAPIController@getPhotographerByBranch');
+
 
 	/*************BranchAPIController**************/
 	Route::resource('branches', 'BranchAPIController');

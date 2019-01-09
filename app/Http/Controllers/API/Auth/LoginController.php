@@ -152,14 +152,15 @@ class LoginController extends BaseApiController
                     "message"=> 'Current account is block'
                 ];
             }
+            
+            $this->reNewToken();
+
             $userInfo = $this->informationUser(auth()->user());
 
             $data = [
                 'status' => $token,
                 'user' => $userInfo,
             ];
-            
-            $this->reNewToken();
 
             return [
                 "success" => true,

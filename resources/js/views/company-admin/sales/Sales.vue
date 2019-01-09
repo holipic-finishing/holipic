@@ -20,10 +20,9 @@
 		          :items="items"
 		           autocomplete
 	              browserAutocomplete="off"
-	              label="Select Branch"
 	              item-text="name"
 	              item-value="id"
-	              v-on:change="changeBranh"
+	              v-on:change="changeBranh(selected)"
 		        ></v-select>
 		      	</v-flex>
 			   	<!-- select box photographer -->
@@ -34,7 +33,7 @@
 		           autocomplete
 	              browserAutocomplete="off"
 	              item-text="name"
-	              item-value="value"
+	              item-value="id"
 	              label="Select Photographer"
 		        ></v-select>
 		      	</v-flex>
@@ -52,7 +51,6 @@
 						slot="activator"
 						prepend-icon="event"
 						v-model="computedStartDay"
-						readonly
   						placeholder="Enter Start Date"
 					></v-text-field>
 					<v-date-picker 
@@ -77,7 +75,6 @@
 						slot="activator"
 						prepend-icon="event"
 						v-model="computedEndDay"
-						readonly
   						placeholder="Enter End Date"
 					></v-text-field>
 					<v-date-picker 
@@ -89,7 +86,7 @@
 				</v-menu>
 				</v-flex>
 				<v-flex xl1 lg1 md1 sm6 xs12>
-					<v-btn class="btn-style" depressed color="primary">Go</v-btn>
+					<v-btn class="btn-style" depressed color="primary" @click="reachSales()">Go</v-btn>
 		      	</v-flex>
 		      	<v-flex xl1 lg1 md1 sm6 xs12>
 				    <v-tooltip bottom class="icon-style">
@@ -158,42 +155,115 @@ export default {
 			to_day:'',
 			urlExport:'',
 			search:'',
-			selected: '',
+			selected: {
+	        	id:'0',
+	        	name:"-- Select Branch --"
+	        },
 	        items: [{
 	        	id:'0',
-	        	name:"Select Branch"
+	        	name:"-- Select Branch --"
 	        }],
 	        phographer:[{
-	        	value:'0',
-	        	name:'Select Photographer'	
+	        	id:'0',
+	        	name:'-- Select Photographer --'	
 	        	}
 	        ],
-			selected1:''
+			selected1:'',
+			authUser:JSON.parse(localStorage.getItem('user')),
+			filterSearch:''
 		}
 	},
 	created(){
 		this.fetchDataBranch()
+	    this.selected1 = {
+	        	id:'0',
+	        	name:'-- Select Photographer --'	
+	        }
 	},
 	methods:{
 		fetchDataBranch(){
-			var authUser = JSON.parse(localStorage.getItem('user'))
-			
-			var url = config.API_URL+'company/branch-company?companyId='+authUser.company_id
+		
+			var url = config.API_URL+'company/branch-company?companyId='+this.authUser.company_id
 
 			get(url)
 			.then(res => {
-				console.log(res)
 				if(res.data && res.data.success){
 					var data = res.data.data
-					this.items = data
+					var vm = this
+					_.forEach(data, function(value,key){
+						vm.items.push(value)					
+					})				    
 				}
 			})
 			.catch(err => {
 				console.log(err)
 			})
 		},
-		changeBranh(item){
-			console.log(item)
+		changeBranh(item){		
+			if(item == 0) {
+				this.phographer =  [{
+		        	id:'0',
+		        	name:'-- Select Photographer --'	
+		        }]
+		        this.selected1 = {
+	        		id:'0',
+	        		name:'-- Select Photographer --'	
+	       	 	}
+			} 
+			var url = config.API_URL+'photographer/photographer-branch?branchId='+item
+			get(url)
+			.then(res => {
+				if(res.data && res.data.success){
+					var data = res.data.data
+					var vm = this
+					_.forEach(data, function(value,key){
+						vm.phographer.push(value)
+							
+					})
+				}
+			})	
+			.catch(err =>{
+
+			})
+		},
+
+		makeParams(){
+
+			let searchValues = []
+			var setsearch = ''
+
+			if(_.trim(this.selected)){
+				if(this.selected.id == 0 ) {
+                searchValues.push('branch_id:' + '0')
+
+				} else {
+
+                searchValues.push('branch_id:' + this.selected)
+				}
+            }
+            if(_.trim(this.selected1)){
+             	if(this.selected == 0){
+             		searchValues.push('photographer_id:' +'0')
+             	}  else if(this.selected1.id == 0) {
+             		searchValues.push('photographer_id:' +'0')
+             	} else {
+                	searchValues.push('photographer_id:' + this.selected1)
+             	}
+            }
+            if(_.trim(this.from_day)){
+                searchValues.push('from_day:' + this.from_day)
+            }
+            if(_.trim(this.to_day)){
+                searchValues.push('to_day:' + this.to_day)
+            }
+
+			this.filterSearch = searchValues.join(";")
+		},
+
+		reachSales(){
+			this.makeParams()
+			console.log(this.filterSearch)
+			
 		}
 	},
 	computed:{

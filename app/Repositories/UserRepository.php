@@ -68,6 +68,7 @@ class UserRepository extends BaseRepository
         return $this->scopeQuery(function($query) use ($email){
             return $query->where('email', $email)->where('role_id', 2);
         })->first();
+
     } 
 
     public function findUserByUserName($userName)
@@ -77,4 +78,17 @@ class UserRepository extends BaseRepository
             return $query->where('username', $userName);
         })->first();
     } 
+
+
+    public function checkUserCommpanyExits($user)
+    {
+        $company = \App\Models\Company::onlyTrashed()->whereOwnerId($user->id)->first();
+
+        if(!empty($company)) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

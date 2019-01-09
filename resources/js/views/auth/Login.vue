@@ -1,13 +1,15 @@
 <template>
 	<div>
 		<h2 class="mb-3">{{$t('message.loginToAdmin')}}</h2>
-		<p class="fs-14">{{$t('message.enterUsernameAndPasswordToAccessControlPanelOfHolipic')}}.</p>
-		<v-form v-model="valid" class="mb-4">
+		<p class="fs-14">Enter email and password to access control panel of Holipic.</p>
+		<v-form v-model="valid" class="mb-4" ref="form">
 			<v-text-field 
-			label="E-mail ID" 
+			label="E-mail" 
 			v-model="email" 
 			:rules="emailRules" 
 			required
+			@keyup.enter="login"
+
 			></v-text-field>
 
 			<v-text-field 
@@ -16,6 +18,7 @@
 			type="password" 
 			:rules="passwordRules" 
 			required
+			@keyup.enter="login"
 			></v-text-field>
 
 			<v-checkbox 
@@ -45,10 +48,11 @@ export default {
 	components: {
     // SessionSliderWidget
 	},
+
 	data() {
 		return {
 			checkbox: false,
-			valid: false,
+			valid: true,
 			email: "admin@gmail.com",
 			emailRules: [
 			v => !!v || "E-mail is required",
@@ -56,14 +60,15 @@ export default {
 			// /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
 			// "E-mail must be valid"
 			],
-			password: "test#123",
+			password: "",
 			passwordRules: [v => !!v || "Password is required"],
 			appLogo: AppConfig.appLogo2,
 			brand: AppConfig.brand
 		};
 	},
 	methods: {
-		submit() {
+		submit() 
+		{
 			const user = {
 				email: this.email,
 				password: this.password
@@ -73,17 +78,19 @@ export default {
 				path: '/default/dashboard/ecommerce'
 			});
 		},
-	  	login () {
 
-	  	 const user = {
-	        email: this.email,
-	        password: this.password
-	      };
-	      this.$store.dispatch("signinUserInDatabase", {
-	        user
-	      });
-	  }
+	  	login () {
+	  		if(this.$refs.form.validate()) {
+		  		const user = {
+		        email: this.email,
+		        password: this.password
+		      	};
+
+		      	this.$store.dispatch("signinUserInDatabase", {user});
+	  		}
+	  	}
 	}
+
 };
 </script>
 

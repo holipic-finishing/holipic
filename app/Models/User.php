@@ -19,6 +19,7 @@ class User extends Authenticatable
     public $fillable = [
         'first_name',
         'last_name',
+        'username',
         'email',
         'password',
         'access_token',
@@ -87,6 +88,16 @@ class User extends Authenticatable
 
     public function setting(){
         return $this->hasOne('App\Models\Setting','id','package_id');
+    }
+
+    public function branch()
+    {
+        return $this->hasOne('App\Models\Branch', 'user_id', 'id');
+    }
+
+    public function customer()
+    {
+        return $this->hasOne('App\Models\Customer', 'user_id', 'id');
     }
 
 }

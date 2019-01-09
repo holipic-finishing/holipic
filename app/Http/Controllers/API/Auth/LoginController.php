@@ -145,19 +145,24 @@ class LoginController extends BaseApiController
                 }
             
 
+            if(!$this->userRepo->checkUserCommpanyExits(auth()->user())) {
+                return [
+                    "success"=> false,
+                    "message"=> 'Current account is block'
+                ];
+            }
+
             $data = [
                 'status' => $token,
                 'user' => auth()->user(),
             ];
-
+            
             $this->reNewToken();
 
             return [
                 "success" => true,
                 "data" => $data,
             ];
-
-            //return view('welcome', ['token' => $data['user']['access_token'], 'currentUser' => $data['user']]);
 
         } catch (\Exception $e){
 

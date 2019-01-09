@@ -1,5 +1,5 @@
-<template>	
-	
+<template>
+	<v-layout row wrap>
 
 	<v-navigation-drawer 
     fixed
@@ -12,7 +12,7 @@
   	>
       	<v-card class="h-100 position-relative">
 			<v-toolbar>
-	      		<v-toolbar-title class="text-capitalize">{{companyName}}</v-toolbar-title>
+	      		<v-toolbar-title class="text-capitalize">Edit Branch</v-toolbar-title>
 	      		<v-spacer></v-spacer>
 	     		<v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
 		      		<v-icon>
@@ -29,15 +29,15 @@
 		    	<v-list-tile class="height-80">
 			        <v-list-tile-content class="h-100">
 			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Company Name:</span>
+			            <span class="font-weight-bold item-title position-item">Branch Name:</span>
 			            <span class="contain-text-field">
 			              <v-text-field
 			                class="font-weight-bold height-input"
-			                placeholder="Enter Company Name"
-			                v-model="company.name"
+			                placeholder="Enter Branch Name"
+			                v-model="branch.name"
 			                outline
 			                :disabled="key == 1 ? false : true"
-			                @keyup.enter="updateCompany('name', company.name)"
+			                 @keyup.enter="updateBranch('name', branch.name)"
 			              ></v-text-field>
 			            </span>
 			            <span class="position-item">
@@ -51,15 +51,16 @@
 		      	<v-list-tile class="height-80">
 			        <v-list-tile-content class="h-100">
 			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Address:</span>
+			            <span class="font-weight-bold item-title position-item">Password:</span>
 			            <span class="contain-text-field">
 			              <v-text-field
 			                class="font-weight-bold height-input"
-			                placeholder="Enter address"
-			                v-model="company.address"
+			                placeholder="Enter Password"
+			                v-model="branch.branch_password"
 			                outline
 			                :disabled="key == 2 ? false : true"
-			                @keyup.enter="updateCompany('address', company.address)"
+			                 @keyup.enter="updateBranch('password', branch.branch_password)"
+			                
 			              ></v-text-field>
 			            </span>
 			            <span class="position-item">
@@ -67,22 +68,21 @@
 			            </span>
 			          </v-list-tile-title>
 			        </v-list-tile-content>
-		     	</v-list-tile>
+		      	</v-list-tile>
 		      	<v-divider class="no-mg-bottom"></v-divider>
-
 
 		      	<v-list-tile class="height-80">
 			        <v-list-tile-content class="h-100">
 			          <v-list-tile-title class="content-flex-end h-100">
-			            <span class="font-weight-bold item-title position-item">Description:</span>
+			            <span class="font-weight-bold item-title position-item">Address:</span>
 			            <span class="contain-text-field">
 			              <v-text-field
 			                class="font-weight-bold height-input"
-			                placeholder="Enter description"
-			                v-model="company.description"
+			                placeholder="Enter Address"
+			                v-model="branch.branch_address"
 			                outline
 			                :disabled="key == 3 ? false : true"
-			                @keyup.enter="updateCompany('description', company.description)"
+			                 @keyup.enter="updateBranch('address', branch.branch_address)"
 			                
 			              ></v-text-field>
 			            </span>
@@ -91,7 +91,7 @@
 			            </span>
 			          </v-list-tile-title>
 			        </v-list-tile-content>
-		     	</v-list-tile>
+		      	</v-list-tile>
 		      	<v-divider class="no-mg-bottom"></v-divider>
 
 		      	<v-list-tile class="height-80">
@@ -101,11 +101,11 @@
 			            <span class="contain-text-field">
 			              <v-text-field
 			                class="font-weight-bold height-input"
-			                placeholder="Enter phone"
-			                v-model="company.phone"
+			                placeholder="Enter Phone"
+			                v-model="branch.branch_phone_number"
 			                outline
 			                :disabled="key == 4 ? false : true"
-			                @keyup.enter="updateCompany('phone', company.phone)"
+			                 @keyup.enter="updateBranch('phone', branch.branch_phone_number)"
 			                
 			              ></v-text-field>
 			            </span>
@@ -114,8 +114,10 @@
 			            </span>
 			          </v-list-tile-title>
 			        </v-list-tile-content>
-		     	</v-list-tile>
+		      	</v-list-tile>
 		      	<v-divider class="no-mg-bottom"></v-divider>
+		      	
+
 		    </v-list>
 
 		      <!-- <v-spacer></v-spacer> -->
@@ -123,87 +125,76 @@
 			      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
 			    </v-card-actions>
 
-		    
 		</v-card>      	
     </v-navigation-drawer>
-
+</v-layout>
 </template>
+
 <script>
+import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 
 export default {
-	name: 'CompanyEdit',
-	data () {
-		return {
-			company: [],
-			drawerRight: false,
-			nameRules: [
-        		v => !!v || 'Name is required'
-      		],
-      		descriptionRules: [
-        		v => !!v || 'Description is required'
-      		],
-      		phoneRules: [
-        		v =>  /^([0-9]*|\d*\.\d{1}?\d*)$/.test(v) || 'Phone is required and is number'
-        		
-      		],
-      		alertType: 'success',
-      		alertMes: '',
-      		key: 0,
-      		alertStt: false,
-      		companyName: ''
 
-		}
+  name: 'branch-edit',
+
+	data () {
+	    return {
+	    	drawerRight: false,
+	    	branch: [],
+	    	key: 0,
+	    	alertStt: false,
+	    	alertType: 'success',
+	    	alertMes: ''
+	    }
 	},
 	mounted() {
-		this.$root.$on('sendEventCompanyEdit', response => {
-			this.drawerRight =  response.showNavigation
-			this.company = response.data
-			this.companyName = response.data.name
-		});
+	  	this.$root.$on('sendEventBranchEdit', response => {
+	  		this.drawerRight =  response.showNavigation
+	  		this.branch = response.data
+	  	});
 	},
-
 	methods: {
-		unDisableItem(key) {
-			this.key = key
+		unDisableItem(index) 
+		{
+			this.key = index
 		},
 		checkValue(){
-			if(this.company.name == '' || this.company.address == '' || this.company.description == '' || this.company.phone == '')
+			if(this.branch.name == '' || this.branch.branch_address == '' || this.branch.branch_password == '' || this.branch.branch_phone_number == '')
 			{
 				this.alertStt = true
 		        this.alertType = 'error'
-		        this.alertMes = 'System Error Occurred'         
+		        this.alertMes = 'Please type text'         
 		        setTimeout(() => {
 		          this.alertStt = false
 		        }, 1500)
-				this.$root.$emit('editCompanySuccess')
+				this.$root.$emit('reloadTableBranch')
 				this.key = 0
 				return false
 			}
 			return true
 		},
-
-		updateCompany(field, value) {
-			
+		updateBranch(field, value)
+		{
 			let params = {}
 
 			switch(field) {
 			  case "name":
-			    params = {name: this.company.name};
+			    params = {name: value};
 			    break;
 			  case "address":
-			    params = {address: this.company.address};
+			    params = {branch_address: value};
 			    break;
-			  case "description":
-			     params = {description: this.company.description};
+			  case "password":
+			     params = {branch_password: value};
 			    break;
 			  default:
-			    params = {phone: this.company.phone};
+			    params = {branch_phone_number: value};
 			}
 
 			if(this.checkValue())
 			{
-				axios.put(config.API_URL+'companies/'+this.company.id, {params: params})
+				put(config.API_URL+'branches/'+this.branch.id, {params: params})
 				.then (response => {
 					if(response && response.data.success) {
 						this.company = response.data.data
@@ -214,15 +205,8 @@ export default {
 			            	this.alertStt = false
 						}, 1500)
 						this.key = 0
-						this.$root.$emit('editCompanySuccess')
-
-						 // setTimeout(function(){	
-						 // 	Vue.notify({
-						 // 	 group: 'loggedIn',
-						 // 	 type: 'success',
-						 // 	 text: 'Update success'
-						 // 	});
-						 // },500);
+						this.$root.$emit('reloadTableBranch')
+						
 					}
 				})
 
@@ -233,14 +217,15 @@ export default {
 			        setTimeout(() => {
 			          this.alertStt = false
 			        }, 1500)
-					this.$root.$emit('editCompanySuccess')
+					this.$root.$emit('reloadTableBranch')
 					this.key = 0
 				})	
 
 			}	
-			
 		}
 	}
-	
 }
 </script>
+
+<style lang="css" scoped>
+</style>

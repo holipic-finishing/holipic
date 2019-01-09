@@ -86,7 +86,9 @@ class CompanyRepository extends BaseRepository
         $results = DB::table('companies as c')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->select('c.id as id', 'c.name','c.phone' ,'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name','c.owner_id')->orderBy('c.id', 'desc')
+                    ->select('c.id as id', 'c.name','c.phone' ,'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name','c.owner_id')
+                    ->whereNull('c.deleted_at')
+                    ->orderBy('c.id', 'desc')
                     ->get();
        
         $results = $this->transform($results);

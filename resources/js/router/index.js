@@ -14,6 +14,7 @@ import CustomerRoutes from './customer';
 import PageNotFound from '../views/partials/pages/page404'
 
 
+
 Vue.use(Router)
 
 var routers = [];

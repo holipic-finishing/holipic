@@ -17,8 +17,13 @@ yarn-error.log
 /public/js/app.js
 /public/logos/
 /public/fonts/vendor/
+<<<<<<< HEAD
 /resources/js/views/dashboard/.fuse_hidden0000980400002570
 /app/Repositories/.fuse_hidden0001262f00000003
 /resources/js/views/companies/.fuse_hidden0000219800002586
 /routes/.fuse_hidden000009ca00000001
+dump.rdb
 
+=======
+dump.rdb
+>>>>>>> 1ed0cf53c5f75f8b8e40313ff11df117cfbda48f

@@ -79,11 +79,6 @@ export default {
                 backgroundColor: this.gradient1,
                 borderColor: ChartConfig.color.info,
                 lineTension: 0.4,
-	            // pointBorderColor: '#17a2b8',
-	            // pointBorderWidth: 2,
-	            // pointRadius: 2,
-	            // pointBackgroundColor: '#FFF',
-	      		// borderWidth: 3,
                 fill: true
             }
          ]
@@ -99,7 +94,7 @@ export default {
 
     getData(params){
 
-			let url = config.API_URL+'report-incomes-package'
+			let url = config.API_URL+'company-admin-chart'
 
 			getWithData(url,params)
 			.then((res) => {

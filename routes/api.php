@@ -143,6 +143,8 @@ Route::group(['namespace' => 'API'],function(){
 	/*************Different Controllers**************/
 
 	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
+	
+	Route::get('company-admin-chart', 'ReportController@getInfoForChartCompanyAdmin');
 
 	Route::resource('exchange_rates', 'ExchangeRateAPIController');
 

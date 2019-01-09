@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use App\Repositories\TransactionRepository;
+use App\Repositories\OrderRepository;
 use App\Http\Controllers\API\BaseApiController;
 
 class ReportController extends BaseApiController
@@ -13,16 +14,18 @@ class ReportController extends BaseApiController
 
 	/** @var  TransactionRepository */
     private $transactionRepository;
+    private $orderRepository;
 
-    public function __construct(TransactionRepository $transactionRepo)
+    public function __construct(TransactionRepository $transactionRepo, OrderRepository $orderRepo)
     {
         $this->transactionRepository = $transactionRepo;
+        $this->orderRepository = $orderRepo;
     }
     
 
-	public function reportIncomesPackage(Request $request){
+	  public function reportIncomesPackage(Request $request){
 
-		$input = $request->all();
+		 $input = $request->all();
         // report from day, to day
        	if($request->has(['start_day','end_day'])){
 
@@ -221,5 +224,116 @@ class ReportController extends BaseApiController
          }
           $data = array_reverse($arrayWeek);
          return $data;
+    }
+
+
+    /**
+     *
+     * function to get infomation in order table (status is Done) to sale chart in company-admin  
+     *@param : defaultDay or defaultWeek or defaultMonth or defaultYear
+     */
+    
+    public function getInfoForChartCompanyAdmin(Request $request){
+        $input = $request->all();
+        // report from day, to day
+        if($request->has(['start_day','end_day'])){
+
+          $arrayDay = $this->initDays($input['start_day'],$input['end_day']);
+
+          $report = $this->orderRepository->reportSaleDaily($input,$arrayDay);
+
+          return $this->responseSuccess('Data success',$report);
+
+        } else 
+        // report from month, to month 
+          if($request->has(['start_month','end_month'])){
+
+            $arrayInMonth = $this->initInMonth($input['start_month'],$input['end_month']);
+
+            $report = $this->orderRepository->reportSaleMonth($input,$arrayInMonth);
+
+            return $this->responseSuccess('Data success',$report);
+
+        } else 
+        // report year
+          if($request->has(['start_year','end_year'])){
+
+            $arrayMonthInYear = $this->initYear($input['start_year'],$input['end_year']);
+            
+            $report = $this->orderRepository->reportSaleYear($input,$arrayMonthInYear);
+
+            return $this->responseSuccess('Data success',$report);
+
+        } else 
+        // report week
+          if($request->has(['start_day_week','end_day_week'])){
+
+            $arrayWeek = $this->initDayWeekDays($input['start_day_week'],$input['end_day_week']);
+
+            $report = $this->orderRepository->reportSaleWeek($input,$arrayWeek);
+
+            return $this->responseSuccess('Data success',$report);
+
+        } else 
+          // report default week
+          if ($request->has(['defaultWeek'])) {
+
+            $arrayWeek = $this->initWeekDays();
+
+            $report = $this->orderRepository->reportSaleWeek($input,$arrayWeek);
+
+            return $this->responseSuccess('Data success',$report);
+
+        } else 
+          // report default 7 days 
+          if($request->has(['defaultDay'])){
+
+            $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
+
+            $endDay     = Carbon::today()->format('Y-m-d');
+
+            $arrayDay = $this->initDays($startDay,$endDay);
+
+            $report = $this->orderRepository->reportSaleDaily($input,$arrayDay);
+
+            return $this->responseSuccess('Data success',$report);
+       
+        } else 
+          // report default 12 month
+          if($request->has(['defaultMonth'])){
+
+            $startMonth  = Carbon::today()->subMonth(12)->format('Y-m-d');
+
+            $endMonth    = Carbon::today()->format('Y-m-d');
+
+            $arrayMonth = $this->initInMonth($startMonth,$endMonth);
+
+            $report = $this->orderRepository->reportSaleMonth($input,$arrayMonth);
+
+            return $this->responseSuccess('Data success',$report);
+
+          }  else 
+
+          if($request->has(['defaultYear'])){
+
+            $startYear  = Carbon::today()->subYears(2)->format('Y-m');
+
+            $endYear    = Carbon::today()->format('Y-m');
+
+            $arrayYear = $this->initYear($startYear,$endYear);
+
+            $report = $this->orderRepository->reportSaleYear($input,$arrayYear);
+
+            return $this->responseSuccess('Data success',$report);
+
+          }
+
+        else
+        {
+
+          return $this->responseError('Failed!', [
+                'error' => 'Data not found',
+            ],500);
+        }
     }
 }

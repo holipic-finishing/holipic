@@ -39,4 +39,20 @@ class OrderRepository extends BaseRepository
     {
         return Order::class;
     }
+
+    public function reportSaleDaily(){
+        dd('daily');
+    }
+
+    public function reportSaleMonth(){
+        dd('month');
+    }
+
+    public function reportSaleYear(){
+        dd('year');
+    }
+
+    public function reportSaleWeek(){
+        dd('week');
+    }
 }

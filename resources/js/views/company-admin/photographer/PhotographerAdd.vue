@@ -11,7 +11,7 @@
 		>
 			<v-card class="h-100 position-relative">
 				<v-toolbar>
-					<v-toolbar-title class="text-capitalize">Edit Photographer</v-toolbar-title>
+					<v-toolbar-title class="text-capitalize">Add Photographer</v-toolbar-title>
 					<v-spacer></v-spacer>
 					<v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
 						<v-icon>
@@ -40,14 +40,10 @@
 						                :items="branches"
 						                item-value="id"
 		              					item-text="name"
-						                v-model="currentSelectBranch"
-						                :disabled="key == 1 ? false : true"
-						                @change="editPhotographer('branch', currentSelectBranch)"
+						                v-model="photographer.branch_id"
+						                :rules="[rules.required]"
 						              ></v-select>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -63,14 +59,10 @@
 										placeholder="Enter Name"
 										v-model="photographer.name"
 										outline
-										
-										:disabled="key == 2 ? false : true"
-										@keyup.enter="editPhotographer('name', photographer.name)"
+										:rules="[rules.required]"
+
 										></v-text-field>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -86,15 +78,10 @@
 										placeholder="Enter Phone"
 										v-model="photographer.phone_number"
 										outline
-										
-										:disabled="key == 3 ? false : true"
-										@keyup.enter="editPhotographer('phone_number', photographer.phone_number)"
+										:rules="[rules.required]"
 										
 										></v-text-field>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -110,15 +97,10 @@
 										placeholder="Enter Address"
 										v-model="photographer.address"
 										outline
+										:rules="[rules.required]"
 										
-										:disabled="key == 4 ? false : true"
-										@keyup.enter="editPhotographer('address', photographer.address)"
-
 										></v-text-field>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -133,31 +115,25 @@
 						                class="font-weight-bold height-input"
 						                outline
 						                :items="status"
-						                v-model="selectStatus"
-						                
-						                :disabled="key == 5 ? false : true"
-										@change="editPhotographer('status', selectStatus)"
+						                v-model="photographer.status"
+						                :rules="[rules.required]"
 						              ></v-select>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(5)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
 
 					</v-list>
-					</v-form>
+				</v-form>
 						<v-spacer></v-spacer>
 
 						<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-							
+							<v-btn dark color="indigo" class="add-btn" @click="savePhotographer()">
+								Save
+							</v-btn>
 							<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
 						</v-card-actions>
 
-					
-				
 			</v-card>      	
 		</v-navigation-drawer>
 	</v-layout>
@@ -166,9 +142,10 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
+
 export default {
 
-  name: 'photographer-edit',
+  name: 'PhotographerAdd',
 
   	data () {
 	    return {
@@ -179,117 +156,59 @@ export default {
 	    	},
 	    	valid: true,
 	    	branches: [],
-	    	user: JSON.parse(localStorage.getItem('user')),
+	    	company: JSON.parse(localStorage.getItem('user')),
 			status: ['Active', 'Inactive'],
 			alertStt:false,
 			alertType:'success',
-			alertMes: '',
-			key: 0,
-			currentSelectBranch: {
-		        id: '',
-		        name: '' 
-		    },
-		    selectStatus:''
+			alertMes: ''
 	    }
   	},
-	mounted() {
-	  	this.$root.$on('showFormEditPhotgrapher', res => {
-	  		this.drawerRight = res.showNavigation,
-	  		this.photographer = res.data
-	  		if(this.photographer.status){
-	  			this.selectStatus = 'Active'
-	  		} else {
-	  			this.selectStatus = 'Inactive'
-	  		}
-	  		this.currentSelectBranch = {id: res.data.branch.id, name: res.data.branch.name}
-	  	})
-	  	this.getBranchCompany()
-	},
-	methods: {
-		getBranchCompany()
+  	mounted() {
+  		this.$root.$on('showPhotographerAdd', res => {
+  			this.photographer = {}
+  			this.$refs.form.reset()
+  			this.drawerRight = res.showNavigation
+  		});
+
+  		this.getBranchCompany()
+  	},
+  	methods: {
+  		getBranchCompany()
   		{
-  			get(config.API_URL+'company/branches?userId='+this.user.id)
+  			get(config.API_URL+'company/branches?companyId='+this.company.company_id)
 			.then(response => {
 				if(response && response.data.success) {
-					this.branches = response.data.data					
-				}
+
+					this.branches = response.data.data
+				}			
+				
 			})
 			.catch(error => {
-				consol.elog(error)
+				console.log(error)
 			})
   		},
-  		unDisableItem(index)
+  		savePhotographer()
   		{
-  			this.key = index
-  		},
-  		checkValue(){
-			if(this.photographer.name == '' || this.photographer.address == '' || this.photographer.phone_number == '' || this.selectStatus == '')
-			{
-				this.alertStt = true
-		        this.alertType = 'error'
-		        this.alertMes = 'Please type text'         
-		        setTimeout(() => {
-		          this.alertStt = false
-		        }, 1500)
+  			if (this.$refs.form.validate()) {
 
-				this.$root.$emit('reloadTablePhotographer')	
-				this.key = 0
-				return false
-			}
-			return true
-		},
-  		editPhotographer(field, value)
-  		{
-  			let params = {}
+	  			let params = {information: this.photographer}
+	  			post(config.API_URL+'photographer', params)	
+	  			.then(response =>{
+	  				if(response && response.data.success) {
+	  					this.$root.$emit('reloadTablePhotographer')
+	  					this.alertStt = true
+					    this.alertMes = response.data.message
 
-  			switch(field) {
-  			 	case "branch" :
-  					params = {branch_id: value};
-  					break;
-				case "name" :
-					params = {name: value};
-
-					break;
-				case "phone_number" :
-					params = {phone_number: value};
-					break;
-				case "address" :
-					params = {address: value};
-					break;
-				case "status" :
-					params = {status: value};
-					break;
-  				default:
-			    	
-  			}
-  			
-  			if(this.checkValue()) {
-  				put(config.API_URL+'photographer/'+this.photographer.id, {params: params})
-				.then (response => {
-					if(response && response.data.success) {
-						this.alertStt = true
-			          	this.alertType = 'success'
-			          	this.alertMes = response.data.message					
-			          	setTimeout(() => {
-			            	this.alertStt = false
-						}, 2000)
-						this.key = 0
-						this.$root.$emit('reloadTablePhotographer')	
-					}
-				})
-
-				.catch((e) =>{
-					this.alertStt = true
-			        this.alertType = 'error'
-			        this.alertMes = response.data.message         
-			        setTimeout(() => {
-			          this.alertStt = false
-			        }, 1500)
-					this.$root.$emit('reloadTablePhotographer')
-					this.key = 0
-				})	
-  			}
-  			
+					    setTimeout(() => {
+					          this.alertStt = false
+					          this.drawerRight = false
+					    }, 2000)
+	  				}
+	  			})
+	  			.catch(error => {
+	  				console.log(error)
+	  			})
+	  		}
   		}
   	}
 }

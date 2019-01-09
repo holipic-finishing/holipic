@@ -482,6 +482,7 @@ export default {
   activityLog: "Activity Log",
   photographers : 'Photographers',
   customer: 'Customer',
-  photographers : 'Photographers List'
+  photographers : 'Photographers List',
+  sales: 'Manage Sales'
 
 }

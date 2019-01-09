@@ -95,15 +95,15 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
-import BranchEdit from './Branch-Edit.vue'
-import BranchAdd from './Branch-Add.vue'
+import BranchEdit from './BranchEdit.vue'
+import BranchAdd from './BranchAdd.vue'
 
 import Vue from 'vue'
 
 
 export default {
 
-  name: 'BranchCompany',
+  name: 'Branches',
   components: {
   	BranchEdit, BranchAdd
   },
@@ -126,7 +126,7 @@ export default {
 				  	
 		    },
 		    rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
-		    user: JSON.parse(localStorage.getItem('user')),
+		    company: JSON.parse(localStorage.getItem('user')),
 		    dialog: false,
 		    itemIdToDelete: ''
 	    }
@@ -141,7 +141,7 @@ export default {
 	methods: {
 		fetchData()
 		{
-			get(config.API_URL+'company/branches?userId='+this.user.id)
+			get(config.API_URL+'company/branches?companyId='+this.company.company_id)
 			.then(response => {
 				this.items = response.data.data
 			})

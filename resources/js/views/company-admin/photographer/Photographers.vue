@@ -1,5 +1,5 @@
 <template>
-	<div class="branch-table">
+		<div class="photographer-table">
 		<!-- <page-title-bar></page-title-bar> -->
 		<v-container fluid grid-list-xl pt-0>
 			<div id="app">
@@ -7,7 +7,7 @@
 					<v-card class="p-4">
 						<v-toolbar flat color="white">
 					        <v-toolbar-title>
-					          	Branches List
+					          	Photographers List
 					          	
 					          	<v-btn dark color="indigo" class="add-btn" @click="showFromAdd()">
 							      <v-icon dark >add</v-icon>
@@ -36,15 +36,28 @@
 							default-sort="id:desc"
 							:search="search"
 						>
-							<template slot="items" slot-scope="props">
+							<template slot="items" slot-scope="props" >
 								<td>{{ props.item.id }}</td>
-								<td class="text-xs-left">{{ props.item.branch_name }}</td>
-								<td class="text-xs-left">{{ props.item.username }}</td>
-								<td class="text-xs-left">{{ props.item.password }}</td>
-								<td class="text-xs-left">{{ props.item.branch_address }}</td>
-								<td class="text-xs-left">{{ props.item.branch_phone_number }}</td>
+								<td class="text-xs-left" >{{ props.item.branch.name }}</td>
+								<td class="text-xs-left">{{ props.item.name }}</td>
+								<td class="text-xs-left">{{ props.item.phone_number }}</td>
+								<td class="text-xs-left">{{ props.item.address }}</td>
+								<td class="text-xs-left">{{ props.item.created_at }}</td>
 
+								<td class="text-xs-left">
+								<!-- {{ props.item.status == true ? 'Active' : 'Inactive' }} -->
+								<v-btn color="success" small v-if="props.item.status === true">Active</v-btn>
+							 	<v-btn color="error" small v-else>Inactive</v-btn>
+								</td>
 					        	<td class="text-xs-left action-width">
+
+					        		<v-icon
+									    small
+									    class="mr-2 hover-icon"
+									    @click="showInfo(props.item)"
+								    >
+								    	visibility
+									</v-icon>
 
 									<v-icon
 										small
@@ -65,12 +78,13 @@
 								</td>
 							</template>
 						</v-data-table>
-						<branch-edit></branch-edit>
-						<branch-add></branch-add>
-
+						
 					</v-card>
 				</v-app>
-				<!-- <show-transaction></show-transaction> -->
+				<photographer-detail ></photographer-detail>
+				<photographer-add></photographer-add>
+				<photographer-edit></photographer-edit>
+
 			</div>
 			<v-dialog v-model="dialog" persistent max-width="450">
 		      <v-card>
@@ -95,80 +109,67 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
-import BranchEdit from './branch/branch-edit.vue'
-import BranchAdd from './branch/branch-add.vue'
-
-import Vue from 'vue'
-
+import PhotographerDetail from './PhotographerDetail'
+import PhotographerAdd from './PhotographerAdd'
+import PhotographerEdit from './PhotographerEdit'
 
 export default {
 
-  name: 'BranchCompany',
-  components: {
-  	BranchEdit, BranchAdd
-  },
+	  name: 'Photographer',
+	  components: {
+	  	PhotographerDetail,PhotographerAdd,PhotographerEdit
+	  },
 
-	data () {
+  	data () {
 	    return {
 	    	headers: [	        
 						{ text: 'ID', value: 'id'},	       
-						{ text: 'Branch Name', value: 'branch_name' },
-						{ text: 'Username', value: 'username'},	
-						{ text: 'Password', value: 'password' },	
-						{ text: 'Address', value: 'branch_address' },		      
-						{ text: 'Phone', value: 'branch_phone_number' },		     
+						{ text: 'Branch Name', value: 'branch.name' },
+						{ text: 'Name', value: 'name'},	
+						{ text: 'Phone', value: 'phone_number' },	
+						{ text: 'Address', value: 'address' },		      
+						{ text: 'Added Date', value: 'created_at' },
+						{ text: 'Status', value: 'status' , sortable: false},		     
 			        	{ text: 'Action', sortable: false },         
 			],
 			items: [],
 			search:'',
 			pagination: {
-				  	rowsPerPage: 25
-				  	
+				  	rowsPerPage: 25  	
 		    },
 		    rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
-		    user: JSON.parse(localStorage.getItem('user')),
+		    company: JSON.parse(localStorage.getItem('user')),
 		    dialog: false,
+		    activeInfo: true,
 		    itemIdToDelete: ''
-	    }
-	},
-	created() {
-		this.fetchData()
 
-	},
-	mounted() {
-		this.$root.$on('reloadTableBranch', res => this.fetchData())
-	},
-	methods: {
-		fetchData()
+	    }
+ 	},
+  	created() {
+  		this.fetchData()
+  	},
+  	mounted() {
+  		this.$root.$on('reloadTablePhotographer', res => {
+  			this.fetchData()
+  		})
+  	},
+  	methods: {
+  		fetchData()
 		{
-			get(config.API_URL+'company/branches?userId='+this.user.id)
+			get(config.API_URL+'photographers?companyId='+this.company.company_id)
 			.then(response => {
-				this.items = response.data.data
+				if(response && response.data.success) {
+
+					this.items = response.data.data
+					console.log(this.items)
+				}
 			})
-		},
-		showFormEdit(item)
-		{
-			this.$root.$emit('sendEventBranchEdit', {
-						showNavigation: true,
-						data: item
-			});
-		},
-		showFromAdd()
-		{
-			this.$root.$emit('sendEventBranchAdd', {
-				showNavigation: true
-			});
 		},
 		deleteItem()
 		{
-			del(config.API_URL+'branches/'+this.itemIdToDelete)
+			del(config.API_URL+'photographer/'+this.itemIdToDelete)
 			.then((res) => {
 	        if(res.data && res.data.success){
-	          Vue.notify({
-	                        type: 'success',
-	                        title: 'Delete Item Successfully',
-	                        position: 'top right'
-	                      })
 	          this.fetchData()
 	          this.dialog = false
 	        }
@@ -178,25 +179,37 @@ export default {
 	        console.log(e)
 	      })
 		},
+		showInfo(item)
+		{
+			this.$root.$emit('showInfoPhototographer', {showNavigation: true,data: item})
+		},
 		showDialog(item)
 		{
 			this.dialog = true
 			this.itemIdToDelete = item
+		},
+		showFromAdd()
+		{
+			this.$root.$emit('showPhotographerAdd', {showNavigation:true})
+		},
+		showFormEdit(item)
+		{
+			this.$root.$emit('showFormEditPhotgrapher', {showNavigation: true, data: item})
 		}
-	}
+  	}
 }
 </script>
 
 <style lang="scss" scoped>
-	.add-btn{
-		right: 0px;
-    	position: absolute;
-    	top: 8px;
-	}
-	.branch-table{
-		margin-top:30px;
-	}
-	.hover-icon{
+.photographer-table{
+	margin-top:30px;
+}
+.add-btn{
+	right:0px;
+	position: absolute;
+	top: 8px;
+}
+.hover-icon{
     &:hover{
       color: blue !important;
     }

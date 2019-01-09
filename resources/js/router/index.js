@@ -35,8 +35,8 @@ import mini from '../container/MiniSidebarLayout.vue'
 
 // import DashboardCompany from '../views/dashboard/admin-company/DashboardCompany.vue'
 // import Notification from '../views/notification/notification.vue'
-import Branch from '../views/dashboard/admin-company/BranchCompany.vue'
-import Photographer from '../views/dashboard/admin-company/Photographer.vue'
+//import Branch from '../views/dashboard/admin-company/BranchCompany.vue'
+//import Photographer from '../views/dashboard/admin-company/Photographer.vue'
 
 // import PageNotFound from '../views/pages/page404'
 

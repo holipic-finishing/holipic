@@ -16,6 +16,31 @@ export const menus = {
 			role_id : 2
 		},
 		{
+
+			action: 'zmdi-assignment-account',
+			title: 'message.branch',
+			active: false,
+			path: '/branches',
+			items:null,
+			role_id : 2
+		},
+		{
+			action: 'zmdi-pin-assistant',
+			title: 'message.photographer',
+			active: false,
+			path: '/photographers',
+			items:null,
+			role_id : 2
+		},
+		{
+			action: 'zmdi-pin-assistant',
+			title: 'message.customer',
+			active: false,
+			path: '/customers',
+			items:null,
+			role_id : 2
+		},
+		{
 			action: 'zmdi zmdi-google-pages',
 			title: 'message.sibarContentPages',
 			active: true,
@@ -32,7 +57,6 @@ export const menus = {
 			role_id : 2
 		},
 
-		
 		 	/////////////////////////////////////////////
 		   ///////								  //////
 		  ///////  SIDEBAR ROUTER SUPER ADMIN    //////

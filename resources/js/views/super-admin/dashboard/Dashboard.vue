@@ -785,7 +785,7 @@ export default {
 	  		return this.tweenedNumber.toFixed(0);
 	  	},
 	  	computedTotalTransactions(){
-	  		return this.tweenedNumberTransactions.toFixed(0)
+	  		return this.tweenedNumberTransactions.toFixed(3)
 	  	}
 	},
 	mounted() {

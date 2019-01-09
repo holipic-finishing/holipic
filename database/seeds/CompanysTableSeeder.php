@@ -17,7 +17,7 @@ class CompanysTableSeeder extends Seeder
 
         \App\Models\Company::truncate();
 
-        $users = \App\Models\User::where('role_id', '<>', 1)->get();
+        $users = \App\Models\User::where('role_id', 2)->get();
         
         // create company with user
         foreach ($users as $user) {

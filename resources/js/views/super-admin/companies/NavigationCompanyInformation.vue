@@ -23,13 +23,13 @@
 		    <v-divider class="no-mg-bottom"></v-divider>
 			  
 			  <!-- Show information -->
-		    <v-list>
+		    <v-list class="heigth-list-title">
 				
 				<v-list-tile>
 					<v-list-tile-content>
 			          	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Package name:</span>
-				          	<span>{{company.package_name}}</span>
+				          	<span class="max-value">{{company.package_name}}</span>
 	          			</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -40,7 +40,7 @@
 					<v-list-tile-content>
 			          	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Email login:</span>
-				          	<span>{{company.email}}</span>
+				          	<span class="max-value">{{company.email}}</span>
 			         	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -51,7 +51,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Address:</span>
-				          	<span>{{company.address}}</span>
+				          	<span class="max-value">{{company.address}}</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -61,7 +61,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Added date:</span>
-				          	<span>{{company.created_at}}</span>
+				          	<span class="max-value">{{company.created_at}}</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -71,7 +71,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Total customer:</span>
-				          	<span>...</span>
+				          	<span class="max-value">...</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -81,7 +81,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Total storage:</span>
-				          	<span>{{company.file_upload}}GB</span>
+				          	<span class="max-value">{{company.file_upload}}GB</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -91,7 +91,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Total income :</span>
-				          	<span>{{company.total_income}}</span>
+				          	<span class="max-value">{{company.total_income}}</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -101,7 +101,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Signature :</span>
-				          	<span>...</span>
+				          	<span class="max-value">...</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -162,6 +162,7 @@
 	    <!-- End show information -->
 
 	    <!-- Close drawer button -->
+
 	    <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
 	      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
 	    </v-card-actions>
@@ -171,7 +172,7 @@
 
   		</v-navigation-drawer>
 	    
-	</v-layout>
+
 
 </template>
 
@@ -193,7 +194,7 @@ import config from '../../../config/index.js'
 		mounted() {
 			this.$root.$on('sendEventCompanyInformation', response => {
 				this.drawerRight = response.showNavigation
-				this.company = response.data
+				//this.company = response.data
 				this.companyId = response.data.id
 
 				this.informationCompany(this.companyId)
@@ -219,101 +220,13 @@ import config from '../../../config/index.js'
 		}
 	}
 </script>
-
-<style>
-	.fix-navigation{
-		padding: 10px 0px;
-		overflow: hidden;
-		
+<style lang="scss" scoped>
+	.content-flex{
+		height: auto !important;
+		white-space: inherit !important;
 	}
-
-	.fix-list{
-		padding: 0px 5px;
+	.max-value{
+		max-width: 63%;
+		flex: 0 0 63%;
 	}
-
-	.text-value-company {
-		right:0px !important;
-		color:red !important;
-	}
-
-	.title-company{
-		height: 50px;
-	    background-color: #4286f4;
-	    text-align: center;
-	    font-weight: 15px bold;
-	    font-size: 20px;
-	    font-weight: bold;
-	    padding: 10px 0px;
-	    color: white;
-	}
-
-	.text-value-company-left {
-		margin: 10px 0px;
-		font-size: 15px;
-	}
-
-	#text-value-company-right {
-		margin: 10px 0px;
-		font-size: 15px;
-		
-	}
-
-	.signature{
-		font-size: 20px  !important; 
-		font-weight: bold;
-		color: #4286f4;
-		text-align:center;
-
-	}
-
-	.line-company{
-		height: 2px;
-		width: 100%;
-		background-color: #4286f4;
-	}
-
-	.image-company{
-		padding: 0px 115px;
-    	margin-bottom: 10px;	
-	}
-
-	.text-size {
-		font-weight: bold;
-		color:#4286f4;
-	}
-
-	.container-company{
-		overflow: auto;
-		/*top:0px;
-		position: absolute;
-		margin-top: 130px;*/
-	}
-
-	.container-company2 {
-		/*bottom:30px;
-		position: absolute;*/
-		padding-top: 0px;
-		overflow: auto;
-		/*bottom:0px;
-		position: absolute;
-		margin-bottom: 50px;*/
-	}
-
-	.coupon-left{
-		font-weight: bold;
-	}
-
-	.btn-company{
-		
-    	right: 30px;
-    	position: absolute;
-    	color:black;
-    	background-color: #e8e9ea !important;
-    	border-color: #b7b9bc !important;
-	}
-
-	.btn-company:hover{
-    	color:black !important;    	
-	}
-	
 </style>

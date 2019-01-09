@@ -471,6 +471,12 @@ export default {
   mailSentSuccessfully : 'Mail sent successfully',
   notification : "Notification",
   yourNotification: "Your notification",
+
+  //Company Admin
+  branch: "Branches",
+  photographer: "Photographers",
+  activityLog: "Activity Log",
+  customer: 'Customers',
   contenPages : "Content Management System",
   sibarContentPages:"Cms",
   activityLog: "Activity Log"

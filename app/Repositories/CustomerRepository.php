@@ -95,28 +95,4 @@ class CustomerRepository extends BaseRepository
 
         return false;
     }
-
-    public function handelGetCustomerInBranch()
-    {
-        $company = \App\Models\Company::whereOwnerId(request('userId'))->first();
-        $branch = \App\Models\Branch::where('company_id', '=', $company['id'])->where('user_id', '=', request('userId'))->get()->toArray();
-        dd($branch);
-        $data = [];
-        
-        if(!empty($company)) {
-            $customers = $this->model->with('user')->with('branch')->where('user_id', '=', request('userId'))->get()->toArray();
-dd($customers);
-            foreach($customers as $customer) 
-            {
-                if($customer['branch'] != null)
-                {
-                    $data[] = $customer;
-                }
-            }
-
-            return $data;
-        }
-
-        return false;
-    }
 }

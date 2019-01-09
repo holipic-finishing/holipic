@@ -27,7 +27,7 @@ class TransactionsTableSeeder extends Seeder
         }
 
         for ($i=0; $i < 2000 ; $i++) {
-            $id_rand = $faker->numberBetween(2, 51);
+            $id_rand = $faker->numberBetween(2, 31);
             $amount = $faker->randomFloat(2);
             $fee = $faker->randomElement($feeArr);
             $status_rand = $faker->randomElement($status);

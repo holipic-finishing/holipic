@@ -814,22 +814,8 @@ class TransactionRepository extends BaseRepository
     public function transform($results){
 
         foreach ($results as $key => $result) {
-           
-            if($results[$key]->type){
-                $results[$key]->type_character = 'Income';
-            }else{
-                $results[$key]->type_character = 'Outcome';
-            }
-
-
-        foreach ($results as $key => $result) {
-
 
             $results[$key]->company_name = $result->user->company->name;
-
-            // $results[$key]->amount_with_symbol = $result->amount ." ".$result->symbol;             
-            // $results[$key]->system_fee_with_symbol = $result->system_fee ." ".$result->symbol;         
-            // $results[$key]->credit_card_fee_with_symbol = $result->credit_card_fee ." ".$result->symbol;
 
             $results[$key]->amount_with_symbol = round(($result->amount * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol; 
 
@@ -837,14 +823,7 @@ class TransactionRepository extends BaseRepository
             $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
 
             $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
-
-            if($results[$key]->status === 'BEEN_SEEN') $results[$key]->status = str_replace("_", " ", $results[$key]->status);     
-            }
-        
-
-                    
         }
-
 
         return $results;
     } 

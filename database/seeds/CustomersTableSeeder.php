@@ -19,7 +19,7 @@ class CustomersTableSeeder extends Seeder
         $branches = \App\Models\Branch::all();
 
         foreach ($branches as $branch) {
-            for ($i=0; $i < rand(5,10) ; $i++) {
+            for ($i=0; $i < rand(3,5) ; $i++) {
                 $password = $faker->password;
 
                 $user =  \App\Models\User::create([

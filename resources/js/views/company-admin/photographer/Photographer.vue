@@ -38,7 +38,7 @@
 						>
 							<template slot="items" slot-scope="props" >
 								<td>{{ props.item.id }}</td>
-								<td class="text-xs-left" >{{ props.item.branch['branch_name'] }}</td>
+								<td class="text-xs-left" >{{ props.item.branch.name }}</td>
 								<td class="text-xs-left">{{ props.item.name }}</td>
 								<td class="text-xs-left">{{ props.item.phone_number }}</td>
 								<td class="text-xs-left">{{ props.item.address }}</td>
@@ -124,7 +124,7 @@ export default {
 	    return {
 	    	headers: [	        
 						{ text: 'ID', value: 'id'},	       
-						{ text: 'Branch Name', value: 'branch.branch_name' },
+						{ text: 'Branch Name', value: 'branch.name' },
 						{ text: 'Name', value: 'name'},	
 						{ text: 'Phone', value: 'phone_number' },	
 						{ text: 'Address', value: 'address' },		      

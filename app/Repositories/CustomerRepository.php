@@ -41,7 +41,7 @@ class CustomerRepository extends BaseRepository
         $data = [];
         
         if(!empty($company)) {
-            $customers = $this->model->with(['branch' => function($q) use ($company) {
+            $customers = $this->model->with('user')->with('room')->with(['branch' => function($q) use ($company) {
                                      $q->whereCompanyId($company['id']);
             }])->get()->toArray();
 

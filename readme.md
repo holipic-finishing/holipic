@@ -40,6 +40,7 @@ php artisan db:seed
 # Step 10 : Set Permission
 + sudo chmod -R 777 public/logos
 + sudo chmod -R 777 storage
++ sudo chmod -R 777 public/avatars
 
 # Step 11: Run project
 + npm run watch-poll

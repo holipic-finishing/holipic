@@ -29,7 +29,7 @@
 					<v-list-tile-content>
 			          	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Package name:</span>
-				          	<span>{{company.package_name}}</span>
+				          	<span class="max-value">{{company.package_name}}</span>
 	          			</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -40,7 +40,7 @@
 					<v-list-tile-content>
 			          	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Email login:</span>
-				          	<span>{{company.email}}</span>
+				          	<span class="max-value">{{company.email}}</span>
 			         	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -51,7 +51,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Address:</span>
-				          	<span>{{company.address}}</span>
+				          	<span class="max-value">{{company.address}}</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -61,7 +61,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Added date:</span>
-				          	<span>{{company.created_at}}</span>
+				          	<span class="max-value">{{company.created_at}}</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -71,7 +71,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Total customer:</span>
-				          	<span>...</span>
+				          	<span class="max-value">...</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -81,7 +81,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Total storage:</span>
-				          	<span>{{company.file_upload}}GB</span>
+				          	<span class="max-value">{{company.file_upload}}GB</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -91,7 +91,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Total income :</span>
-				          	<span>{{company.total_income}}</span>
+				          	<span class="max-value">{{company.total_income}}</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -101,7 +101,7 @@
 					<v-list-tile-content>
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Signature :</span>
-				          	<span>...</span>
+				          	<span class="max-value">...</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -220,3 +220,13 @@ import config from '../../../config/index.js'
 		}
 	}
 </script>
+<style lang="scss" scoped>
+	.content-flex{
+		height: auto !important;
+		white-space: inherit !important;
+	}
+	.max-value{
+		max-width: 63%;
+		flex: 0 0 63%;
+	}
+</style>

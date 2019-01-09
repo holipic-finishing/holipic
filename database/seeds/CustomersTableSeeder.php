@@ -19,16 +19,29 @@ class CustomersTableSeeder extends Seeder
         $branches = \App\Models\Branch::all();
 
         foreach ($branches as $branch) {
-            \App\Models\Customer::create([
-                'name' => $faker->name,
-                'room' => $faker->randomNumber(5),
-                'email' => $faker->email,
-                'password' => $faker->password,
-                'avatar' => $faker->image,
-                'branch_id' => 2,
-                'address' => $faker->address,
-                'status' => 1
-            ]);
+            for ($i=0; $i < rand(5,10) ; $i++) {
+                $password = $faker->password;
+
+                $user =  \App\Models\User::create([
+                    'first_name' => $faker->firstName,
+                    'last_name' => $faker->lastName,
+                    'username' => $faker->userName,
+                    'email' => $faker->email,
+                    'password' => bcrypt($password),
+                    'role_id' => 4,
+                ]);
+
+                \App\Models\Customer::create([
+                    'name' => $faker->name,
+                    'address' => $faker->address,
+                    'status' => 1,
+                    'customer_password' => $password,
+                    'avatar' => $faker->image(public_path() . '/avatars'),
+                    'branch_id' => $branch->id,
+                    'user_id' => $user['id'],
+                    'room_id' => rand(1,100),
+                ]);
+            }
         }
     }
 }

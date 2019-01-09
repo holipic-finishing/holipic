@@ -91,4 +91,14 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Setting','id','package_id');
     }
 
+    public function branch()
+    {
+        return $this->hasOne('App\Models\Branch', 'user_id', 'id');
+    }
+
+    public function customer()
+    {
+        return $this->hasOne('App\Models\Customer', 'user_id', 'id');
+    }
+
 }

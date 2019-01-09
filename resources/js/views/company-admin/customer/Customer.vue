@@ -7,10 +7,13 @@
 						<v-toolbar flat color="white">
 					        <v-toolbar-title>
 					          	 Manage Customers
-					          	 <v-btn dark color="indigo" class="add-btn" >
-							      <!-- <v-icon dark >export</v-icon> -->
+					          	 <!-- <v-btn dark color="indigo" class="add-btn" >
 							      Export
-							    </v-btn>
+							    </v-btn> -->
+
+							    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3 add-btn">
+									<v-icon small>fas fa-file-excel</v-icon>
+								</a>
 							    
 					        </v-toolbar-title>
 					    </v-toolbar>
@@ -39,9 +42,9 @@
 							<template slot="items" slot-scope="props" >
 								<td>{{ props.item.id }}</td>
 								<td class="text-xs-left" >{{ props.item.name }}</td>
-								<td class="text-xs-left">{{ props.item.room }}</td>
-								<td class="text-xs-left">{{ props.item.email }}</td>
-								<td class="text-xs-left">{{ props.item.password }}</td>
+								<td class="text-xs-left">{{ props.item.room.room_hash }}</td>
+								<td class="text-xs-left">{{ props.item.user.email }}</td>
+								<td class="text-xs-left">{{ props.item.customer_password }}</td>
 								<td class="text-xs-left"><img :src="props.item.avatar" width="100%"></td>
 
 								<td class="text-xs-left">
@@ -56,10 +59,8 @@
 								<td class="text-xs-left">
 									<v-text-field
 									  name="name"
-									  label="1000"
-									  
 									  outline
-									  class="height-input"
+									  class="height-input center-input"
 									></v-text-field>
 								</td>
 					        	<td class="text-xs-left action-width">
@@ -128,9 +129,9 @@ export default {
     	headers:[
     			{ text: 'ID', value: 'id'},	       
 				{ text: 'Name', value: 'name' },
-				{ text: 'Room', value: 'room'},	
-				{ text: 'Email', value: 'email' },	
-				{ text: 'Password', value: 'password' },		      
+				{ text: 'Room', value: 'room.room_hash'},	
+				{ text: 'Email', value: 'user.email' },	
+				{ text: 'Password', value: 'customer_password' },		      
 				{ text: 'Avatar', value: 'avatar' },
 				{ text: 'Order'},
 				{ text: 'Invoice'},
@@ -142,7 +143,8 @@ export default {
 				  	rowsPerPage: 25  	
 		    		},
 		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
-		user: JSON.parse(localStorage.getItem('user'))
+		user: JSON.parse(localStorage.getItem('user')),
+		urlExport: config.API_URL+'company/branches/customers/export?userId='+JSON.parse(localStorage.getItem('user')).id
 
     }
   },
@@ -192,5 +194,8 @@ export default {
     	right: 0px;
     	position: absolute;
     	top: 8px;
+    }
+    .center-input{
+    	margin-top: 30px;
     }
 </style>

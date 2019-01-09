@@ -38,9 +38,9 @@
 						>
 							<template slot="items" slot-scope="props">
 								<td>{{ props.item.id }}</td>
-								<td class="text-xs-left">{{ props.item.branch_name }}</td>
-								<td class="text-xs-left">{{ props.item.username }}</td>
-								<td class="text-xs-left">{{ props.item.password }}</td>
+								<td class="text-xs-left">{{ props.item.name }}</td>
+								<td class="text-xs-left">{{ props.item.user.username }}</td>
+								<td class="text-xs-left">{{ props.item.branch_password }}</td>
 								<td class="text-xs-left">{{ props.item.branch_address }}</td>
 								<td class="text-xs-left">{{ props.item.branch_phone_number }}</td>
 
@@ -112,9 +112,9 @@ export default {
 	    return {
 	    	headers: [	        
 						{ text: 'ID', value: 'id'},	       
-						{ text: 'Branch Name', value: 'branch_name' },
+						{ text: 'Branch Name', value: 'name' },
 						{ text: 'Username', value: 'username'},	
-						{ text: 'Password', value: 'password' },	
+						{ text: 'Password', value: 'branch_password' },	
 						{ text: 'Address', value: 'branch_address' },		      
 						{ text: 'Phone', value: 'branch_phone_number' },		     
 			        	{ text: 'Action', sortable: false },         

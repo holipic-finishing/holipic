@@ -141,7 +141,7 @@ class CompanyPackageAPIController extends AppBaseController
     {
         $input =  $request->all();
 
-        if (!$input['value']) {
+        if (!$input['value'] && $input['value'] != 0) {
             return $this->sendError('This field could be not null');
         }
 

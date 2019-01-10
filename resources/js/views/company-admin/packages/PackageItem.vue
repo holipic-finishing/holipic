@@ -21,6 +21,9 @@
 		    </v-toolbar-side-icon>
 	    </v-toolbar>
 	    <v-divider class="no-mg-bottom"></v-divider>
+	    <v-list>
+	    	<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
+		</v-list>
 
 		<v-list v-show="check == 'add'" class="heigth-list-title">
 	 		<v-form ref="form" @submit.prevent="savePackageAdd">
@@ -89,7 +92,7 @@
 				                class="font-weight-bold height-input"
 				                placeholder="Enter package offer"
 				               	v-model="item.total_photo"
-			                    :rules="[rules.required]"
+			                    :rules="[rules.required, rules.number]"
 				                outline                
 				              ></v-text-field>
 				            </span>
@@ -125,7 +128,7 @@
 				                class="font-weight-bold height-input"
 				                placeholder="Enter package offer"
 				               	v-model="item.photo_on_disc"
-			                    :rules="[rules.required]"
+			                    :rules="[rules.required, rules.number]"
 				                outline                
 				              ></v-text-field>
 				            </span>
@@ -143,7 +146,7 @@
 				                class="font-weight-bold height-input"
 				                placeholder="Enter package offer"
 				               	v-model="item.poster"
-			                    :rules="[rules.required]"
+			                    :rules="[rules.required, rules.number]"
 				                outline                
 				              ></v-text-field>
 				            </span>
@@ -251,7 +254,7 @@
 			</v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
 
-	        <v-list-tile class="height-80">
+	        <v-list-tile v-if="data.photo_on_disc != 0" class="height-80">
 				<v-list-tile-content>
 		            <v-list-tile-title class="content-flex-end h-100">
 			          	<span class="font-weight-bold item-title position-item">Photos on the disc</span>
@@ -290,7 +293,6 @@
         </v-list> 
 
         <v-list v-show="check == 'edit'" class="heigth-list-title">
-        	<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 			<v-list-tile class="height-80">
 				<v-list-tile-content class="h-100">
 					<v-list-tile-title class="content-flex-end h-100">
@@ -372,7 +374,7 @@
 							class="font-weight-bold height-input"
 							placeholder="Enter package offer"
 							v-model="data.total_photo"
-							:rules="[rules.required]"
+							:rules="[rules.required, rules.number]"
 							:disabled="key == 4 ? false : true"
 							outline
 							@blur="editItem('total_photo', data.total_photo)"
@@ -420,7 +422,7 @@
 							class="font-weight-bold height-input"
 							placeholder="Enter package offer"
 							v-model="data.photo_on_disc"
-							:rules="[rules.required]"
+							:rules="[rules.required, rules.number]"
 							:disabled="key == 6 ? false : true"
 							outline
 							@blur="editItem('photo_on_disc', data.photo_on_disc)"
@@ -444,7 +446,7 @@
 							class="font-weight-bold height-input"
 							placeholder="Enter package offer"
 							v-model="data.poster"
-							:rules="[rules.required]"
+							:rules="[rules.required, rules.number]"
 							:disabled="key == 7 ? false : true"
 							outline
 							@blur="editItem('poster', data.poster)"
@@ -591,9 +593,9 @@ export default {
       	this.$root.$on('data-packages', res => {
     		this.data = res
     		// console.log(this.setting)
-    		console.log(this.data)
-
- 
+    		if(res.poster == '0'){
+    			this.data.poster = '0'
+    		} 
     	})
 	}
 
@@ -662,7 +664,7 @@ h4 {
 
 
 .text-field-padding {
-	padding-left: 25px;
+	padding-left: 30px;
 }
 
 </style>

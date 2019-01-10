@@ -85,7 +85,7 @@
 	    	<template slot="items" slot-scope="props">
 	    		<td class="text-xs-left">{{ props.item.id }}</td>
 		        <td class="text-xs-left">{{ props.item.size }}</td>
-		        <td class="text-xs-left">
+		        <td class="text-xs-left custom-height-td-package">
 		        	<v-flex xs12 sm12 md12 slot="append">
 		        		<v-flex xs3 class="symbol-td">
 		        			<span >{{ props.item.symbol }}</span>
@@ -95,8 +95,9 @@
 			                :rules="[rules.required]"
 			                :disabled="key == props.item.id ? false : true"
 			                outline
-			                @blur="editItem5('price', props.item.price, props.item.id)"
-						    @keyup.enter="editItem5('price', props.item.price, props.item.id)"
+			                @blur="editPhotoPackage('price', props.item.price, props.item.id)"
+						    @keyup.enter="editPhotoPackage('price', props.item.price, props.item.id)"
+						    class="custom-height-package"
 			            ></v-text-field></v-flex>
 			            <v-flex xs2 class="symbol-td-icon">
 		        			<span >
@@ -110,14 +111,15 @@
 			            <v-flex xs7 class="symbol-td-text-field"><v-text-field 
 			                v-model="props.item.free_photo"
 			                :rules="[rules.required, rules.number]"
-			                :disabled="key2 == props.item.id ? false : true"
+			                :disabled="keyPhotoPackage == props.item.id ? false : true"
 			                outline
-			                @blur="editItem5('free_photo', props.item.free_photo, props.item.id)"
-						    @keyup.enter="editItem5('free_photo', props.item.free_photo, props.item.id)"
+			                @blur="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
+						    @keyup.enter="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
+						    class="custom-height-package"
 			            ></v-text-field></v-flex>
 			            <v-flex xs2 class="symbol-td-icon">
 		        			<span >
-								<v-btn flat icon @click="unDisableItem2(props.item.id)"><v-icon small>fas fa-marker</v-icon></v-btn>
+								<v-btn flat icon @click="unDisablePhotoPackage(props.item.id)"><v-icon small>fas fa-marker</v-icon></v-btn>
 							</span>
 		        		</v-flex>
 		            </v-flex>
@@ -185,7 +187,7 @@ export default {
 		    },
 		    loading: true,
 		    key: 0,
-		    key2: 0,
+		    keyPhotoPackage: 0,
 		    user: JSON.parse(localStorage.getItem('user')),
 
 	    }
@@ -230,11 +232,11 @@ export default {
       		this.key = key
       	},
 
-      	unDisableItem2(key2){
-      		this.key2 = key2
+      	unDisablePhotoPackage(keyPhotoPackage){
+      		this.keyPhotoPackage = keyPhotoPackage
       	},
 
-		editItem5(field_name, value, id){
+		editPhotoPackage(field_name, value, id){
 			var id = id
 	        var field = {
 		        field_name: field_name,
@@ -345,7 +347,7 @@ export default {
 
 .symbol-td {
 	float: left;
-    padding: 18px 5px 0px 0px;
+    padding: 12px 5px 0px 0px;
 }
 
 .symbol-td-text-field {

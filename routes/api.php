@@ -89,10 +89,11 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
 
 	Route::group(['namespace' => 'CompanyAdmin'], function() {
+		Route::post('add/companyPackage', 'CompanyPackageAPIController@addPackage');
 
 		Route::post('edit/companyPackage/{itemId}', 'CompanyPackageAPIController@editPackage');
 
-		Route::get('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
+		Route::post('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
 
 		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
 		

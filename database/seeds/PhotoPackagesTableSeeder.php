@@ -18,36 +18,42 @@ class PhotoPackagesTableSeeder extends Seeder
             'price' => '500000',
             'free_photo' => '0',
             'currency_id' => '1',
+            'company_id' => '1',
         	],
         	[
             'size' => 'DIGITAL',
             'price' => '150000',
             'free_photo' => '0',
             'currency_id' => '1',
+            'company_id' => '1',
         	],
         	[
             'size' => '10R',
             'price' => '300000',
             'free_photo' => '0',
             'currency_id' => '1',
+            'company_id' => '1',
         	],
         	[
             'size' => '6R',
             'price' => '150000',
             'free_photo' => '0',
             'currency_id' => '1',
+            'company_id' => '1',
         	],
         	[
             'size' => '4R',
             'price' => '150000',
             'free_photo' => '0',
             'currency_id' => '1',
+            'company_id' => '1',
         	],
         	[
             'size' => 'FRAME',
             'price' => '250000',
             'free_photo' => '1',
             'currency_id' => '1',
+            'company_id' => '1',
         	],
         ]
     	);

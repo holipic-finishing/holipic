@@ -269,7 +269,7 @@
 			</v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
 
-	        <v-list-tile class="height-80">
+	        <v-list-tile v-if="data.poster != 0" class="height-80">
 				<v-list-tile-content>
 		            <v-list-tile-title class="content-flex-end h-100">
 			          	<span class="font-weight-bold item-title position-item">Poster (20x30)</span>
@@ -286,27 +286,6 @@
 				</v-list-tile-content>
 			</v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
-
-
-	        <!-- <v-list-tile class="height-200">
-				<v-list-tile-content class="h-100">
-		            <v-list-tile-title class="content-flex-end h-100">
-			          	<span class="font-weight-bold item-title position-item">Package Detail</span>
-			          	<span class="contain-text-field">
-			                <v-textarea 
-			              	    class="font-weight-bold text-field-padding"
-					            v-model="data.detail"
-					            readonly
-					            auto-grow
-					            rows="5"
-					            solo
-					        >
-					        </v-textarea>
-			            </span>
-	            	</v-list-tile-title>
-				</v-list-tile-content>
-			</v-list-tile>
-	        <v-divider class="mt-0 mb-0"></v-divider> -->
 			
         </v-list> 
 
@@ -514,7 +493,7 @@ export default {
 	          	},
 	        },
 	        item:{
-	        	company_id: ''
+	        	user_id: ''
 	        },
 	        data:{},
 	        alertStt: false,
@@ -529,9 +508,8 @@ export default {
 		},
 
 		savePackageAdd(){
-			console.log(this.item.company_id)
       		if (this.$refs.form.validate()) {
-      			let url = config.API_URL+'company_packages'
+      			let url = config.API_URL+'add/companyPackage'
       		 	post(url,this.item)
       		 	.then((res) => {
       		 		 if(res.data && res.data.success){
@@ -605,7 +583,7 @@ export default {
 		this.$root.$on('change-status', res => {
           	this.drawerRight = res.showDialog
     		this.check = res.check
-    		this.item.company_id = res.company_id
+    		this.item.user_id = res.user_id
     		// this.item = {
     		// }
       	})

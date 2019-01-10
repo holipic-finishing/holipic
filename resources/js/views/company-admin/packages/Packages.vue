@@ -213,7 +213,7 @@ export default {
 
 		fetchDataPhotoPackage() {
 			let url = config.API_URL+'get-photo-package';
-			get(url)
+			post(url, this.user)
 			.then((res) => {
 				if(res.data && res.data.success){
 					this.desserts2 = res.data.data
@@ -267,7 +267,7 @@ export default {
 			let obj = {
 	  				check : 'add',
 	  				showDialog: true,
-	  				company_id: this.user.id
+	  				user_id: this.user.id
 	  		}
   			this.$root.$emit('change-status', obj)
 		},

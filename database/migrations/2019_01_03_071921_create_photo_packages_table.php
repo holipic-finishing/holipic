@@ -19,6 +19,7 @@ class CreatePhotoPackagesTable extends Migration
             $table->string('price');
             $table->string('free_photo');
             $table->integer('currency_id');
+            $table->integer('company_id');
             $table->timestamps();
             $table->softDeletes();
         });

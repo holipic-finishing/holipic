@@ -29,7 +29,8 @@ class PhotoPackage extends Model
         'size',
         'price',
         'free_photo',
-        'currency_id'
+        'currency_id',
+        'company_id',
     ];
 
     /**
@@ -41,7 +42,8 @@ class PhotoPackage extends Model
         'size' => 'string',
         'price' => 'string',
         'free_photo' => 'string',
-        'currency_id' => 'integer'
+        'currency_id' => 'integer',
+        'company_id' => 'integer',
     ];
 
     /**
@@ -53,7 +55,8 @@ class PhotoPackage extends Model
         'size' => 'required',
         'price' => 'required',
         'free_photo' => 'required',
-        'currency_id' => 'required'
+        'currency_id' => 'required',
+        'company_id' => 'required',
     ];
 
     

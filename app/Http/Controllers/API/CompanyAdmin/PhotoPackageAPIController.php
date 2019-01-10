@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\CompanyAdmin;
 use App\Http\Requests\API\CreatePhotoPackageAPIRequest;
 use App\Http\Requests\API\UpdatePhotoPackageAPIRequest;
 use App\Models\PhotoPackage;
-use App\Repositories\CompanyAdmin\PhotoPackageRepository;
+use App\Repositories\CompanyAdminRepositories\PhotoPackageRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
@@ -127,9 +127,11 @@ class PhotoPackageAPIController extends AppBaseController
         return $this->sendResponse($id, 'Photo Package deleted successfully');
     }
 
-    public function getPhotoPackage() 
+    public function getPhotoPackage(Request $request) 
     {
-        $photoPackages = $this->photoPackageRepository->getPhotoPackage();
+        $input = $request->id;
+
+        $photoPackages = $this->photoPackageRepository->getPhotoPackage($input);
 
         return $this->sendResponse($photoPackages->toArray(), 'Photo Packages retrieved successfully');
     }

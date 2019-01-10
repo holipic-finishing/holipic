@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\CompanyAdmin;
 use App\Http\Requests\API\CreateCompanyPackageAPIRequest;
 use App\Http\Requests\API\UpdateCompanyPackageAPIRequest;
 use App\Models\CompanyPackage;
-use App\Repositories\CompanyAdmin\CompanyPackageRepository;
+use App\Repositories\CompanyAdminRepositories\CompanyPackageRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
@@ -53,7 +53,8 @@ class CompanyPackageAPIController extends AppBaseController
      */
     public function store(CreateCompanyPackageAPIRequest $request)
     {
-        $input = $request->all();
+        $input = $request->all(); 
+
 
         $companyPackages = $this->companyPackageRepository->create($input);
 
@@ -127,8 +128,17 @@ class CompanyPackageAPIController extends AppBaseController
         return $this->sendResponse($id, 'Company Package deleted successfully');
     }
 
-    public function editPackage(Request $request, $itemId){
+    public function addPackage(Request $request) 
+    {
+        $input = $request->all(); 
 
+        $result = $this->companyPackageRepository->getCompanyPackageItem($input);
+
+        return $this->sendResponse($result->toArray(), 'Company Package saved successfully');
+    }
+
+    public function editPackage(Request $request, $itemId)
+    {
         $input =  $request->all();
 
         if (!$input['value']) {

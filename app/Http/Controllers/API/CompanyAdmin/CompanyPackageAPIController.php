@@ -130,7 +130,7 @@ class CompanyPackageAPIController extends AppBaseController
 
     public function getPackage(Request $request)
     {
-        $input = $request->id;
+        $input = $request->company_id;
 
         $result = $this->companyPackageRepository->getCompanyPackages($input);
 

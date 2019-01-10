@@ -3,7 +3,6 @@
 namespace App\Repositories\CompanyAdminRepositories;
 
 use App\Models\PhotoPackage;
-use App\Models\Company;
 use App\Models\Currency;
 use InfyOm\Generator\Common\BaseRepository;
 use DB ;
@@ -39,12 +38,10 @@ class PhotoPackageRepository extends BaseRepository
 
     public function getPhotoPackage($input)
     {
-        $company_id = Company::where('owner_id', '=', $input)->first();
-
         $results = DB::table('photo_packages as p')
                     ->join('currencies as c', 'c.id', '=', 'p.currency_id')
                     ->select('p.id as id', 'p.size','p.price' ,'p.free_photo', 'c.symbol')
-                    ->where('company_id', '=', $company_id['id'])
+                    ->where('company_id', '=', $input)
                     ->get();
 
         return $results;

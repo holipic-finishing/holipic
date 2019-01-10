@@ -129,7 +129,7 @@ class PhotoPackageAPIController extends AppBaseController
 
     public function getPhotoPackage(Request $request) 
     {
-        $input = $request->id;
+        $input = $request->company_id;
 
         $photoPackages = $this->photoPackageRepository->getPhotoPackage($input);
 

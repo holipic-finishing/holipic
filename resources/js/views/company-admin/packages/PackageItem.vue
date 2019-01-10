@@ -495,7 +495,7 @@ export default {
 	          	},
 	        },
 	        item:{
-	        	user_id: ''
+	        	company_id: ''
 	        },
 	        data:{},
 	        alertStt: false,
@@ -585,14 +585,11 @@ export default {
 		this.$root.$on('change-status', res => {
           	this.drawerRight = res.showDialog
     		this.check = res.check
-    		this.item.user_id = res.user_id
-    		// this.item = {
-    		// }
+    		this.item.company_id = res.company_id
       	})
 
       	this.$root.$on('data-packages', res => {
     		this.data = res
-    		// console.log(this.setting)
     		if(res.poster == '0'){
     			this.data.poster = '0'
     		} 

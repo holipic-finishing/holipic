@@ -269,7 +269,7 @@ export default {
 			let obj = {
 	  				check : 'add',
 	  				showDialog: true,
-	  				user_id: this.user.id
+	  				company_id: this.user.company_id
 	  		}
   			this.$root.$emit('change-status', obj)
 		},

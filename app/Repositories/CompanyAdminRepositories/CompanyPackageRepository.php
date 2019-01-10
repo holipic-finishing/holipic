@@ -3,7 +3,6 @@
 namespace App\Repositories\CompanyAdminRepositories;
 
 use App\Models\CompanyPackage;
-use App\Models\Company;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -37,15 +36,11 @@ class CompanyPackageRepository extends BaseRepository
 
     public function getCompanyPackages($input) 
     {
-        $company_id = Company::where('owner_id', '=', $input)->first()->id;
-
-        return $this->model->where('company_id', '=', $company_id)->get();
+        return $this->model->where('company_id', '=', $input)->get();
     }
 
     public function addCompanyPackageItem($input)
     { 
-        $company_id = Company::where('owner_id', '=', $input['user_id'])->first()->id; 
-
         $arrItem = array(
                     'package_name' => $input['package_name'],
                     'price' => $input['price'],
@@ -54,7 +49,7 @@ class CompanyPackageRepository extends BaseRepository
                     'album' => $input['album'],
                     'photo_on_disc' => $input['photo_on_disc'],
                     'poster' => $input['poster'],
-                    'company_id' => $company_id,
+                    'company_id' => $input['company_id'],
                 ); 
 
         return $this->model->create($arrItem);

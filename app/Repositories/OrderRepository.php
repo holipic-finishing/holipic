@@ -58,14 +58,30 @@ class OrderRepository extends BaseRepository
 
             $endDay     = Carbon::today()->format('Y-m-d');
         }
-       
-        $transactions = Transaction::with('transactionexchange')
-                        ->where('status','RECIVED')
-                        ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                        ->get()->toArray();
+    
+        $company_id = 19;
 
+        $orders = $this->scopeQuery(function($query) use ($company_id,$startDay,$endDay){
+            $query = $query->with(['branch' => function($q){
+                      }])
+                      ->with(['customer.room' => function($q){
+                      }])
+                      ->with(['customer.user' => function($q){
+                      }])
+                      ->with(['photographer' => function($q){
+                      }])
+                      ->with('orderexchange')
+                      ->whereHas('branch', function($q) use ($company_id) {
+                        // $q->where('branches.company_id',$company_id);
+                      })
+                      ->where('status','DONE')
+                      ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
 
-        $dates = $this->sumAmount($dates, $transactions, 'day');
+            return $query;
+         })->get()->toArray();
+
+        
+        $dates = $this->sumAmount($dates, $orders, 'day');
        
         return $dates;
     }
@@ -85,14 +101,29 @@ class OrderRepository extends BaseRepository
             $toMonth = Carbon::today()->format('Y-m');
         }
 
-        $transactions = Transaction::with('transactionexchange')
-                        ->where('status','RECIVED')
-                        ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
-                        ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth)
-                        ->get()->toArray();
+        $company_id = 19;
 
+        $orders = $this->scopeQuery(function($query) use ($company_id,$fromMonth,$toMonth){
+            $query = $query->with(['branch' => function($q){
+                      }])
+                      ->with(['customer.room' => function($q){
+                      }])
+                      ->with(['customer.user' => function($q){
+                      }])
+                      ->with(['photographer' => function($q){
+                      }])
+                      ->with('orderexchange')
+                      ->whereHas('branch', function($q) use ($company_id) {
+                        // $q->where('branches.company_id',$company_id);
+                      })
+                      ->where('status','DONE')
+                      ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '>=', $fromMonth)
+                        ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '<=', $toMonth);
 
-        $InMonth = $this->sumAmount($InMonth, $transactions, 'month');
+            return $query;
+         })->get()->toArray();
+
+        $InMonth = $this->sumAmount($InMonth, $orders, 'month');
 
         return $InMonth;
     }
@@ -112,14 +143,29 @@ class OrderRepository extends BaseRepository
             $to_year = Carbon::today()->format('Y-m');
         }
 
+        $company_id = 19;
 
-        $transactions = Transaction::with('transactionexchange')
-                        ->where('status','RECIVED')
-                        ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $from_year)
-                        ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $to_year)
-                        ->get()->toArray();
+        $orders = $this->scopeQuery(function($query) use ($company_id,$from_year,$to_year){
+            $query = $query->with(['branch' => function($q){
+                      }])
+                      ->with(['customer.room' => function($q){
+                      }])
+                      ->with(['customer.user' => function($q){
+                      }])
+                      ->with(['photographer' => function($q){
+                      }])
+                      ->with('orderexchange')
+                      ->whereHas('branch', function($q) use ($company_id) {
+                        // $q->where('branches.company_id',$company_id);
+                      })
+                      ->where('status','DONE')
+                      ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '>=', $from_year)
+                        ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '<=', $to_year);
 
-        $InYear = $this->sumAmount($InYear, $transactions, 'year');
+            return $query;
+         })->get()->toArray();
+
+        $InYear = $this->sumAmount($InYear, $orders, 'year');
  
 
         return $InYear;
@@ -141,27 +187,43 @@ class OrderRepository extends BaseRepository
 
         }          
 
-        $transactions = Transaction::with('transactionexchange')
-                        ->where('status','RECIVED')
-                        ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                        ->get()->toArray();                       
 
+        $company_id = 19;
+
+        $orders = $this->scopeQuery(function($query) use ($company_id,$startDay,$endDay){
+            $query = $query->with(['branch' => function($q){
+                      }])
+                      ->with(['customer.room' => function($q){
+                      }])
+                      ->with(['customer.user' => function($q){
+                      }])
+                      ->with(['photographer' => function($q){
+                      }])
+                      ->with('orderexchange')
+                      ->whereHas('branch', function($q) use ($company_id) {
+                        // $q->where('branches.company_id',$company_id);
+                      })
+                      ->where('status','DONE')
+                      ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
+
+            return $query;
+        })->get()->toArray();                                       
 
         foreach ($dayWeek as $key => $date) {
 
             $count=0;
-            if(count($transactions)) {
-                foreach ($transactions as $k_v => $value) {
+            if(count($orders)) {
+                foreach ($orders as $k_v => $value) {
                     
-                    $day = Carbon::parse($value['dated'])->format('Y-m-d');
+                    $day = Carbon::parse($value['created_at'])->format('Y-m-d');
 
                     if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
 
-                        $amount = $value['amount'];
+                        $total_amount = $value['total_amount'];
 
-                        $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
+                        $exchange_rate_to_dollar =  $value['orderexchange']['exchange_rate_to_dollar'];
 
-                        $count = $count + $amount *  $exchange_rate_to_dollar;  
+                        $count = $count + $total_amount *  $exchange_rate_to_dollar;  
                     } 
                     else {
                         $dayWeek[$key]['total'] = 0;
@@ -172,38 +234,40 @@ class OrderRepository extends BaseRepository
                 $dayWeek[$key]['total'] = round($count,3);
             }  else {
                 $dayWeek[$key]['total'] = 0;
-            }      
+            }   
+       
         }    
     
 
-        return $dayWeek;
+        return $dayWeek;    
+    
     }
 
-    public function sumAmount($dates, $transactions, $timevalue){
-
+    public function sumAmount($dates, $orders, $timevalue){
         foreach ($dates as $key => $date) {
             $count=0;
-            if(count($transactions)){
-                foreach ($transactions as $k_v => $value) {
+            if(count($orders)){
+                foreach ($orders as $k_v => $value) {
 
                         if($timevalue == 'day'){
 
-                            $time_value = Carbon::parse($value['dated'])->format('Y-m-d');
+                            $time_value = Carbon::parse($value['created_at'])->format('Y-m-d');
                         }
                         if($timevalue == 'month'){
-                            $time_value = Carbon::parse($value['dated'])->format('Y-m');
+                            $time_value = Carbon::parse($value['created_at'])->format('Y-m');
                         }
                         if($timevalue == 'year'){
-                            $time_value = Carbon::parse($value['dated'])->format('Y');
+                            $time_value = Carbon::parse($value['created_at'])->format('Y');
                         }                    
                     
                     if($key == $time_value) {
 
-                        $amount = $value['amount'];
+                        $total_amount = $value['total_amount'];
 
-                        $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
+                        $exchange_rate_to_dollar =  $value['orderexchange']['exchange_rate_to_dollar'];
 
-                        $count = $count + $amount *  $exchange_rate_to_dollar;
+
+                        $count = $count + $total_amount *  $exchange_rate_to_dollar;
                                      
 
                     } else {
@@ -216,6 +280,7 @@ class OrderRepository extends BaseRepository
                  $dates[$key]['total'] = 0;
             }           
         }
+
         return $dates;
     }
 }

@@ -16,6 +16,8 @@ class OrderTableSeeder extends Seeder
         
         \App\Models\Order::truncate();
 
+        \App\Models\OrderExchange::truncate();
+
         $faker = Faker\Factory::create();
 
         $branches = \App\Models\Branch::all();
@@ -32,26 +34,60 @@ class OrderTableSeeder extends Seeder
 
         $status = ['PENDING', 'DONE', 'CANCEL'];
 
+        $list_currency_id = [1,2,3];
 
-        for($i=0; $i <= 500 ; $i++){
+        $list_total_amount_dollar = [10, 15 , 30, 45] ;
+        $list_total_amount_euro = [8, 14 , 28, 42] ;
+        $list_total_amount_rp = [150000, 250000 , 600000, 900000] ;
+
+        for($i=0; $i < 2000 ; $i++){
+
+        	$dated =  $faker->dateTimeBetween($startDate = '-6 months', $endDate = '+8 months', $timezone = null);
 
         	$purchase_from_select = $faker->randomElement($purchase_from);
 
+        	$status_select = $faker->randomElement($status);
+
+        	$currency_id = $faker->randomElement($list_currency_id);
+
+        	if($currency_id == 1 ){
+        		$total_amount = $faker->randomElement($list_total_amount_dollar);
+        	}
+        	if($currency_id == 2 ){
+        		$total_amount = $faker->randomElement($list_total_amount_euro);
+        	}
+        	if($currency_id == 3 ){
+        		$total_amount = $faker->randomElement($list_total_amount_rp);
+        	}
+
 	        if($purchase_from_select == 'WEB'){
-	        	$dated =  $faker->dateTimeBetween($startDate = '-6 months', $endDate = '+8 months', $timezone = null);
-	        	$payment_method_select = 'WEB';
-	        	$purchase_date = $dated;
-	        	$download_date =  $dated;
+	        	if($status_select != 'DONE'){
+	        		$payment_method_select = 'WEB';
+		        	$purchase_date = null;
+		        	$download_date =  null;
+		        	$order_date = $dated;
+	        	}else{
+		        	$payment_method_select = 'WEB';
+		        	$purchase_date = $dated;
+		        	$download_date =  $dated;
+		        	$order_date = $dated;
+	        	}
 	        }
 	        if($purchase_from_select == 'SHOP'){
-	        	$dated =  $faker->dateTimeBetween($startDate = '-6 months', $endDate = '+8 months', $timezone = null);
-	        	$payment_method_select = $faker->randomElement($payment_method);
-	        	$purchase_date = $dated;
-	        	$download_date = null;
+	        	if($status_select != 'DONE'){
+		        	$payment_method_select = $faker->randomElement($payment_method);
+		        	$purchase_date = null;
+		        	$download_date = null;
+		        	$order_date = $dated;
+	        	}else{
+	        		$payment_method_select = $faker->randomElement($payment_method);
+		        	$purchase_date = $dated;
+		        	$download_date = null;
+		        	$order_date = $dated;
+	        	}
 	        }
 	       
 	        $branch_id = $faker->randomElement($list_branch_id);
-
 
 	        // photographer
 	        $photographers = \App\Models\Photographer::where('branch_id',$branch_id)->get();
@@ -64,7 +100,7 @@ class OrderTableSeeder extends Seeder
 
 	        $photographer_id = $faker->randomElement($list_photograher_id);
 
-	        //cuatomer
+	        //customer
 
 	        $customers = \App\Models\Customer::where('branch_id',$branch_id)->get();
 
@@ -81,30 +117,16 @@ class OrderTableSeeder extends Seeder
 	       $order->branch_id = $branch_id;
 	       $order->photographer_id = $photographer_id;
 	       $order->customer_id = $customer_id;
-	       $order->total_amount = $faker->randomFloat(2);
+	       $order->total_amount = $total_amount;
 	       $order->purchase_date = $purchase_date;
 	       $order->download_date = $download_date;
 	       $order->payment_method = $payment_method_select;
 	       $order->purchase_from = $purchase_from_select;
-	       $order->status = $faker->randomElement($status);
-	       $order->invoice = 'INV'.time();
-
+	       $order->status = $status_select;
+	       $order->invoice = 'INV'.$faker->ean8;
+	       $order->currency_id = $currency_id;
+	       $order->created_at = $order_date;
 	       $order->save();
-
-	        // $order = \App\Models\Order::create([
-         //        'branch_id' => $branch_id,
-         //        'photographer_id' => $photographer_id,
-         //        'customer_id' => $customer_id,
-         //        'total_amount' =>  $faker->randomFloat(2),
-         //        'purchase_date' => $purchase_date,
-         //        'download_date' => $download_date,
-         //        'payment_method' => $payment_method,
-         //        'purchase_from' => $purchase_from,
-         //        'status' => $faker->randomElement($status),
-         //        'invoice'=> 'INV'.time(),
-                
-         //    ]);
-
 
         }
                 

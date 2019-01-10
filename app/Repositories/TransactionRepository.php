@@ -704,9 +704,7 @@ class TransactionRepository extends BaseRepository
                 $dayWeek[$key]['total'] = round($count,3);
             }  else {
                 $dayWeek[$key]['total'] = 0;
-            }
-
-           
+            }   
        
         }    
     

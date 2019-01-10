@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->integer('photographer_id');
             $table->integer('customer_id');
             $table->decimal('total_amount',30,15);
-            $table->datetime('purchase_date');
+            $table->datetime('purchase_date')->nullable();
             $table->datetime('download_date')->nullable();
             $table->string('payment_method');
             $table->string('purchase_from');

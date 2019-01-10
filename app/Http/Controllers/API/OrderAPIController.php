@@ -140,7 +140,6 @@ class OrderAPIController extends AppBaseController
     public function getAllOrderCompany(Request $request) {
 
         $input = $request->all();
-
         $searchBy = [];
 
         if($request->has('search') && $request->input('search')){
@@ -156,8 +155,8 @@ class OrderAPIController extends AppBaseController
             }
      
         }
-        dd($searchBy);
-        $orders = $this->orderRepository->getAllOrders($searchBy);
+
+        $orders = $this->orderRepository->getAllOrders($input['company_id'],$searchBy);
 
         if ($orders) {
             return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully');

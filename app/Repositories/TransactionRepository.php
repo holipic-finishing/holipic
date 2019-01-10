@@ -813,7 +813,7 @@ class TransactionRepository extends BaseRepository
      */
     
     public function transform($results){
-    
+        
         foreach ($results as $key => $result) {
 
             $results[$key]->company_name = $result->user->company->name;

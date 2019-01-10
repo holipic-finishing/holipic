@@ -266,6 +266,7 @@ export default {
 			this.makeParams()
 			let params = {
                 search:this.filterSearch,
+                company_id:this.authUser.company_id
             }	
 			let url = config.API_URL+'order/orders-company'
 			getWithData(url,params)
@@ -317,6 +318,7 @@ export default {
 			this.makeParams()
 			let params = {
                 search:this.filterSearch,
+                company_id : this.authUser.company_id
             }	
 			let url = config.API_URL+'order/orders-company'
 			getWithData(url,params)

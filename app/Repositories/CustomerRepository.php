@@ -37,14 +37,17 @@ class CustomerRepository extends BaseRepository
 
     public function handelGetCustomers()
     {
-        $companyId = request('companyId');
+        $companyId = request('companyId'); 
 
         $data = [];
         
         if($companyId && $companyId != '') {
-            $customers = $this->model->with('user')->with('room')->with(['branch' => function($q) use ($companyId) {
-                                     $q->whereCompanyId($companyId);
-                        }])->get()->toArray();
+            $customers = $this->model
+                                ->with('user')
+                                ->with('room')
+                                ->with(['branch' => function($q) use ($companyId) {
+                                                     $q->whereCompanyId($companyId)->whereUserId(38);
+                                        }])->get()->toArray();
 
             foreach($customers as $customer) 
             {
@@ -53,7 +56,7 @@ class CustomerRepository extends BaseRepository
                     $data[] = $customer;
                 }
             }
-
+dd($data);
             return $data;
         }
 

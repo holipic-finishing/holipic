@@ -294,22 +294,7 @@ export default {
 		},
 
 		sreachSales(){
-			this.makeParams()
-			let params = {
-                search:this.filterSearch,
-                company_id : this.authUser.company_id
-            }	
-			let url = config.API_URL+'order/orders-company'
-			getWithData(url,params)
-			.then(res => {
-				if(res.data && res.data.success){
-					let data = res.data.data
-					this.desserts = data
-				}
-			})
-			.catch(err => {
-				console.log(err)
-			})
+			this.fetchData()
 			
 		},
 

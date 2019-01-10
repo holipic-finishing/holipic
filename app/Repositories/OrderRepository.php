@@ -57,9 +57,21 @@ class OrderRepository extends BaseRepository
     }
     
     // ********* Get all orders with branch, customer, photographer **********
-    public function getAllOrders(){
+    public function getAllOrders($searchBy){
 
-         $results = $this->scopeQuery(function($query){
+         if (!empty($searchBy['from_day']) && !empty($searchBy['to_day'])) {
+
+                dd('hehe haha');
+            }   else if(!empty($searchBy['to_day'])){
+                dd('haha');
+            } else if(!empty($searchBy['from_day'])){
+               dd('hehe');
+            }
+            dd('ko co');
+     
+
+
+        $results = $this->scopeQuery(function($query) use ($searchBy){
              $query = $query->with(['branch' => function($q) {
                         $q->select('name','id');
                       }])
@@ -71,14 +83,36 @@ class OrderRepository extends BaseRepository
                       }])
                       ->with(['photographer' => function($q){
                         $q->select('id','name');
-                      }])
-                      ->where('status','DONE');
+                      }]);
+
+            if (!empty($searchBy['branch_id']) !== '0') {
+
+                $query = $query->where('branch_id',$searchBy['branch_id']);
+            }  
+
+            if (!empty($searchBy['photographer_id']) !== '0') {
+
+                $query = $query->where('photographer_id',$searchBy['photographer_id']);
+            }  
+
+            if (!empty($searchBy['from_day'])) {
+
+                $query = $query->where(DB::raw('date(purchase_date)'),$searchBy['from_day']);
+            }  
+
+            if (!empty($searchBy['branch_id']) !== '0') {
+
+                $query = $query->where('branch_id',$searchBy['branch_id']);
+            }          
+          
+            $query = $query->where('status','DONE');
              return $query;
          })->get();
-    
+     
         $results = $this->transform($results);
 
         return $results;
+
     }
 
     //*********** Transfrom Orders data **************

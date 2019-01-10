@@ -110,6 +110,8 @@ Route::group(['namespace' => 'API'],function(){
 	/*************Order Controllers**************/
 	Route::resource('orders', 'OrderAPIController');
 
+	Route::get('order/orders-company', 'OrderAPIController@getAllOrderCompany');
+
 
 	/***********************************************
 	**********	ROUTER SUPER ADMIN   ***************

@@ -50,12 +50,14 @@
 					<v-text-field 
 						slot="activator"
 						prepend-icon="event"
-						v-model="computedStartDay"
+						:value="computedStartDay"
   						placeholder="Enter Start Date"
+  						clearable
 					></v-text-field>
 					<v-date-picker 
 						v-model="from_day"
 						no-title
+						@change="menu1 = false"
 						scrollable 
 						:max="new Date().toISOString().substr(0, 10)"
 					></v-date-picker>
@@ -70,23 +72,27 @@
 	                lazy
 	                transition="scale-transition"
 	                offset-y
+
 				>
 					<v-text-field 
 						slot="activator"
 						prepend-icon="event"
-						v-model="computedEndDay"
+						readonly
+						:value="computedEndDay"
   						placeholder="Enter End Date"
+  						clearable
 					></v-text-field>
 					<v-date-picker 
 						v-model="to_day" 
 						no-title 
 						scrollable 
+						@change="menu2 = false"
 						:max="new Date().toISOString().substr(0, 10)"
 					></v-date-picker>
 				</v-menu>
 				</v-flex>
 				<v-flex xl1 lg1 md1 sm6 xs12>
-					<v-btn class="btn-style" depressed color="primary" @click="reachSales()">Go</v-btn>
+					<v-btn class="btn-style" depressed color="primary" @click="sreachSales()">Go</v-btn>
 		      	</v-flex>
 		      	<v-flex xl1 lg1 md1 sm6 xs12>
 				    <v-tooltip bottom class="icon-style">
@@ -122,15 +128,6 @@
 				
 				<template slot="headers" slot-scope="props">
 		          <tr>
-		            <!-- <th>
-		              <v-checkbox
-		                :input-value="props.all"
-		                :indeterminate="props.indeterminate"
-		                primary
-		                hide-details
-		                @click.native="toggleAll"
-		              ></v-checkbox>
-		            </th> -->
 		            <th
 		              v-for="header in props.headers"
 		              :key="header.text"
@@ -172,7 +169,7 @@
 </template>
 
 <script>
-import { get, post, put } from '../../../api/index.js'
+import { get, post, put, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 export default {
 
@@ -266,8 +263,12 @@ export default {
 		},
 
 		fetchData(){
-			let url = config.API_URL+'orders'
-			get(url)
+			this.makeParams()
+			let params = {
+                search:this.filterSearch,
+            }	
+			let url = config.API_URL+'order/orders-company'
+			getWithData(url,params)
 			.then(res => {
 				if(res.data && res.data.success){
 					let data = res.data.data
@@ -312,9 +313,22 @@ export default {
 			this.filterSearch = searchValues.join(";")
 		},
 
-		reachSales(){
+		sreachSales(){
 			this.makeParams()
-			console.log(this.filterSearch)
+			let params = {
+                search:this.filterSearch,
+            }	
+			let url = config.API_URL+'order/orders-company'
+			getWithData(url,params)
+			.then(res => {
+				if(res.data && res.data.success){
+					let data = res.data.data
+					this.desserts = data
+				}
+			})
+			.catch(err => {
+				console.log(err)
+			})
 			
 		}
 	},

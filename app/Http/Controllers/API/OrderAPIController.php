@@ -38,13 +38,11 @@ class OrderAPIController extends AppBaseController
     {
         $this->orderRepository->pushCriteria(new RequestCriteria($request));
         $this->orderRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $orders = $this->orderRepository->getAllOrders();
 
-        if ($orders) {
-            return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully');
-        }else{
-            return $this->sendError('Data not found');
-        }
+        $orders = $this->orderRepository->all();
+
+        return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully');
+       
     }
 
     /**
@@ -130,4 +128,42 @@ class OrderAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Order deleted successfully');
     }
+
+    /**
+     * Target : Get all order company
+     * GET orders/orders-company
+     *
+     * @param  array search
+     *
+     * @return Response
+     */
+    public function getAllOrderCompany(Request $request) {
+
+        $input = $request->all();
+
+        $searchBy = [];
+
+        if($request->has('search') && $request->input('search')){
+
+            $searchValues = explode(';', $request->input('search'));
+            
+            foreach ($searchValues as $val) {
+            $tmp = explode(':', $val);
+    
+                if(count($tmp) > 1){
+                    $searchBy[$tmp[0]] = $tmp[1];
+                }
+            }
+     
+        }
+        dd($searchBy);
+        $orders = $this->orderRepository->getAllOrders($searchBy);
+
+        if ($orders) {
+            return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully');
+        }else{
+            return $this->sendError('Data not found');
+        }
+    }
+
 }

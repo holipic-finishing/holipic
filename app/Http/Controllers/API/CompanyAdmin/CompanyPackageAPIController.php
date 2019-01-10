@@ -128,11 +128,20 @@ class CompanyPackageAPIController extends AppBaseController
         return $this->sendResponse($id, 'Company Package deleted successfully');
     }
 
+    public function getPackage(Request $request)
+    {
+        $input = $request->id;
+
+        $result = $this->companyPackageRepository->getCompanyPackages($input);
+
+        return $this->sendResponse($result->toArray(), 'Company Packages retrieved successfully');
+    }
+
     public function addPackage(Request $request) 
     {
         $input = $request->all(); 
 
-        $result = $this->companyPackageRepository->getCompanyPackageItem($input);
+        $result = $this->companyPackageRepository->addCompanyPackageItem($input);
 
         return $this->sendResponse($result->toArray(), 'Company Package saved successfully');
     }

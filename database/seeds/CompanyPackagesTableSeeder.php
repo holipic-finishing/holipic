@@ -33,7 +33,7 @@ class CompanyPackagesTableSeeder extends Seeder
 	        	'album' => '1 Photobook', 
 	        	'photo_on_disc' => 30,
 	        	'poster' => 1,
-	        	'company_id' => '2', 
+	        	'company_id' => '1', 
 	        ],
 	        [
 	        	'package_name' => 'Package 3', 
@@ -43,7 +43,7 @@ class CompanyPackagesTableSeeder extends Seeder
 	        	'album' => 'Handmade Album', 
 	        	'photo_on_disc' => 40,
 	        	'poster' => 2,
-	        	'company_id' => '3',  
+	        	'company_id' => '1',  
 	        ],
 	        [
 	        	'package_name' => 'Package 4', 
@@ -53,7 +53,17 @@ class CompanyPackagesTableSeeder extends Seeder
 	        	'album' => 'Large Album', 
 	        	'photo_on_disc' => 50,
 	        	'poster' => 2,
-	        	'company_id' => '4', 
+	        	'company_id' => '2', 
+	        ],
+	        [
+	        	'package_name' => 'Package 5', 
+	        	'price' => 'Rp 7500000', 
+	        	'offer' => 'Rp 6000000', 
+	        	'total_photo' => 50, 
+	        	'album' => 'Big Album', 
+	        	'photo_on_disc' => 50,
+	        	'poster' => 2,
+	        	'company_id' => '2', 
 	        ],
         ];
 

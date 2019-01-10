@@ -29,7 +29,7 @@
 	 		<v-form ref="form" @submit.prevent="savePackageAdd">
 				<v-list two-line>
 
-		           	<v-list-tile class="height-80">
+		           	<v-list-tile class="height-70">
 				        <v-list-tile-content class="h-100">
 				          <v-list-tile-title class="content-flex-end h-100">
 				            <span class="font-weight-bold item-title position-item">Package Name:</span>
@@ -47,7 +47,7 @@
 				    </v-list-tile>
 				    <v-divider class="no-mg-bottom"></v-divider>
 
-				    <v-list-tile class="height-80">
+				    <v-list-tile class="height-70">
 				        <v-list-tile-content class="h-100">
 				          <v-list-tile-title class="content-flex-end h-100">
 				            <span class="font-weight-bold item-title position-item">Package Price:</span>
@@ -65,7 +65,7 @@
 				    </v-list-tile>
 				    <v-divider class="no-mg-bottom"></v-divider>
 
-				    <v-list-tile class="height-80">
+				    <v-list-tile class="height-70">
 				        <v-list-tile-content class="h-100">
 				          <v-list-tile-title class="content-flex-end h-100">
 				            <span class="font-weight-bold item-title position-item">Offer Price:</span>
@@ -83,7 +83,7 @@
 				    </v-list-tile>
 				    <v-divider class="no-mg-bottom"></v-divider>
 
-				    <v-list-tile class="height-80">
+				    <v-list-tile class="height-70">
 				        <v-list-tile-content class="h-100">
 				          <v-list-tile-title class="content-flex-end h-100">
 				            <span class="font-weight-bold item-title position-item">Total Photo:</span>
@@ -101,7 +101,7 @@
 				    </v-list-tile>
 				    <v-divider class="no-mg-bottom"></v-divider>
 
-				    <v-list-tile class="height-80">
+				    <v-list-tile class="height-70">
 				        <v-list-tile-content class="h-100">
 				          <v-list-tile-title class="content-flex-end h-100">
 				            <span class="font-weight-bold item-title position-item">Album:</span>
@@ -119,7 +119,7 @@
 				    </v-list-tile>
 				    <v-divider class="no-mg-bottom"></v-divider>
 
-				    <v-list-tile class="height-80">
+				    <v-list-tile class="height-70">
 				        <v-list-tile-content class="h-100">
 				          <v-list-tile-title class="content-flex-end h-100">
 				            <span class="font-weight-bold item-title position-item">Photos on the disc:</span>
@@ -137,7 +137,7 @@
 				    </v-list-tile>
 				    <v-divider class="no-mg-bottom"></v-divider>
 
-				    <v-list-tile class="height-80">
+				    <v-list-tile class="height-70">
 				        <v-list-tile-content class="h-100">
 				          <v-list-tile-title class="content-flex-end h-100">
 				            <span class="font-weight-bold item-title position-item">Poster (20x30):</span>
@@ -164,7 +164,7 @@
    		</v-list>
 
         <v-list v-show="check == 'show'" class="heigth-list-title">
-        	<v-list-tile class="height-80">
+        	<v-list-tile class="height-70">
 				<v-list-tile-content>
 		            <v-list-tile-title class="content-flex-end h-100">
 			          	<span class="font-weight-bold item-title position-item">Package Name</span>
@@ -182,7 +182,7 @@
 			</v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
 
-	        <v-list-tile class="height-80">
+	        <v-list-tile class="height-70">
 				<v-list-tile-content>
 		            <v-list-tile-title class="content-flex-end h-100">
 			          	<span class="font-weight-bold item-title position-item">Package Price</span>
@@ -200,7 +200,7 @@
 			</v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
 
-	        <v-list-tile class="height-80">
+	        <v-list-tile class="height-70">
 				<v-list-tile-content>
 		            <v-list-tile-title class="content-flex-end h-100">
 			          	<span class="font-weight-bold item-title position-item">Offer Price</span>
@@ -218,7 +218,7 @@
 			</v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
 
-	        <v-list-tile class="height-80">
+	        <v-list-tile class="height-70">
 				<v-list-tile-content>
 		            <v-list-tile-title class="content-flex-end h-100">
 			          	<span class="font-weight-bold item-title position-item">Total Photo</span>
@@ -236,7 +236,7 @@
 			</v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
 
-	        <v-list-tile class="height-80">
+	        <v-list-tile class="height-70">
 				<v-list-tile-content>
 		            <v-list-tile-title class="content-flex-end h-100">
 			          	<span class="font-weight-bold item-title position-item">Album</span>
@@ -254,7 +254,7 @@
 			</v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
 
-	        <v-list-tile v-if="data.photo_on_disc != 0" class="height-80">
+	        <v-list-tile v-if="data.photo_on_disc != 0" class="height-70">
 				<v-list-tile-content>
 		            <v-list-tile-title class="content-flex-end h-100">
 			          	<span class="font-weight-bold item-title position-item">Photos on the disc</span>
@@ -272,7 +272,7 @@
 			</v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
 
-	        <v-list-tile v-if="data.poster != 0" class="height-80">
+	        <v-list-tile v-if="data.poster != 0" class="height-70">
 				<v-list-tile-content>
 		            <v-list-tile-title class="content-flex-end h-100">
 			          	<span class="font-weight-bold item-title position-item">Poster (20x30)</span>
@@ -293,7 +293,7 @@
         </v-list> 
 
         <v-list v-show="check == 'edit'" class="heigth-list-title">
-			<v-list-tile class="height-80">
+			<v-list-tile class="height-70">
 				<v-list-tile-content class="h-100">
 					<v-list-tile-title class="content-flex-end h-100">
 						<span class="font-weight-bold item-title position-item">Package Name:</span>
@@ -317,7 +317,7 @@
 			</v-list-tile>
 			<v-divider class="no-mg-bottom"></v-divider>
 
-			<v-list-tile class="height-80">
+			<v-list-tile class="height-70">
 				<v-list-tile-content class="h-100">
 					<v-list-tile-title class="content-flex-end h-100">
 						<span class="font-weight-bold item-title position-item">Package Price:</span>
@@ -341,7 +341,7 @@
 			</v-list-tile>
 			<v-divider class="no-mg-bottom"></v-divider>
 
-			<v-list-tile class="height-80">
+			<v-list-tile class="height-70">
 				<v-list-tile-content class="h-100">
 					<v-list-tile-title class="content-flex-end h-100">
 						<span class="font-weight-bold item-title position-item">Offer Price:</span>
@@ -365,7 +365,7 @@
 			</v-list-tile>
 			<v-divider class="no-mg-bottom"></v-divider>
 
-			<v-list-tile class="height-80">
+			<v-list-tile class="height-70">
 				<v-list-tile-content class="h-100">
 					<v-list-tile-title class="content-flex-end h-100">
 						<span class="font-weight-bold item-title position-item">Total Photo:</span>
@@ -389,7 +389,7 @@
 			</v-list-tile>
 			<v-divider class="no-mg-bottom"></v-divider>
 
-			<v-list-tile class="height-80">
+			<v-list-tile class="height-70">
 				<v-list-tile-content class="h-100">
 					<v-list-tile-title class="content-flex-end h-100">
 						<span class="font-weight-bold item-title position-item">Album:</span>
@@ -413,7 +413,7 @@
 			</v-list-tile>
 			<v-divider class="no-mg-bottom"></v-divider>
 
-			<v-list-tile class="height-80">
+			<v-list-tile class="height-70">
 				<v-list-tile-content class="h-100">
 					<v-list-tile-title class="content-flex-end h-100">
 						<span class="font-weight-bold item-title position-item">Photos on the disc:</span>
@@ -437,7 +437,7 @@
 			</v-list-tile>
 			<v-divider class="no-mg-bottom"></v-divider>
 
-			<v-list-tile class="height-80">
+			<v-list-tile class="height-70">
 				<v-list-tile-content class="h-100">
 					<v-list-tile-title class="content-flex-end h-100">
 						<span class="font-weight-bold item-title position-item">Poster (20x30):</span>

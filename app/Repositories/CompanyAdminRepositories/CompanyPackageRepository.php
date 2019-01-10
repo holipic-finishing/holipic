@@ -35,7 +35,14 @@ class CompanyPackageRepository extends BaseRepository
         return CompanyPackage::class;
     }
 
-    public function getCompanyPackageItem($input)
+    public function getCompanyPackages($input) 
+    {
+        $company_id = Company::where('owner_id', '=', $input)->first()->id;
+
+        return $this->model->where('company_id', '=', $company_id)->get();
+    }
+
+    public function addCompanyPackageItem($input)
     { 
         $company_id = Company::where('owner_id', '=', $input['user_id'])->first()->id; 
 

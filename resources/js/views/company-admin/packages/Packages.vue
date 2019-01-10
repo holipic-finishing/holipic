@@ -199,8 +199,8 @@ export default {
 	},
 	methods:{
 		fetchData() {
-			let url = config.API_URL+'company_packages';
-			get(url)
+			let url = config.API_URL+'get-company-package';
+			post(url, this.user)
 			.then((res) => {
 				console.log(res.data.data)
 				if(res.data && res.data.success){

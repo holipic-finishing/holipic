@@ -50,9 +50,11 @@
 					<v-text-field 
 						slot="activator"
 						prepend-icon="event"
+						readonly
 						:value="computedStartDay"
   						placeholder="Enter Start Date"
   						clearable
+  						@click:clear="clearSearchDate"
 					></v-text-field>
 					<v-date-picker 
 						v-model="from_day"
@@ -81,6 +83,7 @@
 						:value="computedEndDay"
   						placeholder="Enter End Date"
   						clearable
+  						@click:clear="clearSearchEndDate"
 					></v-text-field>
 					<v-date-picker 
 						v-model="to_day" 
@@ -96,10 +99,10 @@
 		      	</v-flex>
 		      	<v-flex xl1 lg1 md1 sm6 xs12>
 				    <v-tooltip bottom class="icon-style">
-					    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3">
+					    <a target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3" @click="exportFile">
 								<v-icon small color="white">fas fa-file-excel</v-icon>
 							</a>
-					    <span>Export companies</span>
+					    <span>Export Sales</span>
 				    </v-tooltip>
 		      	</v-flex>
 				</v-layout>
@@ -119,41 +122,19 @@
 				<v-data-table
 				:headers="headers" 
 				:items="desserts" 
-				class="elevation-5 style-table"
+				class="elevation-5 style-table custom-table-customer"
 				item-key="id" 
 				:pagination.sync="pagination" 
 				:rows-per-page-items="rowsPerPageItems" 
 				:search="search"
 				>
 				
-				<template slot="headers" slot-scope="props">
-		          <tr>
-		            <th
-		              v-for="header in props.headers"
-		              :key="header.text"
-		              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-		              @click="changeSort(header.value)"
-		            >
-		            	<div class="custom-header">
-			              <v-tooltip bottom>
-			                <span slot="activator" class="text-capitalize subheading font-weight-bold">
-			                  {{ header.text }}
-			                </span>
-			                <span>
-			                  {{ header.text }}
-			                </span>
-			              </v-tooltip>
-			              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
-		            	</div>
-		            </th>
-		          </tr>
-		        </template>
 					<template slot="items" slot-scope="props">
 						<td>{{ props.item.id }}</td>
 						<td>{{ props.item.branch_name }}</td>
 						<td>{{ props.item.photographer_name }}</td>
 						<td>{{ props.item.room_has_number }}</td>
-						<td>{{ props.item.total_amount }}</td>
+						<td>{{ formatTotal(props.item.total_amount) }}</td>
 						<td>{{ props.item.purchase_date }}</td>
 						<td>{{ props.item.download_date }}</td>
 						<td>{{ props.item.customer_email }}</td>
@@ -181,7 +162,6 @@ export default {
 			menu2:false,	
 			from_day:'',
 			to_day:'',
-			urlExport:'',
 			search:'',
 			selected: {id:'0',name:"-- Select Branch --" },
 	        items: [{id:'0',name:"-- Select Branch --" }],
@@ -198,7 +178,7 @@ export default {
 				{ text: 'Branch', value: 'branch_name' },
 				{ text: 'Photographer', value: 'photographer_name'},	
 				{ text: 'Room Number', value: 'room_has_number',align: 'left',width: '10%'},	
-				{ text: 'Total Amount', value: 'total_amount' },		      
+				{ text: 'Total Amount', value: 'total_amount',align: 'left' },		      
 				{ text: 'Purchase Date', value: 'purchase_date' },
 				{ text: 'Download Date', value: 'download_date' },	
 				{ text: 'Customer Email', value: 'customer_email' },	
@@ -261,7 +241,6 @@ export default {
 
 			})
 		},
-
 		fetchData(){
 			this.makeParams()
 			let params = {
@@ -332,6 +311,38 @@ export default {
 				console.log(err)
 			})
 			
+		},
+
+		clearSearchDate(){
+			this.from_day = ""
+		},
+
+		clearSearchEndDate(){
+			this.to_day = ""
+		},
+
+		formatTotal($total){
+			let totalAmount = parseFloat($total).toFixed(3)
+
+			return totalAmount;
+		},
+
+		exportFile(){
+			this.makeParams()
+			let params = {
+                search:this.filterSearch,
+                company_id : this.authUser.company_id
+            }	
+			let url = config.API_URL+'order/sales/company/export'
+			getWithData(url,params)
+			.then(res => {
+				if(res.data && res.data.status){
+					window.location.href = res.data.link
+				}
+			})
+			.catch(err => {
+				console.log(err)
+			})
 		}
 	},
 	computed:{
@@ -340,7 +351,7 @@ export default {
 		},
 		computedEndDay(){
 			return this.to_day
-		}
+		},
 	}
 }
 </script>

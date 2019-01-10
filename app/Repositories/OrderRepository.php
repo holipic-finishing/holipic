@@ -221,7 +221,6 @@ class OrderRepository extends BaseRepository
     
     // ********* Get all orders with branch, customer, photographer **********
     public function getAllOrders($company_id,$searchBy){
-        // dd($searchBy);
        
         $results = $this->scopeQuery(function($query) use ($searchBy,$company_id){
             $query = $query->whereHas('branch', function($q) use ($company_id) {
@@ -273,9 +272,9 @@ class OrderRepository extends BaseRepository
             $query = $query->where('status','DONE');
              return $query;
          })->get();
-        // dd($results->toArray());
+      
         $results = $this->transform($results);
-
+        // $this->insertCSVFile($results,$company_id);
         return $results;
 
     }
@@ -291,5 +290,41 @@ class OrderRepository extends BaseRepository
         }
         
         return $results;
+    }
+
+    //********** Insert File CSV **************
+   public function insertCSVFile($attributes,$company_id){
+ 
+        if(!$attributes)
+            return false;
+
+        $pathPublic = env('DB_MYSQL_DIR').DIRECTORY_SEPARATOR;
+
+        $filename =  $company_id . '_Sales.csv';
+       
+        $file = fopen($pathPublic.$filename,"a+");
+        try{
+
+            foreach ($attributes as $key => $value) {
+
+                $data = [];
+                $data[] = $key;
+                $data[] = $value->branch_name;
+                $data[] = $value->photographer_name;
+                $data[] = $value->room_has_number;
+                $data[] = $value->total_amount;
+                $data[] = $value->purchase_date;
+                $data[] = $value->customer_email;
+                $data[] = $value->payment_method;
+                $data[] = $value->purchase_from;
+                fputcsv($file, $data);
+            }
+
+            fclose($file);
+        }catch (Exception $e)
+        {
+            \Log::info(' Errors to insert csv file - '.$e->getMessage());
+        }
+
     }
 }

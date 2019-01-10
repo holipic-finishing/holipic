@@ -157,12 +157,81 @@ class OrderAPIController extends AppBaseController
         }
 
         $orders = $this->orderRepository->getAllOrders($input['company_id'],$searchBy);
-
         if ($orders) {
             return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully');
         }else{
             return $this->sendError('Data not found');
         }
+    }
+
+    /**
+     * Target : Export file csv Sales Company
+     * GET order/sales/company/export
+     *
+     * @param  array search
+     *
+     * @return Response
+     */
+    public function exportSalesCompany(Request $request){
+        $input = $request->all();
+        
+        $this->createLink($input['company_id']);
+
+        $searchBy = [];
+
+        if($request->has('search') && $request->input('search')){
+
+            $searchValues = explode(';', $request->input('search'));
+            
+            foreach ($searchValues as $val) {
+            $tmp = explode(':', $val);
+    
+                if(count($tmp) > 1){
+                    $searchBy[$tmp[0]] = $tmp[1];
+                }
+            }
+     
+        }
+
+        $orders = $this->orderRepository->getAllOrders($input['company_id'],$searchBy);
+
+        if ($orders) {
+            $file_csv = $this->orderRepository->insertCSVFile($orders,$input['company_id']);
+            return \Response::json([
+                    'status' => true,
+                    'link' => url('/files/'.$input['company_id'].'_Sales.csv')
+            ]);
+        }
+
+    }
+
+    /**
+     * Target : Create file CSV sales HEADER
+     * @From : func: getAllOrderCompany
+     *
+     * @param  array search
+     *
+     * 
+     */
+    public function createLink($company_id){
+
+        $path = env('DB_MYSQL_DIR') . DIRECTORY_SEPARATOR;
+        
+        $csvPath = $path .$company_id. '_Sales.csv';
+        if(\File::exists($csvPath)){
+            unlink($csvPath);
+        }
+        if(!\File::exists($path)) {
+
+            \File::makeDirectory($path, $mode = 0777, true, true);
+
+        }
+
+        $file = fopen($csvPath,"a+");
+        $keys = ['SN.','Branch','Photographer','Room Number','Total Amount','Date','Customer Email','Payment Method','Purchased From'];
+        fputcsv($file,$keys);
+        fclose($file); 
+        return $csvPath;
     }
 
 }

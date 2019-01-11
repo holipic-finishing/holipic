@@ -65,6 +65,7 @@ class Order extends Model
         
     ];
 
+
     public static function boot()
     {
         parent::boot();
@@ -74,6 +75,7 @@ class Order extends Model
         });
 
     }
+
 
     public function branch()
     {
@@ -117,6 +119,5 @@ class Order extends Model
             'exchange_rate_to_dollar' => $exchangeRateToDollar
         ]);
     }
-
-    
+  
 }

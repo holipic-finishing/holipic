@@ -59,9 +59,7 @@ class OrderRepository extends BaseRepository
             $endDay     = Carbon::today()->format('Y-m-d');
         }
     
-        $company_id = 19;
-
-        $orders = $this->scopeQuery(function($query) use ($company_id,$startDay,$endDay){
+        $orders = $this->scopeQuery(function($query) use ($startDay,$endDay){
             $query = $query->with(['branch' => function($q){
                       }])
                       ->with(['customer.room' => function($q){
@@ -71,8 +69,8 @@ class OrderRepository extends BaseRepository
                       ->with(['photographer' => function($q){
                       }])
                       ->with('orderexchange')
-                      ->whereHas('branch', function($q) use ($company_id) {
-                        // $q->where('branches.company_id',$company_id);
+                      ->whereHas('branch', function($q) {
+                        // $q->where('branches.company_id',$attributes['company_id']);
                       })
                       ->where('status','DONE')
                       ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
@@ -101,9 +99,7 @@ class OrderRepository extends BaseRepository
             $toMonth = Carbon::today()->format('Y-m');
         }
 
-        $company_id = 19;
-
-        $orders = $this->scopeQuery(function($query) use ($company_id,$fromMonth,$toMonth){
+        $orders = $this->scopeQuery(function($query) use ($fromMonth,$toMonth){
             $query = $query->with(['branch' => function($q){
                       }])
                       ->with(['customer.room' => function($q){
@@ -113,8 +109,8 @@ class OrderRepository extends BaseRepository
                       ->with(['photographer' => function($q){
                       }])
                       ->with('orderexchange')
-                      ->whereHas('branch', function($q) use ($company_id) {
-                        // $q->where('branches.company_id',$company_id);
+                      ->whereHas('branch', function($q) {
+                        // $q->where('branches.company_id',$attributes['company_id']);
                       })
                       ->where('status','DONE')
                       ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '>=', $fromMonth)
@@ -143,9 +139,7 @@ class OrderRepository extends BaseRepository
             $to_year = Carbon::today()->format('Y-m');
         }
 
-        $company_id = 19;
-
-        $orders = $this->scopeQuery(function($query) use ($company_id,$from_year,$to_year){
+        $orders = $this->scopeQuery(function($query) use ($from_year,$to_year){
             $query = $query->with(['branch' => function($q){
                       }])
                       ->with(['customer.room' => function($q){
@@ -155,8 +149,8 @@ class OrderRepository extends BaseRepository
                       ->with(['photographer' => function($q){
                       }])
                       ->with('orderexchange')
-                      ->whereHas('branch', function($q) use ($company_id) {
-                        // $q->where('branches.company_id',$company_id);
+                      ->whereHas('branch', function($q)  {
+                        // $q->where('branches.company_id',$attributes['company_id']);
                       })
                       ->where('status','DONE')
                       ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '>=', $from_year)
@@ -187,10 +181,7 @@ class OrderRepository extends BaseRepository
 
         }          
 
-
-        $company_id = 19;
-
-        $orders = $this->scopeQuery(function($query) use ($company_id,$startDay,$endDay){
+        $orders = $this->scopeQuery(function($query) use ($startDay,$endDay){
             $query = $query->with(['branch' => function($q){
                       }])
                       ->with(['customer.room' => function($q){
@@ -200,8 +191,8 @@ class OrderRepository extends BaseRepository
                       ->with(['photographer' => function($q){
                       }])
                       ->with('orderexchange')
-                      ->whereHas('branch', function($q) use ($company_id) {
-                        // $q->where('branches.company_id',$company_id);
+                      ->whereHas('branch', function($q) {
+                        // $q->where('branches.company_id',$attributes['company_id']);
                       })
                       ->where('status','DONE')
                       ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
@@ -238,7 +229,6 @@ class OrderRepository extends BaseRepository
        
         }    
     
-
         return $dayWeek;    
     
     }
@@ -282,5 +272,114 @@ class OrderRepository extends BaseRepository
         }
 
         return $dates;
+    }
+    
+    // ********* Get all orders with branch, customer, photographer **********
+    public function getAllOrders($company_id,$searchBy){
+       
+        $results = $this->scopeQuery(function($query) use ($searchBy,$company_id){
+            $query = $query->whereHas('branch', function($q) use ($company_id) {
+                        $q->where('branches.company_id',$company_id);
+                      })
+                      ->with(['branch' => function($q){
+                        $q->select('name','id','company_id');
+                      }])
+                      ->with(['customer.room' => function($q){
+                        $q->select('room_hash','id');
+                      }])
+                      ->with(['customer.user' => function($q){
+                        $q->select('email','id');
+                      }])
+                      ->with(['photographer' => function($q){
+                        $q->select('id','name');
+                      }]);
+
+            if (!empty($searchBy['branch_id'])) {
+                if($searchBy['branch_id'] !== '0'){
+                    $query = $query->where('branch_id',$searchBy['branch_id']);
+                }
+            }  
+
+            if (!empty($searchBy['photographer_id'])) {
+                if($searchBy['photographer_id'] !== '0'){
+
+                $query = $query->where('photographer_id',$searchBy['photographer_id']);
+                    
+                }
+            }  
+
+            if (!empty($searchBy['from_day']) && !empty($searchBy['to_day'])) {
+
+                $query = $query->where(DB::raw('date(purchase_date)'),'>=',$searchBy['from_day'])
+                               ->where(DB::raw('date(purchase_date)'),'<=',$searchBy['to_day']);
+
+            }   else if(!empty($searchBy['to_day'])){
+
+                 $query = $query->where(DB::raw('date(purchase_date)'),$searchBy['to_day']);
+
+            } else if(!empty($searchBy['from_day'])){
+
+                 $query = $query->where(DB::raw('date(purchase_date)'),$searchBy['from_day']);
+            }
+        
+
+          
+            $query = $query->where('status','DONE');
+             return $query;
+         })->get();
+      
+        $results = $this->transform($results);
+        // $this->insertCSVFile($results,$company_id);
+        return $results;
+
+    }
+
+    //*********** Transfrom Orders data **************
+    public function transform($results){
+
+        foreach ($results as $key => $result) {
+            $results[$key]->branch_name = $result->branch->name;
+            $results[$key]->room_has_number = $result->customer->room->room_hash;
+            $results[$key]->customer_email = $result->customer->user->email;
+            $results[$key]->photographer_name = $result->photographer->name;
+        }
+        
+        return $results;
+    }
+
+    //********** Insert File CSV **************
+   public function insertCSVFile($attributes,$company_id){
+ 
+        if(!$attributes)
+            return false;
+
+        $pathPublic = env('DB_MYSQL_DIR').DIRECTORY_SEPARATOR;
+
+        $filename =  $company_id . '_Sales.csv';
+       
+        $file = fopen($pathPublic.$filename,"a+");
+        try{
+
+            foreach ($attributes as $key => $value) {
+
+                $data = [];
+                $data[] = $key;
+                $data[] = $value->branch_name;
+                $data[] = $value->photographer_name;
+                $data[] = $value->room_has_number;
+                $data[] = $value->total_amount;
+                $data[] = $value->purchase_date;
+                $data[] = $value->customer_email;
+                $data[] = $value->payment_method;
+                $data[] = $value->purchase_from;
+                fputcsv($file, $data);
+            }
+
+            fclose($file);
+        }catch (Exception $e)
+        {
+            \Log::info(' Errors to insert csv file - '.$e->getMessage());
+        }
+
     }
 }

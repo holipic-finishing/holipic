@@ -33,27 +33,16 @@ class BranchRepository extends BaseRepository
 
     public function handleGetBranchesCompany()
     {
-        // $data = $this->model->whereUserId(request('userId'))->get();
-        $data = $this->model->with('user')->whereUserId(request('userId'))->get()->toArray();
- 
+        $data = $this->model->with('user')->whereCompanyId(request('companyId'))->get()->toArray();
+
         return $data;
     }
 
     public function handleSaveBranchCompany()
     {
-        $company = \App\Models\Company::whereOwnerId(request('userId'))->first();
+        $companyId = request('companyId');
         
-        if(!empty($company)) {
-
-            $branch = $this->model->create(
-                ['company_id' => $company['id'], 
-                 'name' => request('information.branchName'),
-                 'branch_password' => request('information.password'),
-                 'user_id' => request('userId'),
-                 'branch_address' => request('information.address'),
-                 'branch_phone_number' => request('information.phone')
-                ]
-            );
+        if($companyId && $companyId != '') {
 
             $user = \App\Models\User::create(
                 ['first_name' => 'first_name',
@@ -64,10 +53,27 @@ class BranchRepository extends BaseRepository
                  'role_id' => '3'
                 ]
             );
-            
+
+            $branch = $this->model->create(
+                ['company_id' => $companyId, 
+                 'name' => request('information.branchName'),
+                 'branch_password' => request('information.password'),
+                 'user_id' => $user['id'],
+                 'branch_address' => request('information.address'),
+                 'branch_phone_number' => request('information.phone')
+                ]
+            );
+ 
             return $branch;
         }
 
         return false;
+    }
+
+
+    public function handleGetBranchCompanyId($company_id){
+
+       return $this->model->select('id','name')->where('company_id',$company_id)->get();
+
     }
 }

@@ -46,12 +46,11 @@ class PhotographerRepository extends BaseRepository
     //Get photgraphers with company 
     public function handleGetPhotographers()
     {
-        $company = $this->getCompany();
+        $companyId = request('companyId');
 
-        if(!empty($company)) {
-            // $data = $this->model->with('branch')->whereCompanyId($company['id'])->get()->toArray();
-            $data = $this->model->with(['branch' => function($q) use($company) {
-                                $q->whereCompanyId($company['id']);
+        if($companyId && $companyId != '') {
+            $data = $this->model->with(['branch' => function($q) use($companyId) {
+                                $q->whereCompanyId($companyId);
                     }])->get()->toArray();
 
             $array = [];
@@ -87,5 +86,11 @@ class PhotographerRepository extends BaseRepository
         return $data;
     }
 
-    
+
+    /****** Get name, id photographer by branch ******/
+    public function handelGetPhotographersByBranch($branch_id){
+
+        return $this->model->select('id','name')->where('branch_id',$branch_id)->get();
+
+    }
 }

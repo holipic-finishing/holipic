@@ -110,13 +110,12 @@
 							<div class="style-card w-100">
 								<p>Branch</p>
 								<v-select
-						          v-model="selected"
-						          :items="items"
-						          autocomplete
-					              browserAutocomplete="off"
-					              item-text="name"
-					              item-value="id"
-					              v-on:change="changeBranh(selected)"
+						         	:items="listBranch"
+						         	label="Enter Branch"
+						         	v-model="item.branch"
+						         	item-text="name"
+	              					item-value="id"
+						         	v-on:change="changeBranch(item)"
 						        ></v-select>
 						    </div>
 						</div>
@@ -124,13 +123,8 @@
 							<div class="style-card w-100">
 								<p>Photographer</p>
 								<v-select
-						          v-model="selected1"
-						          :items="phographer"
-						           autocomplete
-					              browserAutocomplete="off"
-					              item-text="name"
-					              item-value="id"
-					              label="Select Photographer"
+						         	:items="listPhotographer"
+						         	label="Enter Photographer"
 						        ></v-select>
 					    	</div>
 						</div>
@@ -558,7 +552,7 @@ export default {
   components: {
   	ActivityLog,
   	NotificationDashboard,
-  	 LineChart,
+  	LineChart,
     Transactions,
   },
 
@@ -601,11 +595,13 @@ data() {
 		totalCompany:0,
 		tweenedNumber: 0,
 		tweenedNumberTransactions: 0,
-		selected: {id:'0',name:"-- Select Branch --" },
-	    items: [{id:'0',name:"-- Select Branch --" }],
-	    phographer:[{id:'0',name:'-- Select Photographer --'}],
-		selected1:'',
-		authUser:JSON.parse(localStorage.getItem('user')),
+		company_id:JSON.parse(localStorage.getItem('user')).company_id,
+		listBranch: [{id:'0',name:"-- Select Branch --" }],
+		listPhotographer: [{id:'0',name:"-- Select Photographer --" }],
+		item : {
+			branch: '',
+		}
+
 	  }
 	},
 	methods:{
@@ -892,101 +888,51 @@ data() {
 			this.$root.$emit('loadTransactionsWithTime', obj)
   		},
 
-  		fetchDataBranch(){
-		
-			var url = config.API_URL+'company/branch-company?companyId='+this.authUser.company_id
-
-			get(url)
-			.then(res => {
-				if(res.data && res.data.success){
-					var data = res.data.data
+  		getListBranch(){
+  			var url = config.API_URL+'company/branch-company?companyId='+this.company_id
+  			get(url)
+  			.then((response) => {
+				if(response.data && response.data.success){
+					var data = response.data.data
 					var vm = this
 					_.forEach(data, function(value,key){
-						vm.items.push(value)					
+						console.log(value)
+						vm.listBranch.push(value)					
 					})				    
 				}
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.log(err)
 			})
-		},
+  		},
 
-		changeBranh(item){		
-			if(item == 0) {
-				this.phographer =  [{
-		        	id:'0',
-		        	name:'-- Select Photographer --'	
-		        }]
-		        this.selected1 = {
-	        		id:'0',
-	        		name:'-- Select Photographer --'	
-	       	 	}
-			} 
-			var url = config.API_URL+'photographer/photographer-branch?branchId='+item
-			get(url)
-			.then(res => {
-				if(res.data && res.data.success){
-					var data = res.data.data
-					var vm = this
-					_.forEach(data, function(value,key){
-						vm.phographer.push(value)
+  		changeBranch(item){		
+  			console.log(item)
+			// var url = config.API_URL+'photographer/photographer-branch?branchId='+item
+			// get(url)
+			// .then(res => {
+			// 	if(res.data && res.data.success){
+			// 		var data = res.data.data
+			// 		var vm = this
+			// 		_.forEach(data, function(value,key){
+			// 			vm.phographer.push(value)
 							
-					})
-				}
-			})	
-			.catch(err =>{
+			// 		})
+			// 	}
+			// })	
+			// .catch(err =>{
 
-			})
+			// })
 		},
 
-		fetchData(){
-			this.makeParams()
-			let params = {
-                search:this.filterSearch,
-                company_id:this.authUser.company_id
-            }	
-			let url = config.API_URL+'order/orders-company'
-			getWithData(url,params)
-			.then(res => {
-				if(res.data && res.data.success){
-					let data = res.data.data
-					this.desserts = data
-				}
-			})
-			.catch(err => {
-
-			})
-		},
-		makeParams(){
-
-			let searchValues = []
-			var setsearch = ''
-
-			if(_.trim(this.selected)){
-				if(this.selected.id == 0 ) {
-                searchValues.push('branch_id:' + '0')
-
-				} else {
-
-                searchValues.push('branch_id:' + this.selected)
-				}
-            }
-            if(_.trim(this.selected1)){
-             	if(this.selected == 0){
-             		searchValues.push('photographer_id:' +'0')
-             	}  else if(this.selected1.id == 0) {
-             		searchValues.push('photographer_id:' +'0')
-             	} else {
-                	searchValues.push('photographer_id:' + this.selected1)
-             	}
-            }
-            
-		},
+  		
 
 
 	},
 	created(){
-		this.fetchData()		
+		this.fetchData()
+		this.getListBranch()		
+		
 	},
 	computed:{
 	  	typeTimeReturn(){

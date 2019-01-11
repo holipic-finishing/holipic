@@ -37,7 +37,8 @@ class CustomerRepository extends BaseRepository
 
     public function handelGetCustomers()
     {
-        $company = \App\Models\Company::whereOwnerId(request('userId'))->first();
+        $companyId = request('companyId');
+
         $data = [];
         
         if(!empty($company)) {

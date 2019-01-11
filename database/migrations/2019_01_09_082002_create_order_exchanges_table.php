@@ -16,7 +16,7 @@ class CreateOrderExchangesTable extends Migration
         Schema::create('order_exchanges', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id');
-            $table->decimal('exchange_rate_to_dollar',20,15);
+            $table->decimal('exchange_rate_to_dollar',30,15);
         });
     }
 

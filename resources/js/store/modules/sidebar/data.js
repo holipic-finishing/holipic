@@ -17,7 +17,15 @@ export const menus = {
 		{
 			action: 'zmdi zmdi-account-add',
 			title: 'message.photographers',
-			active: true,
+			active: false,
+			path: '/photographers',
+			items:null,
+			role_id : 3
+		},
+		{
+			action: 'zmdi zmdi-account-add',
+			title: 'message.sales',
+			active: false,
 			path: '/photographers',
 			items:null,
 			role_id : 3
@@ -26,7 +34,7 @@ export const menus = {
 
 		    /////////////////////////////////////////////
 		   ///////								  //////
-		  ///////  SIDEBAR ROUTER ADMIN COMPANY  //////
+		  ///////  SIDEBAR ROUTER COMPANY ADMIN  //////
 		 ///////							    //////
 		/////////////////////////////////////////////
 		
@@ -68,6 +76,14 @@ export const menus = {
 			title: 'message.sibarContentPages',
 			active: true,
 			path: '/content-pages',
+			items:null,
+			role_id : 2
+		},
+		{
+			action: 'zmdi zmdi-chart',
+			title: 'message.sales',
+			active: true,
+			path: '/sales',
 			items:null,
 			role_id : 2
 		},

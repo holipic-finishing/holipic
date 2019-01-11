@@ -108,28 +108,43 @@ class LoginController extends BaseApiController
 
     public function loginSuperAdmin(UserLoginAPIRequest $request)
     {
+        $result = strpos($request['email'],'@');
+
         $credentials = $request->only(['email', 'password']);
         $email = $credentials['email'];
-
+        $dataInfoLogin = null;
         try{
-            $user = $this->userRepo->findUserIsExits($email);
+            if(strpos($request['email'],'@') !== false) {
+                $user = $this->userRepo->findUserIsExits($email);
+                $dataInfoLogin = $credentials;
+
+            } else {
+                $user = $this->userRepo->findUserByUserName($email);
+                $dataUser = [
+                    'username' => $email,
+                    'password' => $request['password']
+                ];
+
+                $dataInfoLogin = $dataUser;
+            } 
+
             if (empty($user)) {
 
                 return [
                     "success"=> false,
-                    "message"=>'Email address not exist in system',
+                    "message"=>'Email or User Name address not exist in system',
 
                 ];
             }
-
-            if (! $token = auth()->attempt($credentials)) {
-
-                return [
-                    "success"=> false,
-                    "message"=> 'Password provider was incorrect'
-                ];
-            }
-            $userInfo = $this->informationUser(auth()->user());
+           
+           
+            if (! $token = auth()->attempt($dataInfoLogin)) {
+                    return [
+                        "success"=> false,
+                        "message"=> 'Password provider was incorrect'
+                    ];
+                }
+            
 
             if(!$this->userRepo->checkUserCommpanyExits(auth()->user())) {
                 return [
@@ -137,12 +152,15 @@ class LoginController extends BaseApiController
                     "message"=> 'Current account is block'
                 ];
             }
+            
+            $this->reNewToken();
+
+            $userInfo = $this->informationUser(auth()->user());
 
             $data = [
                 'status' => $token,
                 'user' => $userInfo,
             ];
-            $this->reNewToken();
 
             return [
                 "success" => true,

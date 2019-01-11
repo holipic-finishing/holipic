@@ -106,7 +106,7 @@
 								</v-menu>
 							</div>
 						</div>
-						<!-- <div class="col-2">
+						<div class="col-2">
 							<div class="style-card w-100">
 								<p>Branch</p>
 								<v-select
@@ -133,7 +133,7 @@
 					              label="Select Photographer"
 						        ></v-select>
 					    	</div>
-						</div> -->
+						</div>
 						<div class="col-2">
 							<div class="style-card w-100">
 								<div class="d-custom-flex justify-space-between fix-total-storage-company">
@@ -938,7 +938,7 @@ data() {
 
 			})
 		},
-		
+
 		fetchData(){
 			this.makeParams()
 			let params = {
@@ -957,6 +957,32 @@ data() {
 
 			})
 		},
+		makeParams(){
+
+			let searchValues = []
+			var setsearch = ''
+
+			if(_.trim(this.selected)){
+				if(this.selected.id == 0 ) {
+                searchValues.push('branch_id:' + '0')
+
+				} else {
+
+                searchValues.push('branch_id:' + this.selected)
+				}
+            }
+            if(_.trim(this.selected1)){
+             	if(this.selected == 0){
+             		searchValues.push('photographer_id:' +'0')
+             	}  else if(this.selected1.id == 0) {
+             		searchValues.push('photographer_id:' +'0')
+             	} else {
+                	searchValues.push('photographer_id:' + this.selected1)
+             	}
+            }
+            
+		},
+
 
 	},
 	created(){

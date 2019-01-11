@@ -28,6 +28,9 @@ import Photographers from '../../views/company-admin/photographer/Photographers'
 //Customers
 import Customers from '../../views/company-admin/customer/Customers'
 
+//Email
+import Email from '../../views/company-admin/email/Emailes'
+
 
 export default {
 	path: '/company-admin',
@@ -123,6 +126,17 @@ export default {
          		companyAuth:true,
 	            title: 'message.sales',
 	            breadcrumb: 'Company / Sales'
+	        }
+	    },
+	    {
+	    	path: '/company-admin/email-setting',
+	        component: Email,
+	        meta: {
+	        	requiresAuth:true,
+	        	adminAuth:false,
+         		companyAuth:true,
+	            title: 'message.emails',
+	            breadcrumb: 'Company / Emails'
 	        }
 	    }
    	]

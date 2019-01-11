@@ -484,7 +484,6 @@ export default {
   photographers : 'Photographers',
   customer: 'Customer',
   photographers : 'Photographers List',
-  sales: 'Manage Sales'
-
-
+  sales: 'Manage Sales',
+  emails:'Emails'
 }

@@ -105,6 +105,11 @@ Route::group(['namespace' => 'API'],function(){
 		
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
+		/******************* EmailAPIController **********************/
+		Route::resource('emails', 'EmailAPIController');
+
+		Route::post('edit/email/{itemId}', 'EmailAPIController@editEmail');
+
 	});
 
 	/*************Order Controllers**************/
@@ -130,11 +135,13 @@ Route::group(['namespace' => 'API'],function(){
 
 	/*************CompanyAPIController**************/
 	
-	
-
 	Route::post('search/companies', 'CompanyAPIController@doSearch');
 
 	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
+
+	Route::get('company/export/customer','CompanyAPIController@exportEmailCustomerByCompanyId');
+
+
 
 	/*************TransactionAPIController**************/
 
@@ -177,6 +184,7 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 	
 });	
+
 
 
 

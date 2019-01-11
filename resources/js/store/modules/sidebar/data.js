@@ -87,6 +87,14 @@ export const menus = {
 			items:null,
 			role_id : 2
 		},
+		{
+			action: 'zmdi zmdi-email',
+			title: 'message.emails',
+			active: true,
+			path: '/email-setting',
+			items:null,	
+			role_id : 2
+		},
 		
 		 	/////////////////////////////////////////////
 		   ///////								  //////

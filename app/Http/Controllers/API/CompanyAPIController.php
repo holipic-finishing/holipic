@@ -172,4 +172,49 @@ class CompanyAPIController extends AppBaseController
 
         return $this->sendResponse($companyInfo, 'Get Information Company Completed');
     }
+
+    /*  Target : function export email information customer by company id
+    *   GET company/export/customer
+    *   
+    */
+    public function exportEmailCustomerByCompanyId(Request $request){
+
+        $input = $request->all();
+    
+        $this->createLink($input['company_id']);
+
+        $results = $this->companyRepository->handleExportCustomerByCompanyId($input['company_id']);
+
+        return \Response::json([
+                    'status' => true,
+                    'link' => url('/files/'.$input['company_id'].'_Customer_email.csv')
+        ]);
+    }
+
+
+    /**
+     * Target : Create file CSV customer HEADER
+     * @From : func: exportEmailCustomerByCompanyId
+     *
+     */
+    public function createLink($company_id){
+
+        $path = env('DB_MYSQL_DIR') . DIRECTORY_SEPARATOR;
+        
+        $csvPath = $path .$company_id. '_Customer_email.csv';
+        if(\File::exists($csvPath)){
+            unlink($csvPath);
+        }
+        if(!\File::exists($path)) {
+
+            \File::makeDirectory($path, $mode = 0777, true, true);
+
+        }
+
+        $file = fopen($csvPath,"a+");
+        $keys = ['SN.','Email'];
+        fputcsv($file,$keys);
+        fclose($file); 
+        return $csvPath;
+    }
 }

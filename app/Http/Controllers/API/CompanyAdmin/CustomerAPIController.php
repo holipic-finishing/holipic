@@ -156,4 +156,17 @@ class CustomerAPIController extends AppBaseController
     {
         return \Excel::download(new ListEmailCustomers(request('companyId')), 'ListEmailCustomers.xlsx');
     }
+
+    public function getBranchCustomers(Request $request)
+    {
+        $input = $request->all(); 
+
+        $customers = $this->customerRepository->handelGetBranchCustomers($input);
+
+        if(!$customers) {
+            return $this->sendError('Customer not found');
+        }
+
+        return $this->sendResponse($customers, 'Get customer successfully');
+    }
 }

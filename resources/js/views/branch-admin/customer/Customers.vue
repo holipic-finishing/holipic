@@ -83,7 +83,7 @@
 								</td>
 							</template>
 						</v-data-table>
-						<customer-edit></customer-edit>
+						<!-- <customer-edit></customer-edit> -->
 						
 					</v-card>
 				</v-app>
@@ -143,7 +143,7 @@ export default {
 				  	rowsPerPage: 25  	
 		    		},
 		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
-		company: JSON.parse(localStorage.getItem('user')),
+		user: JSON.parse(localStorage.getItem('user')),
 		urlExport: config.API_URL+'company/branches/customers/export?companyId='+JSON.parse(localStorage.getItem('user')).company_id
 
     }
@@ -157,9 +157,9 @@ export default {
   },
   methods:{
   	fetchData()
-  	{
-  		get(config.API_URL+'company/branches/customers?companyId='+this.company.company_id)
-  		.then(response => {
+  	{	let url = config.API_URL+'branch/customers';
+  		post(url, this.user)
+  		.then(response => { 
   			if(response && response.data.success) {
   				this.items = response.data.data
   			}

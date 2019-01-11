@@ -92,6 +92,8 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('company/branches/customers/export', 'CustomerAPIController@exportEmailCustomers');
 
+		/*************CustomerAPIController For Branch**************/
+		Route::post('branch/customers', 'CustomerAPIController@getBranchCustomers');
 
 		/*************ActivityLogController**************/
 		

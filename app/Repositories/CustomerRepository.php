@@ -37,17 +37,14 @@ class CustomerRepository extends BaseRepository
 
     public function handelGetCustomers()
     {
-        $companyId = request('companyId'); 
+        $companyId = request('companyId');
 
         $data = [];
         
         if($companyId && $companyId != '') {
-            $customers = $this->model
-                                ->with('user')
-                                ->with('room')
-                                ->with(['branch' => function($q) use ($companyId) {
-                                                     $q->whereCompanyId($companyId)->whereUserId(38);
-                                        }])->get()->toArray();
+            $customers = $this->model->with('user')->with('room')->with(['branch' => function($q) use ($companyId) {
+                                     $q->whereCompanyId($companyId);
+                        }])->get()->toArray();
 
             foreach($customers as $customer) 
             {
@@ -56,7 +53,7 @@ class CustomerRepository extends BaseRepository
                     $data[] = $customer;
                 }
             }
-dd($data);
+
             return $data;
         }
 
@@ -95,6 +92,35 @@ dd($data);
             $customer = $customer->update($input);
 
             return $customer;
+        }
+
+        return false;
+    }
+
+    public function handelGetBranchCustomers($input)
+    {
+        $companyId = $input['company_id'];
+        $user_id = $input['id']; 
+
+        $data = [];
+        
+        if($companyId && $companyId != '') {
+            $customers = $this->model
+                                ->with('user')
+                                ->with('room')
+                                ->with(['branch' => function($q) use ($companyId, $user_id) {
+                                                     $q->whereCompanyId($companyId)->whereUserId($user_id);
+                                        }])->get()->toArray();
+
+            foreach($customers as $customer) 
+            {
+                if($customer['branch'] != null)
+                {
+                    $data[] = $customer;
+                }
+            }
+
+            return $data;
         }
 
         return false;

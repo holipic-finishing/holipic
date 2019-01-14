@@ -33,7 +33,7 @@
 						<v-data-table 
 							:headers="headers" 
 							:items="items" 
-							class="elevation-5"  
+							class="elevation-5 custom-table-customer"  
 							:pagination.sync="pagination" 
 							:rows-per-page-items="rowsPerPageItems" 
 							default-sort="id:desc"
@@ -48,25 +48,33 @@
 								<td class="text-xs-left"><img :src="props.item.avatar" width="100%"></td>
 
 								<td class="text-xs-left">
-									<v-btn color="success" small >Manage</v-btn>
+									<v-btn color="success" small class="btn-customer">Manage</v-btn>
 								</td>
 								<td class="text-xs-left">
-									<v-btn color="success" small >Manage</v-btn>
+									<v-btn color="success" small class="btn-customer">Manage</v-btn>
 								</td>
 								<td class="text-xs-left">
-									<v-btn color="success" small >100</v-btn>
+									<v-btn color="success" small class="btn-customer">100</v-btn>
 								</td>
-								<td class="text-xs-left">
+								<td class="text-xs-left center-input-customer">
 									<v-text-field
 									  name="name"
 									  outline
-									  class="height-input center-input"
+									  class="height-input-customer width-input"
 									></v-text-field>
 								</td>
-					        	<td class="text-xs-left action-width">
+					        	<td class="text-xs-left action-width ">
+
+					        		<v-icon
+										small
+										class="mr-6 hover-icon margin-icon-customer"
+										@click="showFormEdit(props.item)"
+									>
+										card_giftcard
+									</v-icon>
 									<v-icon
 										small
-										class="mr-2 hover-icon"
+										class="mr-6 hover-icon margin-icon-customer"
 										@click="showFormEdit(props.item)"
 									>
 										edit
@@ -74,7 +82,7 @@
 
 									<v-icon
 										small
-										class="mr-2 hover-icon"
+										class="mr-6 hover-icon margin-icon-customer"
 										@click="showDialog(props.item.id)"
 									>
 										delete
@@ -127,7 +135,7 @@ export default {
     	search:'',
     	items:[],
     	headers:[
-    			{ text: 'ID', value: 'id'},	       
+    			{ text: 'ID', value: 'id', width: '1%'},	       
 				{ text: 'Name', value: 'name' },
 				{ text: 'Room', value: 'room.room_hash'},	
 				{ text: 'Email', value: 'user.email' },	
@@ -136,8 +144,8 @@ export default {
 				{ text: 'Order'},
 				{ text: 'Invoice'},
 				{ text: 'Rest Photo'},
-				{ text: 'Set Offer(Rp)', width: '15%'},
-	        	{ text: 'Action', sortable: false, width:'7%' },  
+				{ text: 'Set Offer(Rp)', width: '10%'},
+	        	{ text: 'Action', sortable: false ,width: '7%'},  
 		],
 		pagination: {
 				  	rowsPerPage: 25  	
@@ -181,7 +189,7 @@ export default {
   		this.$root.$emit('showFormEditCustomer', {showNavigation: true, data: item})
   	}
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -195,7 +203,11 @@ export default {
     	position: absolute;
     	top: 8px;
     }
-    .center-input{
-    	margin-top: 30px;
+    .action-width{
+    	min-width:80px;
     }
+    .margin-icon-customer{
+    	margin-left:4px !important;
+    }
+   
 </style>

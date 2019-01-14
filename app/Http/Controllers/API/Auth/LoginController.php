@@ -8,6 +8,8 @@ use App\Http\Requests\API\UserLoginAPIRequest;
 use Lcobucci\JWT\Parser;
 use App\Http\Controllers\API\BaseApiController;
 use App\Models\Company;
+use App\Models\Branch;
+
 
 class LoginController extends BaseApiController
 {
@@ -57,6 +59,7 @@ class LoginController extends BaseApiController
 
                 return [
                     "success"=> false,
+                    "email" => false,
                     "message"=>'Email address not exist in system',
 
                 ];
@@ -66,6 +69,7 @@ class LoginController extends BaseApiController
 
                 return [
                     "success"=> false,
+                    "password" => false,
                     "message"=> 'Password provider was incorrect'
                 ];
             }
@@ -189,15 +193,15 @@ class LoginController extends BaseApiController
             ];
         }
         if($user->role_id == '3') {
-            $company = Company::where('owner_id',$user->id)->first();
+            $branch = Branch::where('user_id',$user->id)->first();
             $data = [
                 'role_id'      => $user->role_id,
                 'full_name'    => $user->first_name . ' ' .  $user->last_name,
                 'access_token' => $user->access_token,
                 'email'        => $user->email,
                 'id'           => $user->id,
-                'company_id'   => $company->id,
-                'company_name' => $company->name
+                'branch_id'   => $branch->id,
+                'branch_name' => $branch->name
             ];
         }
 

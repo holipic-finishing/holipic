@@ -12,7 +12,7 @@ use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Maatwebsite\Excel\Excel;
-use App\Exports\ListEmailCustomers;
+use App\Exports\SalesBranchExport;
 
 /**
  * Class CustomerController
@@ -154,6 +154,6 @@ class CustomerAPIController extends AppBaseController
 
     public function exportEmailCustomers()
     {
-        return \Excel::download(new ListEmailCustomers(request('companyId')), 'ListEmailCustomers.xlsx');
+        return \Excel::download(new SalesBranchExport(request('companyId')), 'ListEmailCustomers.xlsx');
     }
 }

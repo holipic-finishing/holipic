@@ -918,55 +918,42 @@ Holipic
 	           type: "POST",
 	           url: 'landing-page/login',
 	           data: form.serialize(), 
-	           success: function(data)
-	           {
+	           success: function(data){
 		           	if(data && data.success == false) {
-		           		$('#message-form-login').empty();
-		           		$("#message-form-login").append(
-		           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+data.message+"</span>");
+		           		$('#message-form-signin-email').empty();
+		           		$('#message-form-signin-password').empty();
+
+		           		if(data.email == false) {
+		           			$('#message-form-signin-email').append(
+				           			"<span class='label label-important' style='color:red'>"+" "+data.message+"</span>");
+		           		}
+		           		if(data.password == false) {
+		           			$('#message-form-signin-password').append(
+				           			"<span class='label label-important' style='color:red'>"+" "+data.message+"</span>");
+		           		}
+		           		// $("#message-form-login").append(
+		           		// 	"<span class='label label-important'><i class='fa fa-close'></i>"+" "+data.message+"</span>");
 		           	} else {
 		           		window.localStorage.setItem('access_token', data.data.user.access_token)
 
 		           		window.localStorage.setItem('user', JSON.stringify(data.data.user))          		
 
-		           		window.location.href = "/admin";
+		           		window.location.href = "/company-admin";
 		           	}
 	           		
 	           },
 	            error: function(error) {
-			        // console.log(error.responseJSON.errors.email);
-			        // if(error && error.responseJSON.errors.email && error.responseJSON.errors.password) {
+      				$('#message-form-signin-email').empty();
+				   	$('#message-form-signin-password').empty();
+				   	
+				  _.each(error.responseJSON.errors, function(val,key){
+				  	// console.log(val)
+				  	// console.log(key)
+					  	var id = '#message-form-signin-'+key;
 
-			        // 	$('#message-form-login').empty();
-
-	          //  			$("#message-form-login").append(
-	          //  			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+'Please enter your email and password '+"</span>");
-
-	          //  			return false;
-			        // }
-
-			        // if(error.responseJSON.errors.email) {
-			        // 	var errorMessage = error.responseJSON.errors.email[0]
-			        // } else {
-			        // 	var errorMessage = error.responseJSON.errors.password[0]
-			        // }
-
-			        // $('#message-form-login').empty();
-
-	          //  		$("#message-form-login").append(
-	          //  			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+errorMessage+"</span>");
-
-	          				$('#message-form-signin-email').empty();
-						   	$('#message-form-signin-password').empty();
-						   	
-						  _.each(error.responseJSON.errors, function(val,key){
-						  	console.log(val)
-						  	console.log(key)
-							  	var id = '#message-form-signin-'+key;
-
-							  	$(id).append(
-				           			"<span class='label label-important' style='color:red'>"+" "+val+"</span>");
-						  	});	
+					  	$(id).append(
+		           			"<span class='label label-important' style='color:red'>"+" "+val+"</span>");
+				  	});	
 			    }   
 	         });
 		});

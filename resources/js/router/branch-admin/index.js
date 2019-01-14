@@ -13,6 +13,9 @@ import ChangePassword from '../../views/partials/users/ChangePassword'
 //photographers
 import Photographers from '../../views/branch-admin/photographers/Photographers'
 
+//sales
+import Sales from '../../views/branch-admin/sale/Sales'
+
 export default {
 	path: '/branch-admin',
    	component: MiniSidebarLayout,
@@ -46,6 +49,16 @@ export default {
          		branchAuth:true,
 	            title: 'message.photographers',
 	            breadcrumb: 'Branch / Photographers'
+	    	}
+	    },
+	    {
+	    	path:'/branch-admin/sales',
+	    	component: Sales,
+	    	meta : {
+	    		requiresAuth:true,
+         		branchAuth:true,
+	            title: 'message.sales',
+	            breadcrumb: 'Branch / Sales'
 	    	}
 	    }
    	]

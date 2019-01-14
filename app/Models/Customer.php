@@ -73,6 +73,11 @@ class Customer extends Model
 
     public function room()
     {
-        return $this->belongsTo('App\Models\Room', 'room_id', 'id');
+        return $this->hasOne('App\Models\Room', 'id', 'room_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order', 'customer_id', 'id');
     }
 }

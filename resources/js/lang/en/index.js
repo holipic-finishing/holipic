@@ -481,7 +481,7 @@ export default {
   sibarContentPages:"Cms",
   activityLog: "Activity Log",
   photographers : 'Photographers',
-  customer: 'Customer',
+  customer: 'Customers',
   photographers : 'Photographers List',
   sales: 'Manage Sales'
 

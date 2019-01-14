@@ -9,9 +9,9 @@
 					        <v-toolbar-title>
 					          	Photographers List
 					          	
-					          	<v-btn dark color="indigo" class="add-btn" @click="showFromAdd()">
+					          	<!-- <v-btn dark color="indigo" class="add-btn" @click="showFromAdd()">
 							      <v-icon dark >add</v-icon>
-							    </v-btn>
+							    </v-btn> -->
 					        </v-toolbar-title>
 					    </v-toolbar>
 					    <v-divider></v-divider>
@@ -24,6 +24,17 @@
 						        single-line
 						        hide-details
 						    ></v-text-field>
+						    
+						    <v-btn 
+						    	 @click="showFromAdd()"
+						    	color="primary" 
+						    	dark
+						    	slot="activator"
+						    	fab
+						    	small
+						    >
+						    	<v-icon dark>fas fa-plus</v-icon>
+						    </v-btn>
 				    	</v-card-title>
 
 
@@ -213,5 +224,8 @@ export default {
     &:hover{
       color: blue !important;
     }
+}
+.action-width{
+	min-width: 100px;
 }
 </style>

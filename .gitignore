@@ -19,3 +19,4 @@ yarn-error.log
 /public/fonts/vendor/
 dump.rdb
 /public/avatars/
+/public/files/

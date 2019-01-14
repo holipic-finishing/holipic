@@ -165,4 +165,5 @@ class BranchAPIController extends AppBaseController
 
         return $this->sendResponse($branch, 'Add branches successfully');
     }
+
 }

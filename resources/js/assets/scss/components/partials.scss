@@ -40,3 +40,65 @@
 		padding: 0 13px !important;
 	}
 }
+
+.width-input{
+  .v-input__slot{
+    min-width: 140px !important;
+    width: 140px !important;
+    
+    text-align:left !important;
+    
+  }
+}
+
+.custom-table-customer{
+
+	thead th:not(:nth-child(1)){
+		padding: 0 0px !important;
+		text-align:center !important;
+		
+	}
+
+	tbody td:not(:nth-child(1)){
+		padding: 0 6px !important;
+		text-align:center !important;
+	}
+}
+
+	
+@media (max-width: 1366px) {
+    .action-width{
+		text-align:center;
+		margin-left:5px;
+		padding: 0px 10px !important;
+	}
+}
+
+.action-width{
+	text-align:center;
+	margin-left:5px;
+	padding: 0px 10px !important;
+}
+
+.btn-customer{
+	min-width: 61px;
+}
+
+.height-input-customer{
+  .v-input__slot{
+    min-height: 40px !important;
+    height:40px !important;
+    top: 15px !important;
+    position: relative;
+  }
+  input, .v-select__slot{
+    position:relative;
+    top: -10px;
+  }
+}
+
+.custom-table-sale{
+	thead th:not(:nth-child(1)){
+		padding: 0 10px !important;
+	}
+}

@@ -23,14 +23,13 @@ export const menus = {
 			role_id : 3
 		},
 		{
-			action: 'zmdi zmdi-account-add',
+			action: 'fas fa-donate',
 			title: 'message.sales',
 			active: false,
-			path: '/photographers',
+			path: '/sales',
 			items:null,
 			role_id : 3
 		},
-
 
 		    /////////////////////////////////////////////
 		   ///////								  //////

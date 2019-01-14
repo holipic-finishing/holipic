@@ -62,6 +62,8 @@ Route::group(['namespace' => 'API'],function(){
 	
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
+		Route::get('branch/photographers', 'PhotographerAPIController@getPhotographers');
+
 		Route::resource('branches', 'BranchAPIController');
 
 		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
@@ -84,7 +86,12 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
+
+
 	});
+
+	Route::get('branch/sales-list', 'OrderAPIController@getSalesList');
+	Route::get('branch/sales-list/export', 'OrderAPIController@exportSalesListBranch');
 
 	/***********************************************
 	**********	ROUTER SUPER ADMIN   ***************

@@ -97,7 +97,6 @@ export default {
     getData(params){
 
 			let url = config.API_URL+'company-admin-chart'
-
       params.company_id = this.company_id
 
 			getWithData(url,params)

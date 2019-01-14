@@ -3,12 +3,12 @@
 		<v-layout row wrap mt-3>
 			<v-flex d-flex xs12 sm12 md8>
 		        <v-card>
-					<activity-log></activity-log>
+					<!-- <activity-log></activity-log> -->
 		        </v-card>
 	      	</v-flex>
 		      <v-flex d-flex xs12 sm12 md4>
 		        <v-card>
-					<notification-dashboard></notification-dashboard>
+					<!-- <notification-dashboard></notification-dashboard> -->
 		        </v-card>
 		      </v-flex>
 
@@ -50,7 +50,7 @@
 				<div v-if="typeTime == 'day'">
 					<p class="text-primary">(*) Please No choose more than 15 days</p>
 						<div class="row">
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card start-day w-100">
 								<p>Start</p>
 								<v-menu 
@@ -78,7 +78,7 @@
 								</v-menu>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>End</p>
 								<v-menu 
@@ -106,64 +106,39 @@
 								</v-menu>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Branch</p>
 								<v-select
 						         	:items="listBranch"
 						         	label="Enter Branch"
-						         	v-model="item.branch"
+						         	v-model="item.branch_id"
 						         	item-text="name"
 	              					item-value="id"
 						         	v-on:change="changeBranch(item)"
+									@input="reportByRangeDay"
 						        ></v-select>
 						    </div>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Photographer</p>
 								<v-select
 						         	:items="listPhotographer"
 						         	label="Enter Photographer"
+						         	v-model="item.photographer_id"
+						         	item-text="name"
+	              					item-value="id"
+									@input="reportByRangeDay"
 						        ></v-select>
 					    	</div>
-						</div>
-						<div class="col-2">
-							<div class="style-card w-100">
-								<div class="d-custom-flex justify-space-between fix-total-storage-company">
-									<div class="title-total">
-										<h2>{{ computedTotalCompany }}</h2>
-										Total companies
-									</div>
-									<div> 
-										<span class="icon-style fix-icon-storage-company">
-											<i class="material-icons font-2x primary--text">store</i>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-2">
-							<div class="style-card w-100">
-								<div class="d-custom-flex justify-space-between fix-total-storage-company">
-									<div class="title-total">
-										<h2>14,200</h2>
-										Total Storage MB
-									</div>
-									<div> 
-										<span class="icon-style fix-icon-storage-company">
-											<i class="material-icons font-2x success--text">cloud_upload</i>
-										</span>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
 				<div v-if="typeTime == 'month'">
 					<p class="text-primary">(*) Please No choose more than 12 month</p>
 					<div class="row">
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Start</p>
 								<v-menu
@@ -192,7 +167,7 @@
 								</v-menu>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>End</p>
 								<v-menu 
@@ -221,70 +196,39 @@
 								</v-menu>
 							</div>
 						</div>
-						<!-- <div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Branch</p>
 								<v-select
-						          v-model="selected"
-						          :items="items"
-						           autocomplete
-					              browserAutocomplete="off"
-					              item-text="name"
-					              item-value="id"
-					              v-on:change="changeBranh(selected)"
+						         	:items="listBranch"
+						         	label="Enter Branch"
+						         	v-model="item.branch_id"
+						         	item-text="name"
+	              					item-value="id"
+						         	v-on:change="changeBranch(item)"
+									@input="reportByMonth"
 						        ></v-select>
 						    </div>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Photographer</p>
 								<v-select
-						          v-model="selected1"
-						          :items="phographer"
-						           autocomplete
-					              browserAutocomplete="off"
-					              item-text="name"
-					              item-value="id"
-					              label="Select Photographer"
+						         	:items="listPhotographer"
+						         	label="Enter Photographer"
+						         	v-model="item.photographer_id"
+						         	item-text="name"
+	              					item-value="id"
+									@input="reportByMonth"
 						        ></v-select>
 					    	</div>
-						</div> -->
-						<div class="col-2">
-							<div class="style-card w-100">
-								<div class="d-custom-flex justify-space-between fix-total-storage-company">
-									<div class="title-total">
-										<h2>{{ computedTotalCompany }}</h2>
-										Total companies
-									</div>
-									<div> 
-										<span class="icon-style fix-icon-storage-company">
-											<i class="material-icons font-2x primary--text">store</i>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-2">
-							<div class="style-card w-100">
-								<div class="d-custom-flex justify-space-between fix-total-storage-company">
-									<div class="title-total">
-										<h2>14,200</h2>
-										Total Storage MB
-									</div>
-									<div> 
-										<span class="icon-style fix-icon-storage-company">
-											<i class="material-icons font-2x success--text">cloud_upload</i>
-										</span>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
 				<div v-if="typeTime == 'year'">
 					<p class="text-primary">(*) Please No choose more than 5 year</p>
 					<div class="row">
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Start</p>
 
@@ -315,7 +259,7 @@
 								</v-menu>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>End</p>
 
@@ -346,70 +290,39 @@
 								</v-menu>
 							</div>
 						</div>
-						<!-- <div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Branch</p>
 								<v-select
-						          v-model="selected"
-						          :items="items"
-						           autocomplete
-					              browserAutocomplete="off"
-					              item-text="name"
-					              item-value="id"
-					              v-on:change="changeBranh(selected)"
+						         	:items="listBranch"
+						         	label="Enter Branch"
+						         	v-model="item.branch_id"
+						         	item-text="name"
+	              					item-value="id"
+						         	v-on:change="changeBranch(item)"
+									@input="saveEndYear"
 						        ></v-select>
 						    </div>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Photographer</p>
 								<v-select
-						          v-model="selected1"
-						          :items="phographer"
-						           autocomplete
-					              browserAutocomplete="off"
-					              item-text="name"
-					              item-value="id"
-					              label="Select Photographer"
+						         	:items="listPhotographer"
+						         	label="Enter Photographer"
+						         	v-model="item.photographer_id"
+						         	item-text="name"
+	              					item-value="id"
+									@input="saveEndYear"
 						        ></v-select>
 					    	</div>
-						</div> -->
-						<div class="col-2">
-							<div class="style-card w-100">
-								<div class="d-custom-flex justify-space-between fix-total-storage-company">
-									<div class="title-total">
-										<h2>{{ computedTotalCompany }}</h2>
-										Total companies
-									</div>
-									<div> 
-										<span class="icon-style fix-icon-storage-company">
-											<i class="material-icons font-2x primary--text">store</i>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-2">
-							<div class="style-card w-100">
-								<div class="d-custom-flex justify-space-between fix-total-storage-company">
-									<div class="title-total">
-										<h2>14,200</h2>
-										Total Storage MB
-									</div>
-									<div> 
-										<span class="icon-style fix-icon-storage-company">
-											<i class="material-icons font-2x success--text">cloud_upload</i>
-										</span>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
 				<div v-if="typeTime == 'week'">
 					<p class="text-primary">(*) Please No choose more than 6 week</p>
 					<div class="row">
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Start</p>
 								<v-menu
@@ -437,7 +350,7 @@
 								</v-menu>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>End</p>
 
@@ -466,69 +379,38 @@
 								</v-menu>
 							</div>
 						</div>
-						<!-- <div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Branch</p>
 								<v-select
-						          v-model="selected"
-						          :items="items"
-						           autocomplete
-					              browserAutocomplete="off"
-					              item-text="name"
-					              item-value="id"
-					              v-on:change="changeBranh(selected)"
+						         	:items="listBranch"
+						         	label="Enter Branch"
+						         	v-model="item.branch_id"
+						         	item-text="name"
+	              					item-value="id"
+						         	v-on:change="changeBranch(item)"
+									@input="reportByWeek"
 						        ></v-select>
 						    </div>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
 							<div class="style-card w-100">
 								<p>Photographer</p>
 								<v-select
-						          v-model="selected1"
-						          :items="phographer"
-						           autocomplete
-					              browserAutocomplete="off"
-					              item-text="name"
-					              item-value="id"
-					              label="Select Photographer"
+						         	:items="listPhotographer"
+						         	label="Enter Photographer"
+						         	v-model="item.photographer_id"
+						         	item-text="name"
+	              					item-value="id"
+									@input="reportByWeek"
 						        ></v-select>
 					    	</div>
-						</div> -->
-						<div class="col-2">
-							<div class="style-card w-100">
-								<div class="d-custom-flex justify-space-between fix-total-storage-company">
-									<div class="title-total">
-										<h2>{{ computedTotalCompany }}</h2>
-										Total companies
-									</div>
-									<div> 
-										<span class="icon-style fix-icon-storage-company">
-											<i class="material-icons font-2x primary--text">store</i>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-2">
-							<div class="style-card w-100">
-								<div class="d-custom-flex justify-space-between fix-total-storage-company">
-									<div class="title-total">
-										<h2>14,200</h2>
-										Total Storage MB
-									</div>
-									<div> 
-										<span class="icon-style fix-icon-storage-company">
-											<i class="material-icons font-2x success--text">cloud_upload</i>
-										</span>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
 			</app-card>
 		</v-layout>
-		<transactions></transactions>
+		<!-- <transactions></transactions> -->
 	</v-container>		
 </template>
 
@@ -596,11 +478,12 @@ data() {
 		tweenedNumber: 0,
 		tweenedNumberTransactions: 0,
 		company_id:JSON.parse(localStorage.getItem('user')).company_id,
-		listBranch: [{id:'0',name:"-- Select Branch --" }],
-		listPhotographer: [{id:'0',name:"-- Select Photographer --" }],
+		listBranch: [],
+		listPhotographer: [],
 		item : {
-			branch: '',
-		}
+			branch_id: '',
+			photographer_id:''
+		},
 
 	  }
 	},
@@ -685,128 +568,125 @@ data() {
 		},
 
 		reportByRangeDay() {
-			this.validations(this.from_day, this.to_day, 'Day')
+			var	start_day = moment(this.from_day)
+			var	end_day =  moment(this.to_day)
+			var day = end_day.diff(start_day,'days')
 
-			if(this.validate == true){
-
-				var	start_day = moment(this.from_day)
-				var	end_day =  moment(this.to_day)
-				var day = end_day.diff(start_day,'days')
-
-				if(day > 15) {
-					this.errorAlert('Less than 15 days')
-				} else if(day <=0) {
-					this.errorAlert('To days Large from days')
-				} else {
-					let params = {
-						start_day :  this.formatDate(this.from_day),
-						end_day :   this.formatDate(this.to_day)
-					}
-					let obj = {
-						params : params,
-						chooes : 'Day'
-					}
-					this.$root.$emit('companyChart', obj)
-					this.$root.$emit('loadTransactionsWithTime', obj)
-					this.validate = false
+			if(day > 15) {
+				this.errorAlert('Less than 15 days')
+			} else if(day <=0) {
+				this.errorAlert('To days Large from days')
+			} else {
+				let params = {
+					start_day :  this.formatDate(this.from_day),
+					end_day :   this.formatDate(this.to_day),
+					branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id,
+					type: 'day'
 				}
+				let obj = {
+					params : params,
+					chooes : 'Day',
+				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadTransactionsWithTime', obj)
+				this.validate = false
 			}
+		
 			this.resetTime()
 			
 		},
 
 		reportByMonth(){
-			this.validations(this.from_month, this.to_month, 'Month')
+			var	start_month = moment(this.from_month)
+			var	end_month =  moment(this.to_month)
+			var month = end_month.diff(start_month,'month')
 
-			if(this.validate == true){
-				var	start_month = moment(this.from_month)
-				var	end_month =  moment(this.to_month)
-				var month = end_month.diff(start_month,'month')
-
-				if(month > 12) {
-					this.errorAlert('Less than 12 months')
-				} else if(month <=0) {
-					this.errorAlert('To month large from month')
-				} else {
-					var month = {
-			      		start_month: moment(this.from_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
-			      		end_month:moment(this.to_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD')
-		      		}
-					let obj = {
-						params : month,
-						chooes : 'Month'
-					}
-					this.$root.$emit('companyChart', obj)
-					this.$root.$emit('loadTransactionsWithTime', obj)
-
-					this.validate = false
+			if(month > 12) {
+				this.errorAlert('Less than 12 months')
+			} else if(month <=0) {
+				this.errorAlert('To month large from month')
+			} else {
+				var params = {
+		      		start_month: moment(this.from_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
+		      		end_month:moment(this.to_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
+		      		branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id,
+					type: 'month'
+	      		}
+				let obj = {
+					params : params,
+					chooes : 'Month'
 				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadTransactionsWithTime', obj)
+
+				this.validate = false
 			}
+			
 			this.resetTime()
 
 		},
 
 		reportByYear(){
-			this.validations(this.from_year, this.to_year, 'Year')
+			var	start_year = moment(this.from_year)
+			var	end_year =  moment(this.to_year)
+			var year = end_year.diff(start_year,'year')
 
-			if(this.validate == true){
-
-				var	start_year = moment(this.from_year)
-				var	end_year =  moment(this.to_year)
-				var year = end_year.diff(start_year,'year')
-
-				if(year > 5) {
-					this.errorAlert('Less than 5 years')
-				} else if (year <=0) {
-					this.errorAlert('To year large from year')
-				} else {
-					var year = {
-	      				start_year:moment(this.from_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
-	      				end_year:moment(this.to_year, 'YYYY-MM-DD hh:mm:ss').add(12, 'M').format('YYYY-MM')		
-			      	}
-					let obj = {
-						params : year,
-						chooes : 'Year'
-					}
-					this.$root.$emit('companyChart', obj)
-					this.$root.$emit('loadTransactionsWithTime', obj)
-					this.validate = false
+			if(year > 5) {
+				this.errorAlert('Less than 5 years')
+			} else if (year <=0) {
+				this.errorAlert('To year large from year')
+			} else {
+				var params = {
+      				start_year:moment(this.from_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+      				end_year:moment(this.to_year, 'YYYY-MM-DD hh:mm:ss').add(12, 'M').format('YYYY-MM'),
+      				branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id	,
+					type:'year'	
+		      	}
+				let obj = {
+					params : params,
+					chooes : 'Year'
 				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadTransactionsWithTime', obj)
+				this.validate = false
 			}
+			
 			this.resetTime()
 		},
 
 		reportByWeek(){
-			this.validations(this.from_day_week, this.to_day_week, 'Day')
+			var	start_day = moment(this.from_day_week)
+			var	end_day =  moment(this.to_day_week)
+			var day = end_day.diff(start_day,'days')
+	
+			if(day > 42) {
+				this.errorAlert('Less than 6 weeks')
+			} else if(day <=0) {
+				this.errorAlert('To days Large from days')
+			} else {
 
-			if(this.validate == true){
-
-				var	start_day = moment(this.from_day_week)
-				var	end_day =  moment(this.to_day_week)
-				var day = end_day.diff(start_day,'days')
-		
-				if(day > 42) {
-					this.errorAlert('Less than 6 weeks')
-				} else if(day <=0) {
-					this.errorAlert('To days Large from days')
-				} else {
-
-					let params = {
-						start_day_week :  this.formatDate(this.from_day_week),
-						end_day_week :   this.formatDate(this.to_day_week)
-					}
-					let obj = {
-						params : params,
-						chooes : 'Week'
-					}
-					this.$root.$emit('companyChart', obj)
-					this.$root.$emit('loadTransactionsWithTime', obj)
+				let params = {
+					start_day_week :  this.formatDate(this.from_day_week),
+					end_day_week :   this.formatDate(this.to_day_week),
+					branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id,
+					type:'week'
 				}
+				let obj = {
+					params : params,
+					chooes : 'Week'
+				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadTransactionsWithTime', obj)
 			}
 			this.resetTime()
 		},
 
 		activeTypeTime(time) {
+			console.log('aaaaa')
   			this.typeTime = time
 
   			if(this.typeTime == "day"){
@@ -837,7 +717,8 @@ data() {
   		defaultReportSevenDay(){
 
   			let params = {
-				defaultDay :  'default'
+				defaultDay :  'default',
+
 			}
 
   			let obj = {
@@ -851,7 +732,7 @@ data() {
 
   		defaultReportMonth(){
   			let params = {
-				defaultMonth :  'default'
+				defaultMonth :  'default',
 			}
 
   			let obj = {
@@ -864,7 +745,7 @@ data() {
 
   		defaultReportYear(){
   			let params = {
-				defaultYear :  'default'
+				defaultYear :  'default',
 			}
 
   			let obj = {
@@ -877,7 +758,7 @@ data() {
 
   		defaultReportWeek(){
   			let params = {
-				defaultWeek :  'default'
+				defaultWeek :  'default',
 			}
 
   			let obj = {
@@ -896,7 +777,6 @@ data() {
 					var data = response.data.data
 					var vm = this
 					_.forEach(data, function(value,key){
-						console.log(value)
 						vm.listBranch.push(value)					
 					})				    
 				}
@@ -907,22 +787,21 @@ data() {
   		},
 
   		changeBranch(item){		
-  			console.log(item)
-			// var url = config.API_URL+'photographer/photographer-branch?branchId='+item
-			// get(url)
-			// .then(res => {
-			// 	if(res.data && res.data.success){
-			// 		var data = res.data.data
-			// 		var vm = this
-			// 		_.forEach(data, function(value,key){
-			// 			vm.phographer.push(value)
-							
-			// 		})
-			// 	}
-			// })	
-			// .catch(err =>{
-
-			// })
+			var url = config.API_URL+'photographer/photographer-branch?branchId='+item.branch_id
+			get(url)
+			.then(res => {
+				if(res.data && res.data.success){
+					var data = res.data.data
+					var vm = this
+					_.forEach(data, function(value,key){
+						vm.listPhotographer.push(value)
+					})
+				}
+			})	
+			.catch(err =>{
+				console.log(err)
+			})
+  			
 		},
 
   		

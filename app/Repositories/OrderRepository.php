@@ -46,6 +46,7 @@ class OrderRepository extends BaseRepository
     }
 
     public function reportSaleDaily($attributes,$dates){
+
        if(isset($attributes['start_day']) && isset($attributes['end_day']) )
         {
             $startDay = Carbon::parse($attributes['start_day'])->format('Y-m-d');
@@ -58,8 +59,8 @@ class OrderRepository extends BaseRepository
 
             $endDay     = Carbon::today()->format('Y-m-d');
         }
-    
-        $orders = $this->scopeQuery(function($query) use ($startDay,$endDay){
+            
+        $orders = $this->scopeQuery(function($query) use ($startDay,$endDay,$attributes){
             $query = $query->with(['branch' => function($q){
                       }])
                       ->with(['customer.room' => function($q){
@@ -74,6 +75,7 @@ class OrderRepository extends BaseRepository
                       })
                       ->where('status','DONE')
                       ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
+                      dd($query->toSql(), $query->getBindings());
 
             return $query;
          })->get()->toArray();
@@ -110,7 +112,7 @@ class OrderRepository extends BaseRepository
                       }])
                       ->with('orderexchange')
                       ->whereHas('branch', function($q) {
-                        // $q->where('branches.company_id',$attributes['company_id']);
+                        $q->where('branches.company_id',$attributes['company_id']);
                       })
                       ->where('status','DONE')
                       ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '>=', $fromMonth)

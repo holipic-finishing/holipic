@@ -236,6 +236,28 @@ class ReportController extends BaseApiController
     public function getInfoForChartCompanyAdmin(Request $request){
         $input = $request->all();
         // report from day, to day
+        if(isset($input['type'])){
+            $type = $input['type'];
+            if($type == 'day'){
+                $arrayDay = [];
+                if(isset($input['start_day'],$input['end_day'])){
+                  $arrayDay = $this->initDays($input['start_day'],$input['end_day']);
+                }
+                $report = $this->orderRepository->reportSaleDaily($input,$arrayDay);
+
+                return $this->responseSuccess('Data success',$report);
+            }
+            
+            if($type == 'month'){
+              dd('month');
+            }
+            if($type == 'year'){
+              dd('year');
+            }
+            if($type == 'week'){
+              dd('week');
+            }
+        }
         if($request->has(['start_day','end_day'])){
 
           $arrayDay = $this->initDays($input['start_day'],$input['end_day']);

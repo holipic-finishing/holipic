@@ -95,6 +95,8 @@ Route::group(['namespace' => 'API'],function(){
 		/*************CustomerAPIController For Branch**************/
 		Route::post('branch/customers', 'CustomerAPIController@getBranchCustomers');
 
+		Route::patch('branch/customer/{id}', 'CustomerAPIController@updateBranchCustomer');
+
 		/*************ActivityLogController**************/
 		
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');

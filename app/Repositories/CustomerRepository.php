@@ -125,4 +125,41 @@ class CustomerRepository extends BaseRepository
 
         return false;
     }
+
+    public function handleUpdateBranchCustomer($id)
+    {
+       $customer = $this->model->findOrFail($id); 
+
+        $input = request('params');
+
+        if(request('params.status')) {
+            $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false] ;
+        }
+
+        if(request()->file('avatar')) {
+
+            $image = request()->file('avatar');
+
+            $typeFile = $image->getClientOriginalExtension();
+
+            if($typeFile != 'jpg' && $typeFile != 'png' && $typeFile != 'jpeg'){
+                return false;
+            }
+
+            $name = time().'_'.$customer['id'].'_'.$image->getClientOriginalName();
+            $input = ['avatar' => '/images/customer/'.$name];
+
+            $destinationPath = public_path('/images/customer');
+            $image->move($destinationPath, $name);
+        }
+
+        if(!is_null($customer))
+        {
+            $customer = $customer->update($input);
+
+            return $customer;
+        }
+
+        return false;
+    }
 }

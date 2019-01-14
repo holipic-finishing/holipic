@@ -169,4 +169,17 @@ class CustomerAPIController extends AppBaseController
 
         return $this->sendResponse($customers, 'Get customer successfully');
     }
+
+    public function updateBranchCustomer($id)
+    {
+       
+        $customer = $this->customerRepository->handleUpdateBranchCustomer($id);
+
+        if(!$customer) {
+            return $this->sendError('Error update customer');
+        }
+
+        return $this->sendResponse($customer, 'Update customer successfully');
+    }
+
 }

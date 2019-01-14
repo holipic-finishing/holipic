@@ -83,7 +83,7 @@
 								</td>
 							</template>
 						</v-data-table>
-						<!-- <customer-edit></customer-edit> -->
+						<customer-edit></customer-edit>
 						
 					</v-card>
 				</v-app>
@@ -141,7 +141,7 @@ export default {
 		],
 		pagination: {
 				  	rowsPerPage: 25  	
-		    		},
+		},
 		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 		user: JSON.parse(localStorage.getItem('user')),
 		urlExport: config.API_URL+'company/branches/customers/export?companyId='+JSON.parse(localStorage.getItem('user')).company_id

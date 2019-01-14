@@ -1,12 +1,13 @@
 <template>
    <v-menu offset-y origin="right top" left content-class="language-dropdown" transition="slide-y-transition" nudge-top="-10" class="user-block-wrap">
 		<v-btn icon large slot="activator">
-			<img src="/static/avatars/user-13.jpg" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" />
+			<img v-if="user.role_id == 1" src="/static/avatars/user-13.jpg" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" />
+         <img v-if="user.role_id != 1" :src="user.company_logo" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" />
 		</v-btn>
 		<div class="dropdown-content">
          <div class="dropdown-top white--text primary">
-            <span class="white--text fs-14 fw-bold d-block">John Leider</span>
-            <span class="d-block fs-12 fw-light">info@example.com</span>
+            <span class="white--text fs-14 fw-bold d-block">{{ user.full_name }}</span>
+            <span class="d-block fs-12 fw-light">{{ user.email }}</span>
          </div>
          <v-list class="dropdown-list">
             <template v-for="userLink in userLinks" v-if="userLink.id !== 4">
@@ -38,31 +39,38 @@
                   icon: 'ti-user mr-3 primary--text',
                   path: '/users/user-profile'
                },
+               // {
+               //    id: 2,
+               //    title: 'message.inbox',
+               //    icon: 'ti-email mr-3 success--text',
+               //    path: '/inbox'
+               // },
+               // {
+               //    id: 3,
+               //    title: 'message.usersList',
+               //    icon: 'ti-bell mr-3 info--text',
+               //    path: '/users/users-list'
+               // },
                {
                   id: 2,
-                  title: 'message.inbox',
-                  icon: 'ti-email mr-3 success--text',
-                  path: '/inbox'
+                  title: 'message.plan',
+                  icon: 'ti-book mr-3 info--text',
+                  path: '/user/plans'
                },
                {
                   id: 3,
-                  title: 'message.usersList',
-                  icon: 'ti-bell mr-3 info--text',
-                  path: '/users/users-list'
+                  title: 'message.changePassword',
+                  icon: 'ti-lock mr-3 info--text',
+                  path: '/change-password',
+                  pathCom : '/change-password'
                },
                {
                   id: 4,
                   title: 'message.logOut',
                   icon: 'ti-power-off mr-3 error--text'
                },
-               {
-                  id: 5,
-                  title: 'message.changePassword',
-                  icon: 'ti-lock mr-3 info--text',
-                  path: '/change-password',
-                  pathCom : '/change-password'
-               },
             ],
+            user: {},
             role_id : '',
          }
       },
@@ -83,6 +91,8 @@
       created(){
          var userAuth = JSON.parse(localStorage.getItem('user'))
          this.role_id = userAuth.role_id
+         this.user = userAuth
+         console.log(this.user)
       }
    }
 </script>

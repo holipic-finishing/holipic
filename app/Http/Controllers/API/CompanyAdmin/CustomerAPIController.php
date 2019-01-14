@@ -13,6 +13,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Maatwebsite\Excel\Excel;
 use App\Exports\ListEmailCustomers;
+use App\Exports\ListEmailBranchCustomers;
 
 /**
  * Class CustomerController
@@ -180,6 +181,11 @@ class CustomerAPIController extends AppBaseController
         }
 
         return $this->sendResponse($customer, 'Update customer successfully');
+    }
+
+    public function exportEmailBranchCustomers()
+    { 
+        return \Excel::download(new ListEmailBranchCustomers(request('userId')), 'ListEmailBranchCustomers.xlsx');
     }
 
 }

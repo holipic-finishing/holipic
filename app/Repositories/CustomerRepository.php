@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Customer;
+use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -128,12 +129,16 @@ class CustomerRepository extends BaseRepository
 
     public function handleUpdateBranchCustomer($id)
     {
-       $customer = $this->model->findOrFail($id); 
+       $customer = $this->model->findOrFail($id);
 
         $input = request('params');
 
         if(request('params.status')) {
             $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false] ;
+        }
+
+        if (request('params.email')) {
+            User::where('id', '=', $customer->user_id)->update($input);
         }
 
         if(request()->file('avatar')) {

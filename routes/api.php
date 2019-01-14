@@ -97,6 +97,8 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::patch('branch/customer/{id}', 'CustomerAPIController@updateBranchCustomer');
 
+		Route::get('branch/customers/export', 'CustomerAPIController@exportEmailBranchCustomers');
+
 		/*************ActivityLogController**************/
 		
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');

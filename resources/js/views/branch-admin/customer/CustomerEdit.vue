@@ -37,8 +37,8 @@
 										<v-text-field
 										class="font-weight-bold height-input"
 										placeholder="Enter Name"
-										:rules="[rules.required]"
 										v-model="customer.name"
+										:rules="[rules.required]"
 										outline
 										@keyup.enter="editCustomer('name', customer.name)"
 										:disabled="key == 1 ? false : true"
@@ -62,9 +62,10 @@
 											<v-text-field
 											class="font-weight-bold height-input"
 											placeholder="Enter Email"
-											:rules="[rules.required, rules.email]"
 											v-model="customer.user.email"
+											:rules="[rules.required, rules.email]"
 											outline
+											@keyup.enter="editCustomer('email', customer.user.email)"
 											:disabled="key == 2 ? false : true"
 											></v-text-field>
 										</template>
@@ -111,9 +112,6 @@
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<!-- <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
-							
-						</v-flex> -->
 						<v-divider class="no-mg-bottom"></v-divider>
 
 						<v-list-tile class="height-80">
@@ -124,8 +122,8 @@
 										<v-text-field
 										class="font-weight-bold height-input"
 										placeholder="Enter Address"
-										:rules="[rules.required]"
 										v-model="customer.address"
+										:rules="[rules.required]"
 										outline
 										@keyup.enter="editCustomer('address', customer.address)"
 										
@@ -153,7 +151,6 @@
 						                :items="status"
 						                v-model="selectStatus"
 										@change="editCustomer('status', selectStatus)"
-						                
 						                :disabled="key == 5 ? false : true"
 						              ></v-select>
 									</span>
@@ -191,15 +188,8 @@ export default {
     	customer: [],
     	rules: {
 	        required: value => !!value || 'Required.',
-	        decimal: value => {
-	          const pattern = /^[\d]+[\.][\d]{2}$/
-	          return pattern.test(value) || 'E.g:1.00'
-	      	},
-	      	number: value => {
-	          const pattern = /^[0-9]\d*$/
-	          return pattern.test(value) || 'Pls input number.'
-	      	},
-	      },
+	        email: value => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || "E-mail must be valid"
+	    },
 	    valid: true,
 	    alertStt:false,
 		alertType:'success',
@@ -300,6 +290,9 @@ export default {
 			case "name" :
 				params = {name: value};
 				break;
+			case "email" :
+				params = {email: value};
+				break;	
 			case "address" :
 				params = {address: value};
 				break;

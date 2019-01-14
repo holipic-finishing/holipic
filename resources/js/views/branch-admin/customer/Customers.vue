@@ -144,7 +144,7 @@ export default {
 		},
 		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 		user: JSON.parse(localStorage.getItem('user')),
-		urlExport: config.API_URL+'company/branches/customers/export?companyId='+JSON.parse(localStorage.getItem('user')).company_id
+		urlExport: config.API_URL+'branch/customers/export?userId='+JSON.parse(localStorage.getItem('user')).id,
 
     }
   },

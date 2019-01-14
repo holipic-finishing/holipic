@@ -53,23 +53,13 @@ class NotificationRepository extends BaseRepository
     * @params:  $is_read, $user_id, $limit
     * @return : json
     **/
-    public function getNotificationByIsRead($is_read,$user_id,$limit){
+    public function getNotificationByIsRead($is_read,$user_id,$perPage){
 
-        if($limit == null) {
-            $results = $this->model->where('is_read',$is_read)
-                                ->where('user_id',$user_id)
-                                ->orderBy('created_at', 'desc')
-                                ->get();
-        } else {
-            
-            $results = $this->model->where('is_read',$is_read)
-                                ->where('user_id',$user_id)
-                                ->orderBy('created_at', 'desc')
-                                ->limit($limit)
-                                ->get();
-        }
-
-        return $results;
+        $results = $this->model->where('user_id',$user_id)
+                                ->where('is_read','0')
+                                ->orderBy('created_at', 'desc');
+      
+        return $results->paginate($perPage);
 
     }
 

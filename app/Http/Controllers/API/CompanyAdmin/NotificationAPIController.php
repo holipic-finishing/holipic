@@ -43,7 +43,10 @@ class NotificationAPIController extends AppBaseController
         $input = $request->all();
         $this->notificationRepository->pushCriteria(new RequestCriteria($request));
         $this->notificationRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $notifications = $this->notificationRepository->getNotificationByIsRead(self::NOT_IS_READ,$input['user_id'],NULL);
+
+        $perPage = $request->input('perPage', 6);
+
+        $notifications = $this->notificationRepository->getNotificationByIsRead(self::NOT_IS_READ,$input['user_id'],$perPage);
 
         return $this->sendResponse($notifications->toArray(), 'Notifications retrieved successfully');
     }
@@ -153,5 +156,19 @@ class NotificationAPIController extends AppBaseController
 
         return $this->sendResponse($notifications->toArray(), 'Notifications retrieved successfully');
     
+    }
+
+    /* 
+    *  Target : Function get all Notification 
+    *  GET /get-notifications/{user_id}
+    *   
+    */
+
+    public function getNotification($user_id){
+
+        $resulfs = Notification::where('user_id',$user_id)->where('is_read','0')->get();
+
+        return $this->sendResponse($resulfs->toArray(), 'Notifications retrieved successfully');
+
     }
 }

@@ -2,6 +2,18 @@
 	<div class="branch-table">
 		<!-- <page-title-bar></page-title-bar> -->
 		<v-container fluid grid-list-xl pt-0>
+			<v-navigation-drawer 
+	        fixed
+	        v-model="drawer1" 
+	        :right="!rtlLayout" 
+	        temporary 
+	        app 
+	        class="chat-sidebar-wrap"
+	        width="450"
+	      >
+	      
+	        <send-email :item="item"></send-email>
+	      </v-navigation-drawer>
 			<div id="app">
 				<v-app id="inspire">
 					<v-card class="p-4">
@@ -44,7 +56,7 @@
 								<td>{{ props.item.id }}</td>
 								<td>{{ props.item.email_title }}</td>
 								<td>{{ props.item.format_email_content }}</td>
-								<td><v-btn small color="primary">Send Email</v-btn></td>
+								<td><v-btn small color="primary" @click="showEmailToSend(props.item)">Send Email</v-btn></td>
 					        	<td>
 
 									<v-icon
@@ -78,18 +90,22 @@
 import config from '../../../config'
 import { get, post, put, del, getWithData } from '../../../api'
 import EmailItem from './EmailItem.vue'
+import { mapGetters } from "vuex"
+import SendEmail from './SendEmail.vue'
 export default {
 
 	name: 'Email',
 
 	components:{
-		EmailItem
+		EmailItem,
+		SendEmail
 	},
 
 	data () {
 	return {
 			search:'',
 			drawer:false,
+			drawer1:false,
       		pagination: {
 				  	rowsPerPage: 25,
 				  	sortBy: 'id', 
@@ -108,6 +124,7 @@ export default {
 		    alertType: 'success',
 		    alertMes: '',
 		    authUser : JSON.parse(localStorage.getItem('user')),
+		    item:null
 		}
 	},
 	created(){
@@ -172,14 +189,22 @@ export default {
 			.catch(err => {
 				console.log(err)
 			})
+		},
+		showEmailToSend(item){
+			console.log(item)
+			this.drawer1 = true
+			this.item = item
 		}
 	},
 	computed: {
-
+		 ...mapGetters(["rtlLayout",]),
     },
     mounted(){
 		this.$root.$on('reload-data', res => {
 	     	this.fetchData()
+	    })
+	    this.$root.$on('closeDrawerItem', res => {
+	     	this.drawer1 = res
 	    })
     }
 }

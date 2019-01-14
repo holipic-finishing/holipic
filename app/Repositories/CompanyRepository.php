@@ -269,6 +269,7 @@ class CompanyRepository extends BaseRepository
     }
 
     //  show email customer by company id
+    //  @From : func: handleExportCustomerByCompanyId()
     public function getCustomerByCompanyId($company_id){
 
         $results = $this->scopeQuery(function($query) use ($company_id){
@@ -286,6 +287,7 @@ class CompanyRepository extends BaseRepository
     }
 
     // get email customer
+    //  @From : func: getCustomerByCompanyId()
     public function getEmailCustomer($attributes){
         $data = [];
         foreach ($attributes as $key => $value) {

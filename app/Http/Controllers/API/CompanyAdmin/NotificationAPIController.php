@@ -47,7 +47,6 @@ class NotificationAPIController extends AppBaseController
         $perPage = $request->input('perPage', 6);
 
         $notifications = $this->notificationRepository->getNotificationByIsRead(self::NOT_IS_READ,$input['user_id'],$perPage);
-
         return $this->sendResponse($notifications->toArray(), 'Notifications retrieved successfully');
     }
 

@@ -160,7 +160,7 @@ class UserAPIController extends AppBaseController
                 ]);
             }
 
-            $this->notificationRepository->createNotifi($user->id, 'changePasswordSuccess');
+            $this->notificationRepository->createNotifi($user->id, 'changePasswordSuccess','Change Password Success');
             
             if($user){
                 $user = User::where('email',$email)->first()->update([

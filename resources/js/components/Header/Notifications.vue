@@ -78,7 +78,7 @@
 						</v-list-tile>
 				</v-list>
 			</div>
-			<v-card-actions v-if="paginator.to !== paginator.total">
+		<!-- 	<v-card-actions v-if="paginator.to !== paginator.total">
 		        <v-btn 
 		        	small 
 		        	color="primary" 
@@ -86,7 +86,7 @@
 		        >
 		      		More..
 		      	</v-btn>
-      		</v-card-actions>
+      		</v-card-actions> -->
 		</v-card>
 </v-menu>
 </template>
@@ -107,14 +107,14 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 			        maxScrollbarLength: 160
 			    },
 			    paginator: {
-	                perPage: 6,
+	                perPage: 2,
 	                currentPage: 1,
 	                lastPage: 1,
 	                total: 0,
 	                from: 0,
 	                to: 0,
         		},
-			    user:{},
+			    user:JSON.parse(localStorage.getItem('user')),
 			    newnotification : global_notification,
 			    menu: false
 			};
@@ -151,7 +151,9 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 				get(url)
 				.then(res => {
 					if(res.data && res.data.success){
-						this.arrNotifi = res.data.data
+						// this.arrNotifi = res.data.data
+						this.notifications = res.data.data
+
 					}
 				})
 				.catch(err => {
@@ -188,26 +190,29 @@ import Notifications from '../../views/company-admin/notifications/Notifications
                 	page: this.paginator.currentPage,
 					user_id : useAut.id
 				}
+
 				getWithData(url,params)
 				.then(res => {
-					if(res.data && res.data.success){
-						let data = res.data.data.data
-						this.paginator.to = res.data.data.to
-						var vm = this
-						var dataItem = vm.notifications
-						_.forEach(data, function(value, key){
-							dataItem.push(value)
-						})
+				// 	if(res.data && res.data.success){
+				// 		let data = res.data.data.data
+				// 		// this.paginator.to = res.data.data.to
+				// 		// this.paginator.total = res.data.data.total
+				// 		var vm = this
+				// 		var dataItem = vm.notifications
 					
-						vm.notifications = _.uniqBy(dataItem,'id')
-					}
+				// 		_.forEach(data, function(value, key){
+				// 			dataItem.push(value)
+				// 		})
+				// 		console.log(dataItem)
+				// 		// vm.notifications = _.uniqBy(dataItem,'id')
+				// 	}
 				})	
 				.catch(err => {
 					console.log(err)
 				})
 			},
 			removeNotification(item) {
-				this.getAllNotification()
+				// this.getAllNotification()
 				if(this.newnotification.length){
 					var index1 = this.newnotification.findIndex(function(value){
 						return value.id == item.id
@@ -219,29 +224,35 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 					return value.id == item.id
 				});
                 this.notifications.splice(index2, 1);
+                
+               
+
+
 			},
 			
 	
 
 		},
 		created(){
-			this.fetchData()
+			// this.fetchData()
 			this.getAllNotification()
 			var userAuth = JSON.parse(localStorage.getItem('user'))
 			var noti = this
 			socket.on('view-listings',function(data){
 					if (data.user_id == userAuth.id) {
-			        	noti.arrNotifi.unshift(data)
+			        	// noti.arrNotifi.unshift(data)
 			        	noti.notifications.unshift(data)
-						noti.paginator.total = noti.paginator.total + 1
-						noti.paginator.to = noti.paginator.to + 1
+						// noti.paginator.total = noti.paginator.total + 1
+						// noti.paginator.to = noti.paginator.to + 1
 					}
 			    });
 		},
 		computed:{
 			countNotifications(){
 				if(this.newnotification && this.newnotification.length){
-					this.arrNotifi.unshift(this.newnotification[0])
+					// this.arrNotifi.unshift(this.newnotification[0])
+					this.notifications.unshift(this.newnotification[0])
+					
 				}
 				
 				// let vm = this
@@ -251,7 +262,7 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 				// 		count =count + 1
 				// 	}
 				// })
-				return this.arrNotifi.length
+				return this.notifications.length
 			},
 		},
 		mounted() {

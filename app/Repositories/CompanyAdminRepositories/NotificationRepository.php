@@ -38,11 +38,12 @@ class NotificationRepository extends BaseRepository
         return Notification::class;
     }
 
-    public function createNotifi($user_id,$message) {
+    public function createNotifi($user_id,$message,$mess_push) {
 
         $Notification = $this->model->create([
                             'user_id' => $user_id,
-                            'message' => 'message.'.$message
+                            'message' => 'message.'.$message,
+                            'push_notification' => $mess_push
                         ]);
 
         $this->evenNotification($Notification);

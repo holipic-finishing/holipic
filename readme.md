@@ -46,3 +46,6 @@ php artisan db:seed
 + npm run watch-poll
 + cd server_node => node server
 + redis-server --port "your_port"
+
+#push notification 
++ sudo npm install -g localtunnel

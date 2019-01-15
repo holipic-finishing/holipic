@@ -6,7 +6,7 @@ use App\Http\Requests\API\CreateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserAPIRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use App\Repositories\NotificationRepository;
+use App\Repositories\CompanyAdminRepositories\NotificationRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
@@ -140,21 +140,27 @@ class UserAPIController extends AppBaseController
             $token = (new Parser())->parse((string) $request['access_token']);           
             $email=  $token->getClaim('email');
             $user = User::where('email',$email)->first();
-            
 
             if (!password_verify($request['oldPassword'], $user->password)) {   
-                return response()->json(['success' => false, 'message' => 'OldPassword']);
+                return response()->json(['success' => false, 'message' => 'The password current incorrect']);
+            }
+
+            if(strcmp($request['oldPassword'], $request['newPassword']) == 0)
+            {
+                return response()->json([
+                        'success' => false, 
+                        'message' => 'The new password cannot be the same as the old password'
+                ]);
             }
 
             if(strcmp($request['newPassword'], $request['confirmPassword']) != 0 ) {
-                 return response()->json([
+                return response()->json([
                         'success' => false, 
-                        'message' => 'olePasswordAndNewPassword'
-                    ]);
-               
+                        'message' => 'The new password does not match'
+                ]);
             }
 
-            $this->notificationRepository->createNotifi($user->id,'changePasswordSuccess');
+            $this->notificationRepository->createNotifi($user->id, 'changePasswordSuccess');
             
             if($user){
                 $user = User::where('email',$email)->first()->update([
@@ -165,9 +171,12 @@ class UserAPIController extends AppBaseController
             // Save activity logs
             $log = Activity::all()->last();
             $log['user_id'] = User::where('email',$email)->first()->id;
+            $log['description_log'] = 'Change Password';
             $log->save();
 
-            return $this->sendResponse($user, 'changePasswordSuccess');
+            event(new \App\Events\RedisEventActivityLog($log));
+
+            return $this->sendResponse($user, 'Change password success');
         }
         
          catch (Exception $e) {

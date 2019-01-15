@@ -19,6 +19,8 @@ Route::namespace('API')->group(function(){
 	Route::namespace('Auth')->prefix('auth')->group(function(){
 		
 		Route::post('loginSuperAdmin','LoginController@loginSuperAdmin');
+
+		Route::get('logout','LoginController@logoutAuth');
 		
 	});
 });
@@ -31,11 +33,9 @@ Route::get('users/activation', 'UserController@activationAccount')->name('users.
 *********  ROUTER FOR ADMIN PAGE   *****************
 ****************************************************/
 
-Route::prefix('/admin')->group(function () {
-     Route::get('/', function () {
- 	   return view('index');
-	});
-});
+Route::get('/{any}', function () {
+   return view('index');
+})->where('any', '^(?!api).*$');
 
 
 /****************************************
@@ -43,16 +43,7 @@ Route::prefix('/admin')->group(function () {
 *****************************************/
 
 
-Route::get('test-job', function() {
-	// $lang = 'en';
-	// \App::setLocale($lang);
-	// $l = app()->getLocale();
-	// $d = trans('auth.failed');
-	// dd($d);
-
-	// $a =  event(
- //            $e = new \App\Events\RedisEventNotification()
- //        );
+Route::get('test', function() {
 });
 
 

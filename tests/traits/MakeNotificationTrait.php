@@ -1,8 +1,8 @@
 <?php
 
 use Faker\Factory as Faker;
-use App\Models\Notification;
-use App\Repositories\NotificationRepository;
+use App\Models\CompanyAdmin\Notification;
+use App\Repositories\CompanyAdminRepositories\NotificationRepository;
 
 trait MakeNotificationTrait
 {

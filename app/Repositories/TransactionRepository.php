@@ -25,7 +25,6 @@ class TransactionRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'user_id',
-        'type',
         'amount',
         'status',
         'company_id',
@@ -40,17 +39,13 @@ class TransactionRepository extends BaseRepository
         return Transaction::class;
     }
 
-    //function show chart default from now with 10 day before
+    /**
+     * Get Information Company And Total Amount Default
+     * @param  int $companyId
+     * @return Array
+     */
     public function getInformationCompanyAndTotalAmountDefault($companyId)
     {
-        //DB::raw("DATE_FORMAT(dated,'%M %Y %D') as months")
-        // $companies = $this->model->select(DB::raw("sum(amount) as total"),DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"), 'currency_id') 
-        // ->where('company_id', $companyId)
-        // ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10)->toDateString())
-        //         ->where(DB::raw('dated'), '<=', Carbon::now()->toDateString())
-        // ->groupBy('date', 'currency_id')
-        // ->orderBy('date', 'asc')
-        // ->get()->toArray();
        
         $companies = $this->model->join('currencies','currencies.id', '=', 'transactions.currency_id')
                     ->join('companies', 'companies.id', '=', 'transactions.company_id')
@@ -60,7 +55,7 @@ class TransactionRepository extends BaseRepository
                     ->where('transactions.company_id', $companyId)
                     ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10)->toDateString())
                     ->where(DB::raw('dated'), '<=', Carbon::now()->toDateString())
-                    ->where('type', 1)
+                    ->where('status', 'RECIVED')
                     ->groupBy('date', 'currency_id')
                     ->orderBy('date', 'asc')
                     ->get()->toArray();
@@ -89,28 +84,11 @@ class TransactionRepository extends BaseRepository
         ]; 
     }
 
-    //function show label date default for chart
-
+    /**
+     * Create Labels
+     */
     private function createLabels($date = null, $companyId)
     {
-        // if(is_null($date)){
-        //     $date = now();
-        // }
-        // return [
-        //     now()->subDays(10)->format('Y-m-d'),
-        //     now()->subDays(9)->format('Y-m-d'),
-        //     now()->subDays(8)->format('Y-m-d'),
-        //     now()->subDays(8)->format('Y-m-d'),
-        //     now()->subDays(7)->format('Y-m-d'),
-        //     now()->subDays(6)->format('Y-m-d'),
-        //     now()->subDays(5)->format('Y-m-d'),
-        //     now()->subDays(4)->format('Y-m-d'),
-        //     now()->subDays(3)->format('Y-m-d'),
-        //     now()->subDays(2)->format('Y-m-d'),
-        //     now()->subDays(1)->format('Y-m-d'),
-        //     now()->format('Y-m-d'),
-        // ];
-
         $date = $this->model->select(DB::raw("DATE_FORMAT(dated,'%Y-%c-%d') as date"))->where('company_id', $companyId)
                             ->where(DB::raw('dated'), '>=', Carbon::now()->subDays(10)->toDateString())
                             ->where(DB::raw('dated'), '<=', Carbon::now()->toDateString())
@@ -313,7 +291,7 @@ class TransactionRepository extends BaseRepository
                                     ->where('transactions.company_id', $companyId)
                                     ->where(DB::raw("date(dated)"), '>=', $startDay)
                                     ->where(DB::raw("date(dated)"), '<=', $endDay)
-                                    ->where('type', 1)
+                                    ->where('status', 'RECIVED')
                                     ->groupBy('date', 'currency_id')
                                     ->orderBy('date', 'asc')
                                     ->get()->toArray(); 
@@ -403,7 +381,7 @@ class TransactionRepository extends BaseRepository
                                     ->where('transactions.company_id', $companyId)
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
                                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth)
-                                    ->where('type', 1)
+                                    ->where('status', 'RECIVED')
                                     ->groupBy('date', 'currency_id')
                                     ->orderBy('date', 'asc')
                                     ->get()->toArray();
@@ -448,7 +426,7 @@ class TransactionRepository extends BaseRepository
                     ->where('transactions.company_id', $companyId)
                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $monthBefore)
                     ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $month)
-                    ->where('type', 1)
+                    ->where('status', 'RECIVED')
                     ->groupBy('date', 'currency_id')
                     ->orderBy('date', 'asc')
                     ->get()->toArray();
@@ -491,7 +469,7 @@ class TransactionRepository extends BaseRepository
                                 ->where('transactions.company_id', $companyId)
                                 ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $yearBefore)
                                 ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $year)
-                                ->where('type', 1)
+                                ->where('status', 'RECIVED')
                                 ->groupBy('date', 'currency_id')
                                 ->orderBy('date', 'asc')
                                 ->get()->toArray();
@@ -529,7 +507,7 @@ class TransactionRepository extends BaseRepository
                                 ->where('transactions.company_id', $companyId)
                                 ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $startYear)
                                 ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $endYear)
-                                ->where('type', 1)
+                                ->where('status', 'RECIVED')
                                 ->groupBy('date', 'currency_id')
                                 ->orderBy('date', 'asc')
                                 ->get()->toArray();
@@ -672,7 +650,7 @@ class TransactionRepository extends BaseRepository
                         ->get()->toArray();
 
         $InYear = $this->sumSystemFee($InYear, $transactions, 'year');
-
+ 
 
         return $InYear;
 
@@ -692,16 +670,7 @@ class TransactionRepository extends BaseRepository
             $startDay   = Carbon::today()->subDays(42)->format('Y-m-d');
 
             $endDay     = Carbon::today()->format('Y-m-d');
-        }
-      
-
-
-        $transactions = $this->model->select(DB::raw('SUM(system_fee) AS total, dated'))
-                                ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                                ->groupBy('dated')
-                                ->where('type','1')
-                                ->where('status','RECIVED')
-                                ->get();                
+        }          
 
         $transactions = Transaction::with('transactionexchange')
                         ->where('status','RECIVED')
@@ -731,7 +700,7 @@ class TransactionRepository extends BaseRepository
                     }
                 }
 
-                $dayWeek[$key]['total'] = $count;
+                $dayWeek[$key]['total'] = round($count,3);
             }  else {
                 $dayWeek[$key]['total'] = 0;
             }
@@ -739,7 +708,7 @@ class TransactionRepository extends BaseRepository
            
        
         }    
-            
+    
 
         return $dayWeek;
     }
@@ -752,16 +721,16 @@ class TransactionRepository extends BaseRepository
      */
     
     public function getHistoriesTransaction($params){
-        // $now = \Carbon\Carbon::today();
-        // $dateBefore7Days = $now->subDays(7);
-
         $results = $this->scopeQuery(function($query) use($params){
 
             $query = $query->with(['user' => function($q) {
-                                $q->with('package')->with('company');
+                                $q->with('package')->with(['company' => function($que) {
+                                    $que->withTrashed();
+                                }]);
                             }])
-                        ->with('currency');
-
+                        ->with('currency')
+                        ->with('transactionexchange');
+          
             if (!empty($params['defaultDay'])) {
 
                 $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
@@ -831,7 +800,7 @@ class TransactionRepository extends BaseRepository
             }
 
             return $query;
-        })->all();
+        })->get();
 
         $results = $this->transform($results);
 
@@ -839,27 +808,21 @@ class TransactionRepository extends BaseRepository
     }  
 
     /**
-    
-        TODO:
-        - create new_field from old_filed
-        
+     * Transfrom transaction data
      */
     
     public function transform($results){
+
         foreach ($results as $key => $result) {
 
-            if($results[$key]->type){
-                $results[$key]->type_character = 'Income';
-            }else{
-                $results[$key]->type_character = 'Outcome';
-            }
-
             $results[$key]->company_name = $result->user->company->name;
-            $results[$key]->amount_with_symbol = $result->amount ." ".$result->symbol;             
-            $results[$key]->system_fee_with_symbol = $result->system_fee ." ".$result->symbol;         
-            $results[$key]->credit_card_fee_with_symbol = $result->credit_card_fee ." ".$result->symbol;             
+
+            $results[$key]->amount_with_symbol = round(($result->amount * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol; 
+
+            $results[$key]->system_fee_with_symbol = round(($result->system_fee * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol;         
+            $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
+
             $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
-            if($results[$key]->status === 'BEEN_SEEN') $results[$key]->status = str_replace("_", " ", $results[$key]->status);            
         }
 
         return $results;
@@ -874,27 +837,38 @@ class TransactionRepository extends BaseRepository
     public function transactionHistoryDay($attributes,$perPage,$searchBy) {
 
         $now     = \Carbon\Carbon::today()->format('Y-m-d');
-        
         $user_id = $attributes['userId'];
+        $search = '';
 
-        if(!empty($searchBy['title'])){
-            $transactions = $this->model->select('id','title','dated','amount','type')
-                                         ->whereHas('companyUser', function($query) use ($user_id){
-                                            $query->where('owner_id',$user_id);
-                                        })
-                                        ->where('title','LIKE', '%'.$searchBy['title'].'%')
-                                        ->where(DB::raw('date(dated)'),$now)
-                                        ->orderBy('dated', 'desc');
+        if (!empty($searchBy['title'])) {
+            $search = $searchBy['title'];
+        }
 
-        }
-        else {
-            $transactions = $this->model->select('id','title','dated','amount','type')
-                                         ->whereHas('companyUser', function($query) use ($user_id){
-                                            $query->where('owner_id',$user_id);
-                                        })
-                                        ->where(DB::raw('date(dated)'),$now)
-                                        ->orderBy('dated', 'desc');
-        }
+        $transactions = $this->scopeQuery(function($query) use($search, $user_id, $now){
+
+            $query = $query->select('id','title','dated','amount','status')
+                                ->with(['transactionexchange' => function($query){
+                                    $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                }])
+                                ->whereHas('companyUser', function($query) use ($user_id){
+                                    $query->where('owner_id',$user_id);
+                                });
+
+            if (!empty($search)) {
+                $query = $query->where(function($query) use ($search){
+                                    $query->where('title','LIKE', '%'. $search . '%')
+                                        ->orWhere('dated','LIKE', '%'. $search . '%');
+                                });
+            }
+
+
+            $query = $query->where(DB::raw('date(dated)'),$now)
+                                    ->orderBy('dated', 'desc');
+
+            return $query;
+
+        });
+
         return $transactions->paginate($perPage);                            
 
     }
@@ -907,28 +881,41 @@ class TransactionRepository extends BaseRepository
     public function transactionHistoryWeek($attributes,$perPage ,$searchBy) {
 
         $startDay   = \Carbon\Carbon::today()->subDays(7)->format('Y-m-d');
-
         $endDay     = \Carbon\Carbon::today()->format('Y-m-d');
-
         $user_id = $attributes['userId'];
+        
+        $search = '';
 
-        if(!empty($searchBy['title'])){
-             $transactions = $this->model->select('id','title','dated','amount','type')
-                                        ->whereHas('companyUser', function($query) use ($user_id){
-                                                $query->where('owner_id',$user_id);
-                                         })
-                                        ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                                        ->where('title','LIKE', '%'.$searchBy['title'].'%')
-                                        ->orderBy('dated', 'desc');
+        if (!empty($searchBy['title'])) {
+            $search = $searchBy['title'];
         }
-        else {
-            $transactions = $this->model->select('id','title','dated','amount','type')
-                                        ->whereHas('companyUser', function($query) use ($user_id){
-                                                $query->where('owner_id',$user_id);
-                                         })
-                                        ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                                        ->orderBy('dated', 'desc');
-        }
+
+        $transactions = $this->scopeQuery(function($query) use($search, $user_id, $startDay, $endDay){
+
+            $query = $query->select('id','title','dated','amount','status')
+                                ->with(['transactionexchange' => function($query){
+                                    $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                }])
+                                ->whereHas('companyUser', function($query) use ($user_id){
+                                    $query->where('owner_id',$user_id);
+                                });
+
+            if (!empty($search)) {
+
+                $query = $query->where(function($query) use ($search){
+                                        $query->where('title','LIKE', '%'. $search . '%')
+                                            ->orWhere('dated','LIKE', '%'. $search . '%');
+                                    });
+            }
+
+
+            $query = $query->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+                                    ->orderBy('dated', 'desc');
+
+            return $query;
+
+        });
+        
         return $transactions->paginate($perPage);                            
 
     }
@@ -942,29 +929,40 @@ class TransactionRepository extends BaseRepository
     public function transactionHistoryMonth($attributes,$perPage, $searchBy) {
 
         $month = \Carbon\Carbon::today()->format('Y-m');
-
         $user_id = $attributes['userId'];
+        
+        $search = '';
 
-        if(!empty($searchBy['title'])){
-
-            $transactions = $this->model->select('id','title','dated','amount','type')
-                                    ->whereHas('companyUser', function($query) use ($user_id){
-                                        $query->where('owner_id',$user_id);
-                                    })
-                                    ->where('title','LIKE', '%'. $searchBy['title'] . '%')
-                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
-                                    ->orderBy('dated', 'desc');
+        if (!empty($searchBy['title'])) {
+            $search = $searchBy['title'];
         }
-        else {
+      
+        $transactions = $this->scopeQuery(function($query) use($search, $user_id, $month){
 
-         $transactions = $this->model->select('id','title','dated','amount','type')
-                                    ->whereHas('companyUser', function($query) use ($user_id){
-                                        $query->where('owner_id',$user_id);
-                                    })
-                                    ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
+            $query = $query->select('id','title','dated','amount','status')
+                            ->with(['transactionexchange' => function($query){
+                                $query->select(['exchange_rate_to_dollar','transaction_id']);
+                            }])
+                            ->whereHas('companyUser', function($query) use ($user_id){
+                                $query->where('owner_id',$user_id);
+                            });
+            
+            if(!empty($search)){
+
+                $query = $query->where(function($query) use ($search){
+                                    $query->where('title','LIKE', '%'. $search . '%')
+                                        ->orWhere('dated','LIKE', '%'. $search . '%');
+                                });
+            }
+
+
+            $query = $query->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), $month)
                                     ->orderBy('dated', 'desc');
 
-        }                            
+            return $query;
+
+        });
+
         return $transactions->paginate($perPage); 
 
     }
@@ -977,26 +975,40 @@ class TransactionRepository extends BaseRepository
     */
     public function transactionHistoryYear($attributes,$perPage, $searchBy) {
 
-         $year = \Carbon\Carbon::today()->format('Y');
-         $user_id = $attributes['userId'];
-        if(!empty($searchBy['title'])){
+        $year = \Carbon\Carbon::today()->format('Y');
+        $user_id = $attributes['userId'];
+        
+        $search = '';
 
-             $transactions = $this->model->select('id','title','dated','amount','type')
-                                        ->whereHas('companyUser', function($query) use ($user_id){
-                                            $query->where('owner_id',$user_id);
-                                        })
-                                        ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
-                                        ->where('title','LIKE', '%'.$searchBy['title'].'%')
-                                        ->orderBy('dated', 'desc');
-
-        } else { 
-            $transactions = $this->model->select('id','title','dated','amount','type')
-                                        ->whereHas('companyUser', function($query) use ($user_id){
-                                            $query->where('owner_id',$user_id);
-                                        })
-                                        ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
-                                        ->orderBy('dated', 'desc');
+        if (!empty($searchBy['title'])) {
+            $search = $searchBy['title'];
         }
+
+        $transactions = $this->scopeQuery(function($query) use($search, $user_id, $year){
+
+            $query = $query->select('id','title','dated','amount','status')
+                                ->with(['transactionexchange' => function($query){
+                                    $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                }])
+                                ->whereHas('companyUser', function($query) use ($user_id){
+                                    $query->where('owner_id',$user_id);
+                                });
+
+            if (!empty($search)) {
+                $query = $query->where(function($query) use ($search){
+                                    $query->where('title','LIKE', '%'. $search . '%')
+                                        ->orWhere('dated','LIKE', '%'. $search . '%');
+                                });
+            }
+
+
+            $query = $query->where(DB::raw("DATE_FORMAT(dated,'%Y')"), $year)
+                                    ->orderBy('dated', 'desc');
+
+            return $query;
+
+        });
+
         return $transactions->paginate($perPage); 
 
     }
@@ -1073,7 +1085,7 @@ class TransactionRepository extends BaseRepository
                         $dates[$key]['total'] = 0;
                     }
                 }  
-                 $dates[$key]['total'] = $count;
+                 $dates[$key]['total'] = round($count,3);
                     
             } else {
                  $dates[$key]['total'] = 0;
@@ -1081,4 +1093,5 @@ class TransactionRepository extends BaseRepository
         }
         return $dates;
     }
+
 }

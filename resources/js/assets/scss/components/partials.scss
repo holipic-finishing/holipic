@@ -1,0 +1,42 @@
+.plr-0{
+	.v-toolbar__content{
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.custom-header{
+	display:flex;
+	// justify-content:center;
+	align-items:center;
+}
+
+.app-changepass{
+    padding: 100px 0px;
+    overflow:none;
+}
+
+.row-changepass{
+	width: 40%;
+	margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+    .row-changepass{
+		width: 60%;
+		margin: 0 auto;
+	}
+}
+
+@media (max-width: 565px) {
+    .row-changepass{
+		width: 70%;
+		margin: 0 auto;
+	}
+}
+
+.custom-table{
+	thead th:not(:nth-child(1)){
+		padding: 0 13px !important;
+	}
+}

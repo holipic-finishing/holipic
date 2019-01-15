@@ -16,16 +16,17 @@ class CompanysTableSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         \App\Models\Company::truncate();
+
+        $users = \App\Models\User::where('role_id', 2)->get();
         
         // create company with user
-        for ($i=1; $i < 52 ; $i++) {
-            $user = \App\Models\User::find($i);
+        foreach ($users as $user) {
             \App\Models\Company::create([
-                'name' => $user['company_name'],
+                'name' => $faker->company,
                 'description' => $faker->sentence(6, true),
                 'address' => $faker->address,
-                'owner_id' => $user['id'],
                 'logo' => $faker->image(public_path() . '/logos'),
+                'owner_id' => $user->id,
                 'phone' => $faker->phoneNumber,
             ]);
         }

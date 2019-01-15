@@ -7,6 +7,7 @@ use App\Repositories\UserRepository;
 use App\Http\Requests\API\UserLoginAPIRequest;
 use Lcobucci\JWT\Parser;
 use App\Http\Controllers\API\BaseApiController;
+use App\Models\Company;
 
 class LoginController extends BaseApiController
 {
@@ -128,12 +129,19 @@ class LoginController extends BaseApiController
                     "message"=> 'Password provider was incorrect'
                 ];
             }
+            $userInfo = $this->informationUser(auth()->user());
+
+            if(!$this->userRepo->checkUserCommpanyExits(auth()->user())) {
+                return [
+                    "success"=> false,
+                    "message"=> 'Current account is block'
+                ];
+            }
 
             $data = [
                 'status' => $token,
-                'user' => auth()->user(),
+                'user' => $userInfo,
             ];
-            // dd( $data);
             $this->reNewToken();
 
             return [
@@ -141,13 +149,59 @@ class LoginController extends BaseApiController
                 "data" => $data,
             ];
 
-            //return view('welcome', ['token' => $data['user']['access_token'], 'currentUser' => $data['user']]);
-
         } catch (\Exception $e){
 
-            return ('An unexpected error occurred. Please try again...');
+            // return ('An unexpected error occurred. Please try again...');
+            return $e;
             
         }
+
+    }
+
+    public function logoutAuth(){
+        auth()->logout();
+        return [
+                "success" => true
+            ];
+    }
+
+    public function informationUser($user){
+
+        if($user->role_id == '1') {
+            $data = [
+                'role_id'      => $user->role_id,
+                'full_name'    => $user->first_name . ' ' .  $user->last_name,
+                'access_token' => $user->access_token,
+                'email'        => $user->email,
+                'id'           => $user->id
+            ];
+        }
+        if($user->role_id == '2') {
+            $company = Company::where('owner_id',$user->id)->first();
+            $data = [
+                'role_id'      => $user->role_id,
+                'full_name'    => $user->first_name . ' ' .  $user->last_name,
+                'access_token' => $user->access_token,
+                'email'        => $user->email,
+                'id'           => $user->id,
+                'company_id'   => $company->id,
+                'company_name' => $company->name
+            ];
+        }
+        if($user->role_id == '3') {
+            $company = Company::where('owner_id',$user->id)->first();
+            $data = [
+                'role_id'      => $user->role_id,
+                'full_name'    => $user->first_name . ' ' .  $user->last_name,
+                'access_token' => $user->access_token,
+                'email'        => $user->email,
+                'id'           => $user->id,
+                'company_id'   => $company->id,
+                'company_name' => $company->name
+            ];
+        }
+
+        return $data;
 
     }
 

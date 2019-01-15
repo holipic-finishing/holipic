@@ -23,5 +23,6 @@ yarn-error.log
 /routes/.fuse_hidden000009ca00000001
 /public/avatars/
 /public/files/
-
+dump.rdb
+/public/avatars/
 

@@ -1,8 +1,9 @@
 <template>
    <v-menu offset-y origin="right top" left content-class="language-dropdown" transition="slide-y-transition" nudge-top="-10" class="user-block-wrap">
 		<v-btn icon large slot="activator">
-			<img v-if="user.role_id == 1" src="/static/avatars/user-13.jpg" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" />
-         <img v-if="user.role_id != 1" :src="user.company_logo" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" />
+         <i data-v-be2d629e="" class="zmdi grey--text zmdi-account infinite wobble zmdi-hc-fw font-lg"></i>
+			<!-- <img v-if="user.role_id == 1" src="/static/avatars/user-13.jpg" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" />
+         <img v-if="user.role_id != 1" :src="user.company_logo" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" /> -->
 		</v-btn>
 		<div class="dropdown-content">
          <div class="dropdown-top white--text primary">
@@ -92,7 +93,6 @@
          var userAuth = JSON.parse(localStorage.getItem('user'))
          this.role_id = userAuth.role_id
          this.user = userAuth
-         console.log(this.user)
       }
    }
 </script>

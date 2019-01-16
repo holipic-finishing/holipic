@@ -12,9 +12,10 @@ class CompanyPackagesTableSeeder extends Seeder
      */
     public function run()
     {
+    	Schema::disableForeignKeyConstraints();
         CompanyPackage::truncate();
 
-         $arrPackage = [
+        $arrPackage = [
         	[
 	        	'package_name' => 'Package 1', 
 	        	'price' => 'Rp 3000000', 

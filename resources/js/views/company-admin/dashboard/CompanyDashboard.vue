@@ -416,7 +416,6 @@
 				</div>
 
 			</app-card>
-		     </v-flex> 
 		</v-layout>
 		<orders :companyId="company_id"></orders>
 	</v-container>		

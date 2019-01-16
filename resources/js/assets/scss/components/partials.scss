@@ -59,6 +59,12 @@
 	}
 }
 
+.fix-contain-text-field{
+	.v-input__slot{
+    	align-items: end !important;
+  	}
+}
+
 .custom-height-package{
   .v-input__slot{
     min-height: 40px !important;

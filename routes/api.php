@@ -45,13 +45,13 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('coupon_codes', 'CouponCodeAPIController');
 
 	/***************************************************
-	**********	LIST ROUTER RESOURCE COMPANY ADMIN   *************
-	****************************************************
-	*/
+	*********LIST ROUTER RESOURCE COMPANY ADMIN*********
+	***************************************************/
 	Route::group(['namespace' => 'CompanyAdmin'], function() {
-		Route::resource('company_packages', 'CompanyPackageAPIController');
 
+		Route::resource('company_packages', 'CompanyPackageAPIController');
 		Route::resource('photo_packages', 'PhotoPackageAPIController');
+
 	});
 	
 
@@ -75,7 +75,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::resource('notifications', 'NotificationAPIController');
 
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
-		
+
 		Route::get('get-notifications/{user_id}','NotificationAPIController@getNotification');
 
 		/*************PagesAPIController**************/
@@ -140,6 +140,11 @@ Route::group(['namespace' => 'API'],function(){
 		
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
+		/******************* EmailAPIController **********************/
+		Route::resource('emails', 'EmailAPIController');
+
+		Route::post('edit/email/{itemId}', 'EmailAPIController@editEmail');
+
 		Route::get('activity-log/update', 'ActivityLogController@updateIsReadActivityLog');
 
 		/*************CompanyPackageAPIController**************/
@@ -180,11 +185,15 @@ Route::group(['namespace' => 'API'],function(){
 
 	/*************CompanyAPIController**************/
 	
-	
-
 	Route::post('search/companies', 'CompanyAPIController@doSearch');
 
 	Route::get('exportexcel/companies', 'CompanyAPIController@exportExcel');
+
+	Route::get('company/export/customer','CompanyAPIController@exportEmailCustomerByCompanyId');
+
+	Route::get('company/branches/customers/email', 'CompanyAPIController@getEmailCustomers');
+
+	Route::get('company/branches/customer/send-email', 'CompanyAPIController@sendEmailCustomers');
 
 	/*************TransactionAPIController**************/
 
@@ -227,6 +236,7 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 	
 });	
+
 
 
 

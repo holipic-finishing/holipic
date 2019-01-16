@@ -640,7 +640,7 @@ data() {
 			} else {
 				var params = {
       				start_year:moment(this.from_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
-      				end_year:moment(this.to_year, 'YYYY-MM-DD hh:mm:ss').add(12, 'M').format('YYYY-MM'),
+      				end_year:moment(this.to_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
       				branch_id : this.item.branch_id,
 					photographer_id : this.item.photographer_id	,
 					type:'year'	
@@ -686,7 +686,6 @@ data() {
 		},
 
 		activeTypeTime(time) {
-			console.log('aaaaa')
   			this.typeTime = time
 
   			if(this.typeTime == "day"){
@@ -759,6 +758,7 @@ data() {
   		defaultReportWeek(){
   			let params = {
 				defaultWeek :  'default',
+				
 			}
 
   			let obj = {

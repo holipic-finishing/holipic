@@ -217,4 +217,26 @@ class CompanyAPIController extends AppBaseController
         fclose($file); 
         return $csvPath;
     }
+
+    public function getEmailCustomers()
+    {
+        $customers = $this->companyRepository->getCustomerByCompanyId(request('company_id'));
+
+        if(!empty($customers)) {
+            return $this->sendResponse($customers, 'Get Customer success');
+        }
+
+        return $this->sendError('Not data customer email');
+    }
+
+    public function sendEmailCustomers()
+    {
+        $customers = $this->companyRepository->handleSendMailToCustomers();
+
+        if(!$customers) {
+            return $this->sendError('Error send mail');
+        }
+
+        return $this->sendResponse($customers, 'Success send mail');
+    }
 }

@@ -70,7 +70,7 @@
 									<v-icon
 										small
 										class="mr-2 hover-icon"
-										@click="deleteItem(props.item.id)"
+										@click="showDialog(props.item.id)"
 									>
 										delete
 									</v-icon>
@@ -78,6 +78,22 @@
 								</td>
 							</template>
 						</v-data-table>
+						<v-dialog v-model="dialog" persistent max-width="450">
+					      <v-card>
+					        <v-card-title class="headline font-weight-bold">
+					          <v-icon x-large color="yellow accent-3" class="mr-2">
+					            warning
+					          </v-icon>
+					          Do you want delete this item ?
+					        </v-card-title>
+					        <v-divider class="mt-0"></v-divider>
+					        <v-card-actions>
+					          <v-spacer></v-spacer>
+					          <v-btn flat @click="dialog = false">Disagree</v-btn>
+					          <v-btn flat @click="deleteItem">Agree</v-btn>
+					        </v-card-actions>
+					      </v-card>
+					    </v-dialog>
 					</v-card>
 				</v-app>
 			</div>
@@ -124,7 +140,9 @@ export default {
 		    alertType: 'success',
 		    alertMes: '',
 		    authUser : JSON.parse(localStorage.getItem('user')),
-		    item:null
+		    item:null,
+		    dialog: false,
+		    itemIdToDelete: ''
 		}
 	},
 	created(){
@@ -159,9 +177,9 @@ export default {
   			this.$root.$emit('change-status', obj)
   			this.$root.$emit('data-email', item)
 		},
-		deleteItem(id){
-			if(confirm('Are you sure you want to delete this item?')){
-				let url = config.API_URL+'emails/'+id
+		deleteItem(){
+			
+				let url = config.API_URL+'emails/'+this.itemIdToDelete
 				del(url)
 				.then((res) => {
 					this.fetchData();	
@@ -169,11 +187,12 @@ export default {
 			        this.alertType = 'success'
 			        this.alertMes = 'Delete Successfully'					
 			        setTimeout(() => {this.alertStt = false}, 1500)
+			        this.dialog = false
 				})
 				.catch((err) =>{
 					console.log(err)
 				})
-			}
+			
 		},
 		exportCSV(){
 			let params = {
@@ -194,6 +213,11 @@ export default {
 			console.log(item)
 			this.drawer1 = true
 			this.item = item
+		},
+		showDialog(item)
+		{
+			this.dialog = true
+			this.itemIdToDelete = item
 		}
 	},
 	computed: {

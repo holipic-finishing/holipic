@@ -54,3 +54,8 @@
 		text-align:center !important;
 	}
 }
+.fix-contain-text-field{
+	.v-input__slot{
+    	align-items: end !important;
+  	}
+}

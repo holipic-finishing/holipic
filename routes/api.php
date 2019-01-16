@@ -141,7 +141,9 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('company/export/customer','CompanyAPIController@exportEmailCustomerByCompanyId');
 
+	Route::get('company/branches/customers/email', 'CompanyAPIController@getEmailCustomers');
 
+	Route::get('company/branches/customer/send-email', 'CompanyAPIController@sendEmailCustomers');
 
 	/*************TransactionAPIController**************/
 

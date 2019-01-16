@@ -6,7 +6,8 @@ use App\Models\Company;
 use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
 use DB ;
-
+use App\Models\CompanyAdmin\Email;
+use App\Mail\SendMailCustomers;
 /**
  * Class CompanyRepository
  * @package App\Repositories
@@ -271,12 +272,11 @@ class CompanyRepository extends BaseRepository
     //  show email customer by company id
     //  @From : func: handleExportCustomerByCompanyId()
     public function getCustomerByCompanyId($company_id){
-
         $results = $this->scopeQuery(function($query) use ($company_id){
             $query = $query->whereHas('branchs', function($q) use ($company_id) {
                         $q->where('company_id',$company_id);
                       })
-                        ->with('branchs.customers.user');
+                        ->with('branchs.customers');
 
              return $query;
          })->get();
@@ -330,5 +330,31 @@ class CompanyRepository extends BaseRepository
             \Log::info(' Errors to insert csv file - '.$e->getMessage());
         }
     
+    }
+
+    public function handleSendMailToCustomers()
+    {
+        $template = Email::findOrFail(request('templateId'));
+        $email = [];
+
+        if(request('email') == 'all') {
+            if(!empty(request('companyId'))) {
+
+                $email = $this->getCustomerByCompanyId(request('companyId'));
+            }
+
+        } else {
+                $email = request('email'); 
+        }
+
+        if(isset($template) && !empty($template)) {
+            foreach($email as $value) {
+                \Mail::to($value)->queue(new SendMailCustomers($template)); 
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

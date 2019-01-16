@@ -70,12 +70,12 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::post('edit/page/{itemId}','PagesAPIController@editPage');
 
-		/*************PagesAPIController**************/
+		/*************NotificationAPIController**************/
 
 		Route::resource('notifications', 'NotificationAPIController');
 
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
-
+		
 		Route::get('get-notifications/{user_id}','NotificationAPIController@getNotification');
 
 		/*************PagesAPIController**************/
@@ -83,10 +83,11 @@ Route::group(['namespace' => 'API'],function(){
 		Route::resource('branches', 'BranchAPIController');
 
 
-	/***************************************************
-	**********	ROUTER COMPANY AND ADMIN   *************
-	****************************************************/
-	Route::post('change-password', 'UserAPIController@changePassWord');
+		/***************************************************
+		**********	ROUTER COMPANY AND ADMIN   *************
+		****************************************************/
+		
+		Route::post('change-password', 'UserAPIController@changePassWord');
 
 		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
 	
@@ -103,8 +104,20 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
 
-		/*************CustomerAPIController**************/
+		Route::get('photographer/photographer-branch','PhotographerAPIController@getPhotographerByBranch');
 
+
+		/*************BranchAPIController**************/
+		Route::resource('branches', 'BranchAPIController');
+
+		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
+
+		Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
+
+		Route::get('company/branch-company','BranchAPIController@getBranchByCompanyId');
+
+	
+		/*************CustomerAPIController**************/
 		Route::get('company/branches/customers', 'CustomerAPIController@getCustomers');
 
 		Route::patch('company/branches/customer/{id}', 'CustomerAPIController@updateCustomer');
@@ -112,6 +125,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('company/branches/customers/export', 'CustomerAPIController@exportEmailCustomers');
 
 		Route::delete('company/branches/customer/delete/{id}', 'CustomerAPIController@destroy');
+
 
 
 		/*************ActivityLogController**************/
@@ -132,6 +146,15 @@ Route::group(['namespace' => 'API'],function(){
 		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
 
 	});
+
+	/*************Order Controllers**************/
+	Route::resource('orders', 'OrderAPIController');
+
+	Route::get('order/orders-company', 'OrderAPIController@getAllOrderCompany');
+
+	Route::get('order/sales/company/export', 'OrderAPIController@exportSalesCompany');
+
+	Route::post('order/history-order', 'OrderAPIController@getHistoryOrders');
 
 	/***********************************************
 	**********	ROUTER SUPER ADMIN   ***************
@@ -183,12 +206,18 @@ Route::group(['namespace' => 'API'],function(){
 	/*************Different Controllers**************/
 
 	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
+	
+	Route::get('company-admin-chart', 'ReportController@getInfoForChartCompanyAdmin');
 
 	Route::resource('exchange_rates', 'ExchangeRateAPIController');
 
 	Route::resource('transaction_exchanges', 'TransactionExchangeAPIController');
 
+	Route::resource('order_exchanges', 'OrderExchangeAPIController');
+
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
+	
 });	
+
 
 

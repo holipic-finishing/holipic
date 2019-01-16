@@ -481,9 +481,11 @@ export default {
   contenPages : "Content Management System",
   sibarContentPages:"Cms",
   activityLog: "Activity Log",
+  sales : "Sales",
   photographers : 'Photographers',
   customer: 'Customer',
   photographers : 'Photographers List',
   sales: 'Manage Sales'
+
 
 }

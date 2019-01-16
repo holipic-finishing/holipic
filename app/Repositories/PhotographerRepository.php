@@ -86,5 +86,11 @@ class PhotographerRepository extends BaseRepository
         return $data;
     }
 
-    
+
+    /****** Get name, id photographer by branch ******/
+    public function handelGetPhotographersByBranch($branch_id){
+
+        return $this->model->select('id','name')->where('branch_id',$branch_id)->get();
+
+    }
 }

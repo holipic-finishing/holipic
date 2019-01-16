@@ -161,7 +161,6 @@ export default {
 				if(response && response.data.success) {
 
 					this.items = response.data.data
-					console.log(this.items)
 				}
 			})
 		},

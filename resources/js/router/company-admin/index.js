@@ -16,6 +16,9 @@ import ChangePassword from '../../views/partials/users/ChangePassword'
 // Content Manager Systems
 import CMS from '../../views/company-admin/cms/Index'
 
+// Sales 
+import Sales from '../../views/company-admin/sales/Sales'
+
 // CompanyPackages
 import CompanyPackages from '../../views/company-admin/packages/Packages';
 
@@ -27,6 +30,7 @@ import Photographers from '../../views/company-admin/photographer/Photographers'
 
 //Customers
 import Customers from '../../views/company-admin/customer/Customers'
+
 
 export default {
 	path: '/company-admin',
@@ -73,7 +77,7 @@ export default {
 		        name : 'branches',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
+		            // adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.branch'
 		        }
@@ -84,7 +88,7 @@ export default {
 		        name : 'photographers',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
+		            // adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.photographer'
 		        }
@@ -95,7 +99,7 @@ export default {
 		        name : 'customers',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
+		            // adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.customer'
 		            
@@ -114,15 +118,26 @@ export default {
 	        }
 	    },
 	    {
-	        path: '/company-admin/packages',
+	    	path: '/company-admin/sales',
+	        component: Sales,
+	        meta: {
+	        	requiresAuth:true,
+	        	// adminAuth:false,
+         		companyAuth:true,
+	            title: 'message.sales',
+	            breadcrumb: 'Company / Sales'
+	        }
+	    },
+	    {
+	    	path: '/company-admin/packages',
 	        component: CompanyPackages,
 	        meta: {
 	        	requiresAuth:true,
-	        	adminAuth:false,
+	        	// adminAuth:false,
          		companyAuth:true,
-	            title: 'message.package',
-	            breadcrumb: 'Company / Package'
-	        }
-	    },
+		        title: 'message.package',
+		        breadcrumb: 'Company / Package'
+		    }
+	    }
    	]
 }

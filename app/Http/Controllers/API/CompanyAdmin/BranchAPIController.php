@@ -167,4 +167,26 @@ class BranchAPIController extends AppBaseController
 
        return $this->sendResponse($branch, 'Add branches successfully');
     }
+
+    /*  Target : Function get all branch by company id
+     *  GET company/branch-company
+     *
+     *  @params int company_id
+     * 
+     *  @return Response
+    */
+
+    public function getBranchByCompanyId(Request $request) {
+
+       $input = $request->all();
+
+       $branch_company = $this->branchRepository->handleGetBranchCompanyId($input['companyId']);
+
+        if(!$branch_company) {
+            return $this->sendError('Branch by company not found');
+        }
+
+        return $this->sendResponse($branch_company, 'Branch successfully');
+
+    }
 }

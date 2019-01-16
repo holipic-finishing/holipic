@@ -300,7 +300,7 @@
 						         	item-text="name"
 	              					item-value="id"
 						         	v-on:change="changeBranch(item)"
-									@input="saveEndYear"
+									@input="reportByYear"
 						        ></v-select>
 						    </div>
 						</div>
@@ -313,7 +313,7 @@
 						         	v-model="item.photographer_id"
 						         	item-text="name"
 	              					item-value="id"
-									@input="saveEndYear"
+									@input="reportByYear"
 						        ></v-select>
 					    	</div>
 						</div>

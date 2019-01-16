@@ -235,25 +235,95 @@ class ReportController extends BaseApiController
     
     public function getInfoForChartCompanyAdmin(Request $request){
         $input = $request->all();
-        // report from day, to day
+        dd($input);
         if(isset($input['type'])){
             $type = $input['type'];
             if($type == 'day'){
                 $arrayDay = [];
-                if(isset($input['start_day'],$input['end_day'])){
-                  $arrayDay = $this->initDays($input['start_day'],$input['end_day']);
+                if(isset($input['start_day'])){
+                    $temp = Carbon::parse($input['start_day']);
+                    $endDay = $temp->addDays(7)->format('m/d/Y');
+                    $arrayDay = $this->initDays($input['start_day'], $endDay);
+                } 
+               
+                elseif(isset($input['end_day'])){
+                    $temp = Carbon::parse($input['end_day']);
+                    $startDay = $temp->subDays(7)->format('m/d/Y');
+                    $arrayDay = $this->initDays($startDay, $input['end_day']);
                 }
+                elseif(isset($input['start_day']) && isset($input['end_day'])){
+                  $arrayDay = $this->initDays($input['start_day'],$input['end_day']);
+                }else{
+                    $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
+
+                    $endDay     = Carbon::today()->format('Y-m-d');
+
+                    $arrayDay = $this->initDays($startDay,$endDay);
+                }
+                
                 $report = $this->orderRepository->reportSaleDaily($input,$arrayDay);
 
                 return $this->responseSuccess('Data success',$report);
-            }
+          }
             
-            if($type == 'month'){
-              dd('month');
-            }
-            if($type == 'year'){
-              dd('year');
-            }
+          if($type == 'month'){
+                $arrayInMonth = [];
+                if($input['start_month'] != 'Invalid date'){
+                    $temp = Carbon::parse($input['start_month']);
+                    $toMonth = $temp->addMonths(12)->format('Y-m-d');
+                    $arrayInMonth = $this->initInMonth($input['start_month'], $toMonth);
+                } 
+               
+                elseif($input['end_month'] != 'Invalid date'){
+                    $temp = Carbon::parse($input['end_month']);
+                    $fromMonth = $temp->subMonths(12)->format('Y-m-d');
+                    $arrayInMonth = $this->initInMonth($fromMonth, $input['end_month']);
+                }
+                elseif($input['end_month'] != 'Invalid date' && $input['start_month'] != 'Invalid date'){
+                    $arrayInMonth = $this->initInMonth($input['start_month'],$input['end_month']);
+
+                }else{
+                    $startMonth  = Carbon::today()->subMonth(12)->format('Y-m-d');
+
+                    $endMonth    = Carbon::today()->format('Y-m-d');
+
+                    $arrayInMonth = $this->initInMonth($startMonth,$endMonth);
+                }
+               
+                $report = $this->orderRepository->reportSaleMonth($input,$arrayInMonth);
+
+                return $this->responseSuccess('Data success',$report);
+          }
+          if($type == 'year'){
+                $arrayMonthInYear = [];
+                if($input['start_year'] != 'Invalid date'){
+                  var_dump('asdasd');
+                    $temp = Carbon::parse($input['start_year']);
+                    $to_year = $temp->addYears(2)->format('Y-m-d');
+                    $arrayMonthInYear = $this->initYear($input['start_year'], $to_year);
+                } 
+               
+                elseif($input['end_year'] != 'Invalid date'){
+                  var_dump(123123);
+                    $temp = Carbon::parse($input['end_year']);
+                    $from_year = $temp->subYears(2)->format('Y-m-d');
+                    $arrayMonthInYear = $this->initYear($from_year, $input['end_year']);
+                }
+                elseif($input['start_year'] != 'Invalid date' && $input['end_year'] != 'Invalid date'){
+                    var_dump('hrhhrh');
+                    $arrayMonthInYear = $this->initInMonth($input['start_year'],$input['end_year']);
+
+                }else{
+                    dd('ok');
+                    $startYear  = Carbon::today()->subYears(2)->format('Y-m');
+
+                    $endYear    = Carbon::today()->format('Y-m');
+
+                    $arrayMonthInYear = $this->initInMonth($startYear,$endYear);
+                }
+
+                dd($arrayMonthInYear);
+          }
             if($type == 'week'){
               dd('week');
             }

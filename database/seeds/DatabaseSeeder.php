@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(CurrenciesTableSeeder::class);
 
         // $this->call(CouponCodeTableSeeder::class);
-        // $this->call(ExchangeRatesTableSeeder::class);
+        $this->call(ExchangeRatesTableSeeder::class);
         // $this->call(TransactionsTableSeeder::class);
 
         // $this->call(RoomsTableSeeder::class);

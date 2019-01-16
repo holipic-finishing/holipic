@@ -26,7 +26,7 @@ class AddCurrencyIdToOrders extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            
+            Schema::dropIfExists('currency_id');
         });
     }
 }

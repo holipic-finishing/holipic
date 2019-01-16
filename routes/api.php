@@ -65,9 +65,20 @@ Route::group(['namespace' => 'API'],function(){
 		Route::resource('notifications', 'NotificationAPIController');
 
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
-		
 
 		/************* Photographers APIController**************/
+
+		Route::get('get-notifications/{user_id}','NotificationAPIController@getNotification');
+
+		/*************PagesAPIController**************/
+
+		Route::resource('branches', 'BranchAPIController');
+
+		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
+	
+		Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
+
+		/*************PagesAPIController**************/
 
 		Route::get('photographers', 'PhotographerAPIController@getPhotographers');
 

@@ -6,7 +6,7 @@
 					<activity-log></activity-log>
 		        </v-card>
 	      	</v-flex>
-		      <v-flex d-flex xs12 sm12 md4>
+		     <!--  <v-flex d-flex xs12 sm12 md4>
 		        <v-card>
 					<notification-dashboard></notification-dashboard>
 		        </v-card>
@@ -365,6 +365,9 @@
 
 				</div>
 			</app-card>
+
+		      </v-flex> 
+
 		</v-layout>
 		<transactions></transactions>
 	</v-container>		

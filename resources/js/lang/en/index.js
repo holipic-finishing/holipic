@@ -455,6 +455,7 @@ export default {
   // Menu
   company : "Company List",
   package : "Package List",
+  plan: "Plans",
   changePassword : "Change Password",
   listPackage : "List Package",   
   chartCompany: "Company Infomation & Chart",

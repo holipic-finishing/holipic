@@ -122,8 +122,6 @@ class PackageAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        // dd($input);
-
         /** @var Package $package */
         $package = $this->packageRepository->updatePackageAndSetting($input);
 

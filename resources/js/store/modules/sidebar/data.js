@@ -80,7 +80,6 @@ export const menus = {
 			role_id : 2
 		},
 		{
-<<<<<<< HEAD
 			action: 'zmdi zmdi-chart',
 			title: 'message.sales',
 			active: true,
@@ -88,8 +87,7 @@ export const menus = {
 			items:null,
 			role_id : 2
 		},
-		
-=======
+		{
 			action: 'zmdi-comment-list',
 			title: 'message.package',
 			active: true,
@@ -97,8 +95,15 @@ export const menus = {
 			items:null,
 			role_id : 2
 		},
-
->>>>>>> 85904a795943805dba1cef594feabd37830adb5a
+		{
+			action: 'zmdi-comment-list',
+			title: 'message.package',
+			active: true,
+			path: '/packages',
+			items:null,
+			role_id : 2
+		},
+		
 		 	/////////////////////////////////////////////
 		   ///////								  //////
 		  ///////  SIDEBAR ROUTER SUPER ADMIN    //////

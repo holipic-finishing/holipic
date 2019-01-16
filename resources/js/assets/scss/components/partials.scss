@@ -41,9 +41,7 @@
 	}
 }
 
-<<<<<<< HEAD
 .custom-table-customer{
-
 	thead th:not(:nth-child(1)){
 		padding: 0 0px !important;
 		text-align:center !important;
@@ -54,7 +52,8 @@
 		padding: 0 6px !important;
 		text-align:center !important;
 	}
-=======
+}
+
 .custom-height-package{
   .v-input__slot{
     min-height: 40px !important;
@@ -68,5 +67,17 @@
 
 .custom-height-td-package{
 	padding:0px 0px !important;
->>>>>>> 85904a795943805dba1cef594feabd37830adb5a
+	.custom-height-package{
+	  .v-input__slot{
+	    min-height: 40px !important;
+	    height: 40px !important;
+	  }
+	  input, .v-select__slot{
+	    position:relative;
+	    top: -10px;
+	  }
+	}
+}
+.custom-height-td-package{
+	padding:0px 0px !important;
 }

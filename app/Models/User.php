@@ -25,7 +25,8 @@ class User extends Authenticatable
         'access_token',
         'active',
         'package_id',
-        'role_id'
+        'role_id',
+        'id_one_signal'
 
     ];
 
@@ -43,7 +44,8 @@ class User extends Authenticatable
         'password' => 'string',
         'email_verified_at'  => 'string',
         'role_id' => 'string',
-        'access_token' => 'string'
+        'access_token' => 'string',
+        'id_one_signal' => 'string'
     ];
 
     protected $hidden = [

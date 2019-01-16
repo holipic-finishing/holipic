@@ -56,6 +56,7 @@
 import ActivityLog from './ActivityLog'
 import Notification from '../notifications/Notifications'
 import NotificationDashboard from '../notifications/NotificationDashboard'
+import { mapGetters } from "vuex";
 
 export default {
 
@@ -70,8 +71,14 @@ export default {
     	count_pack_company:20,
     	count_pack_basic:20,
     	count_pack_pro:20,
-    	lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`
+    	lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
+    	authUser : JSON.parse(localStorage.getItem('user')),
     }
+  },
+  mounted(){
+  	var user = this.authUser
+  	this.$store.dispatch("connectionPushNotification", {user});
+
   }
 };
 </script>

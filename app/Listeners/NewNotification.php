@@ -35,6 +35,8 @@ class NewNotification
         $domain = env("MIX_APP_PROTOCOL")  . "://" . env("MIX_APP_DOMAIN");
         $oneSingalNotification = new Notification($this->oneSignal);
         $notification = $event->notification;
+        $user_id = $event->user_id;
+        
         $notificationData = [
             "included_segments" => ["All"],
             "contents" => [
@@ -52,8 +54,9 @@ class NewNotification
             ],
             "isChromeWeb" => true,
         ];
-
-         $createNotification = $oneSingalNotification->create($notificationData);
+        if($user_id == $notification->user_id){
+            $createNotification = $oneSingalNotification->create($notificationData);
+        }
          // Log::info($createNotification);
     }
 }

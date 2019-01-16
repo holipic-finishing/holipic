@@ -617,7 +617,7 @@ class OrderRepository extends BaseRepository
                       }
                       return $query;
                    })->get(); 
-
+                    $orders = $this->transformOrder($orders);
             return $orders;
             }
             if($type == 'year'){
@@ -680,7 +680,7 @@ class OrderRepository extends BaseRepository
                       }
                       return $query;
                   })->get();
-
+                    $orders = $this->transformOrder($orders);
               return $orders;
             }
             if($type == 'week'){
@@ -742,7 +742,7 @@ class OrderRepository extends BaseRepository
 
                     return $query;
                 })->get();
-
+                  $orders = $this->transformOrder($orders);
             return $orders;
             }
         }

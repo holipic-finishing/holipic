@@ -91,9 +91,27 @@
   .v-list__tile{
     height: 50px !important;
   }
+}
 
-  .v-list__tile__title{
+.height-70{
+  .v-list__tile{
+    height: 70px !important;
+  }
+}
+
+.v-list__tile__title{
     width: auto !important;
+}
+
+.height-120{
+  .v-list__tile{
+    height: 120px !important;
+  }
+}
+
+.height-200{
+  .v-list__tile{
+    height: 200px !important;
   }
 }
 

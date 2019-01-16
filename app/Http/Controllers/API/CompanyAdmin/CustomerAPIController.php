@@ -14,6 +14,7 @@ use Response;
 use Maatwebsite\Excel\Excel;
 use App\Exports\ListEmailCustomers;
 use App\Exports\ListEmailBranchCustomers;
+use Spatie\Activitylog\Models\Activity;
 
 /**
  * Class CustomerController
@@ -121,11 +122,22 @@ class CustomerAPIController extends AppBaseController
         /** @var Customer $customer */
         $customer = $this->customerRepository->findWithoutFail($id);
 
+
         if (empty($customer)) {
             return $this->sendError('Customer not found');
         }
 
+        $name = $customer['name'];
+
         $customer->delete();
+
+        // Save activity logs
+        $log = Activity::all()->last();
+        $log['user_id'] = request('userId');
+        $log['description_log'] = 'Delete Customer'.' '.$name;
+        $log->save();
+
+        event(new \App\Events\RedisEventActivityLog($log));
 
         return $this->sendResponse($id, 'Customer deleted successfully');
     }

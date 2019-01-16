@@ -186,7 +186,8 @@ class LoginController extends BaseApiController
                 'email'        => $user->email,
                 'id'           => $user->id,
                 'company_id'   => $company->id,
-                'company_name' => $company->name
+                'company_name' => $company->name,
+                'company_logo' => $company->logo
             ];
         }
         if($user->role_id == '3') {
@@ -201,7 +202,8 @@ class LoginController extends BaseApiController
                 'branch_id'    => $branch->id,
                 'branch_name'  => $branch->name,
                 'company_id'   => $company->id,
-                'company_name' => $company->name
+                'company_name' => $company->name,
+                'company_logo' => $company->logo
             ];
         }
 

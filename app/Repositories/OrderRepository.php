@@ -552,10 +552,8 @@ class OrderRepository extends BaseRepository
 
                     return $query;
                  })->get()->toArray();
-dd($orders);
-                return $orders;
-
                 
+                return $orders;
             }
             
             if($type == 'month'){

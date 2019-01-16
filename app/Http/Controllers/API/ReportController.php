@@ -26,7 +26,7 @@ class ReportController extends BaseApiController
 	  public function reportIncomesPackage(Request $request){
 
 		 $input = $request->all();
-     dd($input);
+     
         // report from day, to day
        	if($request->has(['start_day','end_day'])){
 
@@ -236,7 +236,7 @@ class ReportController extends BaseApiController
     
     public function getInfoForChartCompanyAdmin(Request $request){
         $input = $request->all();
-        // dd($input);
+
         if(isset($input['type'])){
             $type = $input['type'];
             if($type == 'day'){

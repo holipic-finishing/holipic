@@ -483,6 +483,7 @@ export default {
   photographers : 'Photographers',
   customer: 'Customer',
   photographers : 'Photographers List',
-  sales: 'Manage Sales'
+  sales: 'Manage Sales',
+  sidebarUpload: 'Upload Photos'
 
 }

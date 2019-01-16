@@ -39,7 +39,7 @@ export const menus = {
 		/////////////////////////////////////////////
 		
 		{
-			action: 'zmdi-view-dashboard',
+			action: 'fas fa-tachometer-alt',
 			title: 'message.dashboard',
 			active: true,
 			path: '/dashboard',
@@ -48,7 +48,7 @@ export const menus = {
 		},
 		{
 
-			action: 'zmdi-assignment-account',
+			action: 'fas fa-code-branch',
 			title: 'message.branch',
 			active: false,
 			path: '/branches',
@@ -56,7 +56,7 @@ export const menus = {
 			role_id : 2
 		},
 		{
-			action: 'zmdi-pin-assistant',
+			action: 'fas fa-user-friends',
 			title: 'message.photographer',
 			active: false,
 			path: '/photographers',
@@ -64,7 +64,7 @@ export const menus = {
 			role_id : 2
 		},
 		{
-			action: 'zmdi-pin-assistant',
+			action: 'fas fa-users',
 			title: 'message.customer',
 			active: false,
 			path: '/customers',
@@ -72,10 +72,18 @@ export const menus = {
 			role_id : 2
 		},
 		{
-			action: 'zmdi zmdi-google-pages',
+			action: 'fas fa-newspaper',
 			title: 'message.sibarContentPages',
 			active: true,
 			path: '/content-pages',
+			items:null,
+			role_id : 2
+		},
+		{
+			action: 'fas fa-cloud-upload-alt',
+			title: 'message.sidebarUpload',
+			active: true,
+			path: '/upload',
 			items:null,
 			role_id : 2
 		},

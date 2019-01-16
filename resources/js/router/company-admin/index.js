@@ -25,6 +25,9 @@ import Photographers from '../../views/company-admin/photographer/Photographers'
 //Customers
 import Customers from '../../views/company-admin/customer/Customers'
 
+//Upload Photos
+import UploadPhotos from '../../views/partials/upload-photos/UploadPhotos'
+
 export default {
 	path: '/company-admin',
    	component: MiniSidebarLayout,
@@ -108,6 +111,18 @@ export default {
          		companyAuth:true,
 	            title: 'message.contenPages',
 	            breadcrumb: 'Company / CMS'
+	        }
+	    },
+	    {
+	        path: '/company-admin/upload',
+	        component: UploadPhotos,
+	        name: 'upload',
+	        meta: {
+	        	requiresAuth:true,
+	        	// adminAuth:false,
+         		companyAuth:true,
+	            title: 'message.sidebarUpload',
+	            breadcrumb: 'Company / Upload Photos'
 	        }
 	    }
    	]

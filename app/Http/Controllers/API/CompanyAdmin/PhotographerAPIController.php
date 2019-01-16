@@ -179,4 +179,24 @@ class PhotographerAPIController extends AppBaseController
 
         return $this->sendResponse($photographer, 'Update Photographer successfully');
     }
+
+    /* Target : Show all name, id photographer by branch id 
+    *  GET photographer/photographer-branch
+    *
+    *  @params : int branch_id
+    *  @return : Response
+    */
+
+    public function getPhotographerByBranch(Request $request) {
+
+        $input = $request->all();
+
+        $branch_photographer = $this->photographerRepository->handelGetPhotographersByBranch($input['branchId']);
+
+        if (empty($branch_photographer)) {
+            return $this->sendError('Photographer not found');
+        }
+
+        return $this->sendResponse($branch_photographer, 'Photographer successfully');
+    }
 }

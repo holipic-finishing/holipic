@@ -41,10 +41,10 @@ class CustomerRepository extends BaseRepository
 
         $data = [];
         
-        if($companyId && $companyId != '') {
-            $customers = $this->model->with('user')->with('room')->with(['branch' => function($q) use ($companyId) {
-                                     $q->whereCompanyId($companyId);
-                        }])->get()->toArray();
+        if(!empty($company)) {
+            $customers = $this->model->with('user')->with('room')->with(['branch' => function($q) use ($company) {
+                    $q->whereCompanyId($company['id']);
+            }])->get()->toArray();
 
             foreach($customers as $customer) 
             {

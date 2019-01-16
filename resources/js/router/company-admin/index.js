@@ -18,6 +18,8 @@ import CMS from '../../views/company-admin/cms/Index'
 
 // Sales 
 import Sales from '../../views/company-admin/sales/Sales'
+// CompanyPackages
+import CompanyPackages from '../../views/company-admin/packages/Packages';
 
 //Branches
 import Branches from '../../views/company-admin/branch/Branches'
@@ -115,15 +117,27 @@ export default {
 	        }
 	    },
 	    {
+<<<<<<< HEAD
 	    	path: '/company-admin/sales',
 	        component: Sales,
+=======
+	        path: '/company-admin/packages',
+	        component: CompanyPackages,
+>>>>>>> 85904a795943805dba1cef594feabd37830adb5a
 	        meta: {
 	        	requiresAuth:true,
 	        	adminAuth:false,
          		companyAuth:true,
+<<<<<<< HEAD
 	            title: 'message.sales',
 	            breadcrumb: 'Company / Sales'
 	        }
 	    }
+=======
+	            title: 'message.package',
+	            breadcrumb: 'Company / Package'
+	        }
+	    },
+>>>>>>> 85904a795943805dba1cef594feabd37830adb5a
    	]
 }

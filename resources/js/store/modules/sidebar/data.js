@@ -88,6 +88,14 @@ export const menus = {
 			role_id : 2
 		},
 		
+			action: 'zmdi-comment-list',
+			title: 'message.package',
+			active: true,
+			path: '/packages',
+			items:null,
+			role_id : 2
+		},
+
 		 	/////////////////////////////////////////////
 		   ///////								  //////
 		  ///////  SIDEBAR ROUTER SUPER ADMIN    //////

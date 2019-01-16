@@ -2,14 +2,18 @@
 	<v-container fluid pt-0 grid-list-xl>
 		<v-layout row wrap mt-3>
 			<v-flex d-flex xs12 sm12 md8>
-		        <v-card>
-					<!-- <activity-log></activity-log> -->
-		        </v-card>
+		        <!-- <v-card> -->
+					<!-- <activity-log></activity-log>
+		        </v-card> -->
+
 	      	</v-flex>
 		      <v-flex d-flex xs12 sm12 md4>
-		        <v-card>
-					<!-- <notification-dashboard></notification-dashboard> -->
-		        </v-card>
+
+	      	</v-flex>
+		      <v-flex d-flex xs12 sm12 md4>
+		        <!-- <v-card>
+					<notification-dashboard></notification-dashboard>
+		        </v-card> -->
 		      </v-flex>
 
 		    <app-card
@@ -35,7 +39,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- Line Chart -->
+					<!-- Line Chart
 					<line-chart :width="300"></line-chart>
 					<!-- End Line Chart -->
 				</div>
@@ -409,6 +413,7 @@
 					</div>
 				</div>
 			</app-card>
+		      </v-flex> -->
 		</v-layout>
 		<transactions></transactions>
 	</v-container>		

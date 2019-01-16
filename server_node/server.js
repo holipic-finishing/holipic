@@ -35,7 +35,17 @@ redis.on('pmessage',function(partner, channel, message){
 	console.log(message)
 	console.log(partner)
 	
-	message = JSON.parse(message);
-    io.emit(channel, message.data.notification);
-    console.log('Sent');
+	if(channel == 'view-listings') {
+		message = JSON.parse(message);
+	    io.emit(channel, message.data.notification);
+	    console.log('Sent');
+	}
+
+
+    if(channel == 'view-activity'){
+        message = JSON.parse(message);
+        console.log('Send log')
+        io.emit(channel, message.data.activity);
+    }
+    console.log('----Log----')
 })

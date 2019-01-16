@@ -16,11 +16,13 @@ class TransactionsTableSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         \App\Models\Transaction::truncate();
+        \App\Models\TransactionExchange::truncate();
 
         $status = ['RECIVED', 'DONE'];
         $packages = \App\Models\Package::all();
 
         $feeArr = [];
+        $credit_card_fee = [1, 2 ,3 ,4 ];
 
         foreach ($packages as $p) {
             $feeArr[] = $p['fee'];
@@ -31,6 +33,7 @@ class TransactionsTableSeeder extends Seeder
             $amount = $faker->randomFloat(2);
             $fee = $faker->randomElement($feeArr);
             $status_rand = $faker->randomElement($status);
+
             if($status_rand == 'RECIVED'){
                 $system_fee = $amount*$fee/100;
             }else{

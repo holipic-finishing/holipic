@@ -20,11 +20,22 @@ class ActivityLogController extends AppBaseController
 
 	public function getActivityLog(Request $request)
 	{
-		$activityLog = $this->activityLogRepository->handleShowActivityLog($request->all());
+		$activityLogs = $this->activityLogRepository->handleShowActivityLog($request->all());
 
 		$times = $this->activityLogRepository->groupTimeActivityLog();
 
-        return $this->sendResponse([$activityLog, $times], 'Get Active Log Successfully');
+        return $this->sendResponse([$activityLogs, $times], 'Get Active Log Successfully');
 
-	}   
+	}
+
+	public function updateIsReadActivityLog(Request $request)
+	{
+		$activityLog = $this->activityLogRepository->handleUpdateIsRead($request['id']);
+
+		if(!$activityLog) {
+			return $this->sendError('Can not update activity log');
+		}
+
+		return $this->sendResponse($activityLog, 'Success update activity');
+	}
 }

@@ -16,6 +16,9 @@ import ChangePassword from '../../views/partials/users/ChangePassword'
 // Content Manager Systems
 import CMS from '../../views/company-admin/cms/Index'
 
+// CompanyPackages
+import CompanyPackages from '../../views/company-admin/packages/Packages';
+
 //Branches
 import Branches from '../../views/company-admin/branch/Branches'
 
@@ -124,6 +127,17 @@ export default {
 	            title: 'message.sidebarUpload',
 	            breadcrumb: 'Company / Upload Photos'
 	        }
-	    }
+	    },
+	    {
+	        path: '/company-admin/packages',
+	        component: CompanyPackages,
+	        meta: {
+	        	requiresAuth:true,
+	        	adminAuth:false,
+         		companyAuth:true,
+	            title: 'message.package',
+	            breadcrumb: 'Company / Package'
+	        }
+	    },
    	]
 }

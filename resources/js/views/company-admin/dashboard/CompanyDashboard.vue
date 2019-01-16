@@ -1,16 +1,20 @@
 <template>
 	<v-container fluid pt-0 grid-list-xl>
 		<v-layout row wrap mt-3>
-			<v-flex d-flex xs12 sm12 md8>
+			<!-- <v-flex d-flex xs12 sm12 md8>
 		        <v-card>
 					<activity-log></activity-log>
 		        </v-card>
-	      	</v-flex>
+
+	      	</v-flex> -->
 		      <v-flex d-flex xs12 sm12 md4>
+
+	      	</v-flex>
+		     <!--  <v-flex d-flex xs12 sm12 md4>
 		        <v-card>
 					<notification-dashboard></notification-dashboard>
 		        </v-card>
-		      </v-flex>
+		      </v-flex> -->
 		</v-layout>
 		<!-- <section-tooltip :title="$t('message.overview')" :tooltip="$t('message.dashboardOverview')"></section-tooltip> -->
 		<!-- Dash Cards -->

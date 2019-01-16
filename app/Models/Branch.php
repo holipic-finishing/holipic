@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+
 
 /**
  * Class Branch
@@ -15,9 +17,12 @@ class Branch extends Model
 {
     use SoftDeletes;
 
+    use LogsActivity;
+
+    protected static $logFillable = true;
+
     public $table = 'branches';
     
-
     protected $dates = ['deleted_at'];
 
 

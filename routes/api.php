@@ -111,11 +111,14 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('company/branches/customers/export', 'CustomerAPIController@exportEmailCustomers');
 
+		Route::delete('company/branches/customer/delete/{id}', 'CustomerAPIController@destroy');
+
 
 		/*************ActivityLogController**************/
 		
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
+		Route::get('activity-log/update', 'ActivityLogController@updateIsReadActivityLog');
 		/*************CompanyPackageAPIController**************/
 
 		Route::post('get-company-package', 'CompanyPackageAPIController@getPackage');

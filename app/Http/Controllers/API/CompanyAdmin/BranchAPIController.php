@@ -13,6 +13,8 @@ use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
+use App\Models\Company;
+
 /**
  * Class BranchController
  * @package App\Http\Controllers\API
@@ -163,6 +165,6 @@ class BranchAPIController extends AppBaseController
 
         }
 
-        return $this->sendResponse($branch, 'Add branches successfully');
+       return $this->sendResponse($branch, 'Add branches successfully');
     }
 }

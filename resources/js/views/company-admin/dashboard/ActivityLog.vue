@@ -136,6 +136,7 @@ export default {
 			.then(response =>{
 				if(response && response.data.success) {
 					this.activityLog = response.data.data[0]
+					console.log(this.activityLog)
 
 					this.times = response.data.data[1].data
 					

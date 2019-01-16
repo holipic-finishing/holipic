@@ -675,6 +675,7 @@ export default {
   		},
 
   		defaultReportYear(){
+  			
   			let params = {
 				defaultYear :  'default'
 			}

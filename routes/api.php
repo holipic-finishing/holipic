@@ -57,8 +57,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	/***********************************************
 	**********	ROUTER COMPANY ADMIN   *************
-	************************************************
-	*/
+	************************************************/
 
 	// Route::post('change-password', 'UserAPIController@changePassWord');
 	Route::post('change-password', 'UserAPIController@changePassWord');
@@ -82,12 +81,6 @@ Route::group(['namespace' => 'API'],function(){
 		/*************PagesAPIController**************/
 
 		Route::resource('branches', 'BranchAPIController');
-
-
-
-	/***************************************************
-	**********	ROUTER COMPANY AND ADMIN   *************
-	****************************************************/
 
 		/***************************************************
 		**********	ROUTER COMPANY AND ADMIN   *************
@@ -133,6 +126,15 @@ Route::group(['namespace' => 'API'],function(){
 		Route::delete('company/branches/customer/delete/{id}', 'CustomerAPIController@destroy');
 
 
+		/*************CustomerAPIController For Branch**************/
+		
+		Route::post('branch/customers', 'CustomerAPIController@getBranchCustomers');
+
+		Route::patch('branch/customer/{id}', 'CustomerAPIController@updateBranchCustomer');
+
+		Route::delete('branch/{id}', 'CustomerAPIController@deleteBranchCustomer');
+
+		Route::get('branch/customers/export', 'CustomerAPIController@exportEmailBranchCustomers');
 
 		/*************ActivityLogController**************/
 		

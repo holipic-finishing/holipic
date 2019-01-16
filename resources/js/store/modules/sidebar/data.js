@@ -31,6 +31,15 @@ export const menus = {
 			role_id : 3
 		},
 
+		{
+			action: 'zmdi-pin-assistant',
+			title: 'message.customer',
+			active: false,
+			path: '/customers',
+			items:null,
+			role_id : 3
+		},
+
 
 		    /////////////////////////////////////////////
 		   ///////								  //////

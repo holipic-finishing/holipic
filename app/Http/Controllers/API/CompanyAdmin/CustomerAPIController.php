@@ -13,6 +13,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Maatwebsite\Excel\Excel;
 use App\Exports\ListEmailCustomers;
+use App\Exports\ListEmailBranchCustomers;
 use Spatie\Activitylog\Models\Activity;
 use App\Repositories\ActivityLogRepository;
 
@@ -165,4 +166,48 @@ class CustomerAPIController extends AppBaseController
     {
         return \Excel::download(new ListEmailCustomers(request('companyId')), 'ListEmailCustomers.xlsx');
     }
+
+    public function getBranchCustomers(Request $request)
+    {
+        $input = $request->all(); 
+
+        $customers = $this->customerRepository->handelGetBranchCustomers($input);
+
+        if(!$customers) {
+            return $this->sendError('Customer not found');
+        }
+
+        return $this->sendResponse($customers, 'Get customer successfully');
+    }
+
+    public function updateBranchCustomer($id)
+    {
+       
+        $customer = $this->customerRepository->handleUpdateBranchCustomer($id);
+
+        if(!$customer) {
+            return $this->sendError('Error update customer');
+        }
+
+        return $this->sendResponse($customer, 'Update customer successfully');
+    }
+
+    public function deleteBranchCustomer($id)
+    {
+        $customer = $this->customerRepository->handleDeleteBranchCustomer($id);
+
+        if ($customer == true) {
+            return $this->sendResponse($id, 'Customer deleted successfully');
+            
+        } else {
+            return $this->sendError('Error delete customer');
+        }
+
+    }
+
+    public function exportEmailBranchCustomers()
+    { 
+        return \Excel::download(new ListEmailBranchCustomers(request('userId')), 'ListEmailBranchCustomers.xlsx');
+    }
+
 }

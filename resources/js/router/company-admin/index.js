@@ -19,6 +19,9 @@ import CMS from '../../views/company-admin/cms/Index'
 // Sales 
 import Sales from '../../views/company-admin/sales/Sales'
 
+// CompanyPackages
+import CompanyPackages from '../../views/company-admin/packages/Packages';
+
 //Branches
 import Branches from '../../views/company-admin/branch/Branches'
 
@@ -42,7 +45,6 @@ export default {
 	        component: CompanyDashboard,
 	        meta: {
 	        	requiresAuth:true,
-	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.ecommerce',
 	            breadcrumb: 'Company / Dashboard'
@@ -54,7 +56,6 @@ export default {
         	name:'CompnayNotification',
 	        meta: {
 	        	requiresAuth:true,
-	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.notification',
 	            breadcrumb: 'Company / Notifications'
@@ -65,7 +66,6 @@ export default {
 	        component: ChangePassword,
 	        meta: {
 	        	requiresAuth:true,
-	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.changePassword',
 	            breadcrumb: 'Company / Change Password'
@@ -77,7 +77,6 @@ export default {
 		        name : 'branches',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.branch'
 		        }
@@ -88,7 +87,6 @@ export default {
 		        name : 'photographers',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.photographer'
 		        }
@@ -99,7 +97,6 @@ export default {
 		        name : 'customers',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.customer'
 		            
@@ -111,7 +108,6 @@ export default {
 	        name: 'cms',
 	        meta: {
 	        	requiresAuth:true,
-	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.contenPages',
 	            breadcrumb: 'Company / CMS'
@@ -122,7 +118,6 @@ export default {
 	        component: Sales,
 	        meta: {
 	        	requiresAuth:true,
-	        	adminAuth:false,
          		companyAuth:true,
 	            title: 'message.sales',
 	            breadcrumb: 'Company / Sales'
@@ -133,11 +128,20 @@ export default {
 	        component: Email,
 	        meta: {
 	        	requiresAuth:true,
-	        	adminAuth:false,
          		companyAuth:true,
 	            title: 'message.emails',
 	            breadcrumb: 'Company / Emails'
 	        }
+	    },
+	    {
+	    	path: '/company-admin/packages',
+	        component: CompanyPackages,
+	        meta: {
+	        	requiresAuth:true,
+         		companyAuth:true,
+		        title: 'message.package',
+		        breadcrumb: 'Company / Package'
+		    }
 	    }
    	]
 }

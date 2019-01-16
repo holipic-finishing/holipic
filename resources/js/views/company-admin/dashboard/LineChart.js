@@ -45,7 +45,9 @@ export default {
            display: false
         }
   	  },
-       chooes:''
+      chooes:'',
+      company_id:JSON.parse(localStorage.getItem('user')).company_id,
+
     }
   },
   created(){
@@ -86,16 +88,16 @@ export default {
     },
  
     fetchData() {
-		let params = {
-					defaultDay :  'default'
-		}
-		this.getData(params);
+  		let params = {
+  					defaultDay :  'default',
+  		}
+    
+  		this.getData(params);
     },
 
     getData(params){
-
-			let url = config.API_URL+'company-admin-chart'
-
+      let url = config.API_URL+'company-admin-chart'
+       params.company_id = this.company_id
 			getWithData(url,params)
 			.then((res) => {
 				if(res.data.success && res){

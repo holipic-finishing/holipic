@@ -522,7 +522,7 @@ Holipic
 													@if($value->package_name=="Basic")
 														{{$value->secure_storage}} GB secure storage
 													@else
-														{{$value->secure_storage}} secure storage
+														{{$value->secure_storage}} GB secure storage
 													@endif		 
 												</li>
 												<li>{{$value->file_upload}} GB file upload</li>
@@ -532,7 +532,7 @@ Holipic
 													@if($value->package_name=="Basic")
 														maximum {{$value->max_user}} users
 													@else 
-														{{$value->max_user}} maximum
+														maximum {{$value->max_user}} users
 													@endif	
 												</li>
 											</ul>
@@ -864,7 +864,6 @@ Holipic
 		$("#frmRegister").submit(function(e) {
 			e.preventDefault();	
 	    	var form = $(this);
-	    	console.log(form.serialize())
 		    $.ajax({
 		           type: "POST",
 		           url: 'users/signup',

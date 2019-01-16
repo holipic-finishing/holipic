@@ -54,15 +54,6 @@
 				<!--Header -->
 				<template slot="headers" slot-scope="props">
           <tr>
-            <!-- <th>
-              <v-checkbox
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-                primary
-                hide-details
-                @click.native="toggleAll"
-              ></v-checkbox>
-            </th> -->
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -86,55 +77,23 @@
 
 				<!--Prop data -->
 				<template slot="items" slot-scope="props">
-					<!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
-						<!-- <td>
-              <v-checkbox
-                :input-value="props.selected"
-                primary
-                hide-details
-              ></v-checkbox>
-            </td> -->
+					
 		    		<td>{{ props.item.id }}</td>
-		    		<td>{{ props.item.company_name }}</td>
-		    		<td class="text-right">{{ props.item.invoice }}</td>
-						<td class="text-right">{{ props.item.dated | moment("DD/MM/YYYY") }}</td>
-		    		<td>{{ props.item.title }}</td>
-		    		<td class="text-right">
-		    			<div v-if="props.item.status === 'RECIVED'" style="color:green">
-		    				+ {{ props.item.amount_with_symbol }} 
-		    			</div>
-		    			<div v-else>
-		    				{{ - props.item.amount_with_symbol }} 
-		    			</div>
-		    		</td>
-		    		<td class="text-right">
-								<v-btn color="success" small v-if="props.item.status === 'RECIVED'">{{ props.item.status }}</v-btn>
-							 	<v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
-			    	</td>
-		    		<td class="action-width"> 
-		    			<v-icon
-                small
-				    		class="mr-2 hover-icon"
-				    		@click="transactionEvent('show', props.item)"
-				    	>
-				    		visibility
-				    	</v-icon>
-				      <v-icon
-                small
-				    		class="mr-2 hover-icon"
-				    		@click="transactionEvent('edit', props.item)"
-				      >
-				        edit
-				      </v-icon>
-				      <v-icon
-                small
-				    		class="mr-2 hover-icon"
-				    		@click="showDialog(props.item.id)"
-				      >
-				        delete
-				      </v-icon>
-		    		</td>
-					<!-- </tr> -->
+            <td>{{ props.item.branch.name }}</td>
+            <td>{{ props.item.photographer.name }}</td>
+            <td>{{ props.item.customer.room.room_hash }}</td>
+            <td>{{ props.item.total_amount_to_dollar }}</td>
+            <td>{{ props.item.purchase_date }}</td>
+            <td>{{ props.item.download_date }}</td>
+            <td>{{ props.item.created_at }}</td>
+            <td>{{ props.item.customer.user.email }}</td>
+            <td>{{ props.item.payment_method }}</td>
+		    		<td>
+                <v-btn color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
+                <v-btn color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
+                <v-btn color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
+            </td>
+											
 	    	</template>
 
 				<!--No data -->
@@ -152,22 +111,7 @@
 			</v-data-table>
 			<!--End Data Table Component -->
 		</app-card>
-    <v-dialog v-model="dialog" persistent max-width="450">
-      <v-card>
-        <v-card-title class="headline font-weight-bold">
-          <v-icon x-large color="yellow accent-3" class="mr-2">
-            warning
-          </v-icon>
-          Do you want delete this item ?
-        </v-card-title>
-        <v-divider class="mt-0"></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn flat @click="dialog = false">Disagree</v-btn>
-          <v-btn flat @click="deleteItem">Agree</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+   
 	</v-layout>
 </template>
 
@@ -180,8 +124,7 @@ import TransactionItem from './TransactionItem'
 import Vue from 'vue'
 
 export default {
-
-  name: 'Transactions',
+  name: 'Orders',
 
   components:{
     TransactionItem
@@ -198,43 +141,63 @@ export default {
           width: '3%'
         },
         { 
-          text: 'Company Name',
+          text: 'Branch',
           align: 'left',
-          value: 'company_name',
+          value: 'branch.name',
           width: '10%'
         },
         { 
-          text: 'Invoice',
-          align: 'right', 
-          value: 'invoice' 
-        },
-        {
-          text: 'Date',
-          align: 'right',
-          value: 'dated'
-        },
-        {
-          text: 'Transaction',
+          text: 'Photographer',
           align: 'left',
-          value: 'title'
+          value: 'photographer.name',
+          width: '10%'
         },
-        {
-          text: 'Amount',
-          align: 'right',
-          value: 'amount_with_symbol',
-          sortable: false
+        { 
+          text: 'Room Number',
+          align: 'left',
+          value: 'customer.room.room_hash',
+          width: '10%'
         },
-        {
-          text: 'Status',
-          align: 'right',
-          value: 'status'
+        { 
+          text: 'Total Amount',
+          align: 'left',
+          value: 'total_amount_to_dollar',
+          width: '10%'
         },
-        {
-          text: 'Action',
-          value: 'actions',
+        { 
+          text: 'Purchase Date',
+          align: 'left',
+          value: 'purchase_date',
+          width: '10%'
+        },
+        { 
+          text: 'Download Date',
+          align: 'left',
+          value: 'download_date',
+          width: '10%'
+        },
+        { 
+          text: 'Order Date',
+          align: 'left',
+          value: 'created_at',
+          width: '10%'
+        },
+        { 
+          text: 'Customer Email',
+          align: 'left',
+          value: 'customer.user.email',
+        },
+        { 
+          text: 'Payment Method',
           align: 'center',
-          sortable: false,
-        }
+          value: 'payment_method',
+        },
+        { 
+          text: 'Status',
+          align: 'center',
+          value: 'status',
+        },
+        
       ],
       pagination: {
       },
@@ -248,7 +211,10 @@ export default {
       	defaultDay: 'default'
       },
       itemIdToDelete: null,
-      rowsPerPageItems: [ 20, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 } ]
+      rowsPerPageItems: [ 20, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 } ],
+      company_id:JSON.parse(localStorage.getItem('user')).company_id,
+
+      
     }
   },
   computed: {
@@ -282,7 +248,8 @@ export default {
   },
   methods: {
     fetchData(params){
-    	post(config.API_URL + 'histories/transactions', params)
+      params.company_id = this.company_id
+    	post(config.API_URL + 'order/history-order', params)
 				.then((res) => {
 					if(res.data && res.data.success){
 						this.desserts = res.data.data
@@ -325,8 +292,9 @@ export default {
       this.itemIdToDelete = id
     },
     deleteItem(){
-      del(config.API_URL + 'transactions/' + this.itemIdToDelete)
+      del(config.API_URL + 'orders/' + this.itemIdToDelete)
       .then((res) => {
+        console.log(res.data)
         if(res.data && res.data.success){
           Vue.notify({
                         type: 'success',

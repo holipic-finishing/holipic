@@ -36,7 +36,8 @@ class Order extends Model
         'payment_method',
         'purchase_from',
         'status',
-        'invoice'
+        'invoice',
+        'currency_id'
     ];
 
     /**
@@ -51,7 +52,8 @@ class Order extends Model
         'payment_method' => 'string',
         'purchase_from' => 'string',
         'status' => 'string',
-        'invoice' => 'string'
+        'invoice' => 'string',
+        'currency_id' => 'integer'
     ];
 
     /**
@@ -62,6 +64,17 @@ class Order extends Model
     public static $rules = [
         
     ];
+
+
+    public static function boot()
+    {
+        parent::boot();
+        static::created(function($model)
+        {
+            static::exchange($model);
+        });
+
+    }
 
 
     public function branch()
@@ -79,6 +92,32 @@ class Order extends Model
         return $this->belongsTo('App\Models\Photographer', 'photographer_id', 'id');
     }
 
+    public function orderexchange()
+    {
+        return $this->hasOne(\App\Models\OrderExchange::class, 'order_id', 'id');
+    }
 
-    
+    static public function exchange($model){
+        if($model->currency_id == 1){
+
+            $exchangeRateToDollar = 1;
+
+        }else{
+
+            $exchangeRateToDollar = ExchangeRate::select('rate')
+                        ->where('from_currency_id', $model->currency_id)
+                        ->where('to_currency_id', 1)
+                        ->first()->toArray();
+
+            $exchangeRateToDollar = (double) $exchangeRateToDollar['rate'];
+
+        }
+                                              
+
+        return OrderExchange::create([
+            'order_id' => $model->id,
+            'exchange_rate_to_dollar' => $exchangeRateToDollar
+        ]);
+    }
+  
 }

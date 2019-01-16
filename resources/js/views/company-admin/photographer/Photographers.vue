@@ -159,14 +159,13 @@ export default {
 			get(config.API_URL+'photographers?companyId='+this.company.company_id)
 			.then(response => {
 				if(response && response.data.success) {
-
 					this.items = response.data.data
 				}
 			})
 		},
 		deleteItem()
 		{
-			del(config.API_URL+'photographer/'+this.itemIdToDelete)
+			del(config.API_URL+'photographer/'+this.itemIdToDelete+'?userId='+this.company.id)
 			.then((res) => {
 	        if(res.data && res.data.success){
 	          this.fetchData()

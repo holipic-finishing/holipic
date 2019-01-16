@@ -60,6 +60,7 @@ Route::group(['namespace' => 'API'],function(){
 	************************************************
 	*/
 
+	// Route::post('change-password', 'UserAPIController@changePassWord');
 	Route::post('change-password', 'UserAPIController@changePassWord');
 	
 	Route::namespace('CompanyAdmin')->group(function(){
@@ -83,11 +84,16 @@ Route::group(['namespace' => 'API'],function(){
 		Route::resource('branches', 'BranchAPIController');
 
 
+
+	/***************************************************
+	**********	ROUTER COMPANY AND ADMIN   *************
+	****************************************************/
+
 		/***************************************************
 		**********	ROUTER COMPANY AND ADMIN   *************
 		****************************************************/
 		
-		Route::post('change-password', 'UserAPIController@changePassWord');
+		// Route::post('change-password', 'UserAPIController@changePassWord');
 
 		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
 	
@@ -133,6 +139,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
 		Route::get('activity-log/update', 'ActivityLogController@updateIsReadActivityLog');
+
 		/*************CompanyPackageAPIController**************/
 
 		Route::post('get-company-package', 'CompanyPackageAPIController@getPackage');

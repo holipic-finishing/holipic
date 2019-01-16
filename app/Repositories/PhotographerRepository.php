@@ -73,8 +73,6 @@ class PhotographerRepository extends BaseRepository
     {
         $input = request('information');
 
-        //$company = $this->getCompany();
-
         $data = $this->model->create([
             'branch_id' => $input['branch_id'],
             'name' => $input['name'],

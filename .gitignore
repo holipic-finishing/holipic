@@ -19,3 +19,5 @@ yarn-error.log
 /public/fonts/vendor/
 dump.rdb
 /public/avatars/
+/routes/.fuse_hidden000005c200000001
+

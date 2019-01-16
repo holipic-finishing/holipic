@@ -18,6 +18,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        \App\Events\RedisEventNotification::class => [
+            \App\Listeners\NewNotification::class,
+        ],
     ];
 
     /**

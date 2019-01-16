@@ -551,7 +551,7 @@ class OrderRepository extends BaseRepository
 
                     return $query;
                  })->get();
-
+                $orders = $this->transformOrder($orders);
             return $orders;
 
             }
@@ -746,5 +746,14 @@ class OrderRepository extends BaseRepository
             return $orders;
             }
         }
+    }
+
+    public function transformOrder($orders){
+      foreach ($orders as $key => $order) {
+          $orders[$key]->total_amount_to_dollar = round(($order->total_amount * $order->orderexchange->exchange_rate_to_dollar),3);
+      }
+       
+      return $orders;
+
     }
 }

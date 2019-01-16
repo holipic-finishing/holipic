@@ -82,6 +82,7 @@
             <td>{{ props.item.branch.name }}</td>
             <td>{{ props.item.photographer.name }}</td>
             <td>{{ props.item.customer.room.room_hash }}</td>
+            <td>{{ props.item.total_amount_to_dollar }}</td>
             <td>{{ props.item.purchase_date }}</td>
             <td>{{ props.item.download_date }}</td>
             <td>{{ props.item.created_at }}</td>
@@ -155,6 +156,12 @@ export default {
           text: 'Room Number',
           align: 'left',
           value: 'customer.room.room_hash',
+          width: '10%'
+        },
+        { 
+          text: 'Total Amount',
+          align: 'left',
+          value: 'total_amount_to_dollar',
           width: '10%'
         },
         { 

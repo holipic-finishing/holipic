@@ -541,7 +541,6 @@ class OrderRepository extends BaseRepository
                               ->whereHas('branch', function($q) use($company_id){
                                 $q->where('branches.company_id',$company_id);
                               })
-                              ->where('status','DONE')
                               ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
                     if($branch_id != ''){
                       $query = $query->where('branch_id', $branch_id);
@@ -551,9 +550,10 @@ class OrderRepository extends BaseRepository
                     }
 
                     return $query;
-                 })->get()->toArray();
-                
-                return $orders;
+                 })->get();
+                $orders = $this->transformOrder($orders);
+            return $orders;
+
             }
             
             if($type == 'month'){
@@ -607,7 +607,6 @@ class OrderRepository extends BaseRepository
                                 ->whereHas('branch', function($q) use($company_id){
                                   $q->where('branches.company_id',$company_id);
                                 })
-                                ->where('status','DONE')
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '>=', $fromMonth)
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '<=', $toMonth);
                       if($branch_id != ''){
@@ -617,10 +616,9 @@ class OrderRepository extends BaseRepository
                         $query = $query->where('photographer_id', $photographer_id);
                       }
                       return $query;
-                   })->get()->toArray(); 
-                  dd($orders);
-
-                return $orders;
+                   })->get(); 
+                    $orders = $this->transformOrder($orders);
+            return $orders;
             }
             if($type == 'year'){
                   $from_year = Carbon::today()->subYears(2)->format('Y');
@@ -672,7 +670,6 @@ class OrderRepository extends BaseRepository
                                 ->whereHas('branch', function($q) use($company_id) {
                                   $q->where('branches.company_id',$company_id);
                                 })
-                                ->where('status','DONE')
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '>=', $from_year)
                                   ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '<=', $to_year);
                       if($branch_id != ''){
@@ -682,8 +679,8 @@ class OrderRepository extends BaseRepository
                         $query = $query->where('photographer_id', $photographer_id);
                       }
                       return $query;
-                  })->get()->toArray();
-                  dd($orders);
+                  })->get();
+                    $orders = $this->transformOrder($orders);
               return $orders;
             }
             if($type == 'week'){
@@ -734,7 +731,6 @@ class OrderRepository extends BaseRepository
                               ->whereHas('branch', function($q) use ($company_id){
                                 $q->where('branches.company_id',$company_id);
                               })
-                              ->where('status','DONE')
                               ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
 
                     if($branch_id != ''){
@@ -745,12 +741,19 @@ class OrderRepository extends BaseRepository
                     }
 
                     return $query;
-                })->get()->toArray();
-
-                dd($orders);
-                return $orders;
-                 
+                })->get();
+                  $orders = $this->transformOrder($orders);
+            return $orders;
             }
         }
+    }
+
+    public function transformOrder($orders){
+      foreach ($orders as $key => $order) {
+          $orders[$key]->total_amount_to_dollar = round(($order->total_amount * $order->orderexchange->exchange_rate_to_dollar),3);
+      }
+       
+      return $orders;
+
     }
 }

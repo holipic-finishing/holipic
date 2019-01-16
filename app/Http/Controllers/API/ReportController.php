@@ -26,7 +26,7 @@ class ReportController extends BaseApiController
 	  public function reportIncomesPackage(Request $request){
 
 		 $input = $request->all();
-     
+
         // report from day, to day
        	if($request->has(['start_day','end_day'])){
 

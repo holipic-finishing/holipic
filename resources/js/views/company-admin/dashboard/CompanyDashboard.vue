@@ -1,17 +1,6 @@
 <template>
 	<v-container fluid pt-0 grid-list-xl>
 		<v-layout row wrap mt-3>
-			<!-- <v-flex d-flex xs12 sm12 md8>
-        <v-card>
-					<activity-log></activity-log>
-        </v-card>
-    	</v-flex>
-
-			<v-flex d-flex xs12 sm12 md4>
-        <v-card>
-					<notification-dashboard></notification-dashboard>
-        </v-card>
-      </v-flex> -->
 			
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
@@ -36,16 +25,12 @@
 							</div>
 						</div>
 					</div>
-					<!-- Line Chart -->
 					<line-chart :width="300"></line-chart>
-					<!-- End Line Chart -->
 				</div>
 
-				<!-- Alert -->
 				<div class="pl-4">
 					<v-alert class="subheading"  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 				</div>
-				<!-- End Alert -->
 
 				<div v-if="typeTime == 'day'">
 					<p class="text-primary">(*) Please No choose more than 15 days</p>
@@ -431,8 +416,9 @@
 				</div>
 
 			</app-card>
+		     </v-flex> 
 		</v-layout>
-		<transactions></transactions>
+		<orders :companyId="company_id"></orders>
 	</v-container>		
 </template>
 
@@ -448,7 +434,7 @@ import { ChartConfig } from "../../../constants/chart-config";
 import config from '../../../config/index.js'
 import { get, getWithData } from '../../../api/index.js'
 import moment from 'moment'
-import Transactions from './Transactions'
+import Orders from './Orders'
 
 export default {
 
@@ -457,7 +443,7 @@ export default {
   	ActivityLog,
   	NotificationDashboard,
   	LineChart,
-    Transactions,
+    Orders,
   },
 	data() {
     return {

@@ -25,6 +25,7 @@ class AddColumnDescriptionLogOnActivityLogs extends Migration
      */
     public function down()
     {
+        
         Schema::table('activity_logs', function (Blueprint $table) {
             Schema::dropIfExists('description_log');
         });

@@ -138,13 +138,8 @@ Route::group(['namespace' => 'API'],function(){
 		
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
-<<<<<<< HEAD
-
 		Route::get('activity-log/update', 'ActivityLogController@updateIsReadActivityLog');
 
-=======
-		Route::get('activity-log/update', 'ActivityLogController@updateIsReadActivityLog');
->>>>>>> 92415e80455d898419dfa787f887e0d48feff8a5
 		/*************CompanyPackageAPIController**************/
 
 		Route::post('get-company-package', 'CompanyPackageAPIController@getPackage');
@@ -156,10 +151,6 @@ Route::group(['namespace' => 'API'],function(){
 		Route::post('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
 
 		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
-<<<<<<< HEAD
-
-=======
->>>>>>> 92415e80455d898419dfa787f887e0d48feff8a5
 
 	});
 

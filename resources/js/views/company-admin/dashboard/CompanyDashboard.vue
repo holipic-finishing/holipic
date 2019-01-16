@@ -39,16 +39,12 @@
 							</div>
 						</div>
 					</div>
-					<!-- Line Chart
 					<line-chart :width="300"></line-chart>
-					<!-- End Line Chart -->
 				</div>
 
-				<!-- Alert -->
 				<div class="pl-4">
 					<v-alert class="subheading"  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 				</div>
-				<!-- End Alert -->
 
 			
 				<div v-if="typeTime == 'day'">
@@ -413,9 +409,9 @@
 					</div>
 				</div>
 			</app-card>
-		      </v-flex> -->
+		     </v-flex> 
 		</v-layout>
-		<transactions></transactions>
+		<orders :companyId="company_id"></orders>
 	</v-container>		
 </template>
 
@@ -431,7 +427,7 @@ import { ChartConfig } from "../../../constants/chart-config";
 import config from '../../../config/index.js'
 import { get, getWithData } from '../../../api/index.js'
 import moment from 'moment'
-import Transactions from './Transactions'
+import Orders from './Orders'
 
 export default {
 
@@ -440,7 +436,7 @@ export default {
   	ActivityLog,
   	NotificationDashboard,
   	LineChart,
-    Transactions,
+    Orders,
   },
 
   

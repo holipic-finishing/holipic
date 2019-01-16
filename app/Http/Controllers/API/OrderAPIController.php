@@ -263,8 +263,9 @@ class OrderAPIController extends AppBaseController
                 $results =  $this->orderRepository->getHistoryOrders($input);
             }
 
-            return $results; 
+           
         }
+        return $this->sendResponse($results->toArray(), 'Order updated successfully');
     }
 
 }

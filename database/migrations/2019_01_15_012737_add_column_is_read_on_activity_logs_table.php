@@ -13,7 +13,7 @@ class AddColumnIsReadOnActivityLogsTable extends Migration
      */
     public function up()
     {
-        Schema::table('activity_logs', function (Blueprint $table) {
+        Schema::table('activity_log', function (Blueprint $table) {
             $table->boolean('is_read')->default(0);
         });
     }
@@ -25,7 +25,7 @@ class AddColumnIsReadOnActivityLogsTable extends Migration
      */
     public function down()
     {
-        Schema::table('activity_logs', function (Blueprint $table) {
+        Schema::table('activity_log', function (Blueprint $table) {
              Schema::dropIfExists('is_read');
         });
     }

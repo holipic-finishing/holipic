@@ -541,7 +541,6 @@ class OrderRepository extends BaseRepository
                               ->whereHas('branch', function($q) use($company_id){
                                 $q->where('branches.company_id',$company_id);
                               })
-                              ->where('status','DONE')
                               ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
                     if($branch_id != ''){
                       $query = $query->where('branch_id', $branch_id);
@@ -551,11 +550,10 @@ class OrderRepository extends BaseRepository
                     }
 
                     return $query;
-                 })->get()->toArray();
-dd($orders);
-                return $orders;
+                 })->get();
 
-                
+            return $orders;
+
             }
             
             if($type == 'month'){
@@ -609,7 +607,6 @@ dd($orders);
                                 ->whereHas('branch', function($q) use($company_id){
                                   $q->where('branches.company_id',$company_id);
                                 })
-                                ->where('status','DONE')
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '>=', $fromMonth)
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '<=', $toMonth);
                       if($branch_id != ''){
@@ -619,10 +616,9 @@ dd($orders);
                         $query = $query->where('photographer_id', $photographer_id);
                       }
                       return $query;
-                   })->get()->toArray(); 
-                  dd($orders);
+                   })->get(); 
 
-                return $orders;
+            return $orders;
             }
             if($type == 'year'){
                   $from_year = Carbon::today()->subYears(2)->format('Y');
@@ -674,7 +670,6 @@ dd($orders);
                                 ->whereHas('branch', function($q) use($company_id) {
                                   $q->where('branches.company_id',$company_id);
                                 })
-                                ->where('status','DONE')
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '>=', $from_year)
                                   ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '<=', $to_year);
                       if($branch_id != ''){
@@ -684,8 +679,8 @@ dd($orders);
                         $query = $query->where('photographer_id', $photographer_id);
                       }
                       return $query;
-                  })->get()->toArray();
-                  dd($orders);
+                  })->get();
+
               return $orders;
             }
             if($type == 'week'){
@@ -736,7 +731,6 @@ dd($orders);
                               ->whereHas('branch', function($q) use ($company_id){
                                 $q->where('branches.company_id',$company_id);
                               })
-                              ->where('status','DONE')
                               ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
 
                     if($branch_id != ''){
@@ -747,11 +741,9 @@ dd($orders);
                     }
 
                     return $query;
-                })->get()->toArray();
+                })->get();
 
-                dd($orders);
-                return $orders;
-                 
+            return $orders;
             }
         }
     }

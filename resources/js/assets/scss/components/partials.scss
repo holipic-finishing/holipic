@@ -53,17 +53,17 @@
 		padding: 0 6px !important;
 		text-align:center !important;
 	}
-.custom-height-package{
-  .v-input__slot{
-    min-height: 40px !important;
-    height: 40px !important;
-  }
-  input, .v-select__slot{
-    position:relative;
-    top: -10px;
-  }
+	.custom-height-package{
+	  .v-input__slot{
+	    min-height: 40px !important;
+	    height: 40px !important;
+	  }
+	  input, .v-select__slot{
+	    position:relative;
+	    top: -10px;
+	  }
+	}
 }
-
 .custom-height-td-package{
 	padding:0px 0px !important;
 }

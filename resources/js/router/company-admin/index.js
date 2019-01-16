@@ -117,27 +117,27 @@ export default {
 	        }
 	    },
 	    {
-<<<<<<< HEAD
 	    	path: '/company-admin/sales',
 	        component: Sales,
-=======
-	        path: '/company-admin/packages',
-	        component: CompanyPackages,
->>>>>>> 85904a795943805dba1cef594feabd37830adb5a
 	        meta: {
 	        	requiresAuth:true,
 	        	adminAuth:false,
          		companyAuth:true,
-<<<<<<< HEAD
 	            title: 'message.sales',
 	            breadcrumb: 'Company / Sales'
 	        }
-	    }
-=======
-	            title: 'message.package',
-	            breadcrumb: 'Company / Package'
-	        }
+
+
 	    },
->>>>>>> 85904a795943805dba1cef594feabd37830adb5a
+
+	    {
+	    	path: '/company-admin/packages',
+	        component: CompanyPackages,
+	        title: 'message.package',
+	        breadcrumb: 'Company / Package'
+	    }
+	        
+	        
+	    
    	]
 }

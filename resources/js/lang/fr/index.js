@@ -452,5 +452,6 @@ export default {
   oldPassword : "Ancien mot de passe dans incorrect",
   viewnotifition: "Montre tout",
   mailSentSuccessfully : "Courrier envoyé avec succès",
-  yourNotification : "Vos notifications"
+  yourNotification : "Vos notifications",
+  plan: "des plans"
 }

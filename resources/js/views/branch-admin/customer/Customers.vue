@@ -1,5 +1,5 @@
 <template>
-	<div class="photographer-table">
+	<div class="customer-table">
 		<v-container fluid grid-list-xl pt-0>
 			<div id="app">
 				<v-app id="inspire">
@@ -33,7 +33,7 @@
 						<v-data-table 
 							:headers="headers" 
 							:items="items" 
-							class="elevation-5"  
+							class="elevation-5 custom-table-zoom"  
 							:pagination.sync="pagination" 
 							:rows-per-page-items="rowsPerPageItems" 
 							default-sort="id:desc"
@@ -63,7 +63,15 @@
 									  class="height-input center-input"
 									></v-text-field>
 								</td>
-					        	<td class="text-xs-left action-width">
+					        	<td class="text-left action-width">
+					        		<v-icon
+										small
+										class="mr-2 hover-icon"
+										@click="showGift(props.item)"
+									>
+										cake
+									</v-icon>
+
 									<v-icon
 										small
 										class="mr-2 hover-icon"
@@ -142,6 +150,7 @@ export default {
 		pagination: {
 				  	rowsPerPage: 25  	
 		},
+		itemIdToDelete: '',
 		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 		user: JSON.parse(localStorage.getItem('user')),
 		urlExport: config.API_URL+'branch/customers/export?userId='+JSON.parse(localStorage.getItem('user')).id,
@@ -169,16 +178,38 @@ export default {
   		})
   	},
   	deleteItem() 
-  	{
-
+  	{	console.log(this.itemIdToDelete)
+  		del(config.API_URL+'branch/'+this.itemIdToDelete)
+		.then((res) => {
+        if(res.data && res.data.success){
+        	setTimeout(() => {
+                Vue.notify({
+                    group: 'loggedIn',
+                	type: 'success',
+                	text: 'Delete Item Success!'
+                })
+					}, 1500)
+          this.fetchData()
+          this.dialog = false
+        }
+        
+      })
+      .catch((e) =>{
+        console.log(e)
+      })
   	},
-  	showDialog()
+  	showDialog(item)
   	{
   		this.dialog = true
+  		this.itemIdToDelete = item
   	},
   	showFormEdit(item)
   	{
   		this.$root.$emit('showFormEditCustomer', {showNavigation: true, data: item})
+  	},
+  	showGift(item)
+  	{
+
   	}
   }
 }
@@ -198,4 +229,8 @@ export default {
     .center-input{
     	margin-top: 30px;
     }
+    .action-width{
+	    min-width: 130px;
+	    width: 130px;
+	}
 </style>

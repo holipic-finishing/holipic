@@ -167,4 +167,22 @@ class CustomerRepository extends BaseRepository
 
         return false;
     }
+
+    public function handleDeleteBranchCustomer($id)
+    {
+        $customer = $this->model->find($id); 
+        if (empty($customer)) {
+            return $this->sendError('Customer not found');
+        }
+
+        $user = User::where('id', '=', $customer->user_id)->first(); 
+        if (empty($user)) {
+            return $this->sendError('User not found');
+        }
+
+        $user->delete();
+        $customer->delete();
+
+        return true;
+    }
 }

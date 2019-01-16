@@ -183,6 +183,19 @@ class CustomerAPIController extends AppBaseController
         return $this->sendResponse($customer, 'Update customer successfully');
     }
 
+    public function deleteBranchCustomer($id)
+    {
+        $customer = $this->customerRepository->handleDeleteBranchCustomer($id);
+
+        if ($customer == true) {
+            return $this->sendResponse($id, 'Customer deleted successfully');
+            
+        } else {
+            return $this->sendError('Error delete customer');
+        }
+
+    }
+
     public function exportEmailBranchCustomers()
     { 
         return \Excel::download(new ListEmailBranchCustomers(request('userId')), 'ListEmailBranchCustomers.xlsx');

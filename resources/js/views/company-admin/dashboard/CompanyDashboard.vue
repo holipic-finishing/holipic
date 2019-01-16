@@ -6,11 +6,11 @@
 					<activity-log></activity-log>
 		        </v-card>
 	      	</v-flex>
-		      <v-flex d-flex xs12 sm12 md4>
+		     <!--  <v-flex d-flex xs12 sm12 md4>
 		        <v-card>
 					<notification-dashboard></notification-dashboard>
 		        </v-card>
-		      </v-flex>
+		      </v-flex> -->
 		</v-layout>
 		<!-- <section-tooltip :title="$t('message.overview')" :tooltip="$t('message.dashboardOverview')"></section-tooltip> -->
 		<!-- Dash Cards -->

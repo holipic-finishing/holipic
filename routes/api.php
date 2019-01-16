@@ -76,6 +76,8 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
+		Route::get('get-notifications/{user_id}','NotificationAPIController@getNotification');
+
 		/*************PagesAPIController**************/
 
 		Route::resource('branches', 'BranchAPIController');

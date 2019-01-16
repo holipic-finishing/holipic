@@ -70,15 +70,12 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::post('edit/page/{itemId}','PagesAPIController@editPage');
 
-		/*************PagesAPIController**************/
+		/*************NotificationAPIController**************/
 
 		Route::resource('notifications', 'NotificationAPIController');
 
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 		
-
-		/************* Photographers APIController**************/
-
 		Route::get('get-notifications/{user_id}','NotificationAPIController@getNotification');
 
 		/*************PagesAPIController**************/
@@ -86,9 +83,10 @@ Route::group(['namespace' => 'API'],function(){
 		Route::resource('branches', 'BranchAPIController');
 
 
-	/***************************************************
-	**********	ROUTER COMPANY AND ADMIN   *************
-	****************************************************/
+		/***************************************************
+		**********	ROUTER COMPANY AND ADMIN   *************
+		****************************************************/
+		
 		Route::post('change-password', 'UserAPIController@changePassWord');
 
 		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');

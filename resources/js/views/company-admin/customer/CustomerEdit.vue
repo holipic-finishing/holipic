@@ -228,7 +228,6 @@ export default {
 		e.preventDefault();
 
 		var file = e.target.files
-		console.log(file)
 		 
 		if(file[0] !== undefined) {
 			this.imageName = file[0].name

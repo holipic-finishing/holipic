@@ -196,7 +196,6 @@ export default {
 			})
 		},
 		readActivityLog(item, key) {
-			console.log(item)
 			get(config.API_URL+'activity-log/update?id='+item.id)
 			.then(response => {
 				if(response && response.data.success) {
@@ -210,7 +209,6 @@ export default {
 		hiddenMenuActivity()
 		{
 			this.folowActivity
-			// console.log(this.hiddenActivity)
 		}
   	}
 };

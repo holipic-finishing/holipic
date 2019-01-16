@@ -18,6 +18,7 @@ import CMS from '../../views/company-admin/cms/Index'
 
 // Sales 
 import Sales from '../../views/company-admin/sales/Sales'
+
 // CompanyPackages
 import CompanyPackages from '../../views/company-admin/packages/Packages';
 
@@ -76,7 +77,7 @@ export default {
 		        name : 'branches',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
+		            // adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.branch'
 		        }
@@ -87,7 +88,7 @@ export default {
 		        name : 'photographers',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
+		            // adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.photographer'
 		        }
@@ -98,7 +99,7 @@ export default {
 		        name : 'customers',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
+		            // adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.customer'
 		            
@@ -121,23 +122,22 @@ export default {
 	        component: Sales,
 	        meta: {
 	        	requiresAuth:true,
-	        	adminAuth:false,
+	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.sales',
 	            breadcrumb: 'Company / Sales'
 	        }
-
-
 	    },
-
 	    {
 	    	path: '/company-admin/packages',
 	        component: CompanyPackages,
-	        title: 'message.package',
-	        breadcrumb: 'Company / Package'
+	        meta: {
+	        	requiresAuth:true,
+	        	// adminAuth:false,
+         		companyAuth:true,
+		        title: 'message.package',
+		        breadcrumb: 'Company / Package'
+		    }
 	    }
-	        
-	        
-	    
    	]
 }

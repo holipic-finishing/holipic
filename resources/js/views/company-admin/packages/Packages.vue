@@ -202,7 +202,6 @@ export default {
 			let url = config.API_URL+'get-company-package';
 			post(url, this.user)
 			.then((res) => {
-				console.log(res.data.data)
 				if(res.data && res.data.success){
 					this.desserts = res.data.data
 					this.loading = false

@@ -82,19 +82,6 @@
 
     </div>
 
-    <v-card class="mt-2 border-top" v-if="imagePreview">
-      <v-container grid-list-sm fluid>
-        <v-layout row wrap>
-          <v-flex xs12 md6>
-            <v-slider label="Scale" v-model="scale" min="1" max="100" step="1"></v-slider>
-          </v-flex>
-          <v-flex xs12 md6>
-            <v-slider label="Quality" v-model="quality" min="1" max="100" step="1"></v-slider>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-card>
-
     <v-card class="mt-2 border-top" v-if="images.length && multiple">
       <v-container grid-list-sm fluid>
         <v-layout row wrap>
@@ -130,7 +117,6 @@
           <v-flex
             xs1
             class="image-list-item"
-            v-if="images.length < maxImage"
           >
             <div class="w-100 h-100">
               <label for="image-upload" class="d-flex align-items-center justify-content-center w-100 h-100 cursor-pointer m-0">
@@ -215,7 +201,7 @@ export default {
       currentIndexImage: 0,
       images: [],
       isDragover: false,
-      quality: 0.6,
+      quality: 0.5,
       convertSize: 5000000,
       original:{},
       compressed: {
@@ -242,6 +228,24 @@ export default {
     }
   },
   methods: {
+    openLoading() {
+      const loading = this.$loading({
+        lock: true,
+        text: 'The process is working, please wait!',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.3)'
+      })
+    },
+    closeLoading(){
+      const loading = this.$loading({
+        lock: true,
+        text: 'The process is working, please wait!',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.3)'
+      })
+      
+      loading.close();
+    },
     /**
      * Drop file
      */
@@ -276,6 +280,7 @@ export default {
      */
     createCompressFile(file){
       var _this = this
+
       new Compressor(file, {
         quality: this.quality,
         mimeType: 'auto',
@@ -295,7 +300,28 @@ export default {
               base64: e.target.result
             }
 
+            console.log('-----compressed-----')
+            console.log(fileInfo.size)
+            console.log('-----compressed-----')
+
             _this.compressed = fileInfo
+
+            if (!_this.images.length) {
+              _this.images.push({
+                name: file.name, 
+                path: _this.compressed.base64, 
+                highlight: 1, 
+                default: 1
+              })
+              _this.currentIndexImage = 0
+            } else {
+              _this.images.push({
+                name: file.name, 
+                path: _this.compressed.base64, 
+                highlight: 0, 
+                default: 0
+              })
+            }
           }
 
           // const formData = new FormData()
@@ -328,6 +354,9 @@ export default {
           size: Math.round(file.size / 1000)+' kB',
           base64: reader.result,
         }
+        console.log('-----original-----')
+        console.log(fileInfo.size)
+        console.log('-----original-----')
 
         this.original = fileInfo 
       }
@@ -346,31 +375,13 @@ export default {
      * @param  File file
      */
     createImage (file) {
-
-      /*******************Original File****************************/
-      this.createOriginalFile(file)
-      /*******************End Original File************************/
-
       /*******************Compression File*************************/
       this.createCompressFile(file)
       /******************End Compression File**********************/
 
-      if (!this.images.length) {
-        this.images.push({
-          name: file.name, 
-          path: this.compressed.base64, 
-          highlight: 1, 
-          default: 1
-        })
-        this.currentIndexImage = 0
-      } else {
-        this.images.push({
-          name: file.name, 
-          path: this.compressed.base64, 
-          highlight: 0, 
-          default: 0
-        })
-      }
+      /*******************Original File****************************/
+      this.createOriginalFile(file)
+      /*******************End Original File************************/
 
       this.$root.$emit('upload-success')
     },
@@ -391,13 +402,20 @@ export default {
       this.$emit('edit-image', formData, this.currentIndexImage, this.images)
     },
     uploadFieldChange (e) {
+      this.openLoading()
+      
       let files = e.target.files || e.dataTransfer.files
+
       if (!files.length) {
         return false
       }
+
       forEach(files, (value, index) => {
         this.createImage(value)
       })
+
+      this.closeLoading()
+
       if (document.getElementById('image-upload')) {
         document.getElementById('image-upload').value = []
       }

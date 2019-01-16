@@ -112,6 +112,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('order/sales/company/export', 'OrderAPIController@exportSalesCompany');
 
+	Route::post('order/history-order', 'OrderAPIController@getHistoryOrders');
 
 	/***********************************************
 	**********	ROUTER SUPER ADMIN   ***************

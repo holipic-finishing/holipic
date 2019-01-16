@@ -281,7 +281,7 @@ class OrderRepository extends BaseRepository
         if(isset($attributes['photographer_id'])){
           $photographer_id = $attributes['photographer_id'];
         }
-              
+
         $orders = $this->scopeQuery(function($query) use ($startDay,$endDay, $company_id,$branch_id,$photographer_id){
             $query = $query->with(['branch' => function($q){
                       }])
@@ -489,5 +489,270 @@ class OrderRepository extends BaseRepository
             \Log::info(' Errors to insert csv file - '.$e->getMessage());
         }
 
+    }
+
+    public function getHistoryOrders($attributes){
+        if(isset($attributes['type'])){
+            $type = $attributes['type'];
+            if($type == 'day'){
+                $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
+
+                $endDay     = Carbon::today()->format('Y-m-d');
+
+                $branch_id = "";
+
+                $photographer_id = "";
+
+                $company_id = $attributes['company_id'];
+
+                if(isset($attributes['start_day'])){
+                    $temp = Carbon::parse($attributes['start_day']);
+                    $startDay = Carbon::parse($attributes['start_day'])->format('Y-m-d');
+                    $endDay = $temp->addDays(7)->format('Y-m-d');
+                } 
+                if(isset($attributes['end_day'])){
+                    $temp = Carbon::parse($attributes['end_day']);
+                    $endDay = Carbon::parse($attributes['end_day'])->format('Y-m-d');
+                    $startDay = $temp->subDays(7)->format('Y-m-d');
+
+                }
+              
+                if(isset($attributes['start_day']) && isset($attributes['end_day'])){
+                    $startDay = Carbon::parse($attributes['start_day'])->format('Y-m-d');
+                    $endDay = Carbon::parse($attributes['end_day'])->format('Y-m-d');
+                }
+                if(isset($attributes['branch_id'])){
+                  $branch_id = $attributes['branch_id'];
+                }
+
+                if(isset($attributes['photographer_id'])){
+                  $photographer_id = $attributes['photographer_id'];
+                }
+                $orders = $this->scopeQuery(function($query) use ($startDay,$endDay, $company_id, $branch_id, $photographer_id){
+                    $query = $query->with(['branch' => function($q){
+                              }])
+                              ->with(['customer.room' => function($q){
+                              }])
+                              ->with(['customer.user' => function($q){
+                              }])
+                              ->with(['photographer' => function($q){
+                              }])
+                              ->with('orderexchange')
+                              ->whereHas('branch', function($q) use($company_id){
+                                $q->where('branches.company_id',$company_id);
+                              })
+                              ->where('status','DONE')
+                              ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
+                    if($branch_id != ''){
+                      $query = $query->where('branch_id', $branch_id);
+                    }
+                    if($photographer_id != ''){
+                      $query = $query->where('photographer_id', $photographer_id)->orderBy('created_at');
+                    }
+
+                    return $query;
+                 })->get()->toArray();
+dd($orders);
+                return $orders;
+
+                
+            }
+            
+            if($type == 'month'){
+                 $fromMonth = Carbon::today()->subMonth(12)->format('Y-m');
+
+                  $toMonth = Carbon::today()->format('Y-m');
+
+                  $branch_id = "";
+
+                  $photographer_id = "";
+
+
+                  $company_id = $attributes['company_id'];
+
+                  if(isset($attributes['start_month']) && $attributes['start_month']  != 'Invalid date'){
+                      $temp = Carbon::parse($attributes['start_month']);
+                      $fromMonth = Carbon::parse($attributes['start_month'])->format('Y-m');
+                      $toMonth = $temp->addMonths(12)->format('Y-m');
+                  }
+                  if(isset($attributes['end_month']) && $attributes['end_month']  != 'Invalid date'){
+                      $temp = Carbon::parse($attributes['end_month']);
+                      $toMonth = Carbon::parse($attributes['end_month'])->format('Y-m');
+                      $fromMonth = $temp->subMonths(12)->format('Y-m');
+                  }
+
+                  if(isset($attributes['start_month']) && $attributes['start_month']  != 'Invalid date' && isset($attributes['end_month']) && $attributes['end_month']  != 'Invalid date'){
+                       $fromMonth = Carbon::parse($attributes['start_month'])->format('Y-m');
+
+                      $toMonth = Carbon::parse($attributes['end_month'])->format('Y-m');
+                  }
+
+
+                  if(isset($attributes['branch_id'])){
+                    $branch_id = $attributes['branch_id'];
+                  }
+
+                  if(isset($attributes['photographer_id'])){
+                    $photographer_id = $attributes['photographer_id'];
+                  }
+
+                  $orders = $this->scopeQuery(function($query) use ($fromMonth,$toMonth,$company_id,$branch_id, $photographer_id){
+                      $query = $query->with(['branch' => function($q){
+                                }])
+                                ->with(['customer.room' => function($q){
+                                }])
+                                ->with(['customer.user' => function($q){
+                                }])
+                                ->with(['photographer' => function($q){
+                                }])
+                                ->with('orderexchange')
+                                ->whereHas('branch', function($q) use($company_id){
+                                  $q->where('branches.company_id',$company_id);
+                                })
+                                ->where('status','DONE')
+                                ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '>=', $fromMonth)
+                                ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '<=', $toMonth);
+                      if($branch_id != ''){
+                        $query = $query->where('branch_id', $branch_id);
+                      }
+                      if($photographer_id != ''){
+                        $query = $query->where('photographer_id', $photographer_id);
+                      }
+                      return $query;
+                   })->get()->toArray(); 
+                  dd($orders);
+
+                return $orders;
+            }
+            if($type == 'year'){
+                  $from_year = Carbon::today()->subYears(2)->format('Y');
+
+                  $to_year = Carbon::today()->format('Y');
+
+                  $branch_id = "";
+
+                  $photographer_id = "";
+
+                  $company_id = $attributes['company_id'];
+
+                  if(isset($attributes['start_year']) && $attributes['start_year']  != 'Invalid date'){
+                      $temp = Carbon::parse($attributes['start_year']);
+                      $from_year = Carbon::parse($attributes['start_year'])->format('Y');
+                      $toMonth = $temp->addYears(2)->format('Y');
+                  }
+                  if(isset($attributes['end_year']) && $attributes['end_year']  != 'Invalid date'){
+                      $temp = Carbon::parse($attributes['end_year']);
+                      $toMonth = Carbon::parse($attributes['end_year'])->format('Y');
+                      $from_year = $temp->subYears(2)->format('Y');
+                  }
+
+                  if(isset($attributes['start_year']) && $attributes['start_year']  != 'Invalid date' && isset($attributes['end_year']) && $attributes['end_year']  != 'Invalid date'){
+                      $fromMonth = Carbon::parse($attributes['start_year'])->format('Y');
+
+                      $toMonth = Carbon::parse($attributes['end_year'])->format('Y');
+                  }
+
+
+                  if(isset($attributes['branch_id'])){
+                    $branch_id = $attributes['branch_id'];
+                  }
+
+                  if(isset($attributes['photographer_id'])){
+                    $photographer_id = $attributes['photographer_id'];
+                  }
+
+                  $orders = $this->scopeQuery(function($query) use ($from_year,$to_year, $company_id, $branch_id, $photographer_id){
+                      $query = $query->with(['branch' => function($q){
+                                }])
+                                ->with(['customer.room' => function($q){
+                                }])
+                                ->with(['customer.user' => function($q){
+                                }])
+                                ->with(['photographer' => function($q){
+                                }])
+                                ->with('orderexchange')
+                                ->whereHas('branch', function($q) use($company_id) {
+                                  $q->where('branches.company_id',$company_id);
+                                })
+                                ->where('status','DONE')
+                                ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '>=', $from_year)
+                                  ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '<=', $to_year);
+                      if($branch_id != ''){
+                        $query = $query->where('branch_id', $branch_id);
+                      }
+                      if($photographer_id != ''){
+                        $query = $query->where('photographer_id', $photographer_id);
+                      }
+                      return $query;
+                  })->get()->toArray();
+                  dd($orders);
+              return $orders;
+            }
+            if($type == 'week'){
+                 $startDay   = Carbon::today()->subDays(42)->format('Y-m-d');
+
+                $endDay     = Carbon::today()->format('Y-m-d');
+
+                $branch_id = "";
+
+                $photographer_id = "";
+
+                $company_id = $attributes['company_id'];
+
+                if(isset($attributes['start_day'])){
+                    $temp = Carbon::parse($attributes['start_day']);
+                    $startDay = Carbon::parse($attributes['start_day'])->format('Y-m-d');
+                    $endDay = $temp->addDays(42)->format('Y-m-d');
+                } 
+                if(isset($attributes['end_day'])){
+                    $temp = Carbon::parse($attributes['end_day']);
+                    $endDay = Carbon::parse($attributes['end_day'])->format('Y-m-d');
+                    $startDay = $temp->subDays(42)->format('Y-m-d');
+
+                }
+              
+                if(isset($attributes['start_day']) && isset($attributes['end_day'])){
+                    $startDay = Carbon::parse($attributes['start_day'])->format('Y-m-d');
+                    $endDay = Carbon::parse($attributes['end_day'])->format('Y-m-d');
+                }
+                if(isset($attributes['branch_id'])){
+                  $branch_id = $attributes['branch_id'];
+                }
+
+                if(isset($attributes['photographer_id'])){
+                  $photographer_id = $attributes['photographer_id'];
+                }
+
+                $orders = $this->scopeQuery(function($query) use ($startDay,$endDay, $company_id,$branch_id,$photographer_id){
+                    $query = $query->with(['branch' => function($q){
+                              }])
+                              ->with(['customer.room' => function($q){
+                              }])
+                              ->with(['customer.user' => function($q){
+                              }])
+                              ->with(['photographer' => function($q){
+                              }])
+                              ->with('orderexchange')
+                              ->whereHas('branch', function($q) use ($company_id){
+                                $q->where('branches.company_id',$company_id);
+                              })
+                              ->where('status','DONE')
+                              ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay]);
+
+                    if($branch_id != ''){
+                      $query = $query->where('branch_id', $branch_id);
+                    }
+                    if($photographer_id != ''){
+                      $query = $query->where('photographer_id', $photographer_id);
+                    }
+
+                    return $query;
+                })->get()->toArray();
+
+                dd($orders);
+                return $orders;
+                 
+            }
+        }
     }
 }

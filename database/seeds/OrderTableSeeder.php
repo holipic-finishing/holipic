@@ -40,9 +40,9 @@ class OrderTableSeeder extends Seeder
         $list_total_amount_euro = [8, 14 , 28, 42] ;
         $list_total_amount_rp = [150000, 250000 , 600000, 900000] ;
 
-        for($i=0; $i < 2000 ; $i++){
+        for($i=0; $i < 5000 ; $i++){
 
-        	$dated =  $faker->dateTimeBetween($startDate = '-6 months', $endDate = '+8 months', $timezone = null);
+        	$dated =  $faker->dateTimeBetween($startDate = '-15 months', $endDate = '+1months', $timezone = null);
 
         	$purchase_from_select = $faker->randomElement($purchase_from);
 

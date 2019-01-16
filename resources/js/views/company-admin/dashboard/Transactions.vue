@@ -282,13 +282,14 @@ export default {
   },
   methods: {
     fetchData(params){
-    	post(config.API_URL + 'histories/transactions', params)
+    	post(config.API_URL + 'order/history-order', params)
 				.then((res) => {
-					if(res.data && res.data.success){
-						this.desserts = res.data.data
-						this.loading = false
-            this.$root.$emit('total-companies', this.desserts.length)
-					}
+					// if(res.data && res.data.success){
+					// 	this.desserts = res.data.data
+					// 	this.loading = false
+     //        this.$root.$emit('total-companies', this.desserts.length)
+					// }
+          console.log(res)
 				})
 				.catch((e) =>{
 					console.log(e)

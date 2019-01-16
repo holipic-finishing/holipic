@@ -234,4 +234,37 @@ class OrderAPIController extends AppBaseController
         return $csvPath;
     }
 
+    /**
+     *
+     * get infomation of order table
+     *
+     */
+    
+    public function getHistoryOrders(Request $request){
+        $input = $request->all();
+        if(isset($input['type'])){
+            $results =  $this->orderRepository->getHistoryOrders($input);
+        }else{
+
+            if ($request->has(['defaultDay'])) {
+                $input['type'] = 'day';
+                $results =  $this->orderRepository->getHistoryOrders($input);
+            } 
+            if ($request->has(['defaultWeek'])) {
+                $input['type'] = 'week';
+                $results =  $this->orderRepository->getHistoryOrders($input);
+            } 
+            if ($request->has(['defaultMonth'])) {
+                $input['type'] = 'month';
+                $results =  $this->orderRepository->getHistoryOrders($input);
+            } 
+            if ($request->has(['defaultYear'])) {
+                $input['type'] = 'year';
+                $results =  $this->orderRepository->getHistoryOrders($input);
+            }
+
+            return $results; 
+        }
+    }
+
 }

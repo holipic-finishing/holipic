@@ -410,7 +410,7 @@
 				</div>
 			</app-card>
 		</v-layout>
-		<!-- <transactions></transactions> -->
+		<transactions></transactions>
 	</v-container>		
 </template>
 
@@ -484,6 +484,7 @@ data() {
 			branch_id: '',
 			photographer_id:''
 		},
+
 
 	  }
 	},
@@ -717,7 +718,7 @@ data() {
 
   			let params = {
 				defaultDay :  'default',
-
+				
 			}
 
   			let obj = {
@@ -803,9 +804,6 @@ data() {
 			})
   			
 		},
-
-  		
-
 
 	},
 	created(){

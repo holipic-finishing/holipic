@@ -347,7 +347,7 @@ export default {
           setTimeout(() => {this.alertStt = false}, 1500)
           this.key = 0
 					this.$root.$emit('editItemSucess')
-					// this.$root.$emit('closeDrawerItem', false)
+					this.$root.$emit('closeDrawerItem', false)
 				}
 			})
 			.catch((e) =>{

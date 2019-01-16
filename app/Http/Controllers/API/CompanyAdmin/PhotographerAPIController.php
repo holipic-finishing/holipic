@@ -11,6 +11,7 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Repositories\ActivityLogRepository;
 
 /**
  * Class PhotographerController
@@ -22,9 +23,13 @@ class PhotographerAPIController extends AppBaseController
     /** @var  PhotographerRepository */
     private $photographerRepository;
 
-    public function __construct(PhotographerRepository $photographerRepo)
+    private $activityRepo;
+
+    public function __construct(PhotographerRepository $photographerRepo, ActivityLogRepository $activityRepo)
     {
         $this->photographerRepository = $photographerRepo;
+
+        $this->activityRepo = $activityRepo;
     }
 
     /**
@@ -122,7 +127,11 @@ class PhotographerAPIController extends AppBaseController
             return $this->sendError('Photographer not found');
         }
 
+        $name = $photographer['name'];
+
         $photographer->delete();
+
+        $this->activityRepo->insertActivityLog(request('userId'), 'Delete Photographer '.$name);
 
         return $this->sendResponse($id, 'Photographer deleted successfully');
     }
@@ -145,6 +154,8 @@ class PhotographerAPIController extends AppBaseController
         if(!$photographer) {
             return $this->sendError('Error Add Photographer');
         }
+
+        $this->activityRepo->insertActivityLog(request('userId'), 'Add Photographer '.$photographer['name']);
 
         return $this->sendResponse($photographer, 'Add Photographer successfully');
     }

@@ -60,6 +60,7 @@ Route::group(['namespace' => 'API'],function(){
 	************************************************
 	*/
 
+	// Route::post('change-password', 'UserAPIController@changePassWord');
 	Route::post('change-password', 'UserAPIController@changePassWord');
 	
 	Route::namespace('CompanyAdmin')->group(function(){
@@ -86,7 +87,7 @@ Route::group(['namespace' => 'API'],function(){
 	/***************************************************
 	**********	ROUTER COMPANY AND ADMIN   *************
 	****************************************************/
-	Route::post('change-password', 'UserAPIController@changePassWord');
+		
 
 		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
 	
@@ -118,9 +119,9 @@ Route::group(['namespace' => 'API'],function(){
 		
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
-<<<<<<< HEAD
+
 		Route::get('activity-log/update', 'ActivityLogController@updateIsReadActivityLog');
-=======
+
 		/*************CompanyPackageAPIController**************/
 
 		Route::post('get-company-package', 'CompanyPackageAPIController@getPackage');
@@ -132,7 +133,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::post('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
 
 		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
->>>>>>> 270715c2fd655d702f01b5f689487870a778c165
+
 
 	});
 

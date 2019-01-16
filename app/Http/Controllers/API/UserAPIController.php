@@ -161,7 +161,7 @@ class UserAPIController extends AppBaseController
                 ]);
             }
 
-            $this->notificationRepository->createNotifi($user->id, 'changePasswordSuccess');
+            $this->notificationRepository->createNotifi($user->id, 'changePasswordSuccess','Change Password Success');
             
             if($user){
                 $user = User::where('email',$email)->first()->update([
@@ -172,7 +172,10 @@ class UserAPIController extends AppBaseController
             // Save activity logs
             $log = Activity::all()->last();
             $log['user_id'] = User::where('email',$email)->first()->id;
+            $log['description_log'] = 'Change Password';
             $log->save();
+
+            event(new \App\Events\RedisEventActivityLog($log));
 
             return $this->sendResponse($user, 'Change password success');
         }

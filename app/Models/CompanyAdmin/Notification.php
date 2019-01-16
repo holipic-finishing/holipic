@@ -21,7 +21,8 @@ class Notification extends Model
     public $fillable = [
         'user_id',
         'message',
-        'is_read'
+        'is_read',
+        'push_notification'
     ];
 
     /**
@@ -32,7 +33,8 @@ class Notification extends Model
     protected $casts = [
         'user_id' => 'integer',
         'message' => 'string',
-        'is_read' => 'boolean'
+        'is_read' => 'boolean',
+        'push_notification' => 'string'
     ];
 
     /**

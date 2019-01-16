@@ -39,8 +39,9 @@
 					<v-icon color="grey">fullscreen</v-icon>
 				</v-btn>
 				
-				<notifications v-show="role_id =='2'"></notifications>
+				<notifications v-show="role_id == '2' "></notifications>
 				<!-- <cart :horizontal="horizontal"></cart> -->
+				<activity-logs v-show="role_id == '2'"></activity-logs>
 				<language-provider></language-provider>
 				<user></user>
 			</div>
@@ -56,13 +57,15 @@ import Notifications from "./Notifications";
 import User from "./User";
 import { getCurrentAppLayout } from "../../helpers/helpers";
 import { mapGetters } from "vuex";
+import ActivityLogs from "./ActivityLogs.vue"
 
 export default {
 	components: {
 		appSidebar: Sidebar,
 		LanguageProvider,
 		Notifications,
-		User
+		User,
+		ActivityLogs
 	},
 	props: {
 		horizontal: {

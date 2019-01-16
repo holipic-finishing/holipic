@@ -43,6 +43,16 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('files', 'FileAPIController');
 
 	Route::resource('coupon_codes', 'CouponCodeAPIController');
+
+	/***************************************************
+	**********	LIST ROUTER RESOURCE COMPANY ADMIN   *************
+	****************************************************
+	*/
+	Route::group(['namespace' => 'CompanyAdmin'], function() {
+		Route::resource('company_packages', 'CompanyPackageAPIController');
+
+		Route::resource('photo_packages', 'PhotoPackageAPIController');
+	});
 	
 
 	/***********************************************
@@ -68,12 +78,30 @@ Route::group(['namespace' => 'API'],function(){
 		
 
 		/************* Photographers APIController**************/
+		Route::get('get-notifications/{user_id}','NotificationAPIController@getNotification');
+
+		/*************PagesAPIController**************/
+
+		Route::resource('branches', 'BranchAPIController');
+
+
+	/***************************************************
+	**********	ROUTER COMPANY AND ADMIN   *************
+	****************************************************/
+	Route::post('change-password', 'UserAPIController@changePassWord');
+
+		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
+	
+		Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
+
+		/*************PagesAPIController**************/
 
 		Route::get('photographers', 'PhotographerAPIController@getPhotographers');
 
 		Route::delete('photographer/{id}', 'PhotographerAPIController@destroy');
 
 		Route::post('photographer', 'PhotographerAPIController@savePhotographer');
+
 
 		Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
 
@@ -97,11 +125,26 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('company/branches/customers/export', 'CustomerAPIController@exportEmailCustomers');
 
+		Route::delete('company/branches/customer/delete/{id}', 'CustomerAPIController@destroy');
+
 
 
 		/*************ActivityLogController**************/
 		
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
+
+		Route::get('activity-log/update', 'ActivityLogController@updateIsReadActivityLog');
+		/*************CompanyPackageAPIController**************/
+
+		Route::post('get-company-package', 'CompanyPackageAPIController@getPackage');
+
+		Route::post('add/companyPackage', 'CompanyPackageAPIController@addPackage');
+
+		Route::post('edit/companyPackage/{itemId}', 'CompanyPackageAPIController@editPackage');
+
+		Route::post('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
+
+		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
 
 	});
 

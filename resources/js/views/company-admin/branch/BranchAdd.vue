@@ -177,7 +177,7 @@ export default {
   methods: {
   	saveBranch()
   	{
-  		console.log(this.branch)
+  		// console.log(this.branch)
   		if (this.$refs.form.validate()) {
   			let params = {information: this.branch, companyId: this.company.company_id}
   			post(config.API_URL+'company/branch', params)

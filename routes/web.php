@@ -66,11 +66,16 @@ Route::get('test', function() {
 
 // dd($response);
 	// $id_one_signal = \App\Models\User::select('id_one_signal')
- //                                ->where('id','6')
+ //                                ->where('email','amara.conroy@hotmail.com')
  //                                ->first();
+ //                 $id = "adsfasfasdfasdf";               
  //     if($id_one_signal){
- //     	dd($id_one_signal->id_one_signal);
+ //     	$data = $id_one_signal->id_one_signal . ',' . $id;
  //     }
+
+ //     // $arId = explode(',',$data);
+ //     $arId = ['asdfasdfasdfasdf','asdfasdfasdfasdf'];
+ //     dd($arId);
 });
 
 

@@ -195,9 +195,18 @@ class UserAPIController extends AppBaseController
 
         $input  = $request->all();
 
-        $user = User::where('email',$input['email'])->first()->update([
-                        'id_one_signal' => $input['id_one_signal']
+        $findUser = User::where('email',$input['email'])->first();
+
+        if($findUser){
+            
+            $id_one_signal = $findUser->id_one_signal . ',' . $input['id_one_signal'];
+
+            $user = User::where('email',$input['email'])->first()->update([
+                        'id_one_signal' => $id_one_signal
                     ]);  
+        
+        }
+
         return $this->sendResponse($user, 'Updata success');
     }
 }

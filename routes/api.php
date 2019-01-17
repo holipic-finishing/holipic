@@ -156,6 +156,9 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('order/history-order', 'OrderAPIController@getHistoryOrders');
 
+	Route::get('order/count-income', 'OrderAPIController@countIncome');
+	
+
 	/***********************************************
 	**********	ROUTER SUPER ADMIN   ***************
 	************************************************/

@@ -32,7 +32,7 @@ class OrderTableSeeder extends Seeder
 
         $purchase_from = ['WEB', 'SHOP'];
 
-        $status = ['PENDING', 'DONE', 'CANCEL'];
+        $status = ['DONE', 'PENDING', 'CANCEL'];
 
         $list_currency_id = [1,2,3];
 
@@ -42,7 +42,7 @@ class OrderTableSeeder extends Seeder
 
         for($i=0; $i < 5000 ; $i++){
 
-        	$dated =  $faker->dateTimeBetween($startDate = '-15 months', $endDate = '+1months', $timezone = null);
+        	$dated =  $faker->dateTimeBetween($startDate = '-15 months', $endDate = '+2months', $timezone = null);
 
         	$purchase_from_select = $faker->randomElement($purchase_from);
 

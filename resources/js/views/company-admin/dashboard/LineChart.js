@@ -58,6 +58,7 @@ export default {
   mounted() {
     
     this.$root.$on('companyChart', res => {
+        this.countIncome(res.params)     
        	this.getData(res.params)
        	this.chooes = res.chooes
     });
@@ -92,12 +93,13 @@ export default {
   					defaultDay :  'default',
   		}
     
-  		this.getData(params);
+      this.countIncome(params);
+      this.getData(params);
     },
 
     getData(params){
       let url = config.API_URL+'company-admin-chart'
-       params.company_id = this.company_id
+      params.company_id = this.company_id
 			getWithData(url,params)
 			.then((res) => {
 				if(res.data.success && res){
@@ -146,7 +148,6 @@ export default {
 		},
 
 	handleDataWeek(data){
-
 			var lables = []
 	        var total = []
 	        _.forEach(data, function(value, key) {
@@ -156,6 +157,24 @@ export default {
 	        this.renderChartData(lables,total);
 
 	},
+
+  countIncome(params){
+      let url = config.API_URL+'order/count-income'
+      params.company_id = this.company_id
+      getWithData(url,params)
+      .then((res) => {
+          if(res.data.success && res){
+            var totalImcome = res.data.data
+            this.$root.$emit('totalImcome', totalImcome)
+          }
+        
+      })
+      .catch((err) => {
+          console.log(err)
+      })
+
+  },
+  
 
 
   }

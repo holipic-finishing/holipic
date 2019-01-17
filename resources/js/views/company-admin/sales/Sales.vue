@@ -116,7 +116,7 @@
 			  		</v-layout>
 			  	</v-flex>
 			  	<v-flex md1 sm12 xs12 align-center justify-center>
-			  		<v-btn class="btn-gradient-primary" fab dark @click="sreachSales()">Go</v-btn>
+			  		<v-btn class="btn-gradient-primary" small fab dark @click="sreachSales()">Go</v-btn>
 			  	</v-flex>
 					<v-flex xs12>
 						<v-card-title>
@@ -367,15 +367,20 @@ export default {
 
 		exportFile(){
 			this.makeParams()
+
 			let params = {
-                search:this.filterSearch,
-                company_id : this.authUser.company_id
-            }	
-			let url = config.API_URL+'order/sales/company/export'
+        search:this.filterSearch,
+        company_id : this.authUser.company_id
+      }	
+
+			let url = config.API_URL + 'order/sales/company/export'
+
 			getWithData(url,params)
 			.then(res => {
 				if(res.data && res.data.status){
-					window.location.href = res.data.link
+					console.log(res.data.link)
+					// window.location.href = res.data.link
+					window.open(res.data.link, '_blank')
 				}
 			})
 			.catch(err => {

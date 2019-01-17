@@ -173,7 +173,6 @@ class OrderAPIController extends AppBaseController
      */
     public function exportSalesCompany(Request $request){
         $input = $request->all();
-        
         $this->createLink($input['company_id']);
 
         $searchBy = [];
@@ -214,8 +213,8 @@ class OrderAPIController extends AppBaseController
      */
     public function createLink($company_id){
 
-        $path = env('DB_MYSQL_DIR') . DIRECTORY_SEPARATOR;
-        
+        $path = public_path() . '/files' . DIRECTORY_SEPARATOR;
+
         $csvPath = $path .$company_id. '_Sales.csv';
         if(\File::exists($csvPath)){
             unlink($csvPath);

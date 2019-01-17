@@ -454,12 +454,12 @@ class OrderRepository extends BaseRepository
     }
 
     //********** Insert File CSV **************
-   public function insertCSVFile($attributes,$company_id){
+    public function insertCSVFile($attributes,$company_id){
  
         if(!$attributes)
             return false;
 
-        $pathPublic = env('DB_MYSQL_DIR').DIRECTORY_SEPARATOR;
+        $pathPublic = public_path() . '/files' . DIRECTORY_SEPARATOR;
 
         $filename =  $company_id . '_Sales.csv';
        

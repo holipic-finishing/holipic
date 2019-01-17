@@ -26,7 +26,7 @@
 	  	        hide-details
 	  	      ></v-text-field>
 	        </div>
-			    <v-btn small fab dark color="indigo" @click="showFromAdd()" class="ml-2 btn-gradient-primary">
+			    <v-btn small fab dark @click="showFromAdd()" class="ml-2 btn-gradient-primary">
 						<v-icon dark>add</v-icon>
 					</v-btn>
 		    </v-card-title>

@@ -483,6 +483,8 @@
 </template>
 
 <script>
+
+import { mapGetters } from "vuex";
 import Vue from 'vue'
 // charts component
 import LineChart from './LineChart.js'
@@ -506,44 +508,45 @@ export default {
     	count_pack_basic:20,
     	count_pack_pro:20,
     	lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
+    	authUser : JSON.parse(localStorage.getItem('user')),
      	alertStt: false,
-			alertType: 'success',
-			alertMes: '',
-			ChartConfig,
-			count_pack_basic:0,
-			count_pack_pro:0,
-			count_pack_company:0,
-			from_day:'',
-			to_day:'',
-			from_month:'',
-			to_month:'',
-			from_year:'',
-			to_year:'',
-			typeTime:'day',
-			total:0,
-			from_day_week:'',
-			to_day_week:'',
-			validate:false,
-			menu1:false,
-			menu2:false,
-			menu3:false,
-			menu4:false,
-			menu5:false,
-			menu6:false,
-			menu7:false,
-			menu8:false,
-			date: '',
-			defaultYear : new Date().getUTCFullYear() + '/31/12',
-			totalCompany:0,
-			tweenedNumber: 0,
-			tweenedNumberTransactions: 0,
-			company_id:JSON.parse(localStorage.getItem('user')).company_id,
-			listBranch: [],
-			listPhotographer: [],
-			item : {
-				branch_id: '',
-				photographer_id:''
-			},
+		alertType: 'success',
+		alertMes: '',
+		ChartConfig,
+		count_pack_basic:0,
+		count_pack_pro:0,
+		count_pack_company:0,
+		from_day:'',
+		to_day:'',
+		from_month:'',
+		to_month:'',
+		from_year:'',
+		to_year:'',
+		typeTime:'day',
+		total:0,
+		from_day_week:'',
+		to_day_week:'',
+		validate:false,
+		menu1:false,
+		menu2:false,
+		menu3:false,
+		menu4:false,
+		menu5:false,
+		menu6:false,
+		menu7:false,
+		menu8:false,
+		date: '',
+		defaultYear : new Date().getUTCFullYear() + '/31/12',
+		totalCompany:0,
+		tweenedNumber: 0,
+		tweenedNumberTransactions: 0,
+		company_id:JSON.parse(localStorage.getItem('user')).company_id,
+		listBranch: [],
+		listPhotographer: [],
+		item : {
+			branch_id: '',
+			photographer_id:''
+		},
 	  }
 	},
 	methods:{
@@ -860,6 +863,8 @@ export default {
 		},
 	},
 	created(){
+		var user = this.authUser  
+  		this.$store.dispatch("connectionPushNotification", {user});
 		this.fetchData()
 		this.getListBranch()		
 		

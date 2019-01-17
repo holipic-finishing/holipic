@@ -35,8 +35,11 @@ class NewNotification
         $domain = env("MIX_APP_PROTOCOL")  . "://" . env("MIX_APP_DOMAIN");
         $oneSingalNotification = new Notification($this->oneSignal);
         $notification = $event->notification;
+        $id_one_signal = $event->id_one_signal;
+        
         $notificationData = [
-            "included_segments" => ["All"],
+            // "included_segments" => ["All"],
+            "include_player_ids" => [$id_one_signal],
             "contents" => [
                 "en" => $notification->push_notification,
             ],
@@ -53,7 +56,7 @@ class NewNotification
             "isChromeWeb" => true,
         ];
 
-         $createNotification = $oneSingalNotification->create($notificationData);
-         // Log::info($createNotification);
+        $createNotification = $oneSingalNotification->create($notificationData);
+ 
     }
 }

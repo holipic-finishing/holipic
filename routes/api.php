@@ -68,6 +68,8 @@ Route::group(['namespace' => 'API'],function(){
 	************************************************/
 
 	Route::post('change-password', 'UserAPIController@changePassWord');
+
+	Route::post('update-onesignal-id','UserAPIController@updateOnesignalUser');
 	
 	Route::namespace('CompanyAdmin')->group(function(){
 
@@ -80,6 +82,15 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
 		Route::get('get-notifications/{user_id}','NotificationAPIController@getNotification');
+
+
+		/*************BranchAPIController**************/
+
+		Route::resource('branches', 'BranchAPIController');
+
+		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
+	
+		Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
 		
 		/*************PhotographerAPIController**************/
 

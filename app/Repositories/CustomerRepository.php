@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Customer;
+use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -41,10 +42,12 @@ class CustomerRepository extends BaseRepository
 
         $data = [];
         
-        if($companyId && $companyId != '') {
+        if(!empty($companyId)) {
+
             $customers = $this->model->with('user')->with('room')->with(['branch' => function($q) use ($companyId) {
-                                     $q->whereCompanyId($companyId);
-                        }])->get()->toArray();
+                    $q->whereCompanyId($companyId);
+            }])->get()->toArray();
+
 
             foreach($customers as $customer) 
             {
@@ -95,5 +98,93 @@ class CustomerRepository extends BaseRepository
         }
 
         return false;
+    }
+
+    public function handelGetBranchCustomers($input)
+    {
+        $companyId = $input['company_id'];
+        $user_id = $input['id']; 
+
+        $data = [];
+        
+        if($companyId && $companyId != '') {
+            $customers = $this->model
+                                ->with('user')
+                                ->with('room')
+                                ->with(['branch' => function($q) use ($companyId, $user_id) {
+                                                     $q->whereCompanyId($companyId)->whereUserId($user_id);
+                                        }])->get()->toArray();
+
+            foreach($customers as $customer) 
+            {
+                if($customer['branch'] != null)
+                {
+                    $data[] = $customer;
+                }
+            }
+
+            return $data;
+        }
+
+        return false;
+    }
+
+    public function handleUpdateBranchCustomer($id)
+    {
+       $customer = $this->model->findOrFail($id);
+
+        $input = request('params');
+
+        if(request('params.status')) {
+            $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false] ;
+        }
+
+        if (request('params.email')) {
+            User::where('id', '=', $customer->user_id)->update($input);
+        }
+
+        if(request()->file('avatar')) {
+
+            $image = request()->file('avatar');
+
+            $typeFile = $image->getClientOriginalExtension();
+
+            if($typeFile != 'jpg' && $typeFile != 'png' && $typeFile != 'jpeg'){
+                return false;
+            }
+
+            $name = time().'_'.$customer['id'].'_'.$image->getClientOriginalName();
+            $input = ['avatar' => '/images/customer/'.$name];
+
+            $destinationPath = public_path('/images/customer');
+            $image->move($destinationPath, $name);
+        }
+
+        if(!is_null($customer))
+        {
+            $customer = $customer->update($input);
+
+            return $customer;
+        }
+
+        return false;
+    }
+
+    public function handleDeleteBranchCustomer($id)
+    {
+        $customer = $this->model->find($id); 
+        if (empty($customer)) {
+            return $this->sendError('Customer not found');
+        }
+
+        $user = User::where('id', '=', $customer->user_id)->first(); 
+        if (empty($user)) {
+            return $this->sendError('User not found');
+        }
+
+        $user->delete();
+        $customer->delete();
+
+        return true;
     }
 }

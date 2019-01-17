@@ -85,7 +85,7 @@ const actions = {
             confirmPassword : payload.params.confirmPassword,
             roleId : payload.params.role_id
         }
-       
+
         post(url,params)
           .then((res) => {
             if(res.data && res.data.success){

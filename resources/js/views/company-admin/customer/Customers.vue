@@ -184,14 +184,13 @@ export default {
   	{
   		this.dialog = true
   		this.itemIdToDelete = item
-  		console.log(this.itemIdToDelete)
   	},
   	showFormEdit(item)
   	{
   		this.$root.$emit('showFormEditCustomer', {showNavigation: true, data: item})
   	}
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

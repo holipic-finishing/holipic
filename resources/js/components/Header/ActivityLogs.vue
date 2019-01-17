@@ -7,7 +7,7 @@
 		origin="right top" z-index="99" content-class="cart-dropdown" transition="slide-y-transition" nudge-top="-20"
 	>
 		<v-badge right overlap slot="activator" title="Activity Logs" @click.native="hiddenMenuActivity()">
-			<span slot="badge">{{total}}</span>
+			<span slot="badge" v-if="total>0">{{total}}</span>
 		
 			<i class="zmdi grey--text animated zmdi zmdi-ticket-star infinite wobble zmdi-hc-fw font-lg">
 				
@@ -35,11 +35,14 @@
 			<div v-else class="dropdown-content">
 				<vue-perfect-scrollbar  :settings="settings" class="custom-height">
 					<v-list two-line>
+						
 						<template v-for="(value, index) in data">
+							
 							<v-list-tile :key="index" class="hover_activity">
 								<!-- <div class="product-img mr-3">
 									<img height="55" width="55" :src="value.productImg">
 								</div> -->
+
 								<v-list-tile-content>
 									<span class="fs-14">{{companyName}}</span>
 									<span class="fs-12 grey--text">
@@ -59,8 +62,9 @@
 								</v-list-tile-action>
 
 							</v-list-tile>
-						
+							
 						</template>
+					
 					</v-list>
 				</vue-perfect-scrollbar>
 				<delete-confirmation-dialog
@@ -103,7 +107,7 @@ export default {
       		data: [],
       		user: JSON.parse(localStorage.getItem('user')),
 		    url: config.API_URL+'activity-log/show',
-		    total: '',
+		    total: 0,
 		    paginator: {
                 perPageDay: 7,
                 page: 1,
@@ -118,8 +122,10 @@ export default {
   	created() {
   		var _this = this
   		socket.on('view-activity',function(data){
-			_this.data.unshift(data)
-			_this.total = _this.total + 1
+			// _this.data.unshift(data)
+			// _this.total = _this.total + 1
+			_this.data = []
+			_this.getActivityLogs(1)
 			
 		}.bind(this));
 		
@@ -129,10 +135,7 @@ export default {
   		this.companyName = this.user.company_name
   	},
   	computed: {
-   		folowActivity() {
-   			this.data = []
-          	this.getActivityLogs(this.paginator.page)
-   		}
+   		
   	},
   	methods: {
 		getActivityLogs(page) 
@@ -146,6 +149,7 @@ export default {
 			.then(response => {
 				if (response.data && response.data.success) {
 					let _this = this
+
 					var array = []
 
 					 _.forEach(response.data.data[0][0],function(value, key){
@@ -195,32 +199,37 @@ export default {
 			})
 		},
 		readActivityLog(item, key) {
-			console.log(item)
 			get(config.API_URL+'activity-log/update?id='+item.id)
 			.then(response => {
 				if(response && response.data.success) {
 					 this.data.splice(key, 1);
 					 this.total = this.total - 1
-					 // this.data = []
-					 // this.getActivityLogs(this.paginator.page)
+					 this.data = []
+					 this.getActivityLogs(1)
+
+					 if(this.data.length <= 7) {
+					 	this.checkloadMore = false
+					 }
+
 				}
 			})
 		},
 		hiddenMenuActivity()
 		{
 			this.folowActivity
-			// console.log(this.hiddenActivity)
 		}
+		
   	}
 };
 </script>
 <style scoped lang="scss">
 	.v-card__actions {
-		justify-content: center !important
+		justify-content: center !important;
 	}
 
 	.style-data {
-		text-align: center !important
+		text-align: center !important;
+		
 	}
 	.custom-height{
 		height: 350px !important;

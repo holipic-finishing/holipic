@@ -139,6 +139,7 @@ class UserAPIController extends AppBaseController
 
             $token = (new Parser())->parse((string) $request['access_token']);         
             $email=  $token->getClaim('email');
+      
             $user = User::where('email',$email)->first();
 
             if (!password_verify($request['oldPassword'], $user->password)) {   

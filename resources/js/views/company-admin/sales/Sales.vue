@@ -56,6 +56,8 @@
 				              lazy
 				              transition="scale-transition"
 				              offset-y
+				              full-width
+				              min-width="290"
 										>
 											<v-text-field 
 												slot="activator"
@@ -88,6 +90,8 @@
 				              lazy
 				              transition="scale-transition"
 				              offset-y
+				              full-width
+				              min-width="290"
 										>
 											<v-text-field 
 												slot="activator"

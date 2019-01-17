@@ -153,7 +153,6 @@ class OrderAPIController extends AppBaseController
                     $searchBy[$tmp[0]] = $tmp[1];
                 }
             }
-     
         }
 
         $orders = $this->orderRepository->getAllOrders($input['company_id'],$searchBy);

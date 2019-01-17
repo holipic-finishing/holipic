@@ -30,6 +30,14 @@ export const menus = {
 			items:null,
 			role_id : 3
 		},
+		{
+			action: 'zmdi-pin-assistant',
+			title: 'message.customer',
+			active: false,
+			path: '/customers',
+			items:null,
+			role_id : 3
+		},
 
 
 		    /////////////////////////////////////////////
@@ -88,14 +96,21 @@ export const menus = {
 			role_id : 2
 		},
 		{
+			action: 'zmdi zmdi-email',
+			title: 'message.emails',
+			active: true,
+			path: '/email-setting',
+			items: null,
+			role_id: 2
+		},	
+		{
 			action: 'zmdi-comment-list',
 			title: 'message.package',
 			active: true,
 			path: '/packages',
-			items:null,
+			items: null,
 			role_id : 2
 		},
-		
 		
 		 	/////////////////////////////////////////////
 		   ///////								  //////

@@ -191,7 +191,7 @@ export default {
   		{
   			if (this.$refs.form.validate()) {
 
-	  			let params = {information: this.photographer}
+	  			let params = {information: this.photographer, userId: this.company.id}
 	  			post(config.API_URL+'photographer', params)	
 	  			.then(response =>{
 	  				if(response && response.data.success) {

@@ -134,10 +134,10 @@ class UserAPIController extends AppBaseController
     }
 
     public function changePassWord(Request $request) {
-
+        // dd(123);
         try {
 
-            $token = (new Parser())->parse((string) $request['access_token']);           
+            $token = (new Parser())->parse((string) $request['access_token']);         
             $email=  $token->getClaim('email');
       
             $user = User::where('email',$email)->first();
@@ -185,5 +185,28 @@ class UserAPIController extends AppBaseController
         }
        
         
+    }
+
+    /*
+    *  Target : Function update Onesignalid in table users with where email
+    */
+
+    public function updateOnesignalUser(Request $request){
+
+        $input  = $request->all();
+
+        $findUser = User::where('email',$input['email'])->first();
+
+        if($findUser){
+            
+            $id_one_signal = $findUser->id_one_signal . ',' . $input['id_one_signal'];
+
+            $user = User::where('email',$input['email'])->first()->update([
+                        'id_one_signal' => $id_one_signal
+                    ]);  
+        
+        }
+
+        return $this->sendResponse($user, 'Updata success');
     }
 }

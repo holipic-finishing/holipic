@@ -87,11 +87,11 @@ export default {
  	components: { Ckeditor },
 	data () {
 		return {
-			alertStt: false,
+			  alertStt: false,
 		    alertType: 'success',
 		    alertMes: '',
 		    key : 0,
-			rules: {
+			  rules: {
         		required: value => !!value || 'This field is required.'
     		},
 		    config: {

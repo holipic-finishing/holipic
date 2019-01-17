@@ -2,7 +2,7 @@
 	<v-layout row wrap>
 		<app-card
 			colClasses="xl12 lg12 md12 sm12 xs12"
-			customClasses="mb-0 sales-widget"
+			customClasses="p-0 elevation-5"
 			:fullScreen="true"
 			:reloadable="true"
 			:closeable="false"
@@ -16,25 +16,27 @@
         class="chat-sidebar-wrap"
         width="450"
       >
-        <transaction-item :eventType="eventType" :item="item"></transaction-item>
+        <!-- <transaction-item :eventType="eventType" :item="item"></transaction-item> -->
       </v-navigation-drawer>
 
       <v-toolbar flat color="white">
         <v-toolbar-title>
-            Orders
+          Orders
         </v-toolbar-title>
       </v-toolbar>
-      <v-divider></v-divider>
+      <v-divider class="m-0"></v-divider>
 			<!--Search Component -->
 			<v-card-title>
 	      <v-spacer></v-spacer>
-	      <v-text-field
-	        v-model="search"
-	        append-icon="search"
-	        label="Enter Search Value"
-	        single-line
-	        hide-details
-	      ></v-text-field>
+        <div class="w-25">
+  	      <v-text-field
+  	        v-model="search"
+  	        append-icon="search"
+  	        label="Enter Search Value"
+  	        single-line
+  	        hide-details
+  	      ></v-text-field>
+        </div>
 	    </v-card-title>
 	    <!--End Search Component -->
 			<!--Data Table Component -->
@@ -42,7 +44,7 @@
 				v-model="selected"
 			  :headers="headers"
 			  :items="itemsToView"
-			  class="elevation-5"
+			  class="elevation-5 body-2 global-custom-table"
 			  :pagination.sync="pagination"
 			  :loading="loadingCom"
 			  select-all
@@ -62,7 +64,7 @@
             >
             	<div class="custom-header">
 	              <v-tooltip bottom>
-	                <span slot="activator" class="text-capitalize subheading font-weight-bold">
+	                <span slot="activator" class="text-capitalize font-weight-bold">
 	                  {{ header.text }}
 	                </span>
 	                <span>
@@ -81,17 +83,19 @@
 		    		<td>{{ props.item.id }}</td>
             <td>{{ props.item.branch.name }}</td>
             <td>{{ props.item.photographer.name }}</td>
-            <td>{{ props.item.customer.room.room_hash }}</td>
+            <td v-if="props.item.customer && props.item.customer.room">{{ props.item.customer.room.room_hash }}</td>
+            <td v-else>No Room</td>
             <td>{{ props.item.total_amount_to_dollar }}</td>
-            <td>{{ props.item.purchase_date }}</td>
-            <td>{{ props.item.download_date }}</td>
-            <td>{{ props.item.created_at }}</td>
-            <td>{{ props.item.customer.user.email }}</td>
+            <td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
+            <td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
+            <td>{{ props.item.created_at | moment("DD/MM/YYYY") }}</td>
+            <td v-if="props.item.customer && props.item.customer.user">{{ props.item.customer.user.email }}</td>
+            <td v-else>No Email</td>
             <td>{{ props.item.payment_method }}</td>
 		    		<td>
-                <v-btn color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
-                <v-btn color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
-                <v-btn color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
+                <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
+                <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
+                <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
             </td>
 											
 	    	</template>
@@ -120,14 +124,14 @@
 import config from '../../../config'
 import { get, post, put, del } from '../../../api'
 import { mapGetters } from "vuex"
-import TransactionItem from './TransactionItem'
+// import TransactionItem from './TransactionItem'
 import Vue from 'vue'
 
 export default {
   name: 'Orders',
 
   components:{
-    TransactionItem
+    // TransactionItem
   },
   data () {
     return {
@@ -191,6 +195,7 @@ export default {
           text: 'Payment Method',
           align: 'center',
           value: 'payment_method',
+          width: '5%'
         },
         { 
           text: 'Status',
@@ -213,8 +218,6 @@ export default {
       itemIdToDelete: null,
       rowsPerPageItems: [ 20, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 } ],
       company_id:JSON.parse(localStorage.getItem('user')).company_id,
-
-      
     }
   },
   computed: {

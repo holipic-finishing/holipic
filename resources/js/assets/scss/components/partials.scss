@@ -94,7 +94,7 @@
   .v-input__slot{
     min-height: 40px !important;
     height:40px !important;
-    top: 15px !important;
+    top: 9px !important;
     position: relative;
 	}
 }
@@ -139,3 +139,13 @@
 .custom-height-td-package{
 	padding:0px 0px !important;
 }
+
+.center-input-customer{
+	.v-input__slot {
+	    margin: 0px auto;
+	}
+	.v-text-field__slot input{
+		margin-top: inherit;
+	}
+}
+

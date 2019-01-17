@@ -71,7 +71,7 @@ export const menus = {
 			role_id : 2
 		},
 		{
-			action: 'zmdi-pin-assistant',
+			action: 'zmdi zmdi-account-box-mail',
 			title: 'message.customer',
 			active: false,
 			path: '/customers',

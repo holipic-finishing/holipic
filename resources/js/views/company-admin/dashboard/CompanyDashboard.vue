@@ -1,10 +1,10 @@
 <template>
-	<v-container fluid pt-0 grid-list-xl>
-		<v-layout row wrap mt-3>
+	<v-container fluid pt-0 grid-list-xl mt-3>
+		<v-layout row wrap>
 			
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="mb-0 sales-widget"
+				customClasses="p-0 elevation-5"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
@@ -27,18 +27,24 @@
 					</div>
 					<line-chart :width="300"></line-chart>
 				</div>
-
+				
+				<!-- Alert -->
 				<div class="pl-4">
 					<v-alert class="subheading"  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 				</div>
+				<!-- Alert -->
+				
+				<!-- Day Component -->
+				<v-layout row wrap mt-3 v-if="typeTime == 'day'">
 
-				<div v-if="typeTime == 'day'">
-					<p class="text-primary">(*) Please No choose more than 15 days</p>
-					<div class="row">
+					<v-flex xs12>
+					  <div class="text-primary">(*) Please No choose more than 15 days</div>
+					</v-flex>
 
-						<div class="col-3">
-							<div class="style-card start-day w-100">
-								<p>Start</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">Start</div>
 								<v-menu 
 									:close-on-content-click="false"
 	                v-model="menu1"
@@ -46,6 +52,7 @@
 	                lazy
 	                transition="scale-transition"
 	                offset-y
+	                full-width
 								>
 									<v-text-field 
 										slot="activator"
@@ -62,12 +69,14 @@
 										@input="reportByRangeDay"
 									></v-date-picker>
 								</v-menu>
-							</div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>End</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">End</div>
 								<v-menu 
 									:close-on-content-click="false"
 	                v-model="menu2"
@@ -75,6 +84,7 @@
 	                lazy
 	                transition="scale-transition"
 	                offset-y
+	                full-width
 								>
 									<v-text-field 
 										slot="activator"
@@ -91,12 +101,14 @@
 										@input="reportByRangeDay"
 									></v-date-picker>
 								</v-menu>
-							</div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>Branch</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  				<div class="font-weight-bold">Branch</div>
 								<v-select
 				         	:items="listBranch"
 				         	label="Enter Branch"
@@ -106,33 +118,40 @@
 						      v-on:change="changeBranch(item)"
 									@input="reportByRangeDay"
 						    ></v-select>
-						  </div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>Photographer</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
 				         	:items="listPhotographer"
 				         	label="Enter Photographer"
 				         	v-model="item.photographer_id"
 				         	item-text="name"
-            			item-value="id"
+	          			item-value="id"
 									@input="reportByRangeDay"
 						    ></v-select>
-					   	</div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-					</div>
-				</div>
+				</v-layout>
+				<!-- End Day Component -->
 
-				<div v-if="typeTime == 'month'">
-					<p class="text-primary">(*) Please No choose more than 12 month</p>
-					<div class="row">
-						<div class="col-3">
+				<!-- Month Component -->
+				<v-layout row wrap mt-3 v-if="typeTime == 'month'">
+					
+					<v-flex xs12>
+					  <div class="text-primary">(*) Please No choose more than 12 month</div>
+					</v-flex>
 
-							<div class="style-card w-100">
-								<p>Start</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">Start</div>
 								<v-menu
 									:close-on-content-click="false"
 	                v-model="menu3"
@@ -157,12 +176,14 @@
 										type="month"
 									></v-date-picker>
 								</v-menu>
-							</div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>End</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">End</div>
 								<v-menu 
 									:close-on-content-click="false"
 	                v-model="menu4"
@@ -187,12 +208,14 @@
 										type="month"
 									></v-date-picker>
 								</v-menu>
-							</div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>Branch</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  				<div class="font-weight-bold">Branch</div>
 								<v-select
 				         	:items="listBranch"
 				         	label="Enter Branch"
@@ -202,12 +225,14 @@
 				         	v-on:change="changeBranch(item)"
 									@input="reportByMonth"
 						    ></v-select>
-						  </div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>Photographer</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
 				         	:items="listPhotographer"
 				         	label="Enter Photographer"
@@ -216,19 +241,24 @@
             			item-value="id"
 									@input="reportByMonth"
 						    ></v-select>
-					    </div>
-						</div>
+						  </v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-					</div>
-				</div>
+				</v-layout>
+				<!-- End Month Component -->
 
-				<div v-if="typeTime == 'year'">
-					<p class="text-primary">(*) Please No choose more than 5 year</p>
-					<div class="row">
+				<!-- Year Component -->
+				<v-layout row wrap mt-3 v-if="typeTime == 'year'">
+					
+					<v-flex xs12>
+					  <div class="text-primary">(*) Please No choose more than 5 year</div>
+					</v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>Start</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">Start</div>
 								<v-menu
 									ref="menu5"
 									:close-on-content-click="false"
@@ -254,12 +284,14 @@
 						        :max="defaultYear"
 					      	></v-date-picker>
 								</v-menu>
-							</div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>End</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">End</div>
 								<v-menu
 									ref="menu6"
 									:close-on-content-click="false"
@@ -285,12 +317,14 @@
 										:max="defaultYear"
 									></v-date-picker>
 								</v-menu>
-							</div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>Branch</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  				<div class="font-weight-bold">Branch</div>
 								<v-select
 				         	:items="listBranch"
 				         	label="Enter Branch"
@@ -300,12 +334,14 @@
 				         	v-on:change="changeBranch(item)"
 									@input="reportByYear"
 						    ></v-select>
-						  </div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>Photographer</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
 				         	:items="listPhotographer"
 				         	label="Enter Photographer"
@@ -314,19 +350,24 @@
             			item-value="id"
 									@input="reportByYear"
 				        ></v-select>
-					    </div>
-						</div>
+				      </v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-					</div>
-				</div>
+				</v-layout>
+				<!-- End Year Component -->
 
-				<div v-if="typeTime == 'week'">
-					<p class="text-primary">(*) Please No choose more than 6 week</p>
-					<div class="row">
+				<!-- Week Component-->
+ 				<v-layout row wrap mt-3 v-if="typeTime == 'week'">
+					
+					<v-flex xs12>
+					  <div class="text-primary">(*) Please No choose more than 6 week</div>
+					</v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>Start</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">Start</div>
 								<v-menu
 									:close-on-content-click="false"
 	                v-model="menu7"
@@ -350,13 +391,14 @@
 										@input="reportByWeek"
 									></v-date-picker>
 								</v-menu>
-							</div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>End</p>
-
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">End</div>
 								<v-menu 
 									:close-on-content-click="false"
 	                v-model="menu8"
@@ -380,12 +422,14 @@
 										@input="reportByWeek"
 									></v-date-picker>
 								</v-menu>
-							</div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>Branch</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  				<div class="font-weight-bold">Branch</div>
 								<v-select
 				         	:items="listBranch"
 				         	label="Enter Branch"
@@ -395,12 +439,14 @@
 				         	v-on:change="changeBranch(item)"
 									@input="reportByWeek"
 						    ></v-select>
-						  </div>
-						</div>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-						<div class="col-3">
-							<div class="style-card w-100">
-								<p>Photographer</p>
+				  <v-flex xs12 md3>
+				  	<v-card class="elevation-5">
+			  			<v-card-text>
+			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
 				         	:items="listPhotographer"
 				         	label="Enter Photographer"
@@ -409,11 +455,12 @@
 	              	item-value="id"
 									@input="reportByWeek"
 						    ></v-select>
-					   	</div>
-						</div>
+				      </v-card-text>
+				  	</v-card>
+				  </v-flex>
 
-					</div>
-				</div>
+				</v-layout>
+				<!-- End Week Component -->
 
 			</app-card>
 		</v-layout>
@@ -422,9 +469,6 @@
 </template>
 
 <script>
-import ActivityLog from './ActivityLog'
-import Notification from '../notifications/Notifications'
-import NotificationDashboard from '../notifications/NotificationDashboard'
 import Vue from 'vue'
 // charts component
 import LineChart from './LineChart.js'
@@ -439,8 +483,6 @@ export default {
 
   name: 'CompanyDashboard',
   components: {
-  	ActivityLog,
-  	NotificationDashboard,
   	LineChart,
     Orders,
   },

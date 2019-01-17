@@ -75,10 +75,11 @@ export default {
     	authUser : JSON.parse(localStorage.getItem('user')),
     }
   },
-  mounted(){
+  created(){
   	var user = this.authUser
-  	this.$store.dispatch("connectionPushNotification", {user});
-
+  	// if(!id_one_signal){
+  		this.$store.dispatch("connectionPushNotification", {user});
+  	// } 
   }
 };
 </script>

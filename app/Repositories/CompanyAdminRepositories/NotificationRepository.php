@@ -52,7 +52,7 @@ class NotificationRepository extends BaseRepository
                                 ->first();
 
         if($id_one_signal){
-            $this->evenNotification($Notification,$id_one_signal);
+            $this->evenNotification($Notification,$id_one_signal->id_one_signal);
         }                        
 
 

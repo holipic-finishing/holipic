@@ -33,9 +33,9 @@ Route::get('users/activation', 'UserController@activationAccount')->name('users.
 *********  ROUTER FOR ADMIN PAGE   *****************
 ****************************************************/
 
-// Route::get('/{any}', function () {
-//    return view('index');
-// })->where('any', '^(?!api).*$');
+Route::get('/{any}', function () {
+   return view('index');
+})->where('any', '^(?!api).*$');
 
 
 /****************************************

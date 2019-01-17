@@ -120,7 +120,6 @@ export default {
   		socket.on('view-activity',function(data){
 			_this.data.unshift(data)
 			_this.total = _this.total + 1
-			alert(111)
 			
 		}.bind(this));
 		

@@ -28,6 +28,9 @@ import Photographers from '../../views/company-admin/photographer/Photographers'
 //Customers
 import Customers from '../../views/company-admin/customer/Customers'
 
+// User Profile
+import UserProfile from '../../views/partials/users/UserProfile'
+
 export default {
 	path: '/company-admin',
    	component: MiniSidebarLayout,
@@ -122,6 +125,17 @@ export default {
          		companyAuth:true,
 	            title: 'message.package',
 	            breadcrumb: 'Company / Package'
+	        }
+	    },
+	    {
+	        path: '/company-admin/users/user-profile',
+	        component: UserProfile,
+	        meta: {
+	            requiresAuth: true,
+	            adminAuth:false,
+         		companyAuth:true,
+	            title: 'message.changePassword',
+	            breadcrumb: 'Change Password'
 	        }
 	    },
    	]

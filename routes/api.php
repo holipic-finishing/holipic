@@ -61,6 +61,10 @@ Route::group(['namespace' => 'API'],function(){
 	*/
 
 	Route::post('change-password', 'UserAPIController@changePassWord');
+
+	Route::get('get-user-profile/{id}', 'UserAPIController@getUserProfile');
+
+	Route::post('user-profile', 'UserAPIController@userProfile');
 	
 	Route::namespace('CompanyAdmin')->group(function(){
 

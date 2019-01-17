@@ -185,4 +185,18 @@ class UserAPIController extends AppBaseController
        
         
     }
+
+    public function getUserProfile($id)
+    {
+        $user = $this->userRepository->findWithoutFail($id); 
+
+        return $this->sendResponse($user->toArray(), 'User retrieved successfully');
+    }
+
+    public function userProfile(Request $request)
+    {
+        $input = $request->all(); 
+
+        return $this->userRepository->editUserProfile($input);
+    }
 }

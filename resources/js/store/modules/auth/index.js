@@ -106,6 +106,35 @@ const actions = {
           
           })
     },
+    editUserProfileInDatabase(context, payload) {
+        context.commit('loginUser');
+        let url = config.API_URL+'user-profile'
+        let params = {
+            id : payload.params.id,
+            username : payload.params.username,
+            email : payload.params.email,
+        }
+       
+        post(url,params)
+          .then((res) => {
+            if(res.data && res.data.success){
+                let data = res.data.message
+                Nprogress.done();
+                setTimeout(() => {
+                    context.commit('editProfileSuccess', data);
+                }, 500)
+                
+             } else {
+                let data = res.data.message
+                context.commit('changepasswordError', data);
+               
+             }
+          })
+          .catch(err =>{
+            context.commit('changepasswordError', err);
+          
+          })
+    },
     logoutUserFromDatabase(context) {
         Nprogress.start();
         let url = '/auth/logout'

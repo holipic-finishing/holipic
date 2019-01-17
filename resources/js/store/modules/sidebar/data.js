@@ -30,10 +30,18 @@ export const menus = {
 			items:null,
 			role_id : 3
 		},
+		{
+			action: 'zmdi-pin-assistant',
+			title: 'message.customer',
+			active: false,
+			path: '/customers',
+			items:null,
+			role_id : 3
+		},
 
 		    /////////////////////////////////////////////
 		   ///////								  //////
-		  ///////  SIDEBAR ROUTER ADMIN COMPANY  //////
+		  ///////  SIDEBAR ROUTER COMPANY ADMIN  //////
 		 ///////							    //////
 		/////////////////////////////////////////////
 		
@@ -76,6 +84,30 @@ export const menus = {
 			active: true,
 			path: '/content-pages',
 			items:null,
+			role_id : 2
+		},
+		{
+			action: 'zmdi zmdi-chart',
+			title: 'message.sales',
+			active: true,
+			path: '/sales',
+			items:null,
+			role_id : 2
+		},
+		{
+			action: 'zmdi zmdi-email',
+			title: 'message.emails',
+			active: true,
+			path: '/email-setting',
+			items: null,
+			role_id: 2
+		},	
+		{
+			action: 'zmdi-comment-list',
+			title: 'message.package',
+			active: true,
+			path: '/packages',
+			items: null,
 			role_id : 2
 		},
 		

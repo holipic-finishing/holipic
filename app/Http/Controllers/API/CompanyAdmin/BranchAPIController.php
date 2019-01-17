@@ -7,11 +7,14 @@ use App\Http\Requests\API\UpdateBranchAPIRequest;
 use App\Models\Branch;
 use App\Repositories\BranchRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\ActivityLogRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+
+use App\Models\Company;
 
 /**
  * Class BranchController
@@ -23,12 +26,13 @@ class BranchAPIController extends AppBaseController
     /** @var  BranchRepository */
     private $branchRepository;
     private $userRepo;
+    private $activityRepo;
 
-    public function __construct(BranchRepository $branchRepo, UserRepository $userRepo)
+    public function __construct(BranchRepository $branchRepo, UserRepository $userRepo, ActivityLogRepository $activityRepo)
     {
         $this->branchRepository = $branchRepo;
         $this->userRepo = $userRepo;
-
+        $this->activityRepo = $activityRepo;
     }
 
     /**
@@ -163,7 +167,31 @@ class BranchAPIController extends AppBaseController
 
         }
 
+        $this->activityRepo->insertActivityLog($branch[1]['owner_id'], 'Add Branch '.$branch[0]['name']);
+
         return $this->sendResponse($branch, 'Add branches successfully');
     }
 
+
+    /*  Target : Function get all branch by company id
+     *  GET company/branch-company
+     *
+     *  @params int company_id
+     * 
+     *  @return Response
+    */
+
+    public function getBranchByCompanyId(Request $request) {
+
+       $input = $request->all();
+
+       $branch_company = $this->branchRepository->handleGetBranchCompanyId($input['companyId']);
+
+        if(!$branch_company) {
+            return $this->sendError('Branch by company not found');
+        }
+
+        return $this->sendResponse($branch_company, 'Branch successfully');
+
+    }
 }

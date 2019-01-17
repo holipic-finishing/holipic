@@ -120,9 +120,9 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
-import PhotographerDetail from './Photographer-Detail.vue'
-import PhotographerAdd from './Photographer-Add.vue'
-import PhotographerEdit from './Photographer-Edit.vue'
+import PhotographerDetail from './PhotographerDetail'
+import PhotographerAdd from './PhotographerAdd'
+import PhotographerEdit from './PhotographerEdit'
 
 export default {
 
@@ -170,15 +170,13 @@ export default {
 			get(config.API_URL+'photographers?companyId='+this.company.company_id)
 			.then(response => {
 				if(response && response.data.success) {
-
 					this.items = response.data.data
-					console.log(this.items)
 				}
 			})
 		},
 		deleteItem()
 		{
-			del(config.API_URL+'photographer/'+this.itemIdToDelete)
+			del(config.API_URL+'photographer/'+this.itemIdToDelete+'?userId='+this.company.id)
 			.then((res) => {
 	        if(res.data && res.data.success){
 	          this.fetchData()

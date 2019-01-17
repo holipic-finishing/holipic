@@ -1,25 +1,85 @@
 <?php
 
 namespace App\Models;
+use Eloquent as Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-use Illuminate\Database\Eloquent\Model;
-
+/**
+ * Class Order
+ * @package App\Models
+ * @version January 9, 2019, 6:50 am UTC
+ *
+ * @property integer branch_id
+ * @property integer photographer_id
+ * @property integer customer_id
+ * @property decimal total_amount
+ * @property string|\Carbon\Carbon purchase_date
+ * @property string|\Carbon\Carbon download_date
+ * @property string payment_method
+ * @property string purchase_from
+ * @property string status
+ * @property string invoice
+ */
 class Order extends Model
 {
-    protected $table = "orders";
 
-    protected $fillable = 
-    [ 'branch_id',
-      'photographer_id',
-      'customer_id',
-      'total_amount',
-      'dowload_date',
-      'purchase_date',
-      'purchase_from',
-      'payment_method',
-      'status',
-      'invoice'
-  	];
+    public $table = 'orders';
+
+    public $fillable = [
+        'branch_id',
+        'photographer_id',
+        'customer_id',
+        'total_amount',
+        'purchase_date',
+        'download_date',
+        'payment_method',
+        'purchase_from',
+        'status',
+        'invoice',
+        'currency_id'
+    ];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'branch_id' => 'integer',
+        'photographer_id' => 'integer',
+        'customer_id' => 'integer',
+        'payment_method' => 'string',
+        'purchase_from' => 'string',
+        'status' => 'string',
+        'invoice' => 'string',
+        'currency_id' => 'integer'
+    ];
+
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $rules = [
+        
+    ];
+
+
+    public static function boot()
+    {
+        parent::boot();
+        static::created(function($model)
+        {
+            static::exchange($model);
+        });
+
+    }
+
+
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch', 'branch_id', 'id');
+    }
 
     public function customer()
     {
@@ -31,9 +91,32 @@ class Order extends Model
         return $this->belongsTo('App\Models\Photographer', 'photographer_id', 'id');
     }
 
-    public function branch()
+    public function orderexchange()
     {
-        return $this->belongsTo('App\Models\Branch', 'branch_id', 'id');
+        return $this->hasOne(\App\Models\OrderExchange::class, 'order_id', 'id');
     }
 
+    static public function exchange($model){
+        if($model->currency_id == 1){
+
+            $exchangeRateToDollar = 1;
+
+        }else{
+
+            $exchangeRateToDollar = ExchangeRate::select('rate')
+                        ->where('from_currency_id', $model->currency_id)
+                        ->where('to_currency_id', 1)
+                        ->first()->toArray();
+
+            $exchangeRateToDollar = (double) $exchangeRateToDollar['rate'];
+
+        }
+                                              
+
+        return OrderExchange::create([
+            'order_id' => $model->id,
+            'exchange_rate_to_dollar' => $exchangeRateToDollar
+        ]);
+    }
+  
 }

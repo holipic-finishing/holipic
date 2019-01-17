@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+
 
 /**
  * Class Branch
@@ -15,9 +17,12 @@ class Branch extends Model
 {
     use SoftDeletes;
 
+    use LogsActivity;
+
+    protected static $logFillable = true;
+
     public $table = 'branches';
     
-
     protected $dates = ['deleted_at'];
 
 
@@ -58,9 +63,14 @@ class Branch extends Model
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
-     public function orders()
+    public function orders()
     {
         return $this->hasMany('App\Models\Order', 'branch_id', 'id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Company', 'company_id', 'id');
     }
     
 }

@@ -4,6 +4,9 @@ namespace App\Repositories;
 
 use App\Models\Branch;
 use InfyOm\Generator\Common\BaseRepository;
+use App\Models\Company;
+use Spatie\Activitylog\Models\Activity;
+use App\Events\RedisEventActivityLog;
 
 /**
  * Class BranchRepository
@@ -63,10 +66,27 @@ class BranchRepository extends BaseRepository
                  'branch_phone_number' => request('information.phone')
                 ]
             );
+
+            $company = Company::whereId(request('companyId'))->first();
+
+            // Save activity logs
+            // $log = Activity::all()->last();
+            // $log['user_id'] = $company['owner_id'];
+            // $log['description_log'] = 'Add Branch'.' '.$branch['name'];
+            // $log->save();
+
+            // event(new \App\Events\RedisEventActivityLog($log));
  
-            return $branch;
+            return [$branch, $company];
         }
 
         return false;
+    }
+
+
+    public function handleGetBranchCompanyId($company_id){
+
+       return $this->model->select('id','name')->where('company_id',$company_id)->get();
+
     }
 }

@@ -68,7 +68,7 @@
 					        		<v-icon
 										small
 										class="mr-6 hover-icon margin-icon-customer"
-										@click="showFormEdit(props.item)"
+										
 									>
 										card_giftcard
 									</v-icon>
@@ -120,11 +120,11 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
-import CustomerEdit from './Customer-Edit'
+import CustomerEdit from './CustomerEdit'
 
 export default {
 
-  name: 'Customer',
+  name: 'Customers',
   components: {
   	CustomerEdit
   },
@@ -152,7 +152,8 @@ export default {
 		    		},
 		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 		company: JSON.parse(localStorage.getItem('user')),
-		urlExport: config.API_URL+'company/branches/customers/export?companyId='+JSON.parse(localStorage.getItem('user')).company_id
+		urlExport: config.API_URL+'company/branches/customers/export?companyId='+JSON.parse(localStorage.getItem('user')).company_id,
+		itemIdToDelete:''
 
     }
   },
@@ -178,11 +179,19 @@ export default {
   	},
   	deleteItem() 
   	{
-
+  		var userId = this.company.id
+  		del(config.API_URL+'company/branches/customer/delete/'+this.itemIdToDelete+'?userId='+userId) 
+  		.then(response => {
+  			if(response && response.data.success) {
+  				this.dialog = false
+  				this.fetchData()
+  			}
+  		})
   	},
-  	showDialog()
+  	showDialog(item)
   	{
   		this.dialog = true
+  		this.itemIdToDelete = item
   	},
   	showFormEdit(item)
   	{

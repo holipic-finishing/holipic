@@ -56,15 +56,7 @@
 				<!--Header -->
 				<template slot="headers" slot-scope="props">
           <tr>
-            <!-- <th>
-              <v-checkbox
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-                primary
-                hide-details
-                @click.native="toggleAll"
-              ></v-checkbox>
-            </th> -->
+           
             <th
               v-for="header in props.headers"
               :key="header.text"
@@ -88,14 +80,7 @@
 
 				<!--Prop data -->
 				<template slot="items" slot-scope="props">
-					<!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
-						<!-- <td>
-              <v-checkbox
-                :input-value="props.selected"
-                primary
-                hide-details
-              ></v-checkbox>
-            </td> -->
+					
 		    		<td>{{ props.item.id }}</td>
 		    		<td>{{ props.item.company_name }}</td>
 		    		<td>{{ props.item.invoice }}</td>

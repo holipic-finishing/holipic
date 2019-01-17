@@ -595,7 +595,7 @@ class TransactionRepository extends BaseRepository
                         ->get()->toArray();
 
 
-        $dates = $this->sumSystemFee($dates, $transactions, 'day');
+        $dates = $this->sumAmount($dates, $transactions, 'day');
        
         return $dates;
     }
@@ -622,7 +622,7 @@ class TransactionRepository extends BaseRepository
                         ->get()->toArray();
 
 
-        $InMonth = $this->sumSystemFee($InMonth, $transactions, 'month');
+        $InMonth = $this->sumAmount($InMonth, $transactions, 'month');
 
         return $InMonth;
     }
@@ -649,7 +649,7 @@ class TransactionRepository extends BaseRepository
                         ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $to_year)
                         ->get()->toArray();
 
-        $InYear = $this->sumSystemFee($InYear, $transactions, 'year');
+        $InYear = $this->sumAmount($InYear, $transactions, 'year');
  
 
         return $InYear;
@@ -670,6 +670,7 @@ class TransactionRepository extends BaseRepository
             $startDay   = Carbon::today()->subDays(42)->format('Y-m-d');
 
             $endDay     = Carbon::today()->format('Y-m-d');
+
         }          
 
         $transactions = Transaction::with('transactionexchange')
@@ -688,11 +689,11 @@ class TransactionRepository extends BaseRepository
 
                     if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
 
-                        $system_fee = $value['system_fee'];
+                        $amount = $value['amount'];
 
                         $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
 
-                        $count = $count + $system_fee *  $exchange_rate_to_dollar;  
+                        $count = $count + $amount *  $exchange_rate_to_dollar;  
                     } 
                     else {
                         $dayWeek[$key]['total'] = 0;
@@ -703,9 +704,7 @@ class TransactionRepository extends BaseRepository
                 $dayWeek[$key]['total'] = round($count,3);
             }  else {
                 $dayWeek[$key]['total'] = 0;
-            }
-
-           
+            }   
        
         }    
     
@@ -812,7 +811,7 @@ class TransactionRepository extends BaseRepository
      */
     
     public function transform($results){
-
+        
         foreach ($results as $key => $result) {
 
             $results[$key]->company_name = $result->user->company->name;
@@ -1054,7 +1053,7 @@ class TransactionRepository extends BaseRepository
         }
     }
 
-    public function sumSystemFee($dates, $transactions, $timevalue){
+    public function sumAmount($dates, $transactions, $timevalue){
 
         foreach ($dates as $key => $date) {
             $count=0;
@@ -1074,11 +1073,11 @@ class TransactionRepository extends BaseRepository
                     
                     if($key == $time_value) {
 
-                        $system_fee = $value['system_fee'];
+                        $amount = $value['amount'];
 
                         $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
 
-                        $count = $count + $system_fee *  $exchange_rate_to_dollar;
+                        $count = $count + $amount *  $exchange_rate_to_dollar;
                                      
 
                     } else {

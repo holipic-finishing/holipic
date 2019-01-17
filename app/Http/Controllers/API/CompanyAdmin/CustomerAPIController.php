@@ -12,7 +12,10 @@ use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Maatwebsite\Excel\Excel;
-use App\Exports\SalesBranchExport;
+use App\Exports\ListEmailCustomers;
+use App\Exports\ListEmailBranchCustomers;
+use Spatie\Activitylog\Models\Activity;
+use App\Repositories\ActivityLogRepository;
 
 /**
  * Class CustomerController
@@ -24,9 +27,12 @@ class CustomerAPIController extends AppBaseController
     /** @var  CustomerRepository */
     private $customerRepository;
 
-    public function __construct(CustomerRepository $customerRepo)
+    private $activityRepo;
+
+    public function __construct(CustomerRepository $customerRepo, ActivityLogRepository $activityRepo)
     {
         $this->customerRepository = $customerRepo;
+        $this->activityRepo = $activityRepo;
     }
 
     /**
@@ -124,7 +130,11 @@ class CustomerAPIController extends AppBaseController
             return $this->sendError('Customer not found');
         }
 
+        $name = $customer['name'];
+
         $customer->delete();
+
+        $this->activityRepo->insertActivityLog(request('userId'), 'Delete Customer '.$name);
 
         return $this->sendResponse($id, 'Customer deleted successfully');
     }
@@ -156,4 +166,47 @@ class CustomerAPIController extends AppBaseController
     {
         return \Excel::download(new SalesBranchExport(request('companyId')), 'ListEmailCustomers.xlsx');
     }
+
+    public function getBranchCustomers(Request $request)
+    {
+        $input = $request->all(); 
+
+        $customers = $this->customerRepository->handelGetBranchCustomers($input);
+
+        if(!$customers) {
+            return $this->sendError('Customer not found');
+        }
+
+        return $this->sendResponse($customers, 'Get customer successfully');
+    }
+
+    public function updateBranchCustomer($id)
+    {
+        $customer = $this->customerRepository->handleUpdateBranchCustomer($id);
+
+        if(!$customer) {
+            return $this->sendError('Error update customer');
+        }
+
+        return $this->sendResponse($customer, 'Update customer successfully');
+    }
+
+    public function deleteBranchCustomer($id)
+    {
+        $customer = $this->customerRepository->handleDeleteBranchCustomer($id);
+
+        if ($customer == true) {
+            return $this->sendResponse($id, 'Customer deleted successfully');
+            
+        } else {
+            return $this->sendError('Error delete customer');
+        }
+
+    }
+
+    public function exportEmailBranchCustomers()
+    { 
+        return \Excel::download(new ListEmailBranchCustomers(request('userId')), 'ListEmailBranchCustomers.xlsx');
+    }
+
 }

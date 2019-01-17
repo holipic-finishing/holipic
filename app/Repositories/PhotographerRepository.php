@@ -86,8 +86,6 @@ class PhotographerRepository extends BaseRepository
     {
         $input = request('information');
 
-        //$company = $this->getCompany();
-
         $data = $this->model->create([
             'branch_id' => $input['branch_id'],
             'name' => $input['name'],
@@ -99,5 +97,11 @@ class PhotographerRepository extends BaseRepository
         return $data;
     }
 
-    
+
+    /****** Get name, id photographer by branch ******/
+    public function handelGetPhotographersByBranch($branch_id){
+
+        return $this->model->select('id','name')->where('branch_id',$branch_id)->get();
+
+    }
 }

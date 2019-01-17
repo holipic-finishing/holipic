@@ -455,6 +455,7 @@ export default {
   // Menu
   company : "Company List",
   package : "Package List",
+  plan: "Plans",
   changePassword : "Change Password",
   listPackage : "List Package",   
   chartCompany: "Company Infomation & Chart",
@@ -480,9 +481,10 @@ export default {
   contenPages : "Content Management System",
   sibarContentPages:"Cms",
   activityLog: "Activity Log",
+  sales : "Sales",
   photographers : 'Photographers',
   customer: 'Customers',
   photographers : 'Photographers List',
-  sales: 'Manage Sales'
-
+  sales: 'Manage Sales',
+  emails:'Emails'
 }

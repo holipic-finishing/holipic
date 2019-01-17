@@ -136,6 +136,7 @@ export default {
 			.then(response =>{
 				if(response && response.data.success) {
 					this.activityLog = response.data.data[0]
+					console.log(this.activityLog)
 
 					this.times = response.data.data[1].data
 					
@@ -152,7 +153,6 @@ export default {
 						// next_link: response.data.data[1].next_page_url
 
 					}
-					console.log(response.data.data[1].current_page)
 				}
 			})
 		},

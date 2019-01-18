@@ -6,6 +6,8 @@ use Spatie\Activitylog\Models\Activity;
 use App\Models\Company;
 use InfyOm\Generator\Common\BaseRepository;
 
+
+
 /**
  * Class CompanyRepository
  * @package App\Repositories
@@ -75,5 +77,15 @@ class ActivityLogRepository extends BaseRepository
         $activityLog = $activityLog->update(['is_read' => true]);
 
         return true;
+    }
+
+    public function insertActivityLog($userId, $description)
+    {
+        $log = $this->model->all()->last();
+        $log['user_id'] = $userId;
+        $log['description_log'] = $description;
+        $log->save();
+
+        event(new \App\Events\RedisEventActivityLog($log));
     }
 }

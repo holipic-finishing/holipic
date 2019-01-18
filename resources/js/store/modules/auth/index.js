@@ -85,7 +85,7 @@ const actions = {
             confirmPassword : payload.params.confirmPassword,
             roleId : payload.params.role_id
         }
-       
+
         post(url,params)
           .then((res) => {
             if(res.data && res.data.success){
@@ -126,12 +126,12 @@ const actions = {
                 
              } else {
                 let data = res.data.message
-                context.commit('changepasswordError', data);
+                context.commit('editProfileError', data);
                
              }
           })
           .catch(err =>{
-            context.commit('changepasswordError', err);
+            context.commit('editProfileError', err);
           
           })
     },
@@ -305,6 +305,25 @@ const mutations = {
             group: 'loggedIn',
             type: 'error',
 
+            text: error
+        });
+    },
+    editProfileSuccess(state, success){
+        Nprogress.done();
+        Vue.notify({
+            group: 'loggedIn',
+            type: 'success',
+            title: 'Message',
+            text: success,
+            duration: 5000
+        });
+         router.push('/super-admin/dashboard');
+    },
+    editProfileError(state, error){
+        Nprogress.done();
+        Vue.notify({
+            group: 'loggedIn',
+            type: 'error',
             text: error
         });
     }

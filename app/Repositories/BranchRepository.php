@@ -70,16 +70,23 @@ class BranchRepository extends BaseRepository
             $company = Company::whereId(request('companyId'))->first();
 
             // Save activity logs
-            $log = Activity::all()->last();
-            $log['user_id'] = $company['owner_id'];
-            $log['description_log'] = 'Add Branch'.' '.$branch['name'];
-            $log->save();
+            // $log = Activity::all()->last();
+            // $log['user_id'] = $company['owner_id'];
+            // $log['description_log'] = 'Add Branch'.' '.$branch['name'];
+            // $log->save();
 
-            event(new \App\Events\RedisEventActivityLog($log));
+            // event(new \App\Events\RedisEventActivityLog($log));
  
-            return $branch;
+            return [$branch, $company];
         }
 
         return false;
+    }
+
+
+    public function handleGetBranchCompanyId($company_id){
+
+       return $this->model->select('id','name')->where('company_id',$company_id)->get();
+
     }
 }

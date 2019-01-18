@@ -1,0 +1,17 @@
+.global-custom-table{
+	td, th{
+		padding-left: 10px !important;
+		padding-right: 10px !important;
+	}
+	th:first-child, td:first-child {
+		padding-left: 24px !important;
+	}
+
+	th:last-child, td:last-child {
+		padding-right: 24px !important;
+	}
+
+	.payment-method-td{
+		max-width: 70px;
+	}
+}

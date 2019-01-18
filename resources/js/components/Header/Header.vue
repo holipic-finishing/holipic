@@ -41,7 +41,7 @@
 				
 				<notifications v-show="role_id == '2' "></notifications>
 				<!-- <cart :horizontal="horizontal"></cart> -->
-				<activity-logs v-show="role_id == '2'"></activity-logs>
+				<activity-logs v-if="role_id == 2" v-show="role_id == '2'"></activity-logs>
 				<language-provider></language-provider>
 				<user></user>
 			</div>

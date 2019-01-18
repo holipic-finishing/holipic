@@ -11,6 +11,7 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Repositories\ActivityLogRepository;
 
 /**
  * Class PhotographerController
@@ -22,9 +23,13 @@ class PhotographerAPIController extends AppBaseController
     /** @var  PhotographerRepository */
     private $photographerRepository;
 
-    public function __construct(PhotographerRepository $photographerRepo)
+    private $activityRepo;
+
+    public function __construct(PhotographerRepository $photographerRepo, ActivityLogRepository $activityRepo)
     {
         $this->photographerRepository = $photographerRepo;
+
+        $this->activityRepo = $activityRepo;
     }
 
     /**
@@ -122,7 +127,11 @@ class PhotographerAPIController extends AppBaseController
             return $this->sendError('Photographer not found');
         }
 
+        $name = $photographer['name'];
+
         $photographer->delete();
+
+        $this->activityRepo->insertActivityLog(request('userId'), 'Delete Photographer '.$name);
 
         return $this->sendResponse($id, 'Photographer deleted successfully');
     }
@@ -146,6 +155,8 @@ class PhotographerAPIController extends AppBaseController
             return $this->sendError('Error Add Photographer');
         }
 
+        $this->activityRepo->insertActivityLog(request('userId'), 'Add Photographer '.$photographer['name']);
+
         return $this->sendResponse($photographer, 'Add Photographer successfully');
     }
 
@@ -167,5 +178,25 @@ class PhotographerAPIController extends AppBaseController
         $photographer = $this->photographerRepository->update($input, $id);
 
         return $this->sendResponse($photographer, 'Update Photographer successfully');
+    }
+
+    /* Target : Show all name, id photographer by branch id 
+    *  GET photographer/photographer-branch
+    *
+    *  @params : int branch_id
+    *  @return : Response
+    */
+
+    public function getPhotographerByBranch(Request $request) {
+
+        $input = $request->all();
+
+        $branch_photographer = $this->photographerRepository->handelGetPhotographersByBranch($input['branchId']);
+
+        if (empty($branch_photographer)) {
+            return $this->sendError('Photographer not found');
+        }
+
+        return $this->sendResponse($branch_photographer, 'Photographer successfully');
     }
 }

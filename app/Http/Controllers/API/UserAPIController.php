@@ -139,6 +139,7 @@ class UserAPIController extends AppBaseController
 
             $token = (new Parser())->parse((string) $request['access_token']);           
             $email=  $token->getClaim('email');
+      
             $user = User::where('email',$email)->first();
 
             if (!password_verify($request['oldPassword'], $user->password)) {   
@@ -195,8 +196,43 @@ class UserAPIController extends AppBaseController
 
     public function userProfile(Request $request)
     {
-        $input = $request->all(); 
+       try {
+            $user = User::where('id',$request['id'])->first(); 
 
-        return $this->userRepository->editUserProfile($input);
+            $checkUsernameExits = User::where('username', $request['username'])->where('id', '!=', $request['id'])->first();
+            $checkEmailExits = User::where('email', $request['email'])->where('id', '!=', $request['id'])->first();
+
+            if ($checkUsernameExits != '') {
+                return response()->json([
+                        'success' => false, 
+                        'message' => 'The username was exist!'
+                ]);
+            } 
+
+            if ($checkEmailExits != '') {
+                return response()->json([
+                        'success' => false, 
+                        'message' => 'The email was exist!'
+                ]);
+            } 
+
+            $this->notificationRepository->createNotifi($user->id, 'editProfileSuccess','Edit Profile Success');
+
+            $user->update($request->all());
+       
+            // Save activity logs
+            $log = Activity::all()->last(); 
+            $log['user_id'] = $user->id;
+            $log['description_log'] = 'Edit Profile'; 
+            $log->save();
+
+            event(new \App\Events\RedisEventActivityLog($log));
+
+            return $this->sendResponse($user, 'Edit Profile success');
+        }
+        
+         catch (Exception $e) {
+             return $e;
+        }
     }
 }

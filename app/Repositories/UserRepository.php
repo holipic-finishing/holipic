@@ -70,7 +70,16 @@ class UserRepository extends BaseRepository
         return $this->scopeQuery(function($query) use ($email){
             return $query->where('email', $email)->where('role_id', 2);
         })->first();
-    }
+
+    } 
+
+    public function findUserByUserName($userName)
+    {
+        $this->skipPresenter();
+        return $this->scopeQuery(function($query) use ($userName){
+            return $query->where('username', $userName);
+        })->first();
+    } 
 
     public function checkUserCommpanyExits($user)
     {
@@ -83,47 +92,4 @@ class UserRepository extends BaseRepository
         return true;
     }
 
-    public function editUserProfile($input)
-    {
-        try {
-            $user = User::where('id',$input['id'])->first(); 
-
-            $arrItems = $input; 
-
-            $checkUsernameExits = User::where('username', $input['username'])->where('id', '!=', $input['id'])->first();
-            $checkEmailExits = User::where('email', $input['email'])->where('id', '!=', $input['id'])->first();
-
-            if ($checkUsernameExits != '') {
-                return response()->json([
-                        'success' => false, 
-                        'message' => 'The username was exist!'
-                ]);
-            } 
-
-            if ($checkEmailExits != '') {
-                return response()->json([
-                        'success' => false, 
-                        'message' => 'The email was exist!'
-                ]);
-            } 
-
-            $user->update($arrItems);
-            
-            NotificationRepository::createNotifi($user->id, 'editProfileSuccess','Edit Profile Success');
-       
-            // Save activity logs
-            $log = Activity::all()->last();
-            $log['user_id'] = $user->id;
-            $log['description_log'] = 'Edit Profile';
-            $log->save();
-
-            event(new \App\Events\RedisEventActivityLog($log));
-
-            return $this->sendResponse($user, 'Edit Profile success');
-        }
-        
-         catch (Exception $e) {
-             return $e;
-        }
-    }
 }

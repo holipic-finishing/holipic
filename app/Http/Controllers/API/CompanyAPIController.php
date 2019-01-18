@@ -95,7 +95,6 @@ class CompanyAPIController extends AppBaseController
     public function update($id, UpdateCompanyAPIRequest $request)
     {
         $input = $request->all();
-        // dd($input);
 
         /** @var Company $company */
         $company = $this->companyRepository->findWithoutFail($id);
@@ -171,5 +170,72 @@ class CompanyAPIController extends AppBaseController
         $companyInfo = $this->companyRepository->handleShowInformationCompany(request('companyId'));
 
         return $this->sendResponse($companyInfo, 'Get Information Company Completed');
+    }
+
+    /*  Target : function export email information customer by company id
+    *   GET company/export/customer
+    *   
+    */
+    public function exportEmailCustomerByCompanyId(Request $request){
+
+        $input = $request->all();
+    
+        $this->createLink($input['company_id']);
+
+        $results = $this->companyRepository->handleExportCustomerByCompanyId($input['company_id']);
+
+        return \Response::json([
+                    'status' => true,
+                    'link' => url('/files/'.$input['company_id'].'_Customer_email.csv')
+        ]);
+    }
+
+
+    /**
+     * Target : Create file CSV customer HEADER
+     * @From : func: exportEmailCustomerByCompanyId
+     *
+     */
+    public function createLink($company_id){
+
+        $path = env('DB_MYSQL_DIR') . DIRECTORY_SEPARATOR;
+        
+        $csvPath = $path .$company_id. '_Customer_email.csv';
+        if(\File::exists($csvPath)){
+            unlink($csvPath);
+        }
+        if(!\File::exists($path)) {
+
+            \File::makeDirectory($path, $mode = 0777, true, true);
+
+        }
+
+        $file = fopen($csvPath,"a+");
+        $keys = ['SN.','Email'];
+        fputcsv($file,$keys);
+        fclose($file); 
+        return $csvPath;
+    }
+
+    public function getEmailCustomers()
+    {
+        $customers = $this->companyRepository->getCustomerByCompanyId(request('company_id'));
+
+        if(!empty($customers)) {
+            return $this->sendResponse($customers, 'Get Customer success');
+        }
+
+        return $this->sendError('Not data customer email');
+    }
+
+    public function sendEmailCustomers()
+    {
+        $customers = $this->companyRepository->handleSendMailToCustomers();
+
+        if(!$customers) {
+            return $this->sendError('Error send mail');
+        }
+
+        return $this->sendResponse($customers, 'Success send mail');
     }
 }

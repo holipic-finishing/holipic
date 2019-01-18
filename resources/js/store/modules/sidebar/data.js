@@ -23,14 +23,21 @@ export const menus = {
 			role_id : 3
 		},
 		{
-			action: 'zmdi zmdi-account-add',
+			action: 'fas fa-donate',
 			title: 'message.sales',
 			active: false,
-			path: '/photographers',
+			path: '/sales',
 			items:null,
 			role_id : 3
 		},
-
+		{
+			action: 'zmdi-pin-assistant',
+			title: 'message.customer',
+			active: false,
+			path: '/customers',
+			items:null,
+			role_id : 3
+		},
 
 		    /////////////////////////////////////////////
 		   ///////								  //////
@@ -88,11 +95,27 @@ export const menus = {
 			role_id : 2
 		},
 		{		
-			action: 'zmdi-comment-list',
+			action: 'fab fa-intercom',
+			title: 'message.sales',
+			active: true,
+			path: '/sales',
+			items:null,
+			role_id : 2
+		},
+		{
+			action: 'fas fa-mail-bulk',
+			title: 'message.emails',
+			active: true,
+			path: '/email-setting',
+			items: null,
+			role_id: 2
+		},	
+		{
+			action: 'fas fa-cubes',
 			title: 'message.package',
 			active: true,
 			path: '/packages',
-			items:null,
+			items: null,
 			role_id : 2
 		},
 		

@@ -16,6 +16,9 @@ import ChangePassword from '../../views/partials/users/ChangePassword'
 // Content Manager Systems
 import CMS from '../../views/company-admin/cms/Index'
 
+// Sales 
+import Sales from '../../views/company-admin/sales/Sales'
+
 // CompanyPackages
 import CompanyPackages from '../../views/company-admin/packages/Packages';
 
@@ -31,6 +34,12 @@ import Customers from '../../views/company-admin/customer/Customers'
 //Upload Photos
 import UploadPhotos from '../../views/partials/upload-photos/UploadPhotos'
 
+// User Profile
+import UserProfile from '../../views/partials/users/UserProfile'
+
+//Email
+import Email from '../../views/company-admin/email/Emailes'
+
 export default {
 	path: '/company-admin',
    	component: MiniSidebarLayout,
@@ -41,7 +50,6 @@ export default {
 	        component: CompanyDashboard,
 	        meta: {
 	        	requiresAuth:true,
-	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.ecommerce',
 	            breadcrumb: 'Company / Dashboard'
@@ -53,7 +61,6 @@ export default {
         	name:'CompnayNotification',
 	        meta: {
 	        	requiresAuth:true,
-	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.notification',
 	            breadcrumb: 'Company / Notifications'
@@ -64,7 +71,6 @@ export default {
 	        component: ChangePassword,
 	        meta: {
 	        	requiresAuth:true,
-	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.changePassword',
 	            breadcrumb: 'Company / Change Password'
@@ -76,7 +82,6 @@ export default {
 		        name : 'branches',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.branch'
 		        }
@@ -87,7 +92,6 @@ export default {
 		        name : 'photographers',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.photographer'
 		        }
@@ -98,7 +102,6 @@ export default {
 		        name : 'customers',
 		        meta: {
 		            requiresAuth: true,
-		            adminAuth:false,
 	         		companyAuth:true,
 		            title: 'message.customer'
 		            
@@ -110,7 +113,6 @@ export default {
 	        name: 'cms',
 	        meta: {
 	        	requiresAuth:true,
-	        	// adminAuth:false,
          		companyAuth:true,
 	            title: 'message.contenPages',
 	            breadcrumb: 'Company / CMS'
@@ -131,13 +133,45 @@ export default {
 	    {
 	        path: '/company-admin/packages',
 	        component: CompanyPackages,
+	    	path: '/company-admin/sales',
+	        component: Sales,
 	        meta: {
 	        	requiresAuth:true,
-	        	adminAuth:false,
          		companyAuth:true,
-	            title: 'message.package',
-	            breadcrumb: 'Company / Package'
+	            title: 'message.sales',
+	            breadcrumb: 'Company / Sales'
 	        }
 	    },
+	    {
+	        path: '/company-admin/users/user-profile',
+	        component: UserProfile,
+	        meta: {
+	            requiresAuth: true,
+	            adminAuth:false,
+         		companyAuth:true,
+	            title: 'message.changePassword',
+	            breadcrumb: 'Change Password'
+	        }
+	    },
+	    {
+	    	path: '/company-admin/email-setting',
+	        component: Email,
+	        meta: {
+	        	requiresAuth:true,
+         		companyAuth:true,
+	            title: 'message.emails',
+	            breadcrumb: 'Company / Emails'
+	        }
+	    },
+	    {
+	    	path: '/company-admin/packages',
+	        component: CompanyPackages,
+	        meta: {
+	        	requiresAuth:true,
+         		companyAuth:true,
+		        title: 'message.package',
+		        breadcrumb: 'Company / Package'
+		    }
+	    }
    	]
 }

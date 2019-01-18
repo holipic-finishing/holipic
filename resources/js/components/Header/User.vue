@@ -38,7 +38,8 @@
                   id: 1,
                   title: 'message.userProfile',
                   icon: 'ti-user mr-3 primary--text',
-                  path: '/users/user-profile'
+                  path: '/users/user-profile',
+                  pathCom: '/users/user-profile'
                },
                // {
                //    id: 2,

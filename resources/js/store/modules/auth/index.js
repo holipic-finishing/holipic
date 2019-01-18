@@ -85,7 +85,7 @@ const actions = {
             confirmPassword : payload.params.confirmPassword,
             roleId : payload.params.role_id
         }
-       
+
         post(url,params)
           .then((res) => {
             if(res.data && res.data.success){
@@ -103,6 +103,35 @@ const actions = {
           })
           .catch(err =>{
             context.commit('changepasswordError', err);
+          
+          })
+    },
+    editUserProfileInDatabase(context, payload) {
+        context.commit('loginUser');
+        let url = config.API_URL+'edit-user-profile'
+        let params = {
+            id : payload.params.id,
+            username : payload.params.username,
+            email : payload.params.email,
+        }
+       
+        post(url,params)
+          .then((res) => {
+            if(res.data && res.data.success){
+                let data = res.data.message
+                Nprogress.done();
+                setTimeout(() => {
+                    context.commit('editProfileSuccess', data);
+                }, 500)
+                
+             } else {
+                let data = res.data.message
+                context.commit('editProfileError', data);
+               
+             }
+          })
+          .catch(err =>{
+            context.commit('editProfileError', err);
           
           })
     },
@@ -228,6 +257,7 @@ const mutations = {
         state.user = null
         localStorage.removeItem('access_token')
         localStorage.removeItem('user')
+        localStorage.removeItem('id_one_signal')
         router.push("/login");
     },
     signUpUser(state) {
@@ -276,6 +306,25 @@ const mutations = {
             group: 'loggedIn',
             type: 'error',
 
+            text: error
+        });
+    },
+    editProfileSuccess(state, success){
+        Nprogress.done();
+        Vue.notify({
+            group: 'loggedIn',
+            type: 'success',
+            title: 'Message',
+            text: success,
+            duration: 5000
+        });
+         router.push('/super-admin/dashboard');
+    },
+    editProfileError(state, error){
+        Nprogress.done();
+        Vue.notify({
+            group: 'loggedIn',
+            type: 'error',
             text: error
         });
     }

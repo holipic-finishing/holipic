@@ -139,7 +139,7 @@ export default {
                 page: this.paginator.currentPage,
                 user_id:this.user_id.id
             }
-            // console.log(params)
+
   			getWithData(url,params)
   			.then(res =>{
   				if(res.data && res.data.success){

@@ -1,56 +1,6 @@
 <template>
 
-	<v-container fluid pt-0 grid-list-xl>
-		<!-- <section-tooltip :title="$t('message.overview')" :tooltip="$t('message.dashboardOverview')"></section-tooltip> -->
-		<!-- Dash Cards -->
-		<!-- <v-layout row wrap border-rad-sm overflow-hidden>
-			<stats-card-v2
-				colClasses="xl3 lg3 md3 sm6 xs12"
-				:heading="$t('message.totalcompany')"
-				:amount="count_pack_company"
-				:icon="$t('zmdi zmdi-account-calendar')"
-				customClasses="style-card-user"
-			></stats-card-v2>
-			<stats-card-v2
-				colClasses="xl3 lg3 md3 sm6 xs12"
-				:heading="$t('message.totalpackagebasic')"
-				:amount="count_pack_basic"
-				:icon="$t('zmdi zmdi-card')"
-				customClasses="style-card-basic"
-				
-			></stats-card-v2>
-			<stats-card-v2
-				colClasses="xl3 lg3 md3 sm12 xs12"
-				:heading="$t('message.totalpackagepro')"
-				:amount="count_pack_pro"
-				:icon="$t('zmdi zmdi-card-membership')"
-				customClasses="style-card-pro"
-
-
-			></stats-card-v2>
-			<stats-card-v2
-				colClasses="xl3 lg3 md3 sm12 xs12"
-				:heading="$t('message.totalimagesuploads')"
-				:amount="2145"
-				:icon="$t('zmdi zmdi-camera')"
-				customClasses="style-card-image"
-			>
-				<line-chart-shadow
-					:dataSet="onlineRevenue"
-					:lineTension="0.4"
-					:dataLabels="labels"
-					:width="370"
-					:height="80"
-					:borderWidth=3
-					:enableGradient='false'
-					:enableShadow='false'
-					:borderColor="ChartConfig.color.warning">
-				</line-chart-shadow>
-			</stats-card-v2>
-
-		</v-layout> -->
-		<!-- End Dash Cards -->
-
+	<v-container fluid pt-0 grid-list-xl>	
 			<!-- Sales -->
 		<v-layout row wrap>
 			<app-card
@@ -725,6 +675,7 @@ export default {
   		},
 
   		defaultReportYear(){
+  			
   			let params = {
 				defaultYear :  'default'
 			}

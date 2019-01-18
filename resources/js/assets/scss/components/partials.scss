@@ -41,10 +41,74 @@
 	}
 }
 
+
+.width-input{
+  .v-input__slot{
+    min-width: 140px !important;
+    width: 140px !important;
+    
+    text-align:left !important;
+    
+  }
+}
+
+.custom-table-zoom {
+	table.v-table thead td:not(:nth-child(1)), table.v-table tbody td:not(:nth-child(1)), table.v-table thead th:not(:nth-child(1)), table.v-table tbody th:not(:nth-child(1)), table.v-table thead td:first-child, table.v-table tbody td:first-child, table.v-table thead th:first-child, table.v-table tbody th:first-child {
+	    padding: 0 4px;
+	}
+}
+
+.custom-table-customer{
+
+	thead th:not(:nth-child(1)){
+		padding: 0 0px !important;
+		text-align:center !important;
+		
+	}
+
+	tbody td:not(:nth-child(1)){
+		padding: 0 6px !important;
+		text-align:center !important;
+	}
+}
+	
+@media (max-width: 1366px) {
+    .action-width{
+		text-align:center;
+		margin-left:5px;
+		padding: 0px 10px !important;
+	}
+}
+
+.action-width{
+	text-align:center;
+	margin-left:5px;
+	padding: 0px 10px !important;
+}
+
+.btn-customer{
+	min-width: 61px;
+}
+
+.height-input-customer{
+  .v-input__slot{
+    min-height: 40px !important;
+    height:40px !important;
+    top: 9px !important;
+    position: relative;
+	}
+}
+.fix-contain-text-field{
+	.v-input__slot{
+    	align-items: end !important;
+  	}
+}
+
 .custom-height-package{
   .v-input__slot{
     min-height: 40px !important;
     height: 40px !important;
+
   }
   input, .v-select__slot{
     position:relative;
@@ -52,6 +116,40 @@
   }
 }
 
+
+.custom-table-sale{
+	thead th:not(:nth-child(1)){
+		padding: 0 10px !important;
+	}
+}
+
+.custom-height-td-package{
+	padding:0px 0px !important;
+	.custom-height-package{
+	  .v-input__slot{
+	    min-height: 40px !important;
+	    height: 40px !important;
+	  }
+	  input, .v-select__slot{
+	    position:relative;
+	    top: -10px;
+	  }
+	}
+}
 .custom-height-td-package{
 	padding:0px 0px !important;
 }
+
+.center-input-customer{
+	.v-input__slot {
+	    margin: 0px auto;
+	}
+	.v-text-field__slot input{
+		margin-top: inherit;
+	}
+}
+
+.fix-v-icon{
+	line-height:unset !important;
+}
+

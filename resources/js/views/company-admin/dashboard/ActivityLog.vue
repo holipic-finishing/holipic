@@ -153,7 +153,6 @@ export default {
 						// next_link: response.data.data[1].next_page_url
 
 					}
-					console.log(response.data.data[1].current_page)
 				}
 			})
 		},

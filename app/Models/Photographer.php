@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
+
 
 /**
  * Class Photographer
@@ -20,6 +22,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Photographer extends Model
 {
     use SoftDeletes;
+
+    use LogsActivity;
+
+    protected static $logFillable = true;
 
     public $table = 'photographers';
     
@@ -62,5 +68,10 @@ class Photographer extends Model
         return $this->belongsTo('App\Models\Branch', 'branch_id', 'id');
     }
 
+
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order', 'photographer_id', 'id');
+    }
     
 }

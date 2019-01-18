@@ -33,10 +33,18 @@ class NewNotification
     public function handle(RedisEventNotification $event)
     {
         $domain = env("MIX_APP_PROTOCOL")  . "://" . env("MIX_APP_DOMAIN");
+        
         $oneSingalNotification = new Notification($this->oneSignal);
+        
         $notification = $event->notification;
+        $id_one_signal = $event->id_one_signal;
+        
+        $arr_id_signal = explode(',',$id_one_signal);
+
+
         $notificationData = [
-            "included_segments" => ["All"],
+            // "included_segments" => ["Active Users", "Inactive Users"],
+            "include_player_ids" => $arr_id_signal,
             "contents" => [
                 "en" => $notification->push_notification,
             ],
@@ -53,7 +61,7 @@ class NewNotification
             "isChromeWeb" => true,
         ];
 
-         $createNotification = $oneSingalNotification->create($notificationData);
-         // Log::info($createNotification);
+        $createNotification = $oneSingalNotification->create($notificationData);
+ 
     }
 }

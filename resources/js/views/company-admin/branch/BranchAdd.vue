@@ -177,13 +177,13 @@ export default {
   methods: {
   	saveBranch()
   	{
-  		// console.log(this.branch)
   		if (this.$refs.form.validate()) {
   			let params = {information: this.branch, companyId: this.company.company_id}
   			post(config.API_URL+'company/branch', params)
   			.then(response => {
   				if(response && response.data.success) {
   					this.$root.$emit('reloadTableBranch')
+  					this.alertType = 'success'
   					this.alertStt = true
 					this.alertMes = response.data.message
 
@@ -195,7 +195,15 @@ export default {
   				}
   			})
   			.catch(error => {
-  				console.log(error)
+  				this.alertType = 'error'
+  				this.alertStt = true
+				this.alertMes = error.response.data.message
+				console.log(error.response)
+
+				setTimeout(() => {
+				          this.alertStt = false
+
+				}, 2000)
   			})
   		}
 

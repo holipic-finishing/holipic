@@ -48,9 +48,9 @@ class Branch extends Model
         
     ];
 
-    public function photgrapher()
+    public function photographers()
     {
-        return $this->hasOne('App\Models\Photographer', 'branch_id', 'id');
+        return $this->hasMany('App\Models\Photographer', 'branch_id', 'id');
     }
 
     public function customers()
@@ -63,6 +63,14 @@ class Branch extends Model
         return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order', 'branch_id', 'id');
+    }
 
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Company', 'company_id', 'id');
+    }
     
 }

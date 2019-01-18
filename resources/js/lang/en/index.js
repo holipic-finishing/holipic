@@ -472,6 +472,7 @@ export default {
   mailSentSuccessfully : 'Mail sent successfully',
   notification : "Notification",
   yourNotification: "Your notification",
+  editProfileSuccess: "Edit User Profile Success",
 
   //Company Admin
   branch: "Branches",
@@ -481,10 +482,11 @@ export default {
   contenPages : "Content Management System",
   sibarContentPages:"Cms",
   activityLog: "Activity Log",
+  sales : "Sales",
   photographers : 'Photographers',
-  customer: 'Customer',
+  customer: 'Customers',
   photographers : 'Photographers List',
   sales: 'Manage Sales',
-  sidebarUpload: 'Upload Photos'
-
+  sidebarUpload: 'Upload Photos',
+  emails:'Emails',
 }

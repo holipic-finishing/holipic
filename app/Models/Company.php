@@ -71,4 +71,8 @@ class Company extends Model
     public function coupon_code(){
         return $this->hasOne('App\Models\CouponCode', 'coupon_codes_id', 'id');
     }
+
+    public function branchs(){
+        return $this->hasMany('App\Models\Branch','company_id','id');
+    }
 }

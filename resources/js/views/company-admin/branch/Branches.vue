@@ -7,15 +7,16 @@
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
-			>
+				>
 				<v-toolbar flat color="white">
-	        <v-toolbar-title>
-	          Branches List
-	        </v-toolbar-title>
-	      </v-toolbar>
-	      <v-divider class="m-0"></v-divider>
+			        <v-toolbar-title>
+			          Branches List
+			        </v-toolbar-title>
+			    </v-toolbar>
+	      		<v-divider class="m-0"></v-divider>
 				<!--Search Component -->
 				<v-card-title>
+
 		      <v-spacer></v-spacer>
 	        <div class="w-25">
 	  	      <v-text-field
@@ -29,10 +30,11 @@
 			    <v-btn small fab dark @click="showFromAdd()" class="ml-2 btn-gradient-primary">
 						<v-icon dark>add</v-icon>
 					</v-btn>
-		    </v-card-title>
+		    	</v-card-title>
 		    <!--End Search Component -->
+
 		    <!-- Table Component -->
-		    <v-data-table 
+			    <v-data-table 
 					:headers="headers" 
 					:items="items" 
 					class="elevation-5 body-2 global-custom-table"
@@ -40,31 +42,31 @@
 					:rows-per-page-items="rowsPerPageItems" 
 					default-sort="id:desc"
 					:search="search"
-				>
+					>
 					<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
 					<!--Header -->
 					<template slot="headers" slot-scope="props">
-	          <tr>
-	            <th
-	              v-for="header in props.headers"
-	              :key="header.text"
-	              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-	              @click="changeSort(header.value)"
-	            >
-	            	<div class="custom-header">
-		              <v-tooltip bottom>
-		                <span slot="activator" class="text-capitalize font-weight-bold">
-		                  {{ header.text }}
-		                </span>
-		                <span>
-		                  {{ header.text }}
-		                </span>
-		              </v-tooltip>
-		              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
-	            	</div>
-	            </th>
-	          </tr>
-	        </template>
+			         	<tr>
+				            <th
+				              v-for="header in props.headers"
+				              :key="header.text"
+				              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+				              @click="changeSort(header.value)"
+				            >
+				            	<div class="custom-header">
+					              <v-tooltip bottom>
+					                <span slot="activator" class="text-capitalize font-weight-bold">
+					                  {{ header.text }}
+					                </span>
+					                <span>
+					                  {{ header.text }}
+					                </span>
+					              </v-tooltip>
+					              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
+				            	</div>
+			           		</th>
+			          	</tr>
+		        	</template>
 
 					<template slot="items" slot-scope="props">
 						<td>{{ props.item.id }}</td>
@@ -73,7 +75,7 @@
 						<td class="text-xs-left">{{ props.item.branch_password }}</td>
 						<td class="text-xs-left">{{ props.item.branch_address }}</td>
 						<td class="text-xs-left">{{ props.item.branch_phone_number }}</td>
-			      <td class="text-xs-left action-width">
+			      		<td class="text-xs-left action-width">
 							<v-icon
 								small
 								class="mr-2 hover-icon"
@@ -93,38 +95,39 @@
 					</template>
 
 					<!--No data -->
-				  <template slot="no-data">
-			      <v-alert :value="true" color="error" icon="warning">
-			        Sorry, nothing to display here :(
-			      </v-alert>
-	    		</template>
-					
+					<template slot="no-data">
+				      <v-alert :value="true" color="error" icon="warning">
+				        Sorry, nothing to display here :(
+				      </v-alert>
+		    		</template>
+						
 					<!--Search no result -->
-	    		<v-alert slot="no-results" :value="true" color="error" icon="warning">
-	          Your search for "{{ search }}" found no results.
-	        </v-alert>
+			    	<v-alert slot="no-results" :value="true" color="error" icon="warning">
+			          Your search for "{{ search }}" found no results.
+			        </v-alert>
 				</v-data-table>
 		    <!-- End Table Component -->
 			</app-card>
+
 		</v-layout>
 		<branch-edit></branch-edit>
 		<branch-add></branch-add>
 		<v-dialog v-model="dialog" persistent max-width="450">
-      <v-card>
-        <v-card-title class="headline font-weight-bold">
-          <v-icon x-large color="yellow accent-3" class="mr-2">
-            warning
-          </v-icon>
-          Do you want delete this item ?
-        </v-card-title>
-        <v-divider class="mt-0"></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn flat @click="dialog = false">Disagree</v-btn>
-          <v-btn flat @click="deleteItem">Agree</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+	      <v-card>
+	        <v-card-title class="headline font-weight-bold">
+	          <v-icon x-large color="yellow accent-3" class="mr-2">
+	            warning
+	          </v-icon>
+	          Do you want delete this item ?
+	        </v-card-title>
+	        <v-divider class="mt-0"></v-divider>
+	        <v-card-actions>
+	          <v-spacer></v-spacer>
+	          <v-btn flat @click="dialog = false">Disagree</v-btn>
+	          <v-btn flat @click="deleteItem">Agree</v-btn>
+	        </v-card-actions>
+	      </v-card>
+	    </v-dialog>
 	</v-container>
 </template>
 
@@ -149,7 +152,7 @@ export default {
 	    	headers: [	        
 						{ text: 'ID', value: 'id'},	       
 						{ text: 'Branch Name', value: 'name' },
-						{ text: 'Username', value: 'username'},	
+						{ text: 'Username', value: 'user.username'},	
 						{ text: 'Password', value: 'branch_password' },	
 						{ text: 'Address', value: 'branch_address' },		      
 						{ text: 'Phone', value: 'branch_phone_number' },		     

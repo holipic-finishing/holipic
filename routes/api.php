@@ -81,6 +81,9 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
+
+		Route::get('branch/photographers', 'PhotographerAPIController@getPhotographers');
+
 		Route::get('get-notifications/{user_id}','NotificationAPIController@getNotification');
 
 
@@ -140,10 +143,20 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('activity-log/update', 'ActivityLogController@updateIsReadActivityLog');
 
-		/******************* EmailAPIController **********************/
+		Route::resource('emails', 'EmailAPIController');
 
 		Route::post('edit/email/{itemId}', 'EmailAPIController@editEmail');
 
+	});
+
+		Route::get('branch/sales-list', 'OrderAPIController@getSalesList');
+		Route::get('branch/sales-list/export', 'OrderAPIController@exportSalesListBranch');
+		
+
+
+		/******************* EmailAPIController **********************/
+
+		Route::post('edit/email/{itemId}', 'EmailAPIController@editEmail');
 
 		/*****************CompanyPackageAPIController*****************/
 
@@ -160,7 +173,7 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
 
-	});
+	// });
 
 	/*************Order Controllers**************/
 	Route::resource('orders', 'OrderAPIController');

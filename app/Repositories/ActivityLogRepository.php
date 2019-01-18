@@ -34,21 +34,20 @@ class ActivityLogRepository extends BaseRepository
         $activityLogs = $this->model->select('id', 'subject_type' , 'description', 'properties', 'description_log',
                                     DB::raw("DATE_FORMAT(updated_at,'%Y-%c-%d') as date"), 'updated_at', 'user_id')
                                  ->where('user_id', $request['userId'])->where('is_read', 0)
-                                 ->orderBy('updated_at', 'desc')
-                                 ->paginate($request['perPage'])->toArray();
+                                 ->orderBy('updated_at', 'desc')->get()
+                                 ->toArray();
+                                 // ->paginate($request['perPage'])
         $array = [];
-        foreach($activityLogs['data'] as $value) 
+        foreach($activityLogs as $value) 
         {
             $value['subject_type'] = substr($value['subject_type'], 11, strlen($value['subject_type']));
             $value['name'] = $company['name'];
             $array[] = $value;
         }
         $page = [];
-        $page['current_page'] = $activityLogs['current_page'];
-        $page['last_page'] = $activityLogs['last_page'];
-        $page['total'] = $activityLogs['total'];
-
-        // dd($array, $page);
+        // $page['current_page'] = $activityLogs['current_page'];
+        // $page['last_page'] = $activityLogs['last_page'];
+        // $page['total'] = $activityLogs['total'];
 
         return [$array, $page];
     }

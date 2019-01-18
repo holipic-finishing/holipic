@@ -87,6 +87,9 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
+
+		Route::get('branch/photographers', 'PhotographerAPIController@getPhotographers');
+
 		Route::get('get-notifications/{user_id}','NotificationAPIController@getNotification');
 
 
@@ -146,10 +149,9 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('activity-log/update', 'ActivityLogController@updateIsReadActivityLog');
 
-		/******************* EmailAPIController **********************/
+		Route::resource('emails', 'EmailAPIController');
 
 		Route::post('edit/email/{itemId}', 'EmailAPIController@editEmail');
-
 
 		/*****************CompanyPackageAPIController*****************/
 
@@ -159,7 +161,6 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::post('edit/companyPackage/{itemId}', 'CompanyPackageAPIController@editPackage');
 
-
 		/*****************PhotoPackageAPIController*****************/
 		
 		Route::post('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
@@ -168,14 +169,23 @@ Route::group(['namespace' => 'API'],function(){
 
 	});
 
+		
+		
 	/*************Order Controllers**************/
 	Route::resource('orders', 'OrderAPIController');
+
+	Route::get('branch/sales-list', 'OrderAPIController@getSalesList');
+	
+	Route::get('branch/sales-list/export', 'OrderAPIController@exportSalesListBranch');
 
 	Route::get('order/orders-company', 'OrderAPIController@getAllOrderCompany');
 
 	Route::get('order/sales/company/export', 'OrderAPIController@exportSalesCompany');
 
 	Route::post('order/history-order', 'OrderAPIController@getHistoryOrders');
+
+	Route::get('order/count-income', 'OrderAPIController@countIncome');
+	
 
 	/***********************************************
 	**********	ROUTER SUPER ADMIN   ***************

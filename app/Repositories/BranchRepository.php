@@ -8,6 +8,8 @@ use App\Models\Company;
 use Spatie\Activitylog\Models\Activity;
 use App\Events\RedisEventActivityLog;
 
+use App\Models\User;
+
 /**
  * Class BranchRepository
  * @package App\Repositories
@@ -88,5 +90,10 @@ class BranchRepository extends BaseRepository
 
        return $this->model->select('id','name')->where('company_id',$company_id)->get();
 
+    }
+
+    public function checkUniqueUserName($username) {
+        $user = User::where('username', $username)->first();
+        return $user;
     }
 }

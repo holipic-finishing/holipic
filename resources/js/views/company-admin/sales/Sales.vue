@@ -147,31 +147,31 @@
 					:pagination.sync="pagination" 
 					:rows-per-page-items="rowsPerPageItems" 
 					:search="search"
-				>
+					>
 					<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
 					<!--Header -->
 					<template slot="headers" slot-scope="props">
-	          <tr>
-	            <th
-	              v-for="header in props.headers"
-	              :key="header.text"
-	              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-	              @click="changeSort(header.value)"
-	            >
-	            	<div class="custom-header">
-		              <v-tooltip bottom>
-		                <span slot="activator" class="text-capitalize font-weight-bold">
-		                  {{ header.text }}
-		                </span>
-		                <span>
-		                  {{ header.text }}
-		                </span>
-		              </v-tooltip>
-		              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
-	            	</div>
-	            </th>
-	          </tr>
-	        </template>
+			          <tr>
+			            <th
+			              v-for="header in props.headers"
+			              :key="header.text"
+			              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+			              @click="changeSort(header.value)"
+			            >
+			            	<div class="custom-header">
+				              <v-tooltip bottom>
+				                <span slot="activator" class="text-capitalize font-weight-bold">
+				                  {{ header.text }}
+				                </span>
+				                <span>
+				                  {{ header.text }}
+				                </span>
+				              </v-tooltip>
+				              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
+			            	</div>
+			            </th>
+			          </tr>
+			        </template>
 				
 					<template slot="items" slot-scope="props">
 						<td>{{ props.item.id }}</td>
@@ -179,23 +179,23 @@
 						<td>{{ props.item.photographer_name }}</td>
 						<td>{{ props.item.room_has_number }}</td>
 						<td>{{ formatTotal(props.item.total_amount) }}</td>
-						<td>{{ props.item.purchase_date }}</td>
-						<td>{{ props.item.download_date }}</td>
+						<td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
+						<td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
 						<td>{{ props.item.customer_email }}</td>
 						<td>{{ props.item.payment_method }}</td>
 					</template>
 
 					<!--No data -->
-				  <template slot="no-data">
-			      <v-alert :value="true" color="error" icon="warning">
-			        Sorry, nothing to display here :(
-			      </v-alert>
-	    		</template>
+				  	<template slot="no-data">
+				      <v-alert :value="true" color="error" icon="warning">
+				        Sorry, nothing to display here :(
+				      </v-alert>
+	    			</template>
 					
 					<!--Search no result -->
-	    		<v-alert slot="no-results" :value="true" color="error" icon="warning">
-	          Your search for "{{ search }}" found no results.
-	        </v-alert>
+		    		<v-alert slot="no-results" :value="true" color="error" icon="warning">
+		          		Your search for "{{ search }}" found no results.
+		        	</v-alert>
 
 				</v-data-table>
 			</app-card>
@@ -378,7 +378,6 @@ export default {
 			getWithData(url,params)
 			.then(res => {
 				if(res.data && res.data.status){
-					console.log(res.data.link)
 					// window.location.href = res.data.link
 					window.open(res.data.link, '_blank')
 				}

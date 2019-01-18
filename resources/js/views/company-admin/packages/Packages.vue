@@ -1,57 +1,95 @@
 <template>
-<div class="margin-table">
-	<v-container fluid grid-list-xl pt-0>
-		<v-toolbar flat color="white">
-		    <h3 class="h3-title-package">Packages List</h3>
-	        <v-divider
-	            class="mx-2"
-	            inset
-	            vertical
-	        ></v-divider>
-		    <v-btn @click="showAddItem()" color="primary" dark class="mb-2">Add</v-btn>
-		</v-toolbar>
-		<package-item></package-item>
-		<v-data-table
-	        :headers="headers"
-	        :items="desserts"
-	        class="elevation-1"
-	        :pagination.sync="pagination"
-		    :loading="loadingCom"
-	    >
-	    	<template slot="items" slot-scope="props">
-	    		<td class="text-xs-left">{{ props.item.id }}</td>
+	<v-container fluid pt-0 grid-list-xl mt-3>
+		<v-layout row wrap>
+			<app-card
+				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5"
+				:fullScreen="true"
+				:reloadable="true"
+				:closeable="false"
+			>
+				<v-toolbar flat color="white">
+	        <v-toolbar-title>
+	          Packages List
+	        </v-toolbar-title>
+	      </v-toolbar>
+	      <v-divider class="m-0"></v-divider>
+
+	      <v-card-title>
+		      <v-spacer></v-spacer>
+			    <v-btn small fab dark @click="showAddItem()" class="ml-2 btn-gradient-primary">
+						<v-icon dark>add</v-icon>
+					</v-btn>
+		    </v-card-title>
+
+		    <package-item></package-item>
+				<v-data-table
+		      :headers="headers"
+		      :items="desserts"
+		      class="elevation-5 body-2 global-custom-table"
+		      :pagination.sync="pagination"
+			    :loading="loadingCom"
+			  >
+			  	<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+					<!--Header -->
+					<template slot="headers" slot-scope="props">
+	          <tr>
+	            <th
+	              v-for="header in props.headers"
+	              :key="header.text"
+	              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+	              @click="changeSort(header.value)"
+	            >
+	            	<div class="custom-header" :class="header.value == 'actions' ? 'justify-content-end' : ''">
+		              <v-tooltip bottom>
+		                <span slot="activator" class="text-capitalize font-weight-bold">
+		                  {{ header.text }}
+		                </span>
+		                <span>
+		                  {{ header.text }}
+		                </span>
+		              </v-tooltip>
+		              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
+	            	</div>
+	            </th>
+	          </tr>
+	        </template>
+
+		    	<template slot="items" slot-scope="props">
+		    		<td class="text-xs-left">{{ props.item.id }}</td>
 		        <td class="text-xs-left">{{ props.item.package_name }}</td>
 		        <td class="text-xs-left">{{ props.item.price }}</td>
 		        <td class="text-xs-left">{{ props.item.offer }}</td>
-		        <td class="text-xs-left">
-		            <v-icon
-			            small
-			            class="mr-2"
-			            @click="showItem(props.item)"
-		            >
-		            	visibility
-		            </v-icon>
-		            <v-icon
-			            small
-			            class="mr-2"
-			            @click="editItem(props.item)"
-		            >
-		            	edit
-		            </v-icon>
-		            <v-icon
-			            small
-			            class="mr-2"
-			            @click="showDialog(props.item.id)"
-		            >
-		            	delete
-		          	</v-icon>
+		        <td class="text-right">
+		          <v-icon
+		            small
+		            class="mr-2"
+		            @click="showItem(props.item)"
+		          >
+		          	visibility
+		          </v-icon>
+		          <v-icon
+		            small
+		            class="mr-2"
+		            @click="editItem(props.item)"
+		          >
+		          	edit
+		          </v-icon>
+		          <v-icon
+		            small
+		            class="mr-2"
+		            @click="showDialog(props.item.id)"
+		          >
+		          	delete
+		        	</v-icon>
 		        </td>
-	    	</template>
-	    	<template slot="no-data">
-	    		<div class="btn-reset text-center"><v-btn color="primary">Reset</v-btn></div>
-      		</template>
-		</v-data-table>
-		<v-dialog v-model="dialog" persistent max-width="450">
+		    	</template>
+		    	<template slot="no-data">
+		    		<div class="btn-reset text-center"><v-btn color="primary">Reset</v-btn></div>
+		    	</template>
+				</v-data-table>
+			</app-card>
+			<v-dialog v-model="dialog" persistent max-width="450">
 	      <v-card>
 	        <v-card-title class="headline font-weight-bold">
 	          <v-icon x-large color="yellow accent-3" class="mr-2">
@@ -67,71 +105,102 @@
 	        </v-card-actions>
 	      </v-card>
 	    </v-dialog>
-	</v-container>
+		</v-layout>
+		<v-layout row wrap>
+			<app-card
+				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5"
+				:fullScreen="true"
+				:reloadable="true"
+				:closeable="false"
+			>
+				<v-toolbar flat color="white">
+	        <v-toolbar-title>
+	          One(1) Photo Package
+	        </v-toolbar-title>
+	      </v-toolbar>
+	      <v-divider class="m-0"></v-divider>
 
-<div class="margin-table">
-	<v-container fluid grid-list-xl pt-0>
-		<v-toolbar flat color="white">
-		    <h3>One(1) Photo Package</h3>
-		</v-toolbar>
-		<v-data-table
-	      :headers="headers2"
-	      :items="desserts2"
-	      class="elevation-1"
-	      :pagination.sync="pagination"
-	      :disable-initial-sort="true"
-		  :loading="loadingCom"
-	    >
-	    	<template slot="items" slot-scope="props">
-	    		<td class="text-xs-left">{{ props.item.id }}</td>
-		        <td class="text-xs-left">{{ props.item.size }}</td>
-		        <td class="text-xs-left custom-height-td-package">
-		        	<v-flex xs12 sm12 md12 slot="append">
-		        		<v-flex xs3 class="symbol-td">
-		        			<span >{{ props.item.symbol }}</span>
-		        		</v-flex>
-			            <v-flex xs7 class="symbol-td-text-field"><v-text-field 
-			                v-model="props.item.price"
-			                :rules="[rules.required]"
-			                :disabled="key == props.item.id ? false : true"
-			                outline
-			                @blur="editPhotoPackage('price', props.item.price, props.item.id)"
-						    @keyup.enter="editPhotoPackage('price', props.item.price, props.item.id)"
-						    class="custom-height-package"
-			            ></v-text-field></v-flex>
-			            <v-flex xs2 class="symbol-td-icon">
-		        			<span >
-								<v-btn flat icon @click="unDisableItem(props.item.id)"><v-icon small>fas fa-marker</v-icon></v-btn>
-							</span>
-		        		</v-flex>
-		            </v-flex>
+	      <v-data-table
+		      :headers="headers2"
+		      :items="desserts2"
+		      class="elevation-5 body-2 global-custom-table"
+		      :pagination.sync="pagination"
+		      :disable-initial-sort="true"
+				  :loading="loadingCom"
+			  >
+			  	<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+					<!--Header -->
+					<template slot="headers" slot-scope="props">
+	          <tr>
+	            <th
+	              v-for="header in props.headers"
+	              :key="header.text"
+	              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+	              @click="changeSort(header.value)"
+	            >
+	            	<div class="custom-header" :class="header.value == 'price' || header.value == 'offer' ? 'justify-content-center' : ''">
+		              <v-tooltip bottom>
+		                <span slot="activator" class="text-capitalize font-weight-bold">
+		                  {{ header.text }}
+		                </span>
+		                <span>
+		                  {{ header.text }}
+		                </span>
+		              </v-tooltip>
+		              <v-icon v-if="header.value == 'package_name' || header.value == 'id'">arrow_upward</v-icon>
+	            	</div>
+	            </th>
+	          </tr>
+	        </template>
+
+		    	<template slot="items" slot-scope="props">
+		    		<td class="text-xs-left">{{ props.item.id }}</td>
+			      <td class="text-xs-left">{{ props.item.size }}</td>
+		        <td>
+		        	<v-flex xs8 offset-xs2 mt-4 class="center-prepend-icon">
+			          <v-text-field
+			          	single-line
+			          	:prepend-icon="props.item.symbol"
+			            v-model="props.item.price"
+			            :rules="[rules.required]"
+			            outline
+			            clear-icon="mdi-close-circle"
+			            clearable
+			            type="number"
+			            @blur="editPhotoPackage('price', props.item.price, props.item.id)"
+								  @keyup.enter="editPhotoPackage('price', props.item.price, props.item.id)"
+			          ></v-text-field>
+			        </v-flex>
 		        </td>
-		        <td class="text-xs-left">
-		        	<v-flex xs12 sm12 md12 slot="append">
-			            <v-flex xs7 class="symbol-td-text-field"><v-text-field 
-			                v-model="props.item.free_photo"
-			                :rules="[rules.required, rules.number]"
-			                :disabled="keyPhotoPackage == props.item.id ? false : true"
-			                outline
-			                @blur="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
-						    @keyup.enter="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
-						    class="custom-height-package"
-			            ></v-text-field></v-flex>
-			            <v-flex xs2 class="symbol-td-icon">
-		        			<span >
-								<v-btn flat icon @click="unDisablePhotoPackage(props.item.id)"><v-icon small>fas fa-marker</v-icon></v-btn>
-							</span>
-		        		</v-flex>
-		            </v-flex>
+		        <td>
+		        	<v-flex xs8 offset-xs2 mt-4>
+			          <v-text-field
+			          	single-line
+			            v-model="props.item.free_photo"
+			            :rules="[rules.required, rules.number]"
+			            outline
+			            clear-icon="mdi-close-circle"
+			            clearable
+			            type="number"
+			            @blur="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
+					    		@keyup.enter="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
+			          ></v-text-field>
+			        </v-flex>
 		        </td>
-	    	</template>
-	    	<template slot="no-data">
-	    		<div class="btn-reset text-center"><v-btn color="primary">Reset</v-btn></div>
-      		</template>
-		</v-data-table>
+		    	</template>
+
+		    	<!--No data -->
+				  <template slot="no-data">
+			      <v-alert :value="true" color="error" icon="warning">
+			        Sorry, nothing to display here :(
+			      </v-alert>
+	    		</template>
+				</v-data-table>
+
+			</app-card>
+		</v-layout>
 	</v-container>
-</div>
-</div>	
 </template>
 
 <script>
@@ -141,61 +210,60 @@ import Vue from 'vue'
 import PackageItem from './PackageItem.vue'
 export default {
 
-  	name: 'Index',
+	name: 'Index',
 
-  	components:{
-  		PackageItem
-  	},
+	components:{
+		PackageItem
+	},
 
 	data () {
-	    return {
-	    	headers: [
-	    		{ text: 'Sl No.', value: 'id' },
-		        { text: 'Package Name', align: 'left', value: 'package_name' },
-		        { text: 'Package Price', value: 'price' },
-		        { text: 'Offer Price', value: 'offer' },
-		        { text: 'Actions', sortable: false }
-	      	],
-	      	desserts: [],
-	      	headers2: [
-	    		{ text: 'Sl No.', value: 'id' },
-		        { text: 'Size', align: 'left', value: 'package_name' },
-		        { text: 'Unit Price', value: 'price', sortable: false },
-		        { text: 'Free Photo', value: 'offer', sortable: false },
-	      	],
-	      	desserts2: [],
-	      	rules: {
-		        required: value => !!value || 'Required.',
-	          	number: value => {
-		            const abc = /^[0-9]\d*$/
-		            return abc.test(value) || 'Please input number.'
-	          	},
-	          	decimal: value => {
-		            const abc = /^[0-9]\d*(\.\d+)?$/
-		            return abc.test(value) || 'Please input number.'
-	          	},
-	        },
-	      	dialog: false,
-	      	pagination: {
-		      page: 1,
-		      rowsPerPage: 10,
-		      totalItems: 0,
-		    },
-		    itemIdToDelete: {
-		    	id: null,
-		    	setting_id:null
-		    },
-		    loading: true,
-		    key: 0,
-		    keyPhotoPackage: 0,
-		    user: JSON.parse(localStorage.getItem('user')),
-
-	    }
+    return {
+    	headers: [
+    		{ text: 'Sl No.', value: 'id' },
+        { text: 'Package Name', align: 'left', value: 'package_name' },
+        { text: 'Package Price', value: 'price' },
+        { text: 'Offer Price', value: 'offer' },
+        { text: 'Actions', value:'actions', sortable: false, align: 'right' }
+    	],
+    	desserts: [],
+    	headers2: [
+    		{ text: 'Sl No.', value: 'id', width: '10%' },
+        { text: 'Size', align: 'left', value: 'package_name', width: '25%' },
+        { text: 'Unit Price', value: 'price', sortable: false, width: '35%', align: 'center' },
+        { text: 'Free Photo', value: 'offer', sortable: false, width: '35%' },
+    	],
+      desserts2: [],
+    	rules: {
+        required: value => !!value || 'Required.',
+        	number: value => {
+            const abc = /^[0-9]\d*$/
+            return abc.test(value) || 'Please input number.'
+        	},
+        	decimal: value => {
+            const abc = /^[0-9]\d*(\.\d+)?$/
+            return abc.test(value) || 'Please input number.'
+        	},
+      },
+      dialog: false,
+      pagination: {
+	      page: 1,
+	      rowsPerPage: 10,
+	      totalItems: 0,
+	    },
+	    itemIdToDelete: {
+	    	id: null,
+	    	setting_id:null
+	    },
+	    loading: true,
+	    key: 0,
+	    keyPhotoPackage: 0,
+	    user: JSON.parse(localStorage.getItem('user')),
+    }
 	},
 	computed: {
-	    loadingCom(){
-	    	return this.loading
-	    },
+    loadingCom(){
+    	return this.loading
+    },
 	},
 	methods:{
 		fetchData() {
@@ -237,32 +305,31 @@ export default {
 
 		editPhotoPackage(field_name, value, id){
 			var id = id
-	        var field = {
-		        field_name: field_name,
-		        value: value,
-		        id: id
-	        }
+      var field = {
+        field_name: field_name,
+        value: value,
+        id: id
+      }
 
-	      this.fetchDataEdit(id, field)
-	    },
+      this.fetchDataEdit(id, field)
+	  },
 
-	    fetchDataEdit(id, field){
-	    	post(config.API_URL + 'edit/photoPackage/' + id, field)
+	  fetchDataEdit(id, field){
+	    post(config.API_URL + 'edit/photoPackage/' + id, field)
 			.then((res) => {
 				if(res.data && res.data.success){
 					Vue.notify({
-		                group: 'loggedIn',
-		                type: 'success',
-		                text: 'Edit Item Success!'
-		            });	
-		            this.key = 0
-					}
-				})
+            group: 'loggedIn',
+            type: 'success',
+            text: 'Edit Item Success!'
+          })
+          this.key = 0
+				}
+			})
 			.catch((e) =>{
-		        		setTimeout(() => {this.alertStt = false}, 1500)
-					})
-
-	    },
+	      setTimeout(() => {this.alertStt = false}, 1500)
+			})
+	  },
 
 		showAddItem(){
 			let obj = {
@@ -299,23 +366,43 @@ export default {
 
 		deleteItem(id,setting_id){
 
-				del(config.API_URL + 'company_packages/' + this.itemIdToDelete.id)
-				.then((res) => {
-					this.loading = true;
-					this.fetchData();
-					this.dialog = false;	
-					// setTimeout(function(){
-			            Vue.notify({
-			                group: 'loggedIn',
-			                type: 'success',
-			                text: 'Delete Item Success!'
-			            });
-			       // },500);
-				})
-				.catch((err) =>{
-					console.log(err)
-				})
-		}
+			del(config.API_URL + 'company_packages/' + this.itemIdToDelete.id)
+			.then((res) => {
+				this.loading = true;
+				this.fetchData();
+				this.dialog = false;	
+				// setTimeout(function(){
+		            Vue.notify({
+		                group: 'loggedIn',
+		                type: 'success',
+		                text: 'Delete Item Success!'
+		            });
+		       // },500);
+			})
+			.catch((err) =>{
+				console.log(err)
+			})
+		},
+		toggleAll () {
+      if (this.selected.length) this.selected = []
+      else{
+	    	this.selected = this.desserts.slice()
+      }
+    },
+    changeSort (column) {
+      var columnsNoSearch = ['actions', 'price', 'offer']
+      if (columnsNoSearch.indexOf(column) > -1) {
+        return
+      }
+      this.loading = true
+      if (this.pagination.sortBy === column) {
+        this.pagination.descending = !this.pagination.descending
+      } else {
+        this.pagination.sortBy = column
+        this.pagination.descending = false
+      }
+      this.loading = false
+    },
 	},
 	mounted(){
         this.$root.$on('reload-table', res => {
@@ -327,7 +414,7 @@ export default {
 		this.fetchData();	
 		this.fetchDataPhotoPackage();	
 	}
-}
+};
 </script>
 
 <style lang="css" scoped>

@@ -60,6 +60,7 @@ class User extends Authenticatable
      */
     public static $rules = [
         'email'=>'required',
+        'username' => 'unique:users, username'
         
     ];
 

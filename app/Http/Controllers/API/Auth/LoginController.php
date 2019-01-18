@@ -10,6 +10,8 @@ use App\Http\Controllers\API\BaseApiController;
 use App\Models\Branch;
 use App\Models\Company;
 
+
+
 class LoginController extends BaseApiController
 {
     /*
@@ -58,6 +60,7 @@ class LoginController extends BaseApiController
 
                 return [
                     "success"=> false,
+                    "email" => false,
                     "message"=>'Email address not exist in system',
 
                 ];
@@ -67,6 +70,7 @@ class LoginController extends BaseApiController
 
                 return [
                     "success"=> false,
+                    "password" => false,
                     "message"=> 'Password provider was incorrect'
                 ];
             }

@@ -1,4 +1,5 @@
 <template>
+
 	<v-container fluid pt-0 grid-list-xl mt-3>
 		<v-layout row wrap>
 			
@@ -20,10 +21,19 @@
 						</nav>
 						<div class="d-custom-flex ">
 							<div class="">
-								<h3 class="info--text mb-0 active">$ {{ computedTotalTransactions }}</h3>
+								<h3 class="info--text mb-0 active">$ {{ computedTotalOders }}</h3>
 								<p class="fs-12 grey--text mb-0 total-transaction">Total Income</p>
 							</div>
 						</div>
+					</div>
+					<div class="d-custom-flex justify-space-between label-wrap pt-2">
+						<nav class="nav navbar-chart-text">
+							<a class="nav-link no-point pdl">Free : 0 </a>
+							<a class="nav-link no-point pdl">CASH : {{ computedCash }} </a>
+							<a class="nav-link no-point pdl">CC : {{ computedCC }} </a>
+							<a class="nav-link no-point pdl">WEB : {{ computedWeb }} </a>
+							<a class="nav-link no-point pdl">INCOME : {{ computedTotalIncome }}</a>
+						</nav>
 					</div>
 					<line-chart :width="300"></line-chart>
 				</div>
@@ -60,7 +70,7 @@
 										v-model="computedStartDay"
 										prepend-icon="event"
 										readonly
-	              		placeholder="Enter Start Date"
+	              						placeholder="Enter Start Date"
 									></v-text-field>
 									<v-date-picker 
 										v-model="from_day"
@@ -93,7 +103,7 @@
 										v-model="computedEndDay"
 										prepend-icon="event"
 										readonly
-	              		placeholder="Enter End Date"
+	              						placeholder="Enter End Date"
 									></v-text-field>
 									<v-date-picker 
 										v-model="to_day" 
@@ -117,7 +127,7 @@
 				         	v-model="item.branch_id"
 				         	item-text="name"
 	              	item-value="id"
-						      v-on:change="changeBranch(item)"
+							    v-on:change="changeBranch(item)"
 									@input="reportByRangeDay"
 						    ></v-select>
 			  			</v-card-text>
@@ -227,8 +237,8 @@
 				         	label="Enter Branch"
 				         	v-model="item.branch_id"
 				         	item-text="name"
-            			item-value="id"
-				         	v-on:change="changeBranch(item)"
+        					item-value="id"
+		         			v-on:change="changeBranch(item)"
 									@input="reportByMonth"
 						    ></v-select>
 			  			</v-card-text>
@@ -244,7 +254,7 @@
 				         	label="Enter Photographer"
 				         	v-model="item.photographer_id"
 				         	item-text="name"
-            			item-value="id"
+        					item-value="id"
 									@input="reportByMonth"
 						    ></v-select>
 						  </v-card-text>
@@ -309,7 +319,7 @@
 									transition="scale-transition"
 									offset-y
 									full-width
-	                min-width="290"
+	               	min-width="290"
 								>
 									<v-text-field
 										slot="activator"
@@ -510,43 +520,53 @@ export default {
     	lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
     	authUser : JSON.parse(localStorage.getItem('user')),
      	alertStt: false,
-		alertType: 'success',
-		alertMes: '',
-		ChartConfig,
-		count_pack_basic:0,
-		count_pack_pro:0,
-		count_pack_company:0,
-		from_day:'',
-		to_day:'',
-		from_month:'',
-		to_month:'',
-		from_year:'',
-		to_year:'',
-		typeTime:'day',
-		total:0,
-		from_day_week:'',
-		to_day_week:'',
-		validate:false,
-		menu1:false,
-		menu2:false,
-		menu3:false,
-		menu4:false,
-		menu5:false,
-		menu6:false,
-		menu7:false,
-		menu8:false,
-		date: '',
-		defaultYear : new Date().getUTCFullYear() + '/31/12',
-		totalCompany:0,
-		tweenedNumber: 0,
-		tweenedNumberTransactions: 0,
-		company_id:JSON.parse(localStorage.getItem('user')).company_id,
-		listBranch: [],
-		listPhotographer: [],
-		item : {
-			branch_id: '',
-			photographer_id:''
-		},
+			alertType: 'success',
+			alertMes: '',
+			ChartConfig,
+			count_pack_basic:0,
+			count_pack_pro:0,
+			count_pack_company:0,
+			from_day:'',
+			to_day:'',
+			from_month:'',
+			to_month:'',
+			from_year:'',
+			to_year:'',
+			typeTime:'day',
+			total:0,
+			from_day_week:'',
+			to_day_week:'',
+			validate:false,
+			menu1:false,
+			menu2:false,
+			menu3:false,
+			menu4:false,
+			menu5:false,
+			menu6:false,
+			menu7:false,
+			menu8:false,
+			date: '',
+			defaultYear : new Date().getUTCFullYear() + '/31/12',
+			totalCompany:0,
+			tweenedNumber: 0,
+			tweenedNumberOders: 0,
+			tweenedNumberCash: 0,
+			tweenedNumberCC: 0,
+			tweenedNumberWeb: 0,
+			tweenedNumberIncome: 0,
+			company_id:JSON.parse(localStorage.getItem('user')).company_id,
+			listBranch: [],
+			listPhotographer: [],
+			item : {
+				branch_id: '',
+				photographer_id:''
+			},
+			income:{
+				cash : 0,
+				cc : 0	,
+				web: 0,
+			},
+			totalImcome : 0
 	  }
 	},
 	methods:{
@@ -573,18 +593,7 @@ export default {
 		},
 
 		fetchData(){
-			let url = config.API_URL+'count-packages'
-			get(url)
-			.then((res)=>{
-				if(res.data && res.data.success){
-					this.count_pack_basic = res.data.data.count_basic	
-					this.count_pack_pro = res.data.data.count_pro	
-					this.count_pack_company = res.data.data.total_count_company	
-				}
-			})
-			.catch((err)=>{
-
-			})
+			
 		},
 
 		validations(from,to,value){
@@ -812,10 +821,10 @@ export default {
 			}
 			this.$root.$emit('companyChart', obj)
 			this.$root.$emit('loadTransactionsWithTime', obj)
-  	},
+  		},
 
-  	defaultReportWeek(){
-  		let params = {
+  		defaultReportWeek(){
+  			let params = {
 				defaultWeek :  'default',
 				
 			}
@@ -861,48 +870,77 @@ export default {
 				console.log(err)
 			})
 		},
+
+		
 	},
 	created(){
 		var user = this.authUser  
   		this.$store.dispatch("connectionPushNotification", {user});
 		this.fetchData()
-		this.getListBranch()		
+		this.getListBranch()
+
 		
 	},
 	computed:{
-  	typeTimeReturn(){
-  		return this.typeTime
-  	},
-  	computedStartDay(){
-  		return this.from_day
-  	},
-  	computedEndDay(){
-  		return this.to_day
-  	},
-  	computedStartMonth(){
-  		return this.from_month
-  	},
-  	computedEndMonth(){
-  		return this.to_month
-  	},
-  	computedStartYear(){
-  		return this.from_year
-  	},
-  	computedEndYear(){
-  		return this.to_year
-  	},
-  	computedStartWeek(){
-  		return this.from_day_week
-  	},
-  	computedEndWeek(){
-  		return this.to_day_week
-  	},
-  	computedTotalCompany(){
-  		return this.tweenedNumber.toFixed(0);
-  	},
-  	computedTotalTransactions(){
-  		return this.tweenedNumberTransactions.toFixed(3)
-  	}
+	  	typeTimeReturn(){
+	  		return this.typeTime
+	  	},
+	  	computedStartDay(){
+	  		return this.from_day
+	  	},
+	  	computedEndDay(){
+	  		return this.to_day
+	  	},
+	  	computedStartMonth(){
+	  		return this.from_month
+	  	},
+	  	computedEndMonth(){
+	  		return this.to_month
+	  	},
+	  	computedStartYear(){
+	  		return this.from_year
+	  	},
+	  	computedEndYear(){
+	  		return this.to_year
+	  	},
+	  	computedStartWeek(){
+	  		return this.from_day_week
+	  	},
+	  	computedEndWeek(){
+	  		return this.to_day_week
+	  	},
+	  	computedTotalCompany(){
+	  		return this.tweenedNumber.toFixed(0);
+	  	},
+	  	computedTotalOders(){
+	  		return this.tweenedNumberOders.toFixed(3)
+	  	},
+	  	computedTotalIncome(){
+	  		this.totalImcome = this.income.cc + this.income.cash + this.income.web
+	  		return this.tweenedNumberIncome.toFixed(3)
+	  	},
+	  	computedCash(){
+	  		return this.tweenedNumberCash.toFixed(3)
+	  	},
+	  	computedCC(){
+	  		return this.tweenedNumberCC.toFixed(3)
+	  	},
+	  	computedWeb(){
+	  		return this.tweenedNumberWeb.toFixed(3)
+	  	},
+	  	icomeCash(){
+	  		return this.income.cash
+	  	},
+	  	icomeWeb(){
+	  		return this.income.web
+	  	},
+	  	icomeCC(){
+	  		return this.income.cc
+	  	},
+
+	  // 	tweenedNumberCash: 0,
+			// tweenedNumberCC: 0,
+			// tweenedNumberWeb: 0,
 	},
 	mounted() {
     this.$root.$on('totalTransaction', res => {
@@ -912,6 +950,13 @@ export default {
     this.$root.$on('total-companies', res => {
     	this.totalCompany = res
     })
+
+    this.$root.$on('totalImcome', res => {
+    	this.income.cash = parseFloat(res.cash.toFixed(3))
+    	this.income.cc = parseFloat(res.cc.toFixed(3))
+    	this.income.web = parseFloat(res.web.toFixed(3))
+    })
+
 	},
 
 	watch: {
@@ -925,7 +970,19 @@ export default {
       TweenLite.to(this.$data, 0.5, { tweenedNumber: newValue })
     },
     total: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { tweenedNumberTransactions: newValue })
+      TweenLite.to(this.$data, 0.5, { tweenedNumberOders: newValue })
+    },
+    totalImcome: function(newValue) {
+      TweenLite.to(this.$data, 0.5, { tweenedNumberIncome: newValue })
+    },
+    icomeCash(newValue){
+    	TweenLite.to(this.$data, 0.5, { tweenedNumberCash: newValue })
+    },
+    icomeCC(newValue){
+    	TweenLite.to(this.$data, 0.5, { tweenedNumberCC: newValue })
+    },
+    icomeWeb(newValue){
+    	TweenLite.to(this.$data, 0.5, { tweenedNumberWeb: newValue })
     }
 	},
 };

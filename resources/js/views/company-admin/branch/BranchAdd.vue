@@ -183,6 +183,7 @@ export default {
   			.then(response => {
   				if(response && response.data.success) {
   					this.$root.$emit('reloadTableBranch')
+  					this.alertType = 'success'
   					this.alertStt = true
 					this.alertMes = response.data.message
 
@@ -194,7 +195,15 @@ export default {
   				}
   			})
   			.catch(error => {
-  				console.log(error)
+  				this.alertType = 'error'
+  				this.alertStt = true
+				this.alertMes = error.response.data.message
+				console.log(error.response)
+
+				setTimeout(() => {
+				          this.alertStt = false
+
+				}, 2000)
   			})
   		}
 

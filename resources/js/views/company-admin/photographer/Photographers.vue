@@ -1,42 +1,73 @@
 <template>
-		<div class="photographer-table">
+	<!-- <div class="photographer-table"> -->
 		<!-- <page-title-bar></page-title-bar> -->
-		<v-container fluid grid-list-xl pt-0>
-			<div id="app">
-				<v-app id="inspire">
-					<v-card class="p-4">
-						<v-toolbar flat color="white">
-					        <v-toolbar-title>
-					          	Photographers List
-					          	
-					          	<v-btn dark color="indigo" class="add-btn" @click="showFromAdd()">
-							      <v-icon dark >add</v-icon>
-							    </v-btn>
-					        </v-toolbar-title>
-					    </v-toolbar>
-					    <v-divider></v-divider>
-						<v-card-title>
-				      		<v-spacer></v-spacer>
-				      		<v-text-field
-				        		v-model="search"
-						        append-icon="search"
-						        label="Enter search value"
-						        single-line
-						        hide-details
-						    ></v-text-field>
-				    	</v-card-title>
-
+	<v-container fluid pt-0 grid-list-xl mt-3>
+		<v-layout row wrap>
+			<app-card
+				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5"
+				:fullScreen="true"
+				:reloadable="true"
+				:closeable="false"
+				>
+				<v-toolbar flat color="white">
+			        <v-toolbar-title>
+			          Photographers List
+			        </v-toolbar-title>
+			    </v-toolbar>
+	      		<v-divider class="m-0"></v-divider>
+				<!--Search Component -->
+				<v-card-title>
+			      	<v-spacer></v-spacer>
+			        <div class="w-25">
+			  	      <v-text-field
+			  	        v-model="search"
+			  	        append-icon="search"
+			  	        label="Enter Search Value"
+			  	        single-line
+			  	        hide-details
+			  	      ></v-text-field>
+			        </div>
+				    <v-btn small fab dark color="indigo" @click="showFromAdd()" class="ml-2 btn-gradient-primary">
+							<v-icon dark>add</v-icon>
+					</v-btn>
+		    	</v-card-title>
 
 						<v-data-table 
 							:headers="headers" 
 							:items="items" 
-							class="elevation-5"  
+							class="elevation-5 body-2 global-custom-table"  
 							:pagination.sync="pagination" 
 							:rows-per-page-items="rowsPerPageItems" 
 							default-sort="id:desc"
 							:search="search"
 						>
-							<template slot="items" slot-scope="props" >
+						<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+
+						<template slot="headers" slot-scope="props">
+			         	<tr>
+				            <th
+				              v-for="header in props.headers"
+				              :key="header.text"
+				              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+				              @click="changeSort(header.value)"
+				            >
+				            	<div class="custom-header">
+					              <v-tooltip bottom>
+					                <span slot="activator" class="text-capitalize font-weight-bold">
+					                  {{ header.text }}
+					                </span>
+					                <span>
+					                  {{ header.text }}
+					                </span>
+					              </v-tooltip>
+					              <v-icon v-if="header.text != 'Action'">arrow_upward</v-icon>
+				            	</div>
+			           		</th>
+			          	</tr>
+		        	</template>
+
+							<template slot="items" slot-scope="props">
 								<td>{{ props.item.id }}</td>
 								<td class="text-xs-left" >{{ props.item.branch.name }}</td>
 								<td class="text-xs-left">{{ props.item.name }}</td>
@@ -46,10 +77,10 @@
 
 								<td class="text-xs-left">
 								<!-- {{ props.item.status == true ? 'Active' : 'Inactive' }} -->
-								<v-btn color="success" small v-if="props.item.status === true">Active</v-btn>
-							 	<v-btn color="error" small v-else>Inactive</v-btn>
+								<v-btn color="btn-gradient-primary" small v-if="props.item.status === true">Active</v-btn>
+							 	<v-btn color="btn-gradient-pink" small v-else>Inactive</v-btn>
 								</td>
-					        	<td class="text-xs-left action-width">
+					        	<td class="text-xs-left action-width-photographer">
 
 					        		<v-icon
 									    small
@@ -77,15 +108,26 @@
 
 								</td>
 							</template>
+
+							<!--No data -->
+							<template slot="no-data">
+						      <v-alert :value="true" color="error" icon="warning">
+						        Sorry, nothing to display here :(
+						      </v-alert>
+				    		</template>
+						
+							<!--Search no result -->
+					    	<v-alert slot="no-results" :value="true" color="error" icon="warning">
+					          Your search for "{{ search }}" found no results.
+					        </v-alert>
 						</v-data-table>
 						
-					</v-card>
-				</v-app>
+			</app-card>
 				<photographer-detail ></photographer-detail>
 				<photographer-add></photographer-add>
 				<photographer-edit></photographer-edit>
 
-			</div>
+		</v-layout>
 			<v-dialog v-model="dialog" persistent max-width="450">
 		      <v-card>
 		        <v-card-title class="headline font-weight-bold">
@@ -103,7 +145,7 @@
 		      </v-card>
 		    </v-dialog>
 		</v-container>		
-	</div>	
+	<!-- </div>	 -->
 </template>
 
 <script>
@@ -141,7 +183,8 @@ export default {
 		    company: JSON.parse(localStorage.getItem('user')),
 		    dialog: false,
 		    activeInfo: true,
-		    itemIdToDelete: ''
+		    itemIdToDelete: '',
+		    loading: false
 
 	    }
  	},
@@ -193,9 +236,23 @@ export default {
 		showFormEdit(item)
 		{
 			this.$root.$emit('showFormEditPhotgrapher', {showNavigation: true, data: item})
-		}
+		},
+		changeSort (column) {
+	      var columnsNoSearch = ['actions']
+	      if (columnsNoSearch.indexOf(column) > -1) {
+	        return
+	      }
+	      this.loading = true
+	      if (this.pagination.sortBy === column) {
+	        this.pagination.descending = !this.pagination.descending
+	      } else {
+	        this.pagination.sortBy = column
+	        this.pagination.descending = false
+	      }
+	      this.loading = false
+    	}
   	}
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -211,5 +268,8 @@ export default {
     &:hover{
       color: blue !important;
     }
+}
+.action-width-photographer{
+	min-width: 113px;
 }
 </style>

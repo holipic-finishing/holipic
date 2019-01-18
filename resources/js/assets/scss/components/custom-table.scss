@@ -14,4 +14,14 @@
 	.payment-method-td{
 		max-width: 70px;
 	}
+
+	#content-right{
+		justify-content: end;
+	}
+
+	.center-prepend-icon{
+		.v-input__icon--prepend{
+			height: 16px !important;
+		}
+	}
 }

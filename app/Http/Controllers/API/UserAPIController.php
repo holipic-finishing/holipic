@@ -134,7 +134,6 @@ class UserAPIController extends AppBaseController
     }
 
     public function changePassWord(Request $request) {
-        // dd(123);
         try {
 
             $token = (new Parser())->parse((string) $request['access_token']);         

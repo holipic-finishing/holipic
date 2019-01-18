@@ -13,9 +13,4 @@ class Room extends Model
     ];
 
     public $timestamps = false;
-
-    public function customers()
-    {
-    	return $this->hasMany('App\Models\Customer', 'room_id', 'id');
-    }
 }

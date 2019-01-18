@@ -158,8 +158,9 @@
 		    		<td class="text-xs-left">{{ props.item.id }}</td>
 			      <td class="text-xs-left">{{ props.item.size }}</td>
 		        <td>
-		        	<v-flex xs8 offset-xs2 mt-4 class="center-prepend-icon">
+		        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
 			          <v-text-field
+			          	hide-details
 			          	single-line
 			          	:prepend-icon="props.item.symbol"
 			            v-model="props.item.price"
@@ -174,8 +175,9 @@
 			        </v-flex>
 		        </td>
 		        <td>
-		        	<v-flex xs8 offset-xs2 mt-4>
+		        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
 			          <v-text-field
+			          	hide-details
 			          	single-line
 			            v-model="props.item.free_photo"
 			            :rules="[rules.required, rules.number]"

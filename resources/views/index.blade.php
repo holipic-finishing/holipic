@@ -38,7 +38,7 @@
 
   </script>
   <script>
-      var OneSignal = window.OneSignal || [];
+     var OneSignal = window.OneSignal || [];
       OneSignal.push(["init", {
           appId: "{{ env("ONESIGNAL_APP_ID") }}",
           subdomainName: 'wbtotalter',
@@ -62,7 +62,15 @@
       }]);
       OneSignal.push(function() {
           OneSignal.showHttpPrompt();
-          // OneSignal.registerForPushNotifications();
+          OneSignal.on('subscriptionChange', function (isSubscribed) {
+            console.log("The user's subscription state is now:", isSubscribed);
+              OneSignal.push(function() {
+                OneSignal.getUserId(function(userId) {
+                  localStorage.setItem('id_one_signal',userId)
+                });
+              });
+              
+            });
       });
   </script>
 

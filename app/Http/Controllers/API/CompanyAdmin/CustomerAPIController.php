@@ -164,7 +164,7 @@ class CustomerAPIController extends AppBaseController
 
     public function exportEmailCustomers()
     {
-        return \Excel::download(new SalesBranchExport(request('companyId')), 'ListEmailCustomers.xlsx');
+        return \Excel::download(new ListEmailCustomers(request('companyId')), 'ListEmailCustomers.xlsx');
     }
 
     public function getBranchCustomers(Request $request)

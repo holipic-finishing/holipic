@@ -1,145 +1,192 @@
 <template>
-	<div class="sale-table">
-		<v-container fluid grid-list-xl pt-0>
-			<div id="app">
-				<v-app id="inspire">
-					<v-card class="p-4">
-						<v-toolbar flat color="white">
-					        <v-toolbar-title>
-					          	Manage Sales
-					        </v-toolbar-title>
-					    </v-toolbar>
-					    <v-divider></v-divider>
-					    
-					   <v-layout row wrap border-rad-sm overflow-hidden>
-						   	<!-- select box photographer -->
-							<v-flex xl4 lg4 md4 sm6 xs12>
-						        <v-select
-						          v-model="valuePhotographer"
-						          :items="photographers"
-						           autocomplete
-					              browserAutocomplete="off"
-					              item-text="name"
-					              item-value="id"
-					              
-						        ></v-select>
+	<v-container fluid pt-0 grid-list-xl mt-3>
+		<v-layout row wrap>
+			<app-card
+				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5"
+				:fullScreen="true"
+				:reloadable="true"
+				:closeable="false"
+				>
+				<v-toolbar flat color="white">
+			        <v-toolbar-title>
+			          Manage Sales
+			        </v-toolbar-title>
+			     </v-toolbar>
+	      		<v-divider class="m-0"></v-divider>
+			  	<v-layout row wrap>
+	      			<!-- Filter Component -->
+				  	<v-flex xs11>
+				  		<v-layout row wrap>
+								<v-flex md3 sm6 xs12>
+									<v-card class="elevation-5">
+						  				<v-card-text>
+									        <v-select
+									          v-model="valuePhotographer"
+									          :items="photographers"
+									           autocomplete
+								              browserAutocomplete="off"
+								              item-text="name"
+								              item-value="id"
+							              
+								        	></v-select>
+						  				</v-card-text>
+					  				</v-card>
+						    	</v-flex>
+						   		<!-- Start day -->
+							   	<v-flex md3 sm6 xs12>
+							   		<v-card class="elevation-5">
+						  				<v-card-text>
+											<v-menu 
+												:close-on-content-click="false"
+								              	v-model="menu1"
+								              	:nudge-right="40"
+								              	lazy
+								              	transition="scale-transition"
+								             	 offset-y
+								              	full-width
+								             	 min-width="290"
+											>
+												<v-text-field 
+													slot="activator"
+													v-model="from_day"
+													clearable
+													readonly
+							  						placeholder="Enter Start Date"
+												></v-text-field>
+												<v-date-picker 
+													v-model="from_day"
+													no-title
+													scrollable 
+													@input= "menu1 =false"
+													:max="new Date().toISOString().substr(0, 10)"
 
+												></v-date-picker>
+											</v-menu>
+						  				</v-card-text>
+						  			</v-card>
+								</v-flex>
+								<!-- End day -->
+								<v-flex md3 sm6 xs12>
+									<v-card class="elevation-5">
+						  				<v-card-text>
+											<v-menu 
+												:close-on-content-click="false"
+								              	v-model="menu2"
+								              	:nudge-right="40"
+								              	lazy
+								              	transition="scale-transition"
+								              	offset-y
+								              	full-width
+								              	min-width="290"
+											>
+												<v-text-field 
+												slot="activator"
+												v-model="to_day"
+												clearable
+						  						placeholder="Enter End Date"
+											></v-text-field>
+											<v-date-picker 
+												v-model="to_day" 
+												no-title 
+												scrollable 
+												@input="menu2 =false"
+												:max="new Date().toISOString().substr(0, 10)"
+											></v-date-picker>
+											</v-menu>
+						  				</v-card-text>
+					  				</v-card>
+								</v-flex>
 
-					      	</v-flex>
-						   	<!-- Start day -->
-						   	<v-flex xl2 lg2 md2 sm3 xs6>
-								<v-menu 
-									:close-on-content-click="false"
-					                v-model="menu1"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-					                min-width="0"
-								>
-									<v-text-field 
-										slot="activator"
-										v-model="from_day"
-										clearable
-										readonly
-				  						placeholder="Enter Start Date"
-									></v-text-field>
-									<v-date-picker 
-										v-model="from_day"
-										no-title
-										scrollable 
-										@input= "menu1 =false"
-										:max="new Date().toISOString().substr(0, 10)"
+								<v-flex md1 sm12 xs12 align-center justify-center>
+				  					<v-btn class="btn-gradient-primary" small fab dark @click="filterSale()">Go</v-btn>
+				  				</v-flex>
+				  		</v-layout>
+				  	</v-flex>
+				  	
+					<v-flex xs12>
+						<v-card-title>
+					      	<v-spacer></v-spacer>
+				        	<div class="w-25">
+					  	      	<v-text-field
+					  	        	v-model="search"
+					  	        	append-icon="search"
+					  	        	label="Enter Search Value"
+					  	        	single-line
+					  	        	hide-details
+					  	      	></v-text-field>
+				        	</div>
+						    <v-tooltip bottom class="icon-style">
+						    	<v-btn slot="activator" small fab dark @click="exportSales()" class="ml-2 btn-gradient-primary">
+										<v-icon dark>fas fa-file-excel</v-icon>
+									</v-btn>
+							    <span>Export Sales</span>
+						    </v-tooltip>
+				    	</v-card-title>
+					</v-flex>
 
-									></v-date-picker>
-								</v-menu>
-							</v-flex>
-							<!-- End day -->
-							<v-flex xl2 lg2 md2 sm3 xs6>
-								<v-menu 
-										:close-on-content-click="false"
-						                v-model="menu2"
-						                :nudge-right="40"
-						                lazy
-						                transition="scale-transition"
-						                offset-y
-						                min-width="0"
-									>
-										<v-text-field 
-											slot="activator"
-											v-model="to_day"
-											clearable
-					  						placeholder="Enter End Date"
-										></v-text-field>
-										<v-date-picker 
-											v-model="to_day" 
-											no-title 
-											scrollable 
-											@input="menu2 =false"
-											:max="new Date().toISOString().substr(0, 10)"
-										></v-date-picker>
-								</v-menu>
-							</v-flex>
-							<v-flex xl2 lg1 md2 sm3 xs6 class="fix-column-btn">
-								<v-btn class="btn-style fix-btn-sale" depressed color="primary" @click="filterSale()">Go</v-btn>
-					      	</v-flex>
-					      	<v-flex xl2 lg1 md2 sm3 xs6 class="fix-column-btn">
-							    <v-btn slot="activator" class="fix-btn-sale" color="primary" @click="exportSales()">
-									<v-icon small color="white">fas fa-file-excel</v-icon>
-								</v-btn>
-					      	</v-flex>
-						</v-layout>
-						
-				      		<v-card-title class="fix-v-card-title-sale">
-				      		<v-spacer></v-spacer>
-				      		<v-flex xs4>
-				      			<v-text-field
-					        		v-model="search"
-							        append-icon="search"
-							        label="Enter search value"
-							        single-line
-							        hide-details
-							        class="fix-text-search-sale"
-							    ></v-text-field>
-				      		</v-flex>
-					      		
-				    		</v-card-title>
-						    <v-data-table 
-							:headers="headers" 
-							:items="sales" 
-							class="elevation-5 custom-table-sale"  
-							:pagination.sync="pagination" 
-							:rows-per-page-items="rowsPerPageItems" 
-							default-sort="id:desc"
-							:search="search"
-								>
+				</v-layout>
+				
+				<v-data-table 
+					:headers="headers" 
+					:items="sales" 
+					class="elevation-5 body-2 global-custom-table"  
+					:pagination.sync="pagination" 
+					:rows-per-page-items="rowsPerPageItems" 
+					default-sort="id:desc"
+					:search="search"
+					>
 
-								<template slot="no-data">
-							      <v-alert :value="true" color="error" icon="warning">
-							        Sorry, nothing to display here :(
-							      </v-alert>
-							    </template>
+					<template slot="headers" slot-scope="props">
+			          <tr>
+			            <th
+			              v-for="header in props.headers"
+			              :key="header.text"
+			              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+			              @click="changeSort(header.value)"
+			            >
+			            	<div class="custom-header">
+				              <v-tooltip bottom>
+				                <span slot="activator" class="text-capitalize font-weight-bold">
+				                  {{ header.text }}
+				                </span>
+				                <span>
+				                  {{ header.text }}
+				                </span>
+				              </v-tooltip>
+				              <v-icon v-if="header.text != 'Branch'">arrow_upward</v-icon>
+			            	</div>
+			            </th>
+			          </tr>
+			        </template>
 
-							    <template slot="items" slot-scope="props" >
-									<td>{{ props.item.id }}</td>
-									<td class="text-xs-left" >{{ props.item.branch.name }}</td>
-									<td class="text-xs-left">{{ props.item.photographer.name }}</td>
-									<td class="text-xs-left">{{ props.item.customer.room.room_hash }}</td>
-									<td class="text-xs-left">{{ props.item.total_amount }}</td>
-									<td class="text-xs-left">{{ props.item.purchase_date }}</td>
-									<td class="text-xs-left">{{ props.item.download_date }}</td>
-									<td class="text-xs-left">{{ props.item.customer.user.email }}</td>
-									<td class="text-xs-left">{{ props.item.payment_method }}</td>
-								</template>
+					<template slot="no-data">
+				      <v-alert :value="true" color="error" icon="warning">
+				        Sorry, nothing to display here :(
+				      </v-alert>
+				    </template>
+
+				    <template slot="items" slot-scope="props" >
+						<td>{{ props.item.id }}</td>
+						<td class="text-xs-left" >{{ props.item.branch.name }}</td>
+						<td class="text-xs-left">{{ props.item.photographer.name }}</td>
+						<td class="text-xs-left">{{ props.item.customer.room.room_hash }}</td>
+						<td class="text-xs-left">{{ props.item.total_amount }}</td>
+						<td class="text-xs-left">{{ props.item.purchase_date }}</td>
+						<td class="text-xs-left">{{ props.item.download_date }}</td>
+						<td class="text-xs-left">{{ props.item.customer.user.email }}</td>
+						<td class="text-xs-left">{{ props.item.payment_method }}</td>
+					</template>
+
+					<!--Search no result -->
+		    		<v-alert slot="no-results" :value="true" color="error" icon="warning">
+		          		Your search for "{{ search }}" found no results.
+		        	</v-alert>
 							
-							</v-data-table>
-				   
-						
-				    </v-card>
-				</v-app>
-			</div>
-		</v-container>
-	</div>
+				</v-data-table>
+			</app-card>
+		</v-layout>
+	</v-container>		    	
 </template>
 
 <script>
@@ -182,7 +229,8 @@ export default {
 			valuePhotographer: '',
 			startDay: '',
 			endDay:'',
-			valueFilter: ''
+			valueFilter: '',
+			loading: false
 	    }
 	  },
 	mounted() {
@@ -279,7 +327,21 @@ export default {
 				console.log(error.response)
 				//this.sales = []
 			})
-		}
+		},
+		changeSort (column) {
+	      var columnsNoSearch = ['actions']
+	      if (columnsNoSearch.indexOf(column) > -1) {
+	        return
+	      }
+	      this.loading = true
+	      if (this.pagination.sortBy === column) {
+	        this.pagination.descending = !this.pagination.descending
+	      } else {
+	        this.pagination.sortBy = column
+	        this.pagination.descending = false
+	      }
+	      this.loading = false
+	    },
 
 	},
 	computed:{

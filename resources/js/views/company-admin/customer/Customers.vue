@@ -28,6 +28,9 @@
 				  	        hide-details
 				  	      ></v-text-field>
 				        </div>
+				         <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary fix-btn-priamry " :href="urlExport">
+							<v-icon small color="white" class="fix-v-icon">fas fa-file-excel</v-icon>
+							</a>
 					    
 			    	</v-card-title>
 
@@ -271,5 +274,10 @@ export default {
     .margin-icon-customer{
     	margin-left:4px !important;
     }
-   
+   	.fix-btn-priamry{
+	   	display:block;
+	  	height: 41px;
+	  	width: 41px;
+	  	border-radius: 50%;
+	}
 </style>

@@ -48,8 +48,8 @@
 					<v-btn fab dark small color="#5D92F4" class="ml-2 btn-gradient-primary" @click="showEmail()">
 						      <v-icon dark >add</v-icon>
 					</v-btn>
-						    <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary " @click="exportCSV">
-							<v-icon small color="white">fas fa-file-excel</v-icon>
+						    <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary fix-btn-priamry" @click="exportCSV">
+							<v-icon small color="white" class="fix-v-icon">fas fa-file-excel</v-icon>
 							</a>
 		    	</v-card-title>
 		    	<v-data-table 
@@ -368,4 +368,10 @@ export default {
     position: absolute;
     top: 13px;
 }
+.fix-btn-priamry{
+   		display:block;
+  height: 41px;
+  width: 41px;
+  border-radius: 50%;
+   	}
 </style>

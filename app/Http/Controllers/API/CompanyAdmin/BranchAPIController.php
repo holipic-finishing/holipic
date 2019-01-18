@@ -160,6 +160,13 @@ class BranchAPIController extends AppBaseController
 
     public function saveBranchCompany()
     {
+        $checkUserName = $this->branchRepository->checkUniqueUserName(request('information.username'));
+
+        if(!empty($checkUserName)) {
+            return $this->sendError('Username branch does exist');
+
+        }
+
         $branch = $this->branchRepository->handleSaveBranchCompany();
 
         if(!$branch) {

@@ -73,7 +73,7 @@
 							<td class="text-xs-left">{{ props.item.room.room_hash }}</td>
 							<td class="text-xs-left">{{ props.item.user.email }}</td>
 							<td class="text-xs-left">{{ props.item.customer_password }}</td>
-							<td class="text-xs-left"><img :src="props.item.avatar" width="100%"></td>
+							<td class="text-xs-left"><img :src="props.item.avatar" width="50px"></td>
 
 							<td class="text-xs-left">
 								<v-btn color="success" small class="btn-customer btn-gradient-primary">Manage</v-btn>

@@ -21,7 +21,7 @@
 						</nav>
 						<div class="d-custom-flex ">
 							<div class="">
-								<h3 class="info--text mb-0 active">$ {{ computedTotalTransactions }}</h3>
+								<h3 class="info--text mb-0 active">$ {{ computedTotalOders }}</h3>
 								<p class="fs-12 grey--text mb-0 total-transaction">Total Income</p>
 							</div>
 						</div>
@@ -29,9 +29,9 @@
 					<div class="d-custom-flex justify-space-between label-wrap pt-2">
 						<nav class="nav navbar-chart-text">
 							<a class="nav-link no-point pdl">Free : 0 </a>
-							<a class="nav-link no-point pdl">CASH : {{ income.cash }} </a>
-							<a class="nav-link no-point pdl">CC : {{ income.cc }} </a>
-							<a class="nav-link no-point pdl">WEB : {{ income.web }} </a>
+							<a class="nav-link no-point pdl">CASH : {{ computedCash }} </a>
+							<a class="nav-link no-point pdl">CC : {{ computedCC }} </a>
+							<a class="nav-link no-point pdl">WEB : {{ computedWeb }} </a>
 							<a class="nav-link no-point pdl">INCOME : {{ computedTotalIncome }}</a>
 						</nav>
 					</div>
@@ -57,13 +57,13 @@
 			  	  		<div class="font-weight-bold">Start</div>
 								<v-menu 
 									:close-on-content-click="false"
-					                v-model="menu1"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-					                full-width
-					                min-width="290"
+	                v-model="menu1"
+	                :nudge-right="40"
+	                lazy
+	                transition="scale-transition"
+	                offset-y
+	                full-width
+	                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
@@ -90,13 +90,13 @@
 			  	  		<div class="font-weight-bold">End</div>
 								<v-menu 
 									:close-on-content-click="false"
-					                v-model="menu2"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-					                full-width
-					                min-width="290"
+	                v-model="menu2"
+	                :nudge-right="40"
+	                lazy
+	                transition="scale-transition"
+	                offset-y
+	                full-width
+	                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
@@ -122,12 +122,12 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Branch</div>
 								<v-select
-						         	:items="listBranch"
-						         	label="Enter Branch"
-						         	v-model="item.branch_id"
-						         	item-text="name"
-			              			item-value="id"
-								    v-on:change="changeBranch(item)"
+				         	:items="listBranch"
+				         	label="Enter Branch"
+				         	v-model="item.branch_id"
+				         	item-text="name"
+	              	item-value="id"
+							    v-on:change="changeBranch(item)"
 									@input="reportByRangeDay"
 						    ></v-select>
 			  			</v-card-text>
@@ -139,11 +139,11 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
-						         	:items="listPhotographer"
-						         	label="Enter Photographer"
-						         	v-model="item.photographer_id"
-						         	item-text="name"
-			          				item-value="id"
+				         	:items="listPhotographer"
+				         	label="Enter Photographer"
+				         	v-model="item.photographer_id"
+				         	item-text="name"
+	          			item-value="id"
 									@input="reportByRangeDay"
 						    ></v-select>
 			  			</v-card-text>
@@ -166,20 +166,20 @@
 			  	  		<div class="font-weight-bold">Start</div>
 								<v-menu
 									:close-on-content-click="false"
-					                v-model="menu3"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-					                full-width
-					                min-width="290"
+	                v-model="menu3"
+	                :nudge-right="40"
+	                lazy
+	                transition="scale-transition"
+	                offset-y
+	                full-width
+	                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
 										v-model="computedStartMonth"
 										prepend-icon="event"
 										readonly
-                  						placeholder="Enter Start Month"
+                  	placeholder="Enter Start Month"
 									></v-text-field>
 									<v-date-picker 
 										v-model="from_month" 
@@ -200,20 +200,20 @@
 			  	  		<div class="font-weight-bold">End</div>
 								<v-menu 
 									:close-on-content-click="false"
-					                v-model="menu4"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-					                full-width
-					                min-width="290"
+	                v-model="menu4"
+	                :nudge-right="40"
+	                lazy
+	                transition="scale-transition"
+	                offset-y
+	                full-width
+	                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
 										v-model="computedEndMonth"
 										prepend-icon="event"
 										readonly
-                  						placeholder="Enter End Month"
+                  	placeholder="Enter End Month"
 									></v-text-field>
 									<v-date-picker 
 										v-model="to_month" 
@@ -233,12 +233,12 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Branch</div>
 								<v-select
-						         	:items="listBranch"
-						         	label="Enter Branch"
-						         	v-model="item.branch_id"
-						         	item-text="name"
-            						item-value="id"
-				         			v-on:change="changeBranch(item)"
+				         	:items="listBranch"
+				         	label="Enter Branch"
+				         	v-model="item.branch_id"
+				         	item-text="name"
+        					item-value="id"
+		         			v-on:change="changeBranch(item)"
 									@input="reportByMonth"
 						    ></v-select>
 			  			</v-card-text>
@@ -250,11 +250,11 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
-						         	:items="listPhotographer"
-						         	label="Enter Photographer"
-						         	v-model="item.photographer_id"
-						         	item-text="name"
-            						item-value="id"
+				         	:items="listPhotographer"
+				         	label="Enter Photographer"
+				         	v-model="item.photographer_id"
+				         	item-text="name"
+        					item-value="id"
 									@input="reportByMonth"
 						    ></v-select>
 						  </v-card-text>
@@ -284,23 +284,23 @@
 									transition="scale-transition"
 									offset-y
 									full-width
-	                				min-width="290"
+	                min-width="290"
 								>
 							    <v-text-field
-							        slot="activator"
-							        v-model="from_year"
-							        label="Start Year"
-							        prepend-icon="event"
-							        readonly
+						        slot="activator"
+						        v-model="from_year"
+						        label="Start Year"
+						        prepend-icon="event"
+						        readonly
 							    ></v-text-field>
-						      	<v-date-picker
-							        ref="picker"
-							        v-model="from_year"
-							        @input="saveStartYear"
-							        reactive
-							        no-title
-							        :max="defaultYear"
-						      	></v-date-picker>
+					      	<v-date-picker
+						        ref="picker"
+						        v-model="from_year"
+						        @input="saveStartYear"
+						        reactive
+						        no-title
+						        :max="defaultYear"
+					      	></v-date-picker>
 								</v-menu>
 			  			</v-card-text>
 				  	</v-card>
@@ -319,7 +319,7 @@
 									transition="scale-transition"
 									offset-y
 									full-width
-	                				min-width="290"
+	               	min-width="290"
 								>
 									<v-text-field
 										slot="activator"
@@ -346,12 +346,12 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Branch</div>
 								<v-select
-						         	:items="listBranch"
-						         	label="Enter Branch"
-						         	v-model="item.branch_id"
-						         	item-text="name"
-		            				item-value="id"
-						         	v-on:change="changeBranch(item)"
+				         	:items="listBranch"
+				         	label="Enter Branch"
+				         	v-model="item.branch_id"
+				         	item-text="name"
+            			item-value="id"
+				         	v-on:change="changeBranch(item)"
 									@input="reportByYear"
 						    ></v-select>
 			  			</v-card-text>
@@ -363,11 +363,11 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
-						         	:items="listPhotographer"
-						         	label="Enter Photographer"
-						         	v-model="item.photographer_id"
-						         	item-text="name"
-		            				item-value="id"
+				         	:items="listPhotographer"
+				         	label="Enter Photographer"
+				         	v-model="item.photographer_id"
+				         	item-text="name"
+            			item-value="id"
 									@input="reportByYear"
 				        ></v-select>
 				      </v-card-text>
@@ -390,20 +390,20 @@
 			  	  		<div class="font-weight-bold">Start</div>
 								<v-menu
 									:close-on-content-click="false"
-					                v-model="menu7"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-					                full-width
-					                min-width="290"
+	                v-model="menu7"
+	                :nudge-right="40"
+	                lazy
+	                transition="scale-transition"
+	                offset-y
+	                full-width
+	                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
 										v-model="computedStartWeek"
 										prepend-icon="event"
 										readonly
-	              						placeholder="Enter Start Week"
+	              		placeholder="Enter Start Week"
 									></v-text-field>
 									<v-date-picker 
 										v-model="from_day_week" 
@@ -423,20 +423,20 @@
 			  	  		<div class="font-weight-bold">End</div>
 								<v-menu 
 									:close-on-content-click="false"
-					                v-model="menu8"
-					                :nudge-right="40"
-					                lazy
-					                transition="scale-transition"
-					                offset-y
-					                full-width
-					                min-width="290"
+	                v-model="menu8"
+	                :nudge-right="40"
+	                lazy
+	                transition="scale-transition"
+	                offset-y
+	                full-width
+	                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
 										v-model="computedEndWeek"
 										prepend-icon="event"
 										readonly
-	              						placeholder="Enter End Week"
+	              		placeholder="Enter End Week"
 									></v-text-field>
 									<v-date-picker 
 										v-model="to_day_week" 
@@ -455,12 +455,12 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Branch</div>
 								<v-select
-						         	:items="listBranch"
-						         	label="Enter Branch"
-						         	v-model="item.branch_id"
-						         	item-text="name"
-		            				item-value="id"
-						         	v-on:change="changeBranch(item)"
+				         	:items="listBranch"
+				         	label="Enter Branch"
+				         	v-model="item.branch_id"
+				         	item-text="name"
+            			item-value="id"
+				         	v-on:change="changeBranch(item)"
 									@input="reportByWeek"
 						    ></v-select>
 			  			</v-card-text>
@@ -472,11 +472,11 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
-						         	:items="listPhotographer"
-						         	label="Enter Photographer"
-						         	v-model="item.photographer_id"
-						         	item-text="name"
-			              			item-value="id"
+				         	:items="listPhotographer"
+				         	label="Enter Photographer"
+				         	v-model="item.photographer_id"
+				         	item-text="name"
+	              	item-value="id"
 									@input="reportByWeek"
 						    ></v-select>
 				      </v-card-text>
@@ -520,50 +520,53 @@ export default {
     	lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`,
     	authUser : JSON.parse(localStorage.getItem('user')),
      	alertStt: false,
-		alertType: 'success',
-		alertMes: '',
-		ChartConfig,
-		count_pack_basic:0,
-		count_pack_pro:0,
-		count_pack_company:0,
-		from_day:'',
-		to_day:'',
-		from_month:'',
-		to_month:'',
-		from_year:'',
-		to_year:'',
-		typeTime:'day',
-		total:0,
-		from_day_week:'',
-		to_day_week:'',
-		validate:false,
-		menu1:false,
-		menu2:false,
-		menu3:false,
-		menu4:false,
-		menu5:false,
-		menu6:false,
-		menu7:false,
-		menu8:false,
-		date: '',
-		defaultYear : new Date().getUTCFullYear() + '/31/12',
-		totalCompany:0,
-		tweenedNumber: 0,
-		tweenedNumberTransactions: 0,
-		company_id:JSON.parse(localStorage.getItem('user')).company_id,
-		listBranch: [],
-		listPhotographer: [],
-		item : {
-			branch_id: '',
-			photographer_id:''
-		},
-		income:{
-			cash : 0,
-			cc : 0	,
-			web: 0,
-		},
-		totalImcome : 0
-
+			alertType: 'success',
+			alertMes: '',
+			ChartConfig,
+			count_pack_basic:0,
+			count_pack_pro:0,
+			count_pack_company:0,
+			from_day:'',
+			to_day:'',
+			from_month:'',
+			to_month:'',
+			from_year:'',
+			to_year:'',
+			typeTime:'day',
+			total:0,
+			from_day_week:'',
+			to_day_week:'',
+			validate:false,
+			menu1:false,
+			menu2:false,
+			menu3:false,
+			menu4:false,
+			menu5:false,
+			menu6:false,
+			menu7:false,
+			menu8:false,
+			date: '',
+			defaultYear : new Date().getUTCFullYear() + '/31/12',
+			totalCompany:0,
+			tweenedNumber: 0,
+			tweenedNumberOders: 0,
+			tweenedNumberCash: 0,
+			tweenedNumberCC: 0,
+			tweenedNumberWeb: 0,
+			tweenedNumberIncome: 0,
+			company_id:JSON.parse(localStorage.getItem('user')).company_id,
+			listBranch: [],
+			listPhotographer: [],
+			item : {
+				branch_id: '',
+				photographer_id:''
+			},
+			income:{
+				cash : 0,
+				cc : 0	,
+				web: 0,
+			},
+			totalImcome : 0
 	  }
 	},
 	methods:{
@@ -909,15 +912,35 @@ export default {
 	  	computedTotalCompany(){
 	  		return this.tweenedNumber.toFixed(0);
 	  	},
-	  	computedTotalTransactions(){
-	  		return this.tweenedNumberTransactions.toFixed(3)
+	  	computedTotalOders(){
+	  		return this.tweenedNumberOders.toFixed(3)
 	  	},
 	  	computedTotalIncome(){
 	  		this.totalImcome = this.income.cc + this.income.cash + this.income.web
-	  		return this.totalImcome.toFixed(3)
+	  		return this.tweenedNumberIncome.toFixed(3)
 	  	},
-	  	
+	  	computedCash(){
+	  		return this.tweenedNumberCash.toFixed(3)
+	  	},
+	  	computedCC(){
+	  		return this.tweenedNumberCC.toFixed(3)
+	  	},
+	  	computedWeb(){
+	  		return this.tweenedNumberWeb.toFixed(3)
+	  	},
+	  	icomeCash(){
+	  		return this.income.cash
+	  	},
+	  	icomeWeb(){
+	  		return this.income.web
+	  	},
+	  	icomeCC(){
+	  		return this.income.cc
+	  	},
 
+	  // 	tweenedNumberCash: 0,
+			// tweenedNumberCC: 0,
+			// tweenedNumberWeb: 0,
 	},
 	mounted() {
     this.$root.$on('totalTransaction', res => {
@@ -947,10 +970,19 @@ export default {
       TweenLite.to(this.$data, 0.5, { tweenedNumber: newValue })
     },
     total: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { tweenedNumberTransactions: newValue })
+      TweenLite.to(this.$data, 0.5, { tweenedNumberOders: newValue })
     },
     totalImcome: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { totalImcome: newValue })
+      TweenLite.to(this.$data, 0.5, { tweenedNumberIncome: newValue })
+    },
+    icomeCash(newValue){
+    	TweenLite.to(this.$data, 0.5, { tweenedNumberCash: newValue })
+    },
+    icomeCC(newValue){
+    	TweenLite.to(this.$data, 0.5, { tweenedNumberCC: newValue })
+    },
+    icomeWeb(newValue){
+    	TweenLite.to(this.$data, 0.5, { tweenedNumberWeb: newValue })
     }
 	},
 };

@@ -182,7 +182,6 @@ class CustomerAPIController extends AppBaseController
 
     public function updateBranchCustomer($id)
     {
-       
         $customer = $this->customerRepository->handleUpdateBranchCustomer($id);
 
         if(!$customer) {

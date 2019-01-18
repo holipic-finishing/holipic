@@ -215,7 +215,7 @@ export default {
 				}
 			})
 			.catch(error => {
-				consol.elog(error)
+				console.log(error)
 			})
   		},
   		unDisableItem(index)

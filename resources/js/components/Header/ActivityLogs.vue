@@ -122,10 +122,10 @@ export default {
   	created() {
   		var _this = this
   		socket.on('view-activity',function(data){
-			// _this.data.unshift(data)
-			// _this.total = _this.total + 1
-			_this.data = []
-			_this.getActivityLogs(1)
+			_this.data.unshift(data)
+			_this.total = _this.total + 1
+			// _this.data = []
+			// _this.getActivityLogs(1)
 			
 		}.bind(this));
 		
@@ -156,14 +156,16 @@ export default {
 					 		_this.data.push(value)
 		             });
 
-		            this.total = response.data.data[0][1].total
+		             this.total = this.data.length
 
-		            this.currentPage = response.data.data[0][1].current_page
+		            // this.total = response.data.data[0][1].total
 
-					if(response.data.data[0][1].last_page > 1) 
-					{
-						this.checkloadMore = true
-					}
+		   //          this.currentPage = response.data.data[0][1].current_page
+
+					// if(response.data.data[0][1].last_page > 1) 
+					// {
+					// 	this.checkloadMore = true
+					// }
 				}
 				
 			})
@@ -188,12 +190,12 @@ export default {
 
 		            this.total = response.data.data[0][1].total
 
-		            this.currentPage = response.data.data[0][1].current_page
+		   //          this.currentPage = response.data.data[0][1].current_page
 
-					if(response.data.data[0][1].current_page == response.data.data[0][1].last_page ) 
-					{
-						this.checkloadMore = false
-					}
+					// if(response.data.data[0][1].current_page == response.data.data[0][1].last_page ) 
+					// {
+					// 	this.checkloadMore = false
+					// }
 				}
 				
 			})
@@ -204,12 +206,12 @@ export default {
 				if(response && response.data.success) {
 					 this.data.splice(key, 1);
 					 this.total = this.total - 1
-					 this.data = []
-					 this.getActivityLogs(1)
+					 // this.data = []
+					 // this.getActivityLogs(1)
 
-					 if(this.data.length <= 7) {
-					 	this.checkloadMore = false
-					 }
+					 // if(this.data.length <= 7) {
+					 // 	this.checkloadMore = false
+					 // }
 
 				}
 			})

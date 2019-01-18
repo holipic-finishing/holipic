@@ -23,10 +23,10 @@ export const menus = {
 			role_id : 3
 		},
 		{
-			action: 'zmdi zmdi-account-add',
+			action: 'fas fa-donate',
 			title: 'message.sales',
 			active: false,
-			path: '/photographers',
+			path: '/sales',
 			items:null,
 			role_id : 3
 		},
@@ -38,7 +38,6 @@ export const menus = {
 			items:null,
 			role_id : 3
 		},
-
 
 		    /////////////////////////////////////////////
 		   ///////								  //////
@@ -72,7 +71,7 @@ export const menus = {
 			role_id : 2
 		},
 		{
-			action: 'zmdi-pin-assistant',
+			action: 'zmdi zmdi-account-box-mail',
 			title: 'message.customer',
 			active: false,
 			path: '/customers',

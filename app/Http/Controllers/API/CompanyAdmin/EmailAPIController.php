@@ -36,6 +36,7 @@ class EmailAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+
         $this->emailRepository->pushCriteria(new RequestCriteria($request));
         $this->emailRepository->pushCriteria(new LimitOffsetCriteria($request));
         $emails = $this->emailRepository->all();
@@ -53,6 +54,7 @@ class EmailAPIController extends AppBaseController
      */
     public function store(CreateEmailAPIRequest $request)
     {
+
         $input = $request->all();
  
         $emails = $this->emailRepository->create($input);

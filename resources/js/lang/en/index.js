@@ -483,7 +483,7 @@ export default {
   activityLog: "Activity Log",
   sales : "Sales",
   photographers : 'Photographers',
-  customer: 'Customer',
+  customer: 'Customers',
   photographers : 'Photographers List',
   sales: 'Manage Sales',
   emails:'Emails'

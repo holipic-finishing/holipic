@@ -257,6 +257,7 @@ const mutations = {
         state.user = null
         localStorage.removeItem('access_token')
         localStorage.removeItem('user')
+        localStorage.removeItem('id_one_signal')
         router.push("/login");
     },
     signUpUser(state) {

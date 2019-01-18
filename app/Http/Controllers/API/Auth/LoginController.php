@@ -109,8 +109,8 @@ class LoginController extends BaseApiController
 
     public function loginSuperAdmin(UserLoginAPIRequest $request)
     {
-        $result = strpos($request['email'],'@');
 
+        $result = strpos($request['email'],'@');
         $credentials = $request->only(['email', 'password']);
         $email = $credentials['email'];
         $dataInfoLogin = null;

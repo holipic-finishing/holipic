@@ -384,7 +384,7 @@ class OrderRepository extends BaseRepository
     
     // ********* Get all orders with branch, customer, photographer **********
     public function getAllOrders($company_id,$searchBy){
-       
+
         $results = $this->scopeQuery(function($query) use ($searchBy,$company_id){
             $query = $query->whereHas('branch', function($q) use ($company_id) {
                         $q->where('branches.company_id',$company_id);
@@ -429,11 +429,9 @@ class OrderRepository extends BaseRepository
 
                  $query = $query->where(DB::raw('date(purchase_date)'),$searchBy['from_day']);
             }
-        
 
-          
             $query = $query->where('status','DONE');
-             return $query;
+            return $query;
          })->get();
       
         $results = $this->transform($results);
@@ -456,12 +454,12 @@ class OrderRepository extends BaseRepository
     }
 
     //********** Insert File CSV **************
-   public function insertCSVFile($attributes,$company_id){
+    public function insertCSVFile($attributes,$company_id){
  
         if(!$attributes)
             return false;
 
-        $pathPublic = env('DB_MYSQL_DIR').DIRECTORY_SEPARATOR;
+        $pathPublic = public_path() . '/files' . DIRECTORY_SEPARATOR;
 
         $filename =  $company_id . '_Sales.csv';
        

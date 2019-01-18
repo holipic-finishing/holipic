@@ -11,6 +11,9 @@ import CompanyAdminRoutes from './company-admin';
 import BranchAdminRoutes from './branch-admin';
 import CustomerRoutes from './customer';
 
+// Dashboard components
+import mini from '../container/MiniSidebarLayout.vue'
+
 import PageNotFound from '../views/partials/pages/page404'
 
 

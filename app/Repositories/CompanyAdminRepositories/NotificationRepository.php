@@ -6,6 +6,7 @@ use App\Models\CompanyAdmin\Notification;
 use InfyOm\Generator\Common\BaseRepository;
 use DB;
 use App\Events\RedisEventNotification;
+use App\Models\User;
 
 /**
  * Class NotificationRepository
@@ -46,7 +47,15 @@ class NotificationRepository extends BaseRepository
                             'push_notification' => $mess_push
                         ]);
 
-        $this->evenNotification($Notification);
+        $id_one_signal = User::select('id_one_signal')
+                                ->where('id',$user_id)
+                                ->first();
+
+        if($id_one_signal){
+            $this->evenNotification($Notification,$id_one_signal->id_one_signal);
+        }                        
+
+
     }
 
      /**
@@ -91,9 +100,9 @@ class NotificationRepository extends BaseRepository
     * from: func:createNotifi
     * to: $attribute
     **/
-    public function evenNotification($attribute) {
+    public function evenNotification($attribute,$id_one_signal) {
         event(
-            $e = new RedisEventNotification($attribute)
+            $e = new RedisEventNotification($attribute,$id_one_signal)
         );
     }
 }

@@ -31,6 +31,10 @@ import Photographers from '../../views/company-admin/photographer/Photographers'
 //Customers
 import Customers from '../../views/company-admin/customer/Customers'
 
+
+// User Profile
+import UserProfile from '../../views/partials/users/UserProfile'
+
 //Email
 import Email from '../../views/company-admin/email/Emailes'
 
@@ -121,6 +125,17 @@ export default {
          		companyAuth:true,
 	            title: 'message.sales',
 	            breadcrumb: 'Company / Sales'
+	        }
+	    },
+	    {
+	        path: '/company-admin/users/user-profile',
+	        component: UserProfile,
+	        meta: {
+	            requiresAuth: true,
+	            adminAuth:false,
+         		companyAuth:true,
+	            title: 'message.changePassword',
+	            breadcrumb: 'Change Password'
 	        }
 	    },
 	    {

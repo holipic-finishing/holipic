@@ -69,7 +69,13 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('change-password', 'UserAPIController@changePassWord');
 
+
+	Route::get('get-user-profile/{id}', 'UserAPIController@getUserProfile');
+
+	Route::post('edit-user-profile', 'UserAPIController@userProfile');
+
 	Route::post('update-onesignal-id','UserAPIController@updateOnesignalUser');
+
 	
 	Route::namespace('CompanyAdmin')->group(function(){
 

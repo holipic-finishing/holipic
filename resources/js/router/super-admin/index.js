@@ -19,6 +19,9 @@ import CouponCodes from '../../views/super-admin/coupon-codes/CouponCodes'
 // Change Password
 import ChangePassword from '../../views/partials/users/ChangePassword'
 
+// User Profile
+import UserProfile from '../../views/partials/users/UserProfile'
+
 export default {
 	path: '/super-admin',
    	component: MiniSidebarLayout,
@@ -71,6 +74,17 @@ export default {
 	    {
 	        path: '/super-admin/change-password',
 	        component: ChangePassword,
+	        meta: {
+	            requiresAuth: true,
+	            adminAuth:true,
+         		// companyAuth:false,
+	            title: 'message.changePassword',
+	            breadcrumb: 'Change Password'
+	        }
+	    },
+	    {
+	        path: '/super-admin/users/user-profile',
+	        component: UserProfile,
 	        meta: {
 	            requiresAuth: true,
 	            adminAuth:true,

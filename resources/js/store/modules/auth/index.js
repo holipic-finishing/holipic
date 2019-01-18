@@ -106,6 +106,35 @@ const actions = {
           
           })
     },
+    editUserProfileInDatabase(context, payload) {
+        context.commit('loginUser');
+        let url = config.API_URL+'edit-user-profile'
+        let params = {
+            id : payload.params.id,
+            username : payload.params.username,
+            email : payload.params.email,
+        }
+       
+        post(url,params)
+          .then((res) => {
+            if(res.data && res.data.success){
+                let data = res.data.message
+                Nprogress.done();
+                setTimeout(() => {
+                    context.commit('editProfileSuccess', data);
+                }, 500)
+                
+             } else {
+                let data = res.data.message
+                context.commit('editProfileError', data);
+               
+             }
+          })
+          .catch(err =>{
+            context.commit('editProfileError', err);
+          
+          })
+    },
     logoutUserFromDatabase(context) {
         Nprogress.start();
         let url = '/auth/logout'
@@ -277,6 +306,25 @@ const mutations = {
             group: 'loggedIn',
             type: 'error',
 
+            text: error
+        });
+    },
+    editProfileSuccess(state, success){
+        Nprogress.done();
+        Vue.notify({
+            group: 'loggedIn',
+            type: 'success',
+            title: 'Message',
+            text: success,
+            duration: 5000
+        });
+         router.push('/super-admin/dashboard');
+    },
+    editProfileError(state, error){
+        Nprogress.done();
+        Vue.notify({
+            group: 'loggedIn',
+            type: 'error',
             text: error
         });
     }

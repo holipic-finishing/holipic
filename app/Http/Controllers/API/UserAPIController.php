@@ -186,6 +186,55 @@ class UserAPIController extends AppBaseController
         
     }
 
+
+    public function getUserProfile($id)
+    {
+        $user = $this->userRepository->findWithoutFail($id); 
+
+        return $this->sendResponse($user->toArray(), 'User retrieved successfully');
+    }
+
+    public function userProfile(Request $request)
+    {
+       try {
+            $user = User::where('id',$request['id'])->first(); 
+
+            $checkUsernameExits = User::where('username', $request['username'])->where('id', '!=', $request['id'])->first();
+            $checkEmailExits = User::where('email', $request['email'])->where('id', '!=', $request['id'])->first();
+
+            if ($checkUsernameExits != '') {
+                return response()->json([
+                        'success' => false, 
+                        'message' => 'The username was exist!'
+                ]);
+            } 
+
+            if ($checkEmailExits != '') {
+                return response()->json([
+                        'success' => false, 
+                        'message' => 'The email was exist!'
+                ]);
+            } 
+
+            $this->notificationRepository->createNotifi($user->id, 'editProfileSuccess','Edit Profile Success');
+
+            $user->update($request->all());
+       
+            // Save activity logs
+            $log = Activity::all()->last(); 
+            $log['user_id'] = $user->id;
+            $log['description_log'] = 'Edit Profile'; 
+            $log->save();
+
+            event(new \App\Events\RedisEventActivityLog($log));
+
+            return $this->sendResponse($user, 'Edit Profile success');
+        }
+        
+         catch (Exception $e) {
+             return $e;
+        }
+    }
     /*
     *  Target : Function update Onesignalid in table users with where email
     */
@@ -196,16 +245,18 @@ class UserAPIController extends AppBaseController
 
         $findUser = User::where('email',$input['email'])->first();
 
-        if($findUser){
-            
+        if($findUser->id_one_signal !== null){
             $id_one_signal = $findUser->id_one_signal . ',' . $input['id_one_signal'];
-
-            $user = User::where('email',$input['email'])->first()->update([
-                        'id_one_signal' => $id_one_signal
-                    ]);  
-        
+        } else {
+            $id_one_signal =  $input['id_one_signal'];
         }
 
+        $user = User::where('email',$input['email'])->first()->update([
+
+                        'id_one_signal' => $id_one_signal
+                    ]);  
+
         return $this->sendResponse($user, 'Updata success');
+
     }
 }

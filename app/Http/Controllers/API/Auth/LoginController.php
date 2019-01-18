@@ -193,6 +193,7 @@ class LoginController extends BaseApiController
         if($user->role_id == '1') {
             $data = [
                 'role_id'      => $user->role_id,
+                'username'     => $user->username,
                 'full_name'    => $user->first_name . ' ' .  $user->last_name,
                 'access_token' => $user->access_token,
                 'email'        => $user->email,
@@ -203,6 +204,7 @@ class LoginController extends BaseApiController
             $company = Company::where('owner_id', $user->id)->first();
             $data = [
                 'role_id'      => $user->role_id,
+                'username'     => $user->username,
                 'full_name'    => $user->first_name . ' ' .  $user->last_name,
                 'access_token' => $user->access_token,
                 'email'        => $user->email,
@@ -217,6 +219,7 @@ class LoginController extends BaseApiController
             $company = Company::where('id', $branch->company_id)->first();
             $data = [
                 'role_id'      => $user->role_id,
+                'username'     => $user->username,
                 'full_name'    => $user->first_name . ' ' .  $user->last_name,
                 'access_token' => $user->access_token,
                 'email'        => $user->email,

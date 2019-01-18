@@ -864,19 +864,7 @@ export default {
 	},
 	created(){
 		var user = this.authUser  
-  		// this.$store.dispatch("connectionPushNotification", {user});
-  		var url = config.API_URL + 'update-onesignal-id'
-  		let params = {
-	      			email : 'hoa@gmail.com',
-	      			id_one_signal: '123-a123-qqq12'
-	      		}
-	      		post(url,params)
-	      		.then(res => {
-	      			
-	      		})
-	      		.catch(err => {
-	      			console.log(err)	
-	      		})
+  		this.$store.dispatch("connectionPushNotification", {user});
 		this.fetchData()
 		this.getListBranch()		
 		

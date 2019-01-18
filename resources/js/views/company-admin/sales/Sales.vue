@@ -179,8 +179,8 @@
 						<td>{{ props.item.photographer_name }}</td>
 						<td>{{ props.item.room_has_number }}</td>
 						<td>{{ formatTotal(props.item.total_amount) }}</td>
-						<td>{{ props.item.purchase_date }}</td>
-						<td>{{ props.item.download_date }}</td>
+						<td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
+						<td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
 						<td>{{ props.item.customer_email }}</td>
 						<td>{{ props.item.payment_method }}</td>
 					</template>

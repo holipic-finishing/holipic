@@ -147,17 +147,6 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::post('edit/email/{itemId}', 'EmailAPIController@editEmail');
 
-	});
-
-		Route::get('branch/sales-list', 'OrderAPIController@getSalesList');
-		Route::get('branch/sales-list/export', 'OrderAPIController@exportSalesListBranch');
-		
-
-
-		/******************* EmailAPIController **********************/
-
-		Route::post('edit/email/{itemId}', 'EmailAPIController@editEmail');
-
 		/*****************CompanyPackageAPIController*****************/
 
 		Route::post('get-company-package', 'CompanyPackageAPIController@getPackage');
@@ -166,17 +155,22 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::post('edit/companyPackage/{itemId}', 'CompanyPackageAPIController@editPackage');
 
-
 		/*****************PhotoPackageAPIController*****************/
 		
 		Route::post('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
 
 		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
 
-	// });
+	});
 
+		
+		
 	/*************Order Controllers**************/
 	Route::resource('orders', 'OrderAPIController');
+
+	Route::get('branch/sales-list', 'OrderAPIController@getSalesList');
+	
+	Route::get('branch/sales-list/export', 'OrderAPIController@exportSalesListBranch');
 
 	Route::get('order/orders-company', 'OrderAPIController@getAllOrderCompany');
 

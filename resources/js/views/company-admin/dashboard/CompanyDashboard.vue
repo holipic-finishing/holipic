@@ -1,4 +1,5 @@
 <template>
+
 	<v-container fluid pt-0 grid-list-xl mt-3>
 		<v-layout row wrap>
 			
@@ -25,6 +26,15 @@
 							</div>
 						</div>
 					</div>
+					<div class="d-custom-flex justify-space-between label-wrap pt-2">
+						<nav class="nav navbar-chart-text">
+							<a class="nav-link no-point pdl">Free : 0 </a>
+							<a class="nav-link no-point pdl">CASH : {{ income.cash }} </a>
+							<a class="nav-link no-point pdl">CC : {{ income.cc }} </a>
+							<a class="nav-link no-point pdl">WEB : {{ income.web }} </a>
+							<a class="nav-link no-point pdl">INCOME : {{ computedTotalIncome }}</a>
+						</nav>
+					</div>
 					<line-chart :width="300"></line-chart>
 				</div>
 				
@@ -47,20 +57,20 @@
 			  	  		<div class="font-weight-bold">Start</div>
 								<v-menu 
 									:close-on-content-click="false"
-	                v-model="menu1"
-	                :nudge-right="40"
-	                lazy
-	                transition="scale-transition"
-	                offset-y
-	                full-width
-	                min-width="290"
+					                v-model="menu1"
+					                :nudge-right="40"
+					                lazy
+					                transition="scale-transition"
+					                offset-y
+					                full-width
+					                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
 										v-model="computedStartDay"
 										prepend-icon="event"
 										readonly
-	              		placeholder="Enter Start Date"
+	              						placeholder="Enter Start Date"
 									></v-text-field>
 									<v-date-picker 
 										v-model="from_day"
@@ -80,20 +90,20 @@
 			  	  		<div class="font-weight-bold">End</div>
 								<v-menu 
 									:close-on-content-click="false"
-	                v-model="menu2"
-	                :nudge-right="40"
-	                lazy
-	                transition="scale-transition"
-	                offset-y
-	                full-width
-	                min-width="290"
+					                v-model="menu2"
+					                :nudge-right="40"
+					                lazy
+					                transition="scale-transition"
+					                offset-y
+					                full-width
+					                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
 										v-model="computedEndDay"
 										prepend-icon="event"
 										readonly
-	              		placeholder="Enter End Date"
+	              						placeholder="Enter End Date"
 									></v-text-field>
 									<v-date-picker 
 										v-model="to_day" 
@@ -112,12 +122,12 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Branch</div>
 								<v-select
-				         	:items="listBranch"
-				         	label="Enter Branch"
-				         	v-model="item.branch_id"
-				         	item-text="name"
-	              	item-value="id"
-						      v-on:change="changeBranch(item)"
+						         	:items="listBranch"
+						         	label="Enter Branch"
+						         	v-model="item.branch_id"
+						         	item-text="name"
+			              			item-value="id"
+								    v-on:change="changeBranch(item)"
 									@input="reportByRangeDay"
 						    ></v-select>
 			  			</v-card-text>
@@ -129,11 +139,11 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
-				         	:items="listPhotographer"
-				         	label="Enter Photographer"
-				         	v-model="item.photographer_id"
-				         	item-text="name"
-	          			item-value="id"
+						         	:items="listPhotographer"
+						         	label="Enter Photographer"
+						         	v-model="item.photographer_id"
+						         	item-text="name"
+			          				item-value="id"
 									@input="reportByRangeDay"
 						    ></v-select>
 			  			</v-card-text>
@@ -156,20 +166,20 @@
 			  	  		<div class="font-weight-bold">Start</div>
 								<v-menu
 									:close-on-content-click="false"
-	                v-model="menu3"
-	                :nudge-right="40"
-	                lazy
-	                transition="scale-transition"
-	                offset-y
-	                full-width
-	                min-width="290"
+					                v-model="menu3"
+					                :nudge-right="40"
+					                lazy
+					                transition="scale-transition"
+					                offset-y
+					                full-width
+					                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
 										v-model="computedStartMonth"
 										prepend-icon="event"
 										readonly
-                  	placeholder="Enter Start Month"
+                  						placeholder="Enter Start Month"
 									></v-text-field>
 									<v-date-picker 
 										v-model="from_month" 
@@ -190,20 +200,20 @@
 			  	  		<div class="font-weight-bold">End</div>
 								<v-menu 
 									:close-on-content-click="false"
-	                v-model="menu4"
-	                :nudge-right="40"
-	                lazy
-	                transition="scale-transition"
-	                offset-y
-	                full-width
-	                min-width="290"
+					                v-model="menu4"
+					                :nudge-right="40"
+					                lazy
+					                transition="scale-transition"
+					                offset-y
+					                full-width
+					                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
 										v-model="computedEndMonth"
 										prepend-icon="event"
 										readonly
-                  	placeholder="Enter End Month"
+                  						placeholder="Enter End Month"
 									></v-text-field>
 									<v-date-picker 
 										v-model="to_month" 
@@ -223,12 +233,12 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Branch</div>
 								<v-select
-				         	:items="listBranch"
-				         	label="Enter Branch"
-				         	v-model="item.branch_id"
-				         	item-text="name"
-            			item-value="id"
-				         	v-on:change="changeBranch(item)"
+						         	:items="listBranch"
+						         	label="Enter Branch"
+						         	v-model="item.branch_id"
+						         	item-text="name"
+            						item-value="id"
+				         			v-on:change="changeBranch(item)"
 									@input="reportByMonth"
 						    ></v-select>
 			  			</v-card-text>
@@ -240,11 +250,11 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
-				         	:items="listPhotographer"
-				         	label="Enter Photographer"
-				         	v-model="item.photographer_id"
-				         	item-text="name"
-            			item-value="id"
+						         	:items="listPhotographer"
+						         	label="Enter Photographer"
+						         	v-model="item.photographer_id"
+						         	item-text="name"
+            						item-value="id"
 									@input="reportByMonth"
 						    ></v-select>
 						  </v-card-text>
@@ -274,23 +284,23 @@
 									transition="scale-transition"
 									offset-y
 									full-width
-	                min-width="290"
+	                				min-width="290"
 								>
 							    <v-text-field
-						        slot="activator"
-						        v-model="from_year"
-						        label="Start Year"
-						        prepend-icon="event"
-						        readonly
+							        slot="activator"
+							        v-model="from_year"
+							        label="Start Year"
+							        prepend-icon="event"
+							        readonly
 							    ></v-text-field>
-					      	<v-date-picker
-						        ref="picker"
-						        v-model="from_year"
-						        @input="saveStartYear"
-						        reactive
-						        no-title
-						        :max="defaultYear"
-					      	></v-date-picker>
+						      	<v-date-picker
+							        ref="picker"
+							        v-model="from_year"
+							        @input="saveStartYear"
+							        reactive
+							        no-title
+							        :max="defaultYear"
+						      	></v-date-picker>
 								</v-menu>
 			  			</v-card-text>
 				  	</v-card>
@@ -309,7 +319,7 @@
 									transition="scale-transition"
 									offset-y
 									full-width
-	                min-width="290"
+	                				min-width="290"
 								>
 									<v-text-field
 										slot="activator"
@@ -336,12 +346,12 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Branch</div>
 								<v-select
-				         	:items="listBranch"
-				         	label="Enter Branch"
-				         	v-model="item.branch_id"
-				         	item-text="name"
-            			item-value="id"
-				         	v-on:change="changeBranch(item)"
+						         	:items="listBranch"
+						         	label="Enter Branch"
+						         	v-model="item.branch_id"
+						         	item-text="name"
+		            				item-value="id"
+						         	v-on:change="changeBranch(item)"
 									@input="reportByYear"
 						    ></v-select>
 			  			</v-card-text>
@@ -353,11 +363,11 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
-				         	:items="listPhotographer"
-				         	label="Enter Photographer"
-				         	v-model="item.photographer_id"
-				         	item-text="name"
-            			item-value="id"
+						         	:items="listPhotographer"
+						         	label="Enter Photographer"
+						         	v-model="item.photographer_id"
+						         	item-text="name"
+		            				item-value="id"
 									@input="reportByYear"
 				        ></v-select>
 				      </v-card-text>
@@ -380,20 +390,20 @@
 			  	  		<div class="font-weight-bold">Start</div>
 								<v-menu
 									:close-on-content-click="false"
-	                v-model="menu7"
-	                :nudge-right="40"
-	                lazy
-	                transition="scale-transition"
-	                offset-y
-	                full-width
-	                min-width="290"
+					                v-model="menu7"
+					                :nudge-right="40"
+					                lazy
+					                transition="scale-transition"
+					                offset-y
+					                full-width
+					                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
 										v-model="computedStartWeek"
 										prepend-icon="event"
 										readonly
-	              		placeholder="Enter Start Week"
+	              						placeholder="Enter Start Week"
 									></v-text-field>
 									<v-date-picker 
 										v-model="from_day_week" 
@@ -413,20 +423,20 @@
 			  	  		<div class="font-weight-bold">End</div>
 								<v-menu 
 									:close-on-content-click="false"
-	                v-model="menu8"
-	                :nudge-right="40"
-	                lazy
-	                transition="scale-transition"
-	                offset-y
-	                full-width
-	                min-width="290"
+					                v-model="menu8"
+					                :nudge-right="40"
+					                lazy
+					                transition="scale-transition"
+					                offset-y
+					                full-width
+					                min-width="290"
 								>
 									<v-text-field 
 										slot="activator"
 										v-model="computedEndWeek"
 										prepend-icon="event"
 										readonly
-	              		placeholder="Enter End Week"
+	              						placeholder="Enter End Week"
 									></v-text-field>
 									<v-date-picker 
 										v-model="to_day_week" 
@@ -445,12 +455,12 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Branch</div>
 								<v-select
-				         	:items="listBranch"
-				         	label="Enter Branch"
-				         	v-model="item.branch_id"
-				         	item-text="name"
-            			item-value="id"
-				         	v-on:change="changeBranch(item)"
+						         	:items="listBranch"
+						         	label="Enter Branch"
+						         	v-model="item.branch_id"
+						         	item-text="name"
+		            				item-value="id"
+						         	v-on:change="changeBranch(item)"
 									@input="reportByWeek"
 						    ></v-select>
 			  			</v-card-text>
@@ -462,11 +472,11 @@
 			  			<v-card-text>
 			  				<div class="font-weight-bold">Photographer</div>
 								<v-select
-				         	:items="listPhotographer"
-				         	label="Enter Photographer"
-				         	v-model="item.photographer_id"
-				         	item-text="name"
-	              	item-value="id"
+						         	:items="listPhotographer"
+						         	label="Enter Photographer"
+						         	v-model="item.photographer_id"
+						         	item-text="name"
+			              			item-value="id"
 									@input="reportByWeek"
 						    ></v-select>
 				      </v-card-text>
@@ -547,6 +557,13 @@ export default {
 			branch_id: '',
 			photographer_id:''
 		},
+		income:{
+			cash : 0,
+			cc : 0	,
+			web: 0,
+		},
+		totalImcome : 0
+
 	  }
 	},
 	methods:{
@@ -573,18 +590,7 @@ export default {
 		},
 
 		fetchData(){
-			let url = config.API_URL+'count-packages'
-			get(url)
-			.then((res)=>{
-				if(res.data && res.data.success){
-					this.count_pack_basic = res.data.data.count_basic	
-					this.count_pack_pro = res.data.data.count_pro	
-					this.count_pack_company = res.data.data.total_count_company	
-				}
-			})
-			.catch((err)=>{
-
-			})
+			
 		},
 
 		validations(from,to,value){
@@ -812,10 +818,10 @@ export default {
 			}
 			this.$root.$emit('companyChart', obj)
 			this.$root.$emit('loadTransactionsWithTime', obj)
-  	},
+  		},
 
-  	defaultReportWeek(){
-  		let params = {
+  		defaultReportWeek(){
+  			let params = {
 				defaultWeek :  'default',
 				
 			}
@@ -861,48 +867,57 @@ export default {
 				console.log(err)
 			})
 		},
+
+		
 	},
 	created(){
 		var user = this.authUser  
   		this.$store.dispatch("connectionPushNotification", {user});
 		this.fetchData()
-		this.getListBranch()		
+		this.getListBranch()
+
 		
 	},
 	computed:{
-  	typeTimeReturn(){
-  		return this.typeTime
-  	},
-  	computedStartDay(){
-  		return this.from_day
-  	},
-  	computedEndDay(){
-  		return this.to_day
-  	},
-  	computedStartMonth(){
-  		return this.from_month
-  	},
-  	computedEndMonth(){
-  		return this.to_month
-  	},
-  	computedStartYear(){
-  		return this.from_year
-  	},
-  	computedEndYear(){
-  		return this.to_year
-  	},
-  	computedStartWeek(){
-  		return this.from_day_week
-  	},
-  	computedEndWeek(){
-  		return this.to_day_week
-  	},
-  	computedTotalCompany(){
-  		return this.tweenedNumber.toFixed(0);
-  	},
-  	computedTotalTransactions(){
-  		return this.tweenedNumberTransactions.toFixed(3)
-  	}
+	  	typeTimeReturn(){
+	  		return this.typeTime
+	  	},
+	  	computedStartDay(){
+	  		return this.from_day
+	  	},
+	  	computedEndDay(){
+	  		return this.to_day
+	  	},
+	  	computedStartMonth(){
+	  		return this.from_month
+	  	},
+	  	computedEndMonth(){
+	  		return this.to_month
+	  	},
+	  	computedStartYear(){
+	  		return this.from_year
+	  	},
+	  	computedEndYear(){
+	  		return this.to_year
+	  	},
+	  	computedStartWeek(){
+	  		return this.from_day_week
+	  	},
+	  	computedEndWeek(){
+	  		return this.to_day_week
+	  	},
+	  	computedTotalCompany(){
+	  		return this.tweenedNumber.toFixed(0);
+	  	},
+	  	computedTotalTransactions(){
+	  		return this.tweenedNumberTransactions.toFixed(3)
+	  	},
+	  	computedTotalIncome(){
+	  		this.totalImcome = this.income.cc + this.income.cash + this.income.web
+	  		return this.totalImcome.toFixed(3)
+	  	},
+	  	
+
 	},
 	mounted() {
     this.$root.$on('totalTransaction', res => {
@@ -912,6 +927,13 @@ export default {
     this.$root.$on('total-companies', res => {
     	this.totalCompany = res
     })
+
+    this.$root.$on('totalImcome', res => {
+    	this.income.cash = parseFloat(res.cash.toFixed(3))
+    	this.income.cc = parseFloat(res.cc.toFixed(3))
+    	this.income.web = parseFloat(res.web.toFixed(3))
+    })
+
 	},
 
 	watch: {
@@ -926,6 +948,9 @@ export default {
     },
     total: function(newValue) {
       TweenLite.to(this.$data, 0.5, { tweenedNumberTransactions: newValue })
+    },
+    totalImcome: function(newValue) {
+      TweenLite.to(this.$data, 0.5, { totalImcome: newValue })
     }
 	},
 };

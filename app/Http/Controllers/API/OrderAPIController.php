@@ -266,4 +266,34 @@ class OrderAPIController extends AppBaseController
         return $this->sendResponse($results->toArray(), 'Order updated successfully');
     }
 
+    public function countIncome(Request $request){
+        $input = $request->all();
+        if(isset($input['type'])){
+            $results =  $this->orderRepository->countIncome($input);
+        }else{
+
+            if ($request->has(['defaultDay'])) {
+                $input['type'] = 'day';
+                $results =  $this->orderRepository->countIncome($input);
+            } 
+            if ($request->has(['defaultWeek'])) {
+                $input['type'] = 'week';
+                $results =  $this->orderRepository->countIncome($input);
+            } 
+            if ($request->has(['defaultMonth'])) {
+                $input['type'] = 'month';
+                $results =  $this->orderRepository->countIncome($input);
+            } 
+            if ($request->has(['defaultYear'])) {
+                $input['type'] = 'year';
+                $results =  $this->orderRepository->countIncome($input);
+            }
+
+           
+        }
+        return $this->sendResponse($results, 'Order updated successfully');
+    }
+
+   
+
 }

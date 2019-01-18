@@ -40,7 +40,7 @@ class NotificationRepository extends BaseRepository
     }
 
     public function createNotifi($user_id,$message,$mess_push) {
-// dd($message);
+
         $Notification = $this->model->create([
                             'user_id' => $user_id,
                             'message' => 'message.'.$message,

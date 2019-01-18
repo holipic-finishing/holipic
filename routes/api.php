@@ -72,7 +72,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('get-user-profile/{id}', 'UserAPIController@getUserProfile');
 
-	Route::post('user-profile', 'UserAPIController@userProfile');
+	Route::post('edit-user-profile', 'UserAPIController@userProfile');
 
 	Route::post('update-onesignal-id','UserAPIController@updateOnesignalUser');
 

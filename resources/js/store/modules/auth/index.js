@@ -108,7 +108,7 @@ const actions = {
     },
     editUserProfileInDatabase(context, payload) {
         context.commit('loginUser');
-        let url = config.API_URL+'user-profile'
+        let url = config.API_URL+'edit-user-profile'
         let params = {
             id : payload.params.id,
             username : payload.params.username,

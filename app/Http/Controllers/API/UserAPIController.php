@@ -235,7 +235,7 @@ class UserAPIController extends AppBaseController
          catch (Exception $e) {
              return $e;
         }
-
+    }
     /*
     *  Target : Function update Onesignalid in table users with where email
     */
@@ -243,15 +243,12 @@ class UserAPIController extends AppBaseController
     public function updateOnesignalUser(Request $request){
 
         $input  = $request->all();
-
         $findUser = User::select('id_one_signal')->where('email',$input['email'])->first();
-
-        if($findUser->id_one_signal){
+        if($findUser){
             $id_one_signal = $findUser->id_one_signal . ',' . $input['id_one_signal'];
         } else {
             $id_one_signal =  $input['id_one_signal'];
         }
-        dd($id_one_signal);
 
             $user = User::where('email',$input['email'])->first()->update([
                         'id_one_signal' => $id_one_signal

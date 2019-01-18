@@ -26,7 +26,7 @@ class AddIdOneSingalUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('id_one_signal')->nullable();
+            $table->dropColumn('id_one_signal');
         });
     }
 }

@@ -378,7 +378,6 @@ export default {
 			getWithData(url,params)
 			.then(res => {
 				if(res.data && res.data.status){
-					console.log(res.data.link)
 					// window.location.href = res.data.link
 					window.open(res.data.link, '_blank')
 				}

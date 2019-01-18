@@ -472,6 +472,7 @@ export default {
   mailSentSuccessfully : 'Mail sent successfully',
   notification : "Notification",
   yourNotification: "Your notification",
+  editProfileSuccess: "Edit User Profile Success",
 
   //Company Admin
   branch: "Branches",

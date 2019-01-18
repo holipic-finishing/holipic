@@ -1,5 +1,5 @@
 <?php
-
+use App\Events\RedisEventNotification;
 /***************************************************
 *********  ROUTER FOR LANDING PAGE   ***************
 ****************************************************/
@@ -73,7 +73,6 @@ Route::get('test', function() {
  //     	$data = $id_one_signal->id_one_signal . ',' . $id;
  //     }
 
- //     // $arId = explode(',',$data);
  //     $arId = ['asdfasdfasdfasdf','asdfasdfasdfasdf'];
  //     dd($arId);
 });

@@ -37,14 +37,14 @@ class NewNotification
         $oneSingalNotification = new Notification($this->oneSignal);
         
         $notification = $event->notification;
-
         $id_one_signal = $event->id_one_signal;
         
         $arr_id_signal = explode(',',$id_one_signal);
 
+
         $notificationData = [
-            // "included_segments" => ["All"],
-            "include_player_ids" => [$arr_id_signal],
+            // "included_segments" => ["Active Users", "Inactive Users"],
+            "include_player_ids" => $arr_id_signal,
             "contents" => [
                 "en" => $notification->push_notification,
             ],

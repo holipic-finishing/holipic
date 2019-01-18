@@ -491,7 +491,7 @@ import LineChart from './LineChart.js'
 import { ChartConfig } from "../../../constants/chart-config";
 //config 
 import config from '../../../config/index.js'
-import { get, getWithData } from '../../../api/index.js'
+import { get, getWithData, post } from '../../../api/index.js'
 import moment from 'moment'
 import Orders from './Orders'
 
@@ -864,7 +864,19 @@ export default {
 	},
 	created(){
 		var user = this.authUser  
-  		this.$store.dispatch("connectionPushNotification", {user});
+  		// this.$store.dispatch("connectionPushNotification", {user});
+  		var url = config.API_URL + 'update-onesignal-id'
+  		let params = {
+	      			email : 'hoa@gmail.com',
+	      			id_one_signal: '123-a123-qqq12'
+	      		}
+	      		post(url,params)
+	      		.then(res => {
+	      			
+	      		})
+	      		.catch(err => {
+	      			console.log(err)	
+	      		})
 		this.fetchData()
 		this.getListBranch()		
 		

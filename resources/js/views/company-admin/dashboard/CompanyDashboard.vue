@@ -28,11 +28,11 @@
 					</div>
 					<div class="d-custom-flex justify-space-between label-wrap pt-2">
 						<nav class="nav navbar-chart-text">
-							<a class="nav-link no-point pdl">Free : 0 </a>
-							<a class="nav-link no-point pdl">CASH : {{ computedCash }} </a>
-							<a class="nav-link no-point pdl">CC : {{ computedCC }} </a>
-							<a class="nav-link no-point pdl">WEB : {{ computedWeb }} </a>
-							<a class="nav-link no-point pdl">INCOME : {{ computedTotalIncome }}</a>
+							<a class="nav-link no-point pdl">Free : <span class="active">0</span></a>
+							<a class="nav-link no-point pdl">CASH : <span class="active">{{ computedCash }}</span></a>
+							<a class="nav-link no-point pdl">CC : <span class="active">{{ computedCC }}</span></a>
+							<a class="nav-link no-point pdl">WEB : <span class="active">{{ computedWeb }}</span></a>
+							<a class="nav-link no-point pdl">INCOME : <span class="active">{{ computedTotalIncome }}</span></a>
 						</nav>
 					</div>
 					<line-chart :width="300"></line-chart>

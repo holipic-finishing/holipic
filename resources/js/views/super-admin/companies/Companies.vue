@@ -1,52 +1,98 @@
 <template>
-	<v-container fluid>
-		<app-card>
-			<company-information></company-information>
-			<company-edit></company-edit>
-			<page-title-bar></page-title-bar>
+	<v-container fluid pt-0 grid-list-xl mt-3 class="container-wrapper">
+		<v-layout row wrap>
+			<app-card
+				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5"
+				:fullScreen="true"
+				:reloadable="true"
+				:closeable="false"
+			>
+				<v-toolbar flat color="white">
+	        <v-toolbar-title>
+	          Company List
+	        </v-toolbar-title>
+		    </v-toolbar>
+      	<v-divider class="m-0"></v-divider>
 
-			<v-toolbar flat color="white" class="plr-0">
-				<v-spacer></v-spacer>
-				<v-text-field
-		        v-model="search"
-		        append-icon="search"
-		        label="Enter Search Value"
-		        single-line
-		        hide-details
-		        class="mr-3"
-			    ></v-text-field>
+      	<!--Search Component -->
+				<v-card-title>
+		      <v-spacer></v-spacer>
+	        <div class="w-25">
+	  	      <v-text-field
+	  	        v-model="search"
+	  	        append-icon="search"
+	  	        label="Enter Search Value"
+	  	        single-line
+	  	        hide-details
+	  	      ></v-text-field>
+	        </div>
 			    <v-tooltip bottom>
-				    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3">
-							<v-icon small>fas fa-file-excel</v-icon>
-						</a>
-				    <span>Export companies</span>
-			    </v-tooltip>
-			</v-toolbar>
+			    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary fix-btn-priamry">
+						<v-icon small color="white">fas fa-file-excel</v-icon>
+					</a>
+			    <span>Export companies</span>
+		    </v-tooltip>
+		    </v-card-title>
+		    <!--End Search Component -->
 
-			<v-data-table 
-				:headers="headers" 
-				:items="desserts" 
-				class="elevation-5"  
-				:pagination.sync="pagination" 
-				:rows-per-page-items="rowsPerPageItems" 
-				default-sort="id:desc"
-				:search="search"
+		    <v-data-table 
+					:headers="headers" 
+					:items="desserts" 
+					class="elevation-5 body-2 global-custom-table" 
+					:pagination.sync="pagination" 
+					:rows-per-page-items="rowsPerPageItems" 
+					default-sort="id:desc"
+					:search="search"
 				>
-				<template slot="items" slot-scope="props">
-					<td>{{ props.item.id }}</td>
-					<td class="text-xs-left">{{ props.item.name }}</td>
-					<td class="text-xs-left">{{ props.item.fullname }}</td>
-					<td class="text-xs-left">{{ props.item.email }}</td>
-					<td class="text-xs-left">{{ props.item.phone }}</td>
-		        	<td class="text-xs-left action-width">
-				        <v-icon
-					        small
-					        class="mr-2 hover-icon"
-					        @click.stop="drawerRight = !drawerRight"
-					        @click="showTransaction(props.item)"
-					    >
+					<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+					<!--Header -->
+					<template slot="headers" slot-scope="props">
+	         	<tr>
+	            <th
+	              v-for="header in props.headers"
+	              :key="header.text"
+	              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+	              @click="changeSort(header.value)"
+	            >
+	            	<div class="custom-header">
+		              <v-tooltip bottom>
+		                <span slot="activator" class="text-capitalize font-weight-bold">
+		                  {{ header.text }}
+		                </span>
+		                <span>
+		                  {{ header.text }}
+		                </span>
+		              </v-tooltip>
+		              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
+	            	</div>
+           		</th>
+          	</tr>
+        	</template>
+
+					<template slot="items" slot-scope="props">
+						<td>{{ props.item.id }}</td>
+						<td class="text-xs-left">{{ props.item.name }}</td>
+						<td class="text-xs-left">{{ props.item.fullname }}</td>
+						<td class="text-xs-left">{{ props.item.email }}</td>
+						<td class="text-xs-left">{{ props.item.phone }}</td>
+	        	<td class="text-xs-left action-width">
+							<v-icon
+								small
+				        class="mr-2 hover-icon"
+				        @click="addCouponAction(props.item)"
+							>
+								mdi-alpha-c-circle
+							</v-icon>
+
+			        <v-icon
+				        small
+				        class="mr-2 hover-icon"
+				        @click.stop="drawerRight = !drawerRight"
+				        @click="showTransaction(props.item)"
+				    	>
 					    	monetization_on
-						</v-icon>
+							</v-icon>
 
 					    <v-icon
 						    small
@@ -54,48 +100,64 @@
 						    @click="showInfo(props.item)"
 					    >
 					    	visibility
-						</v-icon>
+							</v-icon>
 
-						<v-icon
-							small
-							class="mr-2 hover-icon"
-							@click="showFormEdit(props.item)"
-						>
-							edit
-						</v-icon>
+							<v-icon
+								small
+								class="mr-2 hover-icon"
+								@click="showFormEdit(props.item)"
+							>
+								edit
+							</v-icon>
 
-						<v-icon
-							small
-							class="mr-2 hover-icon"
-							@click="showDialog(props.item.id)"
-						>
-							delete
-						</v-icon>
+							<v-icon
+								small
+								class="mr-2 hover-icon"
+								@click="showDialog(props.item.id)"
+							>
+								delete
+							</v-icon>
+						</td>
+					</template>
 
-					</td>
-				</template>
-			</v-data-table>
-				
+					<!--No data -->
+					<template slot="no-data">
+			      <v-alert :value="true" color="error" icon="warning">
+			        Sorry, nothing to display here :(
+			      </v-alert>
+	    		</template>
+						
+					<!--Search no result -->
+		    	<v-alert slot="no-results" :value="true" color="error" icon="warning">
+	          Your search for "{{ search }}" found no results.
+	        </v-alert>
+
+				</v-data-table>
+			</app-card>
+			<!-- Dialog -->
 			<v-dialog v-model="dialog" persistent max-width="450">
-		      <v-card>
-		        <v-card-title class="headline font-weight-bold">
-		          <v-icon x-large color="yellow accent-3" class="mr-2">
-		            warning
-		          </v-icon>
-		          Do you want delete this item ?
-		        </v-card-title>
-		        <v-divider class="mt-0"></v-divider>
-		        <v-card-actions>
-		          <v-spacer></v-spacer>
-		          <v-btn flat @click="dialog = false">Disagree</v-btn>
-		          <v-btn flat @click="deleteItem">Agree</v-btn>
-		        </v-card-actions>
-		      </v-card>
-		    </v-dialog>
-		    
-			<show-transaction></show-transaction>
-		</app-card>
-	</v-container>	
+	      <v-card>
+	        <v-card-title class="headline font-weight-bold">
+	          <v-icon x-large color="yellow accent-3" class="mr-2">
+	            warning
+	          </v-icon>
+	          Do you want delete this item ?
+	        </v-card-title>
+	        <v-divider class="mt-0"></v-divider>
+	        <v-card-actions>
+	          <v-spacer></v-spacer>
+	          <v-btn flat @click="dialog = false">Disagree</v-btn>
+	          <v-btn flat @click="deleteItem">Agree</v-btn>
+	        </v-card-actions>
+	      </v-card>
+	    </v-dialog>
+	    <!-- component -->
+	    <coupon-code-component></coupon-code-component>
+			<transaction-component></transaction-component>
+			<company-information></company-information>
+			<company-edit-component></company-edit-component>
+		</v-layout>
+	</v-container>
 
 </template>
 
@@ -108,14 +170,16 @@
 	import ShowTransaction from './ShowTransaction.vue'
 	import CompanyInformation from './NavigationCompanyInformation'
 	import CompanyEdit from './NavigationCompanyEdit'
+	import CouponCode from './CouponCode'
 
 	export default {
 
 		name: 'Companies',
 		components: {
-			'show-transaction' : ShowTransaction,
+			'transaction-component' : ShowTransaction,
 			'company-information' : CompanyInformation,
-			'company-edit' : CompanyEdit
+			'company-edit-component' : CompanyEdit,
+			'coupon-code-component' : CouponCode
 		},
 
 		data () {
@@ -126,22 +190,24 @@
 					{ text: 'Owner/ Manager', value: 'fullname' },
 					{ text: 'Email', value: 'email'},	
 					{ text: 'Phone', value: 'phone' },		      
-		        	{ text: 'Action', sortable: false },         
-		        ],
-		        desserts:[],
-		        search: '',
-		        dialog: false,
-		        itemIdToDelete: '',
-		        listPackage : [],
-		        urlExport:config.API_URL+'exportexcel/companies',
-		        drawerRight: false,
-		        pagination: {
-				  	rowsPerPage: 25,
-				  	sortBy: 'id', 
-				  	descending: true
-		        },
-		        rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }]
-		    }
+        	{ text: 'Action', value: 'actions', sortable: false },         
+        ],
+        desserts:[],
+        search: '',
+        dialog: false,
+        itemIdToDelete: '',
+        listPackage : [],
+        urlExport:config.API_URL+'exportexcel/companies',
+        drawerRight: false,
+        pagination: {
+		  	rowsPerPage: 25,
+		  	sortBy: 'id', 
+		  	descending: true
+        },
+        rowsPerPageItems: [
+        	25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }
+        ]
+		  }
 		},
 
 		created(){
@@ -236,7 +302,30 @@
 					}
 				})
 
-			}
+			},
+			toggleAll () {
+	      if (this.selected.length) this.selected = []
+	      else{
+		    	this.selected = this.desserts.slice()
+	      }
+	    },
+	    changeSort (column) {
+	      var columnsNoSearch = ['actions']
+	      if (columnsNoSearch.indexOf(column) > -1) {
+	        return
+	      }
+	      this.loading = true
+	      if (this.pagination.sortBy === column) {
+	        this.pagination.descending = !this.pagination.descending
+	      } else {
+	        this.pagination.sortBy = column
+	        this.pagination.descending = false
+	      }
+	      this.loading = false
+	    },
+	    addCouponAction(item){
+	    	this.$root.$emit('show-coupon-code-component')
+	    }
 		},
 	};
 </script>
@@ -277,7 +366,7 @@
 }
 
 .action-width{
-    min-width: 155px;
-    width: 155px;
+    min-width: 170px;
+    width: 170px;
 }
 </style>

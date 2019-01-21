@@ -52,7 +52,7 @@
 			  :search="search"
         :rows-per-page-items="rowsPerPageItems"
 			>
-				<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+				<!-- <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear> -->
 				<!--Header -->
 				<template slot="headers" slot-scope="props">
           <tr>

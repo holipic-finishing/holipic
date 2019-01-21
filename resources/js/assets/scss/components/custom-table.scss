@@ -20,8 +20,25 @@
 	}
 
 	.center-prepend-icon{
-		.v-input__icon--prepend{
-			height: 16px !important;
+		// .v-input__icon--prepend{
+		// 	height: 16px !important;
+		// }
+		input{
+			margin-top: 0px !important;
+		}
+		.v-input__append-inner{
+			margin-top: 3px !important;
+		}
+
+		.v-input__slot{
+			min-height: 35px !important;
+		}
+
+		.v-input__prepend-outer{
+			margin-top: 2px !important;
+		}
+		.v-input__control{
+			font-size: 14px !important;
 		}
 	}
 }

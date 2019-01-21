@@ -72,7 +72,6 @@ class PackageAPIController extends AppBaseController
 
         $data_setting = [
             'expiration_date'  => $input['expiration_date'],
-            'fee'              => $input['fee'],
             'card_fee'         => $input['card_fee'],
             'bonus'            => $input['bonus'],
             'sms'              => $input['sms'],
@@ -122,8 +121,6 @@ class PackageAPIController extends AppBaseController
     public function update($id, UpdatePackageAPIRequest $request)
     {
         $input = $request->all();
-
-        // dd($input);
 
         /** @var Package $package */
         $package = $this->packageRepository->updatePackageAndSetting($input);
@@ -197,14 +194,39 @@ class PackageAPIController extends AppBaseController
 
         $setting = Setting::find($request['id_setting']);
 
+        if($setting){
+            $setting->delete();
+        }
+
         $package = $this->packageRepository->find($request['id_packages']);
 
-        if (empty($package) && empty($setting)) {
-            return $this->sendError('Package not found');
+        if($package){
+            $package->delete();
         }
-        $setting->delete();
-        $package->delete();
 
         return $this->sendResponse($request['id_packages'], 'Package deleted successfully');
+    }
+
+    public function editPackage(Request $request, $itemId){
+
+        $input =  $request->all();
+
+        if (!$input['value']) {
+            return $this->sendError('This field could be not null');
+        }
+
+        $result = null;
+
+        $result = $this->packageRepository->update([
+            $input['field_name'] => $input['value']
+        ], $itemId);
+
+        if($result){
+
+            return $this->sendResponse([], 'Package updated successfully');
+        }else{
+            return $this->sendError('System Error Occurred');
+        }
+
     }
 }

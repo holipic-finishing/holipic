@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Class Package
@@ -27,10 +28,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Package extends Model
 {
-
+    use LogsActivity;
+    
     public $table = 'packages';
 
-
+    protected static $logFillable = true;
+    
 
     public $fillable = [
         'package_name',
@@ -68,8 +71,6 @@ class Package extends Model
     public static $rules = [
         
     ];
-
-
 
     public function users(){
         return $this->hasMany('App\Models\User','package_id','id');

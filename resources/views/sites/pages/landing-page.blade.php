@@ -494,6 +494,9 @@ Holipic
 						<div class="row">
 							<!-- Pricing single start -->
 							@if(!empty($list))
+							@php
+								$amounts = count($list);
+							@endphp
 							@foreach( $list as $value)
 							
 							<div class="col-md-6 common-package-discount">
@@ -519,7 +522,7 @@ Holipic
 													@if($value->package_name=="Basic")
 														{{$value->secure_storage}} GB secure storage
 													@else
-														{{$value->secure_storage}} secure storage
+														{{$value->secure_storage}} GB secure storage
 													@endif		 
 												</li>
 												<li>{{$value->file_upload}} GB file upload</li>
@@ -529,7 +532,7 @@ Holipic
 													@if($value->package_name=="Basic")
 														maximum {{$value->max_user}} users
 													@else 
-														{{$value->max_user}} maximum
+														maximum {{$value->max_user}} users
 													@endif	
 												</li>
 											</ul>
@@ -537,15 +540,15 @@ Holipic
 									</div>
 									
 									@if($value->package_name=="Basic")
-									<div class="btn-buynow">
-										<a data-package='1' class="has-popup select-package" href="#signup">START TO BASIC</a>
-									</div>
+									
+										<div class="btn-buynow">
+											<a data-package='1' class="select-package" href="#signup" id="{{ $value->id }}">START TO BASIC</a>
+										</div>
 									@else
 
-									<div class="btn-buynow btn-enterprise">
-										<a class="has-popup select-package" data-package='2' href="#signup">UPDATE TO PRO</a>
-									</div>
-
+										<div class="btn-buynow btn-enterprise">
+											<a data-package='2' class="select-package" href="#signup" id="{{ $value->id }}">UPDATE TO PRO</a>
+										</div>
 									@endif
 								</div>
 							</div>
@@ -861,7 +864,6 @@ Holipic
 		$("#frmRegister").submit(function(e) {
 			e.preventDefault();	
 	    	var form = $(this);
-	    	console.log(form.serialize())
 		    $.ajax({
 		           type: "POST",
 		           url: 'users/signup',
@@ -918,58 +920,95 @@ Holipic
 	           type: "POST",
 	           url: 'landing-page/login',
 	           data: form.serialize(), 
-	           success: function(data)
-	           {
+	           success: function(data){
 		           	if(data && data.success == false) {
-		           		$('#message-form-login').empty();
-		           		$("#message-form-login").append(
-		           			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+data.message+"</span>");
+		           		$('#message-form-signin-email').empty();
+		           		$('#message-form-signin-password').empty();
+
+		           		if(data.email == false) {
+		           			$('#message-form-signin-email').append(
+				           			"<span class='label label-important' style='color:red'>"+" "+data.message+"</span>");
+		           		}
+		           		if(data.password == false) {
+		           			$('#message-form-signin-password').append(
+				           			"<span class='label label-important' style='color:red'>"+" "+data.message+"</span>");
+		           		}
+		           		// $("#message-form-login").append(
+		           		// 	"<span class='label label-important'><i class='fa fa-close'></i>"+" "+data.message+"</span>");
 		           	} else {
 		           		window.localStorage.setItem('access_token', data.data.user.access_token)
 
 		           		window.localStorage.setItem('user', JSON.stringify(data.data.user))          		
 
-		           		window.location.href = "/admin";
+		           		window.location.href = "/company-admin";
 		           	}
 	           		
 	           },
 	            error: function(error) {
-			        // console.log(error.responseJSON.errors.email);
-			        // if(error && error.responseJSON.errors.email && error.responseJSON.errors.password) {
+      				$('#message-form-signin-email').empty();
+				   	$('#message-form-signin-password').empty();
+				   	
+				  _.each(error.responseJSON.errors, function(val,key){
+				  	// console.log(val)
+				  	// console.log(key)
+					  	var id = '#message-form-signin-'+key;
 
-			        // 	$('#message-form-login').empty();
-
-	          //  			$("#message-form-login").append(
-	          //  			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+'Please enter your email and password '+"</span>");
-
-	          //  			return false;
-			        // }
-
-			        // if(error.responseJSON.errors.email) {
-			        // 	var errorMessage = error.responseJSON.errors.email[0]
-			        // } else {
-			        // 	var errorMessage = error.responseJSON.errors.password[0]
-			        // }
-
-			        // $('#message-form-login').empty();
-
-	          //  		$("#message-form-login").append(
-	          //  			"<span class='label label-important'><i class='fa fa-close'></i>"+" "+errorMessage+"</span>");
-
-	          				$('#message-form-signin-email').empty();
-						   	$('#message-form-signin-password').empty();
-						   	
-						  _.each(error.responseJSON.errors, function(val,key){
-						  	console.log(val)
-						  	console.log(key)
-							  	var id = '#message-form-signin-'+key;
-
-							  	$(id).append(
-				           			"<span class='label label-important' style='color:red'>"+" "+val+"</span>");
-						  	});	
+					  	$(id).append(
+		           			"<span class='label label-important' style='color:red'>"+" "+val+"</span>");
+				  	});	
 			    }   
 	         });
 		});
+
+		function reset() {
+	    	var array = [
+	    		$('#message-form-signup-first_name').empty(),
+			   	$('#message-form-signup-last_name').empty(),
+			   	$('#message-form-signup-company_name').empty(),
+			   	$('#message-form-signup-email').empty(),
+			   	$('#message-form-signup-password').empty(),
+			   	$('#message-form-signup-checkbox').empty(),
+           		$('#message-form-signup').empty(),
+           		$('#message-form-signin-email').empty(),
+			   	$('#message-form-signin-password').empty(),
+	    	]
+
+	    	return array;
+	    }
+
+	    function ficPopup(item) {
+	 		$(item).magnificPopup({
+	 		items: {
+		      	src: '#signup',
+		      	type: 'inline'
+		  	},
+			fixedContentPos: true,
+			fixedBgPos: true,
+			overflowY: 'auto',
+			closeBtnInside: true,
+			removalDelay: 300,
+			mainClass: 'mfp-zoom-in',
+			callbacks: {
+				open: function() {
+					// $('html').css('margin-right', 0);
+					// $('html').css('overflow', 'auto');
+					// $('body').css('position', 'fixed');
+				},
+
+				close: function() {
+					$('body').css('position','');
+		  			reset();
+				}
+			}
+			});
+	 	}
+
+        var amounts = "<?php echo($amounts) ?>"
+
+	 	for(i = 1; i <= amounts; i++) {
+	 		var id_button = '#' +i;
+	 		ficPopup(id_button);
+	 	}
 	});
 </script>
 @endsection

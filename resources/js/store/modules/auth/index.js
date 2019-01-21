@@ -12,7 +12,7 @@ import config from '../../../config/index.js'
 //     twitterAuthProvider,
 //     githubAuthProvider
 // } from '../../../firebase';
-import  { post } from '../../../api/index.js'
+import  { post, get } from '../../../api/index.js'
 
 
 const state = {
@@ -57,11 +57,19 @@ const actions = {
 
         post('/auth/loginSuperAdmin',params)
         .then(res => {
+           if(res && res.data.success) {
+
             let data = res.data.data.user
              Nprogress.done();
                 setTimeout(() => {
                     context.commit('loginUserSuccess', data);
-                }, 500)
+                }, 500)     
+           } else {
+                 setTimeout(() => {
+                    context.commit('loginUserFailure', res.data);
+                }, 500) 
+           }
+            
         })
         .catch(error => {
                 context.commit('loginUserFailure', error);
@@ -77,7 +85,7 @@ const actions = {
             confirmPassword : payload.params.confirmPassword,
             roleId : payload.params.role_id
         }
-       
+
         post(url,params)
           .then((res) => {
             if(res.data && res.data.success){
@@ -98,19 +106,50 @@ const actions = {
           
           })
     },
-    // logoutUserFromFirebase(context) {
-    //     Nprogress.start();
-    //     firebase.auth().signOut()
-    //         .then(() => {
-    //             Nprogress.done();
-    //             setTimeout(() => {
-    //                 context.commit('logoutUser');
-    //             }, 500)
-    //         })
-    //         .catch(error => {
-    //             context.commit('loginUserFailure', error);
-    //         })
-    // },
+    editUserProfileInDatabase(context, payload) {
+        context.commit('loginUser');
+        let url = config.API_URL+'edit-user-profile'
+        let params = {
+            id : payload.params.id,
+            username : payload.params.username,
+            email : payload.params.email,
+        }
+       
+        post(url,params)
+          .then((res) => {
+            if(res.data && res.data.success){
+                let data = res.data.message
+                Nprogress.done();
+                setTimeout(() => {
+                    context.commit('editProfileSuccess', data);
+                }, 500)
+                
+             } else {
+                let data = res.data.message
+                context.commit('editProfileError', data);
+               
+             }
+          })
+          .catch(err =>{
+            context.commit('editProfileError', err);
+          
+          })
+    },
+    logoutUserFromDatabase(context) {
+        Nprogress.start();
+        let url = '/auth/logout'
+        get(url)
+            .then((res) => {
+                Nprogress.done();
+                    setTimeout(() => {
+                        context.commit('logoutUser');
+                    }, 500)
+            })
+            .catch(error => {
+                console.log(error);
+                context.commit('loginUserFailure', error);
+            })
+    },
     // signinUserWithFacebook(context) {
     //     context.commit('loginUser');
     //     firebase.auth().signInWithPopup(facebookAuthProvider).then((result) => {
@@ -183,12 +222,21 @@ const mutations = {
         Nprogress.start();
     },
     loginUserSuccess(state, user) {
+        
         state.user = user;
         localStorage.setItem('user',JSON.stringify(user))
         state.isUserSigninWithAuth0 = false
         var access_token = user.access_token        
-        localStorage.setItem('access_token',access_token)     
-        router.push('/default/dashboard/index')
+        localStorage.setItem('access_token',access_token)    
+        if(user.role_id == "1"){
+            router.push('/super-admin/dashboard')
+        }
+        if(user.role_id == "2"){
+            router.push('/company-admin/dashboard')
+        }
+        if(user.role_id == "3"){
+            router.push('/branch-admin/dashboard')
+        }
         setTimeout(function(){
             Vue.notify({
                 group: 'loggedIn',
@@ -207,15 +255,17 @@ const mutations = {
     },
     logoutUser(state) {
         state.user = null
-        localStorage.removeItem('user');
-        router.push("/session/login");
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('user')
+        localStorage.removeItem('id_one_signal')
+        router.push("/login");
     },
     signUpUser(state) {
         Nprogress.start();
     },
     signUpUserSuccess(state, user) {
         state.user = localStorage.setItem('user', user);
-        router.push("/default/dashboard/ecommerce");
+        router.push("/super-admin/dashboard");
         Vue.notify({
             group: 'loggedIn',
             type: 'success',
@@ -244,11 +294,33 @@ const mutations = {
         Vue.notify({
             group: 'loggedIn',
             type: 'success',
-            text: success
+            title: 'Message',
+            text: success,
+            duration: 5000
         });
-         router.push('/default/dashboard/index');
+         router.push('/super-admin/dashboard');
     },
      changepasswordError(state, error){
+        Nprogress.done();
+        Vue.notify({
+            group: 'loggedIn',
+            type: 'error',
+
+            text: error
+        });
+    },
+    editProfileSuccess(state, success){
+        Nprogress.done();
+        Vue.notify({
+            group: 'loggedIn',
+            type: 'success',
+            title: 'Message',
+            text: success,
+            duration: 5000
+        });
+         router.push('/super-admin/dashboard');
+    },
+    editProfileError(state, error){
         Nprogress.done();
         Vue.notify({
             group: 'loggedIn',

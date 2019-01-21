@@ -9,7 +9,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use \App\Models\Notification;
+use \App\Models\CompanyAdmin\Notification;
 
 class RedisEventNotification implements ShouldBroadcast
 {
@@ -22,10 +22,12 @@ class RedisEventNotification implements ShouldBroadcast
      */
 
     public $notification;
+    public $id_one_signal;
     
-    public function __construct(Notification $notification)
+    public function __construct(Notification $notification, $id_one_signal)
     {
         $this->notification = $notification;
+        $this->id_one_signal = $id_one_signal;
     }
 
     /**

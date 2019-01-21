@@ -33,17 +33,17 @@ class UserController extends Controller
         }
         
         $user = User::create([
-            'company_name' => $request['company_name'],
             'first_name' => $request['first_name'],
             'last_name' => $request['last_name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'package_id' => $request['package_id'],
+            'role_id' => 2
 
         ]);
 
         $company  = Company::create([
-            'name' => $user->company_name,
+            'name' => $request['company_name'],
             'owner_id' => $user->id
         ]);
 

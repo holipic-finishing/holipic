@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Notification;
-use App\Repositories\NotificationRepository;
+use App\Models\CompanyAdmin\Notification;
+use App\Repositories\CompanyAdminRepositories\NotificationRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class NotificationRepositoryTest extends TestCase

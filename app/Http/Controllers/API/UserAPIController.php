@@ -6,7 +6,7 @@ use App\Http\Requests\API\CreateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserAPIRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use App\Repositories\NotificationRepository;
+use App\Repositories\CompanyAdminRepositories\NotificationRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
@@ -14,6 +14,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use \Illuminate\Support\Facades\Hash;
 use Lcobucci\JWT\Parser;
 use Response;
+use Spatie\Activitylog\Models\Activity;
 
 /**
  * Class UserController
@@ -133,27 +134,33 @@ class UserAPIController extends AppBaseController
     }
 
     public function changePassWord(Request $request) {
-
         try {
 
-            $token = (new Parser())->parse((string) $request['access_token']);           
+            $token = (new Parser())->parse((string) $request['access_token']);         
             $email=  $token->getClaim('email');
+      
             $user = User::where('email',$email)->first();
-            
 
             if (!password_verify($request['oldPassword'], $user->password)) {   
-                return response()->json(['success' => false, 'message' => 'OldPassword']);
+                return response()->json(['success' => false, 'message' => 'The password current incorrect']);
+            }
+
+            if(strcmp($request['oldPassword'], $request['newPassword']) == 0)
+            {
+                return response()->json([
+                        'success' => false, 
+                        'message' => 'The new password cannot be the same as the old password'
+                ]);
             }
 
             if(strcmp($request['newPassword'], $request['confirmPassword']) != 0 ) {
-                 return response()->json([
+                return response()->json([
                         'success' => false, 
-                        'message' => 'olePasswordAndNewPassword'
-                    ]);
-               
+                        'message' => 'The new password does not match'
+                ]);
             }
 
-            $this->notificationRepository->createNotifi($user->id,'changePasswordSuccess');
+            $this->notificationRepository->createNotifi($user->id, 'changePasswordSuccess','Change Password Success');
             
             if($user){
                 $user = User::where('email',$email)->first()->update([
@@ -161,7 +168,15 @@ class UserAPIController extends AppBaseController
                         ]);
             }
 
-            return $this->sendResponse($user, 'changePasswordSuccess');
+            // Save activity logs
+            $log = Activity::all()->last();
+            $log['user_id'] = User::where('email',$email)->first()->id;
+            $log['description_log'] = 'Change Password';
+            $log->save();
+
+            event(new \App\Events\RedisEventActivityLog($log));
+
+            return $this->sendResponse($user, 'Change password success');
         }
         
          catch (Exception $e) {
@@ -169,5 +184,79 @@ class UserAPIController extends AppBaseController
         }
        
         
+    }
+
+
+    public function getUserProfile($id)
+    {
+        $user = $this->userRepository->findWithoutFail($id); 
+
+        return $this->sendResponse($user->toArray(), 'User retrieved successfully');
+    }
+
+    public function userProfile(Request $request)
+    {
+       try {
+            $user = User::where('id',$request['id'])->first(); 
+
+            $checkUsernameExits = User::where('username', $request['username'])->where('id', '!=', $request['id'])->first();
+            $checkEmailExits = User::where('email', $request['email'])->where('id', '!=', $request['id'])->first();
+
+            if ($checkUsernameExits != '') {
+                return response()->json([
+                        'success' => false, 
+                        'message' => 'The username was exist!'
+                ]);
+            } 
+
+            if ($checkEmailExits != '') {
+                return response()->json([
+                        'success' => false, 
+                        'message' => 'The email was exist!'
+                ]);
+            } 
+
+            $this->notificationRepository->createNotifi($user->id, 'editProfileSuccess','Edit Profile Success');
+
+            $user->update($request->all());
+       
+            // Save activity logs
+            $log = Activity::all()->last(); 
+            $log['user_id'] = $user->id;
+            $log['description_log'] = 'Edit Profile'; 
+            $log->save();
+
+            event(new \App\Events\RedisEventActivityLog($log));
+
+            return $this->sendResponse($user, 'Edit Profile success');
+        }
+        
+         catch (Exception $e) {
+             return $e;
+        }
+    }
+    /*
+    *  Target : Function update Onesignalid in table users with where email
+    */
+
+    public function updateOnesignalUser(Request $request){
+
+        $input  = $request->all();
+
+        $findUser = User::where('email',$input['email'])->first();
+
+        if($findUser->id_one_signal !== null){
+            $id_one_signal = $findUser->id_one_signal . ',' . $input['id_one_signal'];
+        } else {
+            $id_one_signal =  $input['id_one_signal'];
+        }
+
+        $user = User::where('email',$input['email'])->first()->update([
+
+                        'id_one_signal' => $id_one_signal
+                    ]);  
+
+        return $this->sendResponse($user, 'Updata success');
+
     }
 }

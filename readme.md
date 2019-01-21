@@ -15,8 +15,8 @@ cp .env.example .env
 php artisan key:generate
 
 # Step 5: Install redis server
-Follow link Ubuntu: https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
-Follow link Window: https://github.com/tporadowski/redis/releases
++ Follow link Ubuntu: https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04
++ Follow link Window: https://github.com/tporadowski/redis/releases
 
 # Step 6: Install composer, npm, redis server, bower 
 + composer install
@@ -36,10 +36,14 @@ php artisan db:seed
 
 # Step 9: Create folder
 + public/logos
++ public/avatars
++ public/files
 
 # Step 10 : Set Permission
 + sudo chmod -R 777 public/logos
 + sudo chmod -R 777 storage
++ sudo chmod -R 777 public/avatars
++ sudo chmod -R 777 public/files
 
 # Step 11: Run project
 + npm run watch-poll

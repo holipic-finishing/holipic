@@ -6,22 +6,27 @@ use Eloquent as Model;
 
 use Lcobucci\JWT\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
+    use LogsActivity;
+
+    protected static $logFillable = true;
 
     public $table = 'users';
 
     public $fillable = [
-        'company_name',
         'first_name',
         'last_name',
+        'username',
         'email',
         'password',
         'access_token',
         'active',
         'package_id',
-        'role_id'
+        'role_id',
+        'id_one_signal'
 
     ];
 
@@ -34,11 +39,13 @@ class User extends Authenticatable
 
         'first_name' => 'string',
         'last_name' => 'string',
+        'username' => 'string',
         'email' => 'string',
         'password' => 'string',
         'email_verified_at'  => 'string',
         'role_id' => 'string',
-        'access_token' => 'string'
+        'access_token' => 'string',
+        'id_one_signal' => 'string'
     ];
 
     protected $hidden = [
@@ -53,6 +60,7 @@ class User extends Authenticatable
      */
     public static $rules = [
         'email'=>'required',
+        'username' => 'unique:users, username'
         
     ];
 
@@ -84,6 +92,16 @@ class User extends Authenticatable
 
     public function setting(){
         return $this->hasOne('App\Models\Setting','id','package_id');
+    }
+
+    public function branch()
+    {
+        return $this->hasOne('App\Models\Branch', 'user_id', 'id');
+    }
+
+    public function customer()
+    {
+        return $this->hasOne('App\Models\Customer', 'user_id', 'id');
     }
 
 }

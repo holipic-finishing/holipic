@@ -1,4 +1,4 @@
-//messages.js
+ //messages.js
 export default {
   general: 'General',
   company: 'Company',
@@ -452,11 +452,10 @@ export default {
   dateAndTime: "Date And Time",
   userManager: "Users Management",
 
-
-
   // Menu
-  company : "Company",
-  package : "Packages",
+  company : "Company List",
+  package : "Package List",
+  plan: "Plans",
   changePassword : "Change Password",
   listPackage : "List Package",   
   chartCompany: "Company Infomation & Chart",
@@ -464,7 +463,7 @@ export default {
   settingPackageSystem: "Setting Packages System",
   transaction: "Transaction",
   histories : "Histories",
-  couponCode : "Coupon Code",
+  couponCode : "Coupon Code List",
   changePasswordSuccess : "Change Password User Success",
   olePasswordAndNewPassword: "Old Password or Confirm Password Incorrect",
   oldPassword : "Old Password In Incorrect",
@@ -472,5 +471,21 @@ export default {
   hidingRead : "Hiding read",
   mailSentSuccessfully : 'Mail sent successfully',
   notification : "Notification",
-  yourNotification: "Your notification"
+  yourNotification: "Your notification",
+  editProfileSuccess: "Edit User Profile Success",
+
+  //Company Admin
+  branch: "Branches",
+  photographer: "Photographers",
+  activityLog: "Activity Log",
+  customer: 'Customers',
+  contenPages : "Content Management System",
+  sibarContentPages:"Cms",
+  activityLog: "Activity Log",
+  sales : "Sales",
+  photographers : 'Photographers',
+  customer: 'Customers',
+  photographers : 'Photographers List',
+  sales: 'Manage Sales',
+  emails:'Emails'
 }

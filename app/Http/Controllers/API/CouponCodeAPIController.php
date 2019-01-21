@@ -125,4 +125,35 @@ class CouponCodeAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Coupon Code deleted successfully');
     }
+
+    /**
+     * Edit Coupon Code with field
+     * @param  string $value [description]
+     * @return [type]        [description]
+     */
+    public function editCouponCode(Request $request, $itemId)
+    {
+        $input =  $request->all();
+
+        if (!$input['value'] && $input['field_name'] != 'active') {
+            return $this->sendError('This field could be not null');
+        }
+
+        $result = null;
+
+        $result = $this->couponCodeRepository->update([
+            $input['field_name'] => $input['value']
+        ], $itemId);
+
+        // Save activity log
+        // $log = Activity::all()->last();
+        // $log['user_id'] = $input['userId'];
+        // $log->save();
+
+        if($result){
+            return $this->sendResponse([], 'Coupon code updated successfully');
+        }else{
+            return $this->sendError('System Error Occurred');
+        }
+    }
 }

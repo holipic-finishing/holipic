@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Company extends Model
 {
+    use SoftDeletes;
 
     public $table = 'companies';
     
@@ -30,6 +31,8 @@ class Company extends Model
         'coupon_codes_id',
         'phone'
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be casted to native types.
@@ -67,5 +70,9 @@ class Company extends Model
 
     public function coupon_code(){
         return $this->hasOne('App\Models\CouponCode', 'coupon_codes_id', 'id');
+    }
+
+    public function branchs(){
+        return $this->hasMany('App\Models\Branch','company_id','id');
     }
 }

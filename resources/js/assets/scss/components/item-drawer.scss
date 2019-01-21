@@ -10,8 +10,31 @@
   margin-left: 10px !important;
 }
 
+.item-title-setting{
+  width: 63% !important;
+  margin-left: 10px !important;
+}
+
+.contain-text-field-setting{
+  width: 25% !important;
+  .v-input--selection-controls {
+    margin-top: 0 !important; 
+    padding-top: 0 !important; 
+  }
+  .v-input__slot{
+    margin-bottom: 5px !important;
+  }
+}
+
 .contain-text-field{
   width: 65%;
+  .v-input--selection-controls {
+    margin-top: 0 !important; 
+    padding-top: 0 !important; 
+  }
+  .v-input__slot{
+    margin-bottom: 5px !important;
+  }
 }
 
 .no-mg-horizontal{
@@ -52,6 +75,42 @@
   }
 }
 
+.height-150{
+  .v-list__tile{
+    height: 150px !important;
+  }
+}
+
+.height-200{
+  .v-list__tile{
+    height: 200px !important;
+  }
+}
+
+.height-50{
+  .v-list__tile{
+    height: 50px !important;
+  }
+}
+
+.height-70{
+  .v-list__tile{
+    height: 70px !important;
+  }
+}
+
+.height-120{
+  .v-list__tile{
+    height: 120px !important;
+  }
+}
+
+.height-200{
+  .v-list__tile{
+    height: 200px !important;
+  }
+}
+
 .height-input{
   .v-input__slot{
     min-height: 47px !important;
@@ -62,6 +121,7 @@
     top: -10px;
   }
 }
+
 
 .position-item{
   position:relative;
@@ -76,9 +136,23 @@
   }
 }
 
-.contain-text-field{
+.height-area{
   .v-input__slot{
-    margin-bottom: 5px !important;
+    min-height: 115px !important;
+    height: 115px !important;
+    textarea{
+      padding-top: 5px !important;
+    }
   }
+}
 
+.height-100{
+   .v-list__tile{
+    height: 100% !important;
+  }
+}
+
+.position-item-amount{
+  position: relative;
+  bottom: 22px;
 }

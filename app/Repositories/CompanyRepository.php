@@ -6,7 +6,8 @@ use App\Models\Company;
 use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
 use DB ;
-
+use App\Models\CompanyAdmin\Email;
+use App\Mail\SendMailCustomers;
 /**
  * Class CompanyRepository
  * @package App\Repositories
@@ -86,7 +87,9 @@ class CompanyRepository extends BaseRepository
         $results = DB::table('companies as c')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->select('c.id as id', 'c.name','c.phone' ,'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name')->orderBy('c.id', 'desc')
+                    ->select('c.id as id', 'c.name','c.phone' ,'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name','c.owner_id')
+                    ->whereNull('c.deleted_at')
+                    ->orderBy('c.id', 'desc')
                     ->get();
        
         $results = $this->transform($results);
@@ -266,5 +269,92 @@ class CompanyRepository extends BaseRepository
         
     }
 
+    //  show email customer by company id
+    //  @From : func: handleExportCustomerByCompanyId()
+    public function getCustomerByCompanyId($company_id){
+        $results = $this->scopeQuery(function($query) use ($company_id){
+            $query = $query->whereHas('branchs', function($q) use ($company_id) {
+                        $q->where('company_id',$company_id);
+                      })
+                        ->with('branchs.customers');
 
+             return $query;
+         })->get();
+        
+        $results = $this->getEmailCustomer($results);
+
+        return $results;
+    }
+
+    // get email customer
+    //  @From : func: getCustomerByCompanyId()
+    public function getEmailCustomer($attributes){
+        $data = [];
+        foreach ($attributes as $key => $value) {
+            foreach ($value->branchs as $k => $item) {
+               foreach ($item->customers as $k_1 => $v) {
+                    array_push($data, $v->user->email);
+               }
+            }
+        }
+
+        return $data;
+    }
+
+    // export email file CSV customer by company id
+    public function handleExportCustomerByCompanyId($company_id) {
+
+        $results = $this->getCustomerByCompanyId($company_id);
+
+        if(!$results)
+            return false;
+
+        $pathPublic = env('DB_MYSQL_DIR').DIRECTORY_SEPARATOR;
+
+        $filename =  $company_id . '_Customer_email.csv';
+       
+        $file = fopen($pathPublic.$filename,"a+");
+        try{
+
+            foreach ($results as $key => $value) {
+
+                $data = [];
+                $data[] = $key;
+                $data[] = $value;
+                fputcsv($file, $data);
+            }
+
+            fclose($file);
+        }catch (Exception $e)
+        {
+            \Log::info(' Errors to insert csv file - '.$e->getMessage());
+        }
+    
+    }
+
+    public function handleSendMailToCustomers()
+    {
+        $template = Email::findOrFail(request('templateId'));
+        $email = [];
+
+        if(request('email') == 'all') {
+            if(!empty(request('companyId'))) {
+
+                $email = $this->getCustomerByCompanyId(request('companyId'));
+            }
+
+        } else {
+                $email = request('email'); 
+        }
+
+        if(isset($template) && !empty($template)) {
+            foreach($email as $value) {
+                \Mail::to($value)->queue(new SendMailCustomers($template)); 
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 }

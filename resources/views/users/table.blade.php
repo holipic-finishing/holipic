@@ -1,20 +1,20 @@
 <table class="table table-responsive" id="users-table">
     <thead>
         <tr>
-            <th>Company Name</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Password</th>
-        <th>Access Token</th>
-        <th>Active</th>
+            {{-- <th>Company Name</th> --}}
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Access Token</th>
+            <th>Active</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($users as $user)
         <tr>
-            <td>{!! $user->company_name !!}</td>
+            {{-- <td>{!! $user->company_name !!}</td> --}}
             <td>{!! $user->first_name !!}</td>
             <td>{!! $user->last_name !!}</td>
             <td>{!! $user->email !!}</td>

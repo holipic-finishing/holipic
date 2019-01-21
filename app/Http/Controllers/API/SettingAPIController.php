@@ -6,6 +6,7 @@ use App\Http\Requests\API\CreateSettingAPIRequest;
 use App\Http\Requests\API\UpdateSettingAPIRequest;
 use App\Models\Setting;
 use App\Repositories\SettingRepository;
+use App\Repositories\PackageRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
@@ -23,9 +24,13 @@ class SettingAPIController extends AppBaseController
     /** @var  SettingRepository */
     private $settingRepository;
 
-    public function __construct(SettingRepository $settingRepo)
+    /** @var  PackageRepository */
+    private $packageRepository;
+
+    public function __construct(SettingRepository $settingRepo, PackageRepository $packageRepository)
     {
         $this->settingRepository = $settingRepo;
+        $this->packageRepository = $packageRepository;
     }
 
     /**
@@ -129,9 +134,32 @@ class SettingAPIController extends AppBaseController
     }
 
     public function getPackage(){
-        // dd('123');
+        
         $result = Package::with('setting')->get();
 
         return $this->sendResponse($result, 'Packages successfully');
+    }
+
+    public function editSetting(Request $request, $itemId){
+        $input =  $request->all();
+
+        if (!$input['value'] && $input['field_name'] != 'sms' && $input['field_name'] != 'email_service') {
+            return $this->sendError('This field could be not null');
+        }
+
+        // $package
+
+        $result = null;
+
+        $result = $this->settingRepository->update([
+            $input['field_name'] => $input['value']
+        ], $itemId);
+
+        if($result){
+            return $this->sendResponse([], 'Setting updated successfully');
+        }else{
+            return $this->sendError('System Error Occurred');
+        }
+
     }
 }

@@ -11,28 +11,28 @@ class CurrenciesTableSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+        
+        \App\Models\Currency::truncate();
+
         DB::table('currencies')->insert(
-        [
-        	[
-            'name' => 'Viet Nam Dong',
-            'symbol' => 'VND',
-            'country' => 'VietNamese'
-        	],
-
-        	[
-            'name' => 'Australia dollar',
-            'symbol' => '$',
-            'country' => 'Australia'
-        	],
-
-        	[
-            'name' => 'Andorra euro',
-            'symbol' => '€',
-            'country' => 'Andorra'
-        	],
-
-        ]
-        	
+            [
+            	[
+                    'name' => 'United States Dollar',
+                    'symbol' => '$',
+                    'country' => 'United States of America'
+            	],
+            	[
+                    'name' => 'European Euro',
+                    'symbol' => '€',
+                    'country' => 'European'
+            	],
+            	[
+                    'name' => 'Indonesian Rupiah',
+                    'symbol' => 'Rp',
+                    'country' => 'Indonesia'
+            	],
+            ]
     	);
     }
 }

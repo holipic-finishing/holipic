@@ -57,3 +57,29 @@ export function getCurrentAppLayout(router) {
 	let path = location.split("/")
 	return path[1];
 }
+
+/**
+ * Function to return with content width
+ */
+export function getWithContentWrap(drawerHeaderStt){
+	var contentElement = document.getElementsByClassName('v-content__wrap')[0];
+	var sidebarElement = document.getElementsByClassName('Vuely-sidebar')[0];
+    var contentWidth = contentElement.clientWidth
+    var sidebarWidth = sidebarElement.clientWidth
+
+    if (contentWidth >= 1264) {
+    	return (contentWidth - sidebarWidth)*30/100
+    }else{
+    	if (!drawerHeaderStt) {
+		    if (contentWidth < 1263 && contentWidth >= 992) return contentWidth*40/100
+		    else if (contentWidth < 991 && contentWidth >= 768) return contentWidth*50/100
+		    else if (contentWidth < 767 && contentWidth >= 576) return contentWidth*60/100
+		   	else return contentWidth
+    	}else{
+    		if (contentWidth < 1263 && contentWidth >= 992) return (contentWidth - sidebarWidth)*40/100
+		    else if (contentWidth < 991 && contentWidth >= 768) return (contentWidth - sidebarWidth)*50/100
+		    else if (contentWidth < 767 && contentWidth >= 576 )return (contentWidth - sidebarWidth)*60/100
+		    else return (contentWidth - sidebarWidth)
+    	}
+    }
+}

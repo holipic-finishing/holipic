@@ -243,6 +243,11 @@ Route::group(['namespace' => 'API'],function(){
 	
 	Route::get('company-admin-chart', 'ReportController@getInfoForChartCompanyAdmin');
 
+	/*************CouponCodeAPIController**************/
+
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
+	Route::post('add-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@addCouponCode');
+	Route::post('cancel-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@cancelCouponCode');
+
 	
 });	

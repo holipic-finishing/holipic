@@ -13,6 +13,26 @@
 	overflow: hidden;
 }
 
+.heigth-list-title-style {
+	.v-list__tile__title {
+	    height: auto !important;
+	    white-space: inherit !important;
+	}
+}
+
+.text-total{
+	padding: 0px !important;
+	margin-top:10px !important;
+}
+
+.v-toolbar__content {
+	height: auto;
+	.v-toolbar__title {
+		white-space: normal;
+	}
+}
+
+
 @media only screen and (min-width: 320px) and (max-width: 767px) {
 	.responsive-navigation {
 		min-width: 100% !important;
@@ -24,6 +44,8 @@
 
 	.item-title {
 		margin-left: 0px !important;
+		width: 36% !important;
+    	display: -webkit-inline-box;
 	}
 
 	.flex-padding-2{
@@ -37,20 +59,58 @@
 			height: auto !important;
 		}
 		.v-list__tile__title {
-			display: block;
-		}
-		.item-title{
-			min-width: 100%;
 			display: flex;
 		}
+	}
+
+	.heigth-list-title-style {
+		.v-list__tile__title {
+		    height: auto !important;
+		    white-space: inherit;
+		}
+		.v-list__tile {
+			height: auto !important;
+			padding: 10px 0px !important;
+		}
+		.btn-style{
+			margin-top:20px;
+		}
+	}
+
+	.rp-search{
+		.w-25{
+			min-width: 30% !important;
+		}
+	}
+
+	.fix-btn-priamry {
+		padding: 5px !important;
+	}
+
+}
+
+@media all and (min-width: 481px) and (max-width: 767px) {
+	.flex-padding-2{
+		display: flex;
+		.item-title{
+			min-width: 35% !important;
+			margin-left: 10px !important;
+		}
 		.max-value{
-			margin-left:10px;
+		    max-width: 63%;
+		    flex: 0 0 63%;
+		}
+	}
+
+	.rp-search{
+		.w-25{
+			min-width: 50% !important;
 		}
 	}
 
 }
 
-@media all and (max-width: 420px) {
+@media all and (max-width: 480px) {
 	.content-flex-end {
 		display: block !important;
 
@@ -65,4 +125,34 @@
 			padding: 0px !important;
 		}
 	}
+
+	.flex-padding-2{
+		.item-title{
+			min-width: 100%;
+			display: flex;
+		}
+
+		.max-value{
+			margin-left:10px;
+			max-width: 100% !important;
+		    flex: 0 0 63%;
+		    display: inline-block;
+		}
+
+		.v-list__tile__title {
+			display: block;
+		}	
+	}
+
+	.rp-search{
+		.v-card__title {
+			flex-wrap: inherit;
+			padding: 20px 11px !important;
+		}
+		.w-25{
+			min-width: 84% !important;
+		}
+	}
+
 }
+

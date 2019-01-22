@@ -8,8 +8,8 @@
 			    right
 			    temporary 
 			    app 
-			    class="chat-sidebar-wrap responsive-navigation"
-			    width="450"
+			    this.width = this.getCurrentWithContentWrap()
+    			:width='widthComputed'
 		  		>
 
 			    <v-card class="h-100 position-relative">
@@ -212,6 +212,7 @@
 
 <script>
 import config from '../../../config/index.js'
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 	export default {
 		name: 'CompanyInformation',
@@ -222,19 +223,32 @@ import config from '../../../config/index.js'
 	      		company: [],
 	      		companyId: '',
 	      		couponCode: [],
-	      		lengthCode: ''
+	      		lengthCode: '',
+	      		width: 0,
+      			drawerHeaderStt: null
 			}
 		},
+		computed: {
+	  		widthComputed(){
+	  			return this.width
+	  		}
+  		},
 		mounted() {
 			this.$root.$on('sendEventCompanyInformation', response => {
 				this.drawerRight = response.showNavigation
-				//this.company = response.data
 				this.companyId = response.data.id
-
 				this.informationCompany(this.companyId)
+				this.width = this.getCurrentWithContentWrap()
 			});
+
+			this.$root.$on('drawer-status', res => {
+  				this.drawerHeaderStt = res
+  			})
 		},
 		methods: {
+			getCurrentWithContentWrap(){
+  				return getWithContentWrap(this.drawerHeaderStt)
+  			},
 			informationCompany(companyId) {
 				axios.get(config.API_URL+'companies/information?companyId='+this.companyId)
 				.then(response => {
@@ -258,6 +272,7 @@ import config from '../../../config/index.js'
 	.content-flex{
 		height: auto !important;
 		white-space: inherit !important;
+		
 	}
 	.max-value{
 		max-width: 63%;

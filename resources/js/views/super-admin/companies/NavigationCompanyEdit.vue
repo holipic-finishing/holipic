@@ -8,8 +8,8 @@
 		    right
 		    temporary 
 		    app 
-		    class="chat-sidebar-wrap responsive-navigation"
-		    width="450"
+		    this.width = this.getCurrentWithContentWrap()
+    		:width='widthComputed'
 		  	>
 		  		 
 		      	<v-card class="h-100 position-relative">
@@ -154,6 +154,7 @@
 </template>
 <script>
 import config from '../../../config/index.js'
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
 	name: 'CompanyEdit',
@@ -178,21 +179,35 @@ export default {
       		alertMes: '',
       		key: 0,
       		alertStt: false,
-      		companyName: ''
+      		companyName: '',
+      		width: 0,
+      		drawerHeaderStt: null
 
 		}
 	},
+	computed: {
+  		widthComputed(){
+  			return this.width
+  		}
+  	},
 	mounted() {
 		this.$root.$on('sendEventCompanyEdit', response => {
-			
 			this.drawerRight =  response.showNavigation
 			this.company = response.data
-			this.companyName = response.data.name	
+			this.companyName = response.data.name
+			this.width = this.getCurrentWithContentWrap()	
 		});
+
+		this.$root.$on('drawer-status', res => {
+  			this.drawerHeaderStt = res
+  		})
 
 	},
 
 	methods: {
+		getCurrentWithContentWrap(){
+  			return getWithContentWrap(this.drawerHeaderStt)
+  		},
 		unDisableItem(key) {
 			this.key = key
 		},

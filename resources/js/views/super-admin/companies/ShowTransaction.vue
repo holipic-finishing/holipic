@@ -3,9 +3,10 @@
       fixed
       v-model="drawerRight"
       right
-      clipped
+     
       app
-	  :width="450"
+	  this.width = this.getCurrentWithContentWrap()
+      :width='widthComputed'
 	  temporary
       >
   		<v-list dense>
@@ -85,6 +86,7 @@ import Vue from 'vue'
 import Lodash from 'lodash'
 import moment from 'moment'
 import AppSectionLoader from "../../../components/AppSectionLoader/AppSectionLoader.vue";
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
 
@@ -133,10 +135,13 @@ export default {
         	user_id:'',
         	search:'',
         	on_search:0,
-        	check : 0
+        	check : 0,
+        	width: 0,
+      		drawerHeaderStt: null
 
     	}
   	},
+
   	created(){
 		this.typeTime = "Year"
 	},
@@ -151,10 +156,18 @@ export default {
   			this.user_id = data.userId
   			this.makeParams()
   			this.getData(data.userId, this.paginator.page, this.search)
+  			this.width = this.getCurrentWithContentWrap()
+  		})
+
+  		this.$root.$on('drawer-status', res => {
+  				this.drawerHeaderStt = res
   		})
   	},
 
   	methods: {
+  		getCurrentWithContentWrap(){
+  				return getWithContentWrap(this.drawerHeaderStt)
+  		},
 		getData(id, page, search){
 
 			let url = config.API_URL+'transaction/history'
@@ -424,7 +437,10 @@ export default {
 	  		} else {
 	  			return this.option
 	  		}
-	  	}
+	  	},
+	  	widthComputed(){
+  			return this.width
+  		}
 	},
 }
 </script>

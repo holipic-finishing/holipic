@@ -44,8 +44,20 @@
 				<activity-logs v-if="role_id == 2" v-show="role_id == '2'"></activity-logs>
 				<language-provider></language-provider>
 				<user></user>
+				<v-btn class="ma-0" icon large @click.stop="eWalletSidebar = !eWalletSidebar">
+					<v-icon color="grey">ti-wallet</v-icon>
+				</v-btn>
 			</div>
 		</v-toolbar>
+		<v-dialog 
+			fixed
+			v-model="eWalletSidebar" 
+			:right="!rtlLayout" 
+			temporary app
+			fullscreen hide-overlay transition="slide-x-reverse-transition"
+				>
+			<e-wallet></e-wallet>
+		</v-dialog>		
 	</div>
 </template>
 
@@ -58,6 +70,7 @@ import User from "./User";
 import { getCurrentAppLayout } from "../../helpers/helpers";
 import { mapGetters } from "vuex";
 import ActivityLogs from "./ActivityLogs.vue"
+import EWallet from './EWallet.vue'
 
 export default {
 	components: {
@@ -65,7 +78,8 @@ export default {
 		LanguageProvider,
 		Notifications,
 		User,
-		ActivityLogs
+		ActivityLogs,
+		EWallet
 	},
 	props: {
 		horizontal: {
@@ -77,7 +91,7 @@ export default {
 		return {
 			collapsed: false, // collapse sidebar
 			drawer: null, // sidebar drawer default true
-			chatSidebar: false, // chat component right sidebar
+			eWalletSidebar: false, // chat component right sidebar
 			sidebarImages: "", // sidebar background images
 			enableDefaultSidebar: false,
 			role_id:''
@@ -109,6 +123,12 @@ export default {
          var userAuth = JSON.parse(localStorage.getItem('user'))
          this.role_id = userAuth.role_id
     },
+    mounted(){
+    	this.$root.$on('closeDrawerItem', res => {
+      		this.eWalletSidebar = res
+      		// this.fetchData()
+    	})
+    }
 	
 };
 </script>

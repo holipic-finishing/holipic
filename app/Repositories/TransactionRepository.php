@@ -1014,7 +1014,7 @@ class TransactionRepository extends BaseRepository
 
     /*
     *  Target : Get all data in transaction history in array with key by "Day", "Week", "Month", "Year"
-    *  From : func: transactionHistoryDay, func:transactionHistoryWeek, func:transactionHistoryMonth, func:transactionHistoryYear
+    *  From   : func: transactionHistoryDay, func:transactionHistoryWeek, func:transactionHistoryMonth,       func:transactionHistoryYear
     *  To : array $attributes, int $prerPage, array $searchBy
     */ 
     public function transactionHistory($attributes, $perPage, $searchBy){
@@ -1052,6 +1052,12 @@ class TransactionRepository extends BaseRepository
 
         }
     }
+
+
+    /*
+    *  Target : Sum Amount of table transaction
+    *  From   : func:reportTransactionrDaily, func: reportTransactionMonth, func: reportTransactionYear
+    */
 
     public function sumAmount($dates, $transactions, $timevalue){
 
@@ -1091,6 +1097,39 @@ class TransactionRepository extends BaseRepository
             }           
         }
         return $dates;
+    }
+
+    /*
+    *   Target : Get all table transaction belongs to company id 
+    */
+
+    public function eWalletTransactionHistory($attribute,$status){
+
+        $results =  $this->scopeQuery(function($query) use($attribute, $status){
+
+            $query = $query->select('id','title','dated','amount','status')
+                            ->with(['transactionexchange' => function($query){
+                                $query->select(['exchange_rate_to_dollar','transaction_id']);
+                            }])
+                            ->where('company_id',$attribute['company_id']);
+            $query = $query->orderBy('dated', 'desc');
+            return $query;
+        });
+
+        $results = $this->transformTransactionHistory($results->get());
+
+        return $results;
+    }
+
+    public function transformTransactionHistory($attributes){
+
+        foreach ($attributes as $key => $value) {
+            $new_amount = round($value->amount * $value->transactionexchange->exchange_rate_to_dollar,3);
+            $attributes[$key]->new_amount = $new_amount;
+           
+        }
+        return $attributes;
+
     }
 
 }

@@ -15,7 +15,58 @@
 		<v-tab>Top Up Balance</v-tab>
 		<v-tab>Withdraw Via Bank Transfer</v-tab>
 		<v-tab-item>
-			
+			<!-- Table Component -->
+			<vue-perfect-scrollbar class="scroll-area" :settings="settings" style="height:20%;">
+			    <v-data-table 
+					:headers="headers" 
+					:items="items" 
+					class="elevation-5 body-2 global-custom-table"
+					:pagination.sync="pagination" 
+					:rows-per-page-items="rowsPerPageItems" 
+					disable-initial-sort 
+					>
+					<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+					<!--Header -->
+					<template slot="headers" slot-scope="props">
+			         	<tr>
+				            <th
+				              v-for="header in props.headers"
+				              :key="header.text"
+				              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+				              @click="changeSort(header.value)"
+				            >
+				            	<div class="custom-header">
+					              <v-tooltip bottom>
+					                <span slot="activator" class="text-capitalize font-weight-bold">
+					                  {{ header.text }}
+					                </span>
+					                <span>
+					                  {{ header.text }}
+					                </span>
+					              </v-tooltip>
+					              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
+				            	</div>
+			           		</th>
+			          	</tr>
+		        	</template>
+
+					<template slot="items" slot-scope="props">
+						
+						<td class="text-xs-left">{{ props.item.title }}</td>
+						<td class="text-xs-left">{{ props.item.dated }}</td>
+						<td class="success--text mb-0" v-if="props.item.status == 'RECIVED'">+ {{ props.item.new_amount }}</td>
+						<td class="mb-0" v-else>- {{ props.item.new_amount }}</td>
+			 
+					</template>
+
+					<!--No data -->
+					<template slot="no-data">
+				      <v-alert :value="true" color="error" icon="warning">
+				        Sorry, nothing to display here :(
+				      </v-alert>
+		    		</template>
+				</v-data-table>
+			</vue-perfect-scrollbar>
 		</v-tab-item>
 		<v-tab-item>
 			<div>123123111111111123</div>
@@ -39,19 +90,20 @@ export default {
 
   data () {
     return {
-    	menu: false,
-    	settings: {
-			maxScrollbarLength: 300
+  		headers: [	        
+			{ text: 'Title', value: 'title' },
+			{ text: 'Date', value: 'dated'},	
+			{ text: 'Status', value: 'new_amount' },	
+		],
+		pagination: {
+			rowsPerPage: 25	  	
 		},
-		paginator: {
-            perPage: 2,
-            currentPage: 1,
-            lastPage: 1,
-            total: 0,
-            from: 0,
-            to: 0,
-		},
+		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 		user:JSON.parse(localStorage.getItem('user')),
+		items:[],
+		settings: {
+	        maxScrollbarLength: 160
+	    },
     }
   },
   methods:{
@@ -59,27 +111,45 @@ export default {
   		this.$root.$emit('closeDrawerItem', false)
   	},
   	fetchData(){
-  		let url = config.API_URL + 'notifications'
+  		let url = config.API_URL + 'e-wallet/transaction-history'
 			let params = {
-				perPage: this.paginator.perPage,
-	        	page: this.paginator.currentPage,
-				user_id : this.user.id
+				company_id : this.user.company_id
 			}
 			getWithData(url,params)
 			.then(res => {
 				if(res.data && res.data.success){
-					let data = res.data.data.data
-					this.paginator.total = res.data.data.total
-					this.paginator.to = res.data.data.to
-					this.paginator.currentPage = res.data.data.current_page
-					this.notifications = data
+					let data = res.data.data
+					this.items = data
+
 				}
 			})	
 			.catch(err => {
 				console.log(err)
 			})
-  	}
-  }
+  	},
+  	changeSort (column) {
+      var columnsNoSearch = ['actions']
+      if (columnsNoSearch.indexOf(column) > -1) {
+        return
+      }
+      this.loading = true
+      if (this.pagination.sortBy === column) {
+        this.pagination.descending = !this.pagination.descending
+      } else {
+        this.pagination.sortBy = column
+        this.pagination.descending = false
+      }
+      this.loading = false
+    },
+  },
+  created(){
+  	this.fetchData()
+  },
+  computed:{
+	  	optionLoadView(){
+	  		return this.items
+	  	}
+	},
 }
 </script>
 

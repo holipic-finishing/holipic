@@ -24,6 +24,8 @@ class TransactionAPIController extends AppBaseController
     /** @var  TransactionRepository */
     private $transactionRepository;
 
+    const STATUS_DONE = 'DONE' ;           
+
     public function __construct(TransactionRepository $transactionRepo)
     {
         $this->transactionRepository = $transactionRepo;
@@ -286,6 +288,23 @@ class TransactionAPIController extends AppBaseController
         $result = $this->transactionRepository->transactionHistory($input, $input['perPage'], $searchBy);
 
         return $this->sendResponse($result, 'Transactions retrieved successfully');
+    }
+
+    /*
+    *   Target : Get all transaction history belongs to company id
+    *   GET /e-wallet/transaction-history
+    *
+    *   @param  Request
+    *   return Json
+    */
+    public function getEWalletTransactionHistory(Request $request){
+
+        $input = $request->all();
+
+        $result = $this->transactionRepository->eWalletTransactionHistory($input,self::STATUS_DONE);
+
+        return $this->sendResponse($result, 'Transactions retrieved successfully');
+
     }
 }
 

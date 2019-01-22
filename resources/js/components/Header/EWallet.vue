@@ -16,8 +16,9 @@
 		<v-tab>Withdraw Via Bank Transfer</v-tab>
 		<v-tab-item>
 			<!-- Table Component -->
-			<vue-perfect-scrollbar class="scroll-area" :settings="settings" style="height:20%;">
-			    <v-data-table 
+			<div class="table-component">
+				<vue-perfect-scrollbar class="scroll-area" :settings="settings">
+			    	<v-data-table 
 					:headers="headers" 
 					:items="items" 
 					class="elevation-5 body-2 global-custom-table"
@@ -65,17 +66,97 @@
 				        Sorry, nothing to display here :(
 				      </v-alert>
 		    		</template>
-				</v-data-table>
-			</vue-perfect-scrollbar>
+					</v-data-table>
+				</vue-perfect-scrollbar>
+			</div>
+			
 		</v-tab-item>
 		<v-tab-item>
 			<div>123123111111111123</div>
 		</v-tab-item>
 		<v-tab-item>
-			<div>12312333333333333123</div>
+			<div class="tab-3">
+				<v-card>
+		            <v-toolbar color="primary" dark flat dense cad>
+		              <v-toolbar-title class="subheading">Withdraw Via Bank Form</v-toolbar-title>
+		            <!--   <v-spacer></v-spacer> -->
+		            </v-toolbar>
+		            <v-divider></v-divider>
+		            <v-card-text class="">
+		              <v-form v-model="valid">				 
+					      <v-text-field
+					        label="Withdraw Amount"
+					        name="amount"
+					        placeholder="Enter Amount"
+					        v-model="formModel.amount"
+					        v-validate="'required|decimal:5'"
+					        data-vv-name="amount"     
+					        :error-messages="errors.collect('amount')"  
+					        prefix="$"
+					        required
+					      ></v-text-field>
+					       <v-text-field
+					        label="Bank Account Number"
+					        placeholder="####-####-####-####"
+					        v-validate="'required'"
+					        data-vv-name="account_number"     
+					        :error-messages="errors.collect('account_number')"                
+					        v-model="formModel.account_number"
+					        mask="credit-card"
+					        required
+					      ></v-text-field> 
+						  <v-text-field
+					        label="Bank Name"
+					        name="bank_name"
+					        placeholder="Enter Your Bank Name"
+					        v-model="formModel.bank_name"
+					        v-validate="'required'"
+					        data-vv-name="bank_name"     
+					        :error-messages="errors.collect('bank_name')"  
+					        required
+					      ></v-text-field> 
+					      <v-text-field
+					        label="Account Holder Name"
+					        name="account_holder_name"
+					        placeholder="Enter Your Bank Account Name"
+					        v-model="formModel.account_holder_name"
+					        v-validate="'required'"
+					        data-vv-name="account_holder_name"     
+					        :error-messages="errors.collect('account_holder_name')"  
+					        required
+					      ></v-text-field>  
+					      <v-text-field
+					        label="IBAN"
+					        name="iban"
+					        placeholder="Enter Your IBAN"
+					        v-model="formModel.iban"
+					        v-validate="'required'"
+					        data-vv-name="iban"     
+					        :error-messages="errors.collect('iban')"
+					        required
+					      ></v-text-field>  
+					      <v-text-field
+					        label="SWIFT"
+					        name="swift"
+					        placeholder="Enter SWIFT Code"
+					        v-model="formModel.swift"
+					        v-validate="'required'"
+					        data-vv-name="swift"     
+					        :error-messages="errors.collect('swift')"  
+					        required
+					      ></v-text-field>
+					      <!-- <div class="form-btn">
+						     
+						      <v-btn outline @click="clear">Clear</v-btn>
+						  </div>   -->  
+					   </v-form>   
+		            </v-card-text>       
+          		</v-card>
+			</div>
 		</v-tab-item>
 	</v-tabs>
 	 <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
+	 	<v-btn outline @click="submit" color="primary">Submit</v-btn>
       	<v-btn @click="closeDrawer">Close</v-btn>
     </v-card-actions>
 </v-card>
@@ -93,10 +174,10 @@ export default {
   		headers: [	        
 			{ text: 'Title', value: 'title' },
 			{ text: 'Date', value: 'dated'},	
-			{ text: 'Status', value: 'new_amount' },	
+			{ text: 'Into Money', value: 'new_amount' },	
 		],
 		pagination: {
-			rowsPerPage: 25	  	
+			rowsPerPage: 10	  	
 		},
 		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 		user:JSON.parse(localStorage.getItem('user')),
@@ -104,6 +185,7 @@ export default {
 		settings: {
 	        maxScrollbarLength: 160
 	    },
+	    formModel:{}
     }
   },
   methods:{
@@ -141,6 +223,13 @@ export default {
       }
       this.loading = false
     },
+    submit(){
+    	 this.$validator.validateAll().then((result) => {
+    	 	if(result){
+    	 		alert(123);
+    	 	}
+    	 });
+    }
   },
   created(){
   	this.fetchData()
@@ -156,5 +245,12 @@ export default {
 <style lang="css" scoped>
 .mr-3 {
 	margin-left: 16px !important;
+}
+.table-component {
+	margin-top : 15px;
+}
+.tab-3 {
+    width: 50%;
+    margin: 15px auto;
 }
 </style>

@@ -43,11 +43,41 @@ export default {
     	settings: {
 			maxScrollbarLength: 300
 		},
+		paginator: {
+            perPage: 2,
+            currentPage: 1,
+            lastPage: 1,
+            total: 0,
+            from: 0,
+            to: 0,
+		},
+		user:JSON.parse(localStorage.getItem('user')),
     }
   },
   methods:{
   	closeDrawer(){
   		this.$root.$emit('closeDrawerItem', false)
+  	},
+  	fetchData(){
+  		let url = config.API_URL + 'notifications'
+			let params = {
+				perPage: this.paginator.perPage,
+	        	page: this.paginator.currentPage,
+				user_id : this.user.id
+			}
+			getWithData(url,params)
+			.then(res => {
+				if(res.data && res.data.success){
+					let data = res.data.data.data
+					this.paginator.total = res.data.data.total
+					this.paginator.to = res.data.data.to
+					this.paginator.currentPage = res.data.data.current_page
+					this.notifications = data
+				}
+			})	
+			.catch(err => {
+				console.log(err)
+			})
   	}
   }
 }

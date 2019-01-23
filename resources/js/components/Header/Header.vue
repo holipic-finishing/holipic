@@ -34,7 +34,6 @@
 				</div>
 			</div>
 			<div class="navbar-right">
-
 				<v-btn icon large @click="toggleFullScreen" class="full-screen ma-0">
 					<v-icon color="grey">fullscreen</v-icon>
 				</v-btn>
@@ -47,6 +46,9 @@
 				<v-btn class="ma-0" icon large @click.stop="eWalletSidebar = !eWalletSidebar">
 					<v-icon color="grey">ti-wallet</v-icon>
 				</v-btn>
+				<div class="v-menu v-menu--inline">
+					<span class="ewallet-style">$ {{money_ewallet}}</span>
+				</div>
 			</div>
 		</v-toolbar>
 		<v-dialog 
@@ -94,7 +96,8 @@ export default {
 			eWalletSidebar: false, // chat component right sidebar
 			sidebarImages: "", // sidebar background images
 			enableDefaultSidebar: false,
-			role_id:''
+			role_id:'',
+			money_ewallet:0
 		};
 	},
 	computed: {
@@ -128,7 +131,18 @@ export default {
       		this.eWalletSidebar = res
       		// this.fetchData()
     	})
+    	this.$root.$on('ewallet', res => {
+    		this.money_ewallet = res
+    	})
     }
 	
 };
 </script>
+<style lang="css" scoped>
+.ewallet-style {
+	font-weight: 700;
+    color: gray;
+    font-size: 16px;
+}
+</style>
+    

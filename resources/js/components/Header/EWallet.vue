@@ -145,10 +145,11 @@
 					        :error-messages="errors.collect('swift')"  
 					        required
 					      ></v-text-field>
-					      <!-- <div class="form-btn">
-						     
-						      <v-btn outline @click="clear">Clear</v-btn>
-						  </div>   -->  
+					      <div class="form-btn">
+					      	  <v-spacer></v-spacer>
+						      <v-btn @click="submit" dark color="indigo">Submit</v-btn>
+						     <!--  <v-btn outline @click="clear">Clear</v-btn> -->
+						  </div>    
 					   </v-form>   
 		            </v-card-text>       
           		</v-card>
@@ -156,7 +157,6 @@
 		</v-tab-item>
 	</v-tabs>
 	 <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-	 	<v-btn outline @click="submit" color="primary">Submit</v-btn>
       	<v-btn @click="closeDrawer">Close</v-btn>
     </v-card-actions>
 </v-card>
@@ -185,7 +185,9 @@ export default {
 		settings: {
 	        maxScrollbarLength: 160
 	    },
-	    formModel:{}
+	    formModel:{},
+	    valid: true,
+	    total_ewallet:0
     }
   },
   methods:{
@@ -195,19 +197,39 @@ export default {
   	fetchData(){
   		let url = config.API_URL + 'e-wallet/transaction-history'
 			let params = {
-				company_id : this.user.company_id
+				company_id : this.user.company_id,
+				user_id : this.user.id
 			}
 			getWithData(url,params)
 			.then(res => {
 				if(res.data && res.data.success){
 					let data = res.data.data
 					this.items = data
-
+					this.totalEWallet(data)
 				}
 			})	
 			.catch(err => {
 				console.log(err)
 			})
+  	},
+  	totalEWallet(data){
+  		var total_revenue = 0
+  		var total_done = 0
+  		_.forEach(data, function(v_1, k_1){
+			if(v_1.status == 'RECIVED') {
+            	total_revenue = total_revenue + v_1.new_amount
+            } else {
+            	total_done = total_done + v_1.new_amount
+            }
+		})
+  		this.total_ewallet = (total_revenue - total_done).toFixed(3)
+
+  		if(this.total_ewallet <= 0) {
+  			this.$root.$emit('ewallet', 0)
+  		} else {
+  			this.$root.$emit('ewallet',this.total_ewallet)
+  		}
+		
   	},
   	changeSort (column) {
       var columnsNoSearch = ['actions']
@@ -247,10 +269,13 @@ export default {
 	margin-left: 16px !important;
 }
 .table-component {
-	margin-top : 15px;
+	margin: 15px;
 }
 .tab-3 {
-    width: 50%;
+    width: 65%;
     margin: 15px auto;
+}
+.form-btn {
+	text-align: right;
 }
 </style>

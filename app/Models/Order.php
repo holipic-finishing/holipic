@@ -74,6 +74,11 @@ class Order extends Model
             static::createTransaction($model);
         });
 
+        static::edited(function($model)
+        {
+            static::editTransaction($model);
+        });
+
     }
 
 
@@ -120,7 +125,7 @@ class Order extends Model
         ]);
     }
 
-    static public function createTransaction($model){
+    public static function createTransaction($model){
         if($model->payment_method == 'WEB' && $model->status == 'DONE'){
             $results = Branch::with('company')
                                 ->where('id',$model->branch_id)
@@ -165,6 +170,10 @@ class Order extends Model
                 'dated' => $now,       
             ]);
         }
+    }
+
+    public function editTransaction($model){
+
     }
   
 }

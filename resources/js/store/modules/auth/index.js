@@ -58,7 +58,6 @@ const actions = {
         post('/auth/loginSuperAdmin',params)
         .then(res => {
            if(res && res.data.success) {
-
             let data = res.data.data.user
              Nprogress.done();
                 setTimeout(() => {

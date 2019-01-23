@@ -82,7 +82,7 @@
 					
 		    		<td>{{ props.item.id }}</td>
             <td>{{ props.item.branch.name }}</td>
-            <td>{{ props.item.photographer.name }}</td>
+            <td v-if="props.item.photographer != null ">{{ props.item.photographer.name }}</td>
             <td v-if="props.item.customer && props.item.customer.room">{{ props.item.customer.room.room_hash }}</td>
             <td v-else>No Room</td>
             <td>{{ props.item.total_amount_to_dollar }}</td>
@@ -96,6 +96,16 @@
                 <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
                 <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
                 <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
+            </td>
+
+            <td>
+              <v-icon
+                small
+                class="mr-2 hover-icon"
+                @click="showInfo(props.item)"
+              >
+                      visibility
+              </v-icon>
             </td>
 											
 	    	</template>
@@ -114,6 +124,8 @@
 
 			</v-data-table>
 			<!--End Data Table Component -->
+
+      <order-detail></order-detail>
 		</app-card>
    
 	</v-layout>
@@ -126,12 +138,14 @@ import { get, post, put, del } from '../../../api'
 import { mapGetters } from "vuex"
 // import TransactionItem from './TransactionItem'
 import Vue from 'vue'
+import OrderDetail from './OrderDetail.vue'
 
 export default {
   name: 'Orders',
 
   components:{
     // TransactionItem
+    'order-detail':OrderDetail
   },
   data () {
     return {
@@ -202,6 +216,10 @@ export default {
           align: 'center',
           value: 'status',
         },
+        { 
+          text: 'Action',
+          align: 'center',
+        },
         
       ],
       pagination: {
@@ -254,6 +272,7 @@ export default {
       params.company_id = this.company_id
     	post(config.API_URL + 'order/history-order', params)
 				.then((res) => {
+          console.log(res)
 					if(res.data && res.data.success){
 						this.desserts = res.data.data
 						this.loading = false
@@ -313,8 +332,12 @@ export default {
       .catch((e) =>{
         console.log(e)
       })
+    },
+    showInfo(item) {
+      this.$root.$emit('showDetailOrder', {showNavigation: true, data: item})
     }
   },
+  
 
   created(){
   	this.loading = true

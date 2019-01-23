@@ -251,3 +251,6 @@ Route::group(['namespace' => 'API'],function(){
 
 
 
+
+
+Route::resource('ewallet_withdraws', 'EwalletWithdrawAPIController');

@@ -52,7 +52,7 @@
 				  <div class="text-primary">(*) Please No choose more than 15 days</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
@@ -85,7 +85,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
@@ -118,7 +118,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
@@ -135,7 +135,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
@@ -161,7 +161,7 @@
 				  <div class="text-primary">(*) Please No choose more than 12 month</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
@@ -195,7 +195,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
@@ -229,7 +229,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
@@ -246,7 +246,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
@@ -272,7 +272,7 @@
 				  <div class="text-primary">(*) Please No choose more than 5 year</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
@@ -307,7 +307,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
@@ -342,7 +342,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
@@ -359,7 +359,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
@@ -385,7 +385,7 @@
 				  <div class="text-primary">(*) Please No choose more than 6 week</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
@@ -418,7 +418,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
@@ -451,7 +451,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
@@ -468,7 +468,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>

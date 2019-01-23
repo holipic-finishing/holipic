@@ -41,20 +41,18 @@
   	    <!--End Search Component -->
   			<!--Data Table Component -->
   			<v-data-table
-  				v-model="selected"
   			  :headers="headers"
   			  :items="itemsToView"
   			  class="body-2 global-custom-table"
   			  :pagination.sync="pagination"
   			  :loading="loadingCom"
-  			  select-all
   			  item-key="id"
   			  :search="search"
           :rows-per-page-items="rowsPerPageItems"
   			>
   				<!-- <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear> -->
   				<!--Header -->
-  				<template slot="headers" slot-scope="props">
+  				<!-- <template slot="headers" slot-scope="props">
             <tr>
               <th
                 v-for="header in props.headers"
@@ -75,7 +73,7 @@
               	</div>
               </th>
             </tr>
-          </template>
+          </template> -->
 
   				<!--Prop data -->
   				<template slot="items" slot-scope="props">
@@ -85,18 +83,38 @@
               <td>{{ props.item.photographer.name }}</td>
               <td v-if="props.item.customer && props.item.customer.room">{{ props.item.customer.room.room_hash }}</td>
               <td v-else>No Room</td>
-              <td>{{ props.item.total_amount_to_dollar }}</td>
-              <td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
-              <td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
-              <td>{{ props.item.created_at | moment("DD/MM/YYYY") }}</td>
               <td v-if="props.item.customer && props.item.customer.user">{{ props.item.customer.user.email }}</td>
               <td v-else>No Email</td>
-              <td>{{ props.item.payment_method }}</td>
+              <td>{{ props.item.total_amount_to_dollar }}</td>
+              <td class="text-right">{{ props.item.payment_method }}</td>
+              <td class="text-right">
+                <v-icon
+                  small
+                  class="mr-2 hover-icon"
+                >
+                  visibility
+                </v-icon>
+                <v-icon
+                  small
+                  class="mr-2 hover-icon"
+                >
+                  edit
+                </v-icon>
+                <v-icon
+                  small
+                  class="mr-2 hover-icon"
+                >
+                  delete
+                </v-icon>
+              </td>              
+              <!-- <td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
+              <td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
+              <td>{{ props.item.created_at | moment("DD/MM/YYYY") }}</td>
   		    		<td>
                   <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
                   <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
                   <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
-              </td>
+              </td> -->
   											
   	    	</template>
 
@@ -125,14 +143,12 @@
 import config from '../../../config'
 import { get, post, put, del } from '../../../api'
 import { mapGetters } from "vuex"
-// import TransactionItem from './TransactionItem'
 import Vue from 'vue'
 
 export default {
   name: 'Orders',
 
   components:{
-    // TransactionItem
   },
   data () {
     return {
@@ -143,73 +159,87 @@ export default {
           text: 'ID',
           align: 'left',
           value: 'id',
-          width: '3%'
+          class: 'mb-icon',
+          width: '5%',
         },
         { 
           text: 'Branch',
           align: 'left',
           value: 'branch.name',
-          width: '10%'
+          class: 'mb-icon',
+          width: '10%',
         },
         { 
           text: 'Photographer',
           align: 'left',
           value: 'photographer.name',
-          width: '10%'
+          class: 'mb-icon',
+          width: '10%',
         },
         { 
-          text: 'Room Number',
+          text: 'Room',
           align: 'left',
           value: 'customer.room.room_hash',
-          width: '10%'
+          class: 'mb-icon',
+          width: '10%',
         },
         { 
-          text: 'Total Amount',
-          align: 'left',
-          value: 'total_amount_to_dollar',
-          width: '10%'
-        },
-        { 
-          text: 'Purchase Date',
-          align: 'left',
-          value: 'purchase_date',
-          width: '10%'
-        },
-        { 
-          text: 'Download Date',
-          align: 'left',
-          value: 'download_date',
-          width: '10%'
-        },
-        { 
-          text: 'Order Date',
-          align: 'left',
-          value: 'created_at',
-          width: '10%'
-        },
-        { 
-          text: 'Customer Email',
+          text: 'Email',
           align: 'left',
           value: 'customer.user.email',
+          class: 'mb-icon',
+          width: '15%',
+        },
+        { 
+          text: 'Amount',
+          align: 'left',
+          value: 'total_amount_to_dollar',
+          class: 'mb-icon',
+          width: '5%',
         },
         { 
           text: 'Payment Method',
-          align: 'center',
+          align: 'right',
           value: 'payment_method',
-          width: '5%'
+          class: 'mb-icon',
+          width: '10%',
         },
-        { 
-          text: 'Status',
-          align: 'center',
-          value: 'status',
-        },
+        {
+          text: 'Action',
+          align: 'right',
+          value: 'actions',
+          sortable: false,
+          width: '10%',
+        }
+        // { 
+        //   text: 'Purchase Date',
+        //   align: 'left',
+        //   value: 'purchase_date',
+        //   width: '10%'
+        // },
+        // { 
+        //   text: 'Download Date',
+        //   align: 'left',
+        //   value: 'download_date',
+        //   width: '10%'
+        // },
+        // { 
+        //   text: 'Order Date',
+        //   align: 'left',
+        //   value: 'created_at',
+        //   width: '10%'
+        // },
+        // { 
+        //   text: 'Status',
+        //   align: 'center',
+        //   value: 'status',
+        // },
         
       ],
       pagination: {
       },
       loading: true,
       search: '',
-      selected: [],
       drawer: false,
       item: null,
       eventType: '',
@@ -264,26 +294,6 @@ export default {
 				.catch((e) =>{
 					console.log(e)
 				})
-    },
-    toggleAll () {
-      if (this.selected.length) this.selected = []
-      else{
-	    	this.selected = this.desserts.slice()
-      }
-    },
-    changeSort (column) {
-      var columnsNoSearch = ['actions']
-      if (columnsNoSearch.indexOf(column) > -1) {
-        return
-      }
-      this.loading = true
-      if (this.pagination.sortBy === column) {
-        this.pagination.descending = !this.pagination.descending
-      } else {
-        this.pagination.sortBy = column
-        this.pagination.descending = false
-      }
-      this.loading = false
     },
     transactionEvent(event, item){
     	this.drawer = true

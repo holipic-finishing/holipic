@@ -2,7 +2,7 @@
 	<div>
 		<v-container fluid px-0 py-0>
 			<div class="mt-4 visitor-area-chart">
-				<div class="d-custom-flex justify-space-between px-4 mb-4 label-wrap">
+				<div class="d-custom-flex justify-space-between px-4 mb-4 label-wrap ml-3 mr-3">
 					<div class="d-custom-flex justify-space-between font-weight-bold">
 						<a class="nav-link" :class="typeTimeReturn === 'day' ? 'active' : '' " @click="activeTypeTime('day')">D</a>
 						<a class="nav-link" :class="typeTimeReturn === 'week' ? 'active' : '' " @click="activeTypeTime('week')">W</a>
@@ -48,11 +48,11 @@
 			<!-- Day Component -->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'day'">
 
-				<v-flex xs12>
+				<v-flex xs12 pl-md-5>
 				  <div class="text-primary">(*) Please No choose more than 15 days</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
@@ -85,7 +85,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
@@ -118,7 +118,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
@@ -135,7 +135,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
@@ -157,11 +157,11 @@
 			<!-- Month Component -->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'month'">
 				
-				<v-flex xs12>
+				<v-flex xs12 pl-md-5>
 				  <div class="text-primary">(*) Please No choose more than 12 month</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
@@ -195,7 +195,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
@@ -229,7 +229,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
@@ -246,7 +246,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
@@ -268,11 +268,11 @@
 			<!-- Year Component -->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'year'">
 				
-				<v-flex xs12>
+				<v-flex xs12 pl-md-5>
 				  <div class="text-primary">(*) Please No choose more than 5 year</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
@@ -307,7 +307,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
@@ -342,7 +342,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
@@ -359,7 +359,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
@@ -381,11 +381,11 @@
 			<!-- Week Component-->
 				<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'week'">
 				
-				<v-flex xs12>
+				<v-flex xs12 pl-md-5>
 				  <div class="text-primary">(*) Please No choose more than 6 week</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
@@ -418,7 +418,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
@@ -451,7 +451,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
@@ -468,7 +468,7 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm3 xs12 b-50>
+			  <v-flex xl3 lg3 md3 sm3 xs12 b-50 pl-md-5 pr-md-5>
 			  	<v-card class="elevation-5">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>

@@ -18,6 +18,10 @@ class OrderTableSeeder extends Seeder
 
         \App\Models\OrderExchange::truncate();
 
+        \App\Models\Transaction::truncate();
+
+        \App\Models\TransactionExchange::truncate();
+
         $faker = Faker\Factory::create();
 
         $branches = \App\Models\Branch::all();

@@ -17,7 +17,7 @@ class PackagesTableSeeder extends Seeder
         	[
 	        	'package_name' => 'Basic', 
 	        	'short_description' => 'Secure file sharing and collaboration', 
-	        	'fee' => 2.5, 
+	        	'fee' => 3, 
 	        	'secure_storage' => 100, 
 	        	'file_upload' => 2, 
 	        	'minimum_user' => 3, 
@@ -26,7 +26,7 @@ class PackagesTableSeeder extends Seeder
         	[
 	        	'package_name' => 'Pro', 
 	        	'short_description' => 'More power & personalization', 
-	        	'fee' => 3, 
+	        	'fee' => 2.5, 
 	        	'secure_storage' => 'Unlimited', 
 	        	'file_upload' => 5, 
 	        	'minimum_user' => 3, 

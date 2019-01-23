@@ -324,8 +324,10 @@ class TransactionAPIController extends AppBaseController
 
     }
 
-    public function calEwallet(){
-        
+    public function calEwallet(Request $request){
+        $input = $request->all();
+        $results = $this->transactionRepository->calculatorEwallet($input);
+        return $results;
     }
 
 }

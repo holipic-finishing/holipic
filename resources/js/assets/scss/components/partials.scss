@@ -165,3 +165,13 @@
 .grid-template-column{
 	grid-template-columns: none !important;
 }
+
+.custom-stats-card{
+	.v-card__text {
+		padding: 10px 15px !important;
+	}
+
+	.v-input .v-text-field{
+		padding-top: 5px !important;
+	}
+}

@@ -304,21 +304,21 @@ class TransactionAPIController extends AppBaseController
 
         $result = $this->transactionRepository->eWalletTransactionHistory($input,self::STATUS_DONE);
 
-        $total_done = 0;
-        $total_revenue = 0;
-        foreach ($result as $key => $value) {
-            if($value->status === "DONE"){
-                $total_done = $total_done + $value->new_amount;
-            } else {
-                $total_revenue = $total_revenue + $value->new_amount;
-            }
-        }
+        // $total_done = 0;
+        // $total_revenue = 0;
+        // foreach ($result as $key => $value) {
+        //     if($value->status === "DONE"){
+        //         $total_done = $total_done + $value->new_amount;
+        //     } else {
+        //         $total_revenue = $total_revenue + $value->new_amount;
+        //     }
+        // }
 
-        $total_amount = $total_revenue - $total_done;
+        // $total_amount = $total_revenue - $total_done;
 
-        if($total_amount <= 0) {
-             $this->notificationRepository->createNotifi($input['user_id'], 'AvailableBalanceIs0','Available balance is 0');
-        }
+        // if($total_amount <= 0) {
+        //      $this->notificationRepository->createNotifi($input['user_id'], 'AvailableBalanceIs0','Available balance is 0');
+        // }
 
         return $this->sendResponse($result, 'Transactions retrieved successfully');
 

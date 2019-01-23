@@ -17,7 +17,8 @@
 
       			<!--Search Component -->
 				<v-card-title>
-		      		<v-spacer></v-spacer>
+
+		      		<!-- <v-spacer></v-spacer>
 			        <div class="w-25">
 			  	      <v-text-field
 			  	        v-model="search"
@@ -33,8 +34,28 @@
 							</a>
 					    <span>Export companies</span>
 			   		 </v-tooltip>
-		    	</v-card-title>
+		    	</v-card-title> -->
+
 		    	<!--End Search Component -->
+		      <v-spacer></v-spacer>
+	        <div class="w-25">
+	  	      <v-text-field
+	  	        v-model="search"
+	  	        append-icon="search"
+	  	        label="Enter Search Value"
+	  	        single-line
+	  	        hide-details
+	  	      ></v-text-field>
+	        </div>
+			    <v-tooltip bottom>
+			    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn">
+						<v-icon small color="white">fas fa-file-excel</v-icon>
+					</a>
+			    <span>Export companies</span>
+		    </v-tooltip>
+		    </v-card-title>
+		    <!--End Search Component -->
+
 
 		    <v-data-table 
 					:headers="headers" 
@@ -77,10 +98,24 @@
 						<td class="text-xs-left">{{ props.item.email }}</td>
 						<td class="text-xs-left">{{ props.item.phone }}</td>
 	        	<td class="text-xs-left action-width">
+	        		<v-tooltip top v-if="props.item.coupon_codes_id">
+	        			<v-icon
+									small
+					        class="mr-2 hover-icon"
+					        @click="addCouponAction(props.item, 'Coupon Code List')"
+					        color="red darken-1"
+					        slot="activator"
+								>
+									mdi-alpha-c-circle
+								</v-icon>
+								<span>Coupon Code Added</span>
+	        		</v-tooltip>
+
 							<v-icon
 								small
 				        class="mr-2 hover-icon"
-				        @click="addCouponAction(props.item)"
+				        @click="addCouponAction(props.item, 'Coupon Code List')"
+				        v-else
 							>
 								mdi-alpha-c-circle
 							</v-icon>
@@ -152,7 +187,7 @@
 	      </v-card>
 	    </v-dialog>
 	    <!-- component -->
-	    <coupon-code-component></coupon-code-component>
+	    <coupon-code-component :typeEvent="typeEvent" :item="item"></coupon-code-component>
 			<transaction-component></transaction-component>
 			<company-information></company-information>
 			<company-edit-component></company-edit-component>
@@ -206,7 +241,9 @@
         },
         rowsPerPageItems: [
         	25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }
-        ]
+        ],
+        typeEvent: '',
+        item: {}
 		  }
 		},
 
@@ -217,6 +254,9 @@
 		
 		mounted() {
 			this.$root.$on('editCompanySuccess', res => this.fetchData())
+			this.$root.$on('load-data-after-coupon-code_event', () => {
+				this.fetchData()
+			})
 		},
 
 		methods:{
@@ -323,8 +363,10 @@
 	      }
 	      this.loading = false
 	    },
-	    addCouponAction(item){
-	    	this.$root.$emit('show-coupon-code-component')
+	    addCouponAction(item, typeEvent){
+	    	this.typeEvent = typeEvent
+	    	this.item = item
+	    	this.$root.$emit('show-coupon-code-component', item)
 	    }
 		},
 	};

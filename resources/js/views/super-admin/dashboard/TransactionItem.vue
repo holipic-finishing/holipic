@@ -255,7 +255,7 @@
 
           <v-list-tile class="height-80 rp-amount">
             <v-list-tile-content class="h-100">
-              <v-list-tile-title class="content-flex-end h-100">
+              <v-list-tile-title class="content-flex-end h-100 align-amount">
                 <span class="font-weight-bold item-title position-item ">
                   Amount {{ itemToLoad.currency.name }}
                   <!-- <div>{{ itemToLoad.currency.name }}</div> -->

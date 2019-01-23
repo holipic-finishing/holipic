@@ -53,6 +53,8 @@ class CustomerRepository extends BaseRepository
             {
                 if($customer['branch'] != null)
                 {
+                    $fileName = $this->createLinkAvatar($customer['avatar']);
+                    $customer['avatar'] = asset('avatars/' . $fileName);
                     $data[] = $customer;
                 }
             }
@@ -61,6 +63,12 @@ class CustomerRepository extends BaseRepository
         }
 
         return false;
+    }
+
+    function createLinkAvatar($link){
+        $components = explode("/", $link);
+        $fileName = end($components);
+        return $fileName;
     }
 
     public function handleUpdateCustomer($id)

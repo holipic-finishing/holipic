@@ -40,5 +40,21 @@
 		.v-input__control{
 			font-size: 14px !important;
 		}
+
+		.v-input__icon{
+			opacity: 0.3;
+		}
+	}
+
+	.mb-icon{
+		i{
+			margin-bottom: 3px !important;
+		}
+	}
+
+	.hover-icon{
+		&:hover{
+	      	color: blue;
+	    }
 	}
 }

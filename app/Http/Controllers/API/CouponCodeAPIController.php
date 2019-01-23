@@ -6,6 +6,8 @@ use App\Http\Requests\API\CreateCouponCodeAPIRequest;
 use App\Http\Requests\API\UpdateCouponCodeAPIRequest;
 use App\Models\CouponCode;
 use App\Repositories\CouponCodeRepository;
+use App\Repositories\CompanyRepository;
+use App\Repositories\TransactionRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
@@ -22,9 +24,17 @@ class CouponCodeAPIController extends AppBaseController
     /** @var  CouponCodeRepository */
     private $couponCodeRepository;
 
-    public function __construct(CouponCodeRepository $couponCodeRepo)
+    /** @var  CompanyRepository */
+    private $companyRepo;
+
+    /** @var  TransactionRepository */
+    private $transactionRepo;
+
+    public function __construct(CouponCodeRepository $couponCodeRepo, CompanyRepository $companyRepo, TransactionRepository $transactionRepo)
     {
         $this->couponCodeRepository = $couponCodeRepo;
+        $this->companyRepo = $companyRepo;
+        $this->transactionRepo = $transactionRepo;
     }
 
     /**
@@ -155,5 +165,41 @@ class CouponCodeAPIController extends AppBaseController
         }else{
             return $this->sendError('System Error Occurred');
         }
+    }
+
+    /**
+     * Add Coupon Code for company
+     * @param  string $value [description]
+     * @return [type]        [description]
+     */
+    public function addCouponCode($couponId, $companyId){
+        $company = $this->companyRepo->update([
+            'coupon_codes_id' => $couponId
+        ], $companyId);
+
+        if ($company && $company->coupon_codes_id) {
+            return $this->sendResponse([], 'Add coupon code successfully');
+        }else{
+            return $this->sendError('System Error Occurred');
+        }
+
+    }
+
+    /**
+     * Cancel Coupon Code for company
+     * @param  string $value [description]
+     * @return [type]        [description]
+     */
+    public function cancelCouponCode($couponId, $companyId){
+        $company = $this->companyRepo->update([
+            'coupon_codes_id' => $couponId
+        ], $companyId);
+
+        if ($company && !$company->coupon_codes_id) {
+            return $this->sendResponse([], 'Cancel coupon code successfully');
+        }else{
+            return $this->sendError('System Error Occurred');
+        }
+
     }
 }

@@ -3,7 +3,6 @@
       fixed
       v-model="drawerRight"
       right
-     
       app
 	  this.width = this.getCurrentWithContentWrap()
       :width='widthComputed'

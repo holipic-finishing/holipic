@@ -5,8 +5,9 @@
     right
     clipped
     app
-	  :width="450"
-	  temporary
+	this.width = this.getCurrentWithContentWrap()
+    :width='widthComputed'
+	temporary
   >
 		<v-card class="h-100 position-relative">
   		<v-toolbar>
@@ -554,6 +555,7 @@
 import config from '../../../config/index.js'
 import { post, put } from '../../../api/index.js'	
 import Vue from 'vue'
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
 
@@ -581,10 +583,20 @@ export default {
      	alertType: 'success',
      	alertMes: '',
       key: 0,
-      data:{}
+      data:{},
+      width: 0,
+      drawerHeaderStt: null
     }
 	},
+	computed: {
+		widthComputed(){
+  			return this.width
+  		}
+	},
 	methods:{
+		getCurrentWithContentWrap(){
+  				return getWithContentWrap(this.drawerHeaderStt)
+  		},
 		resetData(){
 			this.$refs.form.reset()
 		},
@@ -682,9 +694,10 @@ export default {
 	},
 	mounted(){
 		this.$root.$on('change-status', res => {
-      this.drawerRight = res.showDialog
+      		this.drawerRight = res.showDialog
 			this.check = res.check
 			this.resetData()
+			this.width = this.getCurrentWithContentWrap()
   	})
 
   	this.$root.$on('data-packages', res => {

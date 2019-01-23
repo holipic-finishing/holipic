@@ -28,7 +28,7 @@
 	  	      ></v-text-field>
 	        </div>
 			    <v-tooltip bottom>
-			    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary fix-btn-priamry">
+			    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn">
 						<v-icon small color="white">fas fa-file-excel</v-icon>
 					</a>
 			    <span>Export companies</span>

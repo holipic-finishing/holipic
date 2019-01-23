@@ -1,9 +1,8 @@
 <template>
-	<v-container fluid pt-0 grid-list-xl mt-3>
+	<v-container fluid px-0 py-0>
 		<v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="p-0 elevation-5"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
@@ -26,7 +25,7 @@
 				<v-data-table
 		      :headers="headers"
 		      :items="desserts"
-		      class="elevation-5 body-2 global-custom-table"
+		      class="body-2 global-custom-table"
 		      :pagination.sync="pagination"
 			    :loading="loadingCom"
 			  >
@@ -109,7 +108,6 @@
 		<v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="p-0 elevation-5"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
@@ -124,7 +122,7 @@
 	      <v-data-table
 		      :headers="headers2"
 		      :items="desserts2"
-		      class="elevation-5 body-2 global-custom-table"
+		      class="body-2 global-custom-table"
 		      :pagination.sync="pagination"
 		      :disable-initial-sort="true"
 				  :loading="loadingCom"

@@ -534,11 +534,12 @@ class OrderRepository extends BaseRepository
         if(!$attributes)
             return false;
 
-        $pathPublic = env('DB_MYSQL_DIR').DIRECTORY_SEPARATOR;
+        $pathPublic = public_path() . '/files' . DIRECTORY_SEPARATOR;
 
         $filename =  $company_id . '_Sales.csv';
        
         $file = fopen($pathPublic.$filename,"a+");
+        
         try{
 
             foreach ($attributes as $key => $value) {

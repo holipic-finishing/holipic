@@ -149,11 +149,12 @@
 	}
 }
 
-.fix-v-icon{
+.custom-v-icon{
 	line-height:unset !important;
+	margin-top: 4px !important;
 }
 
-.fix-btn-priamry{
+.custom-btn{
    	display:block;
   	height: 41px;
   	width: 41px;
@@ -161,3 +162,6 @@
   	padding-top: 3px !important;
 }
 
+.grid-template-column{
+	grid-template-columns: none !important;
+}

@@ -1,122 +1,123 @@
 <template>
-	<v-layout row wrap>
-		<app-card
-			colClasses="xl12 lg12 md12 sm12 xs12"
-			customClasses="p-0 elevation-5"
-			:fullScreen="true"
-			:reloadable="true"
-			:closeable="false"
-		>
-      <v-navigation-drawer 
-        fixed
-        v-model="drawer" 
-        :right="!rtlLayout" 
-        temporary 
-        app 
-        class="chat-sidebar-wrap"
-        width="450"
-      >
-        <!-- <transaction-item :eventType="eventType" :item="item"></transaction-item> -->
-      </v-navigation-drawer>
+  <v-container fluid px-0 py-0>
+  	<v-layout row wrap>
+  		<app-card
+  			colClasses="xl12 lg12 md12 sm12 xs12"
+  			:fullScreen="true"
+  			:reloadable="true"
+  			:closeable="false"
+  		>
+        <v-navigation-drawer 
+          fixed
+          v-model="drawer" 
+          :right="!rtlLayout" 
+          temporary 
+          app 
+          class="chat-sidebar-wrap"
+          width="450"
+        >
+          <!-- <transaction-item :eventType="eventType" :item="item"></transaction-item> -->
+        </v-navigation-drawer>
 
-      <v-toolbar flat color="white">
-        <v-toolbar-title>
-          Orders
-        </v-toolbar-title>
-      </v-toolbar>
-      <v-divider class="m-0"></v-divider>
-			<!--Search Component -->
-			<v-card-title>
-	      <v-spacer></v-spacer>
-        <div class="w-25">
-  	      <v-text-field
-  	        v-model="search"
-  	        append-icon="search"
-  	        label="Enter Search Value"
-  	        single-line
-  	        hide-details
-  	      ></v-text-field>
-        </div>
-	    </v-card-title>
-	    <!--End Search Component -->
-			<!--Data Table Component -->
-			<v-data-table
-				v-model="selected"
-			  :headers="headers"
-			  :items="itemsToView"
-			  class="elevation-5 body-2 global-custom-table"
-			  :pagination.sync="pagination"
-			  :loading="loadingCom"
-			  select-all
-			  item-key="id"
-			  :search="search"
-        :rows-per-page-items="rowsPerPageItems"
-			>
-				<!-- <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear> -->
-				<!--Header -->
-				<template slot="headers" slot-scope="props">
-          <tr>
-            <th
-              v-for="header in props.headers"
-              :key="header.text"
-              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-              @click="changeSort(header.value)"
-            >
-            	<div class="custom-header">
-	              <v-tooltip bottom>
-	                <span slot="activator" class="text-capitalize font-weight-bold">
-	                  {{ header.text }}
-	                </span>
-	                <span>
-	                  {{ header.text }}
-	                </span>
-	              </v-tooltip>
-	              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
-            	</div>
-            </th>
-          </tr>
-        </template>
+        <v-toolbar flat color="white">
+          <v-toolbar-title>
+            Orders
+          </v-toolbar-title>
+        </v-toolbar>
+        <v-divider class="m-0"></v-divider>
+  			<!--Search Component -->
+  			<v-card-title>
+  	      <v-spacer></v-spacer>
+          <div class="w-25">
+    	      <v-text-field
+    	        v-model="search"
+    	        append-icon="search"
+    	        label="Enter Search Value"
+    	        single-line
+    	        hide-details
+    	      ></v-text-field>
+          </div>
+  	    </v-card-title>
+  	    <!--End Search Component -->
+  			<!--Data Table Component -->
+  			<v-data-table
+  				v-model="selected"
+  			  :headers="headers"
+  			  :items="itemsToView"
+  			  class="body-2 global-custom-table"
+  			  :pagination.sync="pagination"
+  			  :loading="loadingCom"
+  			  select-all
+  			  item-key="id"
+  			  :search="search"
+          :rows-per-page-items="rowsPerPageItems"
+  			>
+  				<!-- <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear> -->
+  				<!--Header -->
+  				<template slot="headers" slot-scope="props">
+            <tr>
+              <th
+                v-for="header in props.headers"
+                :key="header.text"
+                :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                @click="changeSort(header.value)"
+              >
+              	<div class="custom-header">
+  	              <v-tooltip bottom>
+  	                <span slot="activator" class="text-capitalize font-weight-bold">
+  	                  {{ header.text }}
+  	                </span>
+  	                <span>
+  	                  {{ header.text }}
+  	                </span>
+  	              </v-tooltip>
+  	              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
+              	</div>
+              </th>
+            </tr>
+          </template>
 
-				<!--Prop data -->
-				<template slot="items" slot-scope="props">
-					
-		    		<td>{{ props.item.id }}</td>
-            <td>{{ props.item.branch.name }}</td>
-            <td>{{ props.item.photographer.name }}</td>
-            <td v-if="props.item.customer && props.item.customer.room">{{ props.item.customer.room.room_hash }}</td>
-            <td v-else>No Room</td>
-            <td>{{ props.item.total_amount_to_dollar }}</td>
-            <td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
-            <td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
-            <td>{{ props.item.created_at | moment("DD/MM/YYYY") }}</td>
-            <td v-if="props.item.customer && props.item.customer.user">{{ props.item.customer.user.email }}</td>
-            <td v-else>No Email</td>
-            <td>{{ props.item.payment_method }}</td>
-		    		<td>
-                <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
-                <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
-                <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
-            </td>
-											
-	    	</template>
+  				<!--Prop data -->
+  				<template slot="items" slot-scope="props">
+  					
+  		    		<td>{{ props.item.id }}</td>
+              <td>{{ props.item.branch.name }}</td>
+              <td>{{ props.item.photographer.name }}</td>
+              <td v-if="props.item.customer && props.item.customer.room">{{ props.item.customer.room.room_hash }}</td>
+              <td v-else>No Room</td>
+              <td>{{ props.item.total_amount_to_dollar }}</td>
+              <td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
+              <td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
+              <td>{{ props.item.created_at | moment("DD/MM/YYYY") }}</td>
+              <td v-if="props.item.customer && props.item.customer.user">{{ props.item.customer.user.email }}</td>
+              <td v-else>No Email</td>
+              <td>{{ props.item.payment_method }}</td>
+  		    		<td>
+                  <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
+                  <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
+                  <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
+              </td>
+  											
+  	    	</template>
 
-				<!--No data -->
-			  <template slot="no-data">
-		      <v-alert :value="true" color="error" icon="warning">
-		        Sorry, nothing to display here :(
-		      </v-alert>
-    		</template>
-				
-				<!--Search no result -->
-    		<v-alert slot="no-results" :value="true" color="error" icon="warning">
-          Your search for "{{ search }}" found no results.
-        </v-alert>
+  				<!--No data -->
+  			  <template slot="no-data">
+  		      <v-alert :value="true" color="error" icon="warning">
+  		        Sorry, nothing to display here :(
+  		      </v-alert>
+      		</template>
+  				
+  				<!--Search no result -->
+      		<v-alert slot="no-results" :value="true" color="error" icon="warning">
+            Your search for "{{ search }}" found no results.
+          </v-alert>
 
-			</v-data-table>
-			<!--End Data Table Component -->
-		</app-card>
-   
-	</v-layout>
+  			</v-data-table>
+  			<!--End Data Table Component -->
+  		</app-card>
+     
+  	</v-layout>
+  </v-container>
 </template>
 
 <script>

@@ -232,6 +232,8 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
+	Route::get('e-wallet/transaction-history', 'TransactionAPIController@getEWalletTransactionHistory');
+
 	/*************SettingAPIController**************/
 
 	Route::get('get-package', 'SettingAPIController@getPackage');

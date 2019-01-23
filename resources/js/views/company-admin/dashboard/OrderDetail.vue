@@ -40,7 +40,7 @@
 			          	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Photographer:</span>
 				          	<span class="max-value" v-if="order.photographer != null">{{order.photographer.name}}</span>
-				          	<span class="max-value" v-else>---</span>
+				          	<span class="max-value" v-else>No photographer</span>
 			         	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -52,7 +52,7 @@
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Room:</span>
 				          	<span class="max-value" v-if="order.customer && order.customer.room">{{order.customer.room.room_hash}}</span>
-				          	<span class="max-value" v-else>---</span>
+				          	<span class="max-value" v-else>No room</span>
 
 			          	</v-list-tile-title>
 					</v-list-tile-content>
@@ -104,7 +104,7 @@
 			         	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title">Customer email :</span>
 				          	<span class="max-value" v-if="order.customer != null && order.customer.user">{{order.customer.user.email}}</span>
-				          	<span class="max-value" v-else>---</span>
+				          	<span class="max-value" v-else>No email</span>
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -145,7 +145,6 @@ export default {
   	this.$root.$on('showDetailOrder', res => {
   		this.drawerRight = res.showNavigation
   		this.order = res.data
-  		console.log(this.order)
   	})
   }
 };

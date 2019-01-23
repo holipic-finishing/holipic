@@ -8,72 +8,56 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
 import 'babel-polyfill';
 import Vue from 'vue'
+import Nprogress from 'nprogress'
+
+/**
+ * Import Vue Plugins
+ */
 import Vuetify from 'vuetify'
+import VueResource from 'vue-resource'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import { Vue2Dragula } from 'vue2-dragula'
 import VueQuillEditor from 'vue-quill-editor'
 import wysiwyg from 'vue-wysiwyg'
 import VueBreadcrumbs from 'vue2-breadcrumbs'
-import VueResource from 'vue-resource'
 import Notifications from 'vue-notification'
 import velocity from 'velocity-animate'
 import AmCharts from 'amcharts3'
 import AmSerial from 'amcharts3/amcharts/serial'
 import AmAngularGauge from 'amcharts3/amcharts/gauge'
-import Nprogress from 'nprogress'
 import VueI18n from 'vue-i18n'
 import VueTour from 'vue-tour'
 import fullscreen from 'vue-fullscreen'
 import InstantSearch from 'vue-instantsearch'
-import VueVideoPlayer from 'vue-video-player';
-import Croppa from 'vue-croppa';
+import VueVideoPlayer from 'vue-video-player'
+import Croppa from 'vue-croppa'
 import VeeValidate from 'vee-validate';
+import VueOffline from 'vue-offline'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
-
-// Import config api URL
-import config from './config'
-
-// Import global components
-import GlobalComponents from './globalComponents'
-
-// Import App.vue
-import App from './App.vue'
-
-// Import router
 import router from './router'
+import { store } from './store/store'
 
-// Import themes
-import primaryTheme from './themes/primaryTheme';
-
-// Import store
-import { store } from './store/store';
-
-// Include script file
-import './lib/VuelyScript'
-
-// Include all css files
-import './lib/VuelyCss'
-
-// messages
-import messages from './lang';
-
-// Header
-var access_token = localStorage.getItem('access_token')
-
-// Import Icon
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@mdi/font/css/materialdesignicons.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'font-awesome/css/font-awesome.min.css'
 
+import config from './config'
+import GlobalComponents from './globalComponents'
+import primaryTheme from './themes/primaryTheme'
+import './lib/VuelyScript'
+import './lib/VuelyCss'
+import messages from './lang';
+import App from './App.vue'
+
+var access_token = localStorage.getItem('access_token')
 axios.defaults.baseURL = config.BASE_URL;
 axios.defaults.headers.common['Authorization'] = access_token;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
-
 
 // Use Plugins
 Vue.use(Vuetify, {
@@ -103,6 +87,9 @@ Vue.use(VueGoogleMaps, {
 })
 Vue.use(VeeValidate);
 Vue.use(require('vue-moment'))
+Vue.use(VueOffline)
+Vue.use(ElementUI);
+
 
 // Create VueI18n instance with options
 const i18n = new VueI18n({

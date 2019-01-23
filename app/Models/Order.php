@@ -71,6 +71,7 @@ class Order extends Model
         static::created(function($model)
         {
             static::exchange($model);
+            static::createTransaction($model);
         });
 
     }
@@ -117,6 +118,36 @@ class Order extends Model
             'order_id' => $model->id,
             'exchange_rate_to_dollar' => $exchangeRateToDollar
         ]);
+    }
+
+    static public function createTransaction($model){
+        if($model->payment_method == 'WEB' && $model->status == 'DONE'){
+            $company = Branch::with('company')
+                                ->where('id',$model->branch_id)
+                                ->first();
+            $owner_id = $company->company->owner_id;
+            $company_id = $company->id;
+        
+            $package = User::with('package')
+                                ->where('id',$owner_id)
+                                ->first();
+            $fee = $package->package->fee;
+
+            $system_fee = ($model->total_amount * $fee) / 100; 
+
+            $now = \Carbon\Carbon::now('+7');
+
+            return Transaction::create([
+                'title' => 'Customer Paid',
+                'amount' => $model->total_amount,
+                'status' => 'RECIVED',
+                'system_fee' => $system_fee,
+                'invoice' => $model->invoice,
+                'currency_id' =>$model->currency_id,
+                'company_id' => $company_id,
+                'dated' => $now,       
+            ]);
+        }
     }
   
 }

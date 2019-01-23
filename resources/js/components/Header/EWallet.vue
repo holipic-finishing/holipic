@@ -14,6 +14,7 @@
 		<v-tab>Transaction History</v-tab>
 		<v-tab>Top Up Balance</v-tab>
 		<v-tab>Withdraw Via Bank Transfer</v-tab>
+		
 		<v-tab-item>
 			<!-- Table Component -->
 			<div class="table-component">
@@ -75,6 +76,7 @@
 			<div>123123111111111123</div>
 		</v-tab-item>
 		<v-tab-item>
+			<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 			<div class="tab-3">
 				<v-card>
 		            <v-toolbar color="primary" dark flat dense cad>
@@ -163,7 +165,7 @@
 </template>
 
 <script>
-import { getWithData, put, get } from '../../api/index.js'
+import { getWithData, put, get, post } from '../../api/index.js'
 import config from '../../config/index.js'
 export default {
 
@@ -187,7 +189,10 @@ export default {
 	    },
 	    formModel:{},
 	    valid: true,
-	    total_ewallet:0
+	    total_ewallet:0,
+	    alertStt: false,
+    	alertType: 'success',
+    	alertMes: ''
     }
   },
   methods:{
@@ -248,7 +253,27 @@ export default {
     submit(){
     	 this.$validator.validateAll().then((result) => {
     	 	if(result){
-    	 		alert(123);
+    	 		let url = config.API_URL + 'ewallet_withdraws'
+
+    	 		let params = {
+    	 			item : this.formModel,
+    	 			company_id : this.user.company_id,
+    	 		}
+
+    	 		post(url,params)
+    	 		.then(res => {
+    	 			if(res.data && res.data.success){
+    	 				this.alertStt = true
+			          	this.alertType = 'success'
+			          	this.alertMes = 'Create Successfully'					
+			          	setTimeout(() => {
+			            	this.alertStt = false
+						}, 1500)
+    	 			}
+    	 		})
+    	 		.catch(err =>{
+
+    	 		})
     	 	}
     	 });
     }

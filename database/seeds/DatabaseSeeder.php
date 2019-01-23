@@ -26,8 +26,9 @@ class DatabaseSeeder extends Seeder
         // $this->call(PagesTableSeeder::class);   
         // $this->call(SettingsTableSeeder::class);
         // $this->call(CustomersTableSeeder::class);
-        $this->call(OrderTableSeeder::class);
+        // $this->call(OrderTableSeeder::class);
         // $this->call(CompanyPackagesTableSeeder::class);
         // $this->call(PhotoPackagesTableSeeder::class);
+        $this->call(EwalletWithdrawSeeder::class);
     }
 }

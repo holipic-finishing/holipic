@@ -1132,4 +1132,46 @@ class TransactionRepository extends BaseRepository
 
     }
 
+    public function calculatorEwallet($attribute){
+        $company_id = 3;
+
+        $amountIncomes =  $this->scopeQuery(function($query) use($company_id){
+
+            $query = $query->with('transactionexchange')
+                            ->where('company_id',$company_id)
+                            ->where('status','RECIVED');
+            return $query;
+        })->get();
+
+        $totalIncome = 0 ; 
+
+        $totalSystemFee = 0;
+
+        foreach ($amountIncomes as $key => $amountIncome) {
+            $totalIncome += ($amountIncome->amount * $amountIncome->transactionexchange->exchange_rate_to_dollar);
+
+            $totalSystemFee += ($amountIncome->system_fee * $amountIncome->transactionexchange->exchange_rate_to_dollar);
+        }
+
+        $amountOutcomes =  $this->scopeQuery(function($query) use($company_id){
+
+            $query = $query->with('transactionexchange')
+                            ->where('company_id',$company_id)
+                            ->where('status','DONE');
+            return $query;
+        })->get();
+
+        $totalOutcome = 0 ; 
+
+        foreach ($amountOutcomes as $key => $amountOutcome) {
+            $totalOutcome += ($amountOutcome->amount * $amountOutcome->transactionexchange->exchange_rate_to_dollar);
+        }
+
+        
+
+        $total = $totalIncome - $totalSystemFee - $totalOutcome;
+        $total = round($total,3);
+        return $total;
+    }
+
 }

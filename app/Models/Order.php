@@ -122,19 +122,36 @@ class Order extends Model
 
     static public function createTransaction($model){
         if($model->payment_method == 'WEB' && $model->status == 'DONE'){
-            $company = Branch::with('company')
+            $results = Branch::with('company')
                                 ->where('id',$model->branch_id)
                                 ->first();
-            $owner_id = $company->company->owner_id;
-            $company_id = $company->id;
-        
+            $owner_id = $results->company->owner_id;
+            $company_id = $results->company->id;
+            $coupon_codes_id = $results->company->coupon_codes_id;
+
+            
+         
             $package = User::with('package')
                                 ->where('id',$owner_id)
                                 ->first();
             $fee = $package->package->fee;
 
-            $system_fee = ($model->total_amount * $fee) / 100; 
-
+            /**
+            * calculator fee with coupon_code
+            */
+            if($coupon_codes_id == null){
+                $system_fee = ($model->total_amount * $fee) / 100; 
+            }elseif($coupon_codes_id != null ){
+                $coupon_code = CouponCode::where('id',$coupon_codes_id)->first();
+                if($coupon_code->active == 0){
+                    $system_fee = ($model->total_amount * $fee) / 100; 
+                }
+                else{
+                    $system_fee_increase = (($coupon_code->discount /100) * ($fee / 100)) * $model->total_amount;
+                    $system_fee = ($model->total_amount * $fee) / 100 - $system_fee_increase;
+                }
+            }
+            
             $now = \Carbon\Carbon::now('+7');
 
             return Transaction::create([

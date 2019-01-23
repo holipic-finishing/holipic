@@ -45,6 +45,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('coupon_codes', 'CouponCodeAPIController');
 
+	Route::resource('ewallet_withdraws', 'EwalletWithdrawAPIController');
 	/***************************************************
 	*********LIST ROUTER RESOURCE COMPANY ADMIN*********
 	***************************************************/
@@ -248,11 +249,9 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 	
+Route::get('test', 'TransactionAPIController@calEwallet');
 });	
 
 
 
 
-
-
-Route::resource('ewallet_withdraws', 'EwalletWithdrawAPIController');

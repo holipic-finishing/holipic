@@ -11,7 +11,7 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-
+use App\Repositories\CompanyAdminRepositories\NotificationRepository;
 /**
  * Class EwalletWithdrawController
  * @package App\Http\Controllers\API
@@ -21,10 +21,12 @@ class EwalletWithdrawAPIController extends AppBaseController
 {
     /** @var  EwalletWithdrawRepository */
     private $ewalletWithdrawRepository;
+    private $notificationRepository;
 
-    public function __construct(EwalletWithdrawRepository $ewalletWithdrawRepo)
+    public function __construct(EwalletWithdrawRepository $ewalletWithdrawRepo, NotificationRepository $notificationRepo)
     {
         $this->ewalletWithdrawRepository = $ewalletWithdrawRepo;
+        $this->notificationRepository = $notificationRepo;
     }
 
     /**
@@ -67,6 +69,8 @@ class EwalletWithdrawAPIController extends AppBaseController
         ];
 
         $ewalletWithdraws = $this->ewalletWithdrawRepository->create($data);
+
+        $this->notificationRepository->createNotifi('1', 'SenWithDrawViaBank','Have Event Withdraw Via Bank');
 
         return $this->sendResponse($ewalletWithdraws->toArray(), 'Ewallet Withdraw saved successfully');
     }

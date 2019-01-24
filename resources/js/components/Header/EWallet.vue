@@ -73,7 +73,115 @@
 			
 		</v-tab-item>
 		<v-tab-item>
-			<div>123123111111111123</div>
+			<div class="tab-3">
+				<v-card>
+		            <v-toolbar color="primary" dark flat dense cad>
+		              <v-toolbar-title class="subheading">Top Up Balance</v-toolbar-title>
+		              <v-spacer></v-spacer>
+		              <v-toolbar-title>$ {{total_ewallet}}</v-toolbar-title>
+		            </v-toolbar>
+		            <v-divider></v-divider>
+		            <v-card-text class="card-style">
+      					<v-list>
+				          <v-list-tile>
+				            <v-list-tile-action>
+				              Credit Card & Debit Card
+				            </v-list-tile-action>
+							<v-list-tile-content>
+							</v-list-tile-content>
+				              <v-list-tile-action>
+				              <img src="../../../../public/static/visa_PNG17.png" height="40" width="120">
+				           		</v-list-tile-action>
+				          </v-list-tile>
+				        </v-list>	
+		            	<v-form>
+		            	<v-container>
+      						<v-layout row wrap>
+      						<v-flex xs12 sm3 > 
+						      <v-select
+							      v-validate="'required'"
+							      :items="pay"
+							      v-model="select"
+							      :error-messages="errors.collect('select')"
+							      label="Select"
+							      data-vv-name="select"
+							      required
+							    ></v-select>
+						   </v-flex>
+						   <v-flex xs12 sm9 > 
+						      <v-text-field
+						        label="Amount"
+						        name="amount_card"
+						        placeholder="Enter Amount"
+						        v-model="formBalance.amount_card"
+						        v-validate="'required|decimal:5'"
+						        data-vv-name="amount_card"     
+						        :error-messages="errors.collect('amount_card')" 
+						        prefix="$" 
+						        required
+						      ></v-text-field>
+						   </v-flex>		
+      						<v-flex xs12 sm12 > 
+						      <v-text-field
+						        label="Name on card"
+						        name="name_card"
+						        placeholder="Enter Your Name"
+						        v-model="formBalance.name_card"
+						        v-validate="'required'"
+						        data-vv-name="name_card"     
+						        :error-messages="errors.collect('name_card')"  
+						        required
+						      ></v-text-field>
+						   </v-flex>
+						   <v-flex xs12 sm12 >
+						       <v-text-field
+						        label="Card number"
+						        placeholder="####-####-####-####"
+						        v-validate="'required'"
+						        data-vv-name="card_number"     
+						        :error-messages="errors.collect('card_number')"                
+						        v-model="formBalance.card_number"
+						        mask="credit-card"
+						        required
+						      ></v-text-field>
+						 	</v-flex>
+						    <v-flex xs12 sm6 >   
+							  <v-text-field
+						        label="Expiry date"
+						        name="expiry_date"
+						        placeholder="MM / YYYY"
+						        v-model="formBalance.expiry_date"
+						        v-validate="'required'"
+						        data-vv-name="expiry_date"     
+						        :error-messages="errors.collect('expiry_date')"
+						        mask="## / ####"  
+						        required
+						      ></v-text-field>
+						    </v-flex>
+						    <v-flex xs12 sm6 >   
+						      <v-text-field
+						        label="Security code"
+						        name="security_code"
+						        placeholder="CVV2"
+						        v-model="formBalance.security_code"
+						        v-validate="'required'"
+						        data-vv-name="security_code"     
+						        :error-messages="errors.collect('security_code')"  
+						        required
+						      ></v-text-field> 
+						    </v-flex> 
+						   </v-layout>
+						</v-container>
+						    
+					      <div class="form-btn">
+					      	  <v-spacer></v-spacer>
+						      <v-btn @click="submit" dark color="indigo">Submit</v-btn>
+						     <!--  <v-btn outline @click="clear">Clear</v-btn> -->
+						  </div>    
+					   </v-form>
+		            </v-card-text>
+		        </v-card>
+			</div>
 		</v-tab-item>
 		<v-tab-item>
 			<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
@@ -206,12 +314,18 @@ export default {
 	        maxScrollbarLength: 160
 	    },
 	    formModel:{},
+	    formBalance:{},
 	    valid: true,
 	    total_ewallet:0,
 	    alertStt: false,
     	alertType: 'success',
     	alertMes: '',
-    	checkStatus : 0
+    	checkStatus : 0,
+    	select: null,
+      	pay: [
+        'Visa',
+        'Master Card'
+     	 ],
     }
   },
   methods:{
@@ -265,6 +379,7 @@ export default {
 
 					if(this.total_ewallet <= 0) {
 			  			this.$root.$emit('ewallet', 0)
+			  			this.total_ewallet = 0
 			  		} else {
 			  			this.$root.$emit('ewallet',this.total_ewallet)
 			  		}
@@ -360,5 +475,8 @@ export default {
 .tab-4 {
 	width: 50%;
 	 margin: 15px auto;
+}
+.card-style {
+	padding: 0px !important;
 }
 </style>

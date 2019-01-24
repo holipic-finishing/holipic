@@ -18,8 +18,8 @@ class CreateTransactionsTable extends Migration
             $table->string('title');
             $table->decimal('amount',20,10);
             $table->string('status');
-            $table->decimal('system_fee',20,10);
-            $table->decimal('credit_card_fee',8,2);
+            $table->decimal('system_fee',20,10)->nullable();
+            $table->decimal('credit_card_fee',8,2)->nullable();
             $table->string('invoice');
             $table->integer('user_id');
             $table->integer('currency_id');

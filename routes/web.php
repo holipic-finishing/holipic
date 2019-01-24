@@ -33,9 +33,16 @@ Route::get('users/activation', 'UserController@activationAccount')->name('users.
 *********  ROUTER FOR ADMIN PAGE   *****************
 ****************************************************/
 
+// Route::get('/callback', function (){
+	
+// });
+
+
 Route::get('/{any}', function () {
    return view('index');
 })->where('any', '^(?!api).*$');
+
+
 
 
 /****************************************

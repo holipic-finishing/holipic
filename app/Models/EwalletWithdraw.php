@@ -67,17 +67,22 @@ class EwalletWithdraw extends Model
             static::createTransaction($model);
         });
 
+        static::updated(function($model)
+        {
+            static::createTransaction($model);
+        });
+
     }
 
     public static function createTransaction($model){
         if($model->status == 'DONE'){
-            $now = \Carbon\Carbon::now('+7');
+            $now = \Carbon\Carbon::now();
 
             return Transaction::create([
                 'title' => 'Withdraw From Company',
                 'amount' => $model->amount,
                 'status' => 'DONE',
-                'invoice' => 'WDFC'.'123',
+                'invoice' => 'INV'.time(),
                 'currency_id' => 1,
                 'company_id' => $model->company_id,
                 'dated' => $now,       

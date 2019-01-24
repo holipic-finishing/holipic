@@ -74,9 +74,9 @@ class Order extends Model
             static::createTransaction($model);
         });
 
-        static::edited(function($model)
+        static::updated(function($model)
         {
-            static::editTransaction($model);
+            static::createTransaction($model);
         });
 
     }
@@ -102,7 +102,7 @@ class Order extends Model
         return $this->hasOne(\App\Models\OrderExchange::class, 'order_id', 'id');
     }
 
-    static public function exchange($model){
+    public static function exchange($model){
         if($model->currency_id == 1){
 
             $exchangeRateToDollar = 1;
@@ -152,19 +152,28 @@ class Order extends Model
                     $system_fee = ($model->total_amount * $fee) / 100; 
                 }
                 else{
-                    $system_fee_increase = (($coupon_code->discount /100) * ($fee / 100)) * $model->total_amount;
-                    $system_fee = ($model->total_amount * $fee) / 100 - $system_fee_increase;
+                    $purchase_date = $model->purchase_date->format('Y-m-d h:m:s');
+                    if($purchase_date >= $coupon_code->from_date && $purchase_date <= $coupon_code->to_date){
+                       
+                        $system_fee_increase = (($coupon_code->discount /100) * ($fee / 100)) * $model->total_amount;
+                        $system_fee = ($model->total_amount * $fee) / 100 - $system_fee_increase;
+
+                    }else{
+
+                        $system_fee = ($model->total_amount * $fee) / 100;
+                    }
+                   
                 }
             }
             
-            $now = \Carbon\Carbon::now('+7');
+            $now = \Carbon\Carbon::now();
 
             return Transaction::create([
                 'title' => 'Customer Paid',
                 'amount' => $model->total_amount,
                 'status' => 'RECIVED',
                 'system_fee' => $system_fee,
-                'invoice' => $model->invoice,
+                'invoice' => 'INV'.time(),
                 'currency_id' =>$model->currency_id,
                 'company_id' => $company_id,
                 'dated' => $now,       
@@ -172,8 +181,6 @@ class Order extends Model
         }
     }
 
-    public function editTransaction($model){
 
-    }
   
 }

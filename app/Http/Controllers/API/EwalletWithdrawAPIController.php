@@ -137,4 +137,26 @@ class EwalletWithdrawAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Ewallet Withdraw deleted successfully');
     }
+
+    public function getEwalletWithdraw()
+    {
+        $data = $this->ewalletWithdrawRepository->handleGetEwalletWithdraw();
+
+        if(empty($data)) {
+            return $this->sendError('Ewallet Withdraw not data');   
+        }
+
+        return $this->sendResponse($data->toArray(), 'Get Ewallet Withdraw success');
+    }
+
+    public function updateStatusEwalletWithdraw($id)
+    {
+        $data = $this->ewalletWithdrawRepository->handleChangeStatusEwalletWithdraw($id);
+
+        if(!$data) {
+            return $this->sendError('Ewallet does not exits');
+        }
+
+        return $this->sendResponse($data, 'Update ewallet success');
+    }
 }

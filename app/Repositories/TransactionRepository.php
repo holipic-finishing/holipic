@@ -1132,7 +1132,7 @@ class TransactionRepository extends BaseRepository
     }
 
     public function calculatorEwallet($attribute){
-        $company_id = 3;
+        $company_id = $attribute['company_id'];
 
         $amountIncomes =  $this->scopeQuery(function($query) use($company_id){
 

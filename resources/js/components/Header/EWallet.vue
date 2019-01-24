@@ -73,19 +73,128 @@
 			
 		</v-tab-item>
 		<v-tab-item>
-			<div>123123111111111123</div>
-		</v-tab-item>
-		<v-tab-item>
-			<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 			<div class="tab-3">
 				<v-card>
 		            <v-toolbar color="primary" dark flat dense cad>
+		              <v-toolbar-title class="subheading">Top Up Balance</v-toolbar-title>
+		              <v-spacer></v-spacer>
+		              <v-toolbar-title>$ {{total_ewallet}}</v-toolbar-title>
+		            </v-toolbar>
+		            <v-divider></v-divider>
+		            <v-card-text class="card-style">
+      					<v-list>
+				          <v-list-tile>
+				            <v-list-tile-action>
+				              Credit Card & Debit Card
+				            </v-list-tile-action>
+							<v-list-tile-content>
+							</v-list-tile-content>
+				              <v-list-tile-action>
+				              <img src="../../../../public/static/visa_PNG17.png" height="40" width="120">
+				           		</v-list-tile-action>
+				          </v-list-tile>
+				        </v-list>	
+		            	<v-form>
+		            	<v-container>
+      						<v-layout row wrap>
+      						<v-flex xs12 sm3 > 
+						      <v-select
+							      v-validate="'required'"
+							      :items="pay"
+							      v-model="select"
+							      :error-messages="errors.collect('select')"
+							      label="Select"
+							      data-vv-name="select"
+							      required
+							    ></v-select>
+						   </v-flex>
+						   <v-flex xs12 sm9 > 
+						      <v-text-field
+						        label="Amount"
+						        name="amount_card"
+						        placeholder="Enter Amount"
+						        v-model="formBalance.amount_card"
+						        v-validate="'required|decimal:5'"
+						        data-vv-name="amount_card"     
+						        :error-messages="errors.collect('amount_card')" 
+						        prefix="$" 
+						        required
+						      ></v-text-field>
+						   </v-flex>		
+      						<v-flex xs12 sm12 > 
+						      <v-text-field
+						        label="Name on card"
+						        name="name_card"
+						        placeholder="Enter Your Name"
+						        v-model="formBalance.name_card"
+						        v-validate="'required'"
+						        data-vv-name="name_card"     
+						        :error-messages="errors.collect('name_card')"  
+						        required
+						      ></v-text-field>
+						   </v-flex>
+						   <v-flex xs12 sm12 >
+						       <v-text-field
+						        label="Card number"
+						        placeholder="####-####-####-####"
+						        v-validate="'required'"
+						        data-vv-name="card_number"     
+						        :error-messages="errors.collect('card_number')"                
+						        v-model="formBalance.card_number"
+						        mask="credit-card"
+						        required
+						      ></v-text-field>
+						 	</v-flex>
+						    <v-flex xs12 sm6 >   
+							  <v-text-field
+						        label="Expiry date"
+						        name="expiry_date"
+						        placeholder="MM / YYYY"
+						        v-model="formBalance.expiry_date"
+						        v-validate="'required'"
+						        data-vv-name="expiry_date"     
+						        :error-messages="errors.collect('expiry_date')"
+						        mask="## / ####"  
+						        required
+						      ></v-text-field>
+						    </v-flex>
+						    <v-flex xs12 sm6 >   
+						      <v-text-field
+						        label="Security code"
+						        name="security_code"
+						        placeholder="CVV2"
+						        v-model="formBalance.security_code"
+						        v-validate="'required'"
+						        data-vv-name="security_code"     
+						        :error-messages="errors.collect('security_code')"  
+						        required
+						      ></v-text-field> 
+						    </v-flex> 
+						   </v-layout>
+						</v-container>
+						    
+					      <div class="form-btn">
+					      	  <v-spacer></v-spacer>
+						      <v-btn @click="submit" dark color="indigo">Submit</v-btn>
+						     <!--  <v-btn outline @click="clear">Clear</v-btn> -->
+						  </div>    
+					   </v-form>
+		            </v-card-text>
+		        </v-card>
+			</div>
+		</v-tab-item>
+		<v-tab-item>
+			<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
+			<div class="tab-3" v-if="total_ewallet > 0 && checkStatus == 1">
+				<v-card>
+		            <v-toolbar color="primary" dark flat dense cad>
 		              <v-toolbar-title class="subheading">Withdraw Via Bank Form</v-toolbar-title>
-		            <!--   <v-spacer></v-spacer> -->
+		              <v-spacer></v-spacer>
+		              <v-toolbar-title>$ {{total_ewallet}}</v-toolbar-title>
 		            </v-toolbar>
 		            <v-divider></v-divider>
 		            <v-card-text class="">
-		              <v-form v-model="valid">				 
+		              <v-form v-model="valid" >				 
 					      <v-text-field
 					        label="Withdraw Amount"
 					        name="amount"
@@ -95,6 +204,7 @@
 					        data-vv-name="amount"     
 					        :error-messages="errors.collect('amount')"  
 					        prefix="$"
+					        @blur="checkAmount()"
 					        required
 					      ></v-text-field>
 					       <v-text-field
@@ -156,6 +266,22 @@
 		            </v-card-text>       
           		</v-card>
 			</div>
+			<div class="tab-4" v-else-if="checkStatus == 0">
+				<v-alert
+			      :value="true"
+			      type="warning"
+			    >
+			      Requesting processing cannot send additional requests	.
+			    </v-alert>
+			</div>
+			<div class="tab-4" v-else>
+				<v-alert
+			      :value="true"
+			      type="warning"
+			    >
+			      You do not have enough balance to execute the transaction.
+			    </v-alert>
+			</div>
 		</v-tab-item>
 	</v-tabs>
 	 <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
@@ -188,16 +314,39 @@ export default {
 	        maxScrollbarLength: 160
 	    },
 	    formModel:{},
+	    formBalance:{},
 	    valid: true,
 	    total_ewallet:0,
 	    alertStt: false,
     	alertType: 'success',
-    	alertMes: ''
+    	alertMes: '',
+    	checkStatus : 0,
+    	select: null,
+      	pay: [
+        'Visa',
+        'Master Card'
+     	 ],
     }
   },
   methods:{
   	closeDrawer(){
   		this.$root.$emit('closeDrawerItem', false)
+  		this.formModel = {};
+        this.$validator.reset();
+  	},
+  	withDraw(){
+  		let url = config.API_URL + 'ewallet_withdraw/'+this.user.company_id
+  		get(url)
+  		.then(res => {
+  			if(res.data.data){
+  				this.checkStatus = 1
+  			} else {
+  				this.checkStatus = 0
+  			}
+  		})
+  		.catch(err => {
+  			console.log(err)
+  		})
   	},
   	fetchData(){
   		let url = config.API_URL + 'e-wallet/transaction-history'
@@ -210,31 +359,35 @@ export default {
 				if(res.data && res.data.success){
 					let data = res.data.data
 					this.items = data
-					this.totalEWallet(data)
 				}
 			})	
 			.catch(err => {
 				console.log(err)
 			})
   	},
-  	totalEWallet(data){
-  		var total_revenue = 0
-  		var total_done = 0
-  		_.forEach(data, function(v_1, k_1){
-			if(v_1.status == 'RECIVED') {
-            	total_revenue = total_revenue + v_1.new_amount
-            } else {
-            	total_done = total_done + v_1.new_amount
-            }
-		})
-  		this.total_ewallet = (total_revenue - total_done).toFixed(3)
+  	callWallet(){
+  		let url = config.API_URL + 'e-wallet/total-ewallet'
+			let params = {
+				company_id : this.user.company_id,
+				user_id : this.user.id
+			}
+			getWithData(url,params)
+			.then(res => {
+				if(res.data){
+					let data = res.data
+					this.total_ewallet = data.toFixed(3)
 
-  		if(this.total_ewallet <= 0) {
-  			this.$root.$emit('ewallet', 0)
-  		} else {
-  			this.$root.$emit('ewallet',this.total_ewallet)
-  		}
-		
+					if(this.total_ewallet <= 0) {
+			  			this.$root.$emit('ewallet', 0)
+			  			this.total_ewallet = 0
+			  		} else {
+			  			this.$root.$emit('ewallet',this.total_ewallet)
+			  		}
+				}
+			})	
+			.catch(err => {
+				console.log(err)
+			})
   	},
   	changeSort (column) {
       var columnsNoSearch = ['actions']
@@ -268,7 +421,9 @@ export default {
 			          	this.alertMes = 'Create Successfully'					
 			          	setTimeout(() => {
 			            	this.alertStt = false
+			            	this.withDraw()
 						}, 1500)
+
     	 			}
     	 		})
     	 		.catch(err =>{
@@ -276,10 +431,24 @@ export default {
     	 		})
     	 	}
     	 });
+    },
+    checkAmount(){
+    	var amount = (this.total_ewallet - this.formModel.amount)
+    	if(amount < 0)  {
+    		this.alertStt = true
+          	this.alertType = 'error'
+          	this.alertMes = 'The balance is not enough to make the transaction'					
+          	setTimeout(() => {
+            	this.alertStt = false
+			}, 2000)
+			this.formModel.amount = ""
+    	}
     }
   },
   created(){
   	this.fetchData()
+  	this.callWallet()
+  	this.withDraw()
   },
   computed:{
 	  	optionLoadView(){
@@ -302,5 +471,12 @@ export default {
 }
 .form-btn {
 	text-align: right;
+}
+.tab-4 {
+	width: 50%;
+	 margin: 15px auto;
+}
+.card-style {
+	padding: 0px !important;
 }
 </style>

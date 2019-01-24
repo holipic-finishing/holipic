@@ -141,4 +141,26 @@ class EwalletWithdrawAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Ewallet Withdraw deleted successfully');
     }
+
+    public function withDrawCompanyId(Request $request, $company_id){
+
+        $result = EwalletWithdraw::where('company_id',$company_id)
+                                 ->where('status','PENDING')
+                                 ->first();
+        if($result){
+            return response()->json([
+                        'success' => false,
+                        'data'    => false, 
+                        'message' => 'Requesting processing cannot send additional requests !'
+                ]);
+        }
+
+        return response()->json([
+                        'success' => true, 
+                        'data'    => true,
+                        'message' => 'Success !'
+                ]);
+
+
+    }
 }

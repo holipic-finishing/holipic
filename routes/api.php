@@ -251,12 +251,7 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 	
 
-	Route::get('test',function(){
-		\App\Models\Order::update([
-            
-
-        ]);
-	});
+	
 });	
 	
 

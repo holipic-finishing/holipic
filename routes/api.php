@@ -236,6 +236,8 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('e-wallet/transaction-history', 'TransactionAPIController@getEWalletTransactionHistory');
 
+	Route::get('e-wallet/total-ewallet', 'TransactionAPIController@calEwallet');
+
 	/*************SettingAPIController**************/
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
@@ -250,13 +252,9 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 	
+	/*************Ewallet Withdraw API Controllers**************/
 
-	Route::get('test',function(){
-		\App\Models\Order::update([
-            
-
-        ]);
-	});
+	Route::get('ewallet_withdraw/{compnay_id}', 'EwalletWithdrawAPIController@withDrawCompanyId');
 });	
 	
 

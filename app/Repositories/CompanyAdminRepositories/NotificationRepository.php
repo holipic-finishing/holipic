@@ -54,11 +54,9 @@ class NotificationRepository extends BaseRepository
         if($id_one_signal){
             $this->evenNotification($Notification,$id_one_signal->id_one_signal);
         }                        
-
-
     }
 
-     /**
+    /**
     * Target: Get data in table Notification where by is_read, user_id, $limit
     * @params:  $is_read, $user_id, $limit
     * @return : json

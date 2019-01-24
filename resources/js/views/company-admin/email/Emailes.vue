@@ -15,6 +15,7 @@
     <v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5 rp-search"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
@@ -29,7 +30,7 @@
 				<!--Search Component -->
 				<v-card-title>
 	      	<v-spacer></v-spacer>
-	        <div class="w-25">
+	        <div class="w-25 input-search">
 	  	      <v-text-field
 	  	        v-model="search"
 	  	        append-icon="search"
@@ -38,10 +39,10 @@
 	  	        hide-details
 	  	      ></v-text-field>
 	        </div>
-					<v-btn fab dark small color="#5D92F4" class="ml-2 btn-gradient-primary" @click="showEmail()">
+					<v-btn fab dark small color="#5D92F4" class="ml-2 btn-gradient-primary custom-btn btn-add" @click="showEmail()">
 						<v-icon dark >add</v-icon>
 					</v-btn>
-			    <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn" @click="exportCSV">
+			    <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn btn-export" @click="exportCSV">
 						<v-icon small color="white" class="custom-v-icon">fas fa-file-excel</v-icon>
 					</a>
 		    </v-card-title>

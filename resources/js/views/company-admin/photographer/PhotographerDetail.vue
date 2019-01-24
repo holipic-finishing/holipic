@@ -5,8 +5,8 @@
     right
     temporary 
     app 
-    class="chat-sidebar-wrap"
-    width="450"
+    this.width = this.getCurrentWithContentWrap()
+  	:width='widthComputed'	
   	>
 
 	    <v-card class="h-100 position-relative">
@@ -55,7 +55,7 @@
 					</v-list-tile>
 	     		 	<v-divider class="no-mg-bottom"></v-divider>
 
-	     		 	<v-list-tile>
+	     		 	<v-list-tile class="height-address">
 						<v-list-tile-content>
 				          	<v-list-tile-title class="content-flex">
 					          	<span class="font-weight-bold item-title">Address:</span>
@@ -106,6 +106,7 @@
 </template>
 
 <script>
+import { getWithContentWrap } from '../../../helpers/helpers'
 export default {
 
   	name: 'PhotographerDetail',
@@ -113,15 +114,28 @@ export default {
   	data () {
 	    return {
 	    	drawerRight: false,
-	    	photographer: []
+	    	photographer: [],
+	    	width: 0,
+		   	drawerHeaderStt: null
 	    }
+  	},
+  	computed: {
+			widthComputed(){
+				return this.width
+			}
   	},
   	mounted()
   	{
   		this.$root.$on('showInfoPhototographer', res => {
   			this.photographer = res.data
   			this.drawerRight = res.showNavigation
+  			this.width = this.getCurrentWithContentWrap()	
   		})
+  	},
+  	methods: {
+  		getCurrentWithContentWrap(){
+  			return getWithContentWrap(this.drawerHeaderStt)
+  		},
   	}
 }
 </script>

@@ -7,8 +7,8 @@
     right
     temporary 
     app 
-    class="chat-sidebar-wrap"
-    width="450"
+    this.width = this.getCurrentWithContentWrap()
+  	:width='widthComputed'
   	>
       	<v-card class="h-100 position-relative">
 			<v-toolbar>
@@ -133,7 +133,7 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
-
+import { getWithContentWrap } from '../../../helpers/helpers'
 export default {
 
   name: 'branch-edit',
@@ -145,16 +145,27 @@ export default {
 	    	key: 0,
 	    	alertStt: false,
 	    	alertType: 'success',
-	    	alertMes: ''
+	    	alertMes: '',
+	    	width: 0,
+	   		drawerHeaderStt: null
 	    }
 	},
+	computed: {
+		widthComputed(){
+			return this.width
+		}
+  },
 	mounted() {
 	  	this.$root.$on('sendEventBranchEdit', response => {
 	  		this.drawerRight =  response.showNavigation
 	  		this.branch = response.data
+	  		this.width = this.getCurrentWithContentWrap()
 	  	});
 	},
 	methods: {
+		getCurrentWithContentWrap(){
+  		return getWithContentWrap(this.drawerHeaderStt)
+  	},
 		unDisableItem(index) 
 		{
 			this.key = index
@@ -224,7 +235,7 @@ export default {
 			}	
 		}
 	}
-}
+};
 </script>
 
 <style lang="css" scoped>

@@ -6,8 +6,8 @@
 		right
 		temporary 
 		app 
-		class="chat-sidebar-wrap"
-		width="450"
+		this.width = this.getCurrentWithContentWrap()
+  	:width='widthComputed'
 		>
 			<v-card class="h-100 position-relative">
 				<v-toolbar>
@@ -142,6 +142,7 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
 
@@ -157,22 +158,33 @@ export default {
 	    	valid: true,
 	    	branches: [],
 	    	company: JSON.parse(localStorage.getItem('user')),
-			status: ['Active', 'Inactive'],
-			alertStt:false,
-			alertType:'success',
-			alertMes: ''
+				status: ['Active', 'Inactive'],
+				alertStt:false,
+				alertType:'success',
+				alertMes: '',
+				width: 0,
+		   	drawerHeaderStt: null
 	    }
+  	},
+  	computed: {
+			widthComputed(){
+				return this.width
+			}
   	},
   	mounted() {
   		this.$root.$on('showPhotographerAdd', res => {
   			this.photographer = {}
   			this.$refs.form.reset()
   			this.drawerRight = res.showNavigation
+  			this.width = this.getCurrentWithContentWrap()	
   		});
 
   		this.getBranchCompany()
   	},
   	methods: {
+  		getCurrentWithContentWrap(){
+  			return getWithContentWrap(this.drawerHeaderStt)
+  		},
   		getBranchCompany()
   		{
   			get(config.API_URL+'company/branches?companyId='+this.company.company_id)

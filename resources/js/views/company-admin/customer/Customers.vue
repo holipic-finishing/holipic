@@ -1,9 +1,10 @@
 <template>
-	<v-container fluid px-0 py-0>
+	<v-container fluid pt-0 grid-list-xl mt-3 class="container-wrapper">
 		<v-layout row wrap>
 		<!-- <div id="app"> -->
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5 rp-search"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
@@ -26,15 +27,17 @@
 		  	        hide-details
 	  	      	></v-text-field>
 	        </div>
-	        <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn" :href="urlExport">
-						<v-icon small color="white">fas fa-file-excel</v-icon>
-					</a>
+	        
+			    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn rp-btn-package ">
+					<v-icon small color="white">fas fa-file-excel</v-icon>
+				</a>
+			   
 	    	</v-card-title>
 
 				<v-data-table 
 					:headers="headers" 
 					:items="items" 
-					class="body-2 global-custom-table"
+					class="body-2 custom-table-customer"
 					:pagination.sync="pagination" 
 					:rows-per-page-items="rowsPerPageItems" 
 					default-sort="id:desc"

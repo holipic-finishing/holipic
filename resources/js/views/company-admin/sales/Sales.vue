@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<v-container fluid grid-list-xl>
+		<v-container fluid pt-0 grid-list-xl mt-3 class="container-wrapper">
 			<v-toolbar flat color="white">
         <v-toolbar-title>
           Manage Sales
         </v-toolbar-title>
       </v-toolbar>
       <v-divider class="m-0"></v-divider>
-      <v-layout row wrap class="stats-card-v4">
+      <v-layout row wrap class="stats-card-v4 rp-search">
     		<!-- Filter Component -->
 		  	<v-flex xs11>
 		  		<v-layout row wrap>
@@ -109,7 +109,7 @@
 		  		</v-layout>
 		  	</v-flex>
 		  	<v-flex md1 sm12 xs12 align-center justify-center class="grid-template-column">
-		  		<v-btn class="btn-gradient-primary" small fab dark @click="sreachSales()">Go</v-btn>
+		  		<v-btn class="btn-gradient-primary custom-btn" small fab dark @click="sreachSales()">Go</v-btn>
 		  	</v-flex>
 				<v-flex xs12>
 					<v-card-title>
@@ -124,7 +124,7 @@
 		  	      ></v-text-field>
 		        </div>
 				    <v-tooltip bottom class="icon-style">
-				    	<v-btn slot="activator" small fab dark @click="exportFile" class="ml-2 btn-gradient-primary">
+				    	<v-btn slot="activator" small fab dark @click="exportFile" class="ml-2 btn-gradient-primary rp-btn-add-export">
 								<v-icon dark>fas fa-file-excel</v-icon>
 							</v-btn>
 					    <span>Export Sales</span>

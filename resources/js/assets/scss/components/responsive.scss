@@ -32,18 +32,6 @@
 	}
 }
 
-.rp-height-list {
-		
-		/*.v-list__tile__title  {
-			height: auto !important;
-    		padding: 5px 0px !important;
-    		white-space: initial;
-		}*/
-		
-	}
-
-
-
 .rp-amount{
 	.v-list__tile__title{
 		height: auto !important;
@@ -53,9 +41,6 @@
 		align-items: center;
 	}
 }
-
-
-
 
 @media only screen and (min-width: 320px) and (max-width: 767px) {
 	.responsive-navigation {
@@ -119,6 +104,21 @@
 		}	
 	}*/
 
+	.v-card__title {
+		.custom-btn {
+			padding: 5px !important;
+	    min-width: 40px !important;
+		}
+
+		.btn-add{
+			padding: 0px !important;
+		}
+
+		.btn-export{
+			padding: 4px !important;
+		}
+	}
+
 }
 
 @media all and (min-width: 481px) and (max-width: 767px) {
@@ -139,8 +139,6 @@
 			min-width: 50% !important;
 		}
 	}
-
-
 
 }
 
@@ -186,6 +184,19 @@
 		.w-25{
 			min-width: 84% !important;
 		}
+		.custom-btn{
+			height: 40px !important;
+	    width: 40px !important;
+	    padding: 0px !important;
+		}
+		.rp-btn-add-export {
+			height: 40px !important;
+	    width: 40px !important;
+	    padding: 0px !important;
+		}
+		.input-search{
+			min-width: 60% !important;
+		}
 	}
 
 	.item-title-setting {
@@ -198,6 +209,31 @@
 	    	width: 40px !important;
 		}
 	}
+
+	.rp-btn-package {
+		height: 40px !important;
+	    width: 40px !important;
+	}
+
+	.v-card__title {
+		.rp-btn-add-export {
+			height: 40px !important;
+	    width: 40px !important;
+		}
+
+		.custom-btn {
+			padding: 5px !important;
+			height: 40px !important;
+	    width: 40px !important;
+		}
+		.btn-add{
+			padding: 0px !important;
+		}
+		.btn-export{
+			padding: 3px !important;
+		}
+	}
+	
 
 	/*.rp-amount{
 		.item-title{
@@ -227,6 +263,14 @@
 			width: 100% !important;
 		}
 	}
-	
+
+	.heigth-list-title {
+		.height-address{
+			.v-list__tile {
+				height: auto !important;
+			}
+		}
+	}
+
 }
 

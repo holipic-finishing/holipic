@@ -7,8 +7,8 @@
 	right
 	temporary 
 	app 
-	class="chat-sidebar-wrap"
-	width="450"
+	this.width = this.getCurrentWithContentWrap()
+  :width='widthComputed'
 	>
 		<v-card class="h-100 position-relative">
 			<v-toolbar>
@@ -147,6 +147,7 @@
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 import Vue from 'vue'
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
 
@@ -162,19 +163,30 @@ export default {
     	valid: true,
     	company: JSON.parse(localStorage.getItem('user')),
     	alertStt:false,
-		alertType:'success',
-		alertMes: ''
+			alertType:'success',
+			alertMes: '',
+			width: 0,
+	   	drawerHeaderStt: null
 
     }
+  },
+  computed: {
+		widthComputed(){
+			return this.width
+		}
   },
   mounted() {
   	this.$root.$on('sendEventBranchAdd', response => {
   		this.branch = {}
   		this.$refs.form.reset()
   		this.drawerRight =  response.showNavigation
+  		this.width = this.getCurrentWithContentWrap()	
   	});
   },
   methods: {
+  	getCurrentWithContentWrap(){
+  			return getWithContentWrap(this.drawerHeaderStt)
+  	},
   	saveBranch()
   	{
   		if (this.$refs.form.validate()) {
@@ -209,7 +221,7 @@ export default {
 
   	}
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

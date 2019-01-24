@@ -6,8 +6,8 @@
 		right
 		temporary 
 		app 
-		class="chat-sidebar-wrap"
-		width="450"
+		this.width = this.getCurrentWithContentWrap()
+  	:width='widthComputed'
 		>
 			<v-card class="h-100 position-relative">
 				<v-toolbar>
@@ -166,6 +166,7 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
+import { getWithContentWrap } from '../../../helpers/helpers'
 export default {
 
   name: 'PhotographerEdit',
@@ -180,17 +181,24 @@ export default {
 	    	valid: true,
 	    	branches: [],
 	    	company: JSON.parse(localStorage.getItem('user')),
-			status: ['Active', 'Inactive'],
-			alertStt:false,
-			alertType:'success',
-			alertMes: '',
-			key: 0,
-			currentSelectBranch: {
-		        id: '',
-		        name: '' 
-		    },
-		    selectStatus:''
+				status: ['Active', 'Inactive'],
+				alertStt:false,
+				alertType:'success',
+				alertMes: '',
+				key: 0,
+				currentSelectBranch: {
+			        id: '',
+			        name: '' 
+			    },
+		    selectStatus:'',
+		    width: 0,
+		   	drawerHeaderStt: null
 	    }
+  	},
+  	computed: {
+			widthComputed(){
+				return this.width
+			}
   	},
 	mounted() {
 	  	this.$root.$on('showFormEditPhotgrapher', res => {
@@ -202,10 +210,14 @@ export default {
 	  			this.selectStatus = 'Inactive'
 	  		}
 	  		this.currentSelectBranch = {id: res.data.branch.id, name: res.data.branch.name}
+	  		this.width = this.getCurrentWithContentWrap()	
 	  	})
 	  	this.getBranchCompany()
 	},
 	methods: {
+		getCurrentWithContentWrap(){
+  			return getWithContentWrap(this.drawerHeaderStt)
+  	},
 		getBranchCompany()
   		{
   			get(config.API_URL+'company/branches?companyId='+this.company.company_id)
@@ -218,79 +230,79 @@ export default {
 				console.log(error)
 			})
   		},
-  		unDisableItem(index)
-  		{
-  			this.key = index
-  		},
-  		checkValue(){
-			if(this.photographer.name == '' || this.photographer.address == '' || this.photographer.phone_number == '' || this.selectStatus == '')
-			{
+		unDisableItem(index)
+		{
+			this.key = index
+		},
+		checkValue(){
+		if(this.photographer.name == '' || this.photographer.address == '' || this.photographer.phone_number == '' || this.selectStatus == '')
+		{
+			this.alertStt = true
+	        this.alertType = 'error'
+	        this.alertMes = 'Please type text'         
+	        setTimeout(() => {
+	          this.alertStt = false
+	        }, 1500)
+
+			this.$root.$emit('reloadTablePhotographer')	
+			this.key = 0
+			return false
+		}
+		return true
+		},
+		editPhotographer(field, value)
+		{
+			let params = {}
+
+			switch(field) {
+			 	case "branch" :
+					params = {branch_id: value};
+					break;
+			case "name" :
+				params = {name: value};
+
+				break;
+			case "phone_number" :
+				params = {phone_number: value};
+				break;
+			case "address" :
+				params = {address: value};
+				break;
+			case "status" :
+				params = {status: value};
+				break;
+				default:
+		    	
+			}
+			
+			if(this.checkValue()) {
+				put(config.API_URL+'photographer/'+this.photographer.id, {params: params})
+			.then (response => {
+				if(response && response.data.success) {
+					this.alertStt = true
+		          	this.alertType = 'success'
+		          	this.alertMes = response.data.message					
+		          	setTimeout(() => {
+		            	this.alertStt = false
+					}, 2000)
+					this.key = 0
+					this.$root.$emit('reloadTablePhotographer')	
+				}
+			})
+
+			.catch((e) =>{
 				this.alertStt = true
 		        this.alertType = 'error'
-		        this.alertMes = 'Please type text'         
+		        this.alertMes = response.data.message         
 		        setTimeout(() => {
 		          this.alertStt = false
 		        }, 1500)
-
-				this.$root.$emit('reloadTablePhotographer')	
+				this.$root.$emit('reloadTablePhotographer')
 				this.key = 0
-				return false
+			})	
 			}
-			return true
-		},
-  		editPhotographer(field, value)
-  		{
-  			let params = {}
-
-  			switch(field) {
-  			 	case "branch" :
-  					params = {branch_id: value};
-  					break;
-				case "name" :
-					params = {name: value};
-
-					break;
-				case "phone_number" :
-					params = {phone_number: value};
-					break;
-				case "address" :
-					params = {address: value};
-					break;
-				case "status" :
-					params = {status: value};
-					break;
-  				default:
-			    	
-  			}
-  			
-  			if(this.checkValue()) {
-  				put(config.API_URL+'photographer/'+this.photographer.id, {params: params})
-				.then (response => {
-					if(response && response.data.success) {
-						this.alertStt = true
-			          	this.alertType = 'success'
-			          	this.alertMes = response.data.message					
-			          	setTimeout(() => {
-			            	this.alertStt = false
-						}, 2000)
-						this.key = 0
-						this.$root.$emit('reloadTablePhotographer')	
-					}
-				})
-
-				.catch((e) =>{
-					this.alertStt = true
-			        this.alertType = 'error'
-			        this.alertMes = response.data.message         
-			        setTimeout(() => {
-			          this.alertStt = false
-			        }, 1500)
-					this.$root.$emit('reloadTablePhotographer')
-					this.key = 0
-				})	
-  			}
-  			
-  		}
+			
+		}
   	}
 }
 </script>

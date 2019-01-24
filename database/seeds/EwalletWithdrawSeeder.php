@@ -24,20 +24,21 @@ class EwalletWithdrawSeeder extends Seeder
         	array_push($listcompany, $company->id);
         }
 
-        for($i = 0 ; $i <= 300 ; $i++ ){
-        	$company_id = $faker->randomElement($listcompany);
+        for($i = 0 ; $i <= 100 ; $i++ ){
+            $company_id = $faker->randomElement($listcompany);
 
-    		\App\Models\EwalletWithdraw::create([
-	            'amount' => $faker->randomElement($amount),
-	            'bank_account_number' => '123456789',
-	            'bank_name' => 'HSBC',
-	            'account_holder_name' => 'Hoa Tran SuperMen',
-	            'iban' => '123-456-789',
-	            'swift_code' => '987-654-321',
-	            'status' => $faker->randomElement($status),
-	            'company_id' => $company_id,
+            \App\Models\EwalletWithdraw::create([
+                'amount' => $faker->randomElement($amount),
+                'bank_account_number' => '123456789',
+                'bank_name' => 'HSBC',
+                'account_holder_name' => 'Hoa Tran SuperMen',
+                'iban' => '123-456-789',
+                'swift_code' => '987-654-321',
+                'status' => $faker->randomElement($status),
+                'company_id' => $company_id,
 
-	        ]);
+            ]);
+            sleep(1);
         }
     }
 }

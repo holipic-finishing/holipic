@@ -159,7 +159,7 @@ class Order extends Model
                         $system_fee = ($model->total_amount * $fee) / 100 - $system_fee_increase;
 
                     }else{
-                        
+
                         $system_fee = ($model->total_amount * $fee) / 100;
                     }
                    
@@ -173,7 +173,7 @@ class Order extends Model
                 'amount' => $model->total_amount,
                 'status' => 'RECIVED',
                 'system_fee' => $system_fee,
-                'invoice' => $model->invoice,
+                'invoice' => 'INV'.time(),
                 'currency_id' =>$model->currency_id,
                 'company_id' => $company_id,
                 'dated' => $now,       

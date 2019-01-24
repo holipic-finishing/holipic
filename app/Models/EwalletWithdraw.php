@@ -82,7 +82,7 @@ class EwalletWithdraw extends Model
                 'title' => 'Withdraw From Company',
                 'amount' => $model->amount,
                 'status' => 'DONE',
-                'invoice' => 'WDFC'.'123',
+                'invoice' => 'INV'.time(),
                 'currency_id' => 1,
                 'company_id' => $model->company_id,
                 'dated' => $now,       

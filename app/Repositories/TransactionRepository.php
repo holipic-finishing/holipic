@@ -1107,7 +1107,7 @@ class TransactionRepository extends BaseRepository
 
         $results =  $this->scopeQuery(function($query) use($attribute, $status){
 
-            $query = $query->select('id','title','dated','amount','status')
+            $query = $query->select('id','title','dated','amount','status','system_fee')
                             ->with(['transactionexchange' => function($query){
                                 $query->select(['exchange_rate_to_dollar','transaction_id']);
                             }])
@@ -1122,9 +1122,8 @@ class TransactionRepository extends BaseRepository
     }
 
     public function transformTransactionHistory($attributes){
-
         foreach ($attributes as $key => $value) {  
-            $new_amount = round($value->amount * $value->transactionexchange->exchange_rate_to_dollar,3);
+            $new_amount = round(($value->amount - $value->system_fee) * $value->transactionexchange->exchange_rate_to_dollar,3);
             $attributes[$key]->new_amount = $new_amount;
         }
         return $attributes;

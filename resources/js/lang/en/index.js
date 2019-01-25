@@ -487,5 +487,6 @@ export default {
   customer: 'Customers',
   photographers : 'Photographers List',
   sales: 'Manage Sales',
-  emails:'Emails'
+  emails:'Emails',
+  ewallet: 'Ewallet Withdraw'
 }

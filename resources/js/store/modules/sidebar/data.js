@@ -147,6 +147,13 @@ export const menus = {
 			active: false,
 			role_id : 1,
 			path: '/coupon-codes'
+		},
+		{
+			action: 'fas fa-dollar-sign',
+			title: 'message.ewallet',
+			active: false,
+			role_id : 1,
+			path: '/ewallet-withdraw'
 		}
 	],
 	// 'message.modules': [

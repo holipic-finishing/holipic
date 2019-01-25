@@ -33,6 +33,11 @@ Route::get('users/activation', 'UserController@activationAccount')->name('users.
 *********  ROUTER FOR ADMIN PAGE   *****************
 ****************************************************/
 
+// Route::get('/test','TestController@index');
+
+// Route::get('/paypal/status','TestController@paymentDetail');
+
+
 Route::get('/{any}', function () {
    return view('index');
 })->where('any', '^(?!api).*$');
@@ -45,9 +50,9 @@ Route::get('/{any}', function () {
 *****************************************/
 
 
-Route::get('test', function() {
+// Route::get('test', function() {
 
-});
+// });
 
 
 

@@ -439,7 +439,7 @@ export default {
     	 			item : this.formModel,
     	 			company_id : this.user.company_id,
     	 		}
-    	 	console.log(params)
+
     	 	post(url,params)
     	 		.then(res => {
     	 			if(res.data && res.data.success){

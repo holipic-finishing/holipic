@@ -150,7 +150,8 @@ class EwalletWithdrawAPIController extends AppBaseController
         if($result){
             return response()->json([
                         'success' => false,
-                        'data'    => false, 
+                        'data'    => false,
+                        'item'    => $result,
                         'message' => 'Requesting processing cannot send additional requests !'
                 ]);
         }

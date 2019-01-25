@@ -96,6 +96,7 @@
                 <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
                 <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
                 <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
+                <v-btn class="btn-gradient-primary ml-0 mr-0" color="primary" small v-if="props.item.status === 'PAID'">{{ props.item.status }}</v-btn>
             </td>
 											
 	    	</template>

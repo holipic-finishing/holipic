@@ -175,14 +175,19 @@ class EwalletWithdrawAPIController extends AppBaseController
         return $this->sendResponse($data->toArray(), 'Get Ewallet Withdraw success');
     }
 
-    public function updateStatusEwalletWithdraw($id)
+    public function updateStatusEwalletWithdraw(Request $request,$id)
     {
+        $input = $request->all();
+
         $data = $this->ewalletWithdrawRepository->handleChangeStatusEwalletWithdraw($id);
 
+        $this->notificationRepository->createNotifi($input['company']['owner_id'], 'withDrawProcessed','The withdrawal request has been processed');
+        
         if(!$data) {
             return $this->sendError('Ewallet does not exits');
         }
-
+        
+        
         return $this->sendResponse($data, 'Update ewallet success');
     }
 }

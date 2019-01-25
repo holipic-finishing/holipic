@@ -472,9 +472,11 @@ export default {
     }
   },
   created(){
-  	this.fetchData()
-  	this.callWallet()
-  	this.withDraw()
+  	if(this.user.role_id == 2){
+	  	this.fetchData()
+	  	this.callWallet()
+	  	this.withDraw()
+  	}
   },
   computed:{
 	  	optionLoadView(){

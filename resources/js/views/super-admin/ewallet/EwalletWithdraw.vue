@@ -84,7 +84,7 @@
 				          outline
 				          class="height-input-customer width-input"
 				          :readonly="props.item.status == 'DONE' ? true : false"
-				          @change="updateStatusEwallet(props.item.id)"
+				          @change="updateStatusEwallet(props.item)"
 				        ></v-select>
 						</td>
 			        	<td class="text-xs-left action-width-photographer">
@@ -207,15 +207,15 @@ export default {
 	      }
 	      this.loading = false
     },
-    updateStatusEwallet(id) {
-    	put(config.API_URL+'ewallet-withdraw/update-status/'+id)
+    updateStatusEwallet(item) {
+    	put(config.API_URL+'ewallet-withdraw/update-status/'+item.id,item)
     	.then(res => {
     		if(res && res.data.success) {
     			Vue.notify({
-            group: 'loggedIn',
-            type: 'success',
-            text: 'Update status success'
-        	});
+	            group: 'loggedIn',
+	            type: 'success',
+	            text: 'Update status success'
+	        	});
     		}
     	})
     	

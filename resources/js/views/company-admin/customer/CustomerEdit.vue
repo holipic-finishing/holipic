@@ -39,14 +39,13 @@
 										placeholder="Enter Name"
 										v-model="customer.name"
 										outline
+										@blur="editCustomer('name', customer.name)"
 										@keyup.enter="editCustomer('name', customer.name)"
-										:disabled="key == 1 ? false : true"
-										
 										></v-text-field>
 									</span>
-									<span class="position-item">
+									<!-- <span class="position-item">
 						              <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
+						            </span> -->
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -63,13 +62,11 @@
 											placeholder="Enter Email"
 											v-model="customer.user.email"
 											outline
-											:disabled="key == 2 ? false : true"
+											@blur="editCustomer('email', customer.user.email)"
+											@keyup.enter="editCustomer('email', customer.user.email)"
 											></v-text-field>
 										</template>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -80,7 +77,14 @@
 								<v-list-tile-title class="content-flex-end h-100">
 									<span class="font-weight-bold item-title position-item">Avatar:</span>
 									<span class="contain-text-field image-filed">
-										<v-text-field v-model='imageName' @click='pickFile' prepend-icon='attach_file' outline class="font-weight-bold height-input" readonly :disabled="key == 3 ? false : true"></v-text-field>
+										<v-text-field 
+											v-model='imageName' 
+											@click='pickFile' 
+											prepend-icon='attach_file' 
+											outline 
+											class="font-weight-bold height-input" 
+											readonly
+										></v-text-field>
 										<input
 											type="file"
 											style="display: none"
@@ -89,9 +93,6 @@
 											@change="onFilePicked($event)"
 										>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -124,16 +125,10 @@
 										placeholder="Enter Address"
 										v-model="customer.address"
 										outline
+										@blur="editCustomer('address', customer.address)"
 										@keyup.enter="editCustomer('address', customer.address)"
-										
-										:disabled="key == 4 ? false : true"
-										
-
 										></v-text-field>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -150,13 +145,8 @@
 						                :items="status"
 						                v-model="selectStatus"
 										@change="editCustomer('status', selectStatus)"
-						                
-						                :disabled="key == 5 ? false : true"
 						              ></v-select>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(5)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -303,6 +293,9 @@ export default {
   			 	
 			case "name" :
 				params = {name: value};
+				break;
+			case "email" :
+				params = {email: value};
 				break;
 			case "address" :
 				params = {address: value};

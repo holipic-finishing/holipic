@@ -244,6 +244,13 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('edit/setting/{itemId}', 'SettingAPIController@editSetting');
 
+	/*************EwalletWithdrawAPIController**************/
+
+	Route::get('ewallet-withdraw', 'EwalletWithdrawAPIController@getEwalletWithdraw');
+
+	Route::put('ewallet-withdraw/update-status/{id}', 'EwalletWithdrawAPIController@updateStatusEwalletWithdraw');
+
+
 	/*************Different Controllers**************/
 
 	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');

@@ -7,7 +7,7 @@
 
 .custom-header{
 	display:flex;
-	// justify-content:center;
+	/*// justify-content:center;*/
 	align-items:center;
 }
 
@@ -151,5 +151,18 @@
 
 .fix-v-icon{
 	line-height:unset !important;
+}
+
+.custom-v-select{
+	.height-input-customer {
+		.v-select__selections {
+			padding-top: 0px !important; 
+			font-size:15px !important;
+		}
+		.v-input__append-inner{
+			margin-top: 6px !important;
+		}
+	}
+	
 }
 

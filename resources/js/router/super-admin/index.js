@@ -22,6 +22,9 @@ import ChangePassword from '../../views/partials/users/ChangePassword'
 // User Profile
 import UserProfile from '../../views/partials/users/UserProfile'
 
+//Ewallet
+import EwalletWithdraw from '../../views/super-admin/ewallet/EwalletWithdraw.vue'
+
 export default {
 	path: '/super-admin',
    	component: MiniSidebarLayout,
@@ -93,5 +96,15 @@ export default {
 	            breadcrumb: 'Change Password'
 	        }
 	    },
+	    {
+	        path: '/super-admin/ewallet-withdraw',
+	        component: EwalletWithdraw,
+	        meta: {
+	            requiresAuth: true,
+	            adminAuth:true,
+	            title: 'message.ewallet',
+	            breadcrumb: 'Ewallet withdraw'
+	        }
+	    }
    	]
 }

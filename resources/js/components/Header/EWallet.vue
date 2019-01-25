@@ -82,19 +82,20 @@
 		            </v-toolbar>
 		            <v-divider></v-divider>
 		            <v-card-text class="card-style">
-      					<v-list>
-				          <v-list-tile>
-				            <v-list-tile-action>
-				              Credit Card & Debit Card
-				            </v-list-tile-action>
-							<v-list-tile-content>
-							</v-list-tile-content>
-				              <v-list-tile-action>
-				              <img src="../../../../public/static/visa_PNG17.png" height="40" width="120">
-				           		</v-list-tile-action>
-				          </v-list-tile>
-				        </v-list>	
-		            	<v-form>
+		            	<v-container>
+        					<v-layout wrap>
+        						<v-flex xs12 sm3 class="text-style"> 
+        							Credit Card & Debit Card
+        						</v-flex>
+        						<v-flex xs12 sm9 >
+        							<div style="text-align: right;"> 
+        								<img src="../../../../public/static/visa_PNG17.png" height="40" width="120">
+        							</div>
+        						</v-flex>
+        					</v-layout>
+        				</v-container>
+      						
+		            	<v-form ref="form1">
 		            	<v-container>
       						<v-layout row wrap>
       						<v-flex xs12 sm3 > 
@@ -102,9 +103,8 @@
 							      v-validate="'required'"
 							      :items="pay"
 							      v-model="select"
-							      :error-messages="errors.collect('select')"
+							      :rules="[rules.required]"
 							      label="Select"
-							      data-vv-name="select"
 							      required
 							    ></v-select>
 						   </v-flex>
@@ -114,9 +114,7 @@
 						        name="amount_card"
 						        placeholder="Enter Amount"
 						        v-model="formBalance.amount_card"
-						        v-validate="'required|decimal:5'"
-						        data-vv-name="amount_card"     
-						        :error-messages="errors.collect('amount_card')" 
+						        :rules="[rules.required, rules.decimal]"
 						        prefix="$" 
 						        required
 						      ></v-text-field>
@@ -127,9 +125,7 @@
 						        name="name_card"
 						        placeholder="Enter Your Name"
 						        v-model="formBalance.name_card"
-						        v-validate="'required'"
-						        data-vv-name="name_card"     
-						        :error-messages="errors.collect('name_card')"  
+						        :rules="[rules.required]"  
 						        required
 						      ></v-text-field>
 						   </v-flex>
@@ -137,9 +133,7 @@
 						       <v-text-field
 						        label="Card number"
 						        placeholder="####-####-####-####"
-						        v-validate="'required'"
-						        data-vv-name="card_number"     
-						        :error-messages="errors.collect('card_number')"                
+						        :rules="[rules.required]"                
 						        v-model="formBalance.card_number"
 						        mask="credit-card"
 						        required
@@ -151,9 +145,7 @@
 						        name="expiry_date"
 						        placeholder="MM / YYYY"
 						        v-model="formBalance.expiry_date"
-						        v-validate="'required'"
-						        data-vv-name="expiry_date"     
-						        :error-messages="errors.collect('expiry_date')"
+						        :rules="[rules.required]"
 						        mask="## / ####"  
 						        required
 						      ></v-text-field>
@@ -164,9 +156,7 @@
 						        name="security_code"
 						        placeholder="CVV2"
 						        v-model="formBalance.security_code"
-						        v-validate="'required'"
-						        data-vv-name="security_code"     
-						        :error-messages="errors.collect('security_code')"  
+						        :rules="[rules.required]"  
 						        required
 						      ></v-text-field> 
 						    </v-flex> 
@@ -175,7 +165,7 @@
 						    
 					      <div class="form-btn">
 					      	  <v-spacer></v-spacer>
-						      <v-btn @click="submit" dark color="indigo">Submit</v-btn>
+						      <!-- <v-btn @click="submit" dark color="indigo">Submit</v-btn> -->
 						     <!--  <v-btn outline @click="clear">Clear</v-btn> -->
 						  </div>    
 					   </v-form>
@@ -194,15 +184,13 @@
 		            </v-toolbar>
 		            <v-divider></v-divider>
 		            <v-card-text class="">
-		              <v-form v-model="valid" >				 
+		              <v-form ref="form">				 
 					      <v-text-field
 					        label="Withdraw Amount"
 					        name="amount"
 					        placeholder="Enter Amount"
 					        v-model="formModel.amount"
-					        v-validate="'required|decimal:5'"
-					        data-vv-name="amount"     
-					        :error-messages="errors.collect('amount')"  
+					        :rules="[rules.required, rules.decimal]"
 					        prefix="$"
 					        @blur="checkAmount()"
 					        required
@@ -210,9 +198,7 @@
 					       <v-text-field
 					        label="Bank Account Number"
 					        placeholder="####-####-####-####"
-					        v-validate="'required'"
-					        data-vv-name="account_number"     
-					        :error-messages="errors.collect('account_number')"                
+					        :rules="[rules.required]"               
 					        v-model="formModel.account_number"
 					        mask="credit-card"
 					        required
@@ -222,9 +208,7 @@
 					        name="bank_name"
 					        placeholder="Enter Your Bank Name"
 					        v-model="formModel.bank_name"
-					        v-validate="'required'"
-					        data-vv-name="bank_name"     
-					        :error-messages="errors.collect('bank_name')"  
+					        :rules="[rules.required]"  
 					        required
 					      ></v-text-field> 
 					      <v-text-field
@@ -232,9 +216,7 @@
 					        name="account_holder_name"
 					        placeholder="Enter Your Bank Account Name"
 					        v-model="formModel.account_holder_name"
-					        v-validate="'required'"
-					        data-vv-name="account_holder_name"     
-					        :error-messages="errors.collect('account_holder_name')"  
+					        :rules="[rules.required]"  
 					        required
 					      ></v-text-field>  
 					      <v-text-field
@@ -242,9 +224,7 @@
 					        name="iban"
 					        placeholder="Enter Your IBAN"
 					        v-model="formModel.iban"
-					        v-validate="'required'"
-					        data-vv-name="iban"     
-					        :error-messages="errors.collect('iban')"
+					        :rules="[rules.required]"
 					        required
 					      ></v-text-field>  
 					      <v-text-field
@@ -252,9 +232,7 @@
 					        name="swift"
 					        placeholder="Enter SWIFT Code"
 					        v-model="formModel.swift"
-					        v-validate="'required'"
-					        data-vv-name="swift"     
-					        :error-messages="errors.collect('swift')"  
+					        :rules="[rules.required]"  
 					        required
 					      ></v-text-field>
 					      <div class="form-btn">
@@ -273,6 +251,47 @@
 			    >
 			      Requesting processing cannot send additional requests	.
 			    </v-alert>
+			    <v-container>
+						<v-layout justify-center>
+							<table class="table table-striped">
+								<tr>
+									<td>Account holder name :</td>
+									<td>{{ transaction.account_holder_name }}</td>
+								</tr>
+								<tr>
+									<td>Bank account number :</td>
+									<td>{{ transaction.bank_account_number }}</td>
+								</tr>
+								<tr>
+									<td>Bank name :</td>
+									<td>{{ transaction.bank_name }}</td>
+								</tr>
+								<tr>
+									<td>Amount :</td>
+									<td>$ {{ transaction.amount }}</td>
+								</tr>
+								<tr>
+									<td>Swift code :</td>
+									<td>{{ transaction.swift_code }}</td>
+								</tr>
+								<tr>
+									<td>Iban :</td>
+									<td>{{ transaction.iban }}</td>
+								</tr>
+								<tr>
+									<td>Status :</td>
+									<td>
+									<v-btn color="btn-gradient-primary" small v-if="transaction.status === 'PENDING'">PENDING</v-btn>
+							 		<!-- <v-btn color="btn-gradient-pink" small v-else>Inactive</v-btn> -->
+							 		</td>
+								</tr>
+								<tr>
+									<td>Date :</td>
+									<td>{{ transaction.created_at }}</td>
+								</tr>
+							</table>
+					</v-layout>
+				</v-container>
 			</div>
 			<div class="tab-4" v-else>
 				<v-alert
@@ -315,24 +334,32 @@ export default {
 	    },
 	    formModel:{},
 	    formBalance:{},
-	    valid: true,
 	    total_ewallet:0,
 	    alertStt: false,
     	alertType: 'success',
     	alertMes: '',
     	checkStatus : 0,
     	select: null,
-      	pay: [
-        'Visa',
-        'Master Card'
-     	 ],
+      	pay: ['Visa','Master Card'],
+      	transaction:{},
+      	rules: {
+	        required: value => !!value || 'Required.',
+          	number: value => {
+	            const abc = /^[0-9]\d*$/
+	            return abc.test(value) || 'Please input number.'
+          	},
+          	decimal: value => {
+	            const abc = /^[0-9]\d*(\.\d+)?$/
+	            return abc.test(value) || 'Please input number.'
+          	},
+	    },
     }
   },
   methods:{
   	closeDrawer(){
   		this.$root.$emit('closeDrawerItem', false)
-  		this.formModel = {};
-        this.$validator.reset();
+  		this.$refs.form.reset()
+        this.$refs.form.resetValidation()
   	},
   	withDraw(){
   		let url = config.API_URL + 'ewallet_withdraw/'+this.user.company_id
@@ -341,6 +368,7 @@ export default {
   			if(res.data.data){
   				this.checkStatus = 1
   			} else {
+  				this.transaction = res.data.item
   				this.checkStatus = 0
   			}
   		})
@@ -404,16 +432,15 @@ export default {
       this.loading = false
     },
     submit(){
-    	 this.$validator.validateAll().then((result) => {
-    	 	if(result){
-    	 		let url = config.API_URL + 'ewallet_withdraws'
+    	if (this.$refs.form.validate()) {
+    		let url = config.API_URL + 'ewallet_withdraws'
 
-    	 		let params = {
+    	 	let params = {
     	 			item : this.formModel,
     	 			company_id : this.user.company_id,
     	 		}
-
-    	 		post(url,params)
+    	 	console.log(params)
+    	 	post(url,params)
     	 		.then(res => {
     	 			if(res.data && res.data.success){
     	 				this.alertStt = true
@@ -425,12 +452,11 @@ export default {
 						}, 1500)
 
     	 			}
-    	 		})
-    	 		.catch(err =>{
-
-    	 		})
-    	 	}
-    	 });
+	 		})
+	 		.catch(err =>{
+	 			console.log(err)
+	 		})
+    	}	
     },
     checkAmount(){
     	var amount = (this.total_ewallet - this.formModel.amount)
@@ -478,5 +504,8 @@ export default {
 }
 .card-style {
 	padding: 0px !important;
+}
+.text-style {
+	padding-top : 6px;
 }
 </style>

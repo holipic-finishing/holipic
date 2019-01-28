@@ -184,6 +184,10 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('order/history-order', 'OrderAPIController@getHistoryOrders');
 
 	Route::get('order/count-income', 'OrderAPIController@countIncome');
+
+	/*************ImageUploadsController**************/
+	Route::post('company/image/upload/store','ImageUploadsController@fileStore');
+	Route::post('company/image/delete','ImageUploadsController@fileDestroy');
 	
 
 	/***********************************************

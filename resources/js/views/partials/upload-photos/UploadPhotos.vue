@@ -1,36 +1,26 @@
 <template>
-	<v-container fluid pt-0 grid-list-xl class="h-100">
-		<v-layout row wrap mt-3 class="h-100">
-			<v-flex d-flex xs12>
-        <v-card class="card-wrap" v-if="isOnline">
-        	<v-container
-	          fluid
-	          grid-list-md
-	          class="custom-container h-100"
-	        >
-	        	<v-layout row wrap>
-              <v-flex xs12 >
-                <multiple-upload></multiple-upload>
-              </v-flex>
-	        	</v-layout>
-	        </v-container>
-        </v-card>
-        <v-card v-if="isOffline">
-          This part will be visible only if user is offline
-        </v-card>
-    	</v-flex>
-		</v-layout>
-	</v-container>
+	<v-container fluid px-0 py-0>
+    <app-card 
+      colClasses="xs12 sm12 md12 lg12"
+      :fullScreen="true" 
+      :reloadable="true" 
+      :closeable="true"
+      customClasses="blog-widget"
+    >
+      <dropzone-upload></dropzone-upload>
+    </app-card>
+  </v-container>
 </template>
 
 <script>
 import MultipleUpload from './components/MultipleUpload'
+import DropzoneUpload from './components/DropzoneUpload'
 
 export default {
 
   name: 'UploadPhotos',
   components: { 
-    MultipleUpload
+    DropzoneUpload
   },
   data () {
     return {

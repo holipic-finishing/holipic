@@ -77,7 +77,7 @@ export default {
 	data() {
 		return {
 			collapsed: false, // collapse sidebar
-			drawer: false, // sidebar drawer default true
+			drawer: true, // sidebar drawer default true
 			chatSidebar: false, // chat component right sidebar
 			sidebarImages: "", // sidebar background images
 			enableDefaultSidebar: false,

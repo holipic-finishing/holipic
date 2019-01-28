@@ -117,8 +117,7 @@ class Transaction extends Model
             $exchangeRateToDollar = (double) $exchangeRateToDollar['rate'];
 
         }
-                                              
-
+                                           
         return TransactionExchange::create([
             'transaction_id' => $model->id,
             'exchange_rate_to_dollar' => $exchangeRateToDollar

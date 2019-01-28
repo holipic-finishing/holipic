@@ -74,49 +74,29 @@
               </th>
             </tr>
           </template> -->
-
-  				<!--Prop data -->
-  				<template slot="items" slot-scope="props">
-  					
-  		    		<td>{{ props.item.id }}</td>
-              <td>{{ props.item.branch.name }}</td>
-              <td>{{ props.item.photographer.name }}</td>
-              <td v-if="props.item.customer && props.item.customer.room">{{ props.item.customer.room.room_hash }}</td>
-              <td v-else>No Room</td>
-              <td v-if="props.item.customer && props.item.customer.user">{{ props.item.customer.user.email }}</td>
-              <td v-else>No Email</td>
-              <td>{{ props.item.total_amount_to_dollar }}</td>
-              <td class="text-right">{{ props.item.payment_method }}</td>
-              <td class="text-right">
-                <v-icon
-                  small
-                  class="mr-2 hover-icon"
-                >
-                  visibility
-                </v-icon>
-                <v-icon
-                  small
-                  class="mr-2 hover-icon"
-                >
-                  edit
-                </v-icon>
-                <v-icon
-                  small
-                  class="mr-2 hover-icon"
-                >
-                  delete
-                </v-icon>
-              </td>              
-              <!-- <td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
-              <td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
-              <td>{{ props.item.created_at | moment("DD/MM/YYYY") }}</td>
-  		    		<td>
-                  <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
-                  <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
-                  <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
-              </td> -->
-  											
-  	    	</template>
+				<!--Prop data -->
+				<template slot="items" slot-scope="props">
+					
+		    		<td>{{ props.item.id }}</td>
+            <td>{{ props.item.branch.name }}</td>
+            <td>{{ props.item.photographer.name }}</td>
+            <td v-if="props.item.customer && props.item.customer.room">{{ props.item.customer.room.room_hash }}</td>
+            <td v-else>No Room</td>
+            <td>{{ props.item.total_amount_to_dollar }}</td>
+            <td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
+            <td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
+            <td>{{ props.item.created_at | moment("DD/MM/YYYY") }}</td>
+            <td v-if="props.item.customer && props.item.customer.user">{{ props.item.customer.user.email }}</td>
+            <td v-else>No Email</td>
+            <td>{{ props.item.payment_method }}</td>
+		    		<td>
+                <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
+                <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
+                <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
+                <v-btn class="btn-gradient-primary ml-0 mr-0" color="primary" small v-if="props.item.status === 'PAID'">{{ props.item.status }}</v-btn>
+            </td>
+											
+	    	</template>
 
   				<!--No data -->
   			  <template slot="no-data">

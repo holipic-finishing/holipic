@@ -73,12 +73,16 @@ class CustomerRepository extends BaseRepository
 
     public function handleUpdateCustomer($id)
     {
-        $customer = $this->model->findOrFail($id);
+        $customer = $this->model->findOrFail($id); 
 
-        $input = request('params');
+        $input = request('params'); 
 
         if(request('params.status')) {
             $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false] ;
+        }
+
+        if (request('params.email')) {
+            User::where('id', '=', $customer->user_id)->update($input);
         }
 
         if(request()->file('avatar')) {

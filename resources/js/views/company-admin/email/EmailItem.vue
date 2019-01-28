@@ -90,14 +90,13 @@
 	                placeholder="Enter Title"
 	                v-model="item.email_title"
 	                outline
-	                :disabled="key == 1 ? false : true"
                 	@blur="editItem('email_title', item.email_title)"
                 	@keyup.enter="editItem('email_title', item.email_title)"
 	              ></v-text-field>
 	            </span>
-	            <span class="position-item">
+	            <!-- <span class="position-item">
 	              <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-	            </span>
+	            </span> -->
 	          </v-list-tile-title>
 	        </v-list-tile-content>
 	      </v-list-tile>
@@ -107,18 +106,11 @@
 	    <v-list-tile class="height-100">
 	        <v-list-tile-content class="h-100">
 	          <v-list-tile-title class="content-flex-end h-100">
-	            <span class="font-weight-bold item-title-style position-item">Email Content
-	           	 <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
-	            </span>
-	           
-	          </v-list-tile-title>
-	          <v-list-tile-title class="content-flex-end h-100">
 					<ckeditor 
 				      v-model="item.email_content" 
 				      :config="config"
 				      name="email_content1"	  
 	           		  class="style-ckeditor"
-	           		  :readOnlyMode="key == 2 ? false : true"
 			     	  @blur="editItem('email_content', item.email_content)"
 				      >
 				    </ckeditor>

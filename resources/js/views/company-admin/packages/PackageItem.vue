@@ -303,15 +303,14 @@
 							placeholder="Enter package name"
 							v-model="data.package_name"
 							outline
-							:disabled="key == 1 ? false : true"
 							:rules="[rules.required]"
 							@blur="editItem('package_name', data.package_name)"
 							@keyup.enter="editItem('package_name', data.package_name)"
 							></v-text-field>
 						</span>
-						<span class="position-item">
+						<!-- <span class="position-item">
 							<v-btn flat icon  @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						</span>
+						</span> -->
 					</v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
@@ -327,14 +326,10 @@
 							placeholder="Enter package price"
 							v-model="data.price"
 							:rules="[rules.required]"
-							:disabled="key == 2 ? false : true"
 							outline
 							@blur="editItem('price', data.price)"
 							@keyup.enter="editItem('price', data.price)"
 							></v-text-field>
-						</span>
-						<span class="position-item">
-							<v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
 						</span>
 					</v-list-tile-title>
 				</v-list-tile-content>
@@ -351,14 +346,10 @@
 							placeholder="Enter package offer"
 							v-model="data.offer"
 							:rules="[rules.required]"
-							:disabled="key == 3 ? false : true"
 							outline
 							@blur="editItem('offer', data.offer)"
 							@keyup.enter="editItem('offer', data.offer)"
 							></v-text-field>
-						</span>
-						<span class="position-item">
-							<v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
 						</span>
 					</v-list-tile-title>
 				</v-list-tile-content>
@@ -375,16 +366,11 @@
 							placeholder="Enter package offer"
 							v-model="data.total_photo"
 							:rules="[rules.required, rules.number]"
-							:disabled="key == 4 ? false : true"
 							outline
 							@blur="editItem('total_photo', data.total_photo)"
 							@keyup.enter="editItem('total_photo', data.total_photo)"
 							></v-text-field>
-						</span>
-						<span class="position-item">
-							<v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						</span>
-					</v-list-tile-title>
+						</span>					</v-list-tile-title>
 				</v-list-tile-content>
 			</v-list-tile>
 			<v-divider class="no-mg-bottom"></v-divider>
@@ -399,14 +385,10 @@
 							placeholder="Enter package offer"
 							v-model="data.album"
 							:rules="[rules.required]"
-							:disabled="key == 5 ? false : true"
 							outline
 							@blur="editItem('album', data.album)"
 							@keyup.enter="editItem('album', data.album)"
 							></v-text-field>
-						</span>
-						<span class="position-item">
-							<v-btn flat icon @click="unDisableItem(5)"><v-icon small>fas fa-marker</v-icon></v-btn>
 						</span>
 					</v-list-tile-title>
 				</v-list-tile-content>
@@ -423,14 +405,10 @@
 							placeholder="Enter package offer"
 							v-model="data.photo_on_disc"
 							:rules="[rules.required, rules.number]"
-							:disabled="key == 6 ? false : true"
 							outline
 							@blur="editItem('photo_on_disc', data.photo_on_disc)"
 							@keyup.enter="editItem('photo_on_disc', data.photo_on_disc)"
 							></v-text-field>
-						</span>
-						<span class="position-item">
-							<v-btn flat icon @click="unDisableItem(6)"><v-icon small>fas fa-marker</v-icon></v-btn>
 						</span>
 					</v-list-tile-title>
 				</v-list-tile-content>
@@ -447,14 +425,10 @@
 							placeholder="Enter package offer"
 							v-model="data.poster"
 							:rules="[rules.required, rules.number]"
-							:disabled="key == 7 ? false : true"
 							outline
 							@blur="editItem('poster', data.poster)"
 							@keyup.enter="editItem('poster', data.poster)"
 							></v-text-field>
-						</span>
-						<span class="position-item">
-							<v-btn flat icon @click="unDisableItem(7)"><v-icon small>fas fa-marker</v-icon></v-btn>
 						</span>
 					</v-list-tile-title>
 				</v-list-tile-content>

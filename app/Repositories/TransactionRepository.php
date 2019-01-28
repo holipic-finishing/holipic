@@ -720,12 +720,16 @@ class TransactionRepository extends BaseRepository
     public function getHistoriesTransaction($params){
         $results = $this->scopeQuery(function($query) use($params){
 
-            $query = $query->with(['user' => function($q) {
-                                $q->with('package')->with(['company' => function($que) {
-                                    $que->withTrashed();
-                                }]);
-                            }])
-                        ->with('currency')
+            // $query = $query->with(['user' => function($q) {
+            //                     $q->with('package')->with(['company' => function($que) {
+            //                         $que->withTrashed();
+            //                     }]);
+            //                 }]);
+            $query = $query->with(['company' => function($q) {
+                                $q->withTrashed();
+                            }]);
+
+            $query = $query->with('currency')
                         ->with('transactionexchange');
           
             if (!empty($params['defaultDay'])) {
@@ -809,17 +813,17 @@ class TransactionRepository extends BaseRepository
      */
     
     public function transform($results){
-        
+
         foreach ($results as $key => $result) {
 
-            $results[$key]->company_name = $result->user->company->name;
+            $results[$key]->company_name = $result->company->name;
 
             $results[$key]->amount_with_symbol = round(($result->amount * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol; 
 
             $results[$key]->system_fee_with_symbol = round(($result->system_fee * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol;         
             $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
 
-            $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
+            // $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
         }
 
         return $results;
@@ -1102,6 +1106,8 @@ class TransactionRepository extends BaseRepository
     */
 
     public function eWalletTransactionHistory($attribute,$status){
+
+        dd($attribute);
 
         $results =  $this->scopeQuery(function($query) use($attribute, $status){
 

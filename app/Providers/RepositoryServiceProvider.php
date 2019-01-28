@@ -23,6 +23,6 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
+        $this->app->bind(\App\Repositories\ImageUploadRepository::class, \App\Repositories\ImageUploadRepositoryEloquent::class);
     }
 }

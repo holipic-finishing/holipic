@@ -36,13 +36,13 @@
 			                placeholder="Enter Company Name"
 			                v-model="company.name"
 			                outline
-			                :disabled="key == 1 ? false : true"
+			                @blur="updateCompany('name', company.name)"
 			                @keyup.enter="updateCompany('name', company.name)"
 			              ></v-text-field>
 			            </span>
-			            <span class="position-item">
+			            <!-- <span class="position-item">
 			              <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-			            </span>
+			            </span> -->
 			          </v-list-tile-title>
 			        </v-list-tile-content>
 		      	</v-list-tile>
@@ -58,12 +58,9 @@
 			                placeholder="Enter address"
 			                v-model="company.address"
 			                outline
-			                :disabled="key == 2 ? false : true"
+			                @blur="updateCompany('address', company.address)"
 			                @keyup.enter="updateCompany('address', company.address)"
 			              ></v-text-field>
-			            </span>
-			            <span class="position-item">
-			              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
 			            </span>
 			          </v-list-tile-title>
 			        </v-list-tile-content>
@@ -81,13 +78,9 @@
 			                placeholder="Enter description"
 			                v-model="company.description"
 			                outline
-			                :disabled="key == 3 ? false : true"
+			                @blur="updateCompany('description', company.description)"
 			                @keyup.enter="updateCompany('description', company.description)"
-			                
 			              ></v-text-field>
-			            </span>
-			            <span class="position-item">
-			              <v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
 			            </span>
 			          </v-list-tile-title>
 			        </v-list-tile-content>
@@ -103,14 +96,10 @@
 			                class="font-weight-bold height-input"
 			                placeholder="Enter phone"
 			                v-model="company.phone"
-			                outline
-			                :disabled="key == 4 ? false : true"
+			                outline			                
+			                @blur="updateCompany('phone', company.phone)"
 			                @keyup.enter="updateCompany('phone', company.phone)"
-			                
 			              ></v-text-field>
-			            </span>
-			            <span class="position-item">
-			              <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
 			            </span>
 			          </v-list-tile-title>
 			        </v-list-tile-content>

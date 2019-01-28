@@ -154,15 +154,14 @@
                 placeholder="Enter Company Name"
                 v-model="itemToLoad.company_name"
                 outline
-                :disabled="key == 1 ? false : true"
                 :rules="[rules.required]"
                 @blur="editItem('company_name', itemToLoad.company_name)"
                 @keyup.enter="editItem('company_name', itemToLoad.company_name)"
               ></v-text-field>
             </span>
-            <span class="position-item">
+            <!-- <span class="position-item">
               <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-            </span>
+            </span> -->
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -179,13 +178,9 @@
                 v-model="itemToLoad.invoice"
                 outline
                 :rules="[rules.required]"
-                :disabled="key == 2 ? false : true"
                 @blur="editItem('invoice', itemToLoad.invoice)"
                 @keyup.enter="editItem('invoice', itemToLoad.invoice)"
               ></v-text-field>
-            </span>
-            <span class="position-item">
-              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
             </span>
           </v-list-tile-title>
         </v-list-tile-content>
@@ -205,7 +200,6 @@
                 transition="scale-transition"
                 offset-y
                 full-width
-                :disabled="key == 3 ? false : true"
               >
                 <v-text-field
                   slot="activator"
@@ -214,13 +208,9 @@
                   class="font-weight-bold height-input"
                   placeholder="Enter date"
                   outline
-                  :disabled="key == 3 ? false : true"
                 ></v-text-field>
                 <v-date-picker v-model="date" no-title  @input="editItem('dated', date)" :max="new Date().toISOString().substr(0, 10)"></v-date-picker>
               </v-menu>
-            </span>
-            <span class="position-item">
-              <v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-calendar-day</v-icon></v-btn>
             </span>
           </v-list-tile-title>
         </v-list-tile-content>
@@ -237,12 +227,8 @@
                 outline
                 :items="listStatus"
                 v-model="itemToLoad.status"
-                :disabled="key == 4 ? false : true"
                 @change="editItem('status', itemToLoad.status)"
               ></v-select>
-            </span>
-            <span class="position-item">
-              <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
             </span>
           </v-list-tile-title>
         </v-list-tile-content>
@@ -262,13 +248,9 @@
                 v-model="itemToLoad.amount"
                 :rules="[rules.required]"
                 outline
-                :disabled="key == 5 ? false : true"
                 @blur="editItem('amount', itemToLoad.amount)"
                 @keyup.enter="editItem('amount', itemToLoad.amount)"
               ></v-text-field>
-            </span>
-            <span class="position-item">
-              <v-btn flat icon @click="unDisableItem(5)"><v-icon small>fas fa-marker</v-icon></v-btn>
             </span>
           </v-list-tile-title>
         </v-list-tile-content>

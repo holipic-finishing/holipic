@@ -26,12 +26,11 @@ routers = [
 	SuperAdminRoutes,
 	CompanyAdminRoutes,
 	BranchAdminRoutes,
-	{
-    	// Page Not Found
-    	path: '*',
-    	component: PageNotFound
-  	}
-
+	// {
+ //    	// Page Not Found
+ //    	path: '*',
+ //    	component: PageNotFound
+ //  	}
 ];
 
 var router = new Router({

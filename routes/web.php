@@ -1,5 +1,5 @@
 <?php
-use App\Events\RedisEventNotification;
+
 /***************************************************
 *********  ROUTER FOR LANDING PAGE   ***************
 ****************************************************/
@@ -28,7 +28,6 @@ Route::namespace('API')->group(function(){
 Route::post('users/signup', 'UserController@signUp')->name('users.signup');
 Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');
 
-
 /***************************************************
 *********  ROUTER FOR ADMIN PAGE   *****************
 ****************************************************/
@@ -46,9 +45,8 @@ Route::get('/{any}', function () {
 
 
 Route::get('test', function() {
-
+	
 });
-
 
 
 

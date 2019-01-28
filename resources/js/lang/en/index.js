@@ -489,4 +489,6 @@ export default {
   sales: 'Manage Sales',
   emails:'Emails',
   ewallet: 'Ewallet Withdraw'
+  sidebarUpload: 'Upload Photos',
+  emails:'Emails',
 }

@@ -40,7 +40,7 @@ class EwalletWithdrawRepository extends BaseRepository
 
     public function handleGetEwalletWithdraw()
     {
-        $data = $this->model->with('company')->whereIn('status', ['PENDING', 'DONE'])->get();
+        $data = $this->model->with('company')->whereIn('status', ['PENDING', 'DONE', 'PAID' ])->get();
 
         return $data;
     }

@@ -10,6 +10,7 @@ import ja from './ja';
 import ko from './ko';
 import it from './it';
 import hu from './hu';
+import tr from './tr';
 
 export default {
     en: {
@@ -47,5 +48,8 @@ export default {
     },
     hu: {
         message: hu
+    },
+    tr: {
+        message: tr
     }
 }

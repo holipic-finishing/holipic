@@ -149,7 +149,29 @@
 	}
 }
 
-.fix-v-icon{
+.custom-v-icon{
 	line-height:unset !important;
+	margin-top: 4px !important;
 }
 
+.custom-btn{
+   	display:block;
+  	height: 41px;
+  	width: 41px;
+  	border-radius: 50%;
+  	padding-top: 3px !important;
+}
+
+.grid-template-column{
+	grid-template-columns: none !important;
+}
+
+.custom-stats-card{
+	.v-card__text {
+		padding: 10px 15px !important;
+	}
+
+	.v-input .v-text-field{
+		padding-top: 5px !important;
+	}
+}

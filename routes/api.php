@@ -69,8 +69,9 @@ Route::group(['namespace' => 'API'],function(){
 	**********	ROUTER COMPANY ADMIN   *************
 	************************************************/
 
-	Route::post('change-password', 'UserAPIController@changePassWord');
+	/*************UserAPIController**************/
 
+	Route::post('change-password', 'UserAPIController@changePassWord');
 
 	Route::get('get-user-profile/{id}', 'UserAPIController@getUserProfile');
 
@@ -78,7 +79,6 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::post('update-onesignal-id','UserAPIController@updateOnesignalUser');
 
-	
 	Route::namespace('CompanyAdmin')->group(function(){
 
 		/*************PagesAPIController**************/
@@ -89,11 +89,7 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('params-notification', 'NotificationAPIController@getNotificationWithParams');
 
-
-		Route::get('branch/photographers', 'PhotographerAPIController@getPhotographers');
-
 		Route::get('get-notifications/{user_id}','NotificationAPIController@getNotification');
-
 
 		/*************BranchAPIController**************/
 
@@ -111,10 +107,11 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::post('photographer', 'PhotographerAPIController@savePhotographer');
 
-
 		Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
 
 		Route::get('photographer/photographer-branch','PhotographerAPIController@getPhotographerByBranch');
+
+		Route::get('branch/photographers', 'PhotographerAPIController@getPhotographers');
 
 
 		/*************BranchAPIController**************/
@@ -150,6 +147,8 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('activity-log/show', 'ActivityLogController@getActivityLog');
 
 		Route::get('activity-log/update', 'ActivityLogController@updateIsReadActivityLog');
+
+		/*****************EmailAPIController*****************/
 
 		Route::resource('emails', 'EmailAPIController');
 
@@ -187,6 +186,10 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('order/history-order', 'OrderAPIController@getHistoryOrders');
 
 	Route::get('order/count-income', 'OrderAPIController@countIncome');
+
+	/*************ImageUploadsController**************/
+	Route::post('company/image/upload/store','ImageUploadsController@fileStore');
+	Route::post('company/image/delete','ImageUploadsController@fileDestroy');
 	
 
 	/***********************************************
@@ -256,14 +259,17 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
 	
 	Route::get('company-admin-chart', 'ReportController@getInfoForChartCompanyAdmin');
-
-	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 	
 	/*************Ewallet Withdraw API Controllers**************/
 
 	Route::get('ewallet_withdraw/{compnay_id}', 'EwalletWithdrawAPIController@withDrawCompanyId');
-
-});	
 	
+	/*************CouponCodeAPIController**************/
 
 
+	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
+	Route::post('add-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@addCouponCode');
+	Route::post('cancel-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@cancelCouponCode');
+
+	
+});	

@@ -31,13 +31,14 @@ import Photographers from '../../views/company-admin/photographer/Photographers'
 //Customers
 import Customers from '../../views/company-admin/customer/Customers'
 
+//Upload Photos
+import UploadPhotos from '../../views/partials/upload-photos/UploadPhotos'
 
 // User Profile
 import UserProfile from '../../views/partials/users/UserProfile'
 
 //Email
 import Email from '../../views/company-admin/email/Emailes'
-
 
 export default {
 	path: '/company-admin',
@@ -118,6 +119,20 @@ export default {
 	        }
 	    },
 	    {
+	        path: '/company-admin/upload',
+	        component: UploadPhotos,
+	        name: 'upload',
+	        meta: {
+	        	requiresAuth:true,
+	        	// adminAuth:false,
+         		companyAuth:true,
+	            title: 'message.sidebarUpload',
+	            breadcrumb: 'Company / Upload Photos'
+	        }
+	    },
+	    {
+	        path: '/company-admin/packages',
+	        component: CompanyPackages,
 	    	path: '/company-admin/sales',
 	        component: Sales,
 	        meta: {

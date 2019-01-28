@@ -10,25 +10,28 @@
 					          	 <!-- <v-btn dark color="indigo" class="add-btn" >
 							      Export
 							    </v-btn> -->
-
-							    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3 add-btn">
-									<v-icon small>fas fa-file-excel</v-icon>
-								</a>
-							    
 					        </v-toolbar-title>
 					    </v-toolbar>
-					    <v-divider></v-divider>
-						<v-card-title>
-				      		<v-spacer></v-spacer>
-				      		<v-text-field
-				        		v-model="search"
-						        append-icon="search"
-						        label="Enter search value"
-						        single-line
-						        hide-details
-						    ></v-text-field>
-				    	</v-card-title>
 
+					    <v-divider></v-divider>
+
+						<v-toolbar flat color="white" class="plr-0">
+							<v-spacer></v-spacer>
+							<v-text-field
+					        v-model="search"
+					        append-icon="search"
+					        label="Enter Search Value"
+					        single-line
+					        hide-details
+					        class="mr-3"
+						    ></v-text-field>
+						    <v-tooltip bottom>
+							    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3">
+										<v-icon small>fas fa-file-excel</v-icon>
+									</a>
+							    <span>Export companies</span>
+						    </v-tooltip>
+						</v-toolbar>
 
 						<v-data-table 
 							:headers="headers" 
@@ -69,7 +72,7 @@
 										class="mr-2 hover-icon"
 										@click="showGift(props.item)"
 									>
-										cake
+										card_giftcard
 									</v-icon>
 
 									<v-icon

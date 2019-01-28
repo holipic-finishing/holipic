@@ -2,17 +2,18 @@
 <template>
 	<div>
 		<v-navigation-drawer
-			v-if="!horizontal"
 			app
 			fixed
+			mini-variant-width="80"
+			v-if="!horizontal"
 			v-model="drawer"
-			:mini-variant.sync="collapseSidebar"
-			mini-variant-width="70"
-			:width="250"
 			class="Vuely-sidebar"
+			:mini-variant.sync="collapseSidebar"
+			:width="250"
 			:style="{backgroundImage: 'url(' + selectedSidebarBgImage.url + ')'}"
 			:class="{'background-none': !backgroundImage}"
 			:right="rtlLayout"
+			@input="updateDrawerHeaderStt"
 		>
 			<!-- App Sidebar -->
 			<app-sidebar></app-sidebar>
@@ -25,7 +26,7 @@
 		>	
 			<div class="d-custom-flex align-items-center navbar-left">
 				<div v-if="!horizontal">
-					<v-toolbar-side-icon icon large @click.stop="drawer = !drawer" class="v-step-0"></v-toolbar-side-icon>
+					<v-toolbar-side-icon icon large @click="emitDrawer" class="v-step-0"></v-toolbar-side-icon>
 				</div>
 				<div class="site-logo-wrap d-custom-flex ml-0 align-items-center" v-else>
 					<router-link to="/horizontal/dashboard/ecommerce" class="grayish-blue site-logo-img">
@@ -92,8 +93,9 @@ export default {
 	data() {
 		return {
 			collapsed: false, // collapse sidebar
-			drawer: null, // sidebar drawer default true
 			eWalletSidebar: false, // chat component right sidebar
+			drawer: true, // sidebar drawer default true
+			chatSidebar: false, // chat component right sidebar
 			sidebarImages: "", // sidebar background images
 			enableDefaultSidebar: false,
 			role_id:'',
@@ -115,16 +117,26 @@ export default {
 		// toggle full screen method
 		toggleFullScreen() {
 			if (screenfull.enabled) {
-			screenfull.toggle();
+				screenfull.toggle();
 			}
 		},
 		toggleSearchForm() {
 			// this.$store.dispatch('toggleSearchForm');
+		},
+		emitDrawer(){
+			this.drawer = !this.drawer
+			this.$root.$emit('drawer-status', this.drawer)
+		},
+		updateDrawerHeaderStt(){
+			this.$root.$emit('drawer-status', this.drawer)
 		}
 	},
+	mounted(){
+		this.$root.$emit('drawer-status', this.drawer)
+	},
 	created(){
-         var userAuth = JSON.parse(localStorage.getItem('user'))
-         this.role_id = userAuth.role_id
+        var userAuth = JSON.parse(localStorage.getItem('user'))
+        this.role_id = userAuth.role_id
     },
     mounted(){
     	this.$root.$on('closeDrawerItem', res => {

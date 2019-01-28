@@ -26,14 +26,13 @@
                 v-model="itemToLoad.page_title"
                 outline
                 :rules="[rules.required]"
-                :disabled="key == 1 ? false : true"
                 @blur="editItem('page_title', itemToLoad.page_title)"
                 @keyup.enter="editItem('page_title', itemToLoad.page_title)"
               ></v-text-field>
             </span>
-            <span class="position-item">
+            <!-- <span class="position-item">
               <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-            </span>
+            </span> -->
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -43,23 +42,16 @@
     <v-list-tile class="height-100">
         <v-list-tile-content class="h-100">
           <v-list-tile-title class="content-flex-end h-100">
-            <span class="font-weight-bold item-title-style position-item">Page Content
-				 <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
-            </span>
-           
-          </v-list-tile-title>
-          <v-list-tile-title class="content-flex-end h-100">
-				<ckeditor 
-				    id="editor1"
-			      v-model="itemToLoad.page_content" 
-			      :config="config"
-			      v-validate="'required'"
-			      name="page_content"	  
-			     :readOnlyMode="key == 2 ? false : true"
-			     @blur="editItem('page_content', itemToLoad.page_content)"
-           class="style-ckeditor"
+				    <ckeditor 
+  				    id="editor1"
+  			      v-model="itemToLoad.page_content" 
+  			      :config="config"
+  			      v-validate="'required'"
+  			      name="page_content"	  
+  			      @blur="editItem('page_content', itemToLoad.page_content)"
+              class="style-ckeditor"
 			      >
-			    </ckeditor>
+			     </ckeditor>
           </v-list-tile-title>
           <span v-show="errors.has('page_content')" class="help is-danger" style="color:red">{{ errors.first('page_content') }}</span>
         </v-list-tile-content>

@@ -823,11 +823,7 @@ class TransactionRepository extends BaseRepository
             $results[$key]->system_fee_with_symbol = round(($result->system_fee * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol;         
             $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
 
-<<<<<<< HEAD
-            $results[$key]->fullname = $result->company->user->first_name . " " . $result->company->user->last_name;
-=======
             // $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
->>>>>>> 0d0e089e91463a2925108587369bdf8006ee25ce
         }
 
         return $results;
@@ -1111,14 +1107,9 @@ class TransactionRepository extends BaseRepository
 
     public function eWalletTransactionHistory($attribute,$status){
 
-<<<<<<< HEAD
         if(isset($attribute['company_id'])){
             $results =  $this->scopeQuery(function($query) use($attribute, $status){
-=======
-        dd($attribute);
 
-        $results =  $this->scopeQuery(function($query) use($attribute, $status){
->>>>>>> 0d0e089e91463a2925108587369bdf8006ee25ce
 
                 $query = $query->select('id','title','dated','amount','status','system_fee')
                                 ->with(['transactionexchange' => function($query){

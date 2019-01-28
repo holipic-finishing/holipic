@@ -488,5 +488,7 @@ export default {
   photographers : 'Photographers List',
   sales: 'Manage Sales',
   emails:'Emails',
-  ewallet: 'Ewallet Withdraw'
+  ewallet: 'Ewallet Withdraw',
+  sidebarUpload: 'Upload Photos',
+
 }

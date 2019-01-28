@@ -41,13 +41,12 @@
 						                item-value="id"
 		              					item-text="name"
 						                v-model="currentSelectBranch"
-						                :disabled="key == 1 ? false : true"
 						                @change="editPhotographer('branch', currentSelectBranch)"
 						              ></v-select>
 									</span>
-									<span class="position-item">
+									<!-- <span class="position-item">
 						              <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
+						            </span> -->
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -63,14 +62,10 @@
 										placeholder="Enter Name"
 										v-model="photographer.name"
 										outline
-										
-										:disabled="key == 2 ? false : true"
+										@blur="editPhotographer('name', photographer.name)"
 										@keyup.enter="editPhotographer('name', photographer.name)"
 										></v-text-field>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -86,15 +81,10 @@
 										placeholder="Enter Phone"
 										v-model="photographer.phone_number"
 										outline
-										
-										:disabled="key == 3 ? false : true"
+										@blur="editPhotographer('phone_number', photographer.phone_number)"
 										@keyup.enter="editPhotographer('phone_number', photographer.phone_number)"
-										
 										></v-text-field>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -110,15 +100,10 @@
 										placeholder="Enter Address"
 										v-model="photographer.address"
 										outline
-										
-										:disabled="key == 4 ? false : true"
+										@blur="editPhotographer('address', photographer.address)"
 										@keyup.enter="editPhotographer('address', photographer.address)"
-
 										></v-text-field>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -134,14 +119,9 @@
 						                outline
 						                :items="status"
 						                v-model="selectStatus"
-						                
-						                :disabled="key == 5 ? false : true"
 										@change="editPhotographer('status', selectStatus)"
 						              ></v-select>
 									</span>
-									<span class="position-item">
-						              <v-btn flat icon @click="unDisableItem(5)"><v-icon small>fas fa-marker</v-icon></v-btn>
-						            </span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
@@ -156,8 +136,6 @@
 							<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
 						</v-card-actions>
 
-					
-				
 			</v-card>      	
 		</v-navigation-drawer>
 	</v-layout>

@@ -53,6 +53,8 @@ class CustomerRepository extends BaseRepository
             {
                 if($customer['branch'] != null)
                 {
+                    $fileName = $this->createLinkAvatar($customer['avatar']);
+                    $customer['avatar'] = asset('avatars/' . $fileName);
                     $data[] = $customer;
                 }
             }
@@ -63,14 +65,24 @@ class CustomerRepository extends BaseRepository
         return false;
     }
 
+    function createLinkAvatar($link){
+        $components = explode("/", $link);
+        $fileName = end($components);
+        return $fileName;
+    }
+
     public function handleUpdateCustomer($id)
     {
-        $customer = $this->model->findOrFail($id);
+        $customer = $this->model->findOrFail($id); 
 
-        $input = request('params');
+        $input = request('params'); 
 
         if(request('params.status')) {
             $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false] ;
+        }
+
+        if (request('params.email')) {
+            User::where('id', '=', $customer->user_id)->update($input);
         }
 
         if(request()->file('avatar')) {

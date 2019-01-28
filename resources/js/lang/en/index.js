@@ -490,5 +490,4 @@ export default {
   emails:'Emails',
   ewallet: 'Ewallet Withdraw',
   sidebarUpload: 'Upload Photos',
-
 }

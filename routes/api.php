@@ -259,7 +259,6 @@ Route::group(['namespace' => 'API'],function(){
 	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
 	
 	Route::get('company-admin-chart', 'ReportController@getInfoForChartCompanyAdmin');
-
 	
 	/*************Ewallet Withdraw API Controllers**************/
 
@@ -267,10 +266,8 @@ Route::group(['namespace' => 'API'],function(){
 
 	/*************CouponCodeAPIController**************/
 
-
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 	Route::post('add-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@addCouponCode');
 	Route::post('cancel-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@cancelCouponCode');
-
 	
 });	

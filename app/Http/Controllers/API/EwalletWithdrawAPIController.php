@@ -4,19 +4,19 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateEwalletWithdrawAPIRequest;
 use App\Http\Requests\API\UpdateEwalletWithdrawAPIRequest;
+use App\Http\Controllers\AppBaseController;
 use App\Models\EwalletWithdraw;
 use App\Repositories\EwalletWithdrawRepository;
+use App\Repositories\CompanyAdminRepositories\NotificationRepository;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-use App\Repositories\CompanyAdminRepositories\NotificationRepository;
+
 /**
  * Class EwalletWithdrawController
  * @package App\Http\Controllers\API
  */
-
 class EwalletWithdrawAPIController extends AppBaseController
 {
     /** @var  EwalletWithdrawRepository */

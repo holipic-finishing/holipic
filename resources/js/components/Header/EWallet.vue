@@ -483,7 +483,7 @@ export default {
 	  		return this.items
 	  	}
 	},
-}
+};
 </script>
 
 <style lang="css" scoped>

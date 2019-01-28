@@ -36,7 +36,7 @@ class OrderTableSeeder extends Seeder
 
         $purchase_from = ['WEB', 'SHOP'];
 
-        $status = ['DONE', 'PENDING', 'CANCEL'];
+        $status = ['DONE', 'PENDING', 'CANCEL', 'PAID'];
 
         $list_currency_id = [1,2,3];
 
@@ -65,7 +65,7 @@ class OrderTableSeeder extends Seeder
         	}
 
 	        if($purchase_from_select == 'WEB'){
-	        	if($status_select != 'DONE'){
+	        	if($status_select != 'DONE' || $status != 'PAID'){
 	        		$payment_method_select = 'WEB';
 		        	$purchase_date = null;
 		        	$download_date =  null;
@@ -78,9 +78,9 @@ class OrderTableSeeder extends Seeder
 	        	}
 	        }
 	        if($purchase_from_select == 'SHOP'){
-	        	if($status_select != 'DONE'){
+	        	if($status_select != 'DONE' || $status_select != 'PAID'){
 		        	$payment_method_select = $faker->randomElement($payment_method);
-		        	$purchase_date = null;
+		        	$purchase_date = $dated;
 		        	$download_date = null;
 		        	$order_date = $dated;
 	        	}else{

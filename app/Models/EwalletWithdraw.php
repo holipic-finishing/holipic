@@ -75,7 +75,7 @@ class EwalletWithdraw extends Model
     }
 
     public static function createTransaction($model){
-        if($model->status == 'PAID'){
+        if($model->status == 'DONE'){
             $now = \Carbon\Carbon::now();
 
             return Transaction::create([

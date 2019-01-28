@@ -44,15 +44,16 @@
 				<activity-logs v-if="role_id == 2" v-show="role_id == '2'"></activity-logs>
 				<language-provider></language-provider>
 				<user></user>
-				<v-btn v-if="role_id == 2"  class="ma-0" icon large @click.stop="eWalletSidebar = !eWalletSidebar">
+				<v-btn v-if="role_id == 2" v-show="role_id == '2' "  class="ma-0" icon large @click.stop="eWalletSidebar = !eWalletSidebar">
 					<v-icon color="grey">ti-wallet</v-icon>
 				</v-btn>
-				<div class="v-menu v-menu--inline"  v-if="role_id == 2">
+				<div class="v-menu v-menu--inline"  v-if="role_id == 2" v-show="role_id == '2' ">
 					<span class="ewallet-style">$ {{money_ewallet}}</span>
 				</div>
 			</div>
 		</v-toolbar>
 		<v-dialog 
+			v-show="role_id == '2'"
 			fixed
 			v-model="eWalletSidebar" 
 			:right="!rtlLayout" 

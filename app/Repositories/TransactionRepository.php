@@ -802,9 +802,9 @@ class TransactionRepository extends BaseRepository
 
             return $query;
         })->get();
-
         $results = $this->transform($results);
 
+        // dd($results->toArray());
         return $results; 
     }  
 
@@ -823,7 +823,11 @@ class TransactionRepository extends BaseRepository
             $results[$key]->system_fee_with_symbol = round(($result->system_fee * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol;         
             $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
 
+<<<<<<< HEAD
+            $results[$key]->fullname = $result->company->user->first_name . " " . $result->company->user->last_name;
+=======
             // $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
+>>>>>>> 0d0e089e91463a2925108587369bdf8006ee25ce
         }
 
         return $results;
@@ -1107,22 +1111,29 @@ class TransactionRepository extends BaseRepository
 
     public function eWalletTransactionHistory($attribute,$status){
 
+<<<<<<< HEAD
+        if(isset($attribute['company_id'])){
+            $results =  $this->scopeQuery(function($query) use($attribute, $status){
+=======
         dd($attribute);
 
         $results =  $this->scopeQuery(function($query) use($attribute, $status){
+>>>>>>> 0d0e089e91463a2925108587369bdf8006ee25ce
 
-            $query = $query->select('id','title','dated','amount','status','system_fee')
-                            ->with(['transactionexchange' => function($query){
-                                $query->select(['exchange_rate_to_dollar','transaction_id']);
-                            }])
-                            ->where('company_id',$attribute['company_id']);
-            $query = $query->orderBy('dated', 'desc');
-            return $query;
-        });
+                $query = $query->select('id','title','dated','amount','status','system_fee')
+                                ->with(['transactionexchange' => function($query){
+                                    $query->select(['exchange_rate_to_dollar','transaction_id']);
+                                }])
+                                ->where('company_id',$attribute['company_id']);
+                $query = $query->orderBy('dated', 'desc');
+                return $query;
+            });
 
-        $results = $this->transformTransactionHistory($results->get());
+            $results = $this->transformTransactionHistory($results->get());
 
-        return $results;
+            return $results;
+        }
+
     }
 
     public function transformTransactionHistory($attributes){
@@ -1135,45 +1146,46 @@ class TransactionRepository extends BaseRepository
     }
 
     public function calculatorEwallet($attribute){
-        $company_id = $attribute['company_id'];
+        if(isset($attribute['company_id'])){
 
-        $amountIncomes =  $this->scopeQuery(function($query) use($company_id){
+            $company_id = $attribute['company_id'];
 
-            $query = $query->with('transactionexchange')
-                            ->where('company_id',$company_id)
-                            ->where('status','RECIVED');
-            return $query;
-        })->get();
+            $amountIncomes =  $this->scopeQuery(function($query) use($company_id){
 
-        $totalIncome = 0 ; 
+                $query = $query->with('transactionexchange')
+                                ->where('company_id',$company_id)
+                                ->where('status','RECIVED');
+                return $query;
+            })->get();
 
-        $totalSystemFee = 0;
+            $totalIncome = 0 ; 
 
-        foreach ($amountIncomes as $key => $amountIncome) {
-            $totalIncome += ($amountIncome->amount * $amountIncome->transactionexchange->exchange_rate_to_dollar);
+            $totalSystemFee = 0;
 
-            $totalSystemFee += ($amountIncome->system_fee * $amountIncome->transactionexchange->exchange_rate_to_dollar);
+            foreach ($amountIncomes as $key => $amountIncome) {
+                $totalIncome += ($amountIncome->amount * $amountIncome->transactionexchange->exchange_rate_to_dollar);
+
+                $totalSystemFee += ($amountIncome->system_fee * $amountIncome->transactionexchange->exchange_rate_to_dollar);
+            }
+
+            $amountOutcomes =  $this->scopeQuery(function($query) use($company_id){
+
+                $query = $query->with('transactionexchange')
+                                ->where('company_id',$company_id)
+                                ->where('status','DONE');
+                return $query;
+            })->get();
+
+            $totalOutcome = 0 ; 
+
+            foreach ($amountOutcomes as $key => $amountOutcome) {
+                $totalOutcome += ($amountOutcome->amount * $amountOutcome->transactionexchange->exchange_rate_to_dollar);
+            }
+
+            $total = $totalIncome - $totalSystemFee - $totalOutcome;
+            $total = round($total,3);
+            return $total;
         }
-
-        $amountOutcomes =  $this->scopeQuery(function($query) use($company_id){
-
-            $query = $query->with('transactionexchange')
-                            ->where('company_id',$company_id)
-                            ->where('status','DONE');
-            return $query;
-        })->get();
-
-        $totalOutcome = 0 ; 
-
-        foreach ($amountOutcomes as $key => $amountOutcome) {
-            $totalOutcome += ($amountOutcome->amount * $amountOutcome->transactionexchange->exchange_rate_to_dollar);
-        }
-
-        
-
-        $total = $totalIncome - $totalSystemFee - $totalOutcome;
-        $total = round($total,3);
-        return $total;
     }
 
 }

@@ -255,13 +255,6 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 					
 				}
 				
-				// let vm = this
-				// let count = 0;
-				// _.forEach(vm.notifications, function(value, key){
-				// 	if(value.is_read === false){
-				// 		count =count + 1
-				// 	}
-				// })
 				return this.notifications.length
 			},
 		},

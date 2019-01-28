@@ -313,10 +313,10 @@ class TransactionAPIController extends AppBaseController
 
         $results = $this->transactionRepository->calculatorEwallet($input);
  
-        // if($results <= 0) {
+        if($results <= 0) {
 
-        //     $this->notificationRepository->createNotifi($input['user_id'], 'AvailableBalanceIs0','Available balance is 0');
-        // }
+            $this->notificationRepository->createNotifi($input['user_id'], 'AvailableBalanceIs0','Available balance is 0');
+        }
         return $results;
     }
 

@@ -439,7 +439,7 @@ export default {
     	 			item : this.formModel,
     	 			company_id : this.user.company_id,
     	 		}
-    	 	console.log(params)
+
     	 	post(url,params)
     	 		.then(res => {
     	 			if(res.data && res.data.success){
@@ -472,9 +472,11 @@ export default {
     }
   },
   created(){
-  	this.fetchData()
-  	this.callWallet()
-  	this.withDraw()
+  	if(this.user.role_id == 2){
+	  	this.fetchData()
+	  	this.callWallet()
+	  	this.withDraw()
+  	}
   },
   computed:{
 	  	optionLoadView(){

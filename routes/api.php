@@ -263,7 +263,7 @@ Route::group(['namespace' => 'API'],function(){
 	/*************Ewallet Withdraw API Controllers**************/
 
 	Route::get('ewallet_withdraw/{compnay_id}', 'EwalletWithdrawAPIController@withDrawCompanyId');
-	
+
 	/*************CouponCodeAPIController**************/
 
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');

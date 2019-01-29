@@ -44,9 +44,9 @@
           subdomainName: 'wbtotalter',
           autoRegister: false,
           safari_web_id: 'web.onesignal.auto.50d89199-747f-4818-96ca-50d4208129fc',
-          httpPermissionRequest: {
-           enable: true
-          },
+          // httpPermissionRequest: {
+          //  enable: true
+          // },
           notifyButton: {
               enable: true
           },
@@ -62,6 +62,7 @@
       }]);
       OneSignal.push(function() {
           OneSignal.showHttpPrompt();
+          // OneSignal.registerForPushNotifications(); 
           OneSignal.on('subscriptionChange', function (isSubscribed) {
             console.log("The user's subscription state is now:", isSubscribed);
               OneSignal.push(function() {

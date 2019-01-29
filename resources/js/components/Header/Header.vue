@@ -47,9 +47,11 @@
 				<v-btn v-if="role_id == 2" v-show="role_id == '2' "  class="ma-0" icon large @click.stop="eWalletSidebar = !eWalletSidebar">
 					<v-icon color="grey">ti-wallet</v-icon>
 				</v-btn>
-				<div class="v-menu v-menu--inline"  v-if="role_id == 2" v-show="role_id == '2' ">
-					<span class="ewallet-style">$ {{money_ewallet}}</span>
-				</div>
+				<v-btn v-if="role_id == 2" v-show="role_id == '2' " class="ma-0" flat @click.stop="eWalletSidebar = !eWalletSidebar">
+					<div class="v-menu v-menu--inline">
+						<span class="ewallet-style">$ {{money_ewallet}}</span>
+					</div>
+				</v-btn>
 			</div>
 		</v-toolbar>
 		<v-dialog 

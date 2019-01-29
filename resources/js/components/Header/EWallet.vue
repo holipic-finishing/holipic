@@ -617,8 +617,8 @@ export default {
   created(){
   	if(this.user.role_id == 2){
 	  	this.fetchData()
-	  	// this.callWallet()
-	  	// this.withDraw()
+	  	this.callWallet()
+	  	this.withDraw()
   	}
   },
   computed:{

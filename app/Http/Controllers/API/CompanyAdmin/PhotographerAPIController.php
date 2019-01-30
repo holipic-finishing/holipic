@@ -131,7 +131,9 @@ class PhotographerAPIController extends AppBaseController
 
         $photographer->delete();
 
-        $this->activityRepo->insertActivityLog(request('userId'), 'Delete Photographer '.$name);
+        if(request('userId')) {
+            $this->activityRepo->insertActivityLog(request('userId'), 'Delete Photographer '.$name); 
+        }
 
         return $this->sendResponse($id, 'Photographer deleted successfully');
     }
@@ -155,8 +157,10 @@ class PhotographerAPIController extends AppBaseController
             return $this->sendError('Error Add Photographer');
         }
 
-        $this->activityRepo->insertActivityLog(request('userId'), 'Add Photographer '.$photographer['name']);
-
+        if(request('userId')) {
+            $this->activityRepo->insertActivityLog(request('userId'), 'Add Photographer '.$photographer['name']);
+        }
+        
         return $this->sendResponse($photographer, 'Add Photographer successfully');
     }
 

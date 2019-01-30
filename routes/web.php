@@ -1,5 +1,5 @@
 <?php
-use App\Events\RedisEventNotification;
+
 /***************************************************
 *********  ROUTER FOR LANDING PAGE   ***************
 ****************************************************/
@@ -41,10 +41,10 @@ Route::get('/{any}', function () {
 *********  ROUTER TEST  *****************
 *****************************************/
 
+// Route::get('test', function() {
 
-Route::get('test', function() {
+// });
 
-});
 
 
 

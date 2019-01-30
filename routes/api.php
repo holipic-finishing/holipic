@@ -45,6 +45,8 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::resource('coupon_codes', 'CouponCodeAPIController');
 
+	Route::resource('ewallet_withdraws', 'EwalletWithdrawAPIController');
+
 	/***************************************************
 	*********LIST ROUTER RESOURCE COMPANY ADMIN*********
 	***************************************************/
@@ -184,6 +186,10 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('order/history-order', 'OrderAPIController@getHistoryOrders');
 
 	Route::get('order/count-income', 'OrderAPIController@countIncome');
+
+	/*************ImageUploadsController**************/
+	Route::post('company/image/upload/store','ImageUploadsController@fileStore');
+	Route::post('company/image/delete','ImageUploadsController@fileDestroy');
 	
 
 	/***********************************************
@@ -231,23 +237,37 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
+	Route::get('e-wallet/transaction-history', 'TransactionAPIController@getEWalletTransactionHistory');
+
+	Route::get('e-wallet/total-ewallet', 'TransactionAPIController@calEwallet');
+
 	/*************SettingAPIController**************/
 
 	Route::get('get-package', 'SettingAPIController@getPackage');
 
 	Route::post('edit/setting/{itemId}', 'SettingAPIController@editSetting');
 
+	/*************EwalletWithdrawAPIController**************/
+
+	Route::get('ewallet-withdraw', 'EwalletWithdrawAPIController@getEwalletWithdraw');
+
+	Route::put('ewallet-withdraw/update-status/{id}', 'EwalletWithdrawAPIController@updateStatusEwalletWithdraw');
+
+
 	/*************Different Controllers**************/
 
 	Route::get('report-incomes-package', 'ReportController@reportIncomesPackage');
 	
 	Route::get('company-admin-chart', 'ReportController@getInfoForChartCompanyAdmin');
+	
+	/*************Ewallet Withdraw API Controllers**************/
+
+	Route::get('ewallet_withdraw/{compnay_id}', 'EwalletWithdrawAPIController@withDrawCompanyId');
 
 	/*************CouponCodeAPIController**************/
 
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 	Route::post('add-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@addCouponCode');
 	Route::post('cancel-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@cancelCouponCode');
-
 	
 });	

@@ -36,13 +36,13 @@
 			                placeholder="Enter Branch Name"
 			                v-model="branch.name"
 			                outline
-			                :disabled="key == 1 ? false : true"
-			                 @keyup.enter="updateBranch('name', branch.name)"
+			                @blur="updateBranch('name', branch.name)"
+			                @keyup.enter="updateBranch('name', branch.name)"
 			              ></v-text-field>
 			            </span>
-			            <span class="position-item">
+			            <!-- <span class="position-item">
 			              <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-			            </span>
+			            </span> -->
 			          </v-list-tile-title>
 			        </v-list-tile-content>
 		      	</v-list-tile>
@@ -58,13 +58,9 @@
 			                placeholder="Enter Password"
 			                v-model="branch.branch_password"
 			                outline
-			                :disabled="key == 2 ? false : true"
-			                 @keyup.enter="updateBranch('password', branch.branch_password)"
-			                
+			                @blur="updateBranch('password', branch.branch_password)"
+			                @keyup.enter="updateBranch('password', branch.branch_password)"
 			              ></v-text-field>
-			            </span>
-			            <span class="position-item">
-			              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
 			            </span>
 			          </v-list-tile-title>
 			        </v-list-tile-content>
@@ -81,13 +77,9 @@
 			                placeholder="Enter Address"
 			                v-model="branch.branch_address"
 			                outline
-			                :disabled="key == 3 ? false : true"
-			                 @keyup.enter="updateBranch('address', branch.branch_address)"
-			                
+			                @blur="updateBranch('address', branch.branch_address)"
+			                @keyup.enter="updateBranch('address', branch.branch_address)"
 			              ></v-text-field>
-			            </span>
-			            <span class="position-item">
-			              <v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
 			            </span>
 			          </v-list-tile-title>
 			        </v-list-tile-content>
@@ -104,20 +96,15 @@
 			                placeholder="Enter Phone"
 			                v-model="branch.branch_phone_number"
 			                outline
-			                :disabled="key == 4 ? false : true"
-			                 @keyup.enter="updateBranch('phone', branch.branch_phone_number)"
-			                
+			                @blur="updateBranch('phone', branch.branch_phone_number)"
+			                @keyup.enter="updateBranch('phone', branch.branch_phone_number)"
 			              ></v-text-field>
-			            </span>
-			            <span class="position-item">
-			              <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
 			            </span>
 			          </v-list-tile-title>
 			        </v-list-tile-content>
 		      	</v-list-tile>
 		      	<v-divider class="no-mg-bottom"></v-divider>
 		      	
-
 		    </v-list>
 
 		      <!-- <v-spacer></v-spacer> -->

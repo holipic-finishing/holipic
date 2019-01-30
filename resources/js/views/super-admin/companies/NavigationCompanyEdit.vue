@@ -40,14 +40,14 @@
 								                placeholder="Enter Company Name"
 								                v-model="company.name"
 								                outline
-								                :disabled="key == 1 ? false : true"
+								                
 								                @keyup.enter="updateCompany('name', company.name)"
 								                :rules="[rules.required]"
 								              ></v-text-field>
 								            </span>
-								            <span class="position-item">
+								           <!--  <span class="position-item">
 								              <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-								            </span>
+								            </span> -->
 								          </v-list-tile-title>
 								        </v-list-tile-content>
 							      	</v-list-tile>
@@ -67,14 +67,14 @@
 								                placeholder="Enter address"
 								                v-model="company.address"
 								                outline
-								                :disabled="key == 2 ? false : true"
+								                
 								                @keyup.enter="updateCompany('address', company.address)"
 								                :rules="[rules.required]"
 								              ></v-text-field>
 								            </span>
-								            <span class="position-item">
+								           <!--  <span class="position-item">
 								              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
-								            </span>
+								            </span> -->
 								          </v-list-tile-title>
 								        </v-list-tile-content>
 							     	</v-list-tile>
@@ -93,15 +93,15 @@
 								                placeholder="Enter description"
 								                v-model="company.description"
 								                outline
-								                :disabled="key == 3 ? false : true"
+								               
 								                @keyup.enter="updateCompany('description', company.description)"
 								                :rules="[rules.required]"
 								                
 								              ></v-text-field>
 								            </span>
-								            <span class="position-item">
+								            <!-- <span class="position-item">
 								              <v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
-								            </span>
+								            </span> -->
 								          </v-list-tile-title>
 								        </v-list-tile-content>
 							     	</v-list-tile>
@@ -121,14 +121,14 @@
 								                placeholder="Enter phone"
 								                v-model="company.phone"
 								                outline
-								                :disabled="key == 4 ? false : true"
+								               
 								                @keyup.enter="updateCompany('phone', company.phone)"
 								                :rules="[rules.required]"
 								              ></v-text-field>
 								            </span>
-								            <span class="position-item">
+								           <!--  <span class="position-item">
 								              <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
-								            </span>
+								            </span> -->
 								          </v-list-tile-title>
 								        </v-list-tile-content>
 							     	</v-list-tile>
@@ -138,6 +138,7 @@
 						      	</v-flex>
 							</v-layout>  
 						</v-form>	
+
 
 				    </v-list>
 

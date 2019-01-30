@@ -263,15 +263,14 @@
 										class="font-weight-bold height-input"
 										:rules="[rules.number]"
 										v-model="data.expiration_date"
-										:disabled="key == 1 ? false : true"
 										@blur="editSetting('expiration_date', data.expiration_date)"
 										@keyup.enter="editSetting('expiration_date', data.expiration_date)"
 										outline
 									></v-text-field>	
 								</span>
-								<span class="position-item">
+								<!-- <span class="position-item">
 									<v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-								</span>
+								</span> -->
 							</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
@@ -287,14 +286,10 @@
 										class="font-weight-bold height-input"
 										:rules="[rules.decimal]"
 										v-model="data.card_fee"
-										:disabled="key == 2 ? false : true"
 										@blur="editSetting('card_fee', data.card_fee)"
 										@keyup.enter="editSetting('card_fee', data.card_fee)"
 										outline
 									></v-text-field>
-								</span>
-								<span class="position-item">
-									<v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
@@ -310,14 +305,10 @@
 										class="font-weight-bold height-input"
 										:rules="[rules.decimal]"
 										v-model="data.bonus"
-										:disabled="key == 3 ? false : true"
 										@blur="editSetting('bonus', data.bonus)"
 										@keyup.enter="editSetting('bonus', data.bonus)"
 										outline
 									></v-text-field>
-								</span>
-								<span class="position-item">
-									<v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
@@ -381,14 +372,10 @@
 										placeholder="Enter fee"
 										v-model="data.fee"
 										outline
-										:disabled="key == 1 ? false : true"
 										:rules="[rules.required, rules.decimal]"
 										@blur="editItem('fee', data.fee)"
 										@keyup.enter="editItem('fee', data.fee)"
 									></v-text-field>
-								</span>
-								<span class="position-item">
-									<v-btn flat icon  @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
@@ -405,14 +392,10 @@
 										placeholder="Enter package name"
 										v-model="data.package_name"
 										:rules="[rules.required]"
-										:disabled="key == 2 ? false : true"
 										outline
 										@blur="editItem('package_name', data.package_name)"
 										@keyup.enter="editItem('package_name', data.package_name)"
 									></v-text-field>
-								</span>
-								<span class="position-item">
-									<v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
@@ -429,14 +412,10 @@
 										placeholder="Enter secure storage"
 										v-model="data.secure_storage"
 										:rules="[rules.required]"
-										:disabled="key == 3 ? false : true"
 										outline
 										@blur="editItem('secure_storage', data.secure_storage)"
 										@keyup.enter="editItem('secure_storage', data.secure_storage)"
 									></v-text-field>
-								</span>
-								<span class="position-item">
-									<v-btn flat icon @click="unDisableItem(3)"><v-icon small>fas fa-marker</v-icon></v-btn>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
@@ -453,14 +432,10 @@
 										placeholder="Enter file upload"
 										v-model="data.file_upload"
 										:rules="[rules.required, rules.number]"
-										:disabled="key == 4 ? false : true"
 										outline
 										@blur="editItem('file_upload', data.file_upload)"
 										@keyup.enter="editItem('file_upload', data.file_upload)"
 									></v-text-field>
-								</span>
-								<span class="position-item">
-									<v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
@@ -477,14 +452,10 @@
 										placeholder="Minimum user"
 										v-model="data.minimum_user"
 										:rules="[rules.required, rules.number]"
-										:disabled="key == 5 ? false : true"
 										outline
 										@blur="editItem('minimum_user', data.minimum_user)"
 										@keyup.enter="editItem('minimum_user', data.minimum_user)"
 									></v-text-field>
-								</span>
-								<span class="position-item">
-									<v-btn flat icon @click="unDisableItem(5)"><v-icon small>fas fa-marker</v-icon></v-btn>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
@@ -501,14 +472,10 @@
 										placeholder="Minimum user"
 										v-model="data.max_user"
 										:rules="[rules.required]"
-										:disabled="key == 6 ? false : true"
 										outline
 										@blur="editItem('max_user', data.max_user)"
 										@keyup.enter="editItem('max_user', data.max_user)"
 									></v-text-field>
-								</span>
-								<span class="position-item">
-									<v-btn flat icon @click="unDisableItem(6)"><v-icon small>fas fa-marker</v-icon></v-btn>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
@@ -521,18 +488,14 @@
 								<span class="font-weight-bold item-title position-item">Description:</span>
 								<span class="contain-text-field h-100">
 									<v-textarea
-					          outline
-					          placeholder="Minimum user"
-					          v-model="data.short_description"
+							            outline
+							            placeholder="Minimum user"
+							            v-model="data.short_description"
 										class="font-weight-bold height-area"
-					          :rules="[rules.required]"
-										:disabled="key == 7 ? false : true"
-					          @blur="editItem('short_description', data.short_description)"
+							            :rules="[rules.required]"
+							            @blur="editItem('short_description', data.short_description)"
 										@keyup.enter="editItem('short_description', data.short_description)"
-					        ></v-textarea>
-								</span>
-								<span class="position-item">
-									<v-btn flat icon @click="unDisableItem(7)"><v-icon small>fas fa-marker</v-icon></v-btn>
+							        ></v-textarea>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>

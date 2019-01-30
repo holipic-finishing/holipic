@@ -168,8 +168,8 @@
 
 				    <template slot="items" slot-scope="props" >
 						<td>{{ props.item.id }}</td>
-						<td class="text-xs-left" >{{ props.item.branch.name }}</td>
-						<td class="text-xs-left">{{ props.item.photographer.name }}</td>
+						<td class="text-xs-left" v-if="props.item.branch != null">{{ props.item.branch.name }}</td>
+						<td class="text-xs-left" v-if="props.item.photographer != null">{{ props.item.photographer.name }}</td>
 						<td class="text-xs-left">{{ props.item.customer.room.room_hash }}</td>
 						<td class="text-xs-left">{{ props.item.total_amount }}</td>
 						<td class="text-xs-left">{{ props.item.purchase_date }}</td>
@@ -263,6 +263,7 @@ export default {
 			.then(response => {
 				if(response && response.data.success) {
 					this.sales = response.data.data
+					console.log(this.sales)
 					
 				}
 			})

@@ -44,7 +44,30 @@ class OrderTableSeeder extends Seeder
         $list_total_amount_euro = [8, 14 , 28, 42] ;
         $list_total_amount_rp = [150000, 250000 , 600000, 900000] ;
 
-        for($i=0; $i < 100 ; $i++){
+        $list_packages = \App\Models\CompanyPackage::all();
+        $list_package_id = [];
+
+        foreach ($list_packages as $key => $list_package) {
+        	array_push($list_package_id, $list_package->id);
+        }
+
+        $list_photo_packages = \App\Models\PhotoPackage::all();
+        $list_photo_package_id = [];
+
+        foreach ($list_photo_packages as $key => $list_photo_package) {
+        	array_push($list_photo_package_id, $list_photo_package->id);
+        }
+
+        $check = $faker->numberBetween(1,2);
+
+        /**
+         * $check = 1 is choose package list
+         * $check =1 is choose photo package
+         *
+         */
+        
+    
+        for($i=0; $i < 50 ; $i++){
 
         	$dated =  $faker->dateTimeBetween($startDate = '-5 months', $endDate = '+2months', $timezone = null);
 
@@ -134,6 +157,8 @@ class OrderTableSeeder extends Seeder
 
         	sleep(1);
         }
+
+        
                 
     }
     

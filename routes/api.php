@@ -269,5 +269,12 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 	Route::post('add-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@addCouponCode');
 	Route::post('cancel-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@cancelCouponCode');
+
+	/*************TransactionCalulatorEwalletsAPIController**************/
+
+	Route::resource('transaction_calulator_ewallets', 'TransactionCalulatorEwalletAPIController');
 	
 });	
+
+
+

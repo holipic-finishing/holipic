@@ -83,7 +83,7 @@
 							      <div slot="label"><strong>USE YOUR SAVED ACCOUNTS</strong></div>
 							      <v-radio value="visa">
 							        <div slot="label">
-							        	<img src="../../../../public/images/Visa-icon.png" height="50" width="50">
+							        	<img src="../../../../public/static/Visa-icon.png" height="50" width="50">
 							        </div>
 							      </v-radio>
 							      <v-radio value="new_credit">

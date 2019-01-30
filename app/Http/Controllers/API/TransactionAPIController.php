@@ -315,7 +315,7 @@ class TransactionAPIController extends AppBaseController
  
         if($results <= 30) {
 
-            $this->notificationRepository->createNotifi($input['user_id'], 'AvailableBalanceIs0','Available balance is 0');
+            $this->notificationRepository->createNotifi($input['user_id'], 'AvailableBalanceIs0','Available balance is 30');
         }
         return $results;
     }

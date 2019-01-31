@@ -272,11 +272,12 @@ class CompanyRepository extends BaseRepository
         if(!$results)
             return false;
 
-        $pathPublic = env('DB_MYSQL_DIR').DIRECTORY_SEPARATOR;
+        $pathPublic = public_path() . '/files' . DIRECTORY_SEPARATOR;
 
         $filename =  $company_id . '_Customer_email.csv';
        
-        $file = fopen($pathPublic.$filename,"a+");
+        $file = fopen($pathPublic . $filename,"a+");
+
         try{
 
             foreach ($results as $key => $value) {

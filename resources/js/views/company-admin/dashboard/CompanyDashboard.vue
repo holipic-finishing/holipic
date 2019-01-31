@@ -15,19 +15,19 @@
 							<p class="fs-12 grey--text mb-0">Customers</p>
 						</div>
 						<div>
-							<h4 class="primary--text mb-0">$ {{ computedCash }}</h4>
+							<h4 class="primary--text mb-0"> {{ computedCash }}</h4>
 							<p class="fs-12 grey--text mb-0">Cash</p>
 						</div>
 						<div>
-							<h4 class="primary--text mb-0">$ {{ computedCC }}</h4>
+							<h4 class="primary--text mb-0"> {{ computedCC }}</h4>
 							<p class="fs-12 grey--text mb-0">CC</p>
 						</div>
 						<div>
-							<h4 class="primary--text mb-0">$ {{ computedWeb }}</h4>
+							<h4 class="primary--text mb-0"> {{ computedWeb }}</h4>
 							<p class="fs-12 grey--text mb-0">Online</p>
 						</div>
 						<div>
-							<h4 class="primary--text mb-0">$ {{ computedTotalIncome }}</h4>
+							<h4 class="primary--text mb-0"> {{ computedTotalIncome }}</h4>
 							<p class="fs-12 grey--text mb-0">Total Income</p>
 						</div>
 					</div>
@@ -516,7 +516,7 @@ import LineChart from './LineChart.js'
 import { ChartConfig } from "../../../constants/chart-config";
 //config 
 import config from '../../../config/index.js'
-import { get, getWithData, post } from '../../../api/index.js'
+import { get, getWithData, post } from '../../../api'
 import moment from 'moment'
 import Orders from './Orders'
 

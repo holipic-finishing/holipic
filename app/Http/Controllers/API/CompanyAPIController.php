@@ -185,8 +185,8 @@ class CompanyAPIController extends AppBaseController
         $results = $this->companyRepository->handleExportCustomerByCompanyId($input['company_id']);
 
         return \Response::json([
-                    'status' => true,
-                    'link' => url('/files/'.$input['company_id'].'_Customer_email.csv')
+            'status' => true,
+            'link' => url('/files/'.$input['company_id'].'_Customer_email.csv')
         ]);
     }
 
@@ -198,16 +198,15 @@ class CompanyAPIController extends AppBaseController
      */
     public function createLink($company_id){
 
-        $path = env('DB_MYSQL_DIR') . DIRECTORY_SEPARATOR;
+        $path = public_path() . '/files' . DIRECTORY_SEPARATOR;
         
         $csvPath = $path .$company_id. '_Customer_email.csv';
+
         if(\File::exists($csvPath)){
             unlink($csvPath);
         }
         if(!\File::exists($path)) {
-
             \File::makeDirectory($path, $mode = 0777, true, true);
-
         }
 
         $file = fopen($csvPath,"a+");

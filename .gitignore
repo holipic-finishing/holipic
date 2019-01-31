@@ -19,6 +19,8 @@ yarn-error.log
 /public/fonts/vendor/
 /public/avatars/
 /public/files/
+/public/image_uploads/
+/storage/
 dump.rdb
 /resources/js/views/dashboard/.fuse_hidden0000980400002570
 /app/Repositories/.fuse_hidden0001262f00000003

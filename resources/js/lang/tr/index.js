@@ -487,5 +487,6 @@ export default {
   customer: 'Müşteriler',
   photographers : 'Fotoğrafçılar Listesi',
   sales: 'Satışları Yönet',
-  emails:'E-postalar'
+  emails:'E-postalar',
+  ewallet:'Ecüzdan Çekil'
 }

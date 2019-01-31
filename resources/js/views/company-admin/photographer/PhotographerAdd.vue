@@ -7,9 +7,10 @@
 		temporary 
 		app 
 		this.width = this.getCurrentWithContentWrap()
-  	:width='widthComputed'
+  		:width='widthComputed'
 		>
 			<v-card class="h-100 position-relative">
+
 				<v-toolbar>
 					<v-toolbar-title class="text-capitalize">Add Photographer</v-toolbar-title>
 					<v-spacer></v-spacer>
@@ -20,14 +21,15 @@
 					</v-toolbar-side-icon>
 				</v-toolbar>
 				<v-divider class="no-mg-bottom"></v-divider>
+
 				<v-form
-				ref="form"
-				v-model="valid"
-				lazy-validation
+					ref="form"
+					v-model="valid"
+					lazy-validation
 				>
 					<v-list class="heigth-list-title">
 
-						<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
+						<!-- <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert> -->
 
 						<v-list-tile class="height-80">
 							<v-list-tile-content class="h-100">
@@ -35,14 +37,14 @@
 									<span class="font-weight-bold item-title position-item">Select Branch:</span>
 									<span class="contain-text-field">
 										<v-select
-						                class="font-weight-bold height-input"
-						                outline
-						                :items="branches"
-						                item-value="id"
-		              					item-text="name"
-						                v-model="photographer.branch_id"
-						                :rules="[rules.required]"
-						              ></v-select>
+			                class="font-weight-bold height-input"
+			                outline
+			                :items="branches"
+			                item-value="id"
+            					item-text="name"
+			                v-model="photographer.branch_id"
+			                :rules="[rules.required]"
+			              ></v-select>
 									</span>
 								</v-list-tile-title>
 							</v-list-tile-content>
@@ -55,12 +57,11 @@
 									<span class="font-weight-bold item-title position-item">Name:</span>
 									<span class="contain-text-field">
 										<v-text-field
-										class="font-weight-bold height-input"
-										placeholder="Enter Name"
-										v-model="photographer.name"
-										outline
-										:rules="[rules.required]"
-
+											class="font-weight-bold height-input"
+											placeholder="Enter Name"
+											v-model="photographer.name"
+											outline
+											:rules="[rules.required]"
 										></v-text-field>
 									</span>
 								</v-list-tile-title>
@@ -74,12 +75,11 @@
 									<span class="font-weight-bold item-title position-item">Phone Number:</span>
 									<span class="contain-text-field">
 										<v-text-field
-										class="font-weight-bold height-input"
-										placeholder="Enter Phone"
-										v-model="photographer.phone_number"
-										outline
-										:rules="[rules.required]"
-										
+											class="font-weight-bold height-input"
+											placeholder="Enter Phone"
+											v-model="photographer.phone_number"
+											outline
+											:rules="[rules.required]"
 										></v-text-field>
 									</span>
 								</v-list-tile-title>
@@ -93,12 +93,11 @@
 									<span class="font-weight-bold item-title position-item">Address:</span>
 									<span class="contain-text-field">
 										<v-text-field
-										class="font-weight-bold height-input"
-										placeholder="Enter Address"
-										v-model="photographer.address"
-										outline
-										:rules="[rules.required]"
-										
+											class="font-weight-bold height-input"
+											placeholder="Enter Address"
+											v-model="photographer.address"
+											outline
+											:rules="[rules.required]"
 										></v-text-field>
 									</span>
 								</v-list-tile-title>
@@ -112,12 +111,12 @@
 									<span class="font-weight-bold item-title position-item">Status:</span>
 									<span class="contain-text-field">
 										<v-select
-						                class="font-weight-bold height-input"
-						                outline
-						                :items="status"
-						                v-model="photographer.status"
-						                :rules="[rules.required]"
-						              ></v-select>
+			                class="font-weight-bold height-input"
+			                outline
+			                :items="status"
+			                v-model="photographer.status"
+			                :rules="[rules.required]"
+			              ></v-select>
 									</span>
 								</v-list-tile-title>
 							</v-list-tile-content>
@@ -125,14 +124,14 @@
 
 					</v-list>
 				</v-form>
-						<v-spacer></v-spacer>
+				<v-spacer></v-spacer>
 
-						<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-							<v-btn dark color="indigo" class="add-btn" @click="savePhotographer()">
-								Save
-							</v-btn>
-							<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-						</v-card-actions>
+				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
+					<v-btn dark color="indigo" class="add-btn" @click="savePhotographer()">
+						Save
+					</v-btn>
+					<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
+				</v-card-actions>
 
 			</v-card>      	
 		</v-navigation-drawer>
@@ -140,6 +139,7 @@
 </template>
 
 <script>
+
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 import { getWithContentWrap } from '../../../helpers/helpers'
@@ -147,84 +147,94 @@ import { getWithContentWrap } from '../../../helpers/helpers'
 export default {
 
   name: 'PhotographerAdd',
+	data () {
+    return {
+    	drawerRight: false,
+    	photographer: {},
+    	rules: {
+	        required: value => !!value || 'This field is required.'
+    	},
+    	valid: true,
+    	branches: [],
+    	company: JSON.parse(localStorage.getItem('user')),
+			status: ['Active', 'Inactive'],
+			alertType:'success',
+			alertMes: '',
+			drawerHeaderStt: null,
+  		width: 0,
+    }
+	},
+	mounted() {
+		this.$root.$on('drawer-status', res => {
+  		this.drawerHeaderStt = res
+  	})
 
-  	data () {
-	    return {
-	    	drawerRight: false,
-	    	photographer: {},
-	    	rules: {
-		        required: value => !!value || 'This field is required.'
-	    	},
-	    	valid: true,
-	    	branches: [],
-	    	company: JSON.parse(localStorage.getItem('user')),
-				status: ['Active', 'Inactive'],
-				alertStt:false,
-				alertType:'success',
-				alertMes: '',
-				width: 0,
-		   	drawerHeaderStt: null
-	    }
-  	},
-  	computed: {
-			widthComputed(){
-				return this.width
-			}
-  	},
-  	mounted() {
-  		this.$root.$on('showPhotographerAdd', res => {
-  			this.photographer = {}
-  			this.$refs.form.reset()
-  			this.drawerRight = res.showNavigation
-  			this.width = this.getCurrentWithContentWrap()	
-  		});
+		this.$root.$on('showPhotographerAdd', res => {
+			this.photographer = {}
+			this.$refs.form.reset()
+			this.drawerRight = res.showNavigation
+			this.width = this.getCurrentWithContentWrap()
+		})
 
-  		this.getBranchCompany()
+		this.getBranchCompany()
+	},
+  methods: {
+  	getCurrentWithContentWrap(){
+  		return getWithContentWrap(this.drawerHeaderStt)
   	},
-  	methods: {
-  		getCurrentWithContentWrap(){
-  			return getWithContentWrap(this.drawerHeaderStt)
-  		},
-  		getBranchCompany()
-  		{
-  			get(config.API_URL+'company/branches?companyId='+this.company.company_id)
+		getBranchCompany() {
+			get(config.API_URL+'company/branches?companyId='+this.company.company_id)
 			.then(response => {
 				if(response && response.data.success) {
-
 					this.branches = response.data.data
 				}			
 				
 			})
 			.catch(error => {
-				console.log(error)
+				this.$notify({
+          title: 'Error',
+          message: 'Cannot Load Branches',
+          type: 'error',
+        })
 			})
-  		},
-  		savePhotographer()
-  		{
-  			if (this.$refs.form.validate()) {
+		},
+		savePhotographer() {
+			if (this.$refs.form.validate()) {
 
-	  			let params = {information: this.photographer, userId: this.company.id}
-	  			post(config.API_URL+'photographer', params)	
-	  			.then(response =>{
-	  				if(response && response.data.success) {
-	  					this.$root.$emit('reloadTablePhotographer')
-	  					this.alertStt = true
-					    this.alertMes = response.data.message
+  			let params = {information: this.photographer, userId: this.company.id}
+  			post(config.API_URL+'photographer', params)	
+  			.then(response =>{
+  				if(response && response.data.success) {
+  					this.$root.$emit('reloadTablePhotographer')
+				    this.alertMes = response.data.message
+				    this.alertType = 'success'
 
-					    setTimeout(() => {
-					          this.alertStt = false
-					          this.drawerRight = false
-					    }, 2000)
-	  				}
-	  			})
-	  			.catch(error => {
-	  				console.log(error)
-	  			})
-	  		}
+				    this.$notify({
+		          title: 'Success',
+		          message: this.alertMes,
+		          type: this.alertType,
+		          duration: 2000,
+		        })
+  				}
+  			})
+  			.catch(error => {
+  				this.$notify({
+	          title: 'Error',
+	          message: 'System Error Occurred',
+	          type: 'error',
+	          duration: 2000,
+	        })
+  			})
   		}
+		}
+	},
+	computed: {
+  	widthComputed(){
+  		return this.width
   	}
-}
+  },
+};
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 </style>

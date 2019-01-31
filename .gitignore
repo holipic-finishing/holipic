@@ -17,7 +17,8 @@ yarn-error.log
 /public/js/app.js
 /public/logos/
 /public/fonts/vendor/
-/resources/views/.fuse_hidden0000263400000001
+/public/image_uploads/
+/storage/
 dump.rdb
 /resources/js/views/dashboard/.fuse_hidden0000980400002570
 /app/Repositories/.fuse_hidden0001262f00000003
@@ -28,6 +29,8 @@ dump.rdb
 /public/files/
 /app/Http/Controllers/API/CompanyAdmin/.fuse_hidden0000255500000001
 /resources/js/components/Header/.fuse_hidden00001ffd00000002
+/resources/js/views/company-admin/branch/.fuse_hidden000020cd00000002
+/resources/js/views/company-admin/packages/.fuse_hidden000020cc00000001
 
 
 

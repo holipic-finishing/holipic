@@ -21,6 +21,8 @@ class OrderTableSeeder extends Seeder
         \App\Models\Transaction::truncate();
 
         \App\Models\TransactionExchange::truncate();
+        
+        \App\Models\TransactionCalulatorEwallet::truncate();
 
         $faker = Faker\Factory::create();
 
@@ -36,7 +38,7 @@ class OrderTableSeeder extends Seeder
 
         $purchase_from = ['WEB', 'SHOP'];
 
-        $status = ['DONE', 'PENDING', 'CANCEL', 'PAID'];
+        $status = ['PENDING', 'CANCEL', 'PAID'];
 
         $list_currency_id = [1,2,3];
 

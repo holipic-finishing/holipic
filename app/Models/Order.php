@@ -127,7 +127,7 @@ class Order extends Model
 
     public static function createTransaction($model){
         
-        if($model->status == 'PAID' || $model->status == 'DONE'){
+        if($model->status == 'PAID'){
 
             if($model->payment_method == "WEB"){
                 $results = Branch::with('company')
@@ -239,7 +239,7 @@ class Order extends Model
                 $invoice = 'INV'.time();
 
                 Transaction::create([
-                    'title' => 'Customer Paid',
+                    'title' => 'System Fee',
                     'amount' => $model->total_amount,
                     'status' => 'RECIVED',
                     'system_fee' => $system_fee,
@@ -250,10 +250,10 @@ class Order extends Model
                 ]);
 
                 TransactionCalulatorEwallet::create([
-                    'title' => 'Customer Paid',
-                    'amount' => 0,
+                    'title' => 'System Fee',
+                    'amount' => $system_fee,
                     'status' => 'DONE',
-                    'system_fee' => $system_fee,
+                    'system_fee' => 0,
                     'invoice' => $invoice,
                     'currency_id' =>$model->currency_id,
                     'company_id' => $company_id,

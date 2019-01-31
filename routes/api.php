@@ -237,9 +237,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
-	Route::get('e-wallet/transaction-history', 'TransactionAPIController@getEWalletTransactionHistory');
-
-	Route::get('e-wallet/total-ewallet', 'TransactionAPIController@calEwallet');
+	
 
 	/*************SettingAPIController**************/
 
@@ -273,6 +271,10 @@ Route::group(['namespace' => 'API'],function(){
 	/*************TransactionCalulatorEwalletsAPIController**************/
 
 	Route::resource('transaction_calulator_ewallets', 'TransactionCalulatorEwalletAPIController');
+
+	Route::get('e-wallet/transaction-history', 'TransactionCalulatorEwalletAPIController@getEWalletTransactionHistory');
+
+	Route::get('e-wallet/total-ewallet', 'TransactionCalulatorEwalletAPIController@calEwallet');
 	
 });	
 

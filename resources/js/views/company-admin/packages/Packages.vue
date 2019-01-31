@@ -88,10 +88,10 @@
 		    	</template>
 				</v-data-table>
 			</app-card>
-			<v-dialog v-model="dialog" persistent max-width="450">
+	    <v-dialog v-model="dialog" persistent max-width="450">
 	      <v-card>
-	        <v-card-title class="headline font-weight-bold">
-	          <v-icon x-large color="yellow accent-3" class="mr-2">
+	        <v-card-title class="headline font-weight-bold grey lighten-3">
+	          <v-icon large color="warning" class="mr-2">
 	            warning
 	          </v-icon>
 	          Do you want delete this item ?
@@ -99,8 +99,8 @@
 	        <v-divider class="mt-0"></v-divider>
 	        <v-card-actions>
 	          <v-spacer></v-spacer>
-	          <v-btn flat @click="dialog = false">Disagree</v-btn>
-	          <v-btn flat @click="deleteItem">Agree</v-btn>
+	          <v-btn color="secondary" outline small @click="dialog = false">Disagree</v-btn>
+	          <v-btn color="warning" outline small @click="deleteItem">Agree</v-btn>
 	        </v-card-actions>
 	      </v-card>
 	    </v-dialog>
@@ -318,11 +318,12 @@ export default {
 	    post(config.API_URL + 'edit/photoPackage/' + id, field)
 			.then((res) => {
 				if(res.data && res.data.success){
-					Vue.notify({
-            group: 'loggedIn',
-            type: 'success',
-            text: 'Edit Item Success!'
-          })
+          this.$notify({
+	          title: 'Success',
+	          message: 'Edit Item Successfully.',
+	          type: 'success',
+	          duration: 2000,
+	        })
           this.key = 0
 				}
 			})
@@ -371,13 +372,12 @@ export default {
 				this.loading = true;
 				this.fetchData();
 				this.dialog = false;	
-				// setTimeout(function(){
-		            Vue.notify({
-		                group: 'loggedIn',
-		                type: 'success',
-		                text: 'Delete Item Success!'
-		            });
-		       // },500);
+				this.$notify({
+          title: 'Success',
+          message: 'Delete Item Successfully.',
+          type: 'success',
+          duration: 2000,
+        })
 			})
 			.catch((err) =>{
 				console.log(err)

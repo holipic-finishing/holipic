@@ -484,8 +484,17 @@ class OrderRepository extends BaseRepository
 
         foreach ($results as $key => $result) {
             $results[$key]->branch_name = $result->branch->name;
-            $results[$key]->room_has_number = $result->customer->room->room_hash;
-            $results[$key]->customer_email = $result->customer->user->email;
+            if ($result->customer && $result->customer->room) {
+              $results[$key]->room_has_number = $result->customer->room->room_hash;
+            }else{
+              $results[$key]->room_has_number = 'No Room';
+            }
+
+            if ($result->customer && $result->customer->user) {
+              $results[$key]->customer_email = $result->customer->user->email;
+            }else{
+              $results[$key]->customer_email = 'No Email';
+            }
             $results[$key]->photographer_name = $result->photographer->name;
         }
         

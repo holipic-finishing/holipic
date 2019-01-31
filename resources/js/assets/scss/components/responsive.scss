@@ -32,6 +32,10 @@
 	}
 }
 
+.fix-croll-container{
+	overflow:hidden !important;
+}
+
 .rp-amount{
 	.v-list__tile__title{
 		height: auto !important;

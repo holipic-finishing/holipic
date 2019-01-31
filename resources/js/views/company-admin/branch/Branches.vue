@@ -1,5 +1,5 @@
 <template>
-	<v-container fluid pt-0 grid-list-xl mt-3 class="container-wrapper">
+	<v-container fluid px-0 py-0 class="fix-croll-container">
 		<v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"

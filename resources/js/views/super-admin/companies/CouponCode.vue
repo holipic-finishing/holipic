@@ -4,7 +4,6 @@
     right
     fixed
     temporary
-    this.width = this.getCurrentWithContentWrap()
     :width='widthComputed'
     @input="loadDataAfterCouponCodeEvent"
   >
@@ -89,7 +88,7 @@
 </template>
 
 <script>
-import  { get, post } from '../../../api'
+import { get, post } from '../../../api'
 import { getWithContentWrap } from '../../../helpers/helpers'
 import config from '../../../config'
 import Vue from 'vue'

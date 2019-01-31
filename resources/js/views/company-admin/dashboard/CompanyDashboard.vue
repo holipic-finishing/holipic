@@ -516,7 +516,7 @@ import LineChart from './LineChart.js'
 import { ChartConfig } from "../../../constants/chart-config";
 //config 
 import config from '../../../config/index.js'
-import { get, getWithData, post } from '../../../api/index.js'
+import { get, getWithData, post } from '../../../api'
 import moment from 'moment'
 import Orders from './Orders'
 

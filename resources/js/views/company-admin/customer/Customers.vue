@@ -1,13 +1,14 @@
 <template>
-	<v-container fluid px-0 py-0>
-		<v-layout row wrap>
-		<!-- <div id="app"> -->
-			<app-card
-				colClasses="xl12 lg12 md12 sm12 xs12"
-				:fullScreen="true"
-				:reloadable="true"
-				:closeable="false"
-			>
+	<v-container fluid grid-list-xl>
+    <v-layout row wrap>
+      <app-card
+        colClasses="xl12 lg12 md12 sm12 xs12"
+        :fullScreen="true"
+        :reloadable="true"
+        :closeable="false"
+        :fullBlock="true"
+        class="p-0"
+      >
 				<v-toolbar flat color="white">
 	        <v-toolbar-title>
 	          Customers Manage
@@ -18,13 +19,13 @@
 				<v-card-title>
 	      	<v-spacer></v-spacer>
 	        <div class="w-25">
-	  	      	<v-text-field
-		  	        v-model="search"
-		  	        append-icon="search"
-		  	        label="Enter Search Value"
-		  	        single-line
-		  	        hide-details
-	  	      	></v-text-field>
+  	      	<v-text-field
+	  	        v-model="search"
+	  	        append-icon="search"
+	  	        label="Enter Search Value"
+	  	        single-line
+	  	        hide-details
+  	      	></v-text-field>
 	        </div>
 	        <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn" :href="urlExport">
 						<v-icon small color="white">fas fa-file-excel</v-icon>
@@ -67,7 +68,36 @@
 						<td class="text-xs-left">{{ props.item.room.room_hash }}</td>
 						<td class="text-xs-left">{{ props.item.user.email }}</td>
 						<td class="text-xs-left">{{ props.item.customer_password }}</td>
-						<td class="text-xs-left"><img :src="props.item.avatar" width="50px"></td>
+						<td class="text-xs-left">
+							<v-tooltip bottom>
+								<img :src="props.item.avatar" width="50px" slot="activator">
+								<span>
+						      <v-card 
+						      	flat 
+						      	tile
+						      	width="200"
+						      	height="200"
+						      >
+						       	<v-img
+		                  :src="props.item.avatar"
+		                  :lazy-src="props.item.avatar"
+		                  aspect-ratio="1"
+		                  class="grey lighten-2"
+		                >
+		                  <v-layout
+		                    slot="placeholder"
+		                    fill-height
+		                    align-center
+		                    justify-center
+		                    ma-0
+		                  >
+		                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+		                  </v-layout>
+		                </v-img>
+						      </v-card>
+								</span>
+					    </v-tooltip>
+						</td>
 
 						<td class="text-xs-left">
 							<v-btn color="success" small class="btn-customer btn-gradient-primary">Manage</v-btn>
@@ -124,25 +154,24 @@
 				</v-data-table>
 				<customer-edit></customer-edit>
 			</app-card>
-		</v-layout>		
+		</v-layout>
 		<v-dialog v-model="dialog" persistent max-width="450">
-    	<v-card>
-        <v-card-title class="headline font-weight-bold">
-          <v-icon x-large color="yellow accent-3" class="mr-2">
+      <v-card>
+        <v-card-title class="headline font-weight-bold grey lighten-3">
+          <v-icon large color="warning" class="mr-2">
             warning
           </v-icon>
           Do you want delete this item ?
         </v-card-title>
-      	<v-divider class="mt-0"></v-divider>
+        <v-divider class="mt-0"></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn flat @click="dialog = false">Disagree</v-btn>
-          <v-btn flat @click="deleteItem">Agree</v-btn>
+          <v-btn color="secondary" outline small @click="dialog = false">Disagree</v-btn>
+          <v-btn color="warning" outline small @click="deleteItem">Agree</v-btn>
         </v-card-actions>
       </v-card>
-  	</v-dialog>
+    </v-dialog>
 	</v-container>		
-	<!-- </div>	 -->
 </template>
 
 <script>
@@ -152,94 +181,94 @@ import CustomerEdit from './CustomerEdit'
 
 export default {
 
-  	name: 'Customers',
-  	components: {
-  		CustomerEdit
-  	},
-
-  	data () {
-    	return {
-	    	dialog: false,
-	    	search:'',
-	    	items:[],
-	    	headers:[
-				{ text: 'ID', value: 'id', width: '1%'},	       
-				{ text: 'Name', value: 'name' },
-				{ text: 'Room', value: 'room.room_hash'},	
-				{ text: 'Email', value: 'user.email' },	
-				{ text: 'Password', value: 'customer_password' },		      
-				{ text: 'Avatar' },
-				{ text: 'Order'},
-				{ text: 'Invoice'},
-				{ text: 'Rest Photo'},
-				{ text: 'Set Offer(Rp)', width: '10%'},
-	      { text: 'Action', sortable: false ,width: '7%', value: 'actions'},  
-			],
-			pagination: {
-			  	rowsPerPage: 25  	
-	    	},
-			rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
-			company: JSON.parse(localStorage.getItem('user')),
-			urlExport: config.API_URL+'company/branches/customers/export?companyId='+JSON.parse(localStorage.getItem('user')).company_id,
-			itemIdToDelete:'',
-			loading:false
-    	}
-  	},
-  	created() {
-  		this.fetchData()
-
-  	},
-  	mounted() {
-  		this.$root.$on('reloadTableCustomer', res => this.fetchData())
-  	},
-  	methods:{
-  		fetchData()
-  		{
-	  		get(config.API_URL+'company/branches/customers?companyId='+this.company.company_id)
-	  		.then(response => {
-	  			if(response && response.data.success) {
-	  				this.items = response.data.data
-	  			}
-	  		})
-	  		.catch(error => {
-	  			console.log(error)
-	  		})
-	  	},
-	  	deleteItem() 
-	  	{
-	  		var userId = this.company.id
-	  		del(config.API_URL+'company/branches/customer/delete/'+this.itemIdToDelete+'?userId='+userId) 
-	  		.then(response => {
-	  			if(response && response.data.success) {
-	  				this.dialog = false
-	  				this.fetchData()
-	  			}
-	  		})
-	  	},
-	  	showDialog(item)
-	  	{
-	  		this.dialog = true
-	  		this.itemIdToDelete = item
-	  	},
-	  	showFormEdit(item)
-	  	{
-	  		this.$root.$emit('showFormEditCustomer', {showNavigation: true, data: item})
-	  	},
-  		changeSort (column) {
-	      	var columnsNoSearch = ['actions']
-	      	if (columnsNoSearch.indexOf(column) > -1) {
-	        	return
-	      	}
-	      	this.loading = true
-	      	if (this.pagination.sortBy === column) {
-	        	this.pagination.descending = !this.pagination.descending
-	      	} else {
-	        	this.pagination.sortBy = column
-	        	this.pagination.descending = false
-	      	}
-	      	this.loading = false
-    	}
+	name: 'Customers',
+	components: {
+		CustomerEdit
+	},
+	data () {
+  	return {
+    	dialog: false,
+    	search:'',
+    	items:[],
+    	headers:[
+			{ text: 'ID', value: 'id', width: '1%'},	       
+			{ text: 'Name', value: 'name' },
+			{ text: 'Room', value: 'room.room_hash'},	
+			{ text: 'Email', value: 'user.email' },	
+			{ text: 'Password', value: 'customer_password' },		      
+			{ text: 'Avatar' },
+			{ text: 'Order'},
+			{ text: 'Invoice'},
+			{ text: 'Rest Photo'},
+			{ text: 'Set Offer(Rp)', width: '10%'},
+      { text: 'Action', sortable: false ,width: '7%', value: 'actions'},  
+		],
+		pagination: {
+		  	rowsPerPage: 25  	
+    	},
+		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
+		company: JSON.parse(localStorage.getItem('user')),
+		urlExport: config.API_URL+'company/branches/customers/export?companyId='+JSON.parse(localStorage.getItem('user')).company_id,
+		itemIdToDelete:'',
+		loading:false
   	}
+	},
+	created() {
+		this.fetchData()
+	},
+	mounted() {
+		this.$root.$on('reloadTableCustomer', res => this.fetchData())
+	},
+	methods:{
+		fetchData() {
+  		get(config.API_URL+'company/branches/customers?companyId='+this.company.company_id)
+  		.then(response => {
+  			if(response && response.data.success) {
+  				this.items = response.data.data
+  			}
+  		})
+  		.catch(error => {
+  			console.log(error)
+  		})
+  	},
+  	deleteItem() {
+  		var userId = this.company.id
+  		del(config.API_URL+'company/branches/customer/delete/'+this.itemIdToDelete+'?userId='+userId) 
+  		.then(response => {
+  			if(response && response.data.success) {
+  				this.dialog = false
+  				this.fetchData()
+  				this.$notify({
+	          title: 'Success',
+	          message: 'Delete Item Successfully.',
+	          type: 'success',
+	          duration: 2000,
+	        })
+  			}
+  		})
+  	},
+  	showDialog(item) {
+  		this.dialog = true
+  		this.itemIdToDelete = item
+  	},
+  	showFormEdit(item) {
+  		this.$root.$emit('showFormEditCustomer', {showNavigation: true, data: item})
+  	},
+		changeSort (column) {
+    	var columnsNoSearch = ['actions']
+    	if (columnsNoSearch.indexOf(column) > -1) {
+      	return
+    	}
+    	this.loading = true
+    	if (this.pagination.sortBy === column) {
+      	this.pagination.descending = !this.pagination.descending
+    	} else {
+      	this.pagination.sortBy = column
+      	this.pagination.descending = false
+    	}
+    	this.loading = false
+  	}
+	}
 };
 </script>
 

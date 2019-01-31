@@ -9,12 +9,6 @@
   	}]"
   > 
     <router-view></router-view>
-    <notifications 
-      group="loggedIn" 
-      position="bottom right"
-      animation-type="velocity"
-      class="z-index"
-    />
   </v-app>
 </template>
 
@@ -121,7 +115,4 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .z-index{
-    z-index: 9999 !important;
-  }
 </style>

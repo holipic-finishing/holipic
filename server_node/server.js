@@ -1,19 +1,49 @@
 /**************************************
 *********  Import Socket IO   *********
 ***************************************/
-require('dotenv').config({path: '../.env'})
+require('dotenv').config({path: '../.env'});
+var SOCKET_IO_PORT = process.env.SOCKET_IO_PORT;
+var REDIS_PORT 	 = process.env.REDIS_PORT;
 
-var SOCKET_IO_PORT = process.env.SOCKET_IO_PORT
-var REDIS_PORT 	 = process.env.REDIS_PORT
+var fs = require('fs');
+var https = require('https');
 
-var io = require('socket.io')(SOCKET_IO_PORT)
-console.log('Connectd to port ' + SOCKET_IO_PORT)
+var app = https.createServer({
+    key: fs.readFileSync('../rsa_key/apache-selfsigned.key'),
+    cert: fs.readFileSync('../rsa_key/apache-selfsigned.crt'),
+});
+
+app.listen(SOCKET_IO_PORT);
+
+var io = require('socket.io').listen(app);
+
+io.set('transports', [
+    'websocket',
+    'flashsocket',
+    'htmlfile',
+    'xhr-polling',
+    'jsonp-polling',
+    'polling'
+]);
+
+console.log('Connectd to port ' + SOCKET_IO_PORT);
 
 io.on('error', function(socket){
-	console.log('error')
-})
+	console.log('error');
+});
+
 io.on('connection',function(socket){
-	console.log('New User Connecttion '+ socket.id)
+	console.log('New User Connecttion '+ socket.id);
+
+	// socket.on('join', function (joinRoom) {
+    //     socket.join(joinRoom);
+    //     console.log('a client has joined room '+ joinRoom);
+    // });
+     
+    // socket.on('leave', function (leaveroom) {
+    //     socket.leave(leaveroom);
+    //     console.log('a client has leave room '+ leaveroom);
+    // });
 })
 
 
@@ -29,23 +59,24 @@ var redis = new Redis(REDIS_PORT)
 /**********************************
 *********  Listen event   *********
 ***********************************/
-redis.psubscribe('*');
+redis.psubscribe("*",function(error, count){
+    console.log(error);
+});
+
 redis.on('pmessage',function(partner, channel, message){
-	console.log(channel)
-	console.log(message)
-	console.log(partner)
+	console.log('----------------Start------------------');
+    console.log(channel + ": " + message);
+    console.log('---------------------------------------');
 	
 	if(channel == 'view-listings') {
 		message = JSON.parse(message);
 	    io.emit(channel, message.data.notification);
-	    console.log('Sent');
 	}
 
 
     if(channel == 'view-activity'){
         message = JSON.parse(message);
-        console.log('Send log')
         io.emit(channel, message.data.activity);
-    }
-    console.log('----Log----')
+    };
+    console.log('----------------End-------------------');
 })

@@ -58,10 +58,10 @@
 
 	     		 	<!-- <v-list-tile class="height-address"> -->
 
-	     		<v-list-tile>
+	     		<v-list-tile class="v-list-address">
 
-						<v-list-tile-content>
-	          	<v-list-tile-title class="content-flex">
+						<v-list-tile-content >
+	          	<v-list-tile-title class="content-flex ">
 		          	<span class="font-weight-bold item-title">Address:</span>
 		          	<span class="max-value">{{photographer.address}}</span>
         			</v-list-tile-title>

@@ -7,7 +7,6 @@
 	app 
 	this.width = this.getCurrentWithContentWrap()
   :width='widthComputed'
-
 	>
 		<v-card class="h-100 position-relative">
 
@@ -123,8 +122,6 @@
 
 				</v-list>
 
-				<!-- <v-spacer></v-spacer> -->
-
 				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end fix-flex-end">
 					<v-btn dark color="indigo" class="add-btn" @click="saveBranch()">
 						Save
@@ -142,6 +139,7 @@
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 import Vue from 'vue'
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
 
@@ -214,11 +212,6 @@ export default {
 	        })
   			})
   		}
-  	}
-  },
-  computed: {
-  	widthComputed(){
-  		return this.width
   	}
   }
 };

@@ -217,12 +217,8 @@ export default {
   	{
   		return getWithContentWrap(this.drawerHeaderStt)
   	},
-  	// unDisableItem(index) {
-  	// 	this.key = index
-  	// },
   	pickFile() {
   		 this.$refs.image.click()
-
   	},
   	onFilePicked (e) {
 

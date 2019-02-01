@@ -1,6 +1,6 @@
 <template>
 
-	<v-container fluid grid-list-xl>
+	<v-container fluid px-0 py-0 class="fix-croll-container">
 		<v-layout row wrap>
 		<!-- <div id="app"> -->
 			<app-card
@@ -9,6 +9,7 @@
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
+				:fullBlock="false"
 			>
 
 				<v-toolbar flat color="white">

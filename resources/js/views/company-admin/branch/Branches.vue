@@ -1,19 +1,19 @@
 <template>
-
-	<v-container fluid grid-list-xl>
+	<v-container fluid px-0 py-0 class="fix-croll-container">
 		<v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="p-0 elevation-5 rp-search"
+				customClasses="rp-0 elevation-5 rp-search"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
+				:fullBlock="false"
 			>
 
 				<v-toolbar flat color="white">
-	        <v-toolbar-title>
-	          Branches List
-	        </v-toolbar-title>
+		        <v-toolbar-title>
+		          Branches List
+		        </v-toolbar-title>
 		    </v-toolbar>
       	<v-divider class="m-0"></v-divider>
 
@@ -33,7 +33,6 @@
 						<v-icon dark>add</v-icon>
 					</v-btn>
 		    </v-card-title>
-		    <!--End Search Component -->
 
 		    <!-- Table Component -->
 			  <v-data-table 
@@ -151,7 +150,7 @@ export default {
 	data () {
 	    return {
 	    	headers: [	        
-						{ text: 'ID', value: 'id'},	       
+						{ text: 'ID', value: 'id', width: '60%'},	       
 						{ text: 'Branch Name', value: 'name' },
 						{ text: 'Username', value: 'user.username'},	
 						{ text: 'Password', value: 'branch_password' },	

@@ -1,14 +1,17 @@
 <template>
-	<v-container fluid grid-list-xl>
-    <v-layout row wrap>
-      <app-card
-        colClasses="xl12 lg12 md12 sm12 xs12"
-        :fullScreen="true"
-        :reloadable="true"
-        :closeable="false"
-        :fullBlock="true"
-        class="p-0"
-      >
+
+	<v-container fluid px-0 py-0 class="fix-croll-container">
+		<v-layout row wrap>
+		<!-- <div id="app"> -->
+			<app-card
+				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5 rp-search"
+				:fullScreen="true"
+				:reloadable="true"
+				:closeable="false"
+				:fullBlock="false"
+			>
+
 				<v-toolbar flat color="white">
 	        <v-toolbar-title>
 	          Customers Manage
@@ -27,15 +30,17 @@
 	  	        hide-details
   	      	></v-text-field>
 	        </div>
-	        <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn" :href="urlExport">
-						<v-icon small color="white">fas fa-file-excel</v-icon>
-					</a>
+	        
+			    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn custom-btn-customer rp-btn-package ">
+					<v-icon small color="white">fas fa-file-excel</v-icon>
+				</a>
+			   
 	    	</v-card-title>
 
 				<v-data-table 
 					:headers="headers" 
 					:items="items" 
-					class="body-2 global-custom-table"
+					class="body-2 custom-table-customer"
 					:pagination.sync="pagination" 
 					:rows-per-page-items="rowsPerPageItems" 
 					default-sort="id:desc"

@@ -152,6 +152,7 @@
 .custom-v-icon{
 	line-height:unset !important;
 	margin-top: 4px !important;
+	font-size:16px;
 }
 
 .custom-v-select{
@@ -169,10 +170,11 @@
 
 .custom-btn{
    	display:block;
-  	height: 41px;
-  	width: 41px;
+  	height: 40px;
+  	width: 40px;
   	border-radius: 50%;
-  	padding-top: 3px !important;
+  	padding-top: 5px !important;
+  	box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
 }
 
 .grid-template-column{
@@ -195,4 +197,12 @@
 
 .app-card{
 	box-shadow: none !important;
+}
+
+.btn-primary{
+	 border:none !important;
+}
+
+.btn-add {
+	padding-top:1px !important;
 }

@@ -1,13 +1,13 @@
 <template>
 	<v-layout row wrap>
 		<v-navigation-drawer 
-			fixed
-	    v-model="drawerRight"
-	  	right
-	    clipped
-	    app
-	    :width='widthComputed'
-	    temporary
+		fixed
+		v-model="drawerRight" 
+		right
+		temporary 
+		app 
+		this.width = this.getCurrentWithContentWrap()
+  	:width='widthComputed'
 		>
 			<v-card class="h-100 position-relative">
 
@@ -140,89 +140,86 @@
 </template>
 
 <script>
-import  { get, post, put, del, getWithData } from '../../../api'
-import config from '../../../config'
+
+import  { get, post, put, del, getWithData } from '../../../api/index.js'
+import config from '../../../config/index.js'
 import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
 
   name: 'PhotographerEdit',
 
-	data () {
-    return {
-    	drawerRight: false,
-    	photographer: {},
-    	rules: {
-	        required: value => !!value || 'This field is required.'
-    	},
-    	valid: true,
-    	branches: [],
-    	company: JSON.parse(localStorage.getItem('user')),
-			status: ['Active', 'Inactive'],
-			alertStt:false,
-			alertType:'success',
-			alertMes: '',
-			key: 0,
-			currentSelectBranch: {
-        id: '',
-        name: '' 
-	    },
-	    selectStatus:'',
-	   	drawerHeaderStt: null,
-  		width: 0,
-    }
-	},
+  	data () {
+	    return {
+	    	drawerRight: false,
+	    	photographer: {},
+	    	rules: {
+		        required: value => !!value || 'This field is required.'
+	    	},
+	    	valid: true,
+	    	branches: [],
+	    	company: JSON.parse(localStorage.getItem('user')),
+				status: ['Active', 'Inactive'],
+				alertStt:false,
+				alertType:'success',
+				alertMes: '',
+				key: 0,
+				currentSelectBranch: {
+			        id: '',
+			        name: '' 
+			    },
+		    selectStatus:'',
+		    width: 0,
+		   	drawerHeaderStt: null
+	    }
+  	},
+  	computed: {
+			widthComputed(){
+				return this.width
+			}
+  	},
 	mounted() {
-		this.$root.$on('drawer-status', res => {
-  		this.drawerHeaderStt = res
-  	})
-
-  	this.$root.$on('showFormEditPhotgrapher', res => {
-  		this.drawerRight = res.showNavigation
-  		this.photographer = res.data
-  		if(this.photographer.status){
-  			this.selectStatus = 'Active'
-  		} else {
-  			this.selectStatus = 'Inactive'
-  		}
-  		this.currentSelectBranch = {id: res.data.branch.id, name: res.data.branch.name}
-  		this.width = this.getCurrentWithContentWrap()
-  	})
-
-  	this.getBranchCompany()
+	  	this.$root.$on('showFormEditPhotgrapher', res => {
+	  		this.drawerRight = res.showNavigation,
+	  		this.photographer = res.data
+	  		if(this.photographer.status){
+	  			this.selectStatus = 'Active'
+	  		} else {
+	  			this.selectStatus = 'Inactive'
+	  		}
+	  		this.currentSelectBranch = {id: res.data.branch.id, name: res.data.branch.name}
+	  		this.width = this.getCurrentWithContentWrap()	
+	  	})
+	  	this.getBranchCompany()
 	},
 	methods: {
 		getCurrentWithContentWrap(){
-  		return getWithContentWrap(this.drawerHeaderStt)
+  			return getWithContentWrap(this.drawerHeaderStt)
   	},
 		getBranchCompany() {
-  		get(config.API_URL+'company/branches?companyId='+this.company.company_id)
-			.then(response => {
-				if(response && response.data.success) {
-					this.branches = response.data.data					
-				}
-			})
-			.catch(error => {
-				this.$notify({
-          title: 'Error',
-          message: 'Cannot Load Branches',
-          type: 'error',
-        })
-			})
-  	},
-		unDisableItem(index) {
-			this.key = index
-		},
-  	checkValue() {
-			if(this.photographer.name == '' || this.photographer.address == '' || this.photographer.phone_number == '' || this.selectStatus == '') {
-        this.alertType = 'error'
-        this.alertMes = 'Please type text'         
-        this.$notify({
-          title: 'Error',
-          message: this.alertMes,
-          type: this.alertType,
-          duration: 2000,
-        })
+	  		get(config.API_URL+'company/branches?companyId='+this.company.company_id)
+				.then(response => {
+					if(response && response.data.success) {
+						this.branches = response.data.data					
+					}
+				})
+				.catch(error => {
+					this.$notify({
+			          title: 'Error',
+			          message: 'Cannot Load Branches',
+			          type: 'error',
+	        		})
+				})
+  		},
+		checkValue(){
+			if(this.photographer.name == '' || this.photographer.address == '' || this.photographer.phone_number == '' || this.selectStatus == '')
+			{
+				this.alertStt = true
+		        this.alertType = 'error'
+		        this.alertMes = 'Please type text'         
+		        setTimeout(() => {
+		          this.alertStt = false
+		        }, 1500)
 
 				this.$root.$emit('reloadTablePhotographer')	
 				this.key = 0
@@ -230,6 +227,81 @@ export default {
 			}
 			return true
 		},
+		// editPhotographer(field, value)
+		// {
+		// 	let params = {}
+
+		// 	switch(field) {
+		// 	 	case "branch" :
+		// 			params = {branch_id: value};
+		// 			break;
+		// 	case "name" :
+		// 		params = {name: value};
+
+		// 		break;
+		// 	case "phone_number" :
+		// 		params = {phone_number: value};
+		// 		break;
+		// 	case "address" :
+		// 		params = {address: value};
+		// 		break;
+		// 	case "status" :
+		// 		params = {status: value};
+		// 		break;
+		// 		default:
+		    	
+		// 	}
+			
+		// 	if(this.checkValue()) {
+		// 		put(config.API_URL+'photographer/'+this.photographer.id, {params: params})
+		// 		.then (response => {
+		// 			if(response && response.data.success) {
+		// 				this.alertStt = true
+		// 	          	this.alertType = 'success'
+		// 	          	this.alertMes = response.data.message					
+		// 	          	setTimeout(() => {
+		// 	            	this.alertStt = false
+		// 				}, 2000)
+		// 				this.key = 0
+		// 				this.$root.$emit('reloadTablePhotographer')	
+		// 			}
+		// 		})
+
+		// 		.catch((e) =>{
+		// 			this.alertStt = true
+		// 	        this.alertType = 'error'
+		// 	        this.alertMes = response.data.message         
+		// 	        setTimeout(() => {
+		// 	          this.alertStt = false
+		// 	        }, 1500)
+		// 			this.$root.$emit('reloadTablePhotographer')
+		// 			this.key = 0
+		// 		})	
+		// 	}
+			
+		// }
+
+  // 	},
+	unDisableItem(index) {
+			this.key = index
+	},
+ //  	checkValue() {
+	// 		if(this.photographer.name == '' || this.photographer.address == '' || this.photographer.phone_number == '' || this.selectStatus == '') {
+ //        this.alertType = 'error'
+ //        this.alertMes = 'Please type text'         
+ //        this.$notify({
+ //          title: 'Error',
+ //          message: this.alertMes,
+ //          type: this.alertType,
+ //          duration: 2000,
+ //        })
+
+	// 			this.$root.$emit('reloadTablePhotographer')	
+	// 			this.key = 0
+	// 			return false
+	// 		}
+	// 		return true
+	// },
   	editPhotographer(field, value) {
 			let params = {}
 
@@ -282,12 +354,8 @@ export default {
 				})	
 			}
   	}
-  },
-  computed: {
-  	widthComputed(){
-  		return this.width
-  	}
   }
+  
 };
 </script>
 

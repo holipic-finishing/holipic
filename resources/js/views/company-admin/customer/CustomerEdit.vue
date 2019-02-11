@@ -1,13 +1,15 @@
 <template>
-		<v-navigation-drawer 
-			fixed
-			v-model="drawerRight" 
-			right
-			temporary 
-			app 
-			class="chat-sidebar-wrap"
-			:width='widthComputed'
+	<v-navigation-drawer 
+		fixed
+		v-model="drawerRight" 
+		right
+		temporary 
+		app 
+		this.width = this.getCurrentWithContentWrap()
+  	:width='widthComputed'
 		>
+
+
 			<v-card class="h-100 position-relative">
 				<v-toolbar>
 					<v-toolbar-title class="text-capitalize">Edit Customer</v-toolbar-title>
@@ -154,8 +156,9 @@
 </template>
 
 <script>
-import  { get, post, put, del, getWithData } from '../../../api'
-import config from '../../../config'
+
+import  { get, post, put, del, getWithData } from '../../../api/index.js'
+import config from '../../../config/index.js'
 import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
@@ -170,18 +173,25 @@ export default {
 		        required: value => !!value || 'This field is required.'
 	    	},
 	    valid: true,
-			alertType:'success',
-			alertMes: '',
-			key:0,
-			status: ['Active', 'Inactive'],
-			selectStatus:'',
-			imageName: '',
-			imageUrl: '',
-			imageFile: '',
-			dialog:'',
-			drawerHeaderStt: null,
-    	width: 0,
+	    alertStt:false,
+		alertType:'success',
+		alertMes: '',
+		key:0,
+		status: ['Active', 'Inactive'],
+		selectStatus:'',
+		imageName: '',
+		imageUrl: '',
+		imageFile: '',
+		dialog:'',
+		width: 0,
+		drawerHeaderStt: null
+
     }
+  },
+  computed: {
+		widthComputed(){
+			return this.width
+		}
   },
   mounted() {
   	this.$root.$on('drawer-status', res => {
@@ -201,14 +211,14 @@ export default {
   },
   methods: {
   	getCurrentWithContentWrap(){
-  		return getWithContentWrap(this.drawerHeaderStt)
+  			return getWithContentWrap(this.drawerHeaderStt)
   	},
-  	unDisableItem(index) {
-  		this.key = index
+  	unDisableItem(index) 
+  	{
+  		return getWithContentWrap(this.drawerHeaderStt)
   	},
   	pickFile() {
   		 this.$refs.image.click()
-
   	},
   	onFilePicked (e) {
 

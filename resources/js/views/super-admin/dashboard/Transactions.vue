@@ -13,8 +13,9 @@
         :right="!rtlLayout" 
         temporary 
         app 
-        class="chat-sidebar-wrap"
-        width="450"
+       
+        this.width = this.getCurrentWithContentWrap()
+        :width='widthComputed'
       >
         <transaction-item :eventType="eventType" :item="item"></transaction-item>
       </v-navigation-drawer>
@@ -165,6 +166,7 @@ import { get, post, put, del } from '../../../api'
 import { mapGetters } from "vuex"
 import TransactionItem from './TransactionItem'
 import Vue from 'vue'
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
 
@@ -235,7 +237,9 @@ export default {
       	defaultDay: 'default'
       },
       itemIdToDelete: null,
-      rowsPerPageItems: [ 20, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 } ]
+      rowsPerPageItems: [ 20, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 } ],
+      width: 0,
+      drawerHeaderStt: null
     }
   },
   computed: {
@@ -247,6 +251,9 @@ export default {
     },
     itemsToView(){
     	return this.desserts
+    },
+    widthComputed(){
+      return this.width
     }
   },
   mounted () {
@@ -271,6 +278,9 @@ export default {
 
   },
   methods: {
+    getCurrentWithContentWrap(){
+      return getWithContentWrap(this.drawerHeaderStt)
+    },
     fetchData(params){
     	post(config.API_URL + 'histories/transactions', params)
 				.then((res) => {
@@ -309,6 +319,7 @@ export default {
       this.$root.$emit('disabled-transaction-item')
       this.eventType = event
       this.item = item
+      this.width = this.getCurrentWithContentWrap()
     },
     showDialog(id){
       this.dialog = true

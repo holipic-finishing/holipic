@@ -1,12 +1,12 @@
 <template>
 	<v-navigation-drawer 
-		fixed
-		v-model="drawerRight" 
-		right
-		temporary 
-		app 
-		class="chat-sidebar-wrap"
-		:width='widthComputed'
+	fixed
+	v-model="drawerRight" 
+	right
+	temporary 
+	app 
+	this.width = this.getCurrentWithContentWrap()
+  :width='widthComputed'
 	>
 		<v-card class="h-100 position-relative">
 
@@ -122,8 +122,6 @@
 
 				</v-list>
 
-				<!-- <v-spacer></v-spacer> -->
-
 				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end fix-flex-end">
 					<v-btn dark color="indigo" class="add-btn" @click="saveBranch()">
 						Save
@@ -137,8 +135,10 @@
 </template>
 
 <script>
-import  { get, post, put, del, getWithData } from '../../../api'
-import config from '../../../config'
+
+import  { get, post, put, del, getWithData } from '../../../api/index.js'
+import config from '../../../config/index.js'
+import Vue from 'vue'
 import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
@@ -154,11 +154,17 @@ export default {
     	},
     	valid: true,
     	company: JSON.parse(localStorage.getItem('user')),
+    	alertStt:false,
 			alertType:'success',
 			alertMes: '',
-			drawerHeaderStt: null,
-    	width: 0,
+			width: 0,
+	   	drawerHeaderStt: null
     }
+  },
+  computed: {
+		widthComputed(){
+			return this.width
+		}
   },
   mounted() {
   	this.$root.$on('drawer-status', res => {
@@ -169,7 +175,8 @@ export default {
   		this.branch = {}
   		this.$refs.form.reset()
   		this.drawerRight =  response.showNavigation
-  		this.width = this.getCurrentWithContentWrap()
+  		this.width = this.getCurrentWithContentWrap()	
+  	
   	})
   },
   methods: {
@@ -205,11 +212,6 @@ export default {
 	        })
   			})
   		}
-  	}
-  },
-  computed: {
-  	widthComputed(){
-  		return this.width
   	}
   }
 };

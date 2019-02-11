@@ -1,13 +1,14 @@
 <template>
-	<v-container fluid grid-list-xl py-1>
+
+	<v-container fluid px-0 py-0 class="fix-croll-container">
 		<v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5 rp-search"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
-				:fullBlock="true"
-				class="p-0"
+				:fullBlock="false"
 			>
 				<v-toolbar flat color="white">
 	        <v-toolbar-title>
@@ -17,18 +18,18 @@
 	      <v-divider class="m-0"></v-divider>
 				<!--Search Component -->
 				<v-card-title>
-	      	<v-spacer></v-spacer>
-	        <div class="w-25">
-	  	      <v-text-field
-	  	        v-model="search"
-	  	        append-icon="search"
-	  	        label="Enter Search Value"
-	  	        single-line
-	  	        hide-details
-	  	      ></v-text-field>
-	        </div>
-			    <v-btn small fab dark color="indigo" @click="showFromAdd()" class="ml-2 btn-gradient-primary">
-						<v-icon dark>add</v-icon>
+			      	<v-spacer></v-spacer>
+			        <div class="w-25">
+			  	      <v-text-field
+			  	        v-model="search"
+			  	        append-icon="search"
+			  	        label="Enter Search Value"
+			  	        single-line
+			  	        hide-details
+			  	      ></v-text-field>
+			        </div>
+				    <v-btn small fab dark color="indigo" @click="showFromAdd()" class="ml-2 btn-gradient-primary rp-btn-add-export">
+							<v-icon dark>add</v-icon>
 					</v-btn>
 		    </v-card-title>
 

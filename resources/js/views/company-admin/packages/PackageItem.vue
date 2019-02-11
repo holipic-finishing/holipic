@@ -22,6 +22,10 @@
 	    </v-toolbar>
 
 	    <v-divider class="no-mg-bottom"></v-divider>
+	    
+	    <v-list>
+	    	<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
+		</v-list>
 
 	    <!-- <v-list>
 	    	<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>

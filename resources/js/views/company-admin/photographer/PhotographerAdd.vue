@@ -1,13 +1,13 @@
 <template>
 	<v-layout row wrap>
 		<v-navigation-drawer 
-			fixed
-	    v-model="drawerRight"
-	  	right
-	    clipped
-	    app
-	    :width='widthComputed'
-	    temporary
+		fixed
+		v-model="drawerRight" 
+		right
+		temporary 
+		app 
+		this.width = this.getCurrentWithContentWrap()
+  		:width='widthComputed'
 		>
 			<v-card class="h-100 position-relative">
 
@@ -139,15 +139,14 @@
 </template>
 
 <script>
-import  { get, post, put, del, getWithData } from '../../../api'
-import config from '../../../config'
-import { getWithContentWrap } from '../../../helpers/helpers'
 
+import  { get, post, put, del, getWithData } from '../../../api/index.js'
+import config from '../../../config/index.js'
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
 
   name: 'PhotographerAdd',
-
 	data () {
     return {
     	drawerRight: false,

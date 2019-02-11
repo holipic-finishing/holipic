@@ -160,7 +160,6 @@ class BranchAPIController extends AppBaseController
 
     public function saveBranchCompany()
     {
-        dd('hung');
         
         $checkUserName = $this->branchRepository->checkUniqueUserName(request('information.username'));
 

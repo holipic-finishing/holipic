@@ -110,7 +110,7 @@
 
 	.v-card__title {
 		.custom-btn {
-			padding: 5px !important;
+			padding: 7px !important;
 	    min-width: 40px !important;
 		}
 
@@ -143,6 +143,14 @@
 			min-width: 50% !important;
 		}
 	}
+
+	.v-card__title {
+		.custom-btn-customer {
+			padding: 7px !important;
+		}
+	
+	}
+	
 
 }
 
@@ -226,7 +234,7 @@
 		}
 
 		.custom-btn {
-			padding: 5px !important;
+			padding: 7px !important;
 			height: 40px !important;
 	    width: 40px !important;
 		}
@@ -279,6 +287,13 @@
 	.v-list-address {
 		.v-list__tile {
 			height: auto !important;
+		}
+	}
+
+	.custom-btn-sale{
+		.v-btn {
+			height: 40px !important; 
+     		width: 40px !important; 
 		}
 	}
 

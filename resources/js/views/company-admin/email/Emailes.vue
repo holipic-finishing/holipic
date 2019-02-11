@@ -44,11 +44,12 @@
 	  	        hide-details
 	  	      ></v-text-field>
 	        </div>
-					<v-btn fab dark small color="#5D92F4" class="ml-2 btn-gradient-primary custom-btn btn-add" @click="showEmail()">
-						<v-icon dark >add</v-icon>
+
+					<v-btn small fab dark color="indigo" @click="showFromAdd()" class="ml-2 btn-gradient-primary custom-btn btn-add">
+							<v-icon dark>add</v-icon>
 					</v-btn>
 			    <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn btn-export" @click="exportCSV">
-						<v-icon small color="white" class="custom-v-icon">fas fa-file-excel</v-icon>
+						<v-icon small color="white" style="font-size:16px">fas fa-file-excel</v-icon>
 					</a>
 		    </v-card-title>
 

@@ -6,8 +6,9 @@
 		right
 		temporary 
 		app 
-		class="chat-sidebar-wrap"
-		width="450"
+	
+		this.width = this.getCurrentWithContentWrap()
+  		:width='widthComputed'
 			>
 			<v-card class="h-100 position-relative">
 				<v-toolbar>
@@ -167,6 +168,8 @@
 <script>
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
+import { getWithContentWrap } from '../../../helpers/helpers'
+
 export default {
 
   name: 'CustomerEdit',
@@ -189,7 +192,9 @@ export default {
 		imageName: '',
 		imageUrl: '',
 		imageFile: '',
-		dialog:''
+		dialog:'',
+		width: 0,
+		drawerHeaderStt: null
     }
   },
   mounted() {
@@ -201,9 +206,18 @@ export default {
   		} else {
   			this.selectStatus = 'Inactive'
   		}
+  		this.width = this.getCurrentWithContentWrap()
   	})
   },
+  computed:{
+  	widthComputed(){
+			return this.width
+	}
+  },
   methods: {
+  	getCurrentWithContentWrap(){
+  		return getWithContentWrap(this.drawerHeaderStt)
+  	},
   	unDisableItem(index) 
   	{
   		this.key = index

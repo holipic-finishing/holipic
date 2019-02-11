@@ -1,123 +1,122 @@
-<template>
-	<div class="customer-table">
-		<v-container fluid grid-list-xl pt-0>
-			<div id="app">
-				<v-app id="inspire">
-					<v-card class="p-4">
-						<v-toolbar flat color="white">
-					        <v-toolbar-title>
-					          	 Manage Customers
-					          	 <!-- <v-btn dark color="indigo" class="add-btn" >
-							      Export
-							    </v-btn> -->
-					        </v-toolbar-title>
-					    </v-toolbar>
+<template>	
+	<v-container fluid px-0 py-0 class="fix-croll-container">
+		<v-layout row wrap>
+			<app-card
+				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5 rp-search"
+				:fullScreen="true"
+				:reloadable="true"
+				:closeable="false"
+				:fullBlock="false"
+			>
+				<v-toolbar flat color="white">
+	        <v-toolbar-title>
+	          Customers Manage
+	        </v-toolbar-title>
+		    </v-toolbar>
+	      <v-divider class="m-0"></v-divider>
+				<!--Search Component -->
+				<v-card-title>
+	      	<v-spacer></v-spacer>
+	        <div class="w-25">
+  	      	<v-text-field
+	  	        v-model="search"
+	  	        append-icon="search"
+	  	        label="Enter Search Value"
+	  	        single-line
+	  	        hide-details
+  	      	></v-text-field>
+	        </div>
+	        
+			    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn custom-btn-customer rp-btn-package ">
+					<v-icon small color="white">fas fa-file-excel</v-icon>
+				</a>
+			   
+	    	</v-card-title>
 
-					    <v-divider></v-divider>
+					<v-data-table 
+						:headers="headers" 
+						:items="items" 
+						class="body-2 custom-table-customer"
+						:pagination.sync="pagination" 
+						:rows-per-page-items="rowsPerPageItems" 
+						default-sort="id:desc"
+						:search="search"
+					>
+						<template slot="items" slot-scope="props" >
+							<td>{{ props.item.id }}</td>
+							<td class="text-xs-left" >{{ props.item.name }}</td>
+							<td class="text-xs-left">{{ props.item.room.room_hash }}</td>
+							<td class="text-xs-left">{{ props.item.user.email }}</td>
+							<td class="text-xs-left">{{ props.item.customer_password }}</td>
+							<td class="text-xs-left"><img :src="props.item.avatar" width="50px" slot="activator"></td>
+							<td class="text-xs-left">
+								<v-btn color="success" small class="btn-customer btn-gradient-primary">Manage</v-btn>
+							</td>
+							<td class="text-xs-left">
+								<v-btn color="success" small class="btn-customer btn-gradient-primary">Manage</v-btn>
+							</td>
+							<td class="text-xs-left">
+								<v-btn color="success" small class="btn-customer btn-gradient-primary">100</v-btn>
+							</td>
+							<td class="text-xs-center center-input-customer">
+								<v-text-field
+								  name="name"
+								  outline
+								  class="height-input-customer width-input "
+								></v-text-field>
+							</td>
+				        	<td class="text-left action-width">
+				        		<v-icon
+									small
+									class="mr-2 hover-icon"
+									@click="showGift(props.item)"
+								>
+									card_giftcard
+								</v-icon>
 
-						<v-toolbar flat color="white" class="plr-0">
-							<v-spacer></v-spacer>
-							<v-text-field
-					        v-model="search"
-					        append-icon="search"
-					        label="Enter Search Value"
-					        single-line
-					        hide-details
-					        class="mr-3"
-						    ></v-text-field>
-						    <v-tooltip bottom>
-							    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary pl-2 pr-2 ml-3">
-										<v-icon small>fas fa-file-excel</v-icon>
-									</a>
-							    <span>Export companies</span>
-						    </v-tooltip>
-						</v-toolbar>
+								<v-icon
+									small
+									class="mr-2 hover-icon"
+									@click="showFormEdit(props.item)"
+								>
+									edit
+								</v-icon>
 
-						<v-data-table 
-							:headers="headers" 
-							:items="items" 
-							class="elevation-5 custom-table-zoom"  
-							:pagination.sync="pagination" 
-							:rows-per-page-items="rowsPerPageItems" 
-							default-sort="id:desc"
-							:search="search"
-						>
-							<template slot="items" slot-scope="props" >
-								<td>{{ props.item.id }}</td>
-								<td class="text-xs-left" >{{ props.item.name }}</td>
-								<td class="text-xs-left">{{ props.item.room.room_hash }}</td>
-								<td class="text-xs-left">{{ props.item.user.email }}</td>
-								<td class="text-xs-left">{{ props.item.customer_password }}</td>
-								<td class="text-xs-left"><img :src="props.item.avatar" width="100%"></td>
+								<v-icon
+									small
+									class="mr-2 hover-icon"
+									@click="showDialog(props.item.id)"
+								>
+									delete
+								</v-icon>
 
-								<td class="text-xs-left">
-									<v-btn color="success" small >Manage</v-btn>
-								</td>
-								<td class="text-xs-left">
-									<v-btn color="success" small >Manage</v-btn>
-								</td>
-								<td class="text-xs-left">
-									<v-btn color="success" small >100</v-btn>
-								</td>
-								<td class="text-xs-left">
-									<v-text-field
-									  name="name"
-									  outline
-									  class="height-input center-input"
-									></v-text-field>
-								</td>
-					        	<td class="text-left action-width">
-					        		<v-icon
-										small
-										class="mr-2 hover-icon"
-										@click="showGift(props.item)"
-									>
-										card_giftcard
-									</v-icon>
+							</td>
+						</template>
+					</v-data-table>
+					<customer-edit></customer-edit>
+					
+				</v-card>
+			</app-card>
 
-									<v-icon
-										small
-										class="mr-2 hover-icon"
-										@click="showFormEdit(props.item)"
-									>
-										edit
-									</v-icon>
-
-									<v-icon
-										small
-										class="mr-2 hover-icon"
-										@click="showDialog(props.item.id)"
-									>
-										delete
-									</v-icon>
-
-								</td>
-							</template>
-						</v-data-table>
-						<customer-edit></customer-edit>
-						
-					</v-card>
-				</v-app>
-
-			</div>
-			<v-dialog v-model="dialog" persistent max-width="450">
-		      <v-card>
-		        <v-card-title class="headline font-weight-bold">
-		          <v-icon x-large color="yellow accent-3" class="mr-2">
-		            warning
-		          </v-icon>
-		          Do you want delete this item ?
-		        </v-card-title>
-		        <v-divider class="mt-0"></v-divider>
-		        <v-card-actions>
-		          <v-spacer></v-spacer>
-		          <v-btn flat @click="dialog = false">Disagree</v-btn>
-		          <v-btn flat @click="deleteItem">Agree</v-btn>
-		        </v-card-actions>
-		      </v-card>
-		    </v-dialog>
-		</v-container>		
-	</div>	
+		</v-layout>
+		<v-dialog v-model="dialog" persistent max-width="450">
+	      <v-card>
+	        <v-card-title class="headline font-weight-bold">
+	          <v-icon x-large color="yellow accent-3" class="mr-2">
+	            warning
+	          </v-icon>
+	          Do you want delete this item ?
+	        </v-card-title>
+	        <v-divider class="mt-0"></v-divider>
+	        <v-card-actions>
+	          <v-spacer></v-spacer>
+	          <v-btn flat @click="dialog = false">Disagree</v-btn>
+	          <v-btn flat @click="deleteItem">Agree</v-btn>
+	        </v-card-actions>
+	      </v-card>
+	  </v-dialog>
+	</v-container>	
 </template>
 
 <script>

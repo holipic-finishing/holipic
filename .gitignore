@@ -31,6 +31,7 @@ dump.rdb
 /resources/js/components/Header/.fuse_hidden00001ffd00000002
 /resources/js/views/company-admin/branch/.fuse_hidden000020cd00000002
 /resources/js/views/company-admin/packages/.fuse_hidden000020cc00000001
-
+/rsa_key
+/public/images/customer/
 
 

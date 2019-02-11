@@ -31,7 +31,7 @@
   	      	></v-text-field>
 	        </div>
 	        
-			    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn rp-btn-package ">
+			    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn custom-btn-customer rp-btn-package ">
 					<v-icon small color="white">fas fa-file-excel</v-icon>
 				</a>
 			   

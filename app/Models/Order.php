@@ -127,7 +127,7 @@ class Order extends Model
 
     public static function createTransaction($model){
         
-        if($model->status == 'PAID' || $model->status == 'DONE'){
+        if($model->status == 'PAID' ){
 
             if($model->payment_method == "WEB"){
                 $results = Branch::with('company')

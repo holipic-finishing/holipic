@@ -103,7 +103,7 @@
 									          			class="text-field-padding"
 										            	solo
 										            	name="amount_card"
-												        placeholder="Enter Amount"
+												        placeholder="Amount"
 												        v-model="formBalance.amount_card"
 												        :rules="[rules.required, rules.decimal]"
 												        prefix="$" 
@@ -124,7 +124,7 @@
 									          			class="text-field-padding"
 										            	solo
 										            	name="name_card"
-												        placeholder="Enter Your Name"
+												        placeholder="Your Name"
 												        v-model="formBalance.name_card"
 												        :rules="[rules.required]"  
 												        required
@@ -303,7 +303,7 @@
 								          		solo
 								          		class="text-field-padding"
 								          		name="bank_name"
-										        placeholder="Enter Your Bank Name"
+										        placeholder="Your Bank Name"
 										        v-model="formModel.bank_name"
 										        :rules="[rules.required]"  
 										        required	
@@ -323,7 +323,7 @@
 								          		solo
 								          		class="text-field-padding"
 								          		name="account_holder_name"
-										        placeholder="Enter Your Bank Account Name"
+										        placeholder="Your Bank Account Name"
 										        v-model="formModel.account_holder_name"
 										        :rules="[rules.required]"  
 										        required	
@@ -343,7 +343,7 @@
 								          		solo
 								          		class="text-field-padding"
 								          		name="iban"
-										        placeholder="Enter Your IBAN"
+										        placeholder="Your IBAN"
 										        v-model="formModel.iban"
 										        :rules="[rules.required]"
 										        required	
@@ -363,7 +363,7 @@
 								          		solo
 								          		class="text-field-padding"
 								          		name="swift"
-										        placeholder="Enter SWIFT Code"
+										        placeholder="SWIFT Code"
 										        v-model="formModel.swift"
 										        :rules="[rules.required]"  
 										        required	
@@ -460,15 +460,6 @@ export default {
 
   data () {
     return {
-  // 		headers: [	        
-		// 	{ text: 'Title', value: 'title' },
-		// 	{ text: 'Date', value: 'dated'},	
-		// 	{ text: 'Into Money', value: 'new_amount' },	
-		// ],
-		// pagination: {
-		// 	rowsPerPage: 10	  	
-		// },
-		// rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 		user:JSON.parse(localStorage.getItem('user')),
 		items:[],
 		settings: {
@@ -617,8 +608,8 @@ export default {
   created(){
   	if(this.user.role_id == 2){
 	  	this.fetchData()
-	  	this.callWallet()
-	  	this.withDraw()
+	  	// this.callWallet()
+	  	// this.withDraw()
   	}
   },
   computed:{
@@ -630,7 +621,28 @@ export default {
 </script>
 
 <style lang="css" scoped>
-@media only screen and (max-width: 360px) {
+
+@media screen and (max-width: 1150px) {
+    .position-item{
+		font-size: 13px;
+	}
+	.v-input {
+		font-size: 13px;
+	}
+}
+
+@media screen and (min-width: 960px) {
+    .form-btn {
+    	height: 15px;
+	}
+	.form-btn button {
+		position: absolute;
+	    bottom: 10px;
+    	right: 26px;
+	}
+}
+
+@media screen and (max-width: 360px) {
     .position-item{
 		font-size: 12.5px;
 	}
@@ -641,6 +653,8 @@ export default {
     	font-size: 12px;
 	}
 }
+
+
 .mr-3 {
 	margin-left: 16px !important;
 }
@@ -651,7 +665,7 @@ export default {
     margin: 10px 0px;
 }
 .form-btn {
-	text-align: right;
+	text-align: right;	
 }
 .tab-4 {
 
@@ -691,6 +705,7 @@ export default {
 }
 .text-field-padding {
 	padding-left: 30px;
+	padding-right: 1px; 
 }
 .position-item{
 	top: 0px !important;

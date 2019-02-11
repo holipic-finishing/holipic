@@ -97,3 +97,8 @@
       }
    }
 </script>
+<style lang="css" scoped>
+.user-block-wrap {
+   margin: -10px;
+}
+</style>

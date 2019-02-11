@@ -168,8 +168,8 @@
 
 				    <template slot="items" slot-scope="props" >
 						<td>{{ props.item.id }}</td>
-						<td class="text-xs-left" >{{ props.item.branch.name }}</td>
-						<td class="text-xs-left">{{ props.item.photographer.name }}</td>
+						<td class="text-xs-left" v-if="props.item.branch != null">{{ props.item.branch.name }}</td>
+						<td class="text-xs-left" v-if="props.item.photographer != null">{{ props.item.photographer.name }}</td>
 						<td class="text-xs-left">{{ props.item.customer.room.room_hash }}</td>
 						<td class="text-xs-left">{{ props.item.total_amount }}</td>
 						<td class="text-xs-left">{{ props.item.purchase_date }}</td>
@@ -210,14 +210,14 @@ export default {
 	        sales: [],
 			selected1:'',
 			headers:[
-				{text: 'ID' }, 
-				{text: 'Branch'}, 
-				{text:'Photographer', value: 'photographer.name'}, 
-				{text: 'Room', value:'user.room.room_hash'}, 
-				{text: 'Total Amount', value: 'total_amount'}, 
-				{text: 'Purchase Date', value: 'purchase_date'}, 
-				{text: 'Download Date', value: 'download_date'}, 
-				{text: 'Customer Email', value:'user.email', sortable: false}, 
+				{text: 'ID' , sortable: false}, 
+				{text: 'Branch' , sortable: false}, 
+				{text:'Photographer', value: 'photographer.name' , sortable: false}, 
+				{text: 'Room', value:'customer.room.room_hash', sortable: false}, 
+				{text: 'Total Amount', value: 'total_amount', sortable: false}, 
+				{text: 'Purchase Date', value: 'purchase_date', sortable: false}, 
+				{text: 'Download Date', value: 'download_date', sortable: false}, 
+				{text: 'Customer Email', value:'customer.user.email', sortable: false}, 
 				{text: 'Payment Method', value: 'payment_method', sortable: false}
 			],
 			pagination: {
@@ -263,6 +263,7 @@ export default {
 			.then(response => {
 				if(response && response.data.success) {
 					this.sales = response.data.data
+					console.log(this.sales)
 					
 				}
 			})

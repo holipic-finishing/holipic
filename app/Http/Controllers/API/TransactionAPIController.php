@@ -24,7 +24,6 @@ class TransactionAPIController extends AppBaseController
     /** @var  TransactionRepository */
     private $transactionRepository;
     private $notificationRepository;
-    const STATUS_DONE = 'DONE' ;           
 
     public function __construct(TransactionRepository $transactionRepo, NotificationRepository $notificationRepo)
     {
@@ -291,34 +290,7 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($result, 'Transactions retrieved successfully');
     }
 
-    /*
-    *   Target : Get all transaction history belongs to company id
-    *   GET /e-wallet/transaction-history
-    *
-    *   @param  Request
-    *   return Json
-    */
-    public function getEWalletTransactionHistory(Request $request){
 
-        $input = $request->all();
-
-        $result = $this->transactionRepository->eWalletTransactionHistory($input,self::STATUS_DONE);
-
-        return $this->sendResponse($result, 'Transactions retrieved successfully');
-
-    }
-
-    public function calEwallet(Request $request){
-        $input = $request->all();
-
-        $results = $this->transactionRepository->calculatorEwallet($input);
- 
-        if($results <= 30) {
-
-            $this->notificationRepository->createNotifi($input['user_id'], 'AvailableBalanceIs0','Available balance is 30');
-        }
-        return $results;
-    }
 
 }
 

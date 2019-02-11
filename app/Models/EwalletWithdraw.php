@@ -77,12 +77,23 @@ class EwalletWithdraw extends Model
     public static function createTransaction($model){
         if($model->status == 'DONE'){
             $now = \Carbon\Carbon::now();
+            $invoice = 'INV'.time();
 
-            return Transaction::create([
+            Transaction::create([
                 'title' => 'Withdraw From Company',
                 'amount' => $model->amount,
                 'status' => 'DONE',
-                'invoice' => 'INV'.time(),
+                'invoice' => $invoice,
+                'currency_id' => 1,
+                'company_id' => $model->company_id,
+                'dated' => $now,       
+            ]);
+
+            TransactionCalulatorEwallet::create([
+                'title' => 'Withdraw From Company',
+                'amount' => $model->amount,
+                'status' => 'DONE',
+                'invoice' => $invoice,
                 'currency_id' => 1,
                 'company_id' => $model->company_id,
                 'dated' => $now,       

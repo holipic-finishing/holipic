@@ -20,14 +20,6 @@ yarn-error.log
 /public/avatars/
 /public/files/
 /public/image_uploads/
-/storage/
-dump.rdb
-/resources/js/views/dashboard/.fuse_hidden0000980400002570
-/app/Repositories/.fuse_hidden0001262f00000003
-/resources/js/views/companies/.fuse_hidden0000219800002586
-/routes/.fuse_hidden000009ca00000001
-/app/Repositories/.fuse_hidden0000267a00000002
-/app/Http/Controllers/API/CompanyAdmin/.fuse_hidden0000255500000001
-/resources/js/components/Header/.fuse_hidden00001ffd00000002
+
 
 

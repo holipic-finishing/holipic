@@ -126,58 +126,140 @@ class Order extends Model
     }
 
     public static function createTransaction($model){
-        if($model->payment_method == 'WEB' && $model->status == 'PAID'){
-            $results = Branch::with('company')
+        
+        if($model->status == 'PAID' ){
+
+            if($model->payment_method == "WEB"){
+                $results = Branch::with('company')
                                 ->where('id',$model->branch_id)
                                 ->first();
-            $owner_id = $results->company->owner_id;
-            $company_id = $results->company->id;
-            $coupon_codes_id = $results->company->coupon_codes_id;
+                $owner_id = $results->company->owner_id;
+                $company_id = $results->company->id;
+                $coupon_codes_id = $results->company->coupon_codes_id;
 
-            
-         
-            $package = User::with('package')
-                                ->where('id',$owner_id)
-                                ->first();
-            $fee = $package->package->fee;
+                
+             
+                $package = User::with('package')
+                                    ->where('id',$owner_id)
+                                    ->first();
+                $fee = $package->package->fee;
 
-            /**
-            * calculator fee with coupon_code
-            */
-            if($coupon_codes_id == null){
-                $system_fee = ($model->total_amount * $fee) / 100; 
-            }elseif($coupon_codes_id != null ){
-                $coupon_code = CouponCode::where('id',$coupon_codes_id)->first();
-                if($coupon_code->active == 0){
+                /**
+                * calculator fee with coupon_code
+                */
+                if($coupon_codes_id == null){
                     $system_fee = ($model->total_amount * $fee) / 100; 
-                }
-                else{
-                    $purchase_date = $model->purchase_date->format('Y-m-d h:m:s');
-                    if($purchase_date >= $coupon_code->from_date && $purchase_date <= $coupon_code->to_date){
-                       
-                        $system_fee_increase = (($coupon_code->discount /100) * ($fee / 100)) * $model->total_amount;
-                        $system_fee = ($model->total_amount * $fee) / 100 - $system_fee_increase;
-
-                    }else{
-
-                        $system_fee = ($model->total_amount * $fee) / 100;
+                }elseif($coupon_codes_id != null ){
+                    $coupon_code = CouponCode::where('id',$coupon_codes_id)->first();
+                    if($coupon_code->active == 0){
+                        $system_fee = ($model->total_amount * $fee) / 100; 
                     }
-                   
-                }
-            }
-            
-            $now = \Carbon\Carbon::now();
+                    else{
+                        $purchase_date = $model->purchase_date->format('Y-m-d h:m:s');
+                        if($purchase_date >= $coupon_code->from_date && $purchase_date <= $coupon_code->to_date){
+                           
+                            $system_fee_increase = (($coupon_code->discount /100) * ($fee / 100)) * $model->total_amount;
+                            $system_fee = ($model->total_amount * $fee) / 100 - $system_fee_increase;
 
-            return Transaction::create([
-                'title' => 'Customer Paid',
-                'amount' => $model->total_amount,
-                'status' => 'RECIVED',
-                'system_fee' => $system_fee,
-                'invoice' => 'INV'.time(),
-                'currency_id' =>$model->currency_id,
-                'company_id' => $company_id,
-                'dated' => $now,       
-            ]);
+                        }else{
+
+                            $system_fee = ($model->total_amount * $fee) / 100;
+                        }
+                       
+                    }
+                }
+                
+                $now = \Carbon\Carbon::now();
+                $invoice = 'INV'.time();
+
+                Transaction::create([
+                    'title' => 'Customer Paid',
+                    'amount' => $model->total_amount,
+                    'status' => 'RECIVED',
+                    'system_fee' => $system_fee,
+                    'invoice' => $invoice ,
+                    'currency_id' =>$model->currency_id,
+                    'company_id' => $company_id,
+                    'dated' => $now,       
+                ]);
+
+                TransactionCalulatorEwallet::create([
+                    'title' => 'Customer Paid',
+                    'amount' => $model->total_amount,
+                    'status' => 'RECIVED',
+                    'system_fee' => $system_fee,
+                    'invoice' => $invoice ,
+                    'currency_id' =>$model->currency_id,
+                    'company_id' => $company_id,
+                    'dated' => $now,       
+                ]);
+            }
+
+            elseif($model->payment_method == "CC" || $model->payment_method == "CASH"){
+                $results = Branch::with('company')
+                                ->where('id',$model->branch_id)
+                                ->first();
+                $owner_id = $results->company->owner_id;
+                $company_id = $results->company->id;
+                $coupon_codes_id = $results->company->coupon_codes_id;
+
+                
+             
+                $package = User::with('package')
+                                    ->where('id',$owner_id)
+                                    ->first();
+                $fee = $package->package->fee;
+
+                /**
+                * calculator fee with coupon_code
+                */
+                if($coupon_codes_id == null){
+                    $system_fee = ($model->total_amount * $fee) / 100; 
+                }elseif($coupon_codes_id != null ){
+                    $coupon_code = CouponCode::where('id',$coupon_codes_id)->first();
+                    if($coupon_code->active == 0){
+                        $system_fee = ($model->total_amount * $fee) / 100; 
+                    }
+                    else{
+                        $purchase_date = $model->purchase_date->format('Y-m-d h:m:s');
+                        if($purchase_date >= $coupon_code->from_date && $purchase_date <= $coupon_code->to_date){
+                           
+                            $system_fee_increase = (($coupon_code->discount /100) * ($fee / 100)) * $model->total_amount;
+                            $system_fee = ($model->total_amount * $fee) / 100 - $system_fee_increase;
+
+                        }else{
+
+                            $system_fee = ($model->total_amount * $fee) / 100;
+                        }
+                       
+                    }
+                }
+                
+                $now = \Carbon\Carbon::now();
+                $invoice = 'INV'.time();
+
+                Transaction::create([
+                    'title' => 'System Fee',
+                    'amount' => $model->total_amount,
+                    'status' => 'RECIVED',
+                    'system_fee' => $system_fee,
+                    'invoice' => $invoice,
+                    'currency_id' =>$model->currency_id,
+                    'company_id' => $company_id,
+                    'dated' => $now,       
+                ]);
+
+                TransactionCalulatorEwallet::create([
+                    'title' => 'System Fee',
+                    'amount' => $system_fee,
+                    'status' => 'DONE',
+                    'system_fee' => 0,
+                    'invoice' => $invoice,
+                    'currency_id' =>$model->currency_id,
+                    'company_id' => $company_id,
+                    'dated' => $now,       
+                ]);
+            }            
         }
     }
 

@@ -237,9 +237,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	Route::get('transaction/history/item', 'TransactionAPIController@getTransactionHistoryWithTimevalue');
 
-	Route::get('e-wallet/transaction-history', 'TransactionAPIController@getEWalletTransactionHistory');
-
-	Route::get('e-wallet/total-ewallet', 'TransactionAPIController@calEwallet');
+	
 
 	/*************SettingAPIController**************/
 
@@ -269,5 +267,16 @@ Route::group(['namespace' => 'API'],function(){
 	Route::post('edit/coupon-codes/{itemId}', 'CouponCodeAPIController@editCouponCode');
 	Route::post('add-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@addCouponCode');
 	Route::post('cancel-coupon-code/{couponId}/{companyId}', 'CouponCodeAPIController@cancelCouponCode');
+
+	/*************TransactionCalulatorEwalletsAPIController**************/
+
+	Route::resource('transaction_calulator_ewallets', 'TransactionCalulatorEwalletAPIController');
+
+	Route::get('e-wallet/transaction-history', 'TransactionCalulatorEwalletAPIController@getEWalletTransactionHistory');
+
+	Route::get('e-wallet/total-ewallet', 'TransactionCalulatorEwalletAPIController@calEwallet');
 	
 });	
+
+
+

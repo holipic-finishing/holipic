@@ -19,5 +19,7 @@ yarn-error.log
 /public/fonts/vendor/
 /public/image_uploads/
 /public/images/customer/
+/public/avatars/
+/public/files/
 
 

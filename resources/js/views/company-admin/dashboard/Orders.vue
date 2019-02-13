@@ -1,12 +1,14 @@
 <template>
-  <v-container fluid px-0 py-0>
-  	<v-layout row wrap>
-  		<app-card
-  			colClasses="xl12 lg12 md12 sm12 xs12"
-  			:fullScreen="true"
-  			:reloadable="true"
-  			:closeable="false"
-  		>
+  <v-container fluid grid-list-xl>
+    <v-layout row wrap>
+      <app-card
+        colClasses="xl12 lg12 md12 sm12 xs12"
+        :fullScreen="true"
+        :reloadable="true"
+        :closeable="false"
+        :fullBlock="true"
+        class="p-0"
+      >
         <v-navigation-drawer 
           fixed
           v-model="drawer" 
@@ -16,7 +18,7 @@
           class="chat-sidebar-wrap"
           width="450"
         >
-          <!-- <transaction-item :eventType="eventType" :item="item"></transaction-item> -->
+          <!-- Order Item -->
         </v-navigation-drawer>
 
         <v-toolbar flat color="white">
@@ -29,13 +31,13 @@
   			<v-card-title>
   	      <v-spacer></v-spacer>
           <div class="w-25">
-    	      <v-text-field
+    	      <!-- <v-text-field
     	        v-model="search"
     	        append-icon="search"
     	        label="Enter Search Value"
     	        single-line
     	        hide-details
-    	      ></v-text-field>
+    	      ></v-text-field> -->
           </div>
   	    </v-card-title>
   	    <!--End Search Component -->
@@ -50,30 +52,7 @@
   			  :search="search"
           :rows-per-page-items="rowsPerPageItems"
   			>
-  				<!-- <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear> -->
-  				<!--Header -->
-  				<!-- <template slot="headers" slot-scope="props">
-            <tr>
-              <th
-                v-for="header in props.headers"
-                :key="header.text"
-                :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                @click="changeSort(header.value)"
-              >
-              	<div class="custom-header">
-  	              <v-tooltip bottom>
-  	                <span slot="activator" class="text-capitalize font-weight-bold">
-  	                  {{ header.text }}
-  	                </span>
-  	                <span>
-  	                  {{ header.text }}
-  	                </span>
-  	              </v-tooltip>
-  	              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
-              	</div>
-              </th>
-            </tr>
-          </template> -->
+  				<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
 
 
   				<!--Prop data -->
@@ -86,9 +65,26 @@
               <td v-else>No Room</td>
               <td v-if="props.item.customer && props.item.customer.user">{{ props.item.customer.user.email }}</td>
               <td v-else>No Email</td>
-              <td>{{ props.item.total_amount_to_dollar }}</td>
-              <td class="text-right">{{ props.item.payment_method }}</td>
-              <td class="text-right">
+              <td class="text-center">{{ props.item.total_amount_to_dollar }}</td>
+              <td class="text-center">{{ props.item.payment_method }}</td>
+              <td class="text-center">
+               <!--  <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
+                <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
+                <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
+                <v-btn class="btn-gradient-primary ml-0 mr-0" color="primary" small v-if="props.item.status === 'PAID'">{{ props.item.status }}</v-btn> -->
+
+                <span class="text-warning" v-if="props.item.status === 'DONE'">{{ props.item.status }}</span>
+
+                <span class="text-success" v-if="props.item.status === 'PENDING'">{{ props.item.status }}</span>
+
+                <span class="text-danger" v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</span>
+
+                <span class="text-primary" v-if="props.item.status === 'PAID'">{{ props.item.status }}</span>
+
+                <span class="text-info" v-if="props.item.status === 'BOOKING'">{{ props.item.status }}</span>
+
+            </td>
+              <td class="text-right action-width">
                 <v-icon
                   small
                   class="mr-2 hover-icon"
@@ -119,8 +115,6 @@
               </td> -->
   											
   	    	</template>
-
-
   				<!--No data -->
   			  <template slot="no-data">
   		      <v-alert :value="true" color="error" icon="warning">
@@ -172,81 +166,54 @@ export default {
           align: 'left',
           value: 'id',
           class: 'mb-icon',
-          width: '5%',
         },
         { 
           text: 'Branch',
           align: 'left',
           value: 'branch.name',
           class: 'mb-icon',
-          width: '10%',
         },
         { 
           text: 'Photographer',
           align: 'left',
           value: 'photographer.name',
           class: 'mb-icon',
-          width: '10%',
         },
         { 
           text: 'Room',
           align: 'left',
           value: 'customer.room.room_hash',
           class: 'mb-icon',
-          width: '10%',
         },
         { 
           text: 'Email',
           align: 'left',
           value: 'customer.user.email',
           class: 'mb-icon',
-          width: '15%',
         },
         { 
           text: 'Amount',
-          align: 'left',
+          align: 'center',
           value: 'total_amount_to_dollar',
           class: 'mb-icon',
-          width: '5%',
         },
         { 
           text: 'Payment Method',
-          align: 'right',
+          align: 'center',
           value: 'payment_method',
           class: 'mb-icon',
-          width: '10%',
+        },
+        {
+          text: 'Status',
+          align: 'center',
+          value: 'actions',
+          sortable: false,
         },
         {
           text: 'Action',
-          align: 'right',
-          value: 'actions',
-          sortable: false,
-          width: '10%',
+          align: 'center',
+          sortable:false,
         }
-        // { 
-        //   text: 'Purchase Date',
-        //   align: 'left',
-        //   value: 'purchase_date',
-        //   width: '10%'
-        // },
-        // { 
-        //   text: 'Download Date',
-        //   align: 'left',
-        //   value: 'download_date',
-        //   width: '10%'
-        // },
-        // { 
-        //   text: 'Order Date',
-        //   align: 'left',
-        //   value: 'created_at',
-        //   width: '10%'
-        // },
-        // { 
-        //   text: 'Status',
-        //   align: 'center',
-        //   value: 'status',
-        // },
-        
       ],
       pagination: {
       },

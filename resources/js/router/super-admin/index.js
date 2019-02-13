@@ -22,6 +22,12 @@ import ChangePassword from '../../views/partials/users/ChangePassword'
 // User Profile
 import UserProfile from '../../views/partials/users/UserProfile'
 
+//Ewallet
+import EwalletWithdraw from '../../views/super-admin/ewallet/EwalletWithdraw.vue'
+
+// Content Manager Systems
+import CMS from '../../views/company-admin/cms/Index'
+
 export default {
 	path: '/super-admin',
    	component: MiniSidebarLayout,
@@ -91,6 +97,27 @@ export default {
          		// companyAuth:false,
 	            title: 'message.changePassword',
 	            breadcrumb: 'Change Password'
+	        }
+	    },
+	    {
+	        path: '/super-admin/ewallet-withdraw',
+	        component: EwalletWithdraw,
+	        meta: {
+	            requiresAuth: true,
+	            adminAuth:true,
+	            title: 'message.ewallet',
+	            breadcrumb: 'Ewallet withdraw'
+	        }
+	    },
+	    {
+	        path: '/super-admin/content-pages',
+	        component: CMS,
+	        name: 'cms',
+	        meta: {
+	        	requiresAuth:true,
+         		adminAuth:true,
+	            title: 'message.contenPages',
+	            breadcrumb: 'Company / CMS'
 	        }
 	    },
    	]

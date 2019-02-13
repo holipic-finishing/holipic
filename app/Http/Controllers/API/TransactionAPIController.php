@@ -12,7 +12,7 @@ use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Spatie\Activitylog\Models\Activity;
-
+use App\Repositories\CompanyAdminRepositories\NotificationRepository;
 
 /**
  * Class TransactionController
@@ -23,10 +23,12 @@ class TransactionAPIController extends AppBaseController
 {
     /** @var  TransactionRepository */
     private $transactionRepository;
+    private $notificationRepository;
 
-    public function __construct(TransactionRepository $transactionRepo)
+    public function __construct(TransactionRepository $transactionRepo, NotificationRepository $notificationRepo)
     {
         $this->transactionRepository = $transactionRepo;
+        $this->notificationRepository = $notificationRepo;
     }
 
     /**
@@ -287,5 +289,8 @@ class TransactionAPIController extends AppBaseController
 
         return $this->sendResponse($result, 'Transactions retrieved successfully');
     }
+
+
+
 }
 

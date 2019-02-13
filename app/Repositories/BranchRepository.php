@@ -46,7 +46,7 @@ class BranchRepository extends BaseRepository
     public function handleSaveBranchCompany()
     {
         $companyId = request('companyId');
-        
+
         if($companyId && $companyId != '') {
 
             $user = \App\Models\User::create(

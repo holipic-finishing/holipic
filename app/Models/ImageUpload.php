@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Entities;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class User.
+ * Class ImageUpload.
  *
  * @package namespace App\Entities;
  */
-class User extends Model implements Transformable
+class ImageUpload extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -20,6 +20,6 @@ class User extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['filename'];
 
 }

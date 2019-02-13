@@ -88,6 +88,7 @@
         "vue2-breadcrumbs": "^2.0.0",
         "vue2-datepicker": "^2.6.3",
         "vue2-dragula": "^2.5.4",
+        "vue2-dropzone": "^3.5.2",
         "vue2-google-maps": "^0.10.2",
         "vue2-leaflet": "^1.0.2",
         "vuedraggable": "^2.16.0",

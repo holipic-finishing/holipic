@@ -5,20 +5,20 @@
 	    right
 	    temporary 
 	    app 
-	    class="chat-sidebar-wrap"
-	    width="450"
+	    this.width = this.getCurrentWithContentWrap()
+  		:width='widthComputed'
   		>
 
 	    <v-card class="h-100 position-relative">
 			<v-toolbar>
 	      		<v-toolbar-title class="text-capitalize">Order ID: {{order.id}}</v-toolbar-title>
 	      		<v-spacer></v-spacer>
-	     		<v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
+	     			<v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
 		      		<v-icon>
 		          		fas fa-times
 		        	</v-icon>
 	      		</v-toolbar-side-icon>
-	    	</v-toolbar>
+	    </v-toolbar>
 		    <v-divider class="no-mg-bottom"></v-divider>
 			  
 			  <!-- Show information -->
@@ -131,6 +131,7 @@
 </template>
 
 <script>
+import { getWithContentWrap } from '../../../helpers/helpers'
 export default {
 
   name: 'OrderDetail',
@@ -138,17 +139,38 @@ export default {
   data () {
     return {
     	drawerRight: false,
-	    order: []
+	    order: [],
+	    width: 0,
+		drawerHeaderStt: null
     }
+  },
+  computed: {
+		widthComputed(){
+			return this.width
+		}
   },
   mounted() {
   	this.$root.$on('showDetailOrder', res => {
   		this.drawerRight = res.showNavigation
   		this.order = res.data
+  		this.width = this.getCurrentWithContentWrap()
   	})
+  },
+  methods: {
+  	getCurrentWithContentWrap(){
+  		return getWithContentWrap(this.drawerHeaderStt)
+  	}
   }
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+.content-flex{
+	height: auto !important;
+	white-space: inherit !important;
+}
+.max-value{
+	max-width: 63%;
+	flex: 0 0 63%;
+}
 </style>

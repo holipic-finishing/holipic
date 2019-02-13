@@ -317,13 +317,12 @@ class OrderAPIController extends AppBaseController
         $path = public_path() . '/files' . DIRECTORY_SEPARATOR;
 
         $csvPath = $path .$company_id. '_Sales.csv';
+
         if(\File::exists($csvPath)){
             unlink($csvPath);
         }
         if(!\File::exists($path)) {
-
             \File::makeDirectory($path, $mode = 0777, true, true);
-
         }
 
         $file = fopen($csvPath,"a+");

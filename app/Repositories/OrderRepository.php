@@ -484,8 +484,17 @@ class OrderRepository extends BaseRepository
 
         foreach ($results as $key => $result) {
             $results[$key]->branch_name = $result->branch->name;
-            $results[$key]->room_has_number = $result->customer->room->room_hash;
-            $results[$key]->customer_email = $result->customer->user->email;
+            if ($result->customer && $result->customer->room) {
+              $results[$key]->room_has_number = $result->customer->room->room_hash;
+            }else{
+              $results[$key]->room_has_number = 'No Room';
+            }
+
+            if ($result->customer && $result->customer->user) {
+              $results[$key]->customer_email = $result->customer->user->email;
+            }else{
+              $results[$key]->customer_email = 'No Email';
+            }
             $results[$key]->photographer_name = $result->photographer->name;
         }
         
@@ -566,6 +575,7 @@ class OrderRepository extends BaseRepository
     }
 
     public function getHistoryOrders($attributes){
+
         if(isset($attributes['type'])){
             $type = $attributes['type'];
             if($type == 'day'){
@@ -602,6 +612,7 @@ class OrderRepository extends BaseRepository
                 if(isset($attributes['photographer_id'])){
                   $photographer_id = $attributes['photographer_id'];
                 }
+
                 $orders = $this->scopeQuery(function($query) use ($startDay,$endDay, $company_id, $branch_id, $photographer_id){
                     $query = $query->with(['branch' => function($q){
                               }])
@@ -622,9 +633,9 @@ class OrderRepository extends BaseRepository
                     if($photographer_id != ''){
                       $query = $query->where('photographer_id', $photographer_id)->orderBy('created_at');
                     }
-
                     return $query;
                  })->get();
+                 
                 $orders = $this->transformOrder($orders);
             return $orders;
 

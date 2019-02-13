@@ -15,19 +15,19 @@
 							<p class="fs-12 grey--text mb-0">Customers</p>
 						</div>
 						<div>
-							<h4 class="primary--text mb-0">$ {{ computedCash }}</h4>
+							<h4 class="primary--text mb-0"> {{ computedCash }}</h4>
 							<p class="fs-12 grey--text mb-0">Cash</p>
 						</div>
 						<div>
-							<h4 class="primary--text mb-0">$ {{ computedCC }}</h4>
+							<h4 class="primary--text mb-0"> {{ computedCC }}</h4>
 							<p class="fs-12 grey--text mb-0">CC</p>
 						</div>
 						<div>
-							<h4 class="primary--text mb-0">$ {{ computedWeb }}</h4>
+							<h4 class="primary--text mb-0"> {{ computedWeb }}</h4>
 							<p class="fs-12 grey--text mb-0">Online</p>
 						</div>
 						<div>
-							<h4 class="primary--text mb-0">$ {{ computedTotalIncome }}</h4>
+							<h4 class="primary--text mb-0"> {{ computedTotalIncome }}</h4>
 							<p class="fs-12 grey--text mb-0">Total Income</p>
 						</div>
 					</div>
@@ -48,12 +48,12 @@
 			<!-- Day Component -->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'day'">
 
-				<v-flex xs12 pl-md-5>
-				  <div class="text-primary">(*) Please No choose more than 15 days</div>
+				<v-flex xs12>
+				  <!-- <div class="text-primary">(*) Please No choose more than 15 days</div> -->
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
 							<v-menu 
@@ -71,7 +71,8 @@
 									v-model="computedStartDay"
 									prepend-icon="event"
 									readonly
-              						placeholder="Enter Start Date"
+              		placeholder="Enter Start Date"
+              		hide-details
 								></v-text-field>
 								<v-date-picker 
 									v-model="from_day"
@@ -85,8 +86,8 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
 							<v-menu 
@@ -104,7 +105,8 @@
 									v-model="computedEndDay"
 									prepend-icon="event"
 									readonly
-              						placeholder="Enter End Date"
+              		placeholder="Enter End Date"
+              		hide-details
 								></v-text-field>
 								<v-date-picker 
 									v-model="to_day" 
@@ -118,8 +120,8 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
 							<v-select
@@ -130,13 +132,14 @@
               	item-value="id"
 						    v-on:change="changeBranch(item)"
 								@input="reportByRangeDay"
+								hide-details
 					    ></v-select>
 		  			</v-card-text>
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
 							<v-select
@@ -146,6 +149,7 @@
 			         	item-text="name"
           			item-value="id"
 								@input="reportByRangeDay"
+								hide-details
 					    ></v-select>
 		  			</v-card-text>
 			  	</v-card>
@@ -157,12 +161,12 @@
 			<!-- Month Component -->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'month'">
 				
-				<v-flex xs12 pl-md-5>
+				<v-flex xs12>
 				  <div class="text-primary">(*) Please No choose more than 12 month</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
 							<v-menu
@@ -181,6 +185,7 @@
 									prepend-icon="event"
 									readonly
                 	placeholder="Enter Start Month"
+                	hide-details
 								></v-text-field>
 								<v-date-picker 
 									v-model="from_month" 
@@ -195,8 +200,8 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
 							<v-menu 
@@ -215,6 +220,7 @@
 									prepend-icon="event"
 									readonly
                 	placeholder="Enter End Month"
+                	hide-details
 								></v-text-field>
 								<v-date-picker 
 									v-model="to_month" 
@@ -229,8 +235,8 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
 							<v-select
@@ -241,13 +247,14 @@
       					item-value="id"
 	         			v-on:change="changeBranch(item)"
 								@input="reportByMonth"
+								hide-details
 					    ></v-select>
 		  			</v-card-text>
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
 							<v-select
@@ -257,6 +264,7 @@
 			         	item-text="name"
       					item-value="id"
 								@input="reportByMonth"
+								hide-details
 					    ></v-select>
 					  </v-card-text>
 			  	</v-card>
@@ -268,12 +276,12 @@
 			<!-- Year Component -->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'year'">
 				
-				<v-flex xs12 pl-md-5>
+				<v-flex xs12>
 				  <div class="text-primary">(*) Please No choose more than 5 year</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
 							<v-menu
@@ -293,6 +301,7 @@
 					        label="Start Year"
 					        prepend-icon="event"
 					        readonly
+					        hide-details
 						    ></v-text-field>
 				      	<v-date-picker
 					        ref="picker"
@@ -307,8 +316,8 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
 							<v-menu
@@ -328,6 +337,7 @@
 									label="End Year"
 									prepend-icon="event"
 									readonly
+									hide-details
 								></v-text-field>
 								<v-date-picker
 									ref="picker2"
@@ -342,8 +352,8 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
 							<v-select
@@ -354,13 +364,14 @@
           			item-value="id"
 			         	v-on:change="changeBranch(item)"
 								@input="reportByYear"
+								hide-details
 					    ></v-select>
 		  			</v-card-text>
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
 							<v-select
@@ -370,6 +381,7 @@
 			         	item-text="name"
           			item-value="id"
 								@input="reportByYear"
+								hide-details
 			        ></v-select>
 			      </v-card-text>
 			  	</v-card>
@@ -381,12 +393,12 @@
 			<!-- Week Component-->
 				<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'week'">
 				
-				<v-flex xs12 pl-md-5>
+				<v-flex xs12>
 				  <div class="text-primary">(*) Please No choose more than 6 week</div>
 				</v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
 							<v-menu
@@ -405,6 +417,7 @@
 									prepend-icon="event"
 									readonly
               		placeholder="Enter Start Week"
+              		hide-details
 								></v-text-field>
 								<v-date-picker 
 									v-model="from_day_week" 
@@ -418,8 +431,8 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
 							<v-menu 
@@ -438,6 +451,7 @@
 									prepend-icon="event"
 									readonly
               		placeholder="Enter End Week"
+              		hide-details
 								></v-text-field>
 								<v-date-picker 
 									v-model="to_day_week" 
@@ -451,8 +465,8 @@
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
 							<v-select
@@ -463,13 +477,14 @@
           			item-value="id"
 			         	v-on:change="changeBranch(item)"
 								@input="reportByWeek"
+								hide-details
 					    ></v-select>
 		  			</v-card-text>
 			  	</v-card>
 			  </v-flex>
 
-			  <v-flex xl3 lg3 md3 sm6 xs12 b-50 pl-xl-5 pr-xl-5 pl-lg-2 pr-lg-2>
-			  	<v-card class="elevation-5">
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
 							<v-select
@@ -479,6 +494,7 @@
 			         	item-text="name"
               	item-value="id"
 								@input="reportByWeek"
+								hide-details
 					    ></v-select>
 			      </v-card-text>
 			  	</v-card>
@@ -500,7 +516,7 @@ import LineChart from './LineChart.js'
 import { ChartConfig } from "../../../constants/chart-config";
 //config 
 import config from '../../../config/index.js'
-import { get, getWithData, post } from '../../../api/index.js'
+import { get, getWithData, post } from '../../../api'
 import moment from 'moment'
 import Orders from './Orders'
 

@@ -720,12 +720,16 @@ class TransactionRepository extends BaseRepository
     public function getHistoriesTransaction($params){
         $results = $this->scopeQuery(function($query) use($params){
 
-            $query = $query->with(['user' => function($q) {
-                                $q->with('package')->with(['company' => function($que) {
-                                    $que->withTrashed();
-                                }]);
-                            }])
-                        ->with('currency')
+            // $query = $query->with(['user' => function($q) {
+            //                     $q->with('package')->with(['company' => function($que) {
+            //                         $que->withTrashed();
+            //                     }]);
+            //                 }]);
+            $query = $query->with(['company' => function($q) {
+                                $q->withTrashed();
+                            }]);
+
+            $query = $query->with('currency')
                         ->with('transactionexchange');
           
             if (!empty($params['defaultDay'])) {
@@ -798,9 +802,9 @@ class TransactionRepository extends BaseRepository
 
             return $query;
         })->get();
-
         $results = $this->transform($results);
 
+        // dd($results->toArray());
         return $results; 
     }  
 
@@ -809,17 +813,17 @@ class TransactionRepository extends BaseRepository
      */
     
     public function transform($results){
-        
+
         foreach ($results as $key => $result) {
 
-            $results[$key]->company_name = $result->user->company->name;
+            $results[$key]->company_name = $result->company->name;
 
             $results[$key]->amount_with_symbol = round(($result->amount * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol; 
 
             $results[$key]->system_fee_with_symbol = round(($result->system_fee * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol;         
             $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
 
-            $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
+            // $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
         }
 
         return $results;
@@ -1012,7 +1016,7 @@ class TransactionRepository extends BaseRepository
 
     /*
     *  Target : Get all data in transaction history in array with key by "Day", "Week", "Month", "Year"
-    *  From : func: transactionHistoryDay, func:transactionHistoryWeek, func:transactionHistoryMonth, func:transactionHistoryYear
+    *  From   : func: transactionHistoryDay, func:transactionHistoryWeek, func:transactionHistoryMonth,       func:transactionHistoryYear
     *  To : array $attributes, int $prerPage, array $searchBy
     */ 
     public function transactionHistory($attributes, $perPage, $searchBy){
@@ -1050,6 +1054,12 @@ class TransactionRepository extends BaseRepository
 
         }
     }
+
+
+    /*
+    *  Target : Sum Amount of table transaction
+    *  From   : func:reportTransactionrDaily, func: reportTransactionMonth, func: reportTransactionYear
+    */
 
     public function sumAmount($dates, $transactions, $timevalue){
 
@@ -1090,5 +1100,7 @@ class TransactionRepository extends BaseRepository
         }
         return $dates;
     }
+
+    
 
 }

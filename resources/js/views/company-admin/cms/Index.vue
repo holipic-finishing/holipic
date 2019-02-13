@@ -1,8 +1,9 @@
 <template>
-	<v-container fluid px-0 py-0>
+	<v-container fluid grid-list-xl>
 		<v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5 rp-search"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
@@ -101,11 +102,11 @@
 import config from '../../../config'
 import { get, post, put, del } from '../../../api'
 import { mapGetters } from "vuex"
-import CmsItem from './CmsItem.vue'
+import CmsItem from './CmsItem'
 
 export default {
 
-	name: 'Index',
+	name: 'CMS',
 	components: {
 		CmsItem
 	},
@@ -126,9 +127,8 @@ export default {
 					{ text: 'Page Content', value: 'page_content' },	      
 		      { text: 'Action', sortable: false, width: '3%', value: 'actions' },         
 		    ],
-			desserts :[],
-			rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }]
-
+				desserts :[],
+				rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }]
     	}
   	},
   	created(){

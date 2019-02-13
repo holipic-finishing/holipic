@@ -36,7 +36,7 @@ class OrderTableSeeder extends Seeder
 
         $payment_method = ['CC', 'CASH'];
 
-        $purchase_from = ['WEB', 'SHOP'];
+        $purchase_from = ['ONLINE', 'SHOP'];
 
         $status = ['BOOKING','DONE','PENDING', 'CANCEL', 'PAID'];
 
@@ -89,7 +89,7 @@ class OrderTableSeeder extends Seeder
         		$total_amount = $faker->randomElement($list_total_amount_rp);
         	}
 
-	        if($purchase_from_select == 'WEB'){
+	        if($purchase_from_select == 'ONLINE'){
 	        	if($status_select != 'DONE' || $status != 'PAID'){
 	        		$payment_method_select = 'ONLINE';
 		        	$purchase_date = null;

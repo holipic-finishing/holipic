@@ -31,6 +31,11 @@ class PhotoPackage extends Model
         'free_photo',
         'currency_id',
         'company_id',
+        'dollar',
+        'euro',
+        'indo',
+        'turkey',
+        'vn',
     ];
 
     /**
@@ -44,6 +49,11 @@ class PhotoPackage extends Model
         'free_photo' => 'string',
         'currency_id' => 'integer',
         'company_id' => 'integer',
+        'dollar' => 'integer',
+        'euro' => 'integer',
+        'indo' => 'integer',
+        'turkey' => 'integer',
+        'vn' => 'integer',
     ];
 
     /**
@@ -57,6 +67,11 @@ class PhotoPackage extends Model
         'free_photo' => 'required',
         'currency_id' => 'required',
         'company_id' => 'required',
+        'dollar' => 'required',
+        'euro' => 'required',
+        'indo' => 'required',
+        'turkey' => 'required',
+        'vn' => 'required',
     ];
 
     

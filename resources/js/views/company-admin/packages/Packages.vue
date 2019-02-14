@@ -122,7 +122,7 @@
 	      <v-data-table
 		      :headers="headers2"
 		      :items="desserts2"
-		      class="body-2 global-custom-table"
+		      class="body-2 global-custom-table-photo-package"
 		      :pagination.sync="pagination"
 		      :disable-initial-sort="true"
 				  :loading="loadingCom"
@@ -154,40 +154,110 @@
 
 		    	<template slot="items" slot-scope="props">
 		    		<td class="text-xs-left">{{ props.item.id }}</td>
-			      <td class="text-xs-left">{{ props.item.size }}</td>
-		        <td>
-		        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
-			          <v-text-field
-			          	hide-details
-			          	single-line
-			          	:prepend-icon="props.item.symbol"
-			            v-model="props.item.price"
-			            :rules="[rules.required]"
-			            outline
-			            clear-icon="mdi-close-circle"
-			            clearable
-			            type="number"
-			            @blur="editPhotoPackage('price', props.item.price, props.item.id)"
-								  @keyup.enter="editPhotoPackage('price', props.item.price, props.item.id)"
-			          ></v-text-field>
-			        </v-flex>
-		        </td>
-		        <td>
-		        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
-			          <v-text-field
-			          	hide-details
-			          	single-line
-			            v-model="props.item.free_photo"
-			            :rules="[rules.required, rules.number]"
-			            outline
-			            clear-icon="mdi-close-circle"
-			            clearable
-			            type="number"
-			            @blur="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
-					    		@keyup.enter="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
-			          ></v-text-field>
-			        </v-flex>
-		        </td>
+			        <td class="text-xs-left">{{ props.item.size }}</td>
+			        <!-- <td>
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+				          <v-text-field
+				          	hide-details
+				          	single-line
+				          	:prepend-icon="props.item.symbol"
+				            v-model="props.item.price"
+				            :rules="[rules.required]"
+				            outline
+				            clear-icon="mdi-close-circle"
+				            clearable
+				            type="number"
+				            @blur="editPhotoPackage('price', props.item.price, props.item.id)"
+									  @keyup.enter="editPhotoPackage('price', props.item.price, props.item.id)"
+				          ></v-text-field>
+				        </v-flex>
+			        </td> -->
+			        <td>
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+				          <v-text-field
+				          	hide-details
+				          	single-line
+				            v-model="props.item.dollar"
+				            :rules="[rules.required, rules.number]"
+				            outline
+				            type="number"
+				            @blur="editPhotoPackage('dollar', props.item.dollar, props.item.id)"
+				    		@keyup.enter="editPhotoPackage('dollar', props.item.dollar, props.item.id)"
+				          ></v-text-field>
+				        </v-flex>
+			        </td>
+			        <td>
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+				          <v-text-field
+				          	hide-details
+				          	single-line
+				            v-model="props.item.euro"
+				            :rules="[rules.required, rules.number]"
+				            outline
+				            type="number"
+				            @blur="editPhotoPackage('euro', props.item.euro, props.item.id)"
+				    		@keyup.enter="editPhotoPackage('euro', props.item.euro, props.item.id)"
+				          ></v-text-field>
+				        </v-flex>
+			        </td>
+			        <td>
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+				          <v-text-field
+				          	hide-details
+				          	single-line
+				            v-model="props.item.indo"
+				            :rules="[rules.required, rules.number]"
+				            outline
+				            type="number"
+				            @blur="editPhotoPackage('indo', props.item.indo, props.item.id)"
+				    		@keyup.enter="editPhotoPackage('indo', props.item.indo, props.item.id)"
+				          ></v-text-field>
+				        </v-flex>
+			        </td>
+			        <td>
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+				          <v-text-field
+				          	hide-details
+				          	single-line
+				            v-model="props.item.turkey"
+				            :rules="[rules.required, rules.number]"
+				            outline
+				            type="number"
+				            @blur="editPhotoPackage('turkey', props.item.turkey, props.item.id)"
+				    		@keyup.enter="editPhotoPackage('turkey', props.item.turkey, props.item.id)"
+				          ></v-text-field>
+				        </v-flex>
+			        </td>
+			        <td>
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+				          <v-text-field
+				          	hide-details
+				          	single-line
+				            v-model="props.item.vn"
+				            :rules="[rules.required, rules.number]"
+				            outline
+				            type="number"
+				            @blur="editPhotoPackage('vn', props.item.vn, props.item.id)"
+				    		@keyup.enter="editPhotoPackage('vn', props.item.vn, props.item.id)"
+				          ></v-text-field>
+				        </v-flex>
+			        </td>
+			        <td>
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+				          <v-text-field
+				          	hide-details
+				          	single-line
+				            v-model="props.item.free_photo"
+				            :rules="[rules.required, rules.number]"
+				            outline
+				            clear-icon="mdi-close-circle"
+				            clearable
+				            type="number"
+				            @blur="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
+				    		@keyup.enter="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
+				          ></v-text-field>
+				        </v-flex>
+			        </td>
 		    	</template>
 
 		    	<!--No data -->
@@ -229,7 +299,11 @@ export default {
     	headers2: [
     		{ text: 'Sl No.', value: 'id', width: '10%' },
         { text: 'Size', align: 'left', value: 'package_name', width: '25%' },
-        { text: 'Unit Price', value: 'price', sortable: false, width: '35%', align: 'center' },
+        { text: 'Dollar', value: 'offer', sortable: false, width: '35%' },
+        { text: 'Euro', value: 'offer', sortable: false, width: '35%' },
+        { text: 'Indo', value: 'offer', sortable: false, width: '35%' },
+        { text: 'Turkey', value: 'offer', sortable: false, width: '35%' },
+        { text: 'VND', value: 'offer', sortable: false, width: '35%' },
         { text: 'Free Photo', value: 'offer', sortable: false, width: '35%' },
     	],
       desserts2: [],
@@ -288,7 +362,8 @@ export default {
 					this.desserts2 = res.data.data
 					this.data = res.data.data
 					this.loading = false
-				}
+				} 
+				console.log(this.desserts2)
 			})
 			.catch((err) =>{
 				console.log(err)

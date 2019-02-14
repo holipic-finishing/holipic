@@ -575,6 +575,7 @@ class OrderRepository extends BaseRepository
     }
 
     public function getHistoryOrders($attributes){
+
         if(isset($attributes['type'])){
             $type = $attributes['type'];
             if($type == 'day'){
@@ -611,6 +612,7 @@ class OrderRepository extends BaseRepository
                 if(isset($attributes['photographer_id'])){
                   $photographer_id = $attributes['photographer_id'];
                 }
+
                 $orders = $this->scopeQuery(function($query) use ($startDay,$endDay, $company_id, $branch_id, $photographer_id){
                     $query = $query->with(['branch' => function($q){
                               }])
@@ -631,9 +633,9 @@ class OrderRepository extends BaseRepository
                     if($photographer_id != ''){
                       $query = $query->where('photographer_id', $photographer_id)->orderBy('created_at');
                     }
-
                     return $query;
                  })->get();
+                 
                 $orders = $this->transformOrder($orders);
             return $orders;
 

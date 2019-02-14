@@ -69,7 +69,7 @@ class OrderTableSeeder extends Seeder
          */
         
     
-        for($i=0; $i < 50 ; $i++){
+        for($i=0; $i < 500 ; $i++){
 
         	$dated =  $faker->dateTimeBetween($startDate = '-5 months', $endDate = '+2months', $timezone = null);
 

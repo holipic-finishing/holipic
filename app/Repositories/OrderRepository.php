@@ -953,7 +953,7 @@ class OrderRepository extends BaseRepository
                               })
                               ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay])
                               ->where('status','DONE')
-                              ->where('payment_method', 'WEB');
+                              ->where('payment_method', 'ONLINE');
                     if($branch_id != ''){
                       $query = $query->where('branch_id', $branch_id);
                     }
@@ -1087,7 +1087,7 @@ class OrderRepository extends BaseRepository
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '>=', $fromMonth)
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '<=', $toMonth)
                                 ->where('status','DONE')
-                                ->where('payment_method', 'WEB');
+                                ->where('payment_method', 'ONLINE');
                       if($branch_id != ''){
                         $query = $query->where('branch_id', $branch_id);
                       }
@@ -1218,7 +1218,7 @@ class OrderRepository extends BaseRepository
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '>=', $from_year)
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '<=', $to_year)
                                 ->where('status','DONE')
-                                ->where('payment_method', 'WEB');
+                                ->where('payment_method', 'ONLINE');
                       if($branch_id != ''){
                         $query = $query->where('branch_id', $branch_id);
                       }
@@ -1347,7 +1347,7 @@ class OrderRepository extends BaseRepository
                               })
                               ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay])
                               ->where('status','DONE')
-                              ->where('payment_method', 'WEB');
+                              ->where('payment_method', 'ONLINE');
 
                     if($branch_id != ''){
                       $query = $query->where('branch_id', $branch_id);

@@ -210,7 +210,6 @@ export default {
     this.$root.$on('searchTag', res => {
       this.params = res
       this.params.check =1
-      this.loading = true
       this.fetchData(this.params)
     })
 

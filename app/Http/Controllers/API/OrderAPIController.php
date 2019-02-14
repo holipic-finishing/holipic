@@ -341,7 +341,7 @@ class OrderAPIController extends AppBaseController
      */
     
     public function getHistoryOrders(Request $request)
-    {
+    {   
         $input = $request->all();
         if(isset($input['type'])){
             $results =  $this->orderRepository->getHistoryOrders($input);

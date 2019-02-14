@@ -4,27 +4,26 @@
 		<p class="fs-14">Enter email and password to access control panel of Holipic.</p>
 		<v-form v-model="valid" class="mb-4" ref="form">
 			<v-text-field 
-			label="E-mail" 
-			v-model="email" 
-			:rules="emailRules" 
-			required
-			@keyup.enter="login"
-
+				label="E-mail" 
+				v-model="email" 
+				:rules="emailRules" 
+				required
+				@keyup.enter="login"
 			></v-text-field>
 
 			<v-text-field 
-			label="Password" 
-			v-model="password" 
-			type="password" 
-			:rules="passwordRules" 
-			required
-			@keyup.enter="login"
+				label="Password" 
+				v-model="password" 
+				type="password" 
+				:rules="passwordRules" 
+				required
+				@keyup.enter="login"
 			></v-text-field>
 
 			<v-checkbox 
-			color="primary" 
-			label="Remember me" 
-			v-model="checkbox"
+				color="primary" 
+				label="Remember me" 
+				v-model="checkbox"
 			></v-checkbox>
 
 			<router-link class="mb-1" to="/session/forgot-password">{{$t('message.forgotPassword')}}?</router-link>
@@ -67,8 +66,7 @@ export default {
 		};
 	},
 	methods: {
-		submit() 
-		{
+		submit() {
 			const user = {
 				email: this.email,
 				password: this.password
@@ -79,16 +77,16 @@ export default {
 			});
 		},
 
-	  	login () {
-	  		if(this.$refs.form.validate()) {
-		  		const user = {
-		        email: this.email,
-		        password: this.password
-		      	};
+  	login () {
+  		if(this.$refs.form.validate()) {
+	  		const user = {
+	        email: this.email,
+	        password: this.password
+	      };
 
-		      	this.$store.dispatch("signinUserInDatabase", {user});
-	  		}
-	  	}
+	      this.$store.dispatch("signinUserInDatabase", {user});
+  		}
+  	}
 	}
 
 };

@@ -36,9 +36,9 @@ class OrderTableSeeder extends Seeder
 
         $payment_method = ['CC', 'CASH'];
 
-        $purchase_from = ['WEB', 'SHOP'];
+        $purchase_from = ['ONLINE', 'SHOP'];
 
-        $status = ['DONE','PENDING', 'CANCEL', 'PAID'];
+        $status = ['BOOKING','DONE','PENDING', 'CANCEL', 'PAID'];
 
         $list_currency_id = [1,2,3];
 
@@ -69,7 +69,7 @@ class OrderTableSeeder extends Seeder
          */
         
     
-        for($i=0; $i < 50 ; $i++){
+        for($i=0; $i < 500 ; $i++){
 
         	$dated =  $faker->dateTimeBetween($startDate = '-5 months', $endDate = '+2months', $timezone = null);
 
@@ -89,14 +89,14 @@ class OrderTableSeeder extends Seeder
         		$total_amount = $faker->randomElement($list_total_amount_rp);
         	}
 
-	        if($purchase_from_select == 'WEB'){
+	        if($purchase_from_select == 'ONLINE'){
 	        	if($status_select != 'DONE' || $status != 'PAID'){
-	        		$payment_method_select = 'WEB';
+	        		$payment_method_select = 'ONLINE';
 		        	$purchase_date = null;
 		        	$download_date =  null;
 		        	$order_date = $dated;
 	        	}else{
-		        	$payment_method_select = 'WEB';
+		        	$payment_method_select = 'ONLINE';
 		        	$purchase_date = $dated;
 		        	$download_date =  $dated;
 		        	$order_date = $dated;

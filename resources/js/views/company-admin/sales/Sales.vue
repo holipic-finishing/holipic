@@ -196,7 +196,9 @@ export default {
 					var vm = this
 					_.forEach(data, function(value,key){
 						vm.items.push(value)					
-					})				    
+					})
+
+
 				}
 			})
 			.catch(err => {
@@ -239,9 +241,11 @@ export default {
 			let url = config.API_URL+'order/orders-company'
 			getWithData(url,params)
 			.then(res => {
+				
 				if(res.data && res.data.success){
 					let data = res.data.data
 					this.desserts = data
+
 				}
 			})
 			.catch(err => {

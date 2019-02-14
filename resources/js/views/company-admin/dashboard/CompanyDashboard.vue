@@ -49,7 +49,7 @@
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'day'">
 
 				<v-flex xs12>
-				  <div class="text-primary">(*) Please No choose more than 15 days</div>
+				  <!-- <div class="text-primary">(*) Please No choose more than 15 days</div> -->
 				</v-flex>
 
 			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>

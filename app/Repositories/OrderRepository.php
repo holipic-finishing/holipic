@@ -1370,7 +1370,7 @@ class OrderRepository extends BaseRepository
         }
     }
 
-    public function sumAmountByPaymentMethod($attributes){
+  public function sumAmountByPaymentMethod($attributes){
       $total = 0 ;
       foreach ($attributes as $key => $attribute) {
           $attributes[$key]->total_amount_to_dollar = round(($attribute->total_amount * $attribute->orderexchange->exchange_rate_to_dollar),3);
@@ -1381,7 +1381,43 @@ class OrderRepository extends BaseRepository
       }
       return $total;
 
-    }
+  }
+
+  public function countValuesOfTag($attributes){
+    $countDone = Order::join('branches','orders.branch_id','=','branches.id')
+                  ->where('status','DONE')
+                  ->where('company_id',$attributes['companyId'])
+                  ->count();
+
+    $countPaid = Order::join('branches','orders.branch_id','=','branches.id')
+                  ->where('status','PAID')
+                  ->where('company_id',$attributes['companyId'])
+                  ->count();
+
+    $countPending = Order::join('branches','orders.branch_id','=','branches.id')
+                  ->where('status','PENDING')
+                  ->where('company_id',$attributes['companyId'])
+                  ->count();
+
+    $countCancel = Order::join('branches','orders.branch_id','=','branches.id')
+                  ->where('status','CANCEL')
+                  ->where('company_id',$attributes['companyId'])
+                  ->count();
+
+    $countBooking = Order::join('branches','orders.branch_id','=','branches.id')
+                  ->where('status','BOOKING')
+                  ->where('company_id',$attributes['companyId'])
+                  ->count();
+
+    return $array = [
+      'done' => $countDone,
+      'paid' => $countPaid,
+      'pending' => $countPending,
+      'cancel' => $countCancel,
+      'booking' => $countBooking,
+
+    ] ; 
+  }
 
 
 }

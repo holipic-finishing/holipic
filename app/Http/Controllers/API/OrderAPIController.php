@@ -394,9 +394,18 @@ class OrderAPIController extends AppBaseController
 
            
         }
-        return $this->sendResponse($results, 'Order updated successfully');
+        return $this->sendResponse($results, 'count income successfully');
     }
 
-   
+    /*
+        -function to count number of tags : pending , done ,...
+        -@param :  status of order : DONE , PENDING , CANCEL,  BOOKING, PAID 
+     */
+    
+    public function countValuesOfTag(Request $request){
+        $input = $request->all();
+        $results =  $this->orderRepository->countValuesOfTag($input);
+        return $this->sendResponse($results, 'count values of tag successfully');
+    }
 
 }

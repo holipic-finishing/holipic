@@ -1,7 +1,8 @@
 <template>
    <v-menu offset-y origin="right top" left content-class="language-dropdown" transition="slide-y-transition" nudge-top="-10" class="user-block-wrap">
 		<v-btn icon large slot="activator">
-         <i data-v-be2d629e="" class="zmdi grey--text zmdi-account infinite wobble zmdi-hc-fw font-lg"></i>
+         <v-icon small>fas fa-user-alt</v-icon>
+         <!-- <i data-v-be2d629e="" class="zmdi grey--text zmdi-account infinite wobble zmdi-hc-fw font-lg"></i> -->
 			<!-- <img v-if="user.role_id == 1" src="/static/avatars/user-13.jpg" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" />
          <img v-if="user.role_id != 1" :src="user.company_logo" alt="avatar" height="40" width="40" class="img-responsive rounded-circle" /> -->
 		</v-btn>
@@ -97,3 +98,8 @@
       }
    }
 </script>
+<style lang="css" scoped>
+.user-block-wrap {
+   margin: -10px;
+}
+</style>

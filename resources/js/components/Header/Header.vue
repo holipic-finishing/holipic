@@ -44,10 +44,13 @@
 				<activity-logs v-if="role_id == 2" v-show="role_id == '2'"></activity-logs>
 				<language-provider></language-provider>
 				<user></user>
-				<v-btn v-if="role_id == 2" v-show="role_id == '2' "  class="ma-0" icon large @click.stop="eWalletSidebar = !eWalletSidebar">
+				<!-- <v-btn v-if="role_id == 2" v-show="role_id == '2' "  class="ma-0" icon large @click.stop="eWalletSidebar = !eWalletSidebar">
 					<v-icon color="grey">ti-wallet</v-icon>
-				</v-btn>
+				</v-btn> -->
 				<v-btn v-if="role_id == 2" v-show="role_id == '2' " class="ma-0" flat @click.stop="eWalletSidebar = !eWalletSidebar">
+					<div class="icon-ewallet">
+						<v-icon color="grey">ti-wallet</v-icon>
+					</div>
 					<div class="v-menu v-menu--inline">
 						<span class="ewallet-style">$ {{money_ewallet}}</span>
 					</div>
@@ -158,6 +161,9 @@ export default {
 	font-weight: 700;
     color: gray;
     font-size: 16px;
+}
+.icon-ewallet {
+	margin-right: 10px;
 }
 </style>
     

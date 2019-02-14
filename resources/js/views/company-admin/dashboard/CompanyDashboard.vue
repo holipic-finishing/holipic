@@ -515,27 +515,27 @@
 			  	</v-flex>
 
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
-			  		<v-chip color="green" text-color="white">
+			  		<v-chip color="green" text-color="white" @click = "searchTag(paid.name)">
 				        <v-avatar class="green darken-4">{{paid.value}}</v-avatar>
 				        {{paid.name}}
 				    </v-chip>
 			  	</v-flex>
 
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
-			  		<v-chip color="green" text-color="white">
+			  		<v-chip color="green" text-color="white" @click = "searchTag(pending.name)">
 				        <v-avatar class="green darken-4">{{pending.value}}</v-avatar>
 				        {{pending.name}}
 				    </v-chip>
 			  	</v-flex>
 
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
-			  		<v-chip color="green" text-color="white">
+			  		<v-chip color="green" text-color="white" @click = "searchTag(cancel.name)">
 				        <v-avatar class="green darken-4">{{cancel.value}}</v-avatar>
 				        {{cancel.name}}
 				    </v-chip>
 			  	</v-flex>
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
-			  		<v-chip color="green" text-color="white">
+			  		<v-chip color="green" text-color="white" @click = "searchTag(booking.name)">
 				        <v-avatar class="green darken-4">{{booking.value}}</v-avatar>
 				        {{booking.name}}
 				    </v-chip>
@@ -643,18 +643,22 @@ export default {
 				name : 'BOOKING',
 				value : 0
 			},
+			paramsSearchTag : {
+				status : ''
+			}
+
 	  }
 	},
 	methods:{
 		searchTag(params){
-			console.log(params)
+			this.paramsSearchTag.status = params
+			this.$root.$emit('searchTag', this.paramsSearchTag)
 		},
 		countValuesOfTag(){
 			var url = config.API_URL+'order/countValuesOfTag?companyId='+this.company_id
 			get(url)
 			.then((response) => {
 				if(response.data && response.data.success){
-					console.log(response.data.data)
 					this.done.value = response.data.data.done			    
 					this.paid.value = response.data.data.paid			    
 					this.pending.value = response.data.data.pending			    

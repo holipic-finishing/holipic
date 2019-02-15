@@ -73,9 +73,9 @@
                 <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
                 <v-btn class="btn-gradient-primary ml-0 mr-0" color="primary" small v-if="props.item.status === 'PAID'">{{ props.item.status }}</v-btn> -->
 
-                <span class="text-warning" v-if="props.item.status === 'DONE'">{{ props.item.status }}</span>
+                <span class="text-success" v-if="props.item.status === 'DONE'">{{ props.item.status }}</span>
 
-                <span class="text-success" v-if="props.item.status === 'PENDING'">{{ props.item.status }}</span>
+                <span class="text-warning" v-if="props.item.status === 'PENDING'">{{ props.item.status }}</span>
 
                 <span class="text-danger" v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</span>
 
@@ -268,9 +268,9 @@ export default {
   methods: {
     fetchData(params){
       params.company_id = this.company_id
-    	post(config.API_URL + 'order/history-order', params)
+      let url = config.API_URL + 'order/history-order'
+    	post(url, params)
 				.then((res) => {
-          console.log(res)
 					if(res.data && res.data.success){
 						this.desserts = res.data.data
 						this.loading = false
@@ -294,7 +294,6 @@ export default {
     deleteItem(){
       del(config.API_URL + 'orders/' + this.itemIdToDelete)
       .then((res) => {
-        console.log(res.data)
         if(res.data && res.data.success){
           Vue.notify({
                         type: 'success',

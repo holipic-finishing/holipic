@@ -1421,6 +1421,33 @@ class OrderRepository extends BaseRepository
     ] ; 
   }
 
+  /* 
+    Target Get all Orders by status
+  */
+  public function getHistoryOrdersByStaus($attributes){
+    
+    $company_id = $attributes['company_id'];
+    $status = $attributes['status'];
+    $allOrders = $this->scopeQuery(function($query) use ($company_id,$status){
+         $query = $query->with(['branch' => function($q){
+                        }])
+                        ->with(['customer.room' => function($q){
+                        }])
+                        ->with(['customer.user' => function($q){
+                        }])
+                        ->with(['photographer' => function($q){
+                        }])
+                        ->with('orderexchange')
+                        ->whereHas('branch', function($q) use ($company_id,$status){
+                          $q->where('branches.company_id',$company_id);
+                        })
+                        ->where('status',$status);
+    return $query;
+    })->get();
+
+    return $allOrders;
+  }
+
 
 }
 

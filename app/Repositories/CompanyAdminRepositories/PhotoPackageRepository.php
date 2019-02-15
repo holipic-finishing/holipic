@@ -40,7 +40,7 @@ class PhotoPackageRepository extends BaseRepository
     {
         $results = DB::table('photo_packages as p')
                     ->join('currencies as c', 'c.id', '=', 'p.currency_id')
-                    ->select('p.id as id', 'p.size','p.price' ,'p.free_photo', 'c.symbol')
+                    ->select('p.id as id', 'p.size','p.price' ,'p.free_photo','p.dollar', 'p.euro', 'p.indo', 'p.turkey', 'p.vn', 'c.symbol')
                     ->where('company_id', '=', $input)
                     ->get();
 

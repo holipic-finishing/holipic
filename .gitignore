@@ -21,4 +21,5 @@ yarn-error.log
 /public/images/customer/
 /public/avatars/
 /public/files/
+/public/rsa_key/
 

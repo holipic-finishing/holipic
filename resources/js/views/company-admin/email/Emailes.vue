@@ -230,7 +230,7 @@ export default {
 			let params = {
         company_id : this.authUser.company_id
       }	
-			let url = config.API_URL+'company/export/customer'
+			let url = config.API_URL + 'export-customers'
 			getWithData(url,params)
 			.then(res => {
 				if(res.data && res.data.status){

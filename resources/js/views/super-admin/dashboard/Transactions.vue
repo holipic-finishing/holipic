@@ -282,7 +282,7 @@ export default {
       return getWithContentWrap(this.drawerHeaderStt)
     },
     fetchData(params){
-    	post(config.API_URL + 'histories/transactions', params)
+    	post(config.API_URL + 'history-transactions', params)
 				.then((res) => {
 					if(res.data && res.data.success){
 						this.desserts = res.data.data
@@ -329,6 +329,11 @@ export default {
       del(config.API_URL + 'transactions/' + this.itemIdToDelete)
       .then((res) => {
         if(res.data && res.data.success){
+          this.$notify.success({
+            title: 'Success',
+            message: 'Delete Item Successfully!',
+            showClose: false
+          })
           this.loading = true
           this.fetchData(this.params)
           this.dialog = false

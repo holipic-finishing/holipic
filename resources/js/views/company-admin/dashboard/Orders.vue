@@ -264,7 +264,6 @@ export default {
       params.company_id = this.company_id
     	post(config.API_URL + 'order/history-order', params)
 				.then((res) => {
-          console.log(res)
 					if(res.data && res.data.success){
 						this.desserts = res.data.data
 						this.loading = false

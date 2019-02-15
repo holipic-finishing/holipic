@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\SuperAdmin;
 
 use App\Http\Requests\API\CreatePackageAPIRequest;
 use App\Http\Requests\API\UpdatePackageAPIRequest;
@@ -163,7 +163,7 @@ class PackageAPIController extends AppBaseController
         return view('sites.pages.landing-page',compact('list'));
     }
 
-    public function CountPackages(){
+    public function countPackages(){
 
         $count_packages = $this->packageRepository->countPackages();
 

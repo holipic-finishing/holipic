@@ -351,7 +351,7 @@ export default {
 
     },
     fetchData(field){
-  		post(config.API_URL + 'edit/transaction/' + this.itemToLoad.id, field)
+  		post(config.API_URL + 'transaction-edit/' + this.itemToLoad.id, field)
 			.then((res) => {
 				if(res.data && res.data.success){
           this.alertStt = true

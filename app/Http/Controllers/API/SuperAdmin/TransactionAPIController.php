@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\SuperAdmin;
 
 use App\Http\Requests\API\CreateTransactionAPIRequest;
 use App\Http\Requests\API\UpdateTransactionAPIRequest;
@@ -131,22 +131,7 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($id, 'Transaction deleted successfully');
     }
 
-    public function getInformationCompany()
-    {
-        $company = $this->transactionRepository->getInformationCompanyAndTotalAmountDefault(request('companyId'));
-        return $this->sendResponse($company, 'Transaction Company successfully');
-    }
-
-    public function loadChartCompanyByTime(Request $request) 
-    {
-
-        $company = $this->transactionRepository->getInformationCompanyAndTotalAmountByTime($request->all());
-
-        return $this->sendResponse($company, 'Transaction Company date/month successfully');
-
-    }
-
-    public function getHistories(Request $request){
+    public function getDashboardTransactions(Request $request){
         $params = $request->all();
 
         $transactions = $this->transactionRepository->getHistoriesTransaction($params);
@@ -156,15 +141,6 @@ class TransactionAPIController extends AppBaseController
         }else{
             return $this->sendError('Data not found');
         }
-
-    }
-
-    public function doSearch(Request $request){
-        $input = $request->all();
-
-        $results =  $this->transactionRepository->search($input);
-
-        return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
 
     }
 
@@ -205,14 +181,6 @@ class TransactionAPIController extends AppBaseController
 
     }
 
-    public function doSearchDashboard(Request $request){
-        $input = $request->all();
-
-        $results =  $this->transactionRepository->searchDashboard($input);
-
-        return $this->sendResponse($results->toArray(), 'Transactions retrieved successfully');
-    }
-
 
     /*
     *   Target : Search tranctions history by time value
@@ -221,7 +189,7 @@ class TransactionAPIController extends AppBaseController
     *   @param  Request
     *   return Json
     */
-    public function getTransactionHistory(Request $request) {
+    public function getCompanyTransactions(Request $request) {
 
         $input = $request->all(); 
 
@@ -265,7 +233,7 @@ class TransactionAPIController extends AppBaseController
     *   @param  Request
     *   return Json
     */
-    public function getTransactionHistoryWithTimevalue(Request $request)
+    public function getTransactionHistoryWithTimeValue(Request $request)
     {
         $input = $request->all();
 
@@ -289,8 +257,5 @@ class TransactionAPIController extends AppBaseController
 
         return $this->sendResponse($result, 'Transactions retrieved successfully');
     }
-
-
-
 }
 

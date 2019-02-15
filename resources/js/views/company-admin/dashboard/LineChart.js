@@ -159,7 +159,7 @@ export default {
 	},
 
   countIncome(params){
-      let url = config.API_URL+'order/count-income'
+      let url = config.API_URL + 'order/count-income'
       params.company_id = this.company_id
       getWithData(url,params)
       .then((res) => {

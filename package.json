@@ -56,6 +56,7 @@
         "screenfull": "^3.3.2",
         "slick-carousel": "^1.8.1",
         "socket.io": "^2.2.0",
+        "underscore": "^1.9.1",
         "vee-validate": "^2.1.4",
         "velocity-animate": "^1.5.2",
         "vue": "^2.5.17",

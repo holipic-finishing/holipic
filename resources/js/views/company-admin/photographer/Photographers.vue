@@ -76,8 +76,8 @@
 						<td class="text-xs-left">{{ props.item.created_at }}</td>
 
 						<td class="text-xs-left">
-						<v-btn color="btn-gradient-primary" small v-if="props.item.status === true">Active</v-btn>
-					 	<v-btn color="btn-gradient-pink" small v-else>Inactive</v-btn>
+						<span class="text-success" v-if="props.item.status === true">Active</span>
+					 	<span class="text-danger" v-else>Inactive</span>
 						</td>
 			      <td class="text-xs-left action-width-photographer">
 	        		<v-icon

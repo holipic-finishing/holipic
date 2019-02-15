@@ -284,34 +284,34 @@
 			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
-							<v-menu
-								ref="menu5"
-								:close-on-content-click="false"
-								v-model="menu5"
-								:nudge-right="40"
-								lazy
-								transition="scale-transition"
-								offset-y
-								full-width
-                min-width="290"
-							>
+						<v-menu
+							ref="menu5"
+							:close-on-content-click="false"
+							v-model="menu5"
+							:nudge-right="40"
+							lazy
+							transition="scale-transition"
+							offset-y
+							full-width
+            				min-width="290"
+						>
 						    <v-text-field
-					        slot="activator"
-					        v-model="from_year"
-					        label="Start Year"
-					        prepend-icon="event"
-					        readonly
-					        hide-details
+						        slot="activator"
+						        v-model="from_year"
+						        label="Start Year"
+						        prepend-icon="event"
+						        readonly
+						        hide-details
 						    ></v-text-field>
-				      	<v-date-picker
-					        ref="picker"
-					        v-model="from_year"
-					        @input="saveStartYear"
-					        reactive
-					        no-title
-					        :max="defaultYear"
-				      	></v-date-picker>
-							</v-menu>
+					      	<v-date-picker
+							        ref="picker"
+							        v-model="from_year"
+							        @input="saveStartYear"
+							        reactive
+							        no-title
+							        :max="defaultYear"
+					      	></v-date-picker>
+						</v-menu>
 		  			</v-card-text>
 			  	</v-card>
 			  </v-flex>
@@ -329,7 +329,7 @@
 								transition="scale-transition"
 								offset-y
 								full-width
-               	min-width="290"
+               					min-width="290"
 							>
 								<v-text-field
 									slot="activator"
@@ -357,12 +357,12 @@
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
 							<v-select
-			         	:items="listBranch"
-			         	label="Enter Branch"
-			         	v-model="item.branch_id"
-			         	item-text="name"
-          			item-value="id"
-			         	v-on:change="changeBranch(item)"
+					         	:items="listBranch"
+					         	label="Enter Branch"
+					         	v-model="item.branch_id"
+					         	item-text="name"
+		          				item-value="id"
+					         	v-on:change="changeBranch(item)"
 								@input="reportByYear"
 								hide-details
 					    ></v-select>
@@ -375,11 +375,11 @@
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
 							<v-select
-			         	:items="listPhotographer"
-			         	label="Enter Photographer"
-			         	v-model="item.photographer_id"
-			         	item-text="name"
-          			item-value="id"
+					         	:items="listPhotographer"
+					         	label="Enter Photographer"
+					         	v-model="item.photographer_id"
+					         	item-text="name"
+		          				item-value="id"
 								@input="reportByYear"
 								hide-details
 			        ></v-select>
@@ -391,7 +391,7 @@
 			<!-- End Year Component -->
 
 			<!-- Week Component-->
-				<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'week'">
+			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'week'">
 				
 				<v-flex xs12>
 				  <div class="text-primary">(*) Please No choose more than 6 week</div>
@@ -403,21 +403,21 @@
 		  	  		<div class="font-weight-bold">Start</div>
 							<v-menu
 								:close-on-content-click="false"
-                v-model="menu7"
-                :nudge-right="40"
-                lazy
-                transition="scale-transition"
-                offset-y
-                full-width
-                min-width="290"
+				                v-model="menu7"
+				                :nudge-right="40"
+				                lazy
+				                transition="scale-transition"
+				                offset-y
+				                full-width
+				                min-width="290"
 							>
 								<v-text-field 
 									slot="activator"
 									v-model="computedStartWeek"
 									prepend-icon="event"
 									readonly
-              		placeholder="Enter Start Week"
-              		hide-details
+				              		placeholder="Enter Start Week"
+				              		hide-details
 								></v-text-field>
 								<v-date-picker 
 									v-model="from_day_week" 
@@ -435,32 +435,32 @@
 			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
-							<v-menu 
-								:close-on-content-click="false"
-                v-model="menu8"
-                :nudge-right="40"
-                lazy
-                transition="scale-transition"
-                offset-y
-                full-width
-                min-width="290"
-							>
-								<v-text-field 
-									slot="activator"
-									v-model="computedEndWeek"
-									prepend-icon="event"
-									readonly
-              		placeholder="Enter End Week"
-              		hide-details
-								></v-text-field>
-								<v-date-picker 
-									v-model="to_day_week" 
-									no-title 
-									scrollable 
-									:max="new Date().toISOString().substr(0, 10)"
-									@input="reportByWeek"
-								></v-date-picker>
-							</v-menu>
+						<v-menu 
+							:close-on-content-click="false"
+			                v-model="menu8"
+			                :nudge-right="40"
+			                lazy
+			                transition="scale-transition"
+			                offset-y
+			                full-width
+			                min-width="290"
+						>
+							<v-text-field 
+								slot="activator"
+								v-model="computedEndWeek"
+								prepend-icon="event"
+								readonly
+			              		placeholder="Enter End Week"
+			              		hide-details
+							></v-text-field>
+							<v-date-picker 
+								v-model="to_day_week" 
+								no-title 
+								scrollable 
+								:max="new Date().toISOString().substr(0, 10)"
+								@input="reportByWeek"
+							></v-date-picker>
+						</v-menu>
 		  			</v-card-text>
 			  	</v-card>
 			  </v-flex>
@@ -470,12 +470,12 @@
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
 							<v-select
-			         	:items="listBranch"
-			         	label="Enter Branch"
-			         	v-model="item.branch_id"
-			         	item-text="name"
-          			item-value="id"
-			         	v-on:change="changeBranch(item)"
+					         	:items="listBranch"
+					         	label="Enter Branch"
+					         	v-model="item.branch_id"
+					         	item-text="name"
+		          				item-value="id"
+					         	v-on:change="changeBranch(item)"
 								@input="reportByWeek"
 								hide-details
 					    ></v-select>
@@ -488,17 +488,58 @@
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
 							<v-select
-			         	:items="listPhotographer"
-			         	label="Enter Photographer"
-			         	v-model="item.photographer_id"
-			         	item-text="name"
-              	item-value="id"
+					         	:items="listPhotographer"
+					         	label="Enter Photographer"
+					         	v-model="item.photographer_id"
+					         	item-text="name"
+              					item-value="id"
 								@input="reportByWeek"
 								hide-details
 					    ></v-select>
 			      </v-card-text>
 			  	</v-card>
 			  </v-flex>
+
+			</v-layout>
+			<v-layout row wrap class="stats-card-v4">
+				
+			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
+			  		<v-chip 
+			  			color="green" 
+			  			text-color="white"
+			  			@click = "searchTag(done.name)"
+			  		>
+				        <v-avatar class="green darken-4">{{done.value}}</v-avatar>
+				        {{done.name}}
+				    </v-chip>
+			  	</v-flex>
+
+			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
+			  		<v-chip color="indigo" text-color="white" @click = "searchTag(paid.name)">
+				        <v-avatar class="indigo darken-4">{{paid.value}}</v-avatar>
+				        {{paid.name}}
+				    </v-chip>
+			  	</v-flex>
+
+			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
+			  		<v-chip color="orange" text-color="white" @click = "searchTag(pending.name)">
+				        <v-avatar class="orange darken-4">{{pending.value}}</v-avatar>
+				        {{pending.name}}
+				    </v-chip>
+			  	</v-flex>
+
+			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
+			  		<v-chip color="red" text-color="white" @click = "searchTag(cancel.name)">
+				        <v-avatar class="red darken-4">{{cancel.value}}</v-avatar>
+				        {{cancel.name}}
+				    </v-chip>
+			  	</v-flex>
+			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
+			  		<v-chip color="primary" text-color="white" @click = "searchTag(booking.name)">
+				        <v-avatar class="primary darken-4">{{booking.value}}</v-avatar>
+				        {{booking.name}}
+				    </v-chip>
+			  	</v-flex>
 
 			</v-layout>
 			<!-- End Week Component -->
@@ -581,30 +622,76 @@ export default {
 				cc : 0	,
 				web: 0,
 			},
-			totalImcome : 0
+			totalImcome : 0,
+			done : {
+				name : 'DONE',
+				value : 0
+			},
+			paid : {
+				name : 'PAID',
+				value : 0
+			},
+			pending : {
+				name : 'PENDING',
+				value : 0
+			},
+			cancel : {
+				name : 'CANCEL',
+				value : 0
+			},
+			booking : {
+				name : 'BOOKING',
+				value : 0
+			},
+			paramsSearchTag : {
+				status : ''
+			}
+
 	  }
 	},
 	methods:{
+		searchTag(params){
+			this.paramsSearchTag.status = params
+			this.$root.$emit('searchTag', this.paramsSearchTag)
+		},
+		countValuesOfTag(){
+			var url = config.API_URL+'order/countValuesOfTag?companyId='+this.company_id
+			get(url)
+			.then((response) => {
+				if(response.data && response.data.success){
+					this.done.value = response.data.data.done			    
+					this.paid.value = response.data.data.paid			    
+					this.pending.value = response.data.data.pending			    
+					this.cancel.value = response.data.data.cancel			    
+					this.booking.value = response.data.data.booking			    
+				}
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+		},
 		formatDate(date) {
-      if(date){
-          return moment(date, 'YYYY-MM-DD hh:mm:ss').format('MM/DD/YYYY');
-      }
-  	},
+	      if(date){
+	          return moment(date, 'YYYY-MM-DD hh:mm:ss').format('MM/DD/YYYY');
+	      }
+	  	},
 
-    saveStartYear(from_year) {
+
+
+    	saveStartYear(from_year) {
 			this.$refs.menu5.save(from_year)
-      	this.$refs.picker.activePicker = 'YEAR'
-      	this.from_year = from_year.substr(0,4)
-      	this.menu5 = false;
-      	this.reportByYear()
+	      	this.$refs.picker.activePicker = 'YEAR'
+	      	this.from_year = from_year.substr(0,4)
+	      	this.menu5 = false;
+	      	this.reportByYear()
 		},
 
 		saveEndYear(to_year) {
 			this.$refs.menu6.save(to_year)
-    	this.$refs.picker2.activePicker = 'YEAR'
-    	this.to_year = to_year.substr(0,4)
-    	this.menu6 = false
-    	this.reportByYear()
+	    	this.$refs.picker2.activePicker = 'YEAR'
+	    	this.to_year = to_year.substr(0,4)
+	    	this.menu6 = false
+	    	this.reportByYear()
 		},
 
 		fetchData(){
@@ -626,9 +713,9 @@ export default {
 
 		errorAlert(errorMesg){
 			this.alertStt = true
-    	this.alertType = 'error'
-    	this.alertMes = errorMesg
-    	setTimeout(() => {this.alertStt = false}, 1500)					
+	    	this.alertType = 'error'
+	    	this.alertMes = errorMesg
+	    	setTimeout(() => {this.alertStt = false}, 1500)					
 		},
 
 		resetTime(){
@@ -893,8 +980,7 @@ export default {
   		this.$store.dispatch("connectionPushNotification", {user});
 		this.fetchData()
 		this.getListBranch()
-
-		
+		this.countValuesOfTag()	
 	},
 	computed:{
 	  	typeTimeReturn(){

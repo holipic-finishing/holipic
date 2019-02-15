@@ -575,6 +575,7 @@ class OrderRepository extends BaseRepository
     }
 
     public function getHistoryOrders($attributes){
+
         if(isset($attributes['type'])){
             $type = $attributes['type'];
             if($type == 'day'){
@@ -611,6 +612,7 @@ class OrderRepository extends BaseRepository
                 if(isset($attributes['photographer_id'])){
                   $photographer_id = $attributes['photographer_id'];
                 }
+
                 $orders = $this->scopeQuery(function($query) use ($startDay,$endDay, $company_id, $branch_id, $photographer_id){
                     $query = $query->with(['branch' => function($q){
                               }])
@@ -631,9 +633,9 @@ class OrderRepository extends BaseRepository
                     if($photographer_id != ''){
                       $query = $query->where('photographer_id', $photographer_id)->orderBy('created_at');
                     }
-
                     return $query;
                  })->get();
+                 
                 $orders = $this->transformOrder($orders);
             return $orders;
 
@@ -951,7 +953,7 @@ class OrderRepository extends BaseRepository
                               })
                               ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay])
                               ->where('status','DONE')
-                              ->where('payment_method', 'WEB');
+                              ->where('payment_method', 'ONLINE');
                     if($branch_id != ''){
                       $query = $query->where('branch_id', $branch_id);
                     }
@@ -1085,7 +1087,7 @@ class OrderRepository extends BaseRepository
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '>=', $fromMonth)
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"), '<=', $toMonth)
                                 ->where('status','DONE')
-                                ->where('payment_method', 'WEB');
+                                ->where('payment_method', 'ONLINE');
                       if($branch_id != ''){
                         $query = $query->where('branch_id', $branch_id);
                       }
@@ -1216,7 +1218,7 @@ class OrderRepository extends BaseRepository
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '>=', $from_year)
                                 ->where(DB::raw("DATE_FORMAT(created_at,'%Y')"), '<=', $to_year)
                                 ->where('status','DONE')
-                                ->where('payment_method', 'WEB');
+                                ->where('payment_method', 'ONLINE');
                       if($branch_id != ''){
                         $query = $query->where('branch_id', $branch_id);
                       }
@@ -1345,7 +1347,7 @@ class OrderRepository extends BaseRepository
                               })
                               ->whereBetween(DB::raw('date(created_at)'),[$startDay,$endDay])
                               ->where('status','DONE')
-                              ->where('payment_method', 'WEB');
+                              ->where('payment_method', 'ONLINE');
 
                     if($branch_id != ''){
                       $query = $query->where('branch_id', $branch_id);
@@ -1417,6 +1419,33 @@ class OrderRepository extends BaseRepository
       'booking' => $countBooking,
 
     ] ; 
+  }
+
+  /* 
+    Target Get all Orders by status
+  */
+  public function getHistoryOrdersByStaus($attributes){
+    
+    $company_id = $attributes['company_id'];
+    $status = $attributes['status'];
+    $allOrders = $this->scopeQuery(function($query) use ($company_id,$status){
+         $query = $query->with(['branch' => function($q){
+                        }])
+                        ->with(['customer.room' => function($q){
+                        }])
+                        ->with(['customer.user' => function($q){
+                        }])
+                        ->with(['photographer' => function($q){
+                        }])
+                        ->with('orderexchange')
+                        ->whereHas('branch', function($q) use ($company_id,$status){
+                          $q->where('branches.company_id',$company_id);
+                        })
+                        ->where('status',$status);
+    return $query;
+    })->get();
+
+    return $allOrders;
   }
 
 

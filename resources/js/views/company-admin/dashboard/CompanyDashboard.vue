@@ -49,7 +49,7 @@
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'day'">
 
 				<v-flex xs12>
-				  <div class="text-primary">(*) Please No choose more than 15 days</div>
+				  <!-- <div class="text-primary">(*) Please No choose more than 15 days</div> -->
 				</v-flex>
 
 			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
@@ -515,28 +515,28 @@
 			  	</v-flex>
 
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
-			  		<v-chip color="green" text-color="white" @click = "searchTag(paid.name)">
-				        <v-avatar class="green darken-4">{{paid.value}}</v-avatar>
+			  		<v-chip color="indigo" text-color="white" @click = "searchTag(paid.name)">
+				        <v-avatar class="indigo darken-4">{{paid.value}}</v-avatar>
 				        {{paid.name}}
 				    </v-chip>
 			  	</v-flex>
 
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
-			  		<v-chip color="green" text-color="white" @click = "searchTag(pending.name)">
-				        <v-avatar class="green darken-4">{{pending.value}}</v-avatar>
+			  		<v-chip color="orange" text-color="white" @click = "searchTag(pending.name)">
+				        <v-avatar class="orange darken-4">{{pending.value}}</v-avatar>
 				        {{pending.name}}
 				    </v-chip>
 			  	</v-flex>
 
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
-			  		<v-chip color="green" text-color="white" @click = "searchTag(cancel.name)">
-				        <v-avatar class="green darken-4">{{cancel.value}}</v-avatar>
+			  		<v-chip color="red" text-color="white" @click = "searchTag(cancel.name)">
+				        <v-avatar class="red darken-4">{{cancel.value}}</v-avatar>
 				        {{cancel.name}}
 				    </v-chip>
 			  	</v-flex>
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
-			  		<v-chip color="green" text-color="white" @click = "searchTag(booking.name)">
-				        <v-avatar class="green darken-4">{{booking.value}}</v-avatar>
+			  		<v-chip color="primary" text-color="white" @click = "searchTag(booking.name)">
+				        <v-avatar class="primary darken-4">{{booking.value}}</v-avatar>
 				        {{booking.name}}
 				    </v-chip>
 			  	</v-flex>

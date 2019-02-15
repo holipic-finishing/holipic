@@ -342,7 +342,13 @@ class OrderAPIController extends AppBaseController
     
     public function getHistoryOrders(Request $request)
     {   
+
         $input = $request->all();
+        if(isset($input['check'])){
+            if($input['check'] == 1){
+               $results =  $this->orderRepository->getHistoryOrdersByStaus($input);
+            }
+        }    
         if(isset($input['type'])){
             $results =  $this->orderRepository->getHistoryOrders($input);
         }else{
@@ -366,7 +372,9 @@ class OrderAPIController extends AppBaseController
 
            
         }
-        return $this->sendResponse($results->toArray(), 'Order updated successfully');
+        return $this->sendResponse($results, 'Order updated successfully');
+
+        // return $this->sendResponse($results->toArray(), 'Order updated successfully');
     }
 
     public function countIncome(Request $request){

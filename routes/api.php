@@ -170,6 +170,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('order/sales/company/export', 'CompanyOrderAPIController@exportSalesCompany');
 		Route::post('order/history-order', 'CompanyOrderAPIController@getHistoryOrders');
 		Route::get('order/count-income', 'CompanyOrderAPIController@countIncome');
+		Route::get('order/countValuesOfTag', 'CompanyOrderAPIController@countValuesOfTag');
 
 		/*************EwalletWithdrawAPIController**************/
 		Route::get('ewallet-withdraw', 'EwalletWithdrawAPIController@getEwalletWithdraw');

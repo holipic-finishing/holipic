@@ -46,6 +46,13 @@
 	}
 }
 
+.content-image{
+	align-items: end !important;
+}
+.custom-avatar{
+	margin-top: 12px !important;
+}
+
 @media only screen and (min-width: 320px) and (max-width: 767px) {
 	.responsive-navigation {
 		min-width: 100% !important;

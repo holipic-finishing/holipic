@@ -1372,7 +1372,7 @@ class OrderRepository extends BaseRepository
         }
     }
 
-    public function sumAmountByPaymentMethod($attributes){
+  public function sumAmountByPaymentMethod($attributes){
       $total = 0 ;
       foreach ($attributes as $key => $attribute) {
           $attributes[$key]->total_amount_to_dollar = round(($attribute->total_amount * $attribute->orderexchange->exchange_rate_to_dollar),3);
@@ -1383,7 +1383,70 @@ class OrderRepository extends BaseRepository
       }
       return $total;
 
-    }
+  }
+
+  public function countValuesOfTag($attributes){
+    $countDone = Order::join('branches','orders.branch_id','=','branches.id')
+                  ->where('status','DONE')
+                  ->where('company_id',$attributes['companyId'])
+                  ->count();
+
+    $countPaid = Order::join('branches','orders.branch_id','=','branches.id')
+                  ->where('status','PAID')
+                  ->where('company_id',$attributes['companyId'])
+                  ->count();
+
+    $countPending = Order::join('branches','orders.branch_id','=','branches.id')
+                  ->where('status','PENDING')
+                  ->where('company_id',$attributes['companyId'])
+                  ->count();
+
+    $countCancel = Order::join('branches','orders.branch_id','=','branches.id')
+                  ->where('status','CANCEL')
+                  ->where('company_id',$attributes['companyId'])
+                  ->count();
+
+    $countBooking = Order::join('branches','orders.branch_id','=','branches.id')
+                  ->where('status','BOOKING')
+                  ->where('company_id',$attributes['companyId'])
+                  ->count();
+
+    return $array = [
+      'done' => $countDone,
+      'paid' => $countPaid,
+      'pending' => $countPending,
+      'cancel' => $countCancel,
+      'booking' => $countBooking,
+
+    ] ; 
+  }
+
+  /* 
+    Target Get all Orders by status
+  */
+  public function getHistoryOrdersByStaus($attributes){
+    
+    $company_id = $attributes['company_id'];
+    $status = $attributes['status'];
+    $allOrders = $this->scopeQuery(function($query) use ($company_id,$status){
+         $query = $query->with(['branch' => function($q){
+                        }])
+                        ->with(['customer.room' => function($q){
+                        }])
+                        ->with(['customer.user' => function($q){
+                        }])
+                        ->with(['photographer' => function($q){
+                        }])
+                        ->with('orderexchange')
+                        ->whereHas('branch', function($q) use ($company_id,$status){
+                          $q->where('branches.company_id',$company_id);
+                        })
+                        ->where('status',$status);
+    return $query;
+    })->get();
+
+    return $allOrders;
+  }
 
 
 }

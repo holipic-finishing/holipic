@@ -299,16 +299,16 @@ export default {
   		this.check = res.check
   		if(this.check){
   			this.$validator.reset()
-  		}
-  	})
+  			}
+  		})
 
-  	this.$root.$on('data-email', res => {
-  		this.item = {
-  			email_title : res.email_title,
-  			email_content : res.email_content,
-  			id : res.id
-  		}
-  	})
+	  	this.$root.$on('data-email', res => {
+	  		this.item = {
+	  			email_title : res.email_title,
+	  			email_content : res.email_content,
+	  			id : res.id
+	  		}
+	  	})
 	},
 	computed:{
 		eventType(){

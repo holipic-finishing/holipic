@@ -45,7 +45,7 @@
 	  	      ></v-text-field>
 	        </div>
 
-					<v-btn small fab dark color="indigo" @click="showFromAdd()" class="ml-2 btn-gradient-primary custom-btn btn-add">
+					<v-btn small fab dark color="indigo" @click="showEmail()" class="ml-2 btn-gradient-primary custom-btn btn-add">
 							<v-icon dark>add</v-icon>
 					</v-btn>
 			    <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn btn-export" @click="exportCSV">
@@ -151,11 +151,11 @@ export default {
 				{ text: 'ID', value: 'id',  align: 'left', width: '5%', class: 'mb-icon'},	       
 				{ text: 'Title', value: 'email_title',width: '10%', class: 'mb-icon' },	
 				{ text: 'Description', value: 'format_email_content',width: '65%', class: 'mb-icon' },	      
-	    	{ text: 'Send Email',sortable: false ,width: '5%', class: 'mb-icon'},  
-	    	{ text: 'Action', sortable: false, width: '10%', align: 'right', class: 'mb-icon' },         
+		    	{ text: 'Send Email',sortable: false ,width: '5%', class: 'mb-icon'},  
+		    	{ text: 'Action', sortable: false, width: '10%', align: 'right', class: 'mb-icon' },         
 	    ],
-			items :[],
-			rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
+		items :[],
+		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 	    alertType: 'success',
 	    alertMes: '',
 	    authUser : JSON.parse(localStorage.getItem('user')),
@@ -173,13 +173,14 @@ export default {
 	methods:{
 		getCurrentWithContentWrap(){
   		return getWithContentWrap(this.drawerHeaderStt)
-  	},
+  		},
 		showEmail(){
+		
 			let obj = {
   				check : true,
   				showDrawer: true,
 	  		}
-  		this.$root.$emit('change-status', obj)
+  			this.$root.$emit('change-status', obj)
 		},
 		fetchData(){
 			let url = config.API_URL + 'emails'
@@ -228,8 +229,8 @@ export default {
 		},
 		exportCSV(){
 			let params = {
-        company_id : this.authUser.company_id
-      }	
+        		company_id : this.authUser.company_id
+      		}	
 			let url = config.API_URL+'company/export/customer'
 			getWithData(url,params)
 			.then(res => {
@@ -239,11 +240,11 @@ export default {
 			})
 			.catch(err => {
 				this.$notify({
-          title: 'Success',
-          message: 'Cannot Export File.',
-          type: 'error',
-          duration: 2000,
-        })
+		        	title: 'Success',
+		          	message: 'Cannot Export File.',
+		          	type: 'error',
+		          	duration: 2000,
+       			 })
 			})
 		},
 		showEmailToSend(item){
@@ -256,38 +257,38 @@ export default {
 			this.itemIdToDelete = item
 		},
 		changeSort (column) {
-      var columnsNoSearch = ['actions']
-      if (columnsNoSearch.indexOf(column) > -1) {
-        return
-      }
-      this.loading = true
-      if (this.pagination.sortBy === column) {
-        this.pagination.descending = !this.pagination.descending
-      } else {
-        this.pagination.sortBy = column
-        this.pagination.descending = false
-      }
-      this.loading = false
-  	}
-	},
+      		var columnsNoSearch = ['actions']
+		      if (columnsNoSearch.indexOf(column) > -1) {
+		        return
+		      }
+		      this.loading = true
+		      if (this.pagination.sortBy === column) {
+		        this.pagination.descending = !this.pagination.descending
+		      } else {
+		        this.pagination.sortBy = column
+		        this.pagination.descending = false
+		      }
+		      this.loading = false
+		  	}
+		},
 	computed: {
 	 	...mapGetters(["rtlLayout",]),
 	 	widthComputed(){
   		return this.width
-  	}
-  },
-  mounted(){
-  	this.$root.$on('drawer-status', res => {
-  		this.drawerHeaderStt = res
-  	})
+  		}
+  	},
+	 mounted(){
+	  	this.$root.$on('drawer-status', res => {
+	  		this.drawerHeaderStt = res
+	  	})
 
-		this.$root.$on('reload-data', res => {
-     	this.fetchData()
-    })
+			this.$root.$on('reload-data', res => {
+	     	this.fetchData()
+	    })
 
-    this.$root.$on('closeDrawerItem', res => {
-     	this.drawer1 = res
-    })
+	    this.$root.$on('closeDrawerItem', res => {
+	     	this.drawer1 = res
+	    })
   }
 };
 </script>

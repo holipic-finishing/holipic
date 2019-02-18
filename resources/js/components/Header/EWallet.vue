@@ -15,432 +15,449 @@
       	<v-container fluid grid-list-md>
       	<v-layout row wrap>
       		<v-flex xl4 lg4 md4 sm12 xs12 >
-      		 	<div class="tab-3">
-      		 		<v-card class="style-card-form">
-			            <v-toolbar color="primary" dark flat dense cad>
-			              <v-toolbar-title class="subheading">Transactions History</v-toolbar-title>
-			              <v-spacer></v-spacer>
-			              <!-- <v-toolbar-title>$ {{total_ewallet}}</v-toolbar-title> -->
-			            </v-toolbar>
-			            <v-divider></v-divider>
-			            <v-card-text class="card-style">
-							<vue-perfect-scrollbar class="scroll-area" :settings="settings" style="height:620px">
-								<v-list two-line class="heigth-list-title-style">
-									<v-list-tile
-										v-for="(item, key) in items"
-										:key="item.id"
-										class="style-list"
-						            >
-						              <v-list-tile-content>
-						                <v-list-tile-title v-text="item.title" class="style-text" style="font-weight: 700;"></v-list-tile-title>
-						                <v-list-tile-sub-title v-text="item.dated" class="text-styl-dated"></v-list-tile-sub-title>
-						              </v-list-tile-content>
-						  		
-						              
-						              <v-list-tile-action>
-						                <p class="success--text mb-0" v-if="item.status == 'RECIVED'">+{{item.new_amount}}</p>
-						                <p class="mb-0" v-else>-{{item.new_amount}}</p>
-						              </v-list-tile-action>
-						            </v-list-tile>
+      			<div class="wrapper-content">		
+	  		 		<div class="header-title">
+	  		 			<span>Transactions History</span>
+	  		 		</div>
+	      			
 
-					        	</v-list>
-								<!--No data -->
-								<template slot="no-data">
-							      <v-alert :value="true" color="error" icon="warning">
-							        Sorry, nothing to display here :(
-							      </v-alert>
-					    		</template>
-								</v-data-table>
-							</vue-perfect-scrollbar>
-						</v-card-text>
-					</v-card>
+	      		 	<div class="tab-3">
+	      		 		<v-card class="style-card-form">
+				            <v-toolbar color="primary" dark flat dense cad>
+				              <v-toolbar-title class="subheading">Transactions History</v-toolbar-title>
+				              <v-spacer></v-spacer>
+				              <!-- <v-toolbar-title>$ {{total_ewallet}}</v-toolbar-title> -->
+				            </v-toolbar>
+				            <v-divider></v-divider>
+				            <v-card-text class="card-style">
+								<vue-perfect-scrollbar class="scroll-area" :settings="settings" style="height:620px">
+									<v-list two-line class="heigth-list-title-style">
+										<v-list-tile
+											v-for="(item, key) in items"
+											:key="item.id"
+											class="style-list"
+							            >
+							              <v-list-tile-content>
+							                <v-list-tile-title v-text="item.title" class="style-text" style="font-weight: 700;"></v-list-tile-title>
+							                <v-list-tile-sub-title v-text="item.dated" class="text-styl-dated"></v-list-tile-sub-title>
+							              </v-list-tile-content>
+							  		
+							              
+							              <v-list-tile-action>
+							                <p class="success--text mb-0" v-if="item.status == 'RECIVED'">+{{item.new_amount}}</p>
+							                <p class="mb-0" v-else>-{{item.new_amount}}</p>
+							              </v-list-tile-action>
+							            </v-list-tile>
+
+						        	</v-list>
+									<!--No data -->
+									<template slot="no-data">
+								      <v-alert :value="true" color="error" icon="warning">
+								        Sorry, nothing to display here :(
+								      </v-alert>
+						    		</template>
+									</v-data-table>
+								</vue-perfect-scrollbar>
+							</v-card-text>
+						</v-card>
+					</div>
 				</div>
       		</v-flex>
       		<v-flex xl4 lg4 md4 sm12 xs12>
-      		 	<div class="tab-3">
-					<v-card class="style-card-form">
-			            <v-toolbar color="primary" dark flat dense cad>
-			              <v-toolbar-title class="subheading">Top Up Balance</v-toolbar-title>
-			              <v-spacer></v-spacer>
-			              <v-toolbar-title>$ {{total_ewallet}}</v-toolbar-title>
-			            </v-toolbar>
-			            <v-divider></v-divider>
-			            <v-card-text>
-			            	<v-container>
-	        					<v-layout wrap>
-	        						<v-flex xs12 sm3 class="text-style"> 
-	        							Credit Card & Debit Card
-	        						</v-flex>
-	        						<v-flex xs12 sm9 >
-	        							<div style="text-align: right;"> 
-	        								<img src="../../../../public/static/visa_PNG17.png" height="40" width="120">
-	        							</div>
-	        						</v-flex>
-	        					</v-layout>
-	        				</v-container>
-	        				<v-container fluid>
-	        					<v-radio-group v-model="radios">
-							      <div slot="label"><strong>USE YOUR SAVED ACCOUNTS</strong></div>
-							      <v-radio value="visa">
-							        <div slot="label">
-							        	<img src="../../../../public/static/Visa-icon.png" height="50" width="50">
-							        </div>
-							      </v-radio>
-							      <v-radio value="new_credit">
-							        <div slot="label"><strong>Use new credit card</strong></div>
-							      </v-radio>
-							    </v-radio-group>
-	        				</v-container>
-	      						
-			            	<v-form ref="form1">
-			            		<v-list class="heigth-list-title">
-						           <v-list-tile class="height-70">
-										<v-list-tile-content>
-								            <v-list-tile-title class="content-flex-end h-100">
-									          	<span class="font-weight-bold item-title position-item ">Amount</span>
-									          	<span class="contain-text-field">
-									          		<v-text-field
-									          			class="text-field-padding"
-										            	solo
-										            	name="amount_card"
-												        placeholder="Amount"
-												        v-model="formBalance.amount_card"
-												        :rules="[rules.required, rules.decimal]"
-												        prefix="$" 
-												        required
-										            >  
-										        	</v-text-field>
-										        </span>
-							            	</v-list-tile-title>
-										</v-list-tile-content>
-								   </v-list-tile>
+      			<div class="wrapper-content">
+	  		 		<div class="header-title">
+	  		 			<span>Top Up Balance</span>
+	  		 		</div>
+	      		 	<div class="tab-3">
+						<v-card class="style-card-form">
+				            <v-toolbar color="primary" dark flat dense cad>
+				              <v-toolbar-title class="subheading">Top Up Balance</v-toolbar-title>
+				              <v-spacer></v-spacer>
+				              <v-toolbar-title>$ {{total_ewallet}}</v-toolbar-title>
+				            </v-toolbar>
+				            <v-divider></v-divider>
+				            <v-card-text>
+				            	<v-container>
+		        					<v-layout wrap>
+		        						<v-flex xs12 sm3 class="text-style"> 
+		        							Credit Card & Debit Card
+		        						</v-flex>
+		        						<v-flex xs12 sm9 >
+		        							<div style="text-align: right;"> 
+		        								<img src="../../../../public/static/visa_PNG17.png" height="40" width="120">
+		        							</div>
+		        						</v-flex>
+		        					</v-layout>
+		        				</v-container>
+		        				<v-container fluid>
+		        					<v-radio-group v-model="radios">
+								      <div slot="label"><strong>USE YOUR SAVED ACCOUNTS</strong></div>
+								      <v-radio value="visa">
+								        <div slot="label">
+								        	<img src="../../../../public/static/Visa-icon.png" height="50" width="50">
+								        </div>
+								      </v-radio>
+								      <v-radio value="new_credit">
+								        <div slot="label"><strong>Use new credit card</strong></div>
+								      </v-radio>
+								    </v-radio-group>
+		        				</v-container>
+		      						
+				            	<v-form ref="form1">
+				            		<v-list class="heigth-list-title">
+							           <v-list-tile class="height-70">
+											<v-list-tile-content>
+									            <v-list-tile-title class="content-flex-end h-100">
+										          	<span class="font-weight-bold item-title position-item ">Amount</span>
+										          	<span class="contain-text-field">
+										          		<v-text-field
+										          			class="text-field-padding"
+											            	solo
+											            	name="amount_card"
+													        placeholder="Amount"
+													        v-model="formBalance.amount_card"
+													        :rules="[rules.required, rules.decimal]"
+													        prefix="$" 
+													        required
+											            >  
+											        	</v-text-field>
+											        </span>
+								            	</v-list-tile-title>
+											</v-list-tile-content>
+									   </v-list-tile>
 
-								   <v-list-tile class="height-70">
-										<v-list-tile-content>
-								            <v-list-tile-title class="content-flex-end h-100">
-									          	<span class="font-weight-bold item-title position-item">Name on card</span>
-									          	<span class="contain-text-field">
-									          		<v-text-field
-									          			class="text-field-padding"
-										            	solo
-										            	name="name_card"
-												        placeholder="Your Name"
-												        v-model="formBalance.name_card"
-												        :rules="[rules.required]"  
-												        required
-										            >  
-										        	</v-text-field>
-										        </span>
-							            	</v-list-tile-title>
-										</v-list-tile-content>
-								   </v-list-tile>
+									   <v-list-tile class="height-70">
+											<v-list-tile-content>
+									            <v-list-tile-title class="content-flex-end h-100">
+										          	<span class="font-weight-bold item-title position-item">Name on card</span>
+										          	<span class="contain-text-field">
+										          		<v-text-field
+										          			class="text-field-padding"
+											            	solo
+											            	name="name_card"
+													        placeholder="Your Name"
+													        v-model="formBalance.name_card"
+													        :rules="[rules.required]"  
+													        required
+											            >  
+											        	</v-text-field>
+											        </span>
+								            	</v-list-tile-title>
+											</v-list-tile-content>
+									   </v-list-tile>
 
-								   <v-list-tile class="height-70">
-										<v-list-tile-content>
-								            <v-list-tile-title class="content-flex-end h-100">
-									          	<span class="font-weight-bold item-title position-item">Card number</span>
-									          	<span class="contain-text-field">
-									          		<v-text-field
-									          			class="text-field-padding"
-										            	solo
-												        placeholder="####-####-####-####"
-												        :rules="[rules.required]"                
-												        v-model="formBalance.card_number"
-												        mask="credit-card"
-												        required
-										            >  
-										        	</v-text-field>
-										        </span>
-							            	</v-list-tile-title>
-										</v-list-tile-content>
-								   </v-list-tile>
+									   <v-list-tile class="height-70">
+											<v-list-tile-content>
+									            <v-list-tile-title class="content-flex-end h-100">
+										          	<span class="font-weight-bold item-title position-item">Card number</span>
+										          	<span class="contain-text-field">
+										          		<v-text-field
+										          			class="text-field-padding"
+											            	solo
+													        placeholder="####-####-####-####"
+													        :rules="[rules.required]"                
+													        v-model="formBalance.card_number"
+													        mask="credit-card"
+													        required
+											            >  
+											        	</v-text-field>
+											        </span>
+								            	</v-list-tile-title>
+											</v-list-tile-content>
+									   </v-list-tile>
 
-								   <v-list-tile class="height-70">
-										<v-list-tile-content>
-								            <v-list-tile-title class="content-flex-end h-100">
-									          	<span class="font-weight-bold item-title position-item">Expiry date</span>
-									          	<span class="contain-text-field">
-									          		<v-text-field
-									          			class="text-field-padding"
-										            	solo
-												        name="expiry_date"
-												        placeholder="MM / YYYY"
-												        v-model="formBalance.expiry_date"
-												        :rules="[rules.required]"
-												        mask="## / ####"  
-												        required
-										            >  
-										        	</v-text-field>
-										        </span>
-							            	</v-list-tile-title>
-										</v-list-tile-content>
-								   </v-list-tile>
+									   <v-list-tile class="height-70">
+											<v-list-tile-content>
+									            <v-list-tile-title class="content-flex-end h-100">
+										          	<span class="font-weight-bold item-title position-item">Expiry date</span>
+										          	<span class="contain-text-field">
+										          		<v-text-field
+										          			class="text-field-padding"
+											            	solo
+													        name="expiry_date"
+													        placeholder="MM / YYYY"
+													        v-model="formBalance.expiry_date"
+													        :rules="[rules.required]"
+													        mask="## / ####"  
+													        required
+											            >  
+											        	</v-text-field>
+											        </span>
+								            	</v-list-tile-title>
+											</v-list-tile-content>
+									   </v-list-tile>
 
-								   <v-list-tile class="height-70">
-										<v-list-tile-content>
-								            <v-list-tile-title class="content-flex-end h-100">
-									          	<span class="font-weight-bold item-title position-item">Security code</span>
-									          	<span class="contain-text-field">
-									          		<v-text-field
-									          			class="text-field-padding"
-										            	solo
-												        name="security_code"
-												        placeholder="CVV2"
-												        v-model="formBalance.security_code"
-												        :rules="[rules.required]"  
-												        required
-										            >  
-										        	</v-text-field>
-										        </span>
-							            	</v-list-tile-title>
-										</v-list-tile-content>
-								   </v-list-tile>
-								</v-list>								    
-						      <div class="form-btn">
-						      	  <v-spacer></v-spacer>
-							      <v-btn  dark color="indigo">Submit</v-btn>
-							     <!--  <v-btn outline @click="clear">Clear</v-btn> -->
-							  </div>    
-						   </v-form>
-			            </v-card-text>
-			        </v-card>
+									   <v-list-tile class="height-70">
+											<v-list-tile-content>
+									            <v-list-tile-title class="content-flex-end h-100">
+										          	<span class="font-weight-bold item-title position-item">Security code</span>
+										          	<span class="contain-text-field">
+										          		<v-text-field
+										          			class="text-field-padding"
+											            	solo
+													        name="security_code"
+													        placeholder="CVV2"
+													        v-model="formBalance.security_code"
+													        :rules="[rules.required]"  
+													        required
+											            >  
+											        	</v-text-field>
+											        </span>
+								            	</v-list-tile-title>
+											</v-list-tile-content>
+									   </v-list-tile>
+									</v-list>								    
+							      <div class="form-btn">
+							      	  <v-spacer></v-spacer>
+								      <v-btn  dark color="indigo">Submit</v-btn>
+								     <!--  <v-btn outline @click="clear">Clear</v-btn> -->
+								  </div>    
+							   </v-form>
+				            </v-card-text>
+				        </v-card>
+					</div>
 				</div>
       		</v-flex>
       		<v-flex xl4 lg4 md4 sm12 xs12>
 				<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
-				<div class="tab-3" v-if="total_ewallet > 0 && checkStatus == 1">
-					<v-card class="style-card-form">
-			            <v-toolbar color="primary" dark flat dense cad>
-			              <v-toolbar-title class="subheading">Withdraw Via Bank Form</v-toolbar-title>
-			              <v-spacer></v-spacer>
-			              <v-toolbar-title>$ {{total_ewallet}}</v-toolbar-title>
-			            </v-toolbar>
-			            <v-divider></v-divider>
-			            <v-card-text>
-			              <v-form ref="form">
-			           
-	      					<v-list class="heigth-list-title">
-					           <v-list-tile class="height-70">
-									<v-list-tile-content>
-							            <v-list-tile-title class="content-flex-end h-100">
-								          	<span class="font-weight-bold item-title position-item" >Payment Method</span>
-								          	<span class="contain-text-field">
-								          		<v-text-field
-								          			class="text-field-padding"
-									            	solo
-									            	value="Bank Transfer"
-													readonly
-									            >  
-									        	</v-text-field>
-									        </span>
-						            	</v-list-tile-title>
-									</v-list-tile-content>
-							   </v-list-tile>
+				<div class="wrapper-content">
+					<div class="header-title">
+						<span>Withdraw Via Bank Form</span>
+					</div>
+					<div class="tab-3" v-if="total_ewallet > 0 && checkStatus == 1">
+						<v-card class="style-card-form">
+				            <v-toolbar color="primary" dark flat dense cad>
+				              <v-toolbar-title class="subheading">Withdraw Via Bank Form</v-toolbar-title>
+				              <v-spacer></v-spacer>
+				              <v-toolbar-title>$ {{total_ewallet}}</v-toolbar-title>
+				            </v-toolbar>
+				            <v-divider></v-divider>
+				            <v-card-text>
+				              <v-form ref="form">
+				           
+		      					<v-list class="heigth-list-title">
+						           <v-list-tile class="height-70">
+										<v-list-tile-content>
+								            <v-list-tile-title class="content-flex-end h-100">
+									          	<span class="font-weight-bold item-title position-item" >Payment Method</span>
+									          	<span class="contain-text-field">
+									          		<v-text-field
+									          			class="text-field-padding"
+										            	solo
+										            	value="Bank Transfer"
+														readonly
+										            >  
+										        	</v-text-field>
+										        </span>
+							            	</v-list-tile-title>
+										</v-list-tile-content>
+								   </v-list-tile>
 
-							   <v-list-tile class="height-70">
-									<v-list-tile-content>
-							            <v-list-tile-title class="content-flex-end h-100">
-								          	<span class="font-weight-bold item-title position-item">Withdraw Amount</span>
-								          	<span class="contain-text-field">
-								          		<v-text-field
-								          		solo
-								          		class="text-field-padding"
-										        name="amount"
-										        v-model="formModel.amount"
-										        :rules="[rules.required, rules.decimal]"
-										        prefix="$"
-										        @blur="checkAmount()"
-										        required	
-									            >  
-									        	</v-text-field>
-									        </span>
-						            	</v-list-tile-title>
-									</v-list-tile-content>
-							   </v-list-tile>
+								   <v-list-tile class="height-70">
+										<v-list-tile-content>
+								            <v-list-tile-title class="content-flex-end h-100">
+									          	<span class="font-weight-bold item-title position-item">Withdraw Amount</span>
+									          	<span class="contain-text-field">
+									          		<v-text-field
+									          		solo
+									          		class="text-field-padding"
+											        name="amount"
+											        v-model="formModel.amount"
+											        :rules="[rules.required, rules.decimal]"
+											        prefix="$"
+											        @blur="checkAmount()"
+											        required	
+										            >  
+										        	</v-text-field>
+										        </span>
+							            	</v-list-tile-title>
+										</v-list-tile-content>
+								   </v-list-tile>
 
-							   <v-list-tile class="height-70">
-									<v-list-tile-content>
-							            <v-list-tile-title class="content-flex-end h-100">
-								          	<span class="font-weight-bold item-title position-item">Withdraw Fee</span>
-								          	<span class="contain-text-field">
-								          		<v-text-field
-								          		solo
-								          		class="text-field-padding"
-								          		readonly	
-									            >  
-									        	</v-text-field>
-									        </span>
-						            	</v-list-tile-title>
-									</v-list-tile-content>
-							   </v-list-tile>
+								   <v-list-tile class="height-70">
+										<v-list-tile-content>
+								            <v-list-tile-title class="content-flex-end h-100">
+									          	<span class="font-weight-bold item-title position-item">Withdraw Fee</span>
+									          	<span class="contain-text-field">
+									          		<v-text-field
+									          		solo
+									          		class="text-field-padding"
+									          		readonly	
+										            >  
+										        	</v-text-field>
+										        </span>
+							            	</v-list-tile-title>
+										</v-list-tile-content>
+								   </v-list-tile>
 
-							   <v-list-tile class="height-70">
-									<v-list-tile-content>
-							            <v-list-tile-title class="content-flex-end h-100">
-								          	<span class="font-weight-bold item-title position-item">Account No</span>
-								          	<span class="contain-text-field">
-								          		<v-text-field
-								          		solo
-								          		class="text-field-padding"
-								          		placeholder="####-####-####-####"
-									        	:rules="[rules.required]"               
-									        	v-model="formModel.account_number"
-									        	mask="credit-card"
-									        	required	
-									            >  
-									        	</v-text-field>
-									        </span>
-						            	</v-list-tile-title>
-									</v-list-tile-content>
-							   </v-list-tile>
+								   <v-list-tile class="height-70">
+										<v-list-tile-content>
+								            <v-list-tile-title class="content-flex-end h-100">
+									          	<span class="font-weight-bold item-title position-item">Account No</span>
+									          	<span class="contain-text-field">
+									          		<v-text-field
+									          		solo
+									          		class="text-field-padding"
+									          		placeholder="####-####-####-####"
+										        	:rules="[rules.required]"               
+										        	v-model="formModel.account_number"
+										        	mask="credit-card"
+										        	required	
+										            >  
+										        	</v-text-field>
+										        </span>
+							            	</v-list-tile-title>
+										</v-list-tile-content>
+								   </v-list-tile>
 
-							   <v-list-tile class="height-70">
-									<v-list-tile-content>
-							            <v-list-tile-title class="content-flex-end h-100">
-								          	<span class="font-weight-bold item-title position-item">Bank Name</span>
-								          	<span class="contain-text-field">
-								          		<v-text-field
-								          		solo
-								          		class="text-field-padding"
-								          		name="bank_name"
-										        placeholder="Your Bank Name"
-										        v-model="formModel.bank_name"
-										        :rules="[rules.required]"  
-										        required	
-									            >  
-									        	</v-text-field>
-									        </span>
-						            	</v-list-tile-title>
-									</v-list-tile-content>
-							   </v-list-tile>
+								   <v-list-tile class="height-70">
+										<v-list-tile-content>
+								            <v-list-tile-title class="content-flex-end h-100">
+									          	<span class="font-weight-bold item-title position-item">Bank Name</span>
+									          	<span class="contain-text-field">
+									          		<v-text-field
+									          		solo
+									          		class="text-field-padding"
+									          		name="bank_name"
+											        placeholder="Your Bank Name"
+											        v-model="formModel.bank_name"
+											        :rules="[rules.required]"  
+											        required	
+										            >  
+										        	</v-text-field>
+										        </span>
+							            	</v-list-tile-title>
+										</v-list-tile-content>
+								   </v-list-tile>
 
-							   <v-list-tile class="height-70">
-									<v-list-tile-content>
-							            <v-list-tile-title class="content-flex-end h-100">
-								          	<span class="font-weight-bold item-title position-item">Acc.Holder Name</span>
-								          	<span class="contain-text-field">
-								          		<v-text-field
-								          		solo
-								          		class="text-field-padding"
-								          		name="account_holder_name"
-										        placeholder="Your Bank Account Name"
-										        v-model="formModel.account_holder_name"
-										        :rules="[rules.required]"  
-										        required	
-									            >  
-									        	</v-text-field>
-									        </span>
-						            	</v-list-tile-title>
-									</v-list-tile-content>
-							   </v-list-tile>
+								   <v-list-tile class="height-70">
+										<v-list-tile-content>
+								            <v-list-tile-title class="content-flex-end h-100">
+									          	<span class="font-weight-bold item-title position-item">Acc.Holder Name</span>
+									          	<span class="contain-text-field">
+									          		<v-text-field
+									          		solo
+									          		class="text-field-padding"
+									          		name="account_holder_name"
+											        placeholder="Your Bank Account Name"
+											        v-model="formModel.account_holder_name"
+											        :rules="[rules.required]"  
+											        required	
+										            >  
+										        	</v-text-field>
+										        </span>
+							            	</v-list-tile-title>
+										</v-list-tile-content>
+								   </v-list-tile>
 
-							   <v-list-tile class="height-70">
-									<v-list-tile-content>
-							            <v-list-tile-title class="content-flex-end h-100">
-								          	<span class="font-weight-bold item-title position-item">IBAN</span>
-								          	<span class="contain-text-field">
-								          		<v-text-field
-								          		solo
-								          		class="text-field-padding"
-								          		name="iban"
-										        placeholder="Your IBAN"
-										        v-model="formModel.iban"
-										        :rules="[rules.required]"
-										        required	
-									            >  
-									        	</v-text-field>
-									        </span>
-						            	</v-list-tile-title>
-									</v-list-tile-content>
-							   </v-list-tile>
+								   <v-list-tile class="height-70">
+										<v-list-tile-content>
+								            <v-list-tile-title class="content-flex-end h-100">
+									          	<span class="font-weight-bold item-title position-item">IBAN</span>
+									          	<span class="contain-text-field">
+									          		<v-text-field
+									          		solo
+									          		class="text-field-padding"
+									          		name="iban"
+											        placeholder="Your IBAN"
+											        v-model="formModel.iban"
+											        :rules="[rules.required]"
+											        required	
+										            >  
+										        	</v-text-field>
+										        </span>
+							            	</v-list-tile-title>
+										</v-list-tile-content>
+								   </v-list-tile>
 
-							   <v-list-tile class="height-70">
-									<v-list-tile-content>
-							            <v-list-tile-title class="content-flex-end h-100">
-								          	<span class="font-weight-bold item-title position-item">SWIFT</span>
-								          	<span class="contain-text-field">
-								          		<v-text-field
-								          		solo
-								          		class="text-field-padding"
-								          		name="swift"
-										        placeholder="SWIFT Code"
-										        v-model="formModel.swift"
-										        :rules="[rules.required]"  
-										        required	
-									            >  
-									        	</v-text-field>
-									        </span>
-						            	</v-list-tile-title>
-									</v-list-tile-content>
-							   </v-list-tile>
-				    		</v-list>
-						        
-						    <div class="form-btn">
-						        <v-spacer></v-spacer>
-							    <v-btn @click="submit" dark color="indigo">Submit</v-btn>
-							      <!-- <v-btn outline @click="clear">Clear</v-btn> -->
-							</div>    
-						   </v-form>   
-			            </v-card-text>       
-	          		</v-card>
-				</div>
-				<div class="tab-4" v-else-if="checkStatus == 0">
-					<v-alert
-				      :value="true"
-				      type="warning"
-				    >
-				      Requesting processing cannot send additional requests	.
-				    </v-alert>
-				    <v-container>
-							<v-layout justify-center>
-								<table class="table table-striped">
-									<tr>
-										<td>Account holder name :</td>
-										<td>{{ transaction.account_holder_name }}</td>
-									</tr>
-									<tr>
-										<td>Bank account number :</td>
-										<td>{{ transaction.bank_account_number }}</td>
-									</tr>
-									<tr>
-										<td>Bank name :</td>
-										<td>{{ transaction.bank_name }}</td>
-									</tr>
-									<tr>
-										<td>Amount :</td>
-										<td>$ {{ transaction.amount }}</td>
-									</tr>
-									<tr>
-										<td>Swift code :</td>
-										<td>{{ transaction.swift_code }}</td>
-									</tr>
-									<tr>
-										<td>Iban :</td>
-										<td>{{ transaction.iban }}</td>
-									</tr>
-									<tr>
-										<td>Status :</td>
-										<td>
-										<v-btn color="btn-gradient-primary" small v-if="transaction.status === 'PENDING'">PENDING</v-btn>
-								 		<!-- <v-btn color="btn-gradient-pink" small v-else>Inactive</v-btn> -->
-								 		</td>
-									</tr>
-									<tr>
-										<td>Date :</td>
-										<td>{{ transaction.created_at }}</td>
-									</tr>
-								</table>
-						</v-layout>
-					</v-container>
-				</div>
-				<div class="tab-4" v-else>
-					<v-alert
-				      :value="true"
-				      type="warning"
-				    >
-				      You do not have enough balance to execute the transaction.
-				    </v-alert>
-				</div>
+								   <v-list-tile class="height-70">
+										<v-list-tile-content>
+								            <v-list-tile-title class="content-flex-end h-100">
+									          	<span class="font-weight-bold item-title position-item">SWIFT</span>
+									          	<span class="contain-text-field">
+									          		<v-text-field
+									          		solo
+									          		class="text-field-padding"
+									          		name="swift"
+											        placeholder="SWIFT Code"
+											        v-model="formModel.swift"
+											        :rules="[rules.required]"  
+											        required	
+										            >  
+										        	</v-text-field>
+										        </span>
+							            	</v-list-tile-title>
+										</v-list-tile-content>
+								   </v-list-tile>
+					    		</v-list>
+							        
+							    <div class="form-btn">
+							        <v-spacer></v-spacer>
+								    <v-btn @click="submit" dark color="indigo">Submit</v-btn>
+								      <!-- <v-btn outline @click="clear">Clear</v-btn> -->
+								</div>    
+							   </v-form>   
+				            </v-card-text>       
+		          		</v-card>
+					</div>
+					<div class="tab-4" v-else-if="checkStatus == 0">
+						<v-alert
+					      :value="true"
+					      type="warning"
+					    >
+					      Requesting processing cannot send additional requests	.
+					    </v-alert>
+					    <v-container>
+								<v-layout justify-center>
+									<table class="table table-striped">
+										<tr>
+											<td>Account holder name :</td>
+											<td>{{ transaction.account_holder_name }}</td>
+										</tr>
+										<tr>
+											<td>Bank account number :</td>
+											<td>{{ transaction.bank_account_number }}</td>
+										</tr>
+										<tr>
+											<td>Bank name :</td>
+											<td>{{ transaction.bank_name }}</td>
+										</tr>
+										<tr>
+											<td>Amount :</td>
+											<td>$ {{ transaction.amount }}</td>
+										</tr>
+										<tr>
+											<td>Swift code :</td>
+											<td>{{ transaction.swift_code }}</td>
+										</tr>
+										<tr>
+											<td>Iban :</td>
+											<td>{{ transaction.iban }}</td>
+										</tr>
+										<tr>
+											<td>Status :</td>
+											<td>
+											<v-btn color="btn-gradient-primary" small v-if="transaction.status === 'PENDING'">PENDING</v-btn>
+									 		<!-- <v-btn color="btn-gradient-pink" small v-else>Inactive</v-btn> -->
+									 		</td>
+										</tr>
+										<tr>
+											<td>Date :</td>
+											<td>{{ transaction.created_at }}</td>
+										</tr>
+									</table>
+							</v-layout>
+						</v-container>
+					</div>
+					<div class="tab-4" v-else>
+						<v-alert
+					      :value="true"
+					      type="warning"
+					    >
+					      You do not have enough balance to execute the transaction.
+					    </v-alert>
+					</div>
+				</div>		
       		</v-flex>		
 		</v-layout>
 		</v-container>	
@@ -637,7 +654,7 @@ export default {
 	}
 	.form-btn button {
 		position: absolute;
-	    bottom: 10px;
+	    bottom: 5px;
     	right: 26px;
 	}
 }
@@ -663,6 +680,8 @@ export default {
 }
 .tab-3 {
     margin: 10px 0px;
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 .form-btn {
 	text-align: right;	
@@ -711,12 +730,28 @@ export default {
 	top: 0px !important;
 }
 .container {
-	padding: 10px !important;
+	padding: 0px !important;
 }	
 .v-input--selection-controls {
 	margin-top:0px !important;
 }
 .style-card-form {
 	height: 100%  !important;
+}
+.header-title {
+	padding: 5px;
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    background: #fdfdfd;
+    font-weight: 500;
+    color: gray;
+}
+.wrapper-content {
+	display: flex;
+    flex-direction: column;
+}
+.container.grid-list-md .layout:only-child {
+	align-items: unset;
 }
 </style>

@@ -1,10 +1,10 @@
 import { Line } from 'vue-chartjs'
-import config from '../../../config/index.js'
+import config from '../../../config'
 import Vue from 'vue'
 import moment from "moment"
 import {ChartConfig} from "../../../constants/chart-config"
 import {hexToRgbA} from "../../../helpers/helpers"
-import { get, getWithData } from '../../../api/index.js'
+import { get, getWithData } from '../../../api'
 
 
 export default {
@@ -72,12 +72,11 @@ export default {
       this.gradient1.addColorStop(0, hexToRgbA(ChartConfig.color.white, 0.2))
       this.gradient1.addColorStop(0.5, hexToRgbA(ChartConfig.color.info, 0.2))
 
-
       this.renderChart({
-         labels: labels,
-         datasets: [
+          labels: labels,
+          datasets: [
             {
-                label: 'Total Transaction',
+                label: 'Total Income',
                 data: data,
                 backgroundColor: this.gradient1,
                 borderColor: ChartConfig.color.info,
@@ -98,7 +97,7 @@ export default {
     },
 
     getData(params){
-      let url = config.API_URL+'company-admin-chart'
+      let url = config.API_URL + 'company-admin-chart'
       params.company_id = this.company_id
 			getWithData(url,params)
 			.then((res) => {
@@ -114,8 +113,8 @@ export default {
               total = total.toFixed(3)
 
               this.$root.$emit('totalTransaction', total)
-          		this.handleDataWeek(dataWeek);
-
+          		this.handleDataWeek(dataWeek)
+              this.getStartWeekAndEndWeekWithValue(dataWeek, this.chooes)
 
 					}else {
 						var total = 0
@@ -123,9 +122,11 @@ export default {
 		            total = total + parseFloat(value.total)
    
 		          });
-              total = total.toFixed(3)
-		        this.$root.$emit('totalTransaction', total)
-						this.handleDataDaily(res.data.data);
+            total = total.toFixed(3)
+		        
+            this.$root.$emit('totalTransaction', total)
+						this.handleDataDaily(res.data.data)
+            this.getStartTimeAndEndTimeWithValue(res.data.data, this.chooes)
 					}
 				}
 				
@@ -135,31 +136,66 @@ export default {
 			})
 	},
 
+  getStartWeekAndEndWeekWithValue(obj, typeTime){
+    var keys, firstKey, lastKey
+    keys = Object.keys(obj)
+    firstKey = Object.keys(obj)[0]
+    lastKey = keys[keys.length-1]
+    var timeObj = {
+      "firstTime" : "",
+      "lastTime" : "",
+      "typeTime" : typeTime
+    }
+
+    _.forEach(obj, function(value,key){
+      if (key == firstKey) {
+        timeObj.firstTime = value.startOfWeek
+      }
+      if (key == lastKey) {
+        timeObj.lastTime = value.endOfWeek
+      }
+    })
+    this.$root.$emit('load-time-in-menu-filter', timeObj)
+  },
+
+  getStartTimeAndEndTimeWithValue(obj, typeTime){
+    var keys, firstKey, lastKey
+    keys = Object.keys(obj)
+    firstKey = Object.keys(obj)[0]
+    lastKey = keys[keys.length-1]
+    var timeObj = {
+      "firstTime" : firstKey,
+      "lastTime" : lastKey,
+      "typeTime" : typeTime
+    }
+    this.$root.$emit('load-time-in-menu-filter', timeObj)
+  },
+
 	handleDataDaily(data){
 			var lables = []
-	        var total = []
-	        _.forEach(data, function(value, key) {
-	            lables.push(key)
-	            total.push(value.total)
-	        });
+      var total = []
+      _.forEach(data, function(value, key) {
+          lables.push(key)
+          total.push(value.total)
+      });
 
-	        this.renderChartData(lables,total);
+      this.renderChartData(lables,total);
 
 		},
 
 	handleDataWeek(data){
 			var lables = []
-	        var total = []
-	        _.forEach(data, function(value, key) {
-	          lables.push(moment(value['startOfWeek']).format('MM-DD') + ' / ' + moment(value['endOfWeek']).format('MM-DD'))
-	          total.push(value.total)                      
-	        });
-	        this.renderChartData(lables,total);
+      var total = []
+      _.forEach(data, function(value, key) {
+        lables.push(moment(value['startOfWeek']).format('MM-DD') + ' / ' + moment(value['endOfWeek']).format('MM-DD'))
+        total.push(value.total)                      
+      });
+      this.renderChartData(lables,total);
 
 	},
 
   countIncome(params){
-      let url = config.API_URL+'order/count-income'
+      let url = config.API_URL + 'order/count-income'
       params.company_id = this.company_id
       getWithData(url,params)
       .then((res) => {

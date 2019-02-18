@@ -44,6 +44,18 @@ class PhotoPackageRepository extends BaseRepository
                     ->where('company_id', '=', $input)
                     ->get();
 
-        return $results;
+        $data = [];
+
+        foreach($results as $value)
+        {
+            $value->dollar = round($value->dollar);
+            $value->euro = round($value->euro, 3);
+            $value->indo = round($value->indo, 3);
+            $value->turkey = round($value->turkey, 3);
+            $value->vn = round($value->vn, 3);
+            $data[] = $value;    
+        }
+
+        return $data;
     }
 }

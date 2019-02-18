@@ -48,40 +48,37 @@
 			<!-- Day Component -->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'day'">
 
-				<v-flex xs12>
-				  <!-- <div class="text-primary">(*) Please No choose more than 15 days</div> -->
-				</v-flex>
-
 			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
 			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
-							<v-menu 
-								:close-on-content-click="false"
-                v-model="menu1"
-                :nudge-right="40"
-                lazy
-                transition="scale-transition"
-                offset-y
-                full-width
-                min-width="290"
-							>
-								<v-text-field 
-									slot="activator"
-									v-model="computedStartDay"
-									prepend-icon="event"
-									readonly
-              		placeholder="Enter Start Date"
-              		hide-details
-								></v-text-field>
-								<v-date-picker 
-									v-model="from_day"
-									no-title
-									scrollable 
-									:max="new Date().toISOString().substr(0, 10)"
-									@input="reportByRangeDay"
-								></v-date-picker>
-							</v-menu>
+						<v-menu 
+							:close-on-content-click="false"
+			                v-model="menu1"
+			                :nudge-right="40"
+			                lazy
+			                transition="scale-transition"
+			                offset-y
+			                full-width
+			                min-width="290"
+						>
+							<v-text-field 
+								slot="activator"
+								v-model="computedStartDay"
+								prepend-icon="event"
+								readonly
+			              		placeholder="Enter Start Date"
+			              		hide-details
+			                	clearable
+							></v-text-field>
+							<v-date-picker 
+								v-model="from_day"
+								no-title
+								scrollable 
+								:max="new Date().toISOString().substr(0, 10)"
+								@input="reportByRangeDay"
+							></v-date-picker>
+						</v-menu>
 		  			</v-card-text>
 			  	</v-card>
 			  </v-flex>
@@ -90,32 +87,33 @@
 			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
-							<v-menu 
-								:close-on-content-click="false"
-                v-model="menu2"
-                :nudge-right="40"
-                lazy
-                transition="scale-transition"
-                offset-y
-                full-width
-                min-width="290"
-							>
-								<v-text-field 
-									slot="activator"
-									v-model="computedEndDay"
-									prepend-icon="event"
-									readonly
-              		placeholder="Enter End Date"
-              		hide-details
-								></v-text-field>
-								<v-date-picker 
-									v-model="to_day" 
-									no-title 
-									scrollable 
-									:max="new Date().toISOString().substr(0, 10)"
-									@input="reportByRangeDay"
-								></v-date-picker>
-							</v-menu>
+						<v-menu 
+							:close-on-content-click="false"
+			                v-model="menu2"
+			                :nudge-right="40"
+			                lazy
+			                transition="scale-transition"
+			                offset-y
+			                full-width
+			                min-width="290"
+						>
+							<v-text-field 
+								slot="activator"
+								v-model="computedEndDay"
+								prepend-icon="event"
+								readonly
+			              		placeholder="Enter End Date"
+			              		hide-details
+			              		clearable
+							></v-text-field>
+							<v-date-picker 
+								v-model="to_day" 
+								no-title 
+								scrollable 
+								:max="new Date().toISOString().substr(0, 10)"
+								@input="reportByRangeDay"
+							></v-date-picker>
+						</v-menu>
 		  			</v-card-text>
 			  	</v-card>
 			  </v-flex>
@@ -124,16 +122,17 @@
 			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
-							<v-select
-			         	:items="listBranch"
-			         	label="Enter Branch"
-			         	v-model="item.branch_id"
-			         	item-text="name"
-              	item-value="id"
-						    v-on:change="changeBranch(item)"
-								@input="reportByRangeDay"
-								hide-details
-					    ></v-select>
+						<v-select
+							clearable
+				         	:items="listBranch"
+				         	label="Enter Branch"
+				         	v-model="item.branch_id"
+				         	item-text="name"
+	          				item-value="id"
+					    	v-on:change="changeBranch(item)"
+							@input="reportByRangeDay"
+							hide-details
+				    	></v-select>
 		  			</v-card-text>
 			  	</v-card>
 			  </v-flex>
@@ -142,15 +141,16 @@
 			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
-							<v-select
-			         	:items="listPhotographer"
-			         	label="Enter Photographer"
-			         	v-model="item.photographer_id"
-			         	item-text="name"
-          			item-value="id"
-								@input="reportByRangeDay"
-								hide-details
-					    ></v-select>
+						<v-select
+							clearable
+				         	:items="listPhotographer"
+				         	label="Enter Photographer"
+				         	v-model="item.photographer_id"
+				         	item-text="name"
+      						item-value="id"
+							@input="reportByRangeDay"
+							hide-details
+				    	></v-select>
 		  			</v-card-text>
 			  	</v-card>
 			  </v-flex>
@@ -160,10 +160,6 @@
 
 			<!-- Month Component -->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'month'">
-				
-				<v-flex xs12>
-				  <div class="text-primary">(*) Please No choose more than 12 month</div>
-				</v-flex>
 
 			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
 			  	<v-card class="elevation-5 custom-stats-card">
@@ -171,21 +167,22 @@
 		  	  		<div class="font-weight-bold">Start</div>
 							<v-menu
 								:close-on-content-click="false"
-                v-model="menu3"
-                :nudge-right="40"
-                lazy
-                transition="scale-transition"
-                offset-y
-                full-width
-                min-width="290"
+				                v-model="menu3"
+				                :nudge-right="40"
+				                lazy
+				                transition="scale-transition"
+				                offset-y
+				                full-width
+				                min-width="290"
 							>
 								<v-text-field 
 									slot="activator"
 									v-model="computedStartMonth"
 									prepend-icon="event"
 									readonly
-                	placeholder="Enter Start Month"
-                	hide-details
+				                	placeholder="Enter Start Month"
+				                	hide-details
+				                	clearable
 								></v-text-field>
 								<v-date-picker 
 									v-model="from_month" 
@@ -206,21 +203,22 @@
 		  	  		<div class="font-weight-bold">End</div>
 							<v-menu 
 								:close-on-content-click="false"
-                v-model="menu4"
-                :nudge-right="40"
-                lazy
-                transition="scale-transition"
-                offset-y
-                full-width
-                min-width="290"
+				                v-model="menu4"
+				                :nudge-right="40"
+				                lazy
+				                transition="scale-transition"
+				                offset-y
+				                full-width
+				                min-width="290"
 							>
 								<v-text-field 
 									slot="activator"
 									v-model="computedEndMonth"
 									prepend-icon="event"
 									readonly
-                	placeholder="Enter End Month"
-                	hide-details
+				                	placeholder="Enter End Month"
+				                	hide-details
+				                	clearable
 								></v-text-field>
 								<v-date-picker 
 									v-model="to_month" 
@@ -240,12 +238,12 @@
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Branch</div>
 							<v-select
-			         	:items="listBranch"
-			         	label="Enter Branch"
-			         	v-model="item.branch_id"
-			         	item-text="name"
-      					item-value="id"
-	         			v-on:change="changeBranch(item)"
+					         	:items="listBranch"
+					         	label="Enter Branch"
+					         	v-model="item.branch_id"
+					         	item-text="name"
+		      					item-value="id"
+			         			v-on:change="changeBranch(item)"
 								@input="reportByMonth"
 								hide-details
 					    ></v-select>
@@ -258,11 +256,11 @@
 		  			<v-card-text>
 		  				<div class="font-weight-bold">Photographer</div>
 							<v-select
-			         	:items="listPhotographer"
-			         	label="Enter Photographer"
-			         	v-model="item.photographer_id"
-			         	item-text="name"
-      					item-value="id"
+					         	:items="listPhotographer"
+					         	label="Enter Photographer"
+					         	v-model="item.photographer_id"
+					         	item-text="name"
+		      					item-value="id"
 								@input="reportByMonth"
 								hide-details
 					    ></v-select>
@@ -275,10 +273,6 @@
 
 			<!-- Year Component -->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'year'">
-				
-				<v-flex xs12>
-				  <div class="text-primary">(*) Please No choose more than 5 year</div>
-				</v-flex>
 
 			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
 			  	<v-card class="elevation-5 custom-stats-card">
@@ -302,6 +296,7 @@
 						        prepend-icon="event"
 						        readonly
 						        hide-details
+						        clearable
 						    ></v-text-field>
 					      	<v-date-picker
 							        ref="picker"
@@ -338,6 +333,7 @@
 									prepend-icon="event"
 									readonly
 									hide-details
+									clearable
 								></v-text-field>
 								<v-date-picker
 									ref="picker2"
@@ -392,10 +388,6 @@
 
 			<!-- Week Component-->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'week'">
-				
-				<v-flex xs12>
-				  <div class="text-primary">(*) Please No choose more than 6 week</div>
-				</v-flex>
 
 			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
 			  	<v-card class="elevation-5 custom-stats-card">
@@ -418,6 +410,7 @@
 									readonly
 				              		placeholder="Enter Start Week"
 				              		hide-details
+				              		clearable
 								></v-text-field>
 								<v-date-picker 
 									v-model="from_day_week" 
@@ -452,6 +445,7 @@
 								readonly
 			              		placeholder="Enter End Week"
 			              		hide-details
+			              		clearable
 							></v-text-field>
 							<v-date-picker 
 								v-model="to_day_week" 
@@ -501,6 +495,8 @@
 			  </v-flex>
 
 			</v-layout>
+			<!-- End Week Component-->
+
 			<v-layout row wrap class="stats-card-v4">
 				
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
@@ -655,7 +651,7 @@ export default {
 			this.$root.$emit('searchTag', this.paramsSearchTag)
 		},
 		countValuesOfTag(){
-			var url = config.API_URL+'order/countValuesOfTag?companyId='+this.company_id
+			var url = config.API_URL + 'order/countValuesOfTag?companyId=' + this.company_id
 			get(url)
 			.then((response) => {
 				if(response.data && response.data.success){
@@ -671,27 +667,25 @@ export default {
 			})
 		},
 		formatDate(date) {
-	      if(date){
-	          return moment(date, 'YYYY-MM-DD hh:mm:ss').format('MM/DD/YYYY');
-	      }
-	  	},
-
-
-
-    	saveStartYear(from_year) {
+      if(date){
+          return moment(date, 'YYYY-MM-DD hh:mm:ss').format('MM/DD/YYYY');
+      }
+  	},
+    
+    saveStartYear(from_year) {
 			this.$refs.menu5.save(from_year)
-	      	this.$refs.picker.activePicker = 'YEAR'
-	      	this.from_year = from_year.substr(0,4)
-	      	this.menu5 = false;
-	      	this.reportByYear()
+    	this.$refs.picker.activePicker = 'YEAR'
+    	this.from_year = from_year.substr(0,4)
+    	this.menu5 = false
+    	this.reportByYear()
 		},
 
 		saveEndYear(to_year) {
 			this.$refs.menu6.save(to_year)
-	    	this.$refs.picker2.activePicker = 'YEAR'
-	    	this.to_year = to_year.substr(0,4)
-	    	this.menu6 = false
-	    	this.reportByYear()
+    	this.$refs.picker2.activePicker = 'YEAR'
+    	this.to_year = to_year.substr(0,4)
+    	this.menu6 = false
+    	this.reportByYear()
 		},
 
 		fetchData(){
@@ -709,6 +703,7 @@ export default {
 			} else { 
 				this.validate = true
 			}
+
 		},
 
 		errorAlert(errorMesg){
@@ -721,23 +716,15 @@ export default {
 		resetTime(){
 			this.menu1 = false
 			this.menu2 = false
-			// this.from_day = ''
-			// this.to_day = ''
 
 			this.menu3 = false
 			this.menu4 = false
-			// this.from_month = ''
-			// this.to_month = ''
 
 			this.menu5 = false
 			this.menu6 = false
-			// this.from_year = ''
-			// this.to_year = ''
 
 			this.menu7 = false
 			this.menu8 = false
-			// this.from_day_week = ''
-			// this.to_day_week = ''
 		},
 
 		reportByRangeDay() {
@@ -745,11 +732,10 @@ export default {
 			var	end_day =  moment(this.to_day)
 			var day = end_day.diff(start_day,'days')
 
-			if(day > 15) {
-				this.errorAlert('Less than 15 days')
-			} else if(day <=0) {
-				this.errorAlert('To days Large from days')
-			} else {
+			if (day <= 0) {
+				this.errorAlert('The end date must be after the start date')
+			}else if(0 < day && day <= 7){
+
 				let params = {
 					start_day :  this.formatDate(this.from_day),
 					end_day :   this.formatDate(this.to_day),
@@ -762,7 +748,57 @@ export default {
 					chooes : 'Day',
 				}
 				this.$root.$emit('companyChart', obj)
-				this.$root.$emit('loadTransactionsWithTime', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
+				this.validate = false
+			}else if(7 < day && day <= 42){
+
+				let params = {
+					start_day_week :  this.formatDate(this.from_day),
+					end_day_week :   this.formatDate(this.to_day),
+					branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id,
+					type:'week'
+				}
+				let obj = {
+					params : params,
+					chooes : 'Week'
+				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
+			}else if(42 < day && day <= 365){
+
+				//view mode month
+				var params = {
+		      		start_month : moment(this.from_day, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
+		      		end_month : moment(this.to_day, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
+		      		branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id,
+					type : 'month'
+	      		}
+				let obj = {
+					params : params,
+					chooes : 'Month'
+				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
+
+				this.validate = false
+			}else{
+
+				//view mode year
+				var params = {
+      				start_year : moment(this.from_day, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+      				end_year : moment(this.to_day, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+      				branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id	,
+					type :'year'	
+		      	}
+				let obj = {
+					params : params,
+					chooes : 'Year'
+				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
 				this.validate = false
 			}
 		
@@ -774,11 +810,11 @@ export default {
 			var	end_month =  moment(this.to_month)
 			var month = end_month.diff(start_month,'month')
 
-			if(month > 12) {
-				this.errorAlert('Less than 12 months')
-			} else if(month <=0) {
-				this.errorAlert('To month large from month')
-			} else {
+			if (month <= 0) {
+				
+				this.errorAlert('The end month must be after the start month')
+			}else if(0 < month && month <= 12){
+
 				var params = {
 		      		start_month: moment(this.from_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
 		      		end_month:moment(this.to_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
@@ -791,8 +827,24 @@ export default {
 					chooes : 'Month'
 				}
 				this.$root.$emit('companyChart', obj)
-				this.$root.$emit('loadTransactionsWithTime', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
 
+				this.validate = false
+			}else{
+
+				var params = {
+      				start_year : moment(this.from_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+      				end_year : moment(this.to_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+      				branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id	,
+					type:'year'	
+		      	}
+				let obj = {
+					params : params,
+					chooes : 'Year'
+				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
 				this.validate = false
 			}
 			
@@ -805,23 +857,26 @@ export default {
 			var year = end_year.diff(start_year,'year')
 
 			if(year > 5) {
-				this.errorAlert('Less than 5 years')
-			} else if (year <=0) {
-				this.errorAlert('To year large from year')
+
+				this.errorAlert('Please choose less than 5 years')
+			} else if (year <= 0) {
+
+				this.errorAlert('The end year must be after the start year')
 			} else {
+
 				var params = {
-      				start_year:moment(this.from_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
-      				end_year:moment(this.to_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+      				start_year : moment(this.from_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+      				end_year : moment(this.to_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
       				branch_id : this.item.branch_id,
 					photographer_id : this.item.photographer_id	,
-					type:'year'	
+					type : 'year'	
 		      	}
 				let obj = {
 					params : params,
 					chooes : 'Year'
 				}
 				this.$root.$emit('companyChart', obj)
-				this.$root.$emit('loadTransactionsWithTime', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
 				this.validate = false
 			}
 			
@@ -832,12 +887,27 @@ export default {
 			var	start_day = moment(this.from_day_week)
 			var	end_day =  moment(this.to_day_week)
 			var day = end_day.diff(start_day,'days')
-	
-			if(day > 42) {
-				this.errorAlert('Less than 6 weeks')
-			} else if(day <=0) {
-				this.errorAlert('To days Large from days')
-			} else {
+
+			if (day <= 0) {
+
+				this.errorAlert('The end week must be after the start week')
+			}else if(0 < day && day <= 7){
+
+				let params = {
+					start_day :  this.formatDate(this.from_day_week),
+					end_day :   this.formatDate(this.to_day_week),
+					branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id,
+					type: 'day'
+				}
+				let obj = {
+					params : params,
+					chooes : 'Day',
+				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
+				this.validate = false
+			}else if(7 < day && day <= 42) {
 
 				let params = {
 					start_day_week :  this.formatDate(this.from_day_week),
@@ -851,8 +921,40 @@ export default {
 					chooes : 'Week'
 				}
 				this.$root.$emit('companyChart', obj)
-				this.$root.$emit('loadTransactionsWithTime', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
+			}else if(42 < day && day <= 365) {
+
+				var params = {
+		      		start_month : moment(this.from_day_week, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
+		      		end_month:moment(this.to_day_week, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
+		      		branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id,
+					type: 'month'
+	      		}
+				let obj = {
+					params : params,
+					chooes : 'Month'
+				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
+			}else{
+
+				var params = {
+      				start_year : moment(this.from_day_week, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+      				end_year : moment(this.to_day_week, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+      				branch_id : this.item.branch_id,
+					photographer_id : this.item.photographer_id	,
+					type : 'year'	
+		      	}
+				let obj = {
+					params : params,
+					chooes : 'Year'
+				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
+				this.validate = false
 			}
+			
 			this.resetTime()
 		},
 
@@ -861,26 +963,18 @@ export default {
 
 			if(this.typeTime == "day"){
 				this.defaultReportSevenDay()
-				this.from_day=''
-				this.to_day= ''
 			}
 
 			if(this.typeTime == "month"){
 				this.defaultReportMonth()
-				this.from_month=''
-      		this.to_month=''
 			}
 
 			if(this.typeTime == "year") {
 				this.defaultReportYear()
-				this.from_year=''
-      		this.to_year=''
 			}
 
 			if(this.typeTime == "week") {
 				this.defaultReportWeek()
-				this.from_day_week=''
-      		this.to_day_week=''
 			}  			
 		},
 
@@ -895,7 +989,7 @@ export default {
 				chooes : 'SevenDay'
 			}
 			this.$root.$emit('companyChart', obj)
-			this.$root.$emit('loadTransactionsWithTime', obj)
+			this.$root.$emit('loadOdersWithTime', obj)
 	
 		},
 
@@ -909,7 +1003,7 @@ export default {
 				chooes : 'Month'
 			}
 			this.$root.$emit('companyChart', obj)
-			this.$root.$emit('loadTransactionsWithTime', obj)
+			this.$root.$emit('loadOdersWithTime', obj)
 		},
 
 		defaultReportYear(){
@@ -919,10 +1013,10 @@ export default {
 
   			let obj = {
 				params : params,
-				chooes : 'year'
+				chooes : 'Year'
 			}
 			this.$root.$emit('companyChart', obj)
-			this.$root.$emit('loadTransactionsWithTime', obj)
+			this.$root.$emit('loadOdersWithTime', obj)
   		},
 
   		defaultReportWeek(){
@@ -936,7 +1030,7 @@ export default {
 				chooes : 'Week'
 			}
 			this.$root.$emit('companyChart', obj)
-			this.$root.$emit('loadTransactionsWithTime', obj)
+			this.$root.$emit('loadOdersWithTime', obj)
 		},
 
 		getListBranch(){
@@ -986,29 +1080,69 @@ export default {
 	  	typeTimeReturn(){
 	  		return this.typeTime
 	  	},
-	  	computedStartDay(){
-	  		return this.from_day
+	  	computedStartDay: {
+	  		get: function () {
+	  			return this.from_day
+	  		},
+	  		set: function (newValue) {
+	  			this.from_day = ''
+	  		}
 	  	},
-	  	computedEndDay(){
-	  		return this.to_day
+	  	computedEndDay: {
+	  		get: function () {
+	  			return this.to_day
+	  		},
+	  		set: function (newValue) {
+	  			this.to_day = ''
+	  		}
 	  	},
-	  	computedStartMonth(){
-	  		return this.from_month
+		computedStartMonth: {
+	  		get: function () {
+	  			return this.from_month
+	  		},
+	  		set: function (newValue) {
+	  			this.from_month = ''
+	  		}
 	  	},
-	  	computedEndMonth(){
-	  		return this.to_month
+	  	computedEndMonth: {
+	  		get: function () {
+	  			return this.to_month
+	  		},
+	  		set: function (newValue) {
+	  			this.to_month = ''
+	  		}
 	  	},
-	  	computedStartYear(){
-	  		return this.from_year
+	  	computedStartYear: {
+	  		get: function () {
+	  			return this.from_year
+	  		},
+	  		set: function (newValue) {
+	  			this.to_year = ''
+	  		}
 	  	},
-	  	computedEndYear(){
-	  		return this.to_year
+	  	computedEndYear: {
+	  		get: function () {
+	  			return this.to_year
+	  		},
+	  		set: function (newValue) {
+	  			this.to_year = ''
+	  		}
 	  	},
-	  	computedStartWeek(){
-	  		return this.from_day_week
+	  	computedStartWeek: {
+	  		get: function () {
+	  			return this.from_day_week
+	  		},
+	  		set: function (newValue) {
+	  			this.from_day_week = ''
+	  		}
 	  	},
-	  	computedEndWeek(){
-	  		return this.to_day_week
+	  	computedEndWeek: {
+	  		get: function () {
+	  			return this.to_day_week
+	  		},
+	  		set: function (newValue) {
+	  			this.to_day_week = ''
+	  		}
 	  	},
 	  	computedTotalCompany(){
 	  		return this.tweenedNumber.toFixed(0);
@@ -1038,10 +1172,6 @@ export default {
 	  	icomeCC(){
 	  		return this.income.cc
 	  	},
-
-	  // 	tweenedNumberCash: 0,
-			// tweenedNumberCC: 0,
-			// tweenedNumberWeb: 0,
 	},
 	mounted() {
     this.$root.$on('totalTransaction', res => {
@@ -1058,33 +1188,60 @@ export default {
     	this.income.web = parseFloat(res.web.toFixed(3))
     })
 
+    this.$root.$on('load-time-in-menu-filter', res => {
+    	if (res) {
+    		switch(res.typeTime) {
+			  	case "SevenDay":
+				    this.from_day = res.firstTime
+						this.to_day = res.lastTime
+				    break;
+			  	case "Week":
+				    this.from_day_week = res.firstTime
+						this.to_day_week = res.lastTime
+				    break;
+			  	case "Month":
+					this.from_month = res.firstTime
+					this.to_month = res.lastTime
+			    	break;
+			  	case "Year":
+					this.from_year = res.firstTime
+					this.to_year = res.lastTime
+			    	break;
+			  	default:
+			  		this.from_day = res.firstTime
+					this.to_day = res.lastTime
+			    	break;
+			}
+    	}
+    })
+
 	},
 
 	watch: {
-    menu5 (val) {
-      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
-    },
-    menu6 (val) {
-      val && this.$nextTick(() => (this.$refs.picker2.activePicker = 'YEAR'))
-    },
-    totalCompany: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { tweenedNumber: newValue })
-    },
-    total: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { tweenedNumberOders: newValue })
-    },
-    totalImcome: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { tweenedNumberIncome: newValue })
-    },
-    icomeCash(newValue){
-    	TweenLite.to(this.$data, 0.5, { tweenedNumberCash: newValue })
-    },
-    icomeCC(newValue){
-    	TweenLite.to(this.$data, 0.5, { tweenedNumberCC: newValue })
-    },
-    icomeWeb(newValue){
-    	TweenLite.to(this.$data, 0.5, { tweenedNumberWeb: newValue })
-    }
+	    menu5 (val) {
+	      val && this.$nextTick(() => (this.$refs.picker.activePicker = 'YEAR'))
+	    },
+	    menu6 (val) {
+	      val && this.$nextTick(() => (this.$refs.picker2.activePicker = 'YEAR'))
+	    },
+	    totalCompany: function(newValue) {
+	      TweenLite.to(this.$data, 0.5, { tweenedNumber: newValue })
+	    },
+	    total: function(newValue) {
+	      TweenLite.to(this.$data, 0.5, { tweenedNumberOders: newValue })
+	    },
+	    totalImcome: function(newValue) {
+	      TweenLite.to(this.$data, 0.5, { tweenedNumberIncome: newValue })
+	    },
+	    icomeCash(newValue){
+	    	TweenLite.to(this.$data, 0.5, { tweenedNumberCash: newValue })
+	    },
+	    icomeCC(newValue){
+	    	TweenLite.to(this.$data, 0.5, { tweenedNumberCC: newValue })
+	    },
+	    icomeWeb(newValue){
+	    	TweenLite.to(this.$data, 0.5, { tweenedNumberWeb: newValue })
+	    }
 	},
 };
 </script>
@@ -1106,7 +1263,6 @@ export default {
 	padding: 5px !important;
 	margin-left: 15px;
     background-color: white;
-	/*width: 400px;*/
 
 }
 .style-card p {

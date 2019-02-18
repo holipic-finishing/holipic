@@ -242,7 +242,7 @@ export default {
     }
   },
   mounted () {
-  	this.$root.$on('loadTransactionsWithTime', res => {
+  	this.$root.$on('loadOdersWithTime', res => {
   		let params = res.params
   		this.params = params
   		this.loading = true

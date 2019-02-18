@@ -34,6 +34,11 @@ class CompanyPackage extends Model
         'photo_on_disc',
         'poster',
         'company_id',
+        'dollar',
+        'euro',
+        'indo',
+        'turkey',
+        'vn',
     ];
 
     /**

@@ -72,20 +72,19 @@
 
 						<v-list-tile class="height-80 ">
 							<v-list-tile-content class="h-100">
-								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Avatar:</span>
+								<v-list-tile-title class="content-flex-end h-100 content-image">
+									<span class="font-weight-bold item-title position-item custom-avatar">Avatar:</span>
 									<span class="contain-text-field image-filed">
-										<v-text-field 
+									<!-- 	<v-text-field 
 											v-model='imageName' 
 											@click='pickFile' 
 											prepend-icon='attach_file' 
 											outline 
 											class="font-weight-bold height-input" 
 											readonly
-										></v-text-field>
+										></v-text-field> -->
 										<input
 											type="file"
-											style="display: none"
 											ref="image"
 											accept="images/*"
 											@change="onFilePicked($event)"
@@ -347,6 +346,7 @@ export default {
 			this.drawerRight = false
 			this.key = 0
 			this.imageUrl = ''
+			this.$refs.image.value = ''
 		},
 	},
 	computed: {

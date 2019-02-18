@@ -487,5 +487,9 @@ export default {
   customer: 'Customers',
   photographers : 'Photographers List',
   sales: 'Manage Sales',
-  emails:'Emails'
+  emails:'Emails',
+  ewallet: 'Ewallet Withdraw',
+  sidebarUpload: 'Upload Photos',
+  AvailableBalanceIs0 : 'Your balance is 30, please add more money',
+  withDrawProcessed : 'The withdrawal request has been processed'
 }

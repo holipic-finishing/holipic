@@ -1,206 +1,141 @@
 <template>
-	<v-container fluid pt-0 grid-list-xl mt-3>
-		<v-layout row wrap>
-			<app-card
-				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="p-0 elevation-5"
-				:fullScreen="true"
-				:reloadable="true"
-				:closeable="false"
-			>
-				<v-toolbar flat color="white">
-	        <v-toolbar-title>
-	          Manage Sales
-	        </v-toolbar-title>
-	      </v-toolbar>
-	      <v-divider class="m-0"></v-divider>
-			  <v-layout row wrap>
-      		<!-- Filter Component -->
-			  	<v-flex xs11>
-			  		<v-layout row wrap>
-			   			<!-- select box branch -->
-							<v-flex md3 sm6 xs12>
-								<v-card class="elevation-5">
-				  				<v-card-text>
-						       	<v-autocomplete
-						          v-model="selected"
-						          :items="items"
-					            item-text="name"
-					            item-value="id"
-					            v-on:change="changeBranh(selected)"
-						        ></v-autocomplete>
-				  				</v-card-text>
-				  			</v-card>
-			      	</v-flex>
-					   	<!-- select box photographer -->
-							<v-flex md3 sm6 xs12>
-								<v-card class="elevation-5">
-				  				<v-card-text>
-						        <v-autocomplete
-						          v-model="selected1"
-						          :items="phographer"
-					            item-text="name"
-					            item-value="id"
-						        ></v-autocomplete>
-				  				</v-card-text>
-				  			</v-card>
-					    </v-flex>
-					   	<!-- Start day -->
-					   	<v-flex md3 sm6 xs12>
-					   		<v-card class="elevation-5">
-				  				<v-card-text>
-										<v-menu 
-											:close-on-content-click="false"
-				              v-model="menu1"
-				              :nudge-right="40"
-				              lazy
-				              transition="scale-transition"
-				              offset-y
-				              full-width
-				              min-width="290"
-										>
-											<v-text-field 
-												slot="activator"
-												prepend-icon="event"
-												readonly
-												:value="computedStartDay"
-					  						placeholder="Enter Start Date"
-					  						clearable
-					  						@click:clear="clearSearchDate"
-											></v-text-field>
-											<v-date-picker 
-												v-model="from_day"
-												no-title
-												@change="menu1 = false"
-												scrollable 
-												:max="new Date().toISOString().substr(0, 10)"
-											></v-date-picker>
-										</v-menu>
-				  				</v-card-text>
-				  			</v-card>
-							</v-flex>
-							<!-- End day -->
-							<v-flex md3 sm6 xs12>
-								<v-card class="elevation-5">
-				  				<v-card-text>
-										<v-menu 
-											:close-on-content-click="false"
-				              v-model="menu2"
-				              :nudge-right="40"
-				              lazy
-				              transition="scale-transition"
-				              offset-y
-				              full-width
-				              min-width="290"
-										>
-											<v-text-field 
-												slot="activator"
-												prepend-icon="event"
-												readonly
-												:value="computedEndDay"
-					  						placeholder="Enter End Date"
-					  						clearable
-					  						@click:clear="clearSearchEndDate"
-											></v-text-field>
-											<v-date-picker 
-												v-model="to_day" 
-												no-title 
-												scrollable 
-												@change="menu2 = false"
-												:max="new Date().toISOString().substr(0, 10)"
-											></v-date-picker>
-										</v-menu>
-				  				</v-card-text>
-				  			</v-card>
-							</v-flex>
-			  		</v-layout>
-			  	</v-flex>
-			  	<v-flex md1 sm12 xs12 align-center justify-center>
-			  		<v-btn class="btn-gradient-primary" small fab dark @click="sreachSales()">Go</v-btn>
-			  	</v-flex>
-					<v-flex xs12>
-						<v-card-title>
-				      <v-spacer></v-spacer>
-			        <div class="w-25">
-			  	      <v-text-field
-			  	        v-model="search"
-			  	        append-icon="search"
-			  	        label="Enter Search Value"
-			  	        single-line
-			  	        hide-details
-			  	      ></v-text-field>
-			        </div>
-					    <v-tooltip bottom class="icon-style">
-					    	<v-btn slot="activator" small fab dark @click="exportFile" class="ml-2 btn-gradient-primary">
-									<v-icon dark>fas fa-file-excel</v-icon>
-								</v-btn>
-						    <span>Export Sales</span>
-					    </v-tooltip>
-				    </v-card-title>
-					</v-flex>
-				</v-layout>
-				<v-data-table
-					:headers="headers" 
-					:items="desserts" 
-					class="elevation-5 body-2 global-custom-table"
-					item-key="id" 
-					:pagination.sync="pagination" 
-					:rows-per-page-items="rowsPerPageItems" 
-					:search="search"
-					>
-					<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-					<!--Header -->
-					<template slot="headers" slot-scope="props">
-			          <tr>
-			            <th
-			              v-for="header in props.headers"
-			              :key="header.text"
-			              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-			              @click="changeSort(header.value)"
-			            >
-			            	<div class="custom-header">
-				              <v-tooltip bottom>
-				                <span slot="activator" class="text-capitalize font-weight-bold">
-				                  {{ header.text }}
-				                </span>
-				                <span>
-				                  {{ header.text }}
-				                </span>
-				              </v-tooltip>
-				              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
-			            	</div>
-			            </th>
-			          </tr>
-			        </template>
-				
-					<template slot="items" slot-scope="props">
-						<td>{{ props.item.id }}</td>
-						<td>{{ props.item.branch_name }}</td>
-						<td>{{ props.item.photographer_name }}</td>
-						<td>{{ props.item.room_has_number }}</td>
-						<td>{{ formatTotal(props.item.total_amount) }}</td>
-						<td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
-						<td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
-						<td>{{ props.item.customer_email }}</td>
-						<td>{{ props.item.payment_method }}</td>
-					</template>
-
-					<!--No data -->
-				  	<template slot="no-data">
-				      <v-alert :value="true" color="error" icon="warning">
-				        Sorry, nothing to display here :(
-				      </v-alert>
-	    			</template>
-					
-					<!--Search no result -->
-		    		<v-alert slot="no-results" :value="true" color="error" icon="warning">
-		          		Your search for "{{ search }}" found no results.
-		        	</v-alert>
-
-				</v-data-table>
-			</app-card>
+	<div>
+		<v-container fluid grid-list-xl>
+			<v-toolbar flat color="white">
+		        <v-toolbar-title>
+		          Manage Sales
+		        </v-toolbar-title>
+      		</v-toolbar>
+      	<v-divider class="m-0"></v-divider>
+      	<v-layout row wrap class="stats-card-v4 rp-search">
+    		<!-- Filter Component -->
+		  	<v-flex xs11>
+		  		<v-layout row wrap>
+		   			<!-- select box branch -->
+						<v-flex md3 sm6 xs12>
+							<v-card class="elevation-5">
+			  				<v-card-text>
+					       	<v-autocomplete
+					          v-model="selected"
+					          :items="items"
+				            item-text="name"
+				            item-value="id"
+				            v-on:change="changeBranh(selected)"
+					        ></v-autocomplete>
+			  				</v-card-text>
+			  			</v-card>
+		      	</v-flex>
+				   	<!-- select box photographer -->
+						<v-flex md3 sm6 xs12>
+							<v-card class="elevation-5">
+			  				<v-card-text>
+					        <v-autocomplete
+					          v-model="selected1"
+					          :items="phographer"
+				            item-text="name"
+				            item-value="id"
+					        ></v-autocomplete>
+			  				</v-card-text>
+			  			</v-card>
+				    </v-flex>
+				   	<!-- Start day -->
+				   	<v-flex md3 sm6 xs12>
+				   		<v-card class="elevation-5">
+			  				<v-card-text>
+									<v-menu 
+										:close-on-content-click="false"
+			              v-model="menu1"
+			              :nudge-right="40"
+			              lazy
+			              transition="scale-transition"
+			              offset-y
+			              full-width
+			              min-width="290"
+									>
+										<v-text-field 
+											slot="activator"
+											prepend-icon="event"
+											readonly
+											:value="computedStartDay"
+				  						placeholder="Enter Start Date"
+				  						clearable
+				  						@click:clear="clearSearchDate"
+										></v-text-field>
+										<v-date-picker 
+											v-model="from_day"
+											no-title
+											@change="menu1 = false"
+											scrollable 
+											:max="new Date().toISOString().substr(0, 10)"
+										></v-date-picker>
+									</v-menu>
+			  				</v-card-text>
+			  			</v-card>
+						</v-flex>
+						<!-- End day -->
+						<v-flex md3 sm6 xs12>
+							<v-card class="elevation-5">
+			  				<v-card-text>
+									<v-menu 
+										:close-on-content-click="false"
+			              v-model="menu2"
+			              :nudge-right="40"
+			              lazy
+			              transition="scale-transition"
+			              offset-y
+			              full-width
+			              min-width="290"
+									>
+										<v-text-field 
+											slot="activator"
+											prepend-icon="event"
+											readonly
+											:value="computedEndDay"
+				  						placeholder="Enter End Date"
+				  						clearable
+				  						@click:clear="clearSearchEndDate"
+										></v-text-field>
+										<v-date-picker 
+											v-model="to_day" 
+											no-title 
+											scrollable 
+											@change="menu2 = false"
+											:max="new Date().toISOString().substr(0, 10)"
+										></v-date-picker>
+									</v-menu>
+			  				</v-card-text>
+			  			</v-card>
+						</v-flex>
+		  		</v-layout>
+		  	</v-flex>
+		  	<v-flex md1 sm12 xs12 align-center justify-center class="grid-template-column">
+		  		<v-btn class="btn-gradient-primary custom-btn" small fab dark @click="sreachSales()">Go</v-btn>
+		  	</v-flex>
+				<v-flex xs12>
+					<v-card-title>
+			      <v-spacer></v-spacer>
+		        <div class="w-25">
+		  	      <v-text-field
+		  	        v-model="search"
+		  	        append-icon="search"
+		  	        label="Enter Search Value"
+		  	        single-line
+		  	        hide-details
+		  	      ></v-text-field>
+		        </div>
+				    <v-tooltip bottom class="icon-style">
+				    	<v-btn slot="activator" small fab dark @click="exportFile" class="ml-2 btn-gradient-primary rp-btn-add-export">
+								<v-icon dark>fas fa-file-excel</v-icon>
+							</v-btn>
+					    <span>Export Sales</span>
+				    </v-tooltip>
+			    </v-card-title>
+				</v-flex>
 		</v-layout>
-	</v-container>		    	
+
+		</v-container>
+		
+	</div>
 </template>
 
 <script>
@@ -261,7 +196,9 @@ export default {
 					var vm = this
 					_.forEach(data, function(value,key){
 						vm.items.push(value)					
-					})				    
+					})
+
+
 				}
 			})
 			.catch(err => {
@@ -304,9 +241,11 @@ export default {
 			let url = config.API_URL+'order/orders-company'
 			getWithData(url,params)
 			.then(res => {
+				
 				if(res.data && res.data.success){
 					let data = res.data.data
 					this.desserts = data
+
 				}
 			})
 			.catch(err => {

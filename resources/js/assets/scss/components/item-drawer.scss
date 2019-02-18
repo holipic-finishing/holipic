@@ -136,6 +136,22 @@
   }
 }
 
+.flexible-list-title{
+  flex:1;
+  overflow: auto;
+  .v-list--two-line .v-list__tile {
+    height: 45px;
+  }
+  .v-list__tile__sub-title{
+    margin-top: 8px !important;
+  }
+
+  .v-list__tile__action--stack {
+    padding-top: 5px !important;
+    padding-bottom: 0 !important;
+  }
+}
+
 .height-area{
   .v-input__slot{
     min-height: 115px !important;

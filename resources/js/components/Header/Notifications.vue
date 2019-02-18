@@ -16,7 +16,7 @@
 			slot="activator"
 		>
 			<span slot="badge" v-if="countNotifications != 0">{{countNotifications}}</span>
-			<i class="zmdi grey--text zmdi-notifications-active animated infinite wobble zmdi-hc-fw font-lg"></i>
+			<i class="zmdi grey--text zmdi-notifications-active infinite wobble zmdi-hc-fw font-lg"></i>
 		</v-badge>
 		<v-card>
 			<div class="dropdown-top d-custom-flex justify-space-between primary">
@@ -255,13 +255,6 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 					
 				}
 				
-				// let vm = this
-				// let count = 0;
-				// _.forEach(vm.notifications, function(value, key){
-				// 	if(value.is_read === false){
-				// 		count =count + 1
-				// 	}
-				// })
 				return this.notifications.length
 			},
 		},

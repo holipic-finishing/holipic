@@ -19,7 +19,14 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrenciesTableSeeder::class);
         $this->call(CouponCodeTableSeeder::class);
         $this->call(ExchangeRatesTableSeeder::class);
-        $this->call(TransactionsTableSeeder::class);
+        
+        /**
+         *
+         * Don't run seed of TransactionsTableSeeder
+         *
+         */
+        // $this->call(TransactionsTableSeeder::class);
+
         $this->call(RoomsTableSeeder::class);
         $this->call(BranchesTableSeeder::class);
         $this->call(PhotographersTableSeeder::class);
@@ -29,5 +36,10 @@ class DatabaseSeeder extends Seeder
         $this->call(OrderTableSeeder::class);
         $this->call(CompanyPackagesTableSeeder::class);
         $this->call(PhotoPackagesTableSeeder::class);
+        
+        /**
+         * Seed With Draw
+         */
+        // $this->call(EwalletWithdrawSeeder::class);
     }
 }

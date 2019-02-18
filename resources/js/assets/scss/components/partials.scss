@@ -7,7 +7,7 @@
 
 .custom-header{
 	display:flex;
-	// justify-content:center;
+	/*// justify-content:center;*/
 	align-items:center;
 }
 
@@ -114,6 +114,9 @@
     position:relative;
     top: -10px;
   }
+  .v-input__append-inner{
+  margin-top:0px !important;
+  }
 }
 
 
@@ -133,6 +136,7 @@
 	  input, .v-select__slot{
 	    position:relative;
 	    top: -10px;
+	    margin-top: 0px !important;
 	  }
 	}
 }
@@ -149,7 +153,60 @@
 	}
 }
 
-.fix-v-icon{
+.custom-v-icon{
 	line-height:unset !important;
+	margin-top: 4px !important;
+	font-size:16px;
 }
 
+.custom-v-select{
+	.height-input-customer {
+		.v-select__selections {
+			padding-top: 0px !important; 
+			font-size:15px !important;
+		}
+		.v-input__append-inner{
+			margin-top: 6px !important;
+		}
+	}
+	
+}
+
+.custom-btn{
+   	display:block;
+  	height: 40px;
+  	width: 40px;
+  	border-radius: 50%;
+  	padding-top: 5px !important;
+  	box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+}
+
+.grid-template-column{
+	grid-template-columns: none !important;
+}
+
+.custom-stats-card{
+	.v-card__text {
+		padding: 10px 15px !important;
+	}
+
+	.v-input .v-text-field{
+		padding-top: 5px !important;
+	}
+}
+
+.fix-croll-container{
+	overflow:hidden !important;
+}
+
+.app-card{
+	box-shadow: none !important;
+}
+
+.btn-primary{
+	 border:none !important;
+}
+
+.btn-add {
+	padding-top:1px !important;
+}

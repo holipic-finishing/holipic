@@ -317,13 +317,12 @@ class OrderAPIController extends AppBaseController
         $path = public_path() . '/files' . DIRECTORY_SEPARATOR;
 
         $csvPath = $path .$company_id. '_Sales.csv';
+
         if(\File::exists($csvPath)){
             unlink($csvPath);
         }
         if(!\File::exists($path)) {
-
             \File::makeDirectory($path, $mode = 0777, true, true);
-
         }
 
         $file = fopen($csvPath,"a+");
@@ -342,8 +341,14 @@ class OrderAPIController extends AppBaseController
      */
     
     public function getHistoryOrders(Request $request)
-    {
+    {   
+
         $input = $request->all();
+        if(isset($input['check'])){
+            if($input['check'] == 1){
+               $results =  $this->orderRepository->getHistoryOrdersByStaus($input);
+            }
+        }    
         if(isset($input['type'])){
             $results =  $this->orderRepository->getHistoryOrders($input);
         }else{
@@ -367,7 +372,9 @@ class OrderAPIController extends AppBaseController
 
            
         }
-        return $this->sendResponse($results->toArray(), 'Order updated successfully');
+        return $this->sendResponse($results, 'Order updated successfully');
+
+        // return $this->sendResponse($results->toArray(), 'Order updated successfully');
     }
 
     public function countIncome(Request $request){
@@ -395,9 +402,18 @@ class OrderAPIController extends AppBaseController
 
            
         }
-        return $this->sendResponse($results, 'Order updated successfully');
+        return $this->sendResponse($results, 'count income successfully');
     }
 
-   
+    /*
+        -function to count number of tags : pending , done ,...
+        -@param :  status of order : DONE , PENDING , CANCEL,  BOOKING, PAID 
+     */
+    
+    public function countValuesOfTag(Request $request){
+        $input = $request->all();
+        $results =  $this->orderRepository->countValuesOfTag($input);
+        return $this->sendResponse($results, 'count values of tag successfully');
+    }
 
 }

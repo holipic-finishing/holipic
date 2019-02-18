@@ -1,21 +1,14 @@
 <template>
   <v-app
-	:dark="darkMode"
-	id="inspire"
-	:class="[{ 
-		'box-layout': boxLayout, 
-		'collapse-sidebar': collapseSidebar, 
-		'rtl-layout': rtlLayout
-	}]"
+  	:dark="darkMode"
+  	id="inspire"
+  	:class="[{ 
+  		'box-layout': boxLayout, 
+  		'collapse-sidebar': collapseSidebar, 
+  		'rtl-layout': rtlLayout
+  	}]"
   > 
-      <router-view></router-view>
-      <notifications 
-        group="loggedIn" 
-        position="bottom right"
-        animation-type="velocity"
-        class="z-index"
-      />
-
+    <router-view></router-view>
   </v-app>
 </template>
 
@@ -23,9 +16,7 @@
 import { mapGetters } from "vuex";
 
 // import AuthService from "./auth/AuthService";
-
 // const auth = new AuthService();
-
 // const { login, logout, authenticated, authNotifier } = auth;
 
 export default {
@@ -50,6 +41,30 @@ export default {
     };
   },
   mounted() {
+    // if (
+    //   this.selectedLocale.locale === "he" ||
+    //   this.selectedLocale.locale === "ar"
+    // ) {
+    //   this.$store.dispatch("rtlLayout");
+    // }
+    // 
+    this.$root.$on('offline', () => {
+      this.$message({
+        showClose: true,
+        message: 'Network unstable! The website will work with offline mode.',
+        type: 'warning',
+        duration: 5000
+      })
+    })
+
+    this.$root.$on('online', () => {
+      this.$message({
+        showClose: true,
+        message: 'Network connected! The website will work with online mode.',
+        type: 'success',
+        duration: 5000
+      })
+    })
     // var OneSignal = window.OneSignal || [];
     //   OneSignal.push(["init", {
     //       appId: "d4cb0199-4846-481d-9388-39ba00fe2773",
@@ -84,7 +99,6 @@ export default {
     //       });
     //   });
     //   });
-
   },
   computed: {
     ...mapGetters([
@@ -101,7 +115,4 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .z-index{
-    z-index: 9999 !important;
-  }
 </style>

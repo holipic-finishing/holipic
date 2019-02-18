@@ -38,14 +38,23 @@ php artisan db:seed
 + public/logos
 + public/avatars
 + public/files
++ public/image_uploads
 
 # Step 10 : Set Permission
 + sudo chmod -R 777 public/logos
 + sudo chmod -R 777 storage
 + sudo chmod -R 777 public/avatars
 + sudo chmod -R 777 public/files
++ sudo chmod -R 777 public/image_uploads
 
 # Step 11: Run project
 + npm run watch-poll
 + cd server_node => node server
 + redis-server --port "your_port"
+
+# Step 12: Config Https
++ config https with apache2: 
+	+ https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-16-04
+	+ https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-18-04
++ install openssh: sudo apt-get install openssh-server
++ copy file : apache-selfsigned.crt and apache-selfsigned.key to rsa_key folder

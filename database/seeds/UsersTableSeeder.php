@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
             'first_name' => 'Super',
             'last_name' => 'Admin', 
             'email' => 'admin@gmail.com', 
-            'password' => bcrypt('123!@#123'), 
+            'password' => bcrypt('123456'), 
             'role_id' => 1,
         ]);
         
@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $faker->email,
-                'password' => bcrypt('123!@#123'),
+                'password' => bcrypt('123456'),
                 'role_id' => 2,
                 'package_id' => $faker->numberBetween(1, 2),
             ]);

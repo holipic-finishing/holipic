@@ -16,7 +16,7 @@ class CreateTransactionExchangesTable extends Migration
         Schema::create('transaction_exchanges', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('transaction_id');
-            $table->decimal('exchange_rate_to_dollar',20,15);
+            $table->decimal('exchange_rate_to_dollar',30,15);
         });
     }
     /**

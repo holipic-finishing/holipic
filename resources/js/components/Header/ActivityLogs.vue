@@ -9,7 +9,7 @@
 		<v-badge right overlap slot="activator" title="Activity Logs" @click.native="hiddenMenuActivity()">
 			<span slot="badge" v-if="total>0">{{total}}</span>
 		
-			<i class="zmdi grey--text animated zmdi zmdi-ticket-star infinite wobble zmdi-hc-fw font-lg">
+			<i class="zmdi grey--text zmdi zmdi-ticket-star infinite wobble zmdi-hc-fw font-lg">
 				
 			</i>
 		</v-badge>

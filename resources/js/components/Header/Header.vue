@@ -2,17 +2,18 @@
 <template>
 	<div>
 		<v-navigation-drawer
-			v-if="!horizontal"
 			app
 			fixed
+			mini-variant-width="80"
+			v-if="!horizontal"
 			v-model="drawer"
-			:mini-variant.sync="collapseSidebar"
-			mini-variant-width="70"
-			:width="250"
 			class="Vuely-sidebar"
+			:mini-variant.sync="collapseSidebar"
+			:width="250"
 			:style="{backgroundImage: 'url(' + selectedSidebarBgImage.url + ')'}"
 			:class="{'background-none': !backgroundImage}"
 			:right="rtlLayout"
+			@input="updateDrawerHeaderStt"
 		>
 			<!-- App Sidebar -->
 			<app-sidebar></app-sidebar>
@@ -25,7 +26,7 @@
 		>	
 			<div class="d-custom-flex align-items-center navbar-left">
 				<div v-if="!horizontal">
-					<v-toolbar-side-icon icon large @click.stop="drawer = !drawer" class="v-step-0"></v-toolbar-side-icon>
+					<v-toolbar-side-icon icon large @click="emitDrawer" class="v-step-0"></v-toolbar-side-icon>
 				</div>
 				<div class="site-logo-wrap d-custom-flex ml-0 align-items-center" v-else>
 					<router-link to="/horizontal/dashboard/ecommerce" class="grayish-blue site-logo-img">
@@ -34,7 +35,6 @@
 				</div>
 			</div>
 			<div class="navbar-right">
-
 				<v-btn icon large @click="toggleFullScreen" class="full-screen ma-0">
 					<v-icon color="grey">fullscreen</v-icon>
 				</v-btn>
@@ -44,12 +44,21 @@
 				<activity-logs v-if="role_id == 2" v-show="role_id == '2'"></activity-logs>
 				<language-provider></language-provider>
 				<user></user>
-				<v-btn class="ma-0" icon large @click.stop="eWalletSidebar = !eWalletSidebar">
+				<!-- <v-btn v-if="role_id == 2" v-show="role_id == '2' "  class="ma-0" icon large @click.stop="eWalletSidebar = !eWalletSidebar">
 					<v-icon color="grey">ti-wallet</v-icon>
+				</v-btn> -->
+				<v-btn v-if="role_id == 2" v-show="role_id == '2' " class="ma-0" flat @click.stop="eWalletSidebar = !eWalletSidebar">
+					<div class="icon-ewallet">
+						<v-icon color="grey">ti-wallet</v-icon>
+					</div>
+					<div class="v-menu v-menu--inline">
+						<span class="ewallet-style">$ {{money_ewallet}}</span>
+					</div>
 				</v-btn>
 			</div>
 		</v-toolbar>
 		<v-dialog 
+			v-show="role_id == '2'"
 			fixed
 			v-model="eWalletSidebar" 
 			:right="!rtlLayout" 
@@ -90,11 +99,13 @@ export default {
 	data() {
 		return {
 			collapsed: false, // collapse sidebar
-			drawer: null, // sidebar drawer default true
 			eWalletSidebar: false, // chat component right sidebar
+			drawer: true, // sidebar drawer default true
+			chatSidebar: false, // chat component right sidebar
 			sidebarImages: "", // sidebar background images
 			enableDefaultSidebar: false,
-			role_id:''
+			role_id:'',
+			money_ewallet:0
 		};
 	},
 	computed: {
@@ -112,23 +123,47 @@ export default {
 		// toggle full screen method
 		toggleFullScreen() {
 			if (screenfull.enabled) {
-			screenfull.toggle();
+				screenfull.toggle();
 			}
 		},
 		toggleSearchForm() {
 			// this.$store.dispatch('toggleSearchForm');
+		},
+		emitDrawer(){
+			this.drawer = !this.drawer
+			this.$root.$emit('drawer-status', this.drawer)
+		},
+		updateDrawerHeaderStt(){
+			this.$root.$emit('drawer-status', this.drawer)
 		}
 	},
+	mounted(){
+		this.$root.$emit('drawer-status', this.drawer)
+	},
 	created(){
-         var userAuth = JSON.parse(localStorage.getItem('user'))
-         this.role_id = userAuth.role_id
+        var userAuth = JSON.parse(localStorage.getItem('user'))
+        this.role_id = userAuth.role_id
     },
     mounted(){
     	this.$root.$on('closeDrawerItem', res => {
       		this.eWalletSidebar = res
       		// this.fetchData()
     	})
+    	this.$root.$on('ewallet', res => {
+    		this.money_ewallet = res
+    	})
     }
 	
 };
 </script>
+<style lang="css" scoped>
+.ewallet-style {
+	font-weight: 700;
+    color: gray;
+    font-size: 16px;
+}
+.icon-ewallet {
+	margin-right: 10px;
+}
+</style>
+    

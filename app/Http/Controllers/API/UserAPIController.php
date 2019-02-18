@@ -245,8 +245,16 @@ class UserAPIController extends AppBaseController
 
         $findUser = User::where('email',$input['email'])->first();
 
-        if($findUser->id_one_signal !== null){
-            $id_one_signal = $findUser->id_one_signal . ',' . $input['id_one_signal'];
+        if($findUser->id_one_signal !== null && $findUser->id_one_signal !== ""){
+
+            $arr_id_signal = explode(',',$findUser->id_one_signal);
+
+            if(!in_array($input['id_one_signal'], $arr_id_signal)){
+                $id_one_signal = $findUser->id_one_signal . ',' . $input['id_one_signal'];
+            } else {
+                $id_one_signal = $findUser->id_one_signal;
+            }
+
         } else {
             $id_one_signal =  $input['id_one_signal'];
         }

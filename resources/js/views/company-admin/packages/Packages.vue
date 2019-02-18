@@ -1,9 +1,8 @@
 <template>
-	<v-container fluid pt-0 grid-list-xl mt-3>
+	<v-container fluid px-0 py-0 class="fix-croll-container">
 		<v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="p-0 elevation-5"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
@@ -26,7 +25,7 @@
 				<v-data-table
 		      :headers="headers"
 		      :items="desserts"
-		      class="elevation-5 body-2 global-custom-table"
+		      class="body-2 global-custom-table"
 		      :pagination.sync="pagination"
 			    :loading="loadingCom"
 			  >
@@ -60,6 +59,126 @@
 		        <td class="text-xs-left">{{ props.item.package_name }}</td>
 		        <td class="text-xs-left">{{ props.item.price }}</td>
 		        <td class="text-xs-left">{{ props.item.offer }}</td>
+		        <td>
+		        	<v-edit-dialog
+	            :return-value.sync="props.item.dollar"
+	            large
+	            lazy
+	            persistent
+	            @save="save('dollar', props.item.dollar, props.item.id)"
+	            @cancel="cancel"
+	            @open="open()"
+	            @close="close"
+	          >
+	            <div>{{ props.item.dollar }}</div>
+	            <div slot="input" class="mt-3 title">Update Dollar</div>
+	            <v-text-field
+	              slot="input"
+	              v-model="props.item.dollar"
+	              label="Edit"
+	              single-line
+	              counter
+	              autofocus
+	              type="number"
+	            ></v-text-field>
+	          </v-edit-dialog>
+		        </td>
+		         <td>
+		        	<v-edit-dialog
+	            :return-value.sync="props.item.euro"
+	            large
+	            lazy
+	            persistent
+	            @save="save('euro', props.item.euro, props.item.id)"
+	            @cancel="cancel"
+	            @open="open()"
+	            @close="close"
+	          >
+	            <div>{{ props.item.euro }}</div>
+	            <div slot="input" class="mt-3 title">Update Euro</div>
+	            <v-text-field
+	              slot="input"
+	              v-model="props.item.euro"
+	             type="number"
+	              label="Edit"
+	              single-line
+	              counter
+	              autofocus
+	            ></v-text-field>
+	          </v-edit-dialog>
+		        </td>
+		         <td>
+		        	<v-edit-dialog
+	            :return-value.sync="props.item.indo"
+	            large
+	            lazy
+	            persistent
+	            @save="save('indo', props.item.indo, props.item.id)"
+	            @cancel="cancel"
+	            @open="open()"
+	            @close="close"
+	          >
+	            <div>{{ props.item.indo }}</div>
+	            <div slot="input" class="mt-3 title">Update Indo</div>
+	            <v-text-field
+	              slot="input"
+	              v-model="props.item.indo"
+	            	type="number"
+	              label="Edit"
+	              single-line
+	              counter
+	              autofocus
+	            ></v-text-field>
+	          </v-edit-dialog>
+		        </td>
+		        <td>
+		        	<v-edit-dialog
+	            :return-value.sync="props.item.turkey"
+	            large
+	            lazy
+	            persistent
+	            @save="save('turkey', props.item.turkey, props.item.id)"
+	            @cancel="cancel"
+	            @open="open()"
+	            @close="close"
+	          >
+	            <div>{{ props.item.turkey }}</div>
+	            <div slot="input" class="mt-3 title">Update Turkey</div>
+	            <v-text-field
+	              slot="input"
+	              v-model="props.item.turkey"
+	             	type="number"
+	              label="Edit"
+	              single-line
+	              counter
+	              autofocus
+	            ></v-text-field>
+	          </v-edit-dialog>
+		        </td>
+		        <td>
+		        	<v-edit-dialog
+	            :return-value.sync="props.item.vn"
+	            large
+	            lazy
+	            persistent
+	             @save="save('vn', props.item.vn, props.item.id)"
+	            @cancel="cancel"
+	            @open="open()"
+	            @close="close"
+	          >
+	            <div>{{ props.item.vn }}</div>
+	            <div slot="input" class="mt-3 title">Update VND</div>
+	            <v-text-field
+	              slot="input"
+	              v-model="props.item.vn"
+	             	type="number"
+	              label="Edit"
+	              single-line
+	              counter
+	              autofocus
+	            ></v-text-field>
+	          </v-edit-dialog>
+		        </td>
 		        <td class="text-right">
 		          <v-icon
 		            small
@@ -89,10 +208,10 @@
 		    	</template>
 				</v-data-table>
 			</app-card>
-			<v-dialog v-model="dialog" persistent max-width="450">
+	    <v-dialog v-model="dialog" persistent max-width="450">
 	      <v-card>
-	        <v-card-title class="headline font-weight-bold">
-	          <v-icon x-large color="yellow accent-3" class="mr-2">
+	        <v-card-title class="headline font-weight-bold grey lighten-3">
+	          <v-icon large color="warning" class="mr-2">
 	            warning
 	          </v-icon>
 	          Do you want delete this item ?
@@ -100,8 +219,8 @@
 	        <v-divider class="mt-0"></v-divider>
 	        <v-card-actions>
 	          <v-spacer></v-spacer>
-	          <v-btn flat @click="dialog = false">Disagree</v-btn>
-	          <v-btn flat @click="deleteItem">Agree</v-btn>
+	          <v-btn color="secondary" outline small @click="dialog = false">Disagree</v-btn>
+	          <v-btn color="warning" outline small @click="deleteItem">Agree</v-btn>
 	        </v-card-actions>
 	      </v-card>
 	    </v-dialog>
@@ -109,7 +228,6 @@
 		<v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="p-0 elevation-5"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
@@ -124,7 +242,7 @@
 	      <v-data-table
 		      :headers="headers2"
 		      :items="desserts2"
-		      class="elevation-5 body-2 global-custom-table"
+		      class="body-2 custom-table"
 		      :pagination.sync="pagination"
 		      :disable-initial-sort="true"
 				  :loading="loadingCom"
@@ -155,39 +273,178 @@
 	        </template>
 
 		    	<template slot="items" slot-scope="props">
-		    		<td class="text-xs-left">{{ props.item.id }}</td>
-			      <td class="text-xs-left">{{ props.item.size }}</td>
-		        <td>
-		        	<v-flex xs8 offset-xs2 mt-4 class="center-prepend-icon">
-			          <v-text-field
-			          	single-line
-			          	:prepend-icon="props.item.symbol"
-			            v-model="props.item.price"
-			            :rules="[rules.required]"
-			            outline
-			            clear-icon="mdi-close-circle"
-			            clearable
-			            type="number"
-			            @blur="editPhotoPackage('price', props.item.price, props.item.id)"
-								  @keyup.enter="editPhotoPackage('price', props.item.price, props.item.id)"
-			          ></v-text-field>
-			        </v-flex>
-		        </td>
-		        <td>
-		        	<v-flex xs8 offset-xs2 mt-4>
-			          <v-text-field
-			          	single-line
-			            v-model="props.item.free_photo"
-			            :rules="[rules.required, rules.number]"
-			            outline
-			            clear-icon="mdi-close-circle"
-			            clearable
-			            type="number"
-			            @blur="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
-					    		@keyup.enter="editPhotoPackage('free_photo', props.item.free_photo, props.item.id)"
-			          ></v-text-field>
-			        </v-flex>
-		        </td>
+		    			<td class="text-xs-left">{{ props.item.id }}</td>
+			        <td class="text-xs-left">{{ props.item.size }}</td>
+			        <td class="text-xs-right">
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+			        	<v-edit-dialog
+			        		:ref="'v-dialog'+'dollar'+props.item.id"
+			            :return-value.sync="props.item.dollar"
+			             :large="true"
+			            lazy
+			            
+			            @save="savePhotoPackage('dollar', props.item.dollar, props.item.id)"
+			            @cancel="cancel"
+			            @open="open()"
+			            @close="close"
+	          			>
+			            <div>{{ props.item.dollar }}</div>
+			            <div slot="input" class="mt-3 title">Update Dollar</div>
+			            <v-text-field
+			              slot="input"
+			              v-model="props.item.dollar"
+			             	type="number"
+			              label="Edit"
+			              single-line
+			              min="0"
+			              autofocus
+			               ref="checkPhotoPackage"
+			              :rules="[rules.required, rules.number]"
+			            ></v-text-field>
+	         			</v-edit-dialog>
+	         		</v-flex>
+			        </td>
+			        <td  class="text-xs-right">
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+			        	<v-edit-dialog
+			        		:ref="'v-dialog'+'euro'+props.item.id"
+			            :return-value.sync="props.item.euro"
+			            :large="true"
+			            lazy
+			            
+			            @save="savePhotoPackage('euro', props.item.euro, props.item.id)"
+			            @cancel="cancel"
+			            @open="open()"
+			            @close="close"
+	          			>
+			            <div>{{ props.item.euro }}</div>
+			            <div slot="input" class="mt-3 title">Update Euro</div>
+			            <v-text-field
+			              slot="input"
+			              v-model="props.item.euro"
+			             	type="number"
+			              label="Edit"
+			              single-line
+			              min="0"
+			              autofocus
+			               ref="checkPhotoPackage"
+			              :rules="[rules.required, rules.number]"
+			            ></v-text-field>
+	         			</v-edit-dialog>
+	         		</v-flex>
+			        </td>
+			        <td  class="text-xs-right">
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+			        	<v-edit-dialog
+			        		:ref="'v-dialog'+'indo'+props.item.id"
+			            :return-value.sync="props.item.indo"
+			            :large="true"
+			            lazy
+			            
+			             @save="savePhotoPackage('indo', props.item.indo, props.item.id)"
+			            @cancel="cancel"
+			            @open="open()"
+			            @close="close"
+	          			>
+			            <div>{{ props.item.indo }}</div>
+			            <div slot="input" class="mt-3 title">Update Indo</div>
+			            <v-text-field
+			              slot="input"
+			              v-model="props.item.indo"
+			             	type="number"
+			              label="Edit"
+			              single-line
+			              min="0"
+			              autofocus
+			               ref="checkPhotoPackage"
+			              :rules="[rules.required, rules.number]"
+			            ></v-text-field>
+	         			</v-edit-dialog>
+	         		</v-flex>
+			        </td>
+			        <td  class="text-xs-right">
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+			        	<v-edit-dialog
+			        		:ref="'v-dialog'+'turkey'+props.item.id"
+			            :return-value.sync="props.item.turkey"
+			            :large="true"
+			            lazy
+			            @save="savePhotoPackage('turkey', props.item.turkey, props.item.id)"
+			            @cancel="cancel"
+			            @open="open()"
+			            @close="close"
+	          			>
+			            <div>{{ props.item.turkey }}</div>
+			            <div slot="input" class="mt-3 title">Update Turkey</div>
+			            <v-text-field
+			              slot="input"
+			              v-model="props.item.turkey"
+			             	type="number"
+			              label="Edit"
+			              single-line
+			              min="0"
+			              autofocus
+			              :rules="[rules.required, rules.number]"
+			              ref="checkPhotoPackage"
+			            ></v-text-field>
+	         			</v-edit-dialog>
+	         		</v-flex>
+			        </td>
+			        <td class="text-xs-right">
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+			        	<v-edit-dialog
+			        		:ref="'v-dialog'+'vn'+props.item.id"
+			            :return-value.sync="props.item.vn"
+			            :large="true"
+			            lazy
+			            @save="savePhotoPackage('vn', props.item.vn, props.item.id)"
+			            @cancel="cancel"
+			            @open="open()"
+			            @close="close('vn', props.item.id)"
+	          			>
+			            <div>{{ props.item.vn }}</div>
+			            <div slot="input" class="mt-3 title">Update VND</div>
+			            <v-text-field
+			              slot="input"
+			              v-model="props.item.vn"
+			             	type="number"
+			              label="Edit"
+			              single-line
+			              min="0"
+			              autofocus
+			              :rules="[rules.required, rules.number]"
+			              ref="checkPhotoPackage"
+			            ></v-text-field>
+	         			</v-edit-dialog>
+	         		</v-flex>
+			        </td>
+			        <td  class="text-xs-right">
+			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+				          <v-edit-dialog
+				          	:ref="'v-dialog'+'free_photo'+props.item.id"
+				            :return-value.sync="props.item.free_photo"
+				            :large="true"
+				            lazy
+				            @save="savePhotoPackage('free_photo', props.item.free_photo, props.item.id)"
+				            @cancel="cancel"
+				            @open="open()"
+				            @close="close('free_photo', props.item.id)"
+	          			>
+			            <div>{{ props.item.free_photo }}</div>
+			            <div slot="input" class="mt-3 title">Update Free Photo</div>
+			            <v-text-field
+			              slot="input"
+			              v-model="props.item.free_photo"
+			             	type="number"
+			              label="Edit"
+			              single-line
+			              min="0"
+			              :rules="[rules.required, rules.number]"
+			              ref="checkPhotoPackage"
+			            ></v-text-field>
+	         			</v-edit-dialog>
+				        </v-flex>
+			        </td>
 		    	</template>
 
 		    	<!--No data -->
@@ -223,13 +480,22 @@ export default {
         { text: 'Package Name', align: 'left', value: 'package_name' },
         { text: 'Package Price', value: 'price' },
         { text: 'Offer Price', value: 'offer' },
+        { text: 'Dollar', value: 'offer', sortable: false, width: '35%' },
+        { text: 'Euro', value: 'offer', sortable: false, width: '35%' },
+        { text: 'Indo', value: 'offer', sortable: false, width: '35%' },
+        { text: 'Turkey', value: 'offer', sortable: false, width: '35%' },
+        { text: 'VND', value: 'offer', sortable: false, width: '35%' },
         { text: 'Actions', value:'actions', sortable: false, align: 'right' }
     	],
     	desserts: [],
     	headers2: [
     		{ text: 'Sl No.', value: 'id', width: '10%' },
         { text: 'Size', align: 'left', value: 'package_name', width: '25%' },
-        { text: 'Unit Price', value: 'price', sortable: false, width: '35%', align: 'center' },
+        { text: 'Dollar', value: 'offer', sortable: false, width: '65%' },
+        { text: 'Euro', value: 'offer', sortable: false, width: '65%' },
+        { text: 'Indo', value: 'offer', sortable: false, width: '65%' },
+        { text: 'Turkey', value: 'offer', sortable: false, width: '65%' },
+        { text: 'VND', value: 'offer', sortable: false, width: '65%' },
         { text: 'Free Photo', value: 'offer', sortable: false, width: '35%' },
     	],
       desserts2: [],
@@ -258,6 +524,7 @@ export default {
 	    key: 0,
 	    keyPhotoPackage: 0,
 	    user: JSON.parse(localStorage.getItem('user')),
+	    persistent: true
     }
 	},
 	computed: {
@@ -288,7 +555,7 @@ export default {
 					this.desserts2 = res.data.data
 					this.data = res.data.data
 					this.loading = false
-				}
+				} 
 			})
 			.catch((err) =>{
 				console.log(err)
@@ -299,9 +566,9 @@ export default {
       		this.key = key
       	},
 
-      	unDisablePhotoPackage(keyPhotoPackage){
-      		this.keyPhotoPackage = keyPhotoPackage
-      	},
+  	unDisablePhotoPackage(keyPhotoPackage){
+  		this.keyPhotoPackage = keyPhotoPackage
+  	},
 
 		editPhotoPackage(field_name, value, id){
 			var id = id
@@ -318,12 +585,14 @@ export default {
 	    post(config.API_URL + 'edit/photoPackage/' + id, field)
 			.then((res) => {
 				if(res.data && res.data.success){
-					Vue.notify({
-            group: 'loggedIn',
-            type: 'success',
-            text: 'Edit Item Success!'
-          })
+          this.$notify({
+	          title: 'Success',
+	          message: 'Edit Item Successfully.',
+	          type: 'success',
+	          duration: 2000,
+	        })
           this.key = 0
+          this.fetchDataPhotoPackage()
 				}
 			})
 			.catch((e) =>{
@@ -371,13 +640,12 @@ export default {
 				this.loading = true;
 				this.fetchData();
 				this.dialog = false;	
-				// setTimeout(function(){
-		            Vue.notify({
-		                group: 'loggedIn',
-		                type: 'success',
-		                text: 'Delete Item Success!'
-		            });
-		       // },500);
+				this.$notify({
+          title: 'Success',
+          message: 'Delete Item Successfully.',
+          type: 'success',
+          duration: 2000,
+        })
 			})
 			.catch((err) =>{
 				console.log(err)
@@ -403,13 +671,61 @@ export default {
       }
       this.loading = false
     },
+    updatePackage(id, field) {
+    	post(config.API_URL + 'edit/companyPackage/' + id, field)
+			.then((res) => {
+				if(res.data && res.data.success){
+          this.$notify({
+	          title: 'Success',
+	          message: 'Edit Item Successfully.',
+	          type: 'success',
+	          duration: 2000,
+	        })		
+
+				}
+			})
+			.catch((e) =>{
+        setTimeout(() => {this.alertStt = false}, 1500)
+			})
+	  },
+    save (type, value, id) {
+        var field = {
+	        field_name: type,
+	        value: value,
+	        id: id
+      	}
+      this.updatePackage(id, field)
+    },
+  	cancel() {
+    	// this.fetchDataPhotoPackage()
+  	},
+    open() {
+      
+    },
+    close (type, id) {
+    	// this.fetchDataPhotoPackage()
+    	this.$refs['v-dialog' + type + id].isActive = false
+    },
+    savePhotoPackage(type, value, id) {
+      if (!this.$refs.checkPhotoPackage.validate()) {
+      	this.$refs['v-dialog' + type + id].isActive = true;
+      } else {
+      	var field = {
+	        field_name: type,
+	        value: value,
+	        id: id
+      	}
+      	// this.$refs.checkPhotoPackage.reset()
+      	this.fetchDataEdit(id, field)
+      }
+    }
 	},
 	mounted(){
-        this.$root.$on('reload-table', res => {
-  	    this.loading = true
-        this.fetchData();	
-      })
-    },
+      this.$root.$on('reload-table', res => {
+	    this.loading = true
+      this.fetchData();	
+    })
+  },
 	created(){
 		this.fetchData();	
 		this.fetchDataPhotoPackage();	
@@ -417,7 +733,7 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 
 .h3-title-package{
 	width: 200px;

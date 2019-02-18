@@ -133,7 +133,7 @@ class PhotoPackageAPIController extends AppBaseController
 
         $photoPackages = $this->photoPackageRepository->getPhotoPackage($input);
 
-        return $this->sendResponse($photoPackages->toArray(), 'Photo Packages retrieved successfully');
+        return $this->sendResponse($photoPackages, 'Photo Packages retrieved successfully');
     }
 
     public function editPackage(Request $request, $itemId){

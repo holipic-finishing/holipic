@@ -36,7 +36,23 @@ class CompanyPackageRepository extends BaseRepository
 
     public function getCompanyPackages($input) 
     {
-        return $this->model->where('company_id', '=', $input)->get();
+        $packages = $this->model->where('company_id', '=', $input)->get();
+
+        $data = [];
+
+        if(!is_null($packages)) {
+            foreach($packages as $value)
+            {
+                $value['dollar'] = round($value['dollar']);
+                $value['euro'] = round($value['euro'], 3);
+                $value['indo'] = round($value['indo'], 3);
+                $value['turkey'] = round($value['turkey'], 3);
+                $value['vn'] = round($value['vn'], 3);
+                $data[] = $value;
+            }
+        }
+
+        return $data;
     }
 
     public function addCompanyPackageItem($input)

@@ -1,88 +1,444 @@
 <template>
 
-	<v-container fluid pt-0 grid-list-xl>	
+	<v-container fluid px-0 py-0 grid-list-xl>	
 			<!-- Sales -->
-		<v-layout row wrap>
-			<app-card
+		<!-- <v-layout row wrap> -->
+			<!-- <app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
 				customClasses="mb-0 sales-widget"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
-			>
-				<div class="visitor-area-chart background-transparent col-sm-12">
-					<div class="d-custom-flex justify-space-between label-wrap pt-2">
-						<nav class="nav navbar-chart-text">
-						  <a class="nav-link" :class="typeTimeReturn === 'day' ? 'active' : '' " @click="activeTypeTime('day')">D</a>
-						  <a class="nav-link" :class="typeTimeReturn === 'week' ? 'active' : '' " @click="activeTypeTime('week')">W</a>
-						  <a class="nav-link" :class="typeTimeReturn === 'month' ? 'active' : '' " @click="activeTypeTime('month')">M</a>
-						  <a class="nav-link" :class="typeTimeReturn === 'year' ? 'active' : '' " @click="activeTypeTime('year')">Y</a>
-						</nav>
-						<div class="d-custom-flex ">
-							<div class="">
-								<h3 class="info--text mb-0 active">$ {{ computedTotalTransactions }}</h3>
-								<p class="fs-12 grey--text mb-0 total-transaction">Total Income</p>
-							</div>
+			> -->
+			<div class="mt-4 visitor-area-chart">
+				<div class="d-custom-flex justify-space-between px-4 mb-4 label-wrap ml-3 mr-3">
+					<div class="d-custom-flex justify-space-between font-weight-bold">
+					  <a class="nav-link" :class="typeTimeReturn === 'day' ? 'active' : '' " @click="activeTypeTime('day')">D</a>
+					  <a class="nav-link" :class="typeTimeReturn === 'week' ? 'active' : '' " @click="activeTypeTime('week')">W</a>
+					  <a class="nav-link" :class="typeTimeReturn === 'month' ? 'active' : '' " @click="activeTypeTime('month')">M</a>
+					  <a class="nav-link" :class="typeTimeReturn === 'year' ? 'active' : '' " @click="activeTypeTime('year')">Y</a>
+					</div>
+					<div class="d-custom-flex ">
+						<div class="">
+							<h3 class="info--text mb-0 active">$ {{ computedTotalTransactions }}</h3>
+							<p class="fs-12 grey--text mb-0 total-transaction">Total Income</p>
 						</div>
 					</div>
+				</div>
+
+				<div class="px-4 pos-relative">
 					<!-- Line Chart -->
 					<line-chart :width="300"></line-chart>
 					<!-- End Line Chart -->
 				</div>
 
+			</div>
+
+			<v-container fluid grid-list-xl class="style-container">
 				<!-- Alert -->
 				<div class="pl-4">
 					<v-alert class="subheading"  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 				</div>
 				<!-- End Alert -->
 
-				<div class="wrap-card-body">
-					<!-- Start Day -->
-					<div class="card-body" v-if="typeTime == 'day'">
-						<p class="text-primary">(*) Please No choose more than 15 days</p>
-						<div class="row">
-							<!-- Start day -->
-							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 form-inline btn-date time-default">	
-								<div class="style-card start-day w-100">
-									<p>Start</p>
-									<v-menu 
-										:close-on-content-click="false"
-						                v-model="menu1"
-						                :nudge-right="40"
-						                lazy
-						                transition="scale-transition"
-						                offset-y
-									>
-										<v-text-field 
-											slot="activator"
-											v-model="computedStartDay"
-											prepend-icon="event"
-											readonly
-	                  						placeholder="Enter Start Date"
-										></v-text-field>
-										<v-date-picker 
-											v-model="from_day"
-											no-title
-											scrollable 
-											:max="new Date().toISOString().substr(0, 10)"
-											@input="reportByRangeDay"
-										></v-date-picker>
-									</v-menu>
+			<!-- 		<div class="wrap-card-body"> -->
+			<!-- Start Day -->
+			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'day'">
+
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card height-box">
+		  			<v-card-text>
+		  	  		<div class="font-weight-bold">Start</div>
+						<v-menu
+						ref="menu1" 
+						:close-on-content-click="false"
+            v-model="menu1"
+            :nudge-right="40"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290"
+						>
+							<v-text-field 
+								slot="activator"
+								v-model="computedStartDay"
+								prepend-icon="event"
+								readonly
+            		placeholder="Enter Start Date"
+            		hide-details
+              	clearable
+							></v-text-field>
+							<v-date-picker 
+								v-model="from_day"
+								no-title
+								scrollable 
+								:max="new Date().toISOString().substr(0, 10)"
+								@input="reportByRangeDay"
+								type="date"
+							></v-date-picker>
+						</v-menu>
+		  			</v-card-text>
+			  	</v-card>
+			  </v-flex>
+
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card height-box">
+		  			<v-card-text>
+		  	  		<div class="font-weight-bold">End</div>
+						<v-menu 
+							ref="menu2" 
+							:close-on-content-click="false"
+              v-model="menu2"
+              :nudge-right="40"
+              lazy
+              transition="scale-transition"
+              offset-y
+              full-width
+              min-width="290"
+						>
+							<v-text-field 
+								slot="activator"
+								v-model="computedEndDay"
+								prepend-icon="event"
+								readonly
+            		placeholder="Enter End Date"
+            		hide-details
+            		clearable
+							></v-text-field>
+							<v-date-picker 
+								v-model="to_day" 
+								no-title 
+								scrollable 
+								:max="new Date().toISOString().substr(0, 10)"
+								@input="reportByRangeDay"
+								type="date"
+							></v-date-picker>
+						</v-menu>
+		  			</v-card-text>
+			  	</v-card>
+			  </v-flex>
+
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card height-box">
+				  	<div class="style-card height-box">
+							<div class="d-custom-flex justify-space-between fix-total-storage-company">
+								<div class="title-total">
+									<h2>{{ computedTotalCompany }}</h2>
+									Total companies
+								</div>
+								<div> 
+									<span class="icon-style fix-icon-storage-company">
+										<i class="material-icons font-2x primary--text">store</i>
+									</span>
 								</div>
 							</div>
-							<!-- End Start Day -->
-							
-							<!-- End Day -->
-							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
-								<div class="style-card w-100">
-									<p>End</p>
+						</div>
+					</v-card>
+			  </v-flex>
+
+			  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+			  	<v-card class="elevation-5 custom-stats-card height-box">
+				  	<div class="style-card height-box">
+							<div class="d-custom-flex justify-space-between fix-total-storage-company">
+								<div class="title-total">
+									<h2>14,200</h2>
+									Total Storage MB
+								</div>
+								<div> 
+									<span class="icon-style fix-icon-storage-company">
+										<i class="material-icons font-2x success--text">cloud_upload</i>
+									</span>
+								</div>
+								
+								</div>
+							</div>
+						</div>
+					</v-card>
+			  </v-flex>
+
+			</v-layout>
+				<!-- </div> -->
+				<!-- End Day  -->	
+			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'month'">
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">Start</div>
+							<v-menu 
+								ref="menu3"
+								:close-on-content-click="false"
+                v-model="menu3"
+                :nudge-right="40"
+                lazy
+                transition="scale-transition"
+                offset-y
+                full-width
+                min-width="290"
+							>
+								<v-text-field 
+									slot="activator"
+									v-model="computedStartMonth"
+									prepend-icon="event"
+									readonly
+              		placeholder="Enter Start Month"
+              		hide-details
+                	clearable
+								></v-text-field>
+								<v-date-picker 
+									v-model="from_month"
+									no-title
+									scrollable 
+									:max="new Date().toISOString().substr(0, 10)"
+									@input="reportByMonth"
+									type="month"
+								></v-date-picker>
+							</v-menu>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">End</div>
+							<v-menu
+								ref="menu4" 
+								:close-on-content-click="false"
+                v-model="menu4"
+                :nudge-right="40"
+                lazy
+                transition="scale-transition"
+                offset-y
+                full-width
+                min-width="290"
+							>
+								<v-text-field 
+									slot="activator"
+									v-model="computedEndMonth"
+									prepend-icon="event"
+									readonly
+              		placeholder="Enter End Month"
+              		hide-details
+              		clearable
+								></v-text-field>
+								<v-date-picker 
+									v-model="to_month" 
+									no-title 
+									scrollable 
+									:max="new Date().toISOString().substr(0, 10)"
+									@input="reportByMonth"
+									type="month"
+								></v-date-picker>
+							</v-menu>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+					  	<div class="style-card height-box">
+								<div class="d-custom-flex justify-space-between fix-total-storage-company">
+									<div class="title-total">
+										<h2>{{ computedTotalCompany }}</h2>
+										Total companies
+									</div>
+									<div> 
+										<span class="icon-style fix-icon-storage-company">
+											<i class="material-icons font-2x primary--text">store</i>
+										</span>
+									</div>
+								</div>
+							</div>
+						</v-card>
+				  </v-flex>
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+					  	<div class="style-card height-box">
+								<div class="d-custom-flex justify-space-between fix-total-storage-company">
+									<div class="title-total">
+										<h2>14,200</h2>
+										Total Storage MB
+									</div>
+									<div> 
+										<span class="icon-style fix-icon-storage-company">
+											<i class="material-icons font-2x success--text">cloud_upload</i>
+										</span>
+									</div>
+									
+									</div>
+								</div>
+							</div>
+						</v-card>
+				  </v-flex>
+
+			</v-layout>
+			<!-- End Month -->
+
+			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'year'">
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">Start</div>
+							<v-menu
+									ref="menu5"
+									:close-on-content-click="false"
+									v-model="menu5"
+									:nudge-right="40"
+									lazy
+									transition="scale-transition"
+									offset-y
+									full-width
+				          min-width="290"
+								>
+								    <v-text-field
+								        slot="activator"
+								        v-model="from_year"
+								        
+								        prepend-icon="event"
+								        readonly
+								    ></v-text-field>
+							      	<v-date-picker
+								        ref="picker"
+								        v-model="from_year"
+								        @input="saveStartYear"
+								        reactive
+								        no-title
+								        :max="defaultYear"
+							      	></v-date-picker>
+								</v-menu>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">End</div>
+							<v-menu
+									ref="menu6"
+									:close-on-content-click="false"
+									v-model="menu6"
+									:nudge-right="40"
+									lazy
+									transition="scale-transition"
+									offset-y
+									full-width
+				          min-width="290"
+								>
+									<v-text-field
+										slot="activator"
+										v-model="to_year"
+										
+										prepend-icon="event"
+										readonly
+									></v-text-field>
+									<v-date-picker
+										ref="picker2"
+										v-model="to_year"
+										@input="saveEndYear"
+										reactive
+										no-title
+										:max="defaultYear"
+									></v-date-picker>
+								</v-menu>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+					  	<div class="style-card height-box">
+								<div class="d-custom-flex justify-space-between fix-total-storage-company">
+									<div class="title-total">
+										<h2>{{ computedTotalCompany }}</h2>
+										Total companies
+									</div>
+									<div> 
+										<span class="icon-style fix-icon-storage-company">
+											<i class="material-icons font-2x primary--text">store</i>
+										</span>
+									</div>
+								</div>
+							</div>
+						</v-card>
+				  </v-flex>
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+					  	<div class="style-card height-box">
+								<div class="d-custom-flex justify-space-between fix-total-storage-company">
+									<div class="title-total">
+										<h2>14,200</h2>
+										Total Storage MB
+									</div>
+									<div> 
+										<span class="icon-style fix-icon-storage-company">
+											<i class="material-icons font-2x success--text">cloud_upload</i>
+										</span>
+									</div>
+									
+									</div>
+								</div>
+							</div>
+						</v-card>
+				  </v-flex>
+
+			</v-layout>
+			<!-- End Year -->
+
+			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'week'">
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">Start</div>
 									<v-menu 
+									:close-on-content-click="false"
+	                v-model="menu1"
+	                :nudge-right="40"
+	                lazy
+	                transition="scale-transition"
+	                offset-y
+	                full-width
+                	min-width="290"
+								>
+									<v-text-field 
+										slot="activator"
+										v-model="computedStartDay"
+										prepend-icon="event"
+										readonly
+                  						placeholder="Enter Start Date"
+									></v-text-field>
+									<v-date-picker 
+										v-model="from_day"
+										no-title
+										scrollable 
+										:max="new Date().toISOString().substr(0, 10)"
+										@input="reportByRangeDay"
+										type="date"
+									></v-date-picker>
+								</v-menu>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+			  			<v-card-text>
+			  	  		<div class="font-weight-bold">End</div>
+								<v-menu 
 										:close-on-content-click="false"
-						                v-model="menu2"
-						                :nudge-right="40"
-						                lazy
-						                transition="scale-transition"
-						                offset-y
+		                v-model="menu2"
+		                :nudge-right="40"
+		                lazy
+		                transition="scale-transition"
+		                offset-y
+		                full-width
+                		min-width="290"
 									>
 										<v-text-field 
 											slot="activator"
@@ -97,227 +453,55 @@
 											scrollable 
 											:max="new Date().toISOString().substr(0, 10)"
 											@input="reportByRangeDay"
+											type="date"
 										></v-date-picker>
 									</v-menu>
+			  			</v-card-text>
+				  	</v-card>
+				  </v-flex>
+
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+					  	<div class="style-card height-box">
+								<div class="d-custom-flex justify-space-between fix-total-storage-company">
+									<div class="title-total">
+										<h2>{{ computedTotalCompany }}</h2>
+										Total companies
+									</div>
+									<div> 
+										<span class="icon-style fix-icon-storage-company">
+											<i class="material-icons font-2x primary--text">store</i>
+										</span>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<!-- End Day  -->
+						</v-card>
+				  </v-flex>
 
-					<div class="card-body" v-if="typeTime == 'month'">
-						<p class="text-primary">(*) Please No choose more than 12 month</p>
-						<div class="row">
-							<!-- Star Month -->
-							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
-								<div class="style-card w-100">
-									<p>Start</p>
-									<v-menu
-										:close-on-content-click="false"
-						                v-model="menu3"
-						                :nudge-right="40"
-						                lazy
-						                transition="scale-transition"
-						                offset-y
-									>
-										<v-text-field 
-											slot="activator"
-											v-model="computedStartMonth"
-											prepend-icon="event"
-											readonly
-	                  						placeholder="Enter Start Month"
-										></v-text-field>
-										<v-date-picker 
-											v-model="from_month" 
-											no-title 
-											scrollable 
-											:max="new Date().toISOString().substr(0, 10)"
-											@input="reportByMonth"
-											type="month"
-										></v-date-picker>
-									</v-menu>
+				  <v-flex xl3 lg3 md3 sm6 xs12 b-50>
+				  	<v-card class="elevation-5 custom-stats-card height-box">
+					  	<div class="style-card height-box">
+								<div class="d-custom-flex justify-space-between fix-total-storage-company">
+									<div class="title-total">
+										<h2>14,200</h2>
+										Total Storage MB
+									</div>
+									<div> 
+										<span class="icon-style fix-icon-storage-company">
+											<i class="material-icons font-2x success--text">cloud_upload</i>
+										</span>
+									</div>
+									
+									</div>
 								</div>
 							</div>
-							<!--End Star Month -->
-							
-							<!-- End Month -->
-							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
-								<div class="style-card w-100">
-									<p>End</p>
-									<v-menu 
-										:close-on-content-click="false"
-						                v-model="menu4"
-						                :nudge-right="40"
-						                lazy
-						                transition="scale-transition"
-						                offset-y
-									>
-										<v-text-field 
-											slot="activator"
-											v-model="computedEndMonth"
-											prepend-icon="event"
-											readonly
-	                  						placeholder="Enter End Month"
-										></v-text-field>
-										<v-date-picker 
-											v-model="to_month" 
-											no-title 
-											scrollable 
-											:max="new Date().toISOString().substr(0, 10)"
-											@input="reportByMonth"
-											type="month"
-										></v-date-picker>
-									</v-menu>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Month -->
+						</v-card>
+				  </v-flex>
 
-					<div class="card-body" v-if="typeTime == 'year'">
-						<p class="text-primary">(*) Please No choose more than 5 year</p>
-						<div class="row">
-							<!-- Start Year -->
-							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default" >	
-								<div class="style-card w-100">
-									<p>Start</p>
+			</v-layout>
+				<!-- Week -->	
 
-									<v-menu
-										ref="menu5"
-										:close-on-content-click="false"
-										v-model="menu5"
-										:nudge-right="40"
-										lazy
-										transition="scale-transition"
-										offset-y
-									>
-									    <v-text-field
-									        slot="activator"
-									        v-model="from_year"
-									        label="Start Year"
-									        prepend-icon="event"
-									        readonly
-									    ></v-text-field>
-								      	<v-date-picker
-									        ref="picker"
-									        v-model="from_year"
-									        @input="saveStartYear"
-									        reactive
-									        no-title
-									        :max="defaultYear"
-								      	></v-date-picker>
-									</v-menu>
-								</div>
-							</div>
-							<!-- End Start Year -->
-						
-							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
-								<!-- End Year -->
-								<div class="style-card w-100">
-									<p>End</p>
-
-									<v-menu
-										ref="menu6"
-										:close-on-content-click="false"
-										v-model="menu6"
-										:nudge-right="40"
-										lazy
-										transition="scale-transition"
-										offset-y
-									>
-										<v-text-field
-											slot="activator"
-											v-model="to_year"
-											label="End Year"
-											prepend-icon="event"
-											readonly
-										></v-text-field>
-										<v-date-picker
-											ref="picker2"
-											v-model="to_year"
-											@input="saveEndYear"
-											reactive
-											no-title
-											:max="defaultYear"
-										></v-date-picker>
-									</v-menu>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Year -->
-
-					<!-- Week -->
-					<div class="card-body" v-if="typeTime == 'week'">
-						<p class="text-primary">(*) Please No choose more than 6 week</p>
-						
-						<div class="row">
-							<!-- Start Week -->
-							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
-								<div class="style-card w-100">
-									<p>Start</p>
-									<v-menu
-										:close-on-content-click="false"
-						                v-model="menu7"
-						                :nudge-right="40"
-						                lazy
-						                transition="scale-transition"
-						                offset-y
-									>
-										<v-text-field 
-											slot="activator"
-											v-model="computedStartWeek"
-											prepend-icon="event"
-											readonly
-		              						placeholder="Enter Start Week"
-										></v-text-field>
-										<v-date-picker 
-											v-model="from_day_week" 
-											no-title 
-											scrollable 
-											:max="new Date().toISOString().substr(0, 10)"
-											@input="reportByWeek"
-										></v-date-picker>
-									</v-menu>
-								</div>
-							</div>
-							<!-- End Start Week -->
-							<!-- Start End Week -->
-							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
-								<!-- Fom day -->
-								<div class="style-card w-100">
-									<p>End</p>
-
-									<v-menu 
-										:close-on-content-click="false"
-						                v-model="menu8"
-						                :nudge-right="40"
-						                lazy
-						                transition="scale-transition"
-						                offset-y
-									>
-										<v-text-field 
-											slot="activator"
-											v-model="computedEndWeek"
-											prepend-icon="event"
-											readonly
-	                  						placeholder="Enter End Week"
-										></v-text-field>
-										<v-date-picker 
-											v-model="to_day_week" 
-											no-title 
-											scrollable 
-											:max="new Date().toISOString().substr(0, 10)"
-											@input="reportByWeek"
-										></v-date-picker>
-									</v-menu>
-								</div>
-							</div>
-							<!-- End Week -->
-						</div>
-					</div>
-
-					<div class="card-body">
+			<!--<div class="card-body">
 						
 						<div class="row total-default">
 							<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">	
@@ -353,10 +537,11 @@
 						</div>
 					</div>
 
-				</div>
-			</app-card>
+				</div> -->
+			<!-- </app-card> -->
+		</v-container>
 			
-		</v-layout>
+		<!-- </v-layout> -->
 		<transactions></transactions>
 	</v-container>
 </template>
@@ -453,9 +638,9 @@ export default {
 
 		errorAlert(errorMesg){
 			this.alertStt = true
-          	this.alertType = 'error'
-          	this.alertMes = errorMesg
-          	setTimeout(() => {this.alertStt = false}, 1500)					
+    	this.alertType = 'error'
+    	this.alertMes = errorMesg
+    	setTimeout(() => {this.alertStt = false}, 1500)					
 		},
 
 		resetTime(){
@@ -489,26 +674,72 @@ export default {
 				var	end_day =  moment(this.to_day)
 				var day = end_day.diff(start_day,'days')
 
-				if(day > 15) {
-					this.errorAlert('Less than 15 days')
-				} else if(day <=0) {
+				if(day <=0) {
 					this.errorAlert('To days Large from days')
-				} else {
+				}else if(0 < day && day <= 7){
+
 					let params = {
 						start_day :  this.formatDate(this.from_day),
-						end_day :   this.formatDate(this.to_day)
+						end_day :   this.formatDate(this.to_day),
+						type: 'day'
 					}
+
 					let obj = {
 						params : params,
-						chooes : 'Day'
+						chooes : 'Day',
 					}
+
 					this.$root.$emit('companyChart', obj)
 					this.$root.$emit('loadTransactionsWithTime', obj)
 					this.validate = false
+
+				}else if(7 < day && day <= 42){
+
+					let params = {
+						start_day_week :  this.formatDate(this.from_day),
+						end_day_week :   this.formatDate(this.to_day),
+						type:'week'
+					}
+
+					let obj = {
+						params : params,
+						chooes : 'Week'
+					}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadOdersWithTime', obj)
+
+				}else if(42 < day && day <= 365){
+					//view mode month
+					var params = {
+			      		start_month : moment(this.from_day, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
+			      		end_month : moment(this.to_day, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD'),
+								type : 'month'
+		      		}
+					let obj = {
+						params : params,
+						chooes : 'Month'
+					}
+					this.$root.$emit('companyChart', obj)
+					this.$root.$emit('loadTransactionsWithTime', obj)
+
+					this.validate = false
+			} else{
+				//view mode year
+				var params = {
+      				start_year : moment(this.from_day, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+      				end_year : moment(this.to_day, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
+							type :'year'	
+		      	}
+				let obj = {
+					params : params,
+					chooes : 'Year'
+				}
+				this.$root.$emit('companyChart', obj)
+				this.$root.$emit('loadTransactionsWithTime', obj)
+				this.validate = false
 				}
 			}
-			this.resetTime()
-			
+				this.resetTime()
 		},
 
 		reportByMonth(){
@@ -692,6 +923,7 @@ export default {
 	  		return this.typeTime
 	  	},
 	  	computedStartDay(){
+	  		
 	  		return this.from_day
 	  	},
 	  	computedEndDay(){
@@ -730,6 +962,33 @@ export default {
 	    this.$root.$on('total-companies', res => {
 	    	this.totalCompany = res
 	    })
+
+	    this.$root.$on('load-time-in-menu-filter', res => {
+    	if (res) {
+    		switch(res.typeTime) {
+			  	case "SevenDay":
+				    this.from_day = res.firstTime
+						this.to_day = res.lastTime
+				    break;
+			  	case "Week":
+				    this.from_day_week = res.firstTime
+						this.to_day_week = res.lastTime
+				    break;
+			  	case "Month":
+						this.from_month = res.firstTime
+						this.to_month = res.lastTime
+			    	break;
+			  	case "year":
+						this.from_year = res.firstTime
+						this.to_year = res.lastTime
+			    	break;
+			  	default:
+			  		this.from_day = res.firstTime
+						this.to_day = res.lastTime
+			    	break;
+			}
+    	}
+    })
   	},
 
   	watch: {

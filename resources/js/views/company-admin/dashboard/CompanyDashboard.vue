@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-container fluid px-0 py-0>
+		<v-container fluid px-0 py-0 grid-list-xl>
 			<div class="mt-4 visitor-area-chart">
 				<div class="d-custom-flex justify-space-between px-4 mb-4 label-wrap ml-3 mr-3">
 					<div class="d-custom-flex justify-space-between font-weight-bold">
@@ -54,22 +54,22 @@
 		  	  		<div class="font-weight-bold">Start</div>
 						<v-menu 
 							:close-on-content-click="false"
-			                v-model="menu1"
-			                :nudge-right="40"
-			                lazy
-			                transition="scale-transition"
-			                offset-y
-			                full-width
-			                min-width="290"
+              v-model="menu1"
+              :nudge-right="40"
+              lazy
+              transition="scale-transition"
+              offset-y
+              full-width
+              min-width="290"
 						>
 							<v-text-field 
 								slot="activator"
 								v-model="computedStartDay"
 								prepend-icon="event"
 								readonly
-			              		placeholder="Enter Start Date"
-			              		hide-details
-			                	clearable
+            		placeholder="Enter Start Date"
+            		hide-details
+              	clearable
 							></v-text-field>
 							<v-date-picker 
 								v-model="from_day"

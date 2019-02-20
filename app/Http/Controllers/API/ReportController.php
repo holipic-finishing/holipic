@@ -223,7 +223,6 @@ class ReportController extends BaseApiController
     
     public function getInfoForChartCompanyAdmin(Request $request){
         $input = $request->all();
-
         if(isset($input['type'])){
             $type = $input['type'];
             if($type == 'day'){
@@ -258,6 +257,8 @@ class ReportController extends BaseApiController
                 
 
                 $report = $this->orderRepository->reportSaleDaily($input,$arrayDay);
+
+
 
                 return $this->responseSuccess('Data success',$report);
           }

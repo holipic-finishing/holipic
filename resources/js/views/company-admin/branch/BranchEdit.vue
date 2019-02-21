@@ -2,14 +2,14 @@
 	<v-layout row wrap>
 
 	<v-navigation-drawer 
-    fixed
-    v-model="drawerRight" 
-    right
-    temporary 
-    app 
-    this.width = this.getCurrentWithContentWrap()
-  	:width='widthComputed'
-  	>
+  	fixed
+    v-model="drawerRight"
+  	right
+    clipped
+    app
+    :width='widthComputed'
+    temporary
+  >
       	<v-card class="h-100 position-relative">
 			<v-toolbar>
 	      		<v-toolbar-title class="text-capitalize">Edit Branch</v-toolbar-title>

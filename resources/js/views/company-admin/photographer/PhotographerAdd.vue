@@ -6,7 +6,7 @@
 		right
 		temporary 
 		app 
-		this.width = this.getCurrentWithContentWrap()
+		clipped
   		:width='widthComputed'
 		>
 			<v-card class="h-100 position-relative">

@@ -203,4 +203,9 @@ class PhotographerAPIController extends AppBaseController
 
         return $this->sendResponse($branch_photographer, 'Photographer successfully');
     }
+
+    public function searchPhotographer()
+    {
+        $this->photographerRepository->searchPhotographer();
+    }
 }

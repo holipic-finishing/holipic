@@ -6,6 +6,7 @@ use App\Models\PhotoPackage;
 use App\Models\Currency;
 use InfyOm\Generator\Common\BaseRepository;
 use DB ;
+use App\Models\Branch;
 
 /**
  * Class PhotoPackageRepository
@@ -46,4 +47,6 @@ class PhotoPackageRepository extends BaseRepository
 
         return $results;
     }
+
+    
 }

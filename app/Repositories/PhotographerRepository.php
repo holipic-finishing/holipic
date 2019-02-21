@@ -46,6 +46,7 @@ class PhotographerRepository extends BaseRepository
     //Get photgraphers with company 
     public function handleGetPhotographers()
     {
+        
         $array = [];
 
         if(request('companyId') && !empty(request('companyId'))) {
@@ -54,7 +55,13 @@ class PhotographerRepository extends BaseRepository
 
             $data = $this->model->with(['branch' => function($q) use($companyId) {
                                 $q->whereCompanyId($companyId);
-                    }])->get()->toArray();
+                    }]);
+
+            if(request('search') && !empty(request('search'))) {
+                $data = $data->where('name', 'like', '%'.request('search').'%');
+            }
+
+            $data = $data->get()->toArray();
         }
 
         if(request('branchId') && !empty(request('branchId'))) {

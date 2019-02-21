@@ -232,7 +232,7 @@
         dialog: false,
         itemIdToDelete: '',
         listPackage : [],
-        urlExport:config.API_URL+'exportexcel/companies',
+        urlExport:config.API_URL + 'companies/export-excel',
         drawerRight: false,
         pagination: {
 		  	rowsPerPage: 25,
@@ -282,7 +282,7 @@
 				var data = []
 				data.push('All')
 
-				get(config.API_URL+'list/packages')
+				get(config.API_URL + 'list-package')
 				.then((res) => {
 					_.forEach(res.data, function(value) {
 						data.push(value.package_name)

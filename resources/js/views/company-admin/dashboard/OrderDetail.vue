@@ -5,7 +5,7 @@
 	    right
 	    temporary 
 	    app 
-	    this.width = this.getCurrentWithContentWrap()
+	    clipped
   		:width='widthComputed'
   		>
 
@@ -28,7 +28,7 @@
 					<v-list-tile-content>
 			          	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title"> Branch:</span>
-				          	<span class="max-value">{{order.branch.name}}</span>
+				          	<span class="max-value" v-if="order && order.branch">{{order.branch.name}}</span>
 	          			</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>

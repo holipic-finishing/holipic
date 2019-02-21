@@ -103,7 +103,7 @@ export default {
 
     getData(params){
 
-			let url = config.API_URL+'report-incomes-package'
+			let url = config.API_URL + 'super-admin-chart-report'
 
 			getWithData(url,params)
 			.then((res) => {

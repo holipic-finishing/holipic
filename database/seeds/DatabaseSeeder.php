@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
          * Don't run seed of TransactionsTableSeeder
          *
          */
-        // $this->call(TransactionsTableSeeder::class);
 
+        // $this->call(TransactionsTableSeeder::class);
         $this->call(RoomsTableSeeder::class);
         $this->call(BranchesTableSeeder::class);
         $this->call(PhotographersTableSeeder::class);

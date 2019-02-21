@@ -4,7 +4,7 @@
 *********  ROUTER FOR LANDING PAGE   ***************
 ****************************************************/
 
-Route::get('','API\PackageAPIController@listPackage');
+Route::get('','API\SuperAdmin\PackageAPIController@listPackage');
 
 Route::namespace('API')->group(function(){
 	Route::namespace('Auth')->group(function(){

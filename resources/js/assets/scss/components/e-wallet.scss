@@ -1,0 +1,63 @@
+.height-ewallet{
+  flex:1;
+  overflow: auto;
+  .v-list__tile{
+    height: 45px !important;
+  }
+}
+
+.custom-tab{
+	.v-tabs__div{
+		text-transform: capitalize;
+	}
+
+	.v-tabs__icon {
+		width: 25px !important;
+	}
+
+	.v-tabs__wrapper--show-arrows {
+	    margin-left: 30px !important;
+	    margin-right: 30px !important;
+	}
+}
+
+.custom-card-ewth{
+	box-shadow: none !important;
+	.v-card__title{
+		padding: 0 16px !important;
+	}
+
+	.v-text-field {
+		padding-top: 0 !important;
+	}
+
+	.w150{
+		width: 150px !important;
+	}
+
+	.custom-list{
+		.v-list__tile__title{
+		    height: 36px !important;
+			line-height: 36px !important;
+		}
+
+		.v-input--selection-controls{
+			margin-top: 0 !important;
+		}
+
+		.v-input__control{
+			width: 100% !important;
+		}
+	}
+
+	.icon-fs-20{
+		.v-icon{
+			font-size: 18px !important;
+			color: dimgrey !important;
+		}
+	}
+
+	#heigth-list-title{
+		height: 60px !important;
+	}
+}

@@ -438,21 +438,6 @@ export default {
 	      	this.reportByYear()
   		},
 
-		fetchData(){
-			let url = config.API_URL+'count-packages'
-			get(url)
-			.then((res)=>{
-				if(res.data && res.data.success){
-					this.count_pack_basic = res.data.data.count_basic	
-					this.count_pack_pro = res.data.data.count_pro	
-					this.count_pack_company = res.data.data.total_count_company	
-				}
-			})
-			.catch((err)=>{
-
-			})
-		},
-
 		validations(from,to,value){
 
 			if(!from && !to){
@@ -701,7 +686,6 @@ export default {
   		}
 	},
 	created(){
-		this.fetchData()		
 	},
 	computed:{
 	  	typeTimeReturn(){

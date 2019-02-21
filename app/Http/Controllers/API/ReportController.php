@@ -23,62 +23,57 @@ class ReportController extends BaseApiController
     }
     
 
-	  public function reportIncomesPackage(Request $request){
+	  public function totalIncomeReport(Request $request){
 
-		 $input = $request->all();
+		    $input = $request->all();
 
         // report from day, to day
        	if($request->has(['start_day','end_day'])){
 
        		$arrayDay = $this->initDays($input['start_day'],$input['end_day']);
 
-       		$report = $this->transactionRepository->reportTransactionrDaily($input,$arrayDay);
+       		$report = $this->transactionRepository->transactionDailyReport($input,$arrayDay);
 
        		return $this->responseSuccess('Data success',$report);
 
-       	} else 
+       	} else if($request->has(['start_month','end_month'])){
         // report from month, to month 
-          if($request->has(['start_month','end_month'])){
 
          		$arrayInMonth = $this->initInMonth($input['start_month'],$input['end_month']);
 
-         		$report = $this->transactionRepository->reportTransactionMonth($input,$arrayInMonth);
+         		$report = $this->transactionRepository->transactionMonthlyReport($input,$arrayInMonth);
 
          		return $this->responseSuccess('Data success',$report);
 
-       	} else 
+       	} else if($request->has(['start_year','end_year'])){
         // report year
-          if($request->has(['start_year','end_year'])){
 
          		$arrayMonthInYear = $this->initYear($input['start_year'],$input['end_year']);
          		
-         		$report = $this->transactionRepository->reportTransactionYear($input,$arrayMonthInYear);
+         		$report = $this->transactionRepository->transactionYearlyReport($input,$arrayMonthInYear);
 
          		return $this->responseSuccess('Data success',$report);
 
-       	} else 
+       	} else if($request->has(['start_day_week','end_day_week'])){
         // report week
-          if($request->has(['start_day_week','end_day_week'])){
 
             $arrayWeek = $this->initDayWeekDays($input['start_day_week'],$input['end_day_week']);
 
-            $report = $this->transactionRepository->reportTransactionWeek($input,$arrayWeek);
+            $report = $this->transactionRepository->transactionWeeklyReport($input,$arrayWeek);
 
             return $this->responseSuccess('Data success',$report);
 
-        } else 
-          // report default week
-          if ($request->has(['defaultWeek'])) {
+        } else if ($request->has(['defaultWeek'])) {
+        // report default week
 
          		$arrayWeek = $this->initWeekDays();
 
-         		$report = $this->transactionRepository->reportTransactionWeek($input,$arrayWeek);
+         		$report = $this->transactionRepository->transactionWeeklyReport($input,$arrayWeek);
 
          		return $this->responseSuccess('Data success',$report);
 
-       	} else 
-          // report default 7 days 
-          if($request->has(['defaultDay'])){
+       	} else if($request->has(['defaultDay'])){
+        // report default 7 days 
 
             $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
 
@@ -86,13 +81,12 @@ class ReportController extends BaseApiController
 
             $arrayDay = $this->initDays($startDay,$endDay);
 
-            $report = $this->transactionRepository->reportTransactionrDaily($input,$arrayDay);
+            $report = $this->transactionRepository->transactionDailyReport($input,$arrayDay);
 
             return $this->responseSuccess('Data success',$report);
        
-        } else 
-          // report default 12 month
-          if($request->has(['defaultMonth'])){
+        } else if($request->has(['defaultMonth'])){
+        // report default 12 month
 
             $startMonth  = Carbon::today()->subMonth(12)->format('Y-m-d');
 
@@ -100,13 +94,11 @@ class ReportController extends BaseApiController
 
             $arrayMonth = $this->initInMonth($startMonth,$endMonth);
 
-            $report = $this->transactionRepository->reportTransactionMonth($input,$arrayMonth);
+            $report = $this->transactionRepository->transactionMonthlyReport($input,$arrayMonth);
 
             return $this->responseSuccess('Data success',$report);
 
-          }  else 
-
-          if($request->has(['defaultYear'])){
+        } else if($request->has(['defaultYear'])){
 
             $startYear  = Carbon::today()->subYears(2)->format('Y-m');
 
@@ -114,21 +106,16 @@ class ReportController extends BaseApiController
 
             $arrayYear = $this->initYear($startYear,$endYear);
 
-            $report = $this->transactionRepository->reportTransactionYear($input,$arrayYear);
+            $report = $this->transactionRepository->transactionYearlyReport($input,$arrayYear);
 
             return $this->responseSuccess('Data success',$report);
 
-          }
+        } else {
 
-        else
-        {
-
-       		return $this->responseError('Failed!', [
-                'error' => 'Data not found',
+            return $this->responseError('Failed!', [
+              'error' => 'Data not found',
             ],500);
        	}
-       
-
     }
 
 

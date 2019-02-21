@@ -10,7 +10,7 @@
 			    app 
 			    this.width = this.getCurrentWithContentWrap()
     			:width='widthComputed'
-		  		>
+		  	>
 
 			    <v-card class="h-100 position-relative">
 					<v-toolbar>
@@ -211,7 +211,7 @@
 </template>
 
 <script>
-import config from '../../../config/index.js'
+import config from '../../../config'
 import { getWithContentWrap } from '../../../helpers/helpers'
 
 	export default {
@@ -250,7 +250,7 @@ import { getWithContentWrap } from '../../../helpers/helpers'
   				return getWithContentWrap(this.drawerHeaderStt)
   			},
 			informationCompany(companyId) {
-				axios.get(config.API_URL+'companies/information?companyId='+this.companyId)
+				axios.get(config.API_URL + 'companies/information?companyId=' + this.companyId)
 				.then(response => {
 					if(response && response.data.success) {
 						this.company = response.data.data[0]
@@ -266,7 +266,7 @@ import { getWithContentWrap } from '../../../helpers/helpers'
 				})
 			}
 		}
-	}
+	};
 </script>
 <style lang="scss" scoped>
 	.content-flex{

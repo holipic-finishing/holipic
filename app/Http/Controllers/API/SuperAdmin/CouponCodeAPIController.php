@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\SuperAdmin;
 
 use App\Http\Requests\API\CreateCouponCodeAPIRequest;
 use App\Http\Requests\API\UpdateCouponCodeAPIRequest;

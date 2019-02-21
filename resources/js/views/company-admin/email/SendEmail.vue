@@ -86,7 +86,7 @@ export default {
 			this.selectEmail = true
 		},
 		getCustomers() {
-			get(config.API_URL+'company/branches/customers/email?company_id='+this.company.company_id)
+			get(config.API_URL + 'customer-emails/?company_id=' + this.company.company_id)
 			.then(response => {
 				if(response && response.data.success) {
 					this.customers = response.data.data
@@ -127,17 +127,17 @@ export default {
 				params = {email: this.value, templateId: this.item.id}
 			}
 
-			getWithData(config.API_URL+'company/branches/customer/send-email', params)
+			getWithData(config.API_URL + 'customer/send-email', params)
 			.then(response => {
 				if(response && response.data.success) {
 					this.alertType = 'success'
 					this.alertMes = "Send mail success"
 					this.$notify({
-	          title: 'Success',
-	          message: this.alertMes,
-	          type: this.alertType,
-	          duration: 2000,
-	        })
+			          	title: 'Success',
+			          	message: this.alertMes,
+			          	type: this.alertType,
+			          	duration: 2000,
+			        })
 				}
 			})
 		}

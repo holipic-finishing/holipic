@@ -43,10 +43,9 @@ class PhotographerRepository extends BaseRepository
         return $company;
     }
 
-    //Get photgraphers with company 
+    //Get photgraphers with company
     public function handleGetPhotographers()
     {
-        
         $array = [];
 
         if(request('companyId') && !empty(request('companyId'))) {
@@ -74,14 +73,14 @@ class PhotographerRepository extends BaseRepository
         }
 
         if($data && !empty($data)) {
-           
-            foreach($data as $value) 
+
+            foreach($data as $value)
             {
                 if(!is_null($value['branch'])){
                     $array[] = $value;
                 }
             }
-            
+
             return $array;
         }
 
@@ -100,7 +99,7 @@ class PhotographerRepository extends BaseRepository
             'address' => $input['address'],
             'status' => $input['status'] == 'Active' ? true : false
         ]);
-            
+
         return $data;
     }
 

@@ -17,7 +17,6 @@ use App\Repositories\ActivityLogRepository;
  * Class PhotographerController
  * @package App\Http\Controllers\API
  */
-
 class PhotographerAPIController extends AppBaseController
 {
     /** @var  PhotographerRepository */
@@ -132,7 +131,7 @@ class PhotographerAPIController extends AppBaseController
         $photographer->delete();
 
         if(request('userId')) {
-            $this->activityRepo->insertActivityLog(request('userId'), 'Delete Photographer '.$name); 
+            $this->activityRepo->insertActivityLog(request('userId'), 'Delete Photographer '.$name);
         }
 
         return $this->sendResponse($id, 'Photographer deleted successfully');
@@ -160,13 +159,13 @@ class PhotographerAPIController extends AppBaseController
         if(request('userId')) {
             $this->activityRepo->insertActivityLog(request('userId'), 'Add Photographer '.$photographer['name']);
         }
-        
+
         return $this->sendResponse($photographer, 'Add Photographer successfully');
     }
 
     public function updatePhotographer($id)
     {
-        $photographer = $this->photographerRepository->findWithoutFail($id); 
+        $photographer = $this->photographerRepository->findWithoutFail($id);
 
         if (empty($photographer)) {
             return $this->sendError('Photographer not found');
@@ -174,7 +173,7 @@ class PhotographerAPIController extends AppBaseController
 
         $input = request('params');
 
-        if(request('params.status')) 
+        if(request('params.status'))
         {
             $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false] ;
         }
@@ -184,13 +183,12 @@ class PhotographerAPIController extends AppBaseController
         return $this->sendResponse($photographer, 'Update Photographer successfully');
     }
 
-    /* Target : Show all name, id photographer by branch id 
+    /* Target : Show all name, id photographer by branch id
     *  GET photographer/photographer-branch
     *
     *  @params : int branch_id
     *  @return : Response
     */
-
     public function getPhotographerByBranch(Request $request) {
 
         $input = $request->all();
@@ -204,8 +202,4 @@ class PhotographerAPIController extends AppBaseController
         return $this->sendResponse($branch_photographer, 'Photographer successfully');
     }
 
-    public function searchPhotographer()
-    {
-        $this->photographerRepository->searchPhotographer();
-    }
 }

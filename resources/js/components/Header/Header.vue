@@ -57,8 +57,8 @@
 							<span class="ewallet-style">$ {{money_ewallet}}</span>
 						</div>
 					</v-btn>
-			      	<span>E-Wallet</span>
-			    </v-tooltip>
+		      <span>E-Wallet</span>
+		    </v-tooltip>
 
 			</div>
 		</v-toolbar>

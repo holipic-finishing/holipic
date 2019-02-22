@@ -13,8 +13,8 @@
 											customClasses="custom-flex-appcard"
 										>
 											<v-text-field
-						            label="Solo"
-						            placeholder="Placeholder"
+						            label="Solo"	
+						            placeholder="Name Photographer"
 						            solo
 						            v-model="search"
 						            @keyup="searchPhotographer()"
@@ -32,16 +32,16 @@
 										<v-list two-line>
 						          <template v-for="(item, index) in items">
 						          	<div class="hover-photographer">
-						            <v-list-tile :key="index" avatar ripple @click="showDetail(item)" :class="item.id == photographerId ? 'active-list-title' : ''">
+						            <v-list-tile :key="index" avatar ripple @click="showDetail(item)" :class="item.id == photographerId && checkDetail ? 'active-list-title' : ''">
 						              	<v-list-tile-avatar>
-							                <img :src="item.avatar">
+							                <img src="/static/img/post-2.png">
 							              </v-list-tile-avatar>
 
 							              <v-list-tile-content>
 						                	<v-list-tile-title>{{ item.name }}</v-list-tile-title>
 						              	</v-list-tile-content>
 
-						              	<v-list-tile-action v-if="item.id == photographerId">
+						              	<v-list-tile-action v-if="item.id == photographerId && checkDetail">
 														<v-btn icon>
 						                	<v-icon color="indigo darken-1">star</v-icon>
 						              	</v-btn>
@@ -65,8 +65,27 @@
 								<v-flex xs12 md7 lg8>
 									<app-card	
 									>
-									<v-layout row wrap>
-										<v-flex xs12 md6>
+									<v-layout row wrap justify-space-between align-center>
+										<div>
+											<v-btn fab dark small color="cyan" v-show="checkDetail">
+								      	<v-icon dark @click="showFormEdit(itemDetail)">edit</v-icon>
+								    	</v-btn>
+
+									    <v-btn fab dark small color="error" v-show="checkDetail">
+									      <v-icon dark @click="showDialog(itemDetail.id)">delete</v-icon>
+									    </v-btn>
+										</div>
+										<v-spacer></v-spacer>
+										<div>
+											<v-btn
+									      color="indigo"
+									      class="white--text"
+									      @click="showFromAdd()"
+									    >
+									      Add New
+									    </v-btn>
+										</div>
+										<!-- <v-flex xs12>
 											<div style="height: 40px !important">
 												<v-btn fab dark small color="cyan" v-show="checkDetail">
 									      	<v-icon dark @click="showFormEdit(itemDetail)">edit</v-icon>
@@ -85,7 +104,7 @@
 									    >
 									      Add New
 									    </v-btn>
-										</v-flex>
+										</v-flex> -->
 									</v-layout>
 
 										<div class="media-body" v-show="checkDetail" style="margin-top:20px">
@@ -286,9 +305,13 @@ export default {
   	},
   	showDetail(item)
   	{
-  		this.checkDetail = true
-  		this.itemDetail = item
-  		this.photographerId = item.id
+  		if(this.checkDetail && this.photographerId == item.id) {
+  			this.checkDetail = false
+  		}else {
+  			this.checkDetail = true
+	  		this.itemDetail = item
+	  		this.photographerId = item.id
+  		}
   	},
   	searchPhotographer()
   	{
@@ -321,4 +344,13 @@ export default {
 	.action-width-photographer{
 		min-width: 113px;
 	}
+	.content-flex{
+	height: auto !important;
+	white-space: inherit !important;
+	align-items: inherit !important;
+	}
+.max-value{
+	max-width: 63%;
+	flex: 0 0 63%;
+}
 </style>

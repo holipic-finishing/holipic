@@ -140,6 +140,21 @@
 		}
 	}
 
+	.media-body{
+		.v-image {
+			margin: 0 auto !important;
+		}
+		.media-body{
+			margin: 0 10px !important;
+    		margin-top: 20px !important;
+    		.max-value{
+    			display: inline-table;
+    		}
+    		.v-list__tile{
+    			height: auto !important;
+    		}
+		}
+	}
 }
 
 @media all and (min-width: 481px) and (max-width: 767px) {

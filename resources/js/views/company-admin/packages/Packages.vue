@@ -520,7 +520,7 @@ export default {
         	},
         	decimal: value => {
             const abc = /^\d+\.\d{0,10}$/
-            return abc.test(value) || 'Please input number .'
+            return abc.test(value) || 'Please input number.'
         	},
       },
       dialog: false,

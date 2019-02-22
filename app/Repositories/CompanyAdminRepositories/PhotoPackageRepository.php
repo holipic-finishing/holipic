@@ -53,9 +53,11 @@ class PhotoPackageRepository extends BaseRepository
             $value->indo = round($value->indo, 3);
             $value->turkey = round($value->turkey, 3);
             $value->vn = round($value->vn, 3);
-            $data[] = $value;    
+            $data[] = $value;
         }
 
         return $data;
     }
+
+
 }

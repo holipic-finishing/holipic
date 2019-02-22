@@ -1,143 +1,177 @@
 <template>
+		<v-container fluid grid-list-xl pt-3>
+			<v-layout row wrap>
+				<v-flex xs12 md12 lg12 sm12 class="col-height-auto">
+					<div>
+						<div class=" custom-profile-body">
+							<v-layout row wrap>
+								<v-flex xs12 md5 lg4 class="col-height-auto">
+									<v-list two-line>
+										<app-card customClasses="custom-flex-appcard">
+											<v-text-field
+						            label="Solo"
+						            placeholder="Search Photographer"
+						            solo
+						            v-model="search"
+						            @keyup="searchPhotographer()"
+												append-icon="search"
+						          ></v-text-field>
 
-	<v-container fluid px-0 py-0 class="fix-croll-container">
-		<v-layout row wrap>
-			<app-card
-				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="p-0 elevation-5 rp-search"
-				:fullScreen="true"
-				:reloadable="true"
-				:closeable="false"
-				:fullBlock="false"
-			>
-				<v-toolbar flat color="white">
-	        <v-toolbar-title>
-	          Photographers List
-	        </v-toolbar-title>
-		    </v-toolbar>
-	      <v-divider class="m-0"></v-divider>
-				<!--Search Component -->
-				<v-card-title>
-			      	<v-spacer></v-spacer>
-			        <div class="w-25">
-			  	      <v-text-field
-			  	        v-model="search"
-			  	        append-icon="search"
-			  	        label="Enter Search Value"
-			  	        single-line
-			  	        hide-details
-			  	      ></v-text-field>
-			        </div>
-				    <v-btn small fab dark color="indigo" @click="showFromAdd()" class="ml-2 btn-gradient-primary rp-btn-add-export">
-							<v-icon dark>add</v-icon>
-					</v-btn>
-		    </v-card-title>
+						          <!-- <v-btn icon @click="searchPhotographer()">
+						            <v-icon>search</v-icon>
+						          </v-btn> -->
+										</app-card>
+						       	<v-divider></v-divider>
+									</v-list>
 
-				<v-data-table 
-					:headers="headers" 
-					:items="items" 
-					class="body-2 global-custom-table"  
-					:pagination.sync="pagination" 
-					:rows-per-page-items="rowsPerPageItems" 
-					default-sort="id:desc"
-					:search="search"
-				>
-					<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+									<vue-perfect-scrollbar :settings="settings" style="height:640px;">
+										<v-list two-line>
+						          <template v-for="(item, index) in items">
+						          	<div class="hover-photographer">
+						            	<v-list-tile
+														:key="index"
+														avatar
+														ripple
+														@click="showDetail(item)"
+														:class="item.id == photographerId && checkDetail ? 'active-list-title' : ''"
+													>
+														<v-list-tile-avatar>
+							             		<img src="/static/img/post-2.png">
+							              </v-list-tile-avatar>
 
-					<template slot="headers" slot-scope="props">
-	         	<tr>
-	            <th
-	              v-for="header in props.headers"
-	              :key="header.text"
-	              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-	              @click="changeSort(header.value)"
-	            >
-	            	<div class="custom-header">
-		              <v-tooltip bottom>
-		                <span slot="activator" class="text-capitalize font-weight-bold">
-		                  {{ header.text }}
-		                </span>
-		                <span>
-		                  {{ header.text }}
-		                </span>
-		              </v-tooltip>
-		              <v-icon v-if="header.text != 'Action'">arrow_upward</v-icon>
-	            	</div>
-           		</th>
-          	</tr>
-        	</template>
+							              <v-list-tile-content>
+						                	<v-list-tile-title>{{ item.name }}</v-list-tile-title>
+						              	</v-list-tile-content>
 
-					<template slot="items" slot-scope="props">
-						<td>{{ props.item.id }}</td>
-						<td class="text-xs-left" >{{ props.item.branch.name }}</td>
-						<td class="text-xs-left">{{ props.item.name }}</td>
-						<td class="text-xs-left">{{ props.item.phone_number }}</td>
-						<td class="text-xs-left">{{ props.item.address }}</td>
-						<td class="text-xs-left">{{ props.item.created_at }}</td>
+						              	<v-list-tile-action v-if="item.id == photographerId && checkDetail">
+															<v-btn icon>
+							                	<v-icon color="indigo darken-1">star</v-icon>
+							              	</v-btn>
+						              	</v-list-tile-action>
 
-						<td class="text-xs-left">
-						<span class="text-success" v-if="props.item.status === true">Active</span>
-					 	<span class="text-danger" v-else>Inactive</span>
-						</td>
-			      <td class="text-xs-left action-width-photographer">
-	        		<v-icon
-						    small
-						    class="mr-2 hover-icon"
-						    @click="showInfo(props.item)"
-					    >
-					    	visibility
-							</v-icon>
+							              <v-list-tile-action v-else>
+															<v-btn icon>
+							                	<v-icon color="grey lighten-1">star_border</v-icon>
+							              	</v-btn>
+							              </v-list-tile-action>
 
-							<v-icon
-								small
-								class="mr-2 hover-icon"
-								@click="showFormEdit(props.item)"
-							>
-								edit
-							</v-icon>
+						            	</v-list-tile>
+						            	<v-divider v-if="index + 1 < items.length" :key="`divider-${index}`" class="m-0"></v-divider>
+						          	</div>
+						          </template>
+						        </v-list>
+					      	</vue-perfect-scrollbar>
 
-							<v-icon
-								small
-								class="mr-2 hover-icon"
-								@click="showDialog(props.item.id)"
-							>
-								delete
-							</v-icon>
-						</td>
-					</template>
+								</v-flex>
 
-					<template slot="no-data">
-			      <v-alert :value="true" color="error" icon="warning">
-			        Sorry, nothing to display here :(
-			      </v-alert>
-	    		</template>
+								<v-flex xs12 md7 lg8>
+									<app-card>
+										<v-layout row wrap justify-space-between align-center>
+											<div>
+												<v-btn fab dark small color="cyan" v-if="checkDetail">
+									      	<v-icon dark @click="showFormEdit(itemDetail)">edit</v-icon>
+									    	</v-btn>
 
-		    	<v-alert slot="no-results" :value="true" color="error" icon="warning">
-	          Your search for "{{ search }}" found no results.
-	        </v-alert>
-				</v-data-table>
-			</app-card>
-			<photographer-detail ></photographer-detail>
-			<photographer-add></photographer-add>
-			<photographer-edit></photographer-edit>
-		</v-layout>
-		<v-dialog v-model="dialog" persistent max-width="450">
-      <v-card>
-        <v-card-title class="headline font-weight-bold grey lighten-3">
-          <v-icon large color="warning" class="mr-2">
-            warning
-          </v-icon>
-          Do you want delete this item ?
-        </v-card-title>
-        <v-divider class="mt-0"></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="secondary" outline small @click="dialog = false">Disagree</v-btn>
-          <v-btn color="warning" outline small @click="deleteItem">Agree</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-	</v-container>		
+										    <v-btn fab dark small color="error" v-if="checkDetail">
+										      <v-icon dark @click="showDialog(itemDetail.id)">delete</v-icon>
+										    </v-btn>
+											</div>
+											<v-spacer></v-spacer>
+											<div>
+												<v-btn
+										      color="indigo"
+										      class="white--text"
+										      @click="showFromAdd()"
+										    >
+										      Add New
+										    </v-btn>
+											</div>
+										</v-layout>
+
+										<div class="media-body" v-if="checkDetail" style="margin-top:20px">
+											<div class="media media-full">
+												<div class="media-image">
+													<v-img
+									          src="/static/img/post-2.png"
+									          lazy-src="/static/img/post-2.png"
+									          width="300"
+									          class="img-responsive mr-4"
+									          style="margin: 0 auto !important;"
+									        ></v-img>
+														<span>{{itemDetail.name}}</span>
+												</div>
+												<div class="media-body">
+												  <v-list class="heigth-list-title">
+														<template>
+
+															<v-list-tile>
+																<v-list-tile-content>
+											          	<v-list-tile-title class="content-flex">
+												          	<span class="font-weight-bold item-title">Address:</span>
+												          	<span class="max-value">{{itemDetail.address}}</span>
+										        			</v-list-tile-title>
+																</v-list-tile-content>
+															</v-list-tile>
+
+															<v-list-tile>
+																<v-list-tile-content>
+											          	<v-list-tile-title class="content-flex">
+												          	<span class="font-weight-bold item-title">Phone number:</span>
+												          	<span class="max-value">{{itemDetail.phone_number}}</span>
+										        			</v-list-tile-title>
+																</v-list-tile-content>
+															</v-list-tile>
+
+															<v-list-tile>
+																<v-list-tile-content>
+											          	<v-list-tile-title class="content-flex">
+												          	<span class="font-weight-bold item-title">Branch:</span>
+												          	<span class="max-value" v-if="itemDetail.branch">{{itemDetail.branch.name}}</span>
+										        			</v-list-tile-title>
+																</v-list-tile-content>
+															</v-list-tile>
+
+															<v-list-tile>
+																<v-list-tile-content>
+											          	<v-list-tile-title class="content-flex">
+												          	<span class="font-weight-bold item-title">Status:</span>
+												          	<span class="max-value">{{itemDetail.status ? 'Active' : 'Inactive'}}</span>
+										        			</v-list-tile-title>
+																</v-list-tile-content>
+															</v-list-tile>
+
+														</template>
+											    </v-list>
+												</div>
+											</div>
+										</div>
+										<photographer-add></photographer-add>
+										<photographer-edit></photographer-edit>
+
+										<v-dialog v-model="dialog" persistent max-width="450">
+								      <v-card>
+								        <v-card-title class="headline font-weight-bold grey lighten-3">
+								          <v-icon large color="warning" class="mr-2">
+								            warning
+								          </v-icon>
+								          Do you want delete this item ?
+								        </v-card-title>
+								        <v-divider class="mt-0"></v-divider>
+								        <v-card-actions>
+								          <v-spacer></v-spacer>
+								          <v-btn color="secondary" outline small @click="dialog = false">Disagree</v-btn>
+								          <v-btn color="warning" outline small @click="deleteItem">Agree</v-btn>
+								        </v-card-actions>
+								      </v-card>
+							    	</v-dialog>
+									</app-card>
+								</v-flex>
+							</v-layout>
+						</div>
+					</div>
+				</v-flex>
+			</v-layout>
+		</v-container>
 </template>
 
 <script>
@@ -146,6 +180,7 @@ import config from '../../../config/index.js'
 import PhotographerDetail from './PhotographerDetail'
 import PhotographerAdd from './PhotographerAdd'
 import PhotographerEdit from './PhotographerEdit'
+import Lodash from 'lodash'
 
 export default {
 
@@ -156,27 +191,33 @@ export default {
 
 	data () {
     return {
-    	headers: [	        
-				{ text: 'ID', value: 'id'},	       
+    	headers: [
+				{ text: 'ID', value: 'id'},
 				{ text: 'Branch Name', value: 'branch.name' },
-				{ text: 'Name', value: 'name'},	
-				{ text: 'Phone', value: 'phone_number' },	
-				{ text: 'Address', value: 'address' },		      
+				{ text: 'Name', value: 'name'},
+				{ text: 'Phone', value: 'phone_number' },
+				{ text: 'Address', value: 'address' },
 				{ text: 'Added Date', value: 'created_at' },
-				{ text: 'Status', value: 'status' , sortable: false},		     
-		    { text: 'Action', sortable: false },         
+				{ text: 'Status', value: 'status' , sortable: false},
+		    { text: 'Action', sortable: false },
 			],
 			items: [],
 			search:'',
 			pagination: {
-			  	rowsPerPage: 25  	
+			  	rowsPerPage: 25
 	    },
 	    rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 	    company: JSON.parse(localStorage.getItem('user')),
 	    dialog: false,
 	    activeInfo: true,
 	    itemIdToDelete: '',
-	    loading: false
+	    loading: false,
+	    checkDetail: false,
+	    itemDetail: [],
+	    settings: {
+        maxScrollbarLength: 160
+      },
+      photographerId: 0
     }
 		},
 	created() {
@@ -193,6 +234,8 @@ export default {
 			.then(response => {
 				if(response && response.data.success) {
 					this.items = response.data.data
+					this.photographerId = this.items[0].id
+					this.checkDetail = true
 				}
 			})
 		},
@@ -208,6 +251,7 @@ export default {
 	          type: 'success',
 	          duration: 2000,
 	        })
+	        this.checkDetail = false
         }
       })
       .catch((e) =>{
@@ -240,7 +284,36 @@ export default {
         this.pagination.descending = false
       }
       this.loading = false
-  	}
+  	},
+  	showDetail(item)
+  	{
+  		// if(this.checkDetail && this.photographerId == item.id) {
+  		// 	this.checkDetail = false
+  		// }else {
+  			this.checkDetail = true
+	  		this.itemDetail = item
+	  		this.photographerId = item.id
+  		// }
+  	},
+  	searchPhotographer : _.debounce(
+			function() {
+				get(config.API_URL + 'photographers?companyId=' + this.company.company_id + '&search=' + this.search)
+				.then(response => {
+					if(response && response.data.success) {
+						this.items = response.data.data
+					}
+				})
+				.catch(err => {
+					if (err.response && err.response.data && !err.response.data.success) {
+						this.$message({
+							title: "WARNING!",
+							message: err.response.data.message,
+							type: 'warning',
+							duration: 2000
+						})
+					}
+				})
+	  	}, 1000)
 	}
 };
 </script>
@@ -262,4 +335,13 @@ export default {
 	.action-width-photographer{
 		min-width: 113px;
 	}
+	.content-flex{
+	height: auto !important;
+	white-space: inherit !important;
+	align-items: inherit !important;
+	}
+.max-value{
+	max-width: 63%;
+	flex: 0 0 63%;
+}
 </style>

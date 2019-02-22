@@ -88,16 +88,15 @@
 		        </td>
 		         <td class="text-right">
 		        	<v-edit-dialog
-	            :return-value.sync="props.item.euro"
-	            large
-	            lazy
-	            
-	            @save="save('euro', props.item.euro, props.item.id)"
-	            @cancel="cancel"
-	            @open="open()"
-	            @close="close('euro', props.item.id)"
-	            :ref="'v-dialog-p'+'euro'+props.item.id"
-	          >
+		            :return-value.sync="props.item.euro"
+		            large
+		            lazy
+		            @save="save('euro', props.item.euro, props.item.id)"
+		            @cancel="cancel"
+		            @open="open()"
+		            @close="close('euro', props.item.id)"
+		            :ref="'v-dialog-p'+'euro'+props.item.id"
+		          >
 	            <div>{{ props.item.euro }}</div>
 	            <div slot="input" class="mt-3 title">Update Euro</div>
 	            <v-text-field

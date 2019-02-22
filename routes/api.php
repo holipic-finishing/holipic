@@ -25,7 +25,6 @@ Route::group(['namespace' => 'API'],function(){
 	Route::resource('users', 'UserAPIController');
 	Route::resource('currencies', 'CurrencyAPIController');
 	Route::resource('files', 'FileAPIController');
-	Route::resource('ewallet_withdraws', 'EwalletWithdrawAPIController');
 
 	/*************UserAPIController**************/
 	Route::post('change-password', 'UserAPIController@changePassWord');
@@ -106,6 +105,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::resource('branches', 'BranchAPIController');
 		Route::resource('emails', 'EmailAPIController');
 		Route::resource('orders', 'CompanyOrderAPIController');
+		Route::resource('ewallet_withdraws', 'EwalletWithdrawAPIController');
 
 		/*************CompanyAPIController**************/
 		Route::get('export-customers','CompanyAPIController@exportEmailCustomerByCompanyId');

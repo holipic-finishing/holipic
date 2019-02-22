@@ -44,7 +44,7 @@
 				<v-alert class="subheading"  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 			</div>
 			<!-- Alert -->
-			
+
 			<!-- Day Component -->
 			<v-layout row wrap class="stats-card-v4" v-if="typeTime == 'day'">
 
@@ -52,7 +52,7 @@
 			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">Start</div>
-						<v-menu 
+						<v-menu
 							:close-on-content-click="false"
               v-model="menu1"
               :nudge-right="40"
@@ -62,7 +62,7 @@
               full-width
               min-width="290"
 						>
-							<v-text-field 
+							<v-text-field
 								slot="activator"
 								v-model="computedStartDay"
 								prepend-icon="event"
@@ -71,10 +71,10 @@
             		hide-details
               	clearable
 							></v-text-field>
-							<v-date-picker 
+							<v-date-picker
 								v-model="from_day"
 								no-title
-								scrollable 
+								scrollable
 								:max="new Date().toISOString().substr(0, 10)"
 								@input="reportByRangeDay"
 							></v-date-picker>
@@ -87,29 +87,29 @@
 			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
-						<v-menu 
+						<v-menu
 							:close-on-content-click="false"
-			                v-model="menu2"
-			                :nudge-right="40"
-			                lazy
-			                transition="scale-transition"
-			                offset-y
-			                full-width
-			                min-width="290"
+              v-model="menu2"
+              :nudge-right="40"
+              lazy
+              transition="scale-transition"
+              offset-y
+              full-width
+              min-width="290"
 						>
-							<v-text-field 
+							<v-text-field
 								slot="activator"
 								v-model="computedEndDay"
 								prepend-icon="event"
 								readonly
-			              		placeholder="Enter End Date"
-			              		hide-details
-			              		clearable
+            		placeholder="Enter End Date"
+            		hide-details
+            		clearable
 							></v-text-field>
-							<v-date-picker 
-								v-model="to_day" 
-								no-title 
-								scrollable 
+							<v-date-picker
+								v-model="to_day"
+								no-title
+								scrollable
 								:max="new Date().toISOString().substr(0, 10)"
 								@input="reportByRangeDay"
 							></v-date-picker>
@@ -175,7 +175,7 @@
 				                full-width
 				                min-width="290"
 							>
-								<v-text-field 
+								<v-text-field
 									slot="activator"
 									v-model="computedStartMonth"
 									prepend-icon="event"
@@ -184,10 +184,10 @@
 				                	hide-details
 				                	clearable
 								></v-text-field>
-								<v-date-picker 
-									v-model="from_month" 
-									no-title 
-									scrollable 
+								<v-date-picker
+									v-model="from_month"
+									no-title
+									scrollable
 									:max="new Date().toISOString().substr(0, 10)"
 									@input="reportByMonth"
 									type="month"
@@ -201,7 +201,7 @@
 			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
-							<v-menu 
+							<v-menu
 								:close-on-content-click="false"
 				                v-model="menu4"
 				                :nudge-right="40"
@@ -211,7 +211,7 @@
 				                full-width
 				                min-width="290"
 							>
-								<v-text-field 
+								<v-text-field
 									slot="activator"
 									v-model="computedEndMonth"
 									prepend-icon="event"
@@ -220,10 +220,10 @@
 				                	hide-details
 				                	clearable
 								></v-text-field>
-								<v-date-picker 
-									v-model="to_month" 
-									no-title 
-									scrollable 
+								<v-date-picker
+									v-model="to_month"
+									no-title
+									scrollable
 									:max="new Date().toISOString().substr(0, 10)"
 									@input="reportByMonth"
 									type="month"
@@ -403,7 +403,7 @@
 				                full-width
 				                min-width="290"
 							>
-								<v-text-field 
+								<v-text-field
 									slot="activator"
 									v-model="computedStartWeek"
 									prepend-icon="event"
@@ -412,10 +412,10 @@
 				              		hide-details
 				              		clearable
 								></v-text-field>
-								<v-date-picker 
-									v-model="from_day_week" 
-									no-title 
-									scrollable 
+								<v-date-picker
+									v-model="from_day_week"
+									no-title
+									scrollable
 									:max="new Date().toISOString().substr(0, 10)"
 									@input="reportByWeek"
 								></v-date-picker>
@@ -428,7 +428,7 @@
 			  	<v-card class="elevation-5 custom-stats-card">
 		  			<v-card-text>
 		  	  		<div class="font-weight-bold">End</div>
-						<v-menu 
+						<v-menu
 							:close-on-content-click="false"
 			                v-model="menu8"
 			                :nudge-right="40"
@@ -438,7 +438,7 @@
 			                full-width
 			                min-width="290"
 						>
-							<v-text-field 
+							<v-text-field
 								slot="activator"
 								v-model="computedEndWeek"
 								prepend-icon="event"
@@ -447,10 +447,10 @@
 			              		hide-details
 			              		clearable
 							></v-text-field>
-							<v-date-picker 
-								v-model="to_day_week" 
-								no-title 
-								scrollable 
+							<v-date-picker
+								v-model="to_day_week"
+								no-title
+								scrollable
 								:max="new Date().toISOString().substr(0, 10)"
 								@input="reportByWeek"
 							></v-date-picker>
@@ -498,11 +498,11 @@
 			<!-- End Week Component-->
 
 			<v-layout row wrap class="stats-card-v4">
-				
+
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
-			  		<v-chip 
+			  		<v-chip
 			  			class="chip-style"
-			  			color="green" 
+			  			color="green"
 			  			text-color="white"
 			  			@click = "searchTag(done.name)"
 			  		>
@@ -540,7 +540,7 @@
 
 			</v-layout>
 			<!-- End Week Component -->
-		</v-container>		
+		</v-container>
 		<orders :companyId="company_id"></orders>
 	</div>
 </template>
@@ -552,7 +552,7 @@ import Vue from 'vue'
 // charts component
 import LineChart from './LineChart.js'
 import { ChartConfig } from "../../../constants/chart-config";
-//config 
+//config
 import config from '../../../config/index.js'
 import { get, getWithData, post } from '../../../api'
 import moment from 'moment'
@@ -656,11 +656,11 @@ export default {
 			get(url)
 			.then((response) => {
 				if(response.data && response.data.success){
-					this.done.value = response.data.data.done			    
-					this.paid.value = response.data.data.paid			    
-					this.pending.value = response.data.data.pending			    
-					this.cancel.value = response.data.data.cancel			    
-					this.booking.value = response.data.data.booking			    
+					this.done.value = response.data.data.done
+					this.paid.value = response.data.data.paid
+					this.pending.value = response.data.data.pending
+					this.cancel.value = response.data.data.cancel
+					this.booking.value = response.data.data.booking
 				}
 			})
 			.catch((err) => {
@@ -672,7 +672,7 @@ export default {
           return moment(date, 'YYYY-MM-DD hh:mm:ss').format('MM/DD/YYYY');
       }
   	},
-    
+
     saveStartYear(from_year) {
 			this.$refs.menu5.save(from_year)
     	this.$refs.picker.activePicker = 'YEAR'
@@ -690,7 +690,7 @@ export default {
 		},
 
 		fetchData(){
-			
+
 		},
 
 		validations(from,to,value){
@@ -701,7 +701,7 @@ export default {
 				this.errorAlert('Please choose End ' + value)
 			} else if(!from) {
 				this.errorAlert('Please choose Start ' + value)
-			} else { 
+			} else {
 				this.validate = true
 			}
 
@@ -711,7 +711,7 @@ export default {
 			this.alertStt = true
 	    	this.alertType = 'error'
 	    	this.alertMes = errorMesg
-	    	setTimeout(() => {this.alertStt = false}, 1500)					
+	    	setTimeout(() => {this.alertStt = false}, 1500)
 		},
 
 		resetTime(){
@@ -792,7 +792,7 @@ export default {
       				end_year : moment(this.to_day, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
       				branch_id : this.item.branch_id,
 					photographer_id : this.item.photographer_id	,
-					type :'year'	
+					type :'year'
 		      	}
 				let obj = {
 					params : params,
@@ -802,7 +802,7 @@ export default {
 				this.$root.$emit('loadOdersWithTime', obj)
 				this.validate = false
 			}
-		
+
 			this.resetTime()
 		},
 
@@ -812,7 +812,7 @@ export default {
 			var month = end_month.diff(start_month,'month')
 
 			if (month <= 0) {
-				
+
 				this.errorAlert('The end month must be after the start month')
 			}else if(0 < month && month <= 12){
 
@@ -838,7 +838,7 @@ export default {
       				end_year : moment(this.to_month, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
       				branch_id : this.item.branch_id,
 					photographer_id : this.item.photographer_id	,
-					type:'year'	
+					type:'year'
 		      	}
 				let obj = {
 					params : params,
@@ -848,7 +848,7 @@ export default {
 				this.$root.$emit('loadOdersWithTime', obj)
 				this.validate = false
 			}
-			
+
 			this.resetTime()
 		},
 
@@ -870,7 +870,7 @@ export default {
       				end_year : moment(this.to_year, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
       				branch_id : this.item.branch_id,
 					photographer_id : this.item.photographer_id	,
-					type : 'year'	
+					type : 'year'
 		      	}
 				let obj = {
 					params : params,
@@ -880,7 +880,7 @@ export default {
 				this.$root.$emit('loadOdersWithTime', obj)
 				this.validate = false
 			}
-			
+
 			this.resetTime()
 		},
 
@@ -945,7 +945,7 @@ export default {
       				end_year : moment(this.to_day_week, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM'),
       				branch_id : this.item.branch_id,
 					photographer_id : this.item.photographer_id	,
-					type : 'year'	
+					type : 'year'
 		      	}
 				let obj = {
 					params : params,
@@ -955,7 +955,7 @@ export default {
 				this.$root.$emit('loadOdersWithTime', obj)
 				this.validate = false
 			}
-			
+
 			this.resetTime()
 		},
 
@@ -976,7 +976,7 @@ export default {
 
 			if(this.typeTime == "week") {
 				this.defaultReportWeek()
-			}  			
+			}
 		},
 
 		defaultReportSevenDay(){
@@ -991,7 +991,7 @@ export default {
 			}
 			this.$root.$emit('companyChart', obj)
 			this.$root.$emit('loadOdersWithTime', obj)
-	
+
 		},
 
 		defaultReportMonth(){
@@ -1023,7 +1023,7 @@ export default {
   		defaultReportWeek(){
   			let params = {
 				defaultWeek :  'default',
-				
+
 			}
 
   			let obj = {
@@ -1042,8 +1042,8 @@ export default {
 					var data = response.data.data
 					var vm = this
 					_.forEach(data, function(value,key){
-						vm.listBranch.push(value)					
-					})				    
+						vm.listBranch.push(value)
+					})
 				}
 			})
 			.catch((err) => {
@@ -1051,7 +1051,7 @@ export default {
 			})
 		},
 
-		changeBranch(item){		
+		changeBranch(item){
 			var url = config.API_URL+'photographer/photographer-branch?branchId='+item.branch_id
 			get(url)
 			.then(res => {
@@ -1062,20 +1062,20 @@ export default {
 						vm.listPhotographer.push(value)
 					})
 				}
-			})	
+			})
 			.catch(err =>{
 				console.log(err)
 			})
 		},
 
-		
+
 	},
 	created(){
-		var user = this.authUser  
+		var user = this.authUser
   		this.$store.dispatch("connectionPushNotification", {user});
 		this.fetchData()
 		this.getListBranch()
-		this.countValuesOfTag()	
+		this.countValuesOfTag()
 	},
 	computed:{
 	  	typeTimeReturn(){

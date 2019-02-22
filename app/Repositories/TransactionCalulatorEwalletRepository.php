@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\TransactionCalulatorEwallet;
 use InfyOm\Generator\Common\BaseRepository;
+use DB;
 
 /**
  * Class TransactionCalulatorEwalletRepository

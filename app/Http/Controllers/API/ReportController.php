@@ -21,7 +21,7 @@ class ReportController extends BaseApiController
         $this->transactionRepository = $transactionRepo;
         $this->orderRepository = $orderRepo;
     }
-    
+
 
 	  public function totalIncomeReport(Request $request){
 
@@ -37,7 +37,7 @@ class ReportController extends BaseApiController
        		return $this->responseSuccess('Data success',$report);
 
        	} else if($request->has(['start_month','end_month'])){
-        // report from month, to month 
+        // report from month, to month
 
          		$arrayInMonth = $this->initInMonth($input['start_month'],$input['end_month']);
 
@@ -49,7 +49,7 @@ class ReportController extends BaseApiController
         // report year
 
          		$arrayMonthInYear = $this->initYear($input['start_year'],$input['end_year']);
-         		
+
          		$report = $this->transactionRepository->transactionYearlyReport($input,$arrayMonthInYear);
 
          		return $this->responseSuccess('Data success',$report);
@@ -73,7 +73,7 @@ class ReportController extends BaseApiController
          		return $this->responseSuccess('Data success',$report);
 
        	} else if($request->has(['defaultDay'])){
-        // report default 7 days 
+        // report default 7 days
 
             $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
 
@@ -84,7 +84,7 @@ class ReportController extends BaseApiController
             $report = $this->transactionRepository->transactionDailyReport($input,$arrayDay);
 
             return $this->responseSuccess('Data success',$report);
-       
+
         } else if($request->has(['defaultMonth'])){
         // report default 12 month
 
@@ -131,7 +131,7 @@ class ReportController extends BaseApiController
         	}else {
         		$key = $timeYear[0]."-".$date;
         	}
-        	
+
             $data[$key] = null;
             $date++;
         }
@@ -140,7 +140,7 @@ class ReportController extends BaseApiController
     }
 
     public function initDayInMonth($month){
-    
+
     	$endInMonth = Carbon::parse($month)->endOfMonth();
     	$data = [];
         $date = Carbon::parse($month);
@@ -162,11 +162,11 @@ class ReportController extends BaseApiController
         }
         return $data;
     }
-    
+
     public function initWeekDays(){
        $today = Carbon::today();
         $arrayWeek = [];
-        for ($i=0; $i <=6 ; $i++) { 
+        for ($i=0; $i <=6 ; $i++) {
             $arrayWeek[$i]['endOfWeek'] = Carbon::parse($today)->format('Y-m-d');
             $arrayWeek[$i]['startOfWeek'] = Carbon::parse($today)->subDays(6)->format('Y-m-d');
             $today = Carbon::parse($today)->subDays(7)->format('Y-m-d');
@@ -205,7 +205,7 @@ class ReportController extends BaseApiController
         $arrayWeek = [];
         $week = $start_day_week->diffInWeeks($end_day_week);
 
-         for ($i=0; $i <= $week ; $i++) { 
+         for ($i=0; $i <= $week ; $i++) {
             $arrayWeek[$i]['startOfWeek'] = Carbon::parse($start_day_week)->format('Y-m-d');
             $arrayWeek[$i]['endOfWeek'] = Carbon::parse($start_day_week)->addDays(6)->format('Y-m-d');
             $start_day_week = Carbon::parse($start_day_week)->addDays(7)->format('Y-m-d');
@@ -217,10 +217,10 @@ class ReportController extends BaseApiController
 
     /**
      *
-     * function to get infomation in order table (status is Done) to sale chart in company-admin  
+     * function to get infomation in order table (status is Done) to sale chart in company-admin
      *@param : defaultDay or defaultWeek or defaultMonth or defaultYear
      */
-    
+
     public function getInfoForChartCompanyAdmin(Request $request){
         $input = $request->all();
         if(isset($input['type'])){
@@ -238,8 +238,8 @@ class ReportController extends BaseApiController
                     }
 
                     $arrayDay = $this->initDays($input['start_day'], $endDay);
-                } 
-               
+                }
+
                 elseif(isset($input['end_day']) && !isset($input['start_day'])){
                     $temp = Carbon::parse($input['end_day']);
                     $startDay = $temp->subDays(7)->format('m/d/Y');
@@ -254,15 +254,12 @@ class ReportController extends BaseApiController
 
                     $arrayDay = $this->initDays($startDay,$endDay);
                 }
-                
 
                 $report = $this->orderRepository->reportSaleDaily($input,$arrayDay);
 
-
-
                 return $this->responseSuccess('Data success',$report);
           }
-            
+
           if($type == 'month'){
                 $arrayInMonth = [];
                 if($input['start_month'] != 'Invalid date' && $input['end_month'] == 'Invalid date'){
@@ -274,10 +271,10 @@ class ReportController extends BaseApiController
                     }else{
                       $toMonth = $toMonth->format('m/d/Y');
                     }
-               
+
                     $arrayInMonth = $this->initInMonth($input['start_month'], $toMonth);
-                } 
-               
+                }
+
                 elseif($input['end_month'] != 'Invalid date' && $input['start_month'] == 'Invalid date'){
                     $temp = Carbon::parse($input['end_month']);
                     $fromMonth = $temp->subMonths(12)->format('Y-m-d');
@@ -294,7 +291,7 @@ class ReportController extends BaseApiController
                     $arrayInMonth = $this->initInMonth($startMonth,$endMonth);
                 }
 
-               
+
                 $report = $this->orderRepository->reportSaleMonth($input,$arrayInMonth);
 
                 return $this->responseSuccess('Data success',$report);
@@ -312,8 +309,8 @@ class ReportController extends BaseApiController
                     }
                     $arrayMonthInYear = $this->initYear($input['start_year'], $to_year);
 
-                } 
-                
+                }
+
                 elseif($input['end_year'] != 'Invalid date' && $input['start_year'] == 'Invalid date'){
                     $temp = Carbon::parse($input['end_year']);
                     $from_year = $temp->subYears(2)->format('Y-m');
@@ -328,7 +325,7 @@ class ReportController extends BaseApiController
 
                     $arrayMonthInYear = $this->initYear($startYear,$endYear);
                 }
-               
+
                 $report = $this->orderRepository->reportSaleYear($input,$arrayMonthInYear);
 
                 return $this->responseSuccess('Data success',$report);
@@ -346,8 +343,8 @@ class ReportController extends BaseApiController
                       $endDay = $endDay->format('m/d/Y');
                     }
                     $arrayWeek = $this->initDayWeekDays($input['start_day_week'], $endDay);
-                } 
-               
+                }
+
                 elseif(isset($input['end_day_week']) && !isset($input['start_day_week'])){
                     $temp = Carbon::parse($input['end_day_week']);
                     $startDay = $temp->subDays(42)->format('m/d/Y');
@@ -366,11 +363,11 @@ class ReportController extends BaseApiController
                 $report = $this->orderRepository->reportSaleWeek($input,$arrayWeek);
 
                 return $this->responseSuccess('Data success',$report);
-               
+
             }
         }
-        
-        else 
+
+        else
           // report default week
           if ($request->has(['defaultWeek'])) {
 
@@ -380,8 +377,8 @@ class ReportController extends BaseApiController
 
             return $this->responseSuccess('Data success',$report);
 
-        } else 
-          // report default 7 days 
+        } else
+          // report default 7 days
           if($request->has(['defaultDay'])){
 
             $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
@@ -393,8 +390,8 @@ class ReportController extends BaseApiController
             $report = $this->orderRepository->reportSaleDaily($input,$arrayDay);
 
             return $this->responseSuccess('Data success',$report);
-       
-        } else 
+
+        } else
           // report default 12 month
           if($request->has(['defaultMonth'])){
 
@@ -408,7 +405,7 @@ class ReportController extends BaseApiController
 
             return $this->responseSuccess('Data success',$report);
 
-          }  else 
+          }  else
 
           if($request->has(['defaultYear'])){
 

@@ -478,40 +478,6 @@
 
 			</v-layout>
 			<!-- Week -->
-			<div class="card-body">
-				<div class="row total-default">
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">
-						<div class="style-card w-100">
-							<div class="d-custom-flex justify-space-between fix-total-storage-company">
-								<div class="title-total">
-									<h2>{{ computedTotalCompany }}</h2>
-									Total companies
-								</div>
-								<div>
-									<span class="icon-style fix-icon-storage-company">
-										<i class="material-icons font-2x primary--text">store</i>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="xl3 lg3 md3 sm12 xs12 form-inline btn-date time-default">
-						<div class="style-card w-100">
-							<div class="d-custom-flex justify-space-between fix-total-storage-company">
-								<div class="title-total">
-									<h2>14,200</h2>
-									Total Storage MB
-								</div>
-								<div>
-									<span class="icon-style fix-icon-storage-company">
-										<i class="material-icons font-2x success--text">cloud_upload</i>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 		</v-container>
 		<transactions></transactions>
 	</v-container>

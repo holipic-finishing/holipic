@@ -41,14 +41,11 @@
 	}
 }
 
-
 .width-input{
   .v-input__slot{
     min-width: 140px !important;
     width: 140px !important;
-    
     text-align:left !important;
-    
   }
 }
 
@@ -63,7 +60,7 @@
 	thead th:not(:nth-child(1)){
 		padding: 0 0px !important;
 		text-align:center !important;
-		
+
 	}
 
 	tbody td:not(:nth-child(1)){
@@ -71,7 +68,7 @@
 		text-align:center !important;
 	}
 }
-	
+
 @media (max-width: 1366px) {
     .action-width{
 		text-align:center;
@@ -162,14 +159,14 @@
 .custom-v-select{
 	.height-input-customer {
 		.v-select__selections {
-			padding-top: 0px !important; 
+			padding-top: 0px !important;
 			font-size:15px !important;
 		}
 		.v-input__append-inner{
 			margin-top: 6px !important;
 		}
 	}
-	
+
 }
 
 .custom-btn{
@@ -209,6 +206,10 @@
 
 .btn-add {
 	padding-top:1px !important;
+}
+
+.height-box{
+	height: 90% !important;
 }
 
 .label-mb-0{

@@ -299,21 +299,21 @@ class CompanyRepository extends BaseRepository
     public function handleSendMailToCustomers()
     {
         $template = Email::findOrFail(request('templateId'));
-        $email = [];
+        $emails = [];
 
         if(request('email') == 'all') {
             if(!empty(request('companyId'))) {
 
-                $email = $this->getCustomerByCompanyId(request('companyId'));
+                $emails = $this->getCustomerByCompanyId(request('companyId'));
             }
 
         } else {
-                $email = request('email'); 
+                $emails = request('email'); 
         }
 
         if(isset($template) && !empty($template)) {
-            foreach($email as $value) {
-                \Mail::to($value)->queue(new SendMailCustomers($template)); 
+            foreach($emails as $email) {
+                \Mail::to($email)->queue(new SendMailCustomers($template)); 
             }
 
             return true;

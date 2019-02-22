@@ -116,6 +116,7 @@
 									          lazy-src="/static/img/post-2.png"
 									          width="300"
 									          class="img-responsive mr-4"
+									          style="margin: 0 auto !important;"
 									        ></v-img>
 														<span>{{itemDetail.name}}</span>
 												</div>

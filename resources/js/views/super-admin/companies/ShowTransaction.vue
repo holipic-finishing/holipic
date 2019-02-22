@@ -169,7 +169,7 @@ export default {
   		},
 		getData(id, page, search){
 
-			let url = config.API_URL+'transaction/history'
+			let url = config.API_URL + 'company/history-transactions'
 
 			let params = {
                 perPage: this.paginator.perPageDay,
@@ -274,7 +274,7 @@ export default {
 
 		getDataWithTimeValue(value,page,search){
 
-			let url = config.API_URL+'transaction/history/item'
+			let url = config.API_URL + 'company/history-transactions/filter'
 
 			let params = {
                 perPage: this.paginator.perPageDay,

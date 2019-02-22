@@ -25,7 +25,7 @@
 				<v-data-table
 		      :headers="headers"
 		      :items="desserts"
-		      class="body-2 global-custom-table"
+		      class="body-2 custom-table-package"
 		      :pagination.sync="pagination"
 			    :loading="loadingCom"
 			  >
@@ -39,7 +39,7 @@
 	              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
 	              @click="changeSort(header.value)"
 	            >
-	            	<div class="custom-header" :class="header.value == 'actions' ? 'justify-content-end' : ''">
+	            	<!-- <div class="custom-header" :class="header.value == 'actions' ? 'justify-content-end' : ''"> -->
 		              <v-tooltip bottom>
 		                <span slot="activator" class="text-capitalize font-weight-bold">
 		                  {{ header.text }}
@@ -49,51 +49,54 @@
 		                </span>
 		              </v-tooltip>
 		              <v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
-	            	</div>
+
+
+	            	<!-- </div> -->
 	            </th>
 	          </tr>
 	        </template>
 
 		    	<template slot="items" slot-scope="props">
-		    		<td class="text-xs-left">{{ props.item.id }}</td>
+		    		<td class="text-xs-left">{{ props.index + 1 }}</td>
 		        <td class="text-xs-left">{{ props.item.package_name }}</td>
 		        <td class="text-xs-left">{{ props.item.price }}</td>
 		        <td class="text-xs-left">{{ props.item.offer }}</td>
-		        <td>
+		        <td class="text-right">
 		        	<v-edit-dialog
 	            :return-value.sync="props.item.dollar"
 	            large
 	            lazy
-	            persistent
 	            @save="save('dollar', props.item.dollar, props.item.id)"
 	            @cancel="cancel"
 	            @open="open()"
-	            @close="close"
+	            @close="close('dollar', props.item.id)"
+	            :ref="'v-dialog-p'+'dollar'+props.item.id"
 	          >
-	            <div>{{ props.item.dollar }}</div>
+	            <div>{{ props.item.dollar  }}</div>
 	            <div slot="input" class="mt-3 title">Update Dollar</div>
 	            <v-text-field
 	              slot="input"
 	              v-model="props.item.dollar"
 	              label="Edit"
 	              single-line
-	              counter
 	              autofocus
 	              type="number"
+	              ref="checkPackage"
+	              :rules="[rules.required, rules.number]"
 	            ></v-text-field>
 	          </v-edit-dialog>
 		        </td>
-		         <td>
+		         <td class="text-right">
 		        	<v-edit-dialog
-	            :return-value.sync="props.item.euro"
-	            large
-	            lazy
-	            persistent
-	            @save="save('euro', props.item.euro, props.item.id)"
-	            @cancel="cancel"
-	            @open="open()"
-	            @close="close"
-	          >
+		            :return-value.sync="props.item.euro"
+		            large
+		            lazy
+		            @save="save('euro', props.item.euro, props.item.id)"
+		            @cancel="cancel"
+		            @open="open()"
+		            @close="close('euro', props.item.id)"
+		            :ref="'v-dialog-p'+'euro'+props.item.id"
+		          >
 	            <div>{{ props.item.euro }}</div>
 	            <div slot="input" class="mt-3 title">Update Euro</div>
 	            <v-text-field
@@ -102,21 +105,23 @@
 	             type="number"
 	              label="Edit"
 	              single-line
-	              counter
 	              autofocus
+	              ref="checkPackage"
+	              :rules="[rules.required, rules.decimal]"
 	            ></v-text-field>
 	          </v-edit-dialog>
 		        </td>
-		         <td>
+		         <td class="text-right">
 		        	<v-edit-dialog
 	            :return-value.sync="props.item.indo"
 	            large
 	            lazy
-	            persistent
+	            
 	            @save="save('indo', props.item.indo, props.item.id)"
 	            @cancel="cancel"
 	            @open="open()"
-	            @close="close"
+	            @close="close('indo', props.item.id)"
+	            :ref="'v-dialog-p'+'indo'+props.item.id"
 	          >
 	            <div>{{ props.item.indo }}</div>
 	            <div slot="input" class="mt-3 title">Update Indo</div>
@@ -126,21 +131,26 @@
 	            	type="number"
 	              label="Edit"
 	              single-line
-	              counter
 	              autofocus
+	              min="0"
+	              ref="checkPackage"
+	              :rules="[rules.required, rules.decimal]"
 	            ></v-text-field>
 	          </v-edit-dialog>
 		        </td>
-		        <td>
+		        <td class="text-right">
 		        	<v-edit-dialog
 	            :return-value.sync="props.item.turkey"
 	            large
 	            lazy
-	            persistent
+	            
 	            @save="save('turkey', props.item.turkey, props.item.id)"
 	            @cancel="cancel"
 	            @open="open()"
-	            @close="close"
+	            @close="close('turkey', props.item.id)"
+	            
+	            :rules="[rules.required, rules.number]"
+	            :ref="'v-dialog-p'+'turkey'+props.item.id"
 	          >
 	            <div>{{ props.item.turkey }}</div>
 	            <div slot="input" class="mt-3 title">Update Turkey</div>
@@ -150,21 +160,23 @@
 	             	type="number"
 	              label="Edit"
 	              single-line
-	              counter
 	              autofocus
+	              min="0"
+	              ref="checkPackage"
+	              :rules="[rules.required, rules.decimal]"
 	            ></v-text-field>
 	          </v-edit-dialog>
 		        </td>
-		        <td>
+		        <td class="text-right">
 		        	<v-edit-dialog
 	            :return-value.sync="props.item.vn"
 	            large
 	            lazy
-	            persistent
-	             @save="save('vn', props.item.vn, props.item.id)"
+	            @save="save('vn', props.item.vn, props.item.id)"
 	            @cancel="cancel"
 	            @open="open()"
 	            @close="close"
+	            :ref="'v-dialog-p'+'vn'+props.item.id"
 	          >
 	            <div>{{ props.item.vn }}</div>
 	            <div slot="input" class="mt-3 title">Update VND</div>
@@ -174,12 +186,13 @@
 	             	type="number"
 	              label="Edit"
 	              single-line
-	              counter
 	              autofocus
+	              ref="checkPackage"
+	              :rules="[rules.required, rules.decimal]"
 	            ></v-text-field>
 	          </v-edit-dialog>
 		        </td>
-		        <td class="text-right">
+		        <td class="text-center action-width">
 		          <v-icon
 		            small
 		            class="mr-2"
@@ -273,9 +286,9 @@
 	        </template>
 
 		    	<template slot="items" slot-scope="props">
-		    			<td class="text-xs-left">{{ props.item.id }}</td>
+		    			<td class="text-xs-left">{{ props.index + 1 }}</td>
 			        <td class="text-xs-left">{{ props.item.size }}</td>
-			        <td class="text-xs-right">
+			        <td class="text-xs-right custom-td-package">
 			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
 			        	<v-edit-dialog
 			        		:ref="'v-dialog'+'dollar'+props.item.id"
@@ -298,13 +311,13 @@
 			              single-line
 			              min="0"
 			              autofocus
-			               ref="checkPhotoPackage"
+			              ref="checkPhotoPackage"
 			              :rules="[rules.required, rules.number]"
 			            ></v-text-field>
 	         			</v-edit-dialog>
 	         		</v-flex>
 			        </td>
-			        <td  class="text-xs-right">
+			        <td  class="text-xs-right custom-td-package">
 			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
 			        	<v-edit-dialog
 			        		:ref="'v-dialog'+'euro'+props.item.id"
@@ -328,12 +341,12 @@
 			              min="0"
 			              autofocus
 			               ref="checkPhotoPackage"
-			              :rules="[rules.required, rules.number]"
+			              :rules="[rules.required, rules.decimal]"
 			            ></v-text-field>
 	         			</v-edit-dialog>
 	         		</v-flex>
 			        </td>
-			        <td  class="text-xs-right">
+			        <td  class="text-xs-right custom-td-package">
 			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
 			        	<v-edit-dialog
 			        		:ref="'v-dialog'+'indo'+props.item.id"
@@ -357,12 +370,12 @@
 			              min="0"
 			              autofocus
 			               ref="checkPhotoPackage"
-			              :rules="[rules.required, rules.number]"
+			              :rules="[rules.required, rules.decimal]"
 			            ></v-text-field>
 	         			</v-edit-dialog>
 	         		</v-flex>
 			        </td>
-			        <td  class="text-xs-right">
+			        <td  class="text-xs-right custom-td-package">
 			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
 			        	<v-edit-dialog
 			        		:ref="'v-dialog'+'turkey'+props.item.id"
@@ -384,13 +397,13 @@
 			              single-line
 			              min="0"
 			              autofocus
-			              :rules="[rules.required, rules.number]"
+			              :rules="[rules.required, rules.decimal]"
 			              ref="checkPhotoPackage"
 			            ></v-text-field>
 	         			</v-edit-dialog>
 	         		</v-flex>
 			        </td>
-			        <td class="text-xs-right">
+			        <td class="text-xs-right custom-td-package">
 			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
 			        	<v-edit-dialog
 			        		:ref="'v-dialog'+'vn'+props.item.id"
@@ -412,13 +425,13 @@
 			              single-line
 			              min="0"
 			              autofocus
-			              :rules="[rules.required, rules.number]"
+			              :rules="[rules.required, rules.decimal]"
 			              ref="checkPhotoPackage"
 			            ></v-text-field>
 	         			</v-edit-dialog>
 	         		</v-flex>
 			        </td>
-			        <td  class="text-xs-right">
+			        <td  class="text-xs-right custom-td-package">
 			        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
 				          <v-edit-dialog
 				          	:ref="'v-dialog'+'free_photo'+props.item.id"
@@ -506,7 +519,7 @@ export default {
             return abc.test(value) || 'Please input number.'
         	},
         	decimal: value => {
-            const abc = /^[0-9]\d*(\.\d+)?$/
+            const abc = /^\d+\.\d{0,10}$/
             return abc.test(value) || 'Please input number.'
         	},
       },
@@ -564,7 +577,7 @@ export default {
 
 		unDisableItem(key){
       		this.key = key
-      	},
+    },
 
   	unDisablePhotoPackage(keyPhotoPackage){
   		this.keyPhotoPackage = keyPhotoPackage
@@ -631,7 +644,7 @@ export default {
 		showDialog(id, setting_id){
 	      this.dialog = true
 	      this.itemIdToDelete.id = id
-	    },
+	  },
 
 		deleteItem(id,setting_id){
 
@@ -682,6 +695,7 @@ export default {
 	          duration: 2000,
 	        })		
 
+          this.fetchData()
 				}
 			})
 			.catch((e) =>{
@@ -689,22 +703,35 @@ export default {
 			})
 	  },
     save (type, value, id) {
+    	if (!this.$refs.checkPackage.validate()) {
+      	this.$refs['v-dialog-p' + type + id].isActive = true;
+      } else {
         var field = {
 	        field_name: type,
 	        value: value,
 	        id: id
       	}
-      this.updatePackage(id, field)
+      	this.updatePackage(id, field)
+      }
     },
   	cancel() {
-    	// this.fetchDataPhotoPackage()
+  		this.fetchData();
+
+  		this.fetchDataPhotoPackage();		
   	},
     open() {
       
     },
     close (type, id) {
-    	// this.fetchDataPhotoPackage()
+    	this.fetchData();
+
+  		this.fetchDataPhotoPackage();
+
     	this.$refs['v-dialog' + type + id].isActive = false
+
+    	this.$refs['v-dialog-p' + type + id].isActive = false;
+
+    		
     },
     savePhotoPackage(type, value, id) {
       if (!this.$refs.checkPhotoPackage.validate()) {
@@ -715,7 +742,6 @@ export default {
 	        value: value,
 	        id: id
       	}
-      	// this.$refs.checkPhotoPackage.reset()
       	this.fetchDataEdit(id, field)
       }
     }

@@ -5,7 +5,7 @@
 		right
 		temporary 
 		app 
-		this.width = this.getCurrentWithContentWrap()
+		clipped
   	:width='widthComputed'
 		>
 

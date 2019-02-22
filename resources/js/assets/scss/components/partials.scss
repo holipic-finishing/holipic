@@ -211,6 +211,7 @@
 	padding-top:1px !important;
 }
 
+
 .custom-flex-appcard{
 	.app-card-content {
 
@@ -265,3 +266,10 @@
 .active-list-title{
 	background: rgba(0,0,0,0.05);
 }
+
+.label-mb-0{
+	label{
+		margin-bottom: 0 !important;
+	}
+}
+

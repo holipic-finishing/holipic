@@ -14,11 +14,11 @@ class AddCurrenciesToPhotoPackagesTable extends Migration
     public function up()
     {
         Schema::table('photo_packages', function (Blueprint $table) {
-            $table->integer('dollar');
-            $table->integer('euro');
-            $table->integer('indo');
-            $table->integer('turkey');
-            $table->integer('vn');
+            $table->decimal('dollar', 30, 10)->default(0,0);
+            $table->decimal('euro', 30, 10)->default(0,0);
+            $table->decimal('indo', 30, 10)->default(0,0);
+            $table->decimal('turkey', 30, 10)->default(0,0);
+            $table->decimal('vn', 30, 10)->default(0,0);
         });
     }
 

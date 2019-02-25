@@ -1,7 +1,7 @@
 <template>
 	<v-layout row wrap>
 
-	<v-navigation-drawer 
+	<v-navigation-drawer
   	fixed
     v-model="drawerRight"
   	right
@@ -104,15 +104,10 @@
 			        </v-list-tile-content>
 		      	</v-list-tile>
 		      	<v-divider class="no-mg-bottom"></v-divider>
-		      	
+
 		    </v-list>
 
-		      <!-- <v-spacer></v-spacer> -->
-		      	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-			      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-			    </v-card-actions>
-
-		</v-card>      	
+		</v-card>
     </v-navigation-drawer>
 </v-layout>
 </template>
@@ -153,7 +148,7 @@ export default {
 		getCurrentWithContentWrap(){
   		return getWithContentWrap(this.drawerHeaderStt)
   	},
-		unDisableItem(index) 
+		unDisableItem(index)
 		{
 			this.key = index
 		},
@@ -162,7 +157,7 @@ export default {
 			{
 				this.alertStt = true
 		        this.alertType = 'error'
-		        this.alertMes = 'Please type text'         
+		        this.alertMes = 'Please type text'
 		        setTimeout(() => {
 		          this.alertStt = false
 		        }, 1500)
@@ -198,28 +193,28 @@ export default {
 						this.company = response.data.data
 						this.alertStt = true
 			          	this.alertType = 'success'
-			          	this.alertMes = 'Update Successfully'					
+			          	this.alertMes = 'Update Successfully'
 			          	setTimeout(() => {
 			            	this.alertStt = false
 						}, 1500)
 						this.key = 0
 						this.$root.$emit('reloadTableBranch')
-						
+
 					}
 				})
 
 				.catch((e) =>{
 					this.alertStt = true
 			        this.alertType = 'error'
-			        this.alertMes = 'System Error Occurred'         
+			        this.alertMes = 'System Error Occurred'
 			        setTimeout(() => {
 			          this.alertStt = false
 			        }, 1500)
 					this.$root.$emit('reloadTableBranch')
 					this.key = 0
-				})	
+				})
 
-			}	
+			}
 		}
 	}
 };

@@ -1,10 +1,10 @@
 <template>
-	<v-navigation-drawer 
+	<v-navigation-drawer
 		fixed
-		v-model="drawerRight" 
+		v-model="drawerRight"
 		right
-		temporary 
-		app 
+		temporary
+		app
 		clipped
   	:width='widthComputed'
 		>
@@ -75,12 +75,12 @@
 								<v-list-tile-title class="content-flex-end h-100 content-image">
 									<span class="font-weight-bold item-title position-item custom-avatar">Avatar:</span>
 									<span class="contain-text-field image-filed">
-									<!-- 	<v-text-field 
-											v-model='imageName' 
-											@click='pickFile' 
-											prepend-icon='attach_file' 
-											outline 
-											class="font-weight-bold height-input" 
+									<!-- 	<v-text-field
+											v-model='imageName'
+											@click='pickFile'
+											prepend-icon='attach_file'
+											outline
+											class="font-weight-bold height-input"
 											readonly
 										></v-text-field> -->
 										<input
@@ -143,14 +143,9 @@
 							</v-list-tile-content>
 						</v-list-tile>
 					</v-list>
-				</v-form>	
-				<v-spacer></v-spacer>
+				</v-form>
 
-				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-					<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-				</v-card-actions>
-
-			</v-card>      	
+			</v-card>
 		</v-navigation-drawer>
 </template>
 
@@ -212,7 +207,7 @@ export default {
   	getCurrentWithContentWrap(){
   			return getWithContentWrap(this.drawerHeaderStt)
   	},
-  	unDisableItem(index) 
+  	unDisableItem(index)
   	{
   		return getWithContentWrap(this.drawerHeaderStt)
   	},
@@ -223,7 +218,7 @@ export default {
 
 			e.preventDefault();
 			var file = e.target.files
-		 
+
 			if(file[0] !== undefined) {
 
 				this.imageName = file[0].name
@@ -241,7 +236,7 @@ export default {
 				var fd = new FormData();
 				fd.append('_method', 'PATCH')
 				fd.append("avatar", file[0]);
-				
+
 				axios.post(config.API_URL+'company/branches/customer/'+this.customer.id, fd)
 					.then (response => {
 						if(response && response.data.success) {
@@ -252,9 +247,9 @@ export default {
 			          message: this.alertMes,
 			          type: this.alertType,
 			          duration: 2000,
-			        })					
+			        })
 							this.key = 0
-							this.$root.$emit('reloadTableCustomer')	
+							this.$root.$emit('reloadTableCustomer')
 						}
 					})
 					.catch((e,value) =>{
@@ -265,15 +260,15 @@ export default {
 		          message: this.alertMes,
 		          type: this.alertType,
 		          duration: 2000,
-		        })	         
+		        })
 						this.$root.$emit('reloadTableCustomer')
 						this.key = 0
-					})	
+					})
 			} else {
 				this.imageName = ''
 				this.imageFile = ''
 				this.imageUrl = ''
-				 
+
 			}
 		},
 		checkValue() {
@@ -285,8 +280,8 @@ export default {
           message: this.alertMes,
           type: this.alertType,
           duration: 2000,
-        })	         
-				this.$root.$emit('reloadTablePhotographer')	
+        })
+				this.$root.$emit('reloadTablePhotographer')
 				this.key = 0
 				return false
 			}
@@ -296,7 +291,7 @@ export default {
 			let params = {}
 
   		switch(field) {
-  			 	
+
 				case "name" :
 					params = {name: value};
 					break;
@@ -309,15 +304,15 @@ export default {
 				case "status" :
 					params = {status: value};
 					break;
-					default:   	
+					default:
   		}
-  		
+
   		if(this.checkValue()) {
 	  		axios.patch(config.API_URL+'company/branches/customer/'+this.customer.id, {params: params})
 				.then (response => {
 					if(response && response.data.success) {
           	this.alertType = 'success'
-          	this.alertMes = response.data.message					
+          	this.alertMes = response.data.message
           	this.$notify({
 		          title: 'Success',
 		          message: this.alertMes,
@@ -325,12 +320,12 @@ export default {
 		          duration: 2000,
 		        })
 						this.key = 0
-						this.$root.$emit('reloadTableCustomer')	
+						this.$root.$emit('reloadTableCustomer')
 					}
 				})
 				.catch((e) =>{
 	        this.alertType = 'error'
-	        this.alertMes = response.data.message         
+	        this.alertMes = response.data.message
 		      this.$notify({
 	          title: 'Error',
 	          message: this.alertMes,
@@ -340,7 +335,7 @@ export default {
 					this.$root.$emit('reloadTableCustomer')
 					this.key = 0
 				})
-			}	
+			}
 		},
 		stopdrawerRight(){
 			this.drawerRight = false

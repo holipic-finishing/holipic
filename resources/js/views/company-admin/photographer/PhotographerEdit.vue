@@ -1,11 +1,11 @@
 <template>
 	<v-layout row wrap>
-		<v-navigation-drawer 
+		<v-navigation-drawer
 		fixed
-		v-model="drawerRight" 
+		v-model="drawerRight"
 		right
-		temporary 
-		app 
+		temporary
+		app
 		clipped
   	:width='widthComputed'
 		>
@@ -128,13 +128,8 @@
 
 					</v-list>
 				</v-form>
-				<v-spacer></v-spacer>
 
-				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-					<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-				</v-card-actions>
-
-			</v-card>      	
+			</v-card>
 		</v-navigation-drawer>
 	</v-layout>
 </template>
@@ -166,7 +161,7 @@ export default {
 				key: 0,
 				currentSelectBranch: {
 			        id: '',
-			        name: '' 
+			        name: ''
 			    },
 		    selectStatus:'',
 		    width: 0,
@@ -188,7 +183,7 @@ export default {
 	  			this.selectStatus = 'Inactive'
 	  		}
 	  		this.currentSelectBranch = {id: res.data.branch.id, name: res.data.branch.name}
-	  		this.width = this.getCurrentWithContentWrap()	
+	  		this.width = this.getCurrentWithContentWrap()
 	  	})
 	  	this.getBranchCompany()
 	},
@@ -200,7 +195,7 @@ export default {
 	  		get(config.API_URL+'company/branches?companyId='+this.company.company_id)
 				.then(response => {
 					if(response && response.data.success) {
-						this.branches = response.data.data					
+						this.branches = response.data.data
 					}
 				})
 				.catch(error => {
@@ -216,12 +211,12 @@ export default {
 			{
 				this.alertStt = true
 		        this.alertType = 'error'
-		        this.alertMes = 'Please type text'         
+		        this.alertMes = 'Please type text'
 		        setTimeout(() => {
 		          this.alertStt = false
 		        }, 1500)
 
-				this.$root.$emit('reloadTablePhotographer')	
+				this.$root.$emit('reloadTablePhotographer')
 				this.key = 0
 				return false
 			}
@@ -249,36 +244,36 @@ export default {
 		// 		params = {status: value};
 		// 		break;
 		// 		default:
-		    	
+
 		// 	}
-			
+
 		// 	if(this.checkValue()) {
 		// 		put(config.API_URL+'photographer/'+this.photographer.id, {params: params})
 		// 		.then (response => {
 		// 			if(response && response.data.success) {
 		// 				this.alertStt = true
 		// 	          	this.alertType = 'success'
-		// 	          	this.alertMes = response.data.message					
+		// 	          	this.alertMes = response.data.message
 		// 	          	setTimeout(() => {
 		// 	            	this.alertStt = false
 		// 				}, 2000)
 		// 				this.key = 0
-		// 				this.$root.$emit('reloadTablePhotographer')	
+		// 				this.$root.$emit('reloadTablePhotographer')
 		// 			}
 		// 		})
 
 		// 		.catch((e) =>{
 		// 			this.alertStt = true
 		// 	        this.alertType = 'error'
-		// 	        this.alertMes = response.data.message         
+		// 	        this.alertMes = response.data.message
 		// 	        setTimeout(() => {
 		// 	          this.alertStt = false
 		// 	        }, 1500)
 		// 			this.$root.$emit('reloadTablePhotographer')
 		// 			this.key = 0
-		// 		})	
+		// 		})
 		// 	}
-			
+
 		// }
 
   // 	},
@@ -288,7 +283,7 @@ export default {
  //  	checkValue() {
 	// 		if(this.photographer.name == '' || this.photographer.address == '' || this.photographer.phone_number == '' || this.selectStatus == '') {
  //        this.alertType = 'error'
- //        this.alertMes = 'Please type text'         
+ //        this.alertMes = 'Please type text'
  //        this.$notify({
  //          title: 'Error',
  //          message: this.alertMes,
@@ -296,7 +291,7 @@ export default {
  //          duration: 2000,
  //        })
 
-	// 			this.$root.$emit('reloadTablePhotographer')	
+	// 			this.$root.$emit('reloadTablePhotographer')
 	// 			this.key = 0
 	// 			return false
 	// 		}
@@ -323,13 +318,13 @@ export default {
 					break;
 					default:
 			}
-  			
+
 			if(this.checkValue()) {
 				put(config.API_URL+'photographer/'+this.photographer.id, {params: params})
 				.then (response => {
 					if(response && response.data.success) {
           	this.alertType = 'success'
-          	this.alertMes = response.data.message					
+          	this.alertMes = response.data.message
 		        this.$notify({
 		          title: 'Success',
 		          message: this.alertMes,
@@ -337,12 +332,12 @@ export default {
 		          duration: 2000,
 		        })
 						this.key = 0
-						this.$root.$emit('reloadTablePhotographer')	
+						this.$root.$emit('reloadTablePhotographer')
 					}
 				})
 				.catch((e) =>{
 	        this.alertType = 'error'
-	        this.alertMes = response.data.message         
+	        this.alertMes = response.data.message
 	       	this.$notify({
 	          title: 'Error',
 	          message: this.alertMes,
@@ -351,11 +346,11 @@ export default {
 	        })
 					this.$root.$emit('reloadTablePhotographer')
 					this.key = 0
-				})	
+				})
 			}
   	}
   }
-  
+
 };
 </script>
 

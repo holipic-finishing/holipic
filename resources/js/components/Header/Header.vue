@@ -18,12 +18,12 @@
 			<!-- App Sidebar -->
 			<app-sidebar></app-sidebar>
 		</v-navigation-drawer>
-		<v-toolbar 
+		<v-toolbar
 			class="Vuely-toolbar"
 			app
 			:color="activeHeaderFilter.class"
 			fixed
-		>	
+		>
 			<div class="d-custom-flex align-items-center navbar-left">
 				<div v-if="!horizontal">
 					<v-toolbar-side-icon icon large @click="emitDrawer" class="v-step-0"></v-toolbar-side-icon>
@@ -46,7 +46,10 @@
 				<!-- Language -->
 				<language-provider></language-provider>
 				<!-- User Info -->
-				<user></user>
+				<v-tooltip bottom>
+					<user slot="activator"></user>
+					<span>Image Profile</span>
+				</v-tooltip>
 				<!-- E-Wallet -->
 				<v-tooltip bottom>
 					<v-btn v-if="role_id == 2" v-show="role_id == '2' " class="ma-0" flat @click="openEWallet" slot="activator">
@@ -157,7 +160,7 @@ export default {
 			  			this.money_ewallet = 0
 			  		}
 				}
-			})	
+			})
 			.catch(err => {
 				console.log(err)
 			})
@@ -171,7 +174,7 @@ export default {
         this.role_id = userAuth.role_id
         this.callWallet()
     }
-	
+
 };
 </script>
 <style lang="css" scoped>
@@ -184,4 +187,3 @@ export default {
 		margin-right: 10px;
 	}
 </style>
-    

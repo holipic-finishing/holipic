@@ -47,12 +47,6 @@
         </v-flex>
 			</v-list-tile>
 		</v-list>
-		<v-spacer></v-spacer>
-
-		<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-			<v-btn color="primary" @click="sendMail()">SEND</v-btn>
-			<v-btn @click="closeDrawer">Close</v-btn>
-		</v-card-actions>
 	</v-card>
 </template>
 
@@ -122,7 +116,7 @@ export default {
 	          duration: 2000,
 	        })
 					return
-				} 
+				}
 
 				params = {email: this.value, templateId: this.item.id}
 			}

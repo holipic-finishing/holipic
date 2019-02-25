@@ -22,7 +22,7 @@
 	    </v-toolbar>
 
 	    <v-divider class="no-mg-bottom"></v-divider>
-	    
+
 	    <v-list>
 	    	<v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 		</v-list>
@@ -63,7 +63,7 @@
 				                placeholder="Enter package price"
 				                v-model="item.price"
 		 			            :rules="[rules.required]"
-				                outline       
+				                outline
 				              ></v-text-field>
 				            </span>
 				          </v-list-tile-title>
@@ -81,7 +81,7 @@
 				                placeholder="Enter package offer"
 				               	v-model="item.offer"
 			                    :rules="[rules.required]"
-				                outline                
+				                outline
 				              ></v-text-field>
 				            </span>
 				          </v-list-tile-title>
@@ -99,7 +99,7 @@
 				                placeholder="Enter package offer"
 				               	v-model="item.total_photo"
 			                    :rules="[rules.required, rules.number]"
-				                outline                
+				                outline
 				              ></v-text-field>
 				            </span>
 				          </v-list-tile-title>
@@ -117,7 +117,7 @@
 				                placeholder="Enter package offer"
 				               	v-model="item.album"
 			                    :rules="[rules.required]"
-				                outline                
+				                outline
 				              ></v-text-field>
 				            </span>
 				          </v-list-tile-title>
@@ -135,7 +135,7 @@
 				                placeholder="Enter package offer"
 				               	v-model="item.photo_on_disc"
 			                    :rules="[rules.required, rules.number]"
-				                outline                
+				                outline
 				              ></v-text-field>
 				            </span>
 				          </v-list-tile-title>
@@ -153,19 +153,19 @@
 				                placeholder="Enter package offer"
 				               	v-model="item.poster"
 			                    :rules="[rules.required, rules.number]"
-				                outline                
+				                outline
 				              ></v-text-field>
 				            </span>
 				          </v-list-tile-title>
 				        </v-list-tile-content>
 				    </v-list-tile>
 				    <v-divider class="no-mg-bottom"></v-divider>
-				   	
+
 				    <v-flex xs12 sm12 class="style-flex fix-style-flex">
-							<v-btn color="info" type="submit">SAVE</v-btn>	
+							<v-btn color="info" type="submit">SAVE</v-btn>
 						</v-flex>
 
-		      </v-list>  
+		      </v-list>
 	   		</v-form>
    		</v-list>
 
@@ -181,7 +181,7 @@
 		            	v-model="data.package_name"
 		            	readonly
 		            	solo
-		            >  
+		            >
 			        	</v-text-field>
 			        </span>
           	</v-list-tile-title>
@@ -199,7 +199,7 @@
 		            	v-model="data.price"
 		            	readonly
 		            	solo
-		            >  
+		            >
 			        	</v-text-field>
 			        </span>
           	</v-list-tile-title>
@@ -217,7 +217,7 @@
 		            	v-model="data.offer"
 		            	readonly
 		            	solo
-		            >  
+		            >
 			        	</v-text-field>
 			        </span>
           	</v-list-tile-title>
@@ -235,7 +235,7 @@
 		            	v-model="data.total_photo"
 		            	readonly
 		            	solo
-		            >  
+		            >
 			        	</v-text-field>
 			        </span>
           	</v-list-tile-title>
@@ -253,7 +253,7 @@
 		            	v-model="data.album"
 		            	readonly
 		            	solo
-		            >  
+		            >
 			        	</v-text-field>
 			        </span>
           	</v-list-tile-title>
@@ -271,7 +271,7 @@
 		            	v-model="data.photo_on_disc"
 		            	readonly
 		            	solo
-		            >  
+		            >
 			        	</v-text-field>
 			        </span>
           	</v-list-tile-title>
@@ -289,15 +289,15 @@
 		            	v-model="data.poster"
 		            	readonly
 		            	solo
-		            >  
+		            >
 			        	</v-text-field>
 			        </span>
           	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 	      <v-divider class="mt-0 mb-0"></v-divider>
-			
-      </v-list> 
+
+      </v-list>
 
       <v-list v-show="check == 'edit'" class="heigth-list-title">
 
@@ -440,11 +440,7 @@
 				</v-list-tile>
 				<v-divider class="no-mg-bottom"></v-divider>
 
-      </v-list> 
-	    
-		 	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-				<v-btn @click.stop="stopdrawerRight()">Close</v-btn>
-			</v-card-actions>
+      </v-list>
 
  		</v-navigation-drawer>
 	</v-card>
@@ -453,7 +449,7 @@
 <script>
 import config from '../../../config/index.js'
 import { post, put } from '../../../api/index.js'
-import { getWithContentWrap } from '../../../helpers/helpers'	
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 export default {
 
@@ -487,7 +483,7 @@ export default {
     }
 	},
 	methods:{
-		
+
 		getCurrentWithContentWrap(){
   		return getWithContentWrap(this.drawerHeaderStt)
   	},
@@ -535,7 +531,7 @@ export default {
 
 	    this.fetchData(field)
   	},
-      	
+
 	  fetchData(field){
 	    post(config.API_URL + 'edit/companyPackage/' + this.data.id, field)
 			.then((res) => {
@@ -547,7 +543,7 @@ export default {
 	          message: this.alertMes,
 	          type: this.alertType,
 	          duration: 2000,
-	        })					
+	        })
           this.key = 0
 					this.$root.$emit('editItemSucess')
 				}
@@ -563,7 +559,7 @@ export default {
         })
 			})
 	  },
-      
+
 	},
 	mounted(){
 		this.$root.$on('drawer-status', res => {
@@ -582,7 +578,7 @@ export default {
     	this.data = res
   		if(res.poster == '0'){
   			this.data.poster = '0'
-  		} 
+  		}
     })
 	},
 	computed: {

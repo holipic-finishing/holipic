@@ -13,11 +13,11 @@
           </v-toolbar-side-icon>
         </v-toolbar>
         <v-divider class="mt-0 mb-0"></v-divider>
-    	  
+
 
     	  <!-- Show Item -->
         <v-list v-if="itemToLoad && eventType === 'show'" class="heigth-list-title rp-height-list">
-    			
+
     			<v-list-tile>
     				<v-list-tile-content>
               <v-list-tile-title class="content-flex">
@@ -28,7 +28,7 @@
     			</v-list-tile>
           <v-divider class="mt-0 mb-0"></v-divider>
 
-    			
+
     			<v-list-tile>
     				<v-list-tile-content>
               <v-list-tile-title class="content-flex">
@@ -61,7 +61,7 @@
     			</v-list-tile>
           <v-divider class="mt-0 mb-0"></v-divider>
 
-    	
+
     			<v-list-tile>
     				<v-list-tile-content>
               <v-list-tile-title class="content-flex">
@@ -72,7 +72,7 @@
     			</v-list-tile>
           <v-divider class="mt-0 mb-0"></v-divider>
 
-    				
+
     			<v-list-tile>
     				<v-list-tile-content>
               <v-list-tile-title class="content-flex">
@@ -217,7 +217,7 @@
                       class="font-weight-bold height-input"
                       placeholder="Enter date"
                       outline
-                      
+
                     ></v-text-field>
                     <v-date-picker v-model="date" no-title  @input="editItem('dated', date)" :max="new Date().toISOString().substr(0, 10)"></v-date-picker>
                   </v-menu>
@@ -240,7 +240,7 @@
                     outline
                     :items="listStatus"
                     v-model="itemToLoad.status"
-                   
+
                     @change="editItem('status', itemToLoad.status)"
                   ></v-select>
                 </span>
@@ -265,7 +265,7 @@
                     v-model="itemToLoad.amount"
                     :rules="[rules.required]"
                     outline
-                    
+
                     @blur="editItem('amount', itemToLoad.amount)"
                     @keyup.enter="editItem('amount', itemToLoad.amount)"
                   ></v-text-field>
@@ -281,12 +281,6 @@
 
         </v-list>
     		<!-- End Item Edit -->
-
-        <!-- Close drawer button -->
-        <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-          <v-btn @click="closeDrawer">Close</v-btn>
-        </v-card-actions>
-        <!-- End close drawer button -->
 
     	</v-card>
     </v-flex>
@@ -356,7 +350,7 @@ export default {
 				if(res.data && res.data.success){
           this.alertStt = true
           this.alertType = 'success'
-          this.alertMes = 'Update Successfully'					
+          this.alertMes = 'Update Successfully'
           setTimeout(() => {this.alertStt = false}, 1500)
           this.key = 0
 					this.$root.$emit('editItemSucess')
@@ -366,7 +360,7 @@ export default {
 			.catch((e) =>{
 				this.alertStt = true
         this.alertType = 'error'
-        this.alertMes = 'System Error Occurred'         
+        this.alertMes = 'System Error Occurred'
         setTimeout(() => {this.alertStt = false}, 1500)
 			})
 
@@ -398,7 +392,7 @@ export default {
   .content-flex{
     height: auto !important;
     white-space: inherit !important;
-    
+
   }
   .max-value{
     max-width: 63%;

@@ -1,10 +1,10 @@
 <template>
-	<v-navigation-drawer 
+	<v-navigation-drawer
 		fixed
-		v-model="drawerRight" 
+		v-model="drawerRight"
 		right
-		temporary 
-		app 
+		temporary
+		app
 		clipped
 	  :width='widthComputed'
 	>
@@ -120,17 +120,15 @@
 					</v-list-tile>
 					<v-divider class="no-mg-bottom"></v-divider>
 
-				</v-list>
+					<v-flex xs12 sm12 class="style-flex fix-style-flex">
+						<v-btn dark color="indigo" class="add-btn" @click="saveBranch()">
+							Save
+						</v-btn>
+					</v-flex>
 
-				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end fix-flex-end">
-					<v-btn dark color="indigo" class="add-btn" @click="saveBranch()">
-						Save
-					</v-btn>
-					<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-				</v-card-actions>
-				
+				</v-list>
 			</v-form>
-		</v-card>      	
+		</v-card>
 	</v-navigation-drawer>
 </template>
 
@@ -175,8 +173,8 @@ export default {
   		this.branch = {}
   		this.$refs.form.reset()
   		this.drawerRight =  response.showNavigation
-  		this.width = this.getCurrentWithContentWrap()	
-  	
+  		this.width = this.getCurrentWithContentWrap()
+
   	})
   },
   methods: {
@@ -218,9 +216,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.fix-flex-end{
-		margin-bottom: 0px;
-		position:absolute;
-		bottom: 0px;
-	}
+.fix-style-flex{
+	float: right;
+}
+.style-flex {
+	padding: 5px 12px !important;
+	font-weight: 500 !important;
+}
 </style>

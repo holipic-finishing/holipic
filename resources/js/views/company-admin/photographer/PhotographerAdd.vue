@@ -1,11 +1,11 @@
 <template>
 	<v-layout row wrap>
-		<v-navigation-drawer 
+		<v-navigation-drawer
 		fixed
-		v-model="drawerRight" 
+		v-model="drawerRight"
 		right
-		temporary 
-		app 
+		temporary
+		app
 		clipped
   		:width='widthComputed'
 		>
@@ -121,19 +121,17 @@
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
+						<v-divider></v-divider>
+						<v-flex xs12 sm12 class="style-flex fix-style-flex">
+							<v-btn dark color="indigo" class="add-btn" @click="savePhotographer()">
+								Save
+							</v-btn>
+						</v-flex>
 
 					</v-list>
 				</v-form>
-				<v-spacer></v-spacer>
 
-				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-					<v-btn dark color="indigo" class="add-btn" @click="savePhotographer()">
-						Save
-					</v-btn>
-					<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-				</v-card-actions>
-
-			</v-card>      	
+			</v-card>
 		</v-navigation-drawer>
 	</v-layout>
 </template>
@@ -187,8 +185,8 @@ export default {
 			.then(response => {
 				if(response && response.data.success) {
 					this.branches = response.data.data
-				}			
-				
+				}
+
 			})
 			.catch(error => {
 				this.$notify({
@@ -202,7 +200,7 @@ export default {
 			if (this.$refs.form.validate()) {
 
   			let params = {information: this.photographer, userId: this.company.id}
-  			post(config.API_URL+'photographer', params)	
+  			post(config.API_URL+'photographer', params)
   			.then(response =>{
   				if(response && response.data.success) {
   					this.$root.$emit('reloadTablePhotographer')
@@ -237,4 +235,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fix-style-flex{
+	float: right;
+}
+.style-flex {
+	padding: 5px 12px !important;
+	font-weight: 500 !important;
+}
 </style>

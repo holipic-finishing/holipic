@@ -1,13 +1,13 @@
 <template>
 <v-container fluid pt-0 grid-list-xl mt-3>
 	<v-layout row wrap>
-		<v-flex xs12>		
-		    <v-navigation-drawer 
+		<v-flex xs12>
+		    <v-navigation-drawer
 			    fixed
-			    v-model="drawerRight" 
+			    v-model="drawerRight"
 			    right
-			    temporary 
-			    app 
+			    temporary
+			    app
 			    this.width = this.getCurrentWithContentWrap()
     			:width='widthComputed'
 		  	>
@@ -23,7 +23,7 @@
 			      		</v-toolbar-side-icon>
 			    	</v-toolbar>
 				    <v-divider class="no-mg-bottom"></v-divider>
-					<v-layout row wrap>  
+					<v-layout row wrap>
 					  <!-- Show information -->
 					    <v-list class="heigth-list-title">
 							<v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
@@ -109,7 +109,7 @@
 							</v-list-tile>
 							</v-flex>
 							<v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
-				      			<v-divider class="no-mg-bottom"></v-divider>	
+				      			<v-divider class="no-mg-bottom"></v-divider>
 				      		</v-flex>
 
 				      		<v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
@@ -140,10 +140,10 @@
 				      			<v-divider class="no-mg-bottom"></v-divider>
 				      		</v-flex>
 				    	</v-list>
-			    	</v-layout>	
+			    	</v-layout>
 
 				    <v-list v-if="lengthCode > 0">
-				    	
+
 				    	<v-list-tile>
 							<v-list-tile-content>
 						         	<v-list-tile-title class="content-flex">
@@ -194,13 +194,6 @@
 
 				    </v-list>
 				    <!-- End show information -->
-
-			    	<!-- Close drawer button -->
-
-				    <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-				      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-				    </v-card-actions>
-				    <!-- End close drawer button -->
 
 				</v-card>
 
@@ -259,9 +252,9 @@ import { getWithContentWrap } from '../../../helpers/helpers'
 
 						var array = response.data.data[1]
 
-						this.lengthCode = array.length	
-						
-						
+						this.lengthCode = array.length
+
+
 					}
 				})
 			}
@@ -272,7 +265,7 @@ import { getWithContentWrap } from '../../../helpers/helpers'
 	.content-flex{
 		height: auto !important;
 		white-space: inherit !important;
-		
+
 	}
 	.max-value{
 		max-width: 63%;

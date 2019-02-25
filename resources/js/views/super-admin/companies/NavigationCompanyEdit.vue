@@ -1,17 +1,17 @@
-<template>	
+<template>
 <v-container fluid pt-0 grid-list-xl mt-3>
 	<v-layout row wrap>
 		<v-flex xs12>
-			<v-navigation-drawer 
+			<v-navigation-drawer
 		    fixed
-		    v-model="drawerRight" 
+		    v-model="drawerRight"
 		    right
-		    temporary 
-		    app 
+		    temporary
+		    app
 		    this.width = this.getCurrentWithContentWrap()
     		:width='widthComputed'
 		  	>
-		  		 
+
 		      	<v-card class="h-100 position-relative">
 					<v-toolbar>
 			      		<v-toolbar-title class="text-capitalize">{{companyName}}</v-toolbar-title>
@@ -40,7 +40,7 @@
 								                placeholder="Enter Company Name"
 								                v-model="company.name"
 								                outline
-								                
+
 								                @keyup.enter="updateCompany('name', company.name)"
 								                :rules="[rules.required]"
 								              ></v-text-field>
@@ -51,7 +51,7 @@
 								          </v-list-tile-title>
 								        </v-list-tile-content>
 							      	</v-list-tile>
-							      	
+
 						      	</v-flex>
 						      	<v-flex d-flex xs12 sm12 md12 class="flex-padding">
 						      		<v-divider class="no-mg-bottom"></v-divider>
@@ -67,7 +67,7 @@
 								                placeholder="Enter address"
 								                v-model="company.address"
 								                outline
-								                
+
 								                @keyup.enter="updateCompany('address', company.address)"
 								                :rules="[rules.required]"
 								              ></v-text-field>
@@ -93,10 +93,10 @@
 								                placeholder="Enter description"
 								                v-model="company.description"
 								                outline
-								               
+
 								                @keyup.enter="updateCompany('description', company.description)"
 								                :rules="[rules.required]"
-								                
+
 								              ></v-text-field>
 								            </span>
 								            <!-- <span class="position-item">
@@ -121,7 +121,7 @@
 								                placeholder="Enter phone"
 								                v-model="company.phone"
 								                outline
-								               
+
 								                @keyup.enter="updateCompany('phone', company.phone)"
 								                :rules="[rules.required]"
 								              ></v-text-field>
@@ -136,17 +136,12 @@
 							    <v-flex d-flex xs12 sm12 md12 class="flex-padding">
 							      	<v-divider class="no-mg-bottom"></v-divider>
 						      	</v-flex>
-							</v-layout>  
-						</v-form>	
+							</v-layout>
+						</v-form>
 
 
 				    </v-list>
 
-				      	<!-- <v-spacer></v-spacer> -->
-				      	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-					      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-					    </v-card-actions>
-		 
 				</v-card>
 		    </v-navigation-drawer>
 		</v-flex>
@@ -171,7 +166,7 @@ export default {
       		],
       		phoneRules: [
         		v =>  /^([0-9]*|\d*\.\d{1}?\d*)$/.test(v) || 'Phone is required and is number'
-        		
+
       		],
       		rules: {
 		        required: value => !!value || 'This field is required.'
@@ -196,7 +191,7 @@ export default {
 			this.drawerRight =  response.showNavigation
 			this.company = response.data
 			this.companyName = response.data.name
-			this.width = this.getCurrentWithContentWrap()	
+			this.width = this.getCurrentWithContentWrap()
 		});
 
 		this.$root.$on('drawer-status', res => {
@@ -217,7 +212,7 @@ export default {
 			{
 				this.alertStt = true
 		        this.alertType = 'error'
-		        this.alertMes = 'System Error Occurred'         
+		        this.alertMes = 'System Error Occurred'
 		        setTimeout(() => {
 		          this.alertStt = false
 		        }, 1500)
@@ -229,7 +224,7 @@ export default {
 		},
 
 		updateCompany(field, value) {
-			
+
 			let params = {}
 
 			switch(field) {
@@ -254,14 +249,14 @@ export default {
 						this.company = response.data.data
 						this.alertStt = true
 			          	this.alertType = 'success'
-			          	this.alertMes = 'Update Successfully'					
+			          	this.alertMes = 'Update Successfully'
 			          	setTimeout(() => {
 			            	this.alertStt = false
 						}, 1500)
 						this.key = 0
 						this.$root.$emit('editCompanySuccess')
 
-						 // setTimeout(function(){	
+						 // setTimeout(function(){
 						 // 	Vue.notify({
 						 // 	 group: 'loggedIn',
 						 // 	 type: 'success',
@@ -274,18 +269,18 @@ export default {
 				.catch((e) =>{
 					this.alertStt = true
 			        this.alertType = 'error'
-			        this.alertMes = 'System Error Occurred'         
+			        this.alertMes = 'System Error Occurred'
 			        setTimeout(() => {
 			          this.alertStt = false
 			        }, 1500)
 					this.$root.$emit('editCompanySuccess')
 					this.key = 0
-				})	
+				})
 
-			}	
-			
+			}
+
 		}
 	}
-	
+
 }
 </script>

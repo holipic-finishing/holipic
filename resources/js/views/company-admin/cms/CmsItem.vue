@@ -42,12 +42,12 @@
       <v-list-tile class="height-100">
         <v-list-tile-content class="h-100">
           <v-list-tile-title class="content-flex-end h-100">
-				    <ckeditor 
+				    <ckeditor
   				    id="editor1"
-  			      v-model="itemToLoad.page_content" 
+  			      v-model="itemToLoad.page_content"
   			      :config="config"
   			      v-validate="'required'"
-  			      name="page_content"	  
+  			      name="page_content"
   			      @blur="editItem('page_content', itemToLoad.page_content)"
               class="style-ckeditor"
 			      >
@@ -59,17 +59,11 @@
 
     </v-list>
   	<!-- End Item Edit -->
-
-   	<!-- Close drawer button -->
-    <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-      	<v-btn @click="closeDrawer">Close</v-btn>
-    </v-card-actions>
-    <!-- End close drawer button -->		
-  </v-card>    
+  </v-card>
 </template>
 
 <script>
-import Ckeditor from 'vue-ckeditor2'	
+import Ckeditor from 'vue-ckeditor2'
 import config from '../../../config'
 import { post } from '../../../api'
 
@@ -106,7 +100,7 @@ export default {
   methods:{
 		closeDrawer(){
 			this.$root.$emit('closeDrawerItem', false)
-			this.key = 0	
+			this.key = 0
 		},
 		unDisableItem(key){
    		this.key = key
@@ -139,7 +133,7 @@ export default {
 			.then((res) => {
 				if(res.data && res.data.success){
 	        this.alertType = 'success'
-	        this.alertMes = 'Update Successfully'					
+	        this.alertMes = 'Update Successfully'
 	        this.$notify({
             title: 'Success',
             message: this.alertMes,
@@ -158,18 +152,18 @@ export default {
           message: this.alertMes,
           type: this.alertType,
           duration: 2000,
-        })          
+        })
 			})
  		},
  		Validate(field_name,value){
  			if(!value){
 			this.alertStt = true
 	        this.alertType = 'error'
-	        this.alertMes = 'No ' + field_name + ' Yet'  
-	        this.validate = false      
+	        this.alertMes = 'No ' + field_name + ' Yet'
+	        this.validate = false
 	        setTimeout(() => {this.alertStt = false}, 1500)
  			}else {
- 				this.validate = true  
+ 				this.validate = true
  			}
  		}
   },

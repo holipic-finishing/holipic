@@ -11,6 +11,7 @@
 .item-title{
   width: 35% !important;
   margin-left: 10px !important;
+  font-weight: 500 !important;
 }
 
 .item-title-setting{
@@ -21,8 +22,8 @@
 .contain-text-field-setting{
   width: 25% !important;
   .v-input--selection-controls {
-    margin-top: 0 !important; 
-    padding-top: 0 !important; 
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
   .v-input__slot{
     margin-bottom: 5px !important;
@@ -32,8 +33,8 @@
 .contain-text-field{
   width: 65%;
   .v-input--selection-controls {
-    margin-top: 0 !important; 
-    padding-top: 0 !important; 
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
   .v-input__slot{
     margin-bottom: 5px !important;
@@ -55,7 +56,6 @@
   display: flex;
   justify-content: start;
   align-items: baseline;
-  padding-top: 15px;
   position: relative;
 }
 
@@ -72,15 +72,63 @@
   justify-content: flex-end;
 }
 
-.height-80{
-  .v-list__tile{
-    height: 80px !important;
-  }
+.height-65{
+    height: 65px !important;
+    .v-list__tile{
+        height: 100% !important;
+    }
+    .v-text-field input{
+        padding: 8px 0 0 !important;
+    }
+
+    .error--text{
+        font-weight: 500 !important;
+    }
+    .v-text-field__slot{
+        input{
+            font-weight: 400 !important;
+        }
+    }
+}
+
+.height-55{
+    height: 55px !important;
+    .v-list__tile{
+        height: 100% !important;
+    }
+    .v-text-field input{
+        padding: 8px 0 0 !important;
+    }
+
+    .error--text{
+        font-weight: 500 !important;
+    }
+    .v-text-field__slot{
+        input{
+            font-weight: 400 !important;
+        }
+    }
 }
 
 .height-150{
   .v-list__tile{
     height: 150px !important;
+  }
+  .v-text-field__slot{
+      textarea{
+          font-weight: 400 !important;
+      }
+  }
+}
+
+.height-75{
+  .v-list__tile{
+    min-height: 75px !important;
+  }
+  .v-text-field__slot{
+      textarea{
+          font-weight: 400 !important;
+      }
   }
 }
 
@@ -116,8 +164,8 @@
 
 .height-input{
   .v-input__slot{
-    min-height: 47px !important;
-    height: 47px !important;
+    min-height: 30px !important;
+    height: 30px !important;
   }
   input, .v-select__slot{
     position:relative;

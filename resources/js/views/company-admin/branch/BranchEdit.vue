@@ -123,9 +123,6 @@ export default {
 	    	drawerRight: false,
 	    	branch: [],
 	    	key: 0,
-	    	alertStt: false,
-	    	alertType: 'success',
-	    	alertMes: '',
 	    	width: 0,
 	   		drawerHeaderStt: null
 	    }
@@ -153,7 +150,7 @@ export default {
 		checkValue(){
 			if(this.branch.name == '' || this.branch.branch_address == '' || this.branch.branch_password == '' || this.branch.branch_phone_number == '')
 			{
-				this.$message({
+				this.$notify({
 					title: "Error",
 					message: "This Field Should Not Be Empty",
 					duration: 1500,
@@ -190,7 +187,7 @@ export default {
 				.then (response => {
 					if(response && response.data.success) {
 						this.company = response.data.data
-						this.$message({
+						this.$notify({
 							title: "Success",
 							message: "Update Successfully",
 							duration: 1500,
@@ -204,7 +201,7 @@ export default {
 				})
 
 				.catch((e) =>{
-					this.$message({
+					this.$notify({
 						title: "Error",
 						message: "System Error Occurred",
 						duration: 1500,

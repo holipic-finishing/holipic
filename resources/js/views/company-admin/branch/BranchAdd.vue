@@ -81,21 +81,21 @@
 					</v-list-tile>
 					<v-divider class="m-0"></v-divider>
 
-					<v-list-tile class="height-65">
-						<v-list-tile-content class="h-100">
-							<v-list-tile-title class="content-flex-end h-100">
-								<span class="item-title position-item">Address:</span>
-								<span class="contain-text-field">
-									<v-text-field
-										class="height-input"
+					<v-list-tile class="height-75">
+				    	<v-list-tile-content class="h-100">
+				          	<v-list-tile-title class="content-flex-end h-100">
+				            	<span class="item-title">Address:</span>
+				            	<span class="contain-text-field">
+									<v-textarea
 										placeholder="Input Your Address"
 										v-model="branch.address"
 										:rules="[rules.required]"
-									></v-text-field>
-								</span>
-							</v-list-tile-title>
-						</v-list-tile-content>
-					</v-list-tile>
+										rows="1"
+									></v-textarea>
+				            	</span>
+				          	</v-list-tile-title>
+				     	</v-list-tile-content>
+			      	</v-list-tile>
 					<v-divider class="m-0"></v-divider>
 
 					<v-list-tile class="height-65">
@@ -148,9 +148,9 @@ export default {
     	valid: true,
     	company: JSON.parse(localStorage.getItem('user')),
     	alertStt:false,
-			alertType:'success',
-			alertMes: '',
-			width: 0,
+		alertType:'success',
+		alertMes: '',
+		width: 0,
 	   	drawerHeaderStt: null
     }
   },
@@ -184,25 +184,24 @@ export default {
   				if(response && response.data.success) {
   					this.$root.$emit('reloadTableBranch')
   					this.alertType = 'success'
-						this.alertMes = response.data.message
-
-						this.$notify({
-		          title: 'Success',
-		          message: this.alertMes,
-		          type: this.alertType,
-		          duration: 2000,
-		        })
+					this.alertMes = response.data.message
+					this.$notify({
+			          title: 'Success',
+			          message: this.alertMes,
+			          type: this.alertType,
+			          duration: 2000,
+			        })
   				}
   			})
   			.catch(error => {
   				this.alertType = 'error'
-					this.alertMes = error.response.data.message
-					this.$notify({
-	          title: 'Error',
-	          message: this.alertMes,
-	          type: this.alertType,
-	          duration: 2000,
-	        })
+				this.alertMes = error.response.data.message
+				this.$notify({
+		          title: 'Error',
+		          message: this.alertMes,
+		          type: this.alertType,
+		          duration: 2000,
+		        })
   			})
   		}
   	}

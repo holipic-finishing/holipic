@@ -72,76 +72,18 @@
   justify-content: flex-end;
 }
 
-.height-65{
-    height: 65px !important;
-    .v-list__tile{
-        height: 100% !important;
-    }
-    .v-text-field input{
-        padding: 8px 0 0 !important;
-    }
-
-    .error--text{
-        font-weight: 500 !important;
-    }
-    .v-text-field__slot{
-        input{
-            font-weight: 400 !important;
-        }
-    }
-}
-
-.height-55{
-    height: 55px !important;
-    .v-list__tile{
-        height: 100% !important;
-    }
-    .v-text-field input{
-        padding: 8px 0 0 !important;
-    }
-
-    .error--text{
-        font-weight: 500 !important;
-    }
-    .v-text-field__slot{
-        input{
-            font-weight: 400 !important;
-        }
-    }
-}
-
-.height-150{
-  .v-list__tile{
-    height: 150px !important;
-  }
-  .v-text-field__slot{
-      textarea{
-          font-weight: 400 !important;
-      }
-  }
-}
-
-.height-75{
-  .v-list__tile{
-    min-height: 75px !important;
-  }
-  .v-text-field__slot{
-      textarea{
-          font-weight: 400 !important;
-      }
-  }
-}
-
-.height-200{
-  .v-list__tile{
-    height: 200px !important;
-  }
-}
-
 .height-50{
   .v-list__tile{
     height: 50px !important;
   }
+}
+
+.height-55{
+    height: 55px !important;
+}
+
+.height-65{
+    height: 65px !important;
 }
 
 .height-70{
@@ -150,10 +92,20 @@
   }
 }
 
+.height-75{
+    .v-list__tile{
+      height: 75px !important;
+    }
+}
+
 .height-120{
   .v-list__tile{
     height: 120px !important;
   }
+}
+
+.height-150{
+    height: 150px !important;
 }
 
 .height-200{
@@ -162,21 +114,57 @@
   }
 }
 
+.height-75, .height-150{
+  .v-text-field__slot{
+      textarea{
+          font-weight: 400 !important;
+      }
+  }
+}
+
+.height-55, .height-65, .height-150{
+    .v-list__tile{
+        height: 100% !important;
+    }
+    .v-text-field input{
+        padding: 8px 0 0 !important;
+    }
+
+    .error--text{
+        font-weight: 500 !important;
+    }
+    .v-text-field__slot{
+        input{
+            font-weight: 400 !important;
+        }
+    }
+}
+
 .height-input{
   .v-input__slot{
     min-height: 30px !important;
     height: 30px !important;
   }
-  input, .v-select__slot{
+
+  input .v-select__slot{
     position:relative;
-    top: -10px;
+    top: 0px;
+  }
+
+  .v-text-field__slot{
+    position: relative;
+  }
+
+  .v-select__selection--comma{
+      margin: 7px 4px 0px 0 !important;
+  }
+  .v-select__selections{
+      font-weight: 400 !important;
   }
 }
 
-
 .position-item{
   position:relative;
-  top: -10px;
 }
 
 .heigth-list-title{
@@ -190,9 +178,11 @@
 .flexible-list-title{
   flex:1;
   overflow: auto;
+
   .v-list--two-line .v-list__tile {
     height: 45px;
   }
+
   .v-list__tile__sub-title{
     margin-top: 8px !important;
   }

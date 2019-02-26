@@ -34,12 +34,14 @@
 									<span class="item-title position-item">Select Branch:</span>
 									<span class="contain-text-field">
 										<v-select
+											clearable
 							                :items="branches"
 							                item-value="id"
 			            					item-text="name"
 						                	v-model="photographer.branch_id"
 						                	:rules="[rules.required]"
 						                	placeholder="Select Branch"
+						                	class="height-input"
 						              	></v-select>
 									</span>
 								</v-list-tile-title>
@@ -81,22 +83,22 @@
 						</v-list-tile>
 						<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-65">
-							<v-list-tile-content class="h-100">
-								<v-list-tile-title class="content-flex-end h-100">
-									<span class="item-title position-item">Address:</span>
-									<span class="contain-text-field">
-										<v-text-field
-											class="height-input"
+						<v-list-tile class="height-75">
+					    	<v-list-tile-content class="h-100">
+					          	<v-list-tile-title class="content-flex-end h-100">
+					            	<span class="item-title">Address:</span>
+					            	<span class="contain-text-field">
+										<v-textarea
 											placeholder="Input Your Address"
 											v-model="photographer.address"
 											:rules="[rules.required]"
-										></v-text-field>
-									</span>
-								</v-list-tile-title>
-							</v-list-tile-content>
-						</v-list-tile>
-						<v-divider class="m-0"></v-divider>
+											rows="1"
+										></v-textarea>
+					            	</span>
+					          	</v-list-tile-title>
+					     	</v-list-tile-content>
+				      	</v-list-tile>
+				      	<v-divider class="m-0"></v-divider>
 
 						<v-list-tile class="height-65">
 							<v-list-tile-content class="h-100">
@@ -104,10 +106,12 @@
 									<span class="item-title position-item">Status:</span>
 									<span class="contain-text-field">
 										<v-select
+											clearable
 							                :items="status"
 							                v-model="photographer.status"
 							                :rules="[rules.required]"
 							                placeholder="Select Status"
+							                class="height-input"
 							         	></v-select>
 									</span>
 								</v-list-tile-title>

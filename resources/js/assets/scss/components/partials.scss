@@ -56,16 +56,16 @@
 }
 
 .custom-table-customer{
+	.margin-left{
+    	padding-left: 0px !important;
+    	margin-left: 0px !important;
+    }
+    .th-margin{
+    	text-align:left !important;
+    }
 
-	thead th:not(:nth-child(1)){
-		padding: 0 0px !important;
-		text-align:center !important;
-
-	}
-
-	tbody td:not(:nth-child(1)){
-		padding: 0 6px !important;
-		text-align:center !important;
+    .btn-customer {
+		margin-left: 0px !important;
 	}
 }
 
@@ -84,7 +84,7 @@
 }
 
 .btn-customer{
-	min-width: 61px;
+	min-width: 100px;
 }
 
 .height-input-customer{
@@ -176,6 +176,7 @@
   	border-radius: 50%;
   	padding-top: 5px !important;
   	box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+	flex: none !important;
 }
 
 .grid-template-column{
@@ -267,5 +268,12 @@
 .label-mb-0{
 	label{
 		margin-bottom: 0 !important;
+	}
+}
+
+.custom-height-75{
+	.v-list__tile {
+		padding: 15px 16px !important;
+	    height: auto !important;
 	}
 }

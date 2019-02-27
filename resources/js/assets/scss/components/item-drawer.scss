@@ -11,6 +11,7 @@
 .item-title{
   width: 35% !important;
   margin-left: 10px !important;
+  font-weight: 500 !important;
 }
 
 .item-title-setting{
@@ -21,8 +22,8 @@
 .contain-text-field-setting{
   width: 25% !important;
   .v-input--selection-controls {
-    margin-top: 0 !important; 
-    padding-top: 0 !important; 
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
   .v-input__slot{
     margin-bottom: 5px !important;
@@ -32,11 +33,14 @@
 .contain-text-field{
   width: 65%;
   .v-input--selection-controls {
-    margin-top: 0 !important; 
-    padding-top: 0 !important; 
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
   .v-input__slot{
     margin-bottom: 5px !important;
+  }
+  .v-label{
+      top: 7px !important;
   }
 }
 
@@ -55,7 +59,6 @@
   display: flex;
   justify-content: start;
   align-items: baseline;
-  padding-top: 15px;
   position: relative;
 }
 
@@ -72,28 +75,18 @@
   justify-content: flex-end;
 }
 
-.height-80{
-  .v-list__tile{
-    height: 80px !important;
-  }
-}
-
-.height-150{
-  .v-list__tile{
-    height: 150px !important;
-  }
-}
-
-.height-200{
-  .v-list__tile{
-    height: 200px !important;
-  }
-}
-
 .height-50{
   .v-list__tile{
     height: 50px !important;
   }
+}
+
+.height-55{
+    height: 55px !important;
+}
+
+.height-65{
+    height: 65px !important;
 }
 
 .height-70{
@@ -102,10 +95,20 @@
   }
 }
 
+.height-75{
+    .v-list__tile{
+      height: 75px !important;
+    }
+}
+
 .height-120{
   .v-list__tile{
     height: 120px !important;
   }
+}
+
+.height-150{
+    height: 150px !important;
 }
 
 .height-200{
@@ -114,21 +117,57 @@
   }
 }
 
-.height-input{
-  .v-input__slot{
-    min-height: 47px !important;
-    height: 47px !important;
-  }
-  input, .v-select__slot{
-    position:relative;
-    top: -10px;
+.height-75, .height-150{
+  .v-text-field__slot{
+      textarea{
+          font-weight: 400 !important;
+      }
   }
 }
 
+.height-55, .height-65, .height-150{
+    .v-list__tile{
+        height: 100% !important;
+    }
+    .v-text-field input{
+        padding: 8px 0 0 !important;
+    }
+
+    .error--text{
+        font-weight: 500 !important;
+    }
+    .v-text-field__slot{
+        input{
+            font-weight: 400 !important;
+        }
+    }
+}
+
+.height-input{
+  .v-input__slot{
+    min-height: 30px !important;
+    height: 30px !important;
+  }
+
+  input .v-select__slot{
+    position:relative;
+    top: 0px;
+  }
+
+  .v-text-field__slot{
+    position: relative;
+  }
+
+  .v-select__selection--comma{
+      margin: 7px 4px 0px 0 !important;
+  }
+  .v-select__selections{
+      font-weight: 400 !important;
+  }
+}
 
 .position-item{
   position:relative;
-  top: -10px;
 }
 
 .heigth-list-title{
@@ -142,9 +181,11 @@
 .flexible-list-title{
   flex:1;
   overflow: auto;
+
   .v-list--two-line .v-list__tile {
     height: 45px;
   }
+
   .v-list__tile__sub-title{
     margin-top: 8px !important;
   }
@@ -174,4 +215,14 @@
 .position-item-amount{
   position: relative;
   bottom: 22px;
+}
+
+.custom-border-bottom-0{
+    .v-input__slot::before {
+        border-style: none !important;
+    }
+
+    input{
+        text-align: right;
+    }
 }

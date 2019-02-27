@@ -1,17 +1,16 @@
 <template>
 	<v-layout row wrap>
 		<v-navigation-drawer
-		fixed
-		v-model="drawerRight"
-		right
-		temporary
-		app
-		clipped
-  	:width='widthComputed'
+			fixed
+			v-model="drawerRight"
+			right
+			temporary
+			app
+			clipped
+			:width='widthComputed'
 		>
 			<v-card class="h-100 position-relative">
-
-				<v-toolbar>
+				<v-toolbar class="mb-3">
 					<v-toolbar-title class="text-capitalize">Edit Photographer</v-toolbar-title>
 					<v-spacer></v-spacer>
 					<v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
@@ -20,7 +19,6 @@
 						</v-icon>
 					</v-toolbar-side-icon>
 				</v-toolbar>
-				<v-divider class="no-mg-bottom"></v-divider>
 
 				<v-form
 					ref="form"
@@ -29,39 +27,37 @@
 				>
 					<v-list class="heigth-list-title">
 
-						<!-- <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert> -->
-
-						<v-list-tile class="height-80">
+						<v-list-tile class="height-55">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Select Branch:</span>
+									<span class="item-title position-item">Select Branch:</span>
 									<span class="contain-text-field">
 										<v-select
-			                class="font-weight-bold height-input"
-			                outline
-			                :items="branches"
-			                item-value="id"
-            					item-text="name"
-			                v-model="currentSelectBranch"
-			                @change="editPhotographer('branch', currentSelectBranch)"
-			              ></v-select>
+							                class="height-input"
+							                :items="branches"
+							                item-value="id"
+        									item-text="name"
+							                v-model="currentSelectBranch"
+							                @change="editPhotographer('branch', currentSelectBranch)"
+											placeholder="Select Branch"
+			              				></v-select>
 									</span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+						<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-80">
+						<v-list-tile class="height-55">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Name:</span>
+									<span class="item-title position-item">Name:</span>
 									<span class="contain-text-field">
 										<v-text-field
-											class="font-weight-bold height-input"
+											class="height-input"
 											placeholder="Enter Name"
 											v-model="photographer.name"
 											:rules="[rules.required]"
-											outline
+
 											@blur="editPhotographer('name', photographer.name)"
 											@keyup.enter="editPhotographer('name', photographer.name)"
 										></v-text-field>
@@ -69,19 +65,18 @@
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+						<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-80">
+						<v-list-tile class="height-55">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Phone Number:</span>
+									<span class="item-title position-item">Phone Number:</span>
 									<span class="contain-text-field">
 										<v-text-field
-											class="font-weight-bold height-input"
+											class="height-input"
 											placeholder="Enter Phone"
 											v-model="photographer.phone_number"
 											:rules="[rules.required]"
-											outline
 											@blur="editPhotographer('phone_number', photographer.phone_number)"
 											@keyup.enter="editPhotographer('phone_number', photographer.phone_number)"
 										></v-text-field>
@@ -89,18 +84,19 @@
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+						<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-80">
+
+						<v-list-tile class="height-55">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Email:</span>
+									<span class="item-title position-item">Email:</span>
 									<span class="contain-text-field">
 										<v-text-field
-											class="font-weight-bold height-input"
+											class="height-input"
 											placeholder="Enter Email"
 											v-model="photographer.email"
-											outline
+											
 											:rules="[rules.required, rules.email]"
 											@blur="editPhotographer('email', photographer.email)"
 											@keyup.enter="editPhotographer('email', photographer.email)"
@@ -109,9 +105,9 @@
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+						<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-80">
+						<v-list-tile class="height-75 custom-height-75">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
 									<span class="font-weight-bold item-title position-item">Avatar:</span>
@@ -159,46 +155,46 @@
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+						<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-80">
+						<v-list-tile class="height-75">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Address:</span>
+									<span class="item-title position-item">Address:</span>
 									<span class="contain-text-field">
-										<v-text-field
-											class="font-weight-bold height-input"
+										<v-textarea
 											placeholder="Enter Address"
 											v-model="photographer.address"
-											:rules="[rules.required]"
-
-											outline
 											@blur="editPhotographer('address', photographer.address)"
+											:rules="[rules.required]"
 											@keyup.enter="editPhotographer('address', photographer.address)"
-										></v-text-field>
-									</span>
-								</v-list-tile-title>
-							</v-list-tile-content>
-						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+											hide-details
+											single-line
+											rows="2"
+										></v-textarea>
+					            	</span>
+					          	</v-list-tile-title>
+					     	</v-list-tile-content>
+				      	</v-list-tile>
+				      	<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-80">
+						<v-list-tile class="height-55">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Status:</span>
+									<span class="item-title position-item">Status:</span>
 									<span class="contain-text-field">
 										<v-select
-			                class="font-weight-bold height-input"
-			                outline
-			                :items="status"
-			                v-model="selectStatus"
+							                class="height-input"
+							                :items="status"
+							                v-model="selectStatus"
 											@change="editPhotographer('status', selectStatus)"
-						        ></v-select>
+											placeholder="Select Status"
+						        		></v-select>
 									</span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+						<v-divider class="m-0"></v-divider>
 
 						<!-- <v-list-tile class="height-80">
 							<v-list-tile-content class="h-100">
@@ -219,7 +215,7 @@
 						</v-list-tile>
 						<v-divider class="no-mg-bottom"></v-divider> -->
 
-						<v-list-tile class="height-80 ">
+						<v-list-tile class="height-75 custom-height-75">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100 content-image">
 									<span class="font-weight-bold item-title position-item custom-avatar">ID copy:</span>
@@ -267,7 +263,8 @@
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+						<v-divider class="m-0"></v-divider>
+						
 
 					</v-list>
 				</v-form>
@@ -301,15 +298,15 @@ export default {
 	    	valid: true,
 	    	branches: [],
 	    	company: JSON.parse(localStorage.getItem('user')),
-				status: ['Active', 'Inactive'],
-				alertStt:false,
-				alertType:'success',
-				alertMes: '',
-				key: 0,
-				currentSelectBranch: {
-			        id: '',
-			        name: ''
-			    },
+			status: ['Active', 'Inactive'],
+			alertStt:false,
+			alertType:'success',
+			alertMes: '',
+			key: 0,
+			currentSelectBranch: {
+		        id: '',
+		        name: ''
+		    },
 		    selectStatus:'',
 		    width: 0,
 		   	drawerHeaderStt: null,
@@ -322,9 +319,9 @@ export default {
 	    }
   	},
   	computed: {
-			widthComputed(){
-				return this.width
-			}
+		widthComputed(){
+			return this.width
+		}
   	},
 	mounted() {
 	  	this.$root.$on('showFormEditPhotgrapher', res => {
@@ -346,18 +343,18 @@ export default {
   		},
 		getBranchCompany() {
 	  		get(config.API_URL+'company/branches?companyId='+this.company.company_id)
-				.then(response => {
-					if(response && response.data.success) {
-						this.branches = response.data.data
-					}
-				})
-				.catch(error => {
-					this.$notify({
-			          title: 'Error',
-			          message: 'Cannot Load Branches',
-			          type: 'error',
-	        		})
-				})
+			.then(response => {
+				if(response && response.data.success) {
+					this.branches = response.data.data
+				}
+			})
+			.catch(error => {
+				this.$notify({
+		          title: 'Error',
+		          message: 'Cannot Load Branches',
+		          type: 'error',
+        		})
+			})
   		},
 		checkValue(){
 			if(this.photographer.name == '' || this.photographer.address == '' || this.photographer.phone_number == '' || this.selectStatus == '')
@@ -417,7 +414,8 @@ export default {
 		// 			this.key = 0
 		// 		})
 		// },
-	  	editPhotographer(field, value) {
+  		editPhotographer(field, value) {
+
 			let params = {}
 
 			switch(field) {
@@ -454,9 +452,9 @@ export default {
 				          type: this.alertType,
 				          duration: 2000,
 				        })
-								this.key = 0
-								this.$root.$emit('reloadTablePhotographer', {data: response.data.data})
-							}
+						this.key = 0
+						this.$root.$emit('reloadTablePhotographer', {data: response.data.data})
+					}
 				})
 				.catch((e) =>{
 			        this.alertType = 'error'
@@ -574,14 +572,17 @@ export default {
 			          duration: 2000,
 			        })
 					this.$root.$emit('reloadTablePhotographer', {data: response.data.data})
+
 					this.key = 0
 					this.photographer.avatar = ''
 					this.photographer.identification = ''
 				})
-	    }
-  }
 
-};
+	    }
+  	}
+
+  	};
+
 </script>
 
 <style lang="scss" scoped>

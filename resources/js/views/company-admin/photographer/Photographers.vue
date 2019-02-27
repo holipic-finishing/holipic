@@ -171,10 +171,17 @@
 
 															<v-list-tile class="heigth-list-title-style">
 																<v-list-tile-content>
-											          	<v-list-tile-title class="content-flex">
-												          	<span class="font-weight-bold item-title">ID Copy:</span>
-												          	<img :src="itemDetail.identification_card" width="320px" height="170px" slot="activator">
-										        			</v-list-tile-title>
+														          	<v-list-tile-title class="content-flex">
+															          	<span class="font-weight-bold item-title">ID Copy:</span>
+															          	<!-- <img :src="itemDetail.identification_card" width="320px" height="170px" slot="activator"> -->
+															          	<v-img
+																          :src="itemDetail.identification_card"
+																          width="320"
+																          height="170"
+																          class="img-responsive mr-4"
+																          style="margin: 0 auto !important;"
+																        ></v-img>
+													        			</v-list-tile-title>
 																</v-list-tile-content>
 															</v-list-tile>
 

@@ -22,12 +22,14 @@ class PhotographersTableSeeder extends Seeder
         foreach ($branches as $branch) {
             for ($i=0; $i < rand(3,8); $i++) { 
                 \App\Models\Photographer::create([    
-                    'branch_id' => 2,
                     'name' => $faker->name,
                     'phone_number' => $faker->phoneNumber,
                     'address' => $faker->address,
                     'status' => $faker->boolean,
                     'branch_id' => $branch->id,
+                    'avatar' => $faker->image('/photographers/avatars'),
+                    'email' => $faker->email,
+                    'identification_card' => ''
                 ]);
             }
         }

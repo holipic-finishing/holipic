@@ -39,6 +39,9 @@ php artisan db:seed
 + public/avatars
 + public/files
 + public/image_uploads
++ public/photographers
+	- public/photographers/avatars
+	- public/phototgraphers/identification
 
 # Step 10 : Set Permission
 + sudo chmod -R 777 public/logos
@@ -46,6 +49,7 @@ php artisan db:seed
 + sudo chmod -R 777 public/avatars
 + sudo chmod -R 777 public/files
 + sudo chmod -R 777 public/image_uploads
++ sudo chmod -R 777 public/photographers
 
 # Step 11: Run project
 + npm run watch-poll

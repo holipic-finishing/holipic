@@ -29,15 +29,19 @@
 						          <template v-for="(item, index) in items">
 						          	<div class="hover-photographer">
 						            	<v-list-tile
-														:key="index"
-														avatar
-														ripple
-														@click="showDetail(item)"
-														:class="item.id == photographerId && checkDetail ? 'active-list-title' : ''"
-													>
-														<v-list-tile-avatar>
-							             		<img src="/static/img/post-2.png">
-							              </v-list-tile-avatar>
+											:key="index"
+											avatar
+											ripple
+											@click="showDetail(item)"
+											:class="item.id == photographerId && checkDetail ? 'active-list-title' : ''"
+											>
+												<v-list-tile-avatar v-if="item.avatar == undefined || item.avatar == null || item.avatar == '' ">
+							             			<img src="static/avatars/noavatar.jpg" >
+							              		</v-list-tile-avatar>
+
+							              		<v-list-tile-avatar v-else>
+													<img :src="item.avatar">
+							              		</v-list-tile-avatar>
 
 							              <v-list-tile-content>
 						                	<v-list-tile-title>{{ item.name }}</v-list-tile-title>
@@ -90,16 +94,32 @@
 
 										<div class="media-body" v-if="checkDetail" style="margin-top:20px">
 											<div class="media media-full">
-												<div class="media-image">
+
+												<div class="media-image" v-if="itemDetail.avatar == null || itemDetail.avatar == ''">
+													
 													<v-img
-									          src="/static/img/post-2.png"
-									          lazy-src="/static/img/post-2.png"
-									          width="300"
-									          class="img-responsive mr-4"
-									          style="margin: 0 auto !important;"
-									        ></v-img>
+											          src="/static/avatars/noavatar.jpg"
+											          width="300"
+											          height="380"
+											          class="img-responsive mr-4"
+											          style="margin: 0 auto !important;"
+											        ></v-img>
 														<span>{{itemDetail.name}}</span>
 												</div>
+
+												<div class="media-image" v-else>
+													
+													<v-img
+											          :src="itemDetail.avatar"
+											          width="300"
+											          height="380"
+											          class="img-responsive mr-4"
+											          style="margin: 0 auto !important;"
+											        ></v-img>
+														<span>{{itemDetail.name}}</span>
+												</div>
+
+												
 												<div class="media-body">
 												  <v-list class="heigth-list-title">
 														<template>
@@ -125,6 +145,15 @@
 															<v-list-tile>
 																<v-list-tile-content>
 											          	<v-list-tile-title class="content-flex">
+												          	<span class="font-weight-bold item-title">Email:</span>
+												          	<span class="max-value">{{itemDetail.email}}</span>
+										        			</v-list-tile-title>
+																</v-list-tile-content>
+															</v-list-tile>
+
+															<v-list-tile>
+																<v-list-tile-content>
+											          	<v-list-tile-title class="content-flex">
 												          	<span class="font-weight-bold item-title">Branch:</span>
 												          	<span class="max-value" v-if="itemDetail.branch">{{itemDetail.branch.name}}</span>
 										        			</v-list-tile-title>
@@ -136,6 +165,15 @@
 											          	<v-list-tile-title class="content-flex">
 												          	<span class="font-weight-bold item-title">Status:</span>
 												          	<span class="max-value">{{itemDetail.status ? 'Active' : 'Inactive'}}</span>
+										        			</v-list-tile-title>
+																</v-list-tile-content>
+															</v-list-tile>
+
+															<v-list-tile class="heigth-list-title-style">
+																<v-list-tile-content>
+											          	<v-list-tile-title class="content-flex">
+												          	<span class="font-weight-bold item-title">ID Copy:</span>
+												          	<img :src="itemDetail.identification_card" width="320px" height="170px" slot="activator">
 										        			</v-list-tile-title>
 																</v-list-tile-content>
 															</v-list-tile>
@@ -215,106 +253,132 @@ export default {
 	    checkDetail: false,
 	    itemDetail: [],
 	    settings: {
-        maxScrollbarLength: 160
-      },
-      photographerId: 0
+        	maxScrollbarLength: 160
+      	},
+	    photographerId: 0,
+	    activeItem: ''
     }
 		},
 	created() {
-		this.fetchData()
+		this.fetchData(this.activeItem)
 	},
 	mounted() {
 		this.$root.$on('reloadTablePhotographer', res => {
-			this.fetchData()
+			this.fetchData(res.data.id)
+		})
+
+		this.$root.$on('reloadTablePhotographerAdd', res => {
+			this.fetchData(this.activeItem)
 		})
 	},
 	methods: {
-		fetchData() {
+		fetchData(activeItem) {
 			get(config.API_URL+'photographers?companyId='+this.company.company_id)
 			.then(response => {
 				if(response && response.data.success) {
 					this.items = response.data.data
-					this.photographerId = this.items[0].id
+					if(activeItem == '') {
+						this.photographerId = this.items[0].id
+					} else {
+						this.photographerId = activeItem
+					}
 					this.checkDetail = true
+					this.detailItem(this.photographerId)
 				}
 			})
 		},
+
 		deleteItem() {
 			del(config.API_URL+'photographer/'+this.itemIdToDelete+'?userId='+this.company.id)
 			.then((res) => {
-        if(res.data && res.data.success){
-          this.fetchData()
-          this.dialog = false
-          this.$notify({
-	          title: 'Success',
-	          message: 'Delete Item Successfully.',
-	          type: 'success',
-	          duration: 2000,
-	        })
-	        this.checkDetail = false
-        }
-      })
-      .catch((e) =>{
-        console.log(e)
-      })
+		        if(res.data && res.data.success){
+		          	this.fetchData(this.activeItem)
+		          	this.dialog = false
+		          	this.$notify({
+			          title: 'Success',
+			          message: 'Delete Item Successfully.',
+			          type: 'success',
+			          duration: 2000,
+			        })
+			        this.checkDetail = false
+		    	}
+      		})
+		    .catch((e) =>{
+		        console.log(e.response)
+		    })
 		},
+
+		detailItem(photographerId) {
+			get(config.API_URL+'photographer/detail/'+photographerId)
+			.then((res) => {
+				if(res.data && res.data.success) {
+					this.itemDetail = res.data.data
+				}
+			})
+			.catch((e) =>{
+	        	console.log(e.response)
+	      })
+		},
+
 		showInfo(item) {
 			this.$root.$emit('showInfoPhototographer', {showNavigation: true,data: item})
 		},
+
 		showDialog(item) {
 			this.dialog = true
 			this.itemIdToDelete = item
 		},
+
 		showFromAdd() {
 			this.$root.$emit('showPhotographerAdd', {showNavigation:true})
 		},
+
 		showFormEdit(item) {
 			this.$root.$emit('showFormEditPhotgrapher', {showNavigation: true, data: item})
 		},
+
 		changeSort (column) {
-      var columnsNoSearch = ['actions']
-      if (columnsNoSearch.indexOf(column) > -1) {
-        return
-      }
-      this.loading = true
-      if (this.pagination.sortBy === column) {
-        this.pagination.descending = !this.pagination.descending
-      } else {
-        this.pagination.sortBy = column
-        this.pagination.descending = false
-      }
-      this.loading = false
-  	},
-  	showDetail(item)
-  	{
-  		// if(this.checkDetail && this.photographerId == item.id) {
-  		// 	this.checkDetail = false
-  		// }else {
+		    var columnsNoSearch = ['actions']
+	    	if (columnsNoSearch.indexOf(column) > -1) {
+	        	return
+	    	}
+		    this.loading = true
+	    	if (this.pagination.sortBy === column) {
+	        	this.pagination.descending = !this.pagination.descending
+	    	} else {
+	        	this.pagination.sortBy = column
+	        	this.pagination.descending = false
+	      	}
+		    this.loading = false
+  		},
+	  	showDetail(item)
+	  	{
+	  		
   			this.checkDetail = true
 	  		this.itemDetail = item
 	  		this.photographerId = item.id
-  		// }
-  	},
-  	searchPhotographer : _.debounce(
-			function() {
-				get(config.API_URL + 'photographers?companyId=' + this.company.company_id + '&search=' + this.search)
-				.then(response => {
-					if(response && response.data.success) {
-						this.items = response.data.data
-					}
-				})
-				.catch(err => {
-					if (err.response && err.response.data && !err.response.data.success) {
-						this.$message({
-							title: "WARNING!",
-							message: err.response.data.message,
-							type: 'warning',
-							duration: 2000
-						})
-					}
-				})
-	  	}, 1000)
-	}
+
+	  	},
+	  	searchPhotographer : _.debounce(
+				function() {
+					get(config.API_URL + 'photographers?companyId=' + this.company.company_id + '&search=' + this.search)
+					.then(response => {
+						if(response && response.data.success) {
+							this.items = response.data.data
+						}
+					})
+					.catch(err => {
+						if (err.response && err.response.data && !err.response.data.success) {
+							this.$message({
+								title: "WARNING!",
+								message: err.response.data.message,
+								type: 'warning',
+								duration: 2000
+							})
+						}
+					})
+		  	}, 1000)
+		}
 };
 </script>
 

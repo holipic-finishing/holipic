@@ -60,6 +60,7 @@
 											class="font-weight-bold height-input"
 											placeholder="Enter Name"
 											v-model="photographer.name"
+											:rules="[rules.required]"
 											outline
 											@blur="editPhotographer('name', photographer.name)"
 											@keyup.enter="editPhotographer('name', photographer.name)"
@@ -79,10 +80,81 @@
 											class="font-weight-bold height-input"
 											placeholder="Enter Phone"
 											v-model="photographer.phone_number"
+											:rules="[rules.required]"
 											outline
 											@blur="editPhotographer('phone_number', photographer.phone_number)"
 											@keyup.enter="editPhotographer('phone_number', photographer.phone_number)"
 										></v-text-field>
+									</span>
+								</v-list-tile-title>
+							</v-list-tile-content>
+						</v-list-tile>
+						<v-divider class="no-mg-bottom"></v-divider>
+
+						<v-list-tile class="height-80">
+							<v-list-tile-content class="h-100">
+								<v-list-tile-title class="content-flex-end h-100">
+									<span class="font-weight-bold item-title position-item">Email:</span>
+									<span class="contain-text-field">
+										<v-text-field
+											class="font-weight-bold height-input"
+											placeholder="Enter Email"
+											v-model="photographer.email"
+											outline
+											:rules="[rules.required, rules.email]"
+											@blur="editPhotographer('email', photographer.email)"
+											@keyup.enter="editPhotographer('email', photographer.email)"
+										></v-text-field>
+									</span>
+								</v-list-tile-title>
+							</v-list-tile-content>
+						</v-list-tile>
+						<v-divider class="no-mg-bottom"></v-divider>
+
+						<v-list-tile class="height-80">
+							<v-list-tile-content class="h-100">
+								<v-list-tile-title class="content-flex-end h-100">
+									<span class="font-weight-bold item-title position-item">Avatar:</span>
+									<span class="contain-text-field">
+										<img class="result" :src="resultURLAvatar" alt="" width="30%">
+										<v-dialog v-model="dialog2" persistent max-width="600px">
+											<v-btn slot="activator" >Upload avatar</v-btn>
+
+											<v-card>
+									        <v-card-title>
+									          <span class="headline">Upload Avatar</span>
+									        </v-card-title>
+									        <v-card-text>
+									          <v-container grid-list-md>
+									            <v-layout wrap >
+									            	 
+									            	 <v-flex xs12 sm6 md8>
+									            	 	<input type="file" @change="uploadAvatar($event)">
+										              </v-flex>
+
+										              <v-flex xs12 sm6 md4>
+										                 <v-btn @click="getResultAvatar()" dark color="indigo">crop image</v-btn>
+										              </v-flex>
+
+										              <v-flex xs12 sm6 md12>
+													    <clipper-basic class="my-clipper basic" ref="clipperAvatar" :src="imgURLAvatar" preview="my-preview" width="30%">
+												    	</clipper-basic>
+												    </v-flex>
+												 
+												    <v-flex xs12 sm6 md12>
+												        <img class="result" :src="resultURLAvatar" alt="" width="100%">
+												    </v-flex>
+									            </v-layout>
+									          </v-container>
+									         
+									        </v-card-text>
+									        <v-card-actions>
+									          <v-spacer></v-spacer>
+									           <v-btn color="blue darken-1" flat @click="dialog2 = false">Cancel</v-btn>
+									          <v-btn color="blue darken-1" flat @click="updateAvatarOrIdentification('avatar')">Done</v-btn>
+									        </v-card-actions>
+									      </v-card>
+										</v-dialog>
 									</span>
 								</v-list-tile-title>
 							</v-list-tile-content>
@@ -98,6 +170,8 @@
 											class="font-weight-bold height-input"
 											placeholder="Enter Address"
 											v-model="photographer.address"
+											:rules="[rules.required]"
+
 											outline
 											@blur="editPhotographer('address', photographer.address)"
 											@keyup.enter="editPhotographer('address', photographer.address)"
@@ -120,6 +194,75 @@
 			                v-model="selectStatus"
 											@change="editPhotographer('status', selectStatus)"
 						        ></v-select>
+									</span>
+								</v-list-tile-title>
+							</v-list-tile-content>
+						</v-list-tile>
+						<v-divider class="no-mg-bottom"></v-divider>
+
+						<!-- <v-list-tile class="height-80">
+							<v-list-tile-content class="h-100">
+								<v-list-tile-title class="content-flex-end h-100">
+									<span class="font-weight-bold item-title position-item">ID Copy:</span>
+									
+									<span class="contain-text-field">
+										<img :src="photographer.indenfication_card" width="20%">
+										<input
+											type="file"
+											ref="image"
+											accept="images/*"
+											@change="onFilePicked($event)"
+										>
+									</span>
+								</v-list-tile-title>
+							</v-list-tile-content>
+						</v-list-tile>
+						<v-divider class="no-mg-bottom"></v-divider> -->
+
+						<v-list-tile class="height-80 ">
+							<v-list-tile-content class="h-100">
+								<v-list-tile-title class="content-flex-end h-100 content-image">
+									<span class="font-weight-bold item-title position-item custom-avatar">ID copy:</span>
+									<span class="contain-text-field image-filed">
+										<img class="result" :src="resultURLCard" alt="" width="30%">
+										<v-dialog v-model="dialog" persistent max-width="600px">
+											<v-btn slot="activator" >Upload card</v-btn>
+
+											<v-card>
+									        <v-card-title>
+									          <span class="headline">Upload Identification Card</span>
+									        </v-card-title>
+									        <v-card-text>
+									          <v-container grid-list-md>
+									            <v-layout wrap >
+									            	 
+									            	<v-flex xs12 sm6 md8>
+									            	 	<input type="file" @change="uploadIdentification($event)">
+										            </v-flex>
+
+										            <v-flex xs12 sm6 md4>
+										                 <v-btn @click="getResult()" dark color="indigo">crop image</v-btn>
+										            </v-flex>
+
+										            <v-flex xs12 sm6 md12>
+  														<clipper-basic class="my-clipper basic" ref="clipper" :src="imgURLCard" preview="my-preview" width="30%">
+												    	</clipper-basic>
+												    </v-flex>
+												    
+												    <v-flex xs12 sm6 md12>
+												        <img class="result" :src="resultURLCard" alt="" width="100%">
+												    </v-flex>
+									            </v-layout>
+									          </v-container>
+									         
+									        </v-card-text>
+									        <v-card-actions>
+									          <v-spacer></v-spacer>
+									          <v-btn color="blue darken-1" flat @click="dialog = false">Cancel</v-btn>
+									          <v-btn color="blue darken-1" flat @click="updateAvatarOrIdentification('identification')">Done</v-btn>
+									        </v-card-actions>
+									      </v-card>
+										</v-dialog>
 									</span>
 								</v-list-tile-title>
 							</v-list-tile-content>
@@ -149,7 +292,11 @@ export default {
 	    	drawerRight: false,
 	    	photographer: {},
 	    	rules: {
-		        required: value => !!value || 'This field is required.'
+		        required: value => !!value || 'This field is required.',
+		        email: value => {
+            		const abc = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            		return abc.test(value) || 'Incorrect format email.'
+        		}
 	    	},
 	    	valid: true,
 	    	branches: [],
@@ -165,7 +312,13 @@ export default {
 			    },
 		    selectStatus:'',
 		    width: 0,
-		   	drawerHeaderStt: null
+		   	drawerHeaderStt: null,
+		   	resultURLCard:'',
+	    	imgURLCard:'',
+	    	resultURLAvatar:'',
+	    	imgURLAvatar:'',
+	    	dialog: false,
+	    	dialog2: false
 	    }
   	},
   	computed: {
@@ -190,7 +343,7 @@ export default {
 	methods: {
 		getCurrentWithContentWrap(){
   			return getWithContentWrap(this.drawerHeaderStt)
-  	},
+  		},
 		getBranchCompany() {
 	  		get(config.API_URL+'company/branches?companyId='+this.company.company_id)
 				.then(response => {
@@ -222,82 +375,49 @@ export default {
 			}
 			return true
 		},
-		// editPhotographer(field, value)
+		unDisableItem(index) {
+			this.key = index
+		},
+		// onFilePicked(e)
 		// {
-		// 	let params = {}
+		// 	e.preventDefault();
 
-		// 	switch(field) {
-		// 	 	case "branch" :
-		// 			params = {branch_id: value};
-		// 			break;
-		// 	case "name" :
-		// 		params = {name: value};
+		// 	const file = e.target.files
 
-		// 		break;
-		// 	case "phone_number" :
-		// 		params = {phone_number: value};
-		// 		break;
-		// 	case "address" :
-		// 		params = {address: value};
-		// 		break;
-		// 	case "status" :
-		// 		params = {status: value};
-		// 		break;
-		// 		default:
-
-		// 	}
-
-		// 	if(this.checkValue()) {
-		// 		put(config.API_URL+'photographer/'+this.photographer.id, {params: params})
+		// 	var fd = new FormData();
+		// 	fd.append('_method', 'PUT')
+			
+	 //        fd.append("identification", file[0]);
+	      	
+		// 	post(config.API_URL+'photographer/'+this.photographer.id, fd)
 		// 		.then (response => {
 		// 			if(response && response.data.success) {
-		// 				this.alertStt = true
 		// 	          	this.alertType = 'success'
 		// 	          	this.alertMes = response.data.message
-		// 	          	setTimeout(() => {
-		// 	            	this.alertStt = false
-		// 				}, 2000)
+		// 		        this.$notify({
+		// 		          title: 'Success',
+		// 		          message: this.alertMes,
+		// 		          type: this.alertType,
+		// 		          duration: 2000,
+		// 		        })
 		// 				this.key = 0
 		// 				this.$root.$emit('reloadTablePhotographer')
 		// 			}
 		// 		})
-
 		// 		.catch((e) =>{
-		// 			this.alertStt = true
 		// 	        this.alertType = 'error'
 		// 	        this.alertMes = response.data.message
-		// 	        setTimeout(() => {
-		// 	          this.alertStt = false
-		// 	        }, 1500)
+		// 	       	this.$notify({
+		// 	          title: 'Error',
+		// 	          message: this.alertMes,
+		// 	          type: this.alertType,
+		// 	          duration: 2000,
+		// 	        })
 		// 			this.$root.$emit('reloadTablePhotographer')
 		// 			this.key = 0
 		// 		})
-		// 	}
-
-		// }
-
-  // 	},
-	unDisableItem(index) {
-			this.key = index
-	},
- //  	checkValue() {
-	// 		if(this.photographer.name == '' || this.photographer.address == '' || this.photographer.phone_number == '' || this.selectStatus == '') {
- //        this.alertType = 'error'
- //        this.alertMes = 'Please type text'
- //        this.$notify({
- //          title: 'Error',
- //          message: this.alertMes,
- //          type: this.alertType,
- //          duration: 2000,
- //        })
-
-	// 			this.$root.$emit('reloadTablePhotographer')
-	// 			this.key = 0
-	// 			return false
-	// 		}
-	// 		return true
-	// },
-  	editPhotographer(field, value) {
+		// },
+	  	editPhotographer(field, value) {
 			let params = {}
 
 			switch(field) {
@@ -309,6 +429,9 @@ export default {
 					break;
 				case "phone_number" :
 					params = {phone_number: value};
+					break;
+				case "email" :
+					params = {email: value};
 					break;
 				case "address" :
 					params = {address: value};
@@ -323,32 +446,139 @@ export default {
 				put(config.API_URL+'photographer/'+this.photographer.id, {params: params})
 				.then (response => {
 					if(response && response.data.success) {
-          	this.alertType = 'success'
-          	this.alertMes = response.data.message
-		        this.$notify({
-		          title: 'Success',
-		          message: this.alertMes,
-		          type: this.alertType,
-		          duration: 2000,
-		        })
+			          	this.alertType = 'success'
+			          	this.alertMes = response.data.message
+				        this.$notify({
+				          title: 'Success',
+				          message: this.alertMes,
+				          type: this.alertType,
+				          duration: 2000,
+				        })
+								this.key = 0
+								this.$root.$emit('reloadTablePhotographer', {data: response.data.data})
+							}
+				})
+				.catch((e) =>{
+			        this.alertType = 'error'
+			        this.alertMes = response.data.message
+			       	this.$notify({
+			          title: 'Error',
+			          message: this.alertMes,
+			          type: this.alertType,
+			          duration: 2000,
+			        })
+						this.$root.$emit('reloadTablePhotographer', {data: response.data.data})
 						this.key = 0
-						this.$root.$emit('reloadTablePhotographer')
+				})
+			}
+	  	},
+	  	decodeImage(image) 
+		{
+			var blobBin = atob(image.split(',')[1]);
+			var array = [];
+			for(var i = 0; i < blobBin.length; i++) {
+			    array.push(blobBin.charCodeAt(i));
+			}
+			var file = new Blob([new Uint8Array(array)], {type: 'image/jpg'});
+
+			return file
+		},
+		getResult()
+		{
+			const canvas = this.$refs.clipper.clip();
+            this.resultURLCard = canvas.toDataURL("image/jpg", 1);
+			this.photographer.identification = this.decodeImage(this.resultURLCard)
+		},
+		getResultAvatar()
+		{
+			const canvas = this.$refs.clipperAvatar.clip();
+            this.resultURLAvatar = canvas.toDataURL("image/jpg", 1);
+            this.photographer.avatar = this.decodeImage(this.resultURLAvatar)
+		},
+		uploadIdentification(e){
+			if (e.target.files.length !== 0) {
+				if(this.imgURLCard) URL.revokeObjectURL(this.imgURLCard)
+				this.imgURLCard = window.URL.createObjectURL(e.target.files[0]);
+			}
+	    },
+	    uploadAvatar(e) {
+	    	if (e.target.files.length !== 0) {
+		        if(this.imgURLAvatar) URL.revokeObjectURL(this.imgURLAvatar)
+		        this.imgURLAvatar = window.URL.createObjectURL(e.target.files[0]);
+	      	}
+	    },
+	    updateAvatarOrIdentification(type)
+	    {
+	    	var fd = new FormData();
+			fd.append('_method', 'PUT')
+
+	    	if(type == 'avatar') {
+	    		if(this.resultURLAvatar == '') {
+	    			this.alertType = 'error'
+			        this.alertMes = 'Please choose image avatar'
+			       	this.$notify({
+			          title: 'Error',
+			          message: this.alertMes,
+			          type: this.alertType,
+			          duration: 2000,
+			        })
+			        return
+	    		} else {
+	    			fd.append("avatar", this.photographer.avatar); 
+	    		}
+	    	}
+
+	    	if(type == 'identification') {
+	    		if(this.resultURLCard == '') {
+	    			this.alertType = 'error'
+			        this.alertMes = 'Please choose image identification'
+			       	this.$notify({
+			          title: 'Error',
+			          message: this.alertMes,
+			          type: this.alertType,
+			          duration: 2000,
+			        })
+			        return
+
+	    		} else {
+	    			fd.append("identification", this.photographer.identification); 
+	    		}
+	    	}
+
+			post(config.API_URL+'photographer/'+this.photographer.id, fd)
+				.then (response => {
+					if(response && response.data.success) {
+			          	this.alertType = 'success'
+			          	this.alertMes = response.data.message
+				        this.$notify({
+				          title: 'Success',
+				          message: this.alertMes,
+				          type: this.alertType,
+				          duration: 2000,
+				        })
+						this.key = 0
+						this.$root.$emit('reloadTablePhotographer', {data: response.data.data})
+						this.photographer.avatar = ''
+						this.photographer.identification = ''
+						this.dialog = false
+	    				this.dialog2 = false
 					}
 				})
 				.catch((e) =>{
-	        this.alertType = 'error'
-	        this.alertMes = response.data.message
-	       	this.$notify({
-	          title: 'Error',
-	          message: this.alertMes,
-	          type: this.alertType,
-	          duration: 2000,
-	        })
-					this.$root.$emit('reloadTablePhotographer')
+			        this.alertType = 'error'
+			        this.alertMes = response.data.message
+			       	this.$notify({
+			          title: 'Error',
+			          message: this.alertMes,
+			          type: this.alertType,
+			          duration: 2000,
+			        })
+					this.$root.$emit('reloadTablePhotographer', {data: response.data.data})
 					this.key = 0
+					this.photographer.avatar = ''
+					this.photographer.identification = ''
 				})
-			}
-  	}
+	    }
   }
 
 };

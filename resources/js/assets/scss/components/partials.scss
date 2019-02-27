@@ -56,23 +56,12 @@
 }
 
 .custom-table-customer{
-	
-	thead th:not(:nth-child(1)){
-		padding: 0 0px !important;
-	}
-
-	tbody td:not(:nth-child(1)){
-		padding: 0px 0px !important;
-		
-	}
-
 	.margin-left{
     	padding-left: 0px !important;
     	margin-left: 0px !important;
     }
     .th-margin{
     	text-align:left !important;
-    	padding-left: 0px !important;
     }
 
     .btn-customer {
@@ -187,6 +176,7 @@
   	border-radius: 50%;
   	padding-top: 5px !important;
   	box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+	flex: none !important;
 }
 
 .grid-template-column{

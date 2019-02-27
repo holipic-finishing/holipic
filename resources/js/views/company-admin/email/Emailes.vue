@@ -68,6 +68,7 @@
 						<td>{{ props.item.format_email_content }}</td>
 						<td>
 							<v-btn
+								class="m-0"
 								small
 								color="indigo"
 								@click="showEmailToSend(props.item)"

@@ -26,7 +26,7 @@
 				<v-data-table
 			      	:headers="headers"
 			      	:items="desserts"
-			      	class="body-2 custom-table-package"
+			      	class="body-2"
 			      	:pagination.sync="pagination"
 			    	:loading="loadingCom"
 			  	>
@@ -54,11 +54,11 @@
 	        		</template>
 
 		    		<template slot="items" slot-scope="props">
-		    			<td class="text-xs-left">{{ props.index + 1 }}</td>
-				        <td class="text-xs-left">{{ props.item.package_name }}</td>
-				        <td class="text-xs-left">{{ props.item.price }}</td>
-				        <td class="text-xs-left">{{ props.item.offer }}</td>
-		        		<td class="text-right">
+		    			<td>{{ props.index + 1 }}</td>
+				        <td>{{ props.item.package_name }}</td>
+				        <td>{{ props.item.price }}</td>
+				        <td>{{ props.item.offer }}</td>
+		        		<td>
 		        			<v-edit-dialog
 					            :return-value.sync="props.item.dollar"
 					            large
@@ -83,7 +83,7 @@
 					            ></v-text-field>
 	          				</v-edit-dialog>
 		        		</td>
-		         		<td class="text-right">
+		         		<td>
 		        			<v-edit-dialog
 		            			:return-value.sync="props.item.euro"
 		            			large
@@ -108,7 +108,7 @@
 	            					></v-text-field>
 	          				</v-edit-dialog>
 		        		</td>
-		         		<td class="text-right">
+		         		<td>
 		        			<v-edit-dialog
 					            :return-value.sync="props.item.indo"
 					            large
@@ -134,7 +134,7 @@
 		            			></v-text-field>
 	          				</v-edit-dialog>
 		        		</td>
-		        		<td class="text-right">
+		        		<td>
 		        			<v-edit-dialog
 					            :return-value.sync="props.item.turkey"
 					            large
@@ -161,7 +161,7 @@
 	            				></v-text-field>
 	          				</v-edit-dialog>
 		        		</td>
-		        		<td class="text-right">
+		        		<td>
 		        			<v-edit-dialog
 					            :return-value.sync="props.item.vn"
 					            large
@@ -186,7 +186,7 @@
 					            ></v-text-field>
 	          				</v-edit-dialog>
 	        			</td>
-		        		<td class="text-center action-width">
+		        		<td class="action-width">
 				          	<v-icon
 				            	small
 				            	class="mr-2"
@@ -249,7 +249,7 @@
 	      		<v-data-table
 		      		:headers="headers2"
 			      	:items="desserts2"
-			      	class="body-2 custom-table"
+			      	class="body-2"
 			      	:pagination.sync="pagination"
 			      	:disable-initial-sort="true"
 				  	:loading="loadingCom"
@@ -264,7 +264,7 @@
 			              		:class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
 			              		@click="changeSort(header.value)"
 			            	>
-			            		<div class="custom-header" :class="header.value == 'price' || header.value == 'offer' ? 'justify-content-center' : ''">
+			            		<div :class="header.value == 'price' || header.value == 'offer' ? 'justify-content-center' : ''">
 					              	<v-tooltip bottom>
 						                <span slot="activator" class="text-capitalize font-weight-bold">
 						                  	{{ header.text }}
@@ -280,10 +280,10 @@
 			        </template>
 
 		    		<template slot="items" slot-scope="props">
-		    			<td class="text-xs-left">{{ props.index + 1 }}</td>
-			        	<td class="text-xs-left">{{ props.item.size }}</td>
-			        	<td class="text-xs-right custom-td-package">
-			        		<v-flex xs8 offset-xs2 class="center-prepend-icon">
+		    			<td>{{ props.index + 1 }}</td>
+			        	<td>{{ props.item.size }}</td>
+			        	<td>
+			        		<v-flex class="center-prepend-icon">
 				        		<v-edit-dialog
 				        			:ref="'v-dialog'+'dollar'+props.item.id"
 			            			:return-value.sync="props.item.dollar"
@@ -310,8 +310,8 @@
 		         				</v-edit-dialog>
 	         				</v-flex>
 			        	</td>
-			        	<td  class="text-xs-right custom-td-package">
-			        		<v-flex xs8 offset-xs2 class="center-prepend-icon">
+			        	<td>
+			        		<v-flex class="center-prepend-icon">
 				        		<v-edit-dialog
 				        			:ref="'v-dialog'+'euro'+props.item.id"
 					            	:return-value.sync="props.item.euro"
@@ -338,8 +338,8 @@
 		         				</v-edit-dialog>
 		         			</v-flex>
 			        	</td>
-			        	<td  class="text-xs-right custom-td-package">
-			        		<v-flex xs8 offset-xs2 class="center-prepend-icon">
+			        	<td>
+			        		<v-flex class="center-prepend-icon">
 			        			<v-edit-dialog
 					        		:ref="'v-dialog'+'indo'+props.item.id"
 					            	:return-value.sync="props.item.indo"
@@ -366,8 +366,8 @@
 	         					</v-edit-dialog>
 	         				</v-flex>
 		        		</td>
-			        	<td  class="text-xs-right custom-td-package">
-				        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+			        	<td>
+				        	<v-flex class="center-prepend-icon">
 					        	<v-edit-dialog
 					        		:ref="'v-dialog'+'turkey'+props.item.id"
 						            :return-value.sync="props.item.turkey"
@@ -394,8 +394,8 @@
 			         			</v-edit-dialog>
 			         		</v-flex>
 				        </td>
-			        	<td class="text-xs-right custom-td-package">
-				        	<v-flex xs8 offset-xs2 class="center-prepend-icon">
+			        	<td>
+				        	<v-flex class="center-prepend-icon">
 					        	<v-edit-dialog
 					        		:ref="'v-dialog'+'vn'+props.item.id"
 						            :return-value.sync="props.item.vn"
@@ -422,8 +422,8 @@
 			         			</v-edit-dialog>
 			         		</v-flex>
 				        </td>
-			        	<td  class="text-xs-right custom-td-package">
-			        		<v-flex xs8 offset-xs2 class="center-prepend-icon">
+			        	<td>
+			        		<v-flex class="center-prepend-icon">
 					          	<v-edit-dialog
 						          	:ref="'v-dialog'+'free_photo'+props.item.id"
 						            :return-value.sync="props.item.free_photo"
@@ -477,58 +477,58 @@ export default {
 	},
 
 	data () {
-    return {
-    	headers: [
-    		{ text: 'Sl No.', value: 'id' },
-        { text: 'Package Name', align: 'left', value: 'package_name' },
-        { text: 'Package Price', value: 'price' },
-        { text: 'Offer Price', value: 'offer' },
-        { text: 'Dollar', value: 'offer', sortable: false, width: '35%' },
-        { text: 'Euro', value: 'offer', sortable: false, width: '35%' },
-        { text: 'Indo', value: 'offer', sortable: false, width: '35%' },
-        { text: 'Turkey', value: 'offer', sortable: false, width: '35%' },
-        { text: 'VND', value: 'offer', sortable: false, width: '35%' },
-        { text: 'Actions', value:'actions', sortable: false, align: 'right' }
-    	],
-    	desserts: [],
-    	headers2: [
-    		{ text: 'Sl No.', value: 'id', width: '10%' },
-        { text: 'Size', align: 'left', value: 'package_name', width: '25%' },
-        { text: 'Dollar', value: 'offer', sortable: false, width: '65%' },
-        { text: 'Euro', value: 'offer', sortable: false, width: '65%' },
-        { text: 'Indo', value: 'offer', sortable: false, width: '65%' },
-        { text: 'Turkey', value: 'offer', sortable: false, width: '65%' },
-        { text: 'VND', value: 'offer', sortable: false, width: '65%' },
-        { text: 'Free Photo', value: 'offer', sortable: false, width: '35%' },
-    	],
-      desserts2: [],
-    	rules: {
-        required: value => !!value || 'Required.',
-        	number: value => {
-            const abc = /^[0-9]\d*$/
-            return abc.test(value) || 'Please input number.'
-        	},
-        	decimal: value => {
-            const abc = /^\d+\.\d{0,10}$/
-            return abc.test(value) || 'Please input number.'
-        	},
-      },
-      dialog: false,
-      pagination: {
-	      page: 1,
-	      rowsPerPage: 10,
-	      totalItems: 0,
-	    },
-	    itemIdToDelete: {
-	    	id: null,
-	    	setting_id:null
-	    },
-	    loading: true,
-	    key: 0,
-	    keyPhotoPackage: 0,
-	    user: JSON.parse(localStorage.getItem('user')),
-	    persistent: true
-    }
+	    return {
+	    	headers: [
+	    		{ text: 'Sl No.', value: 'id' },
+		        { text: 'Package Name', align: 'left', value: 'package_name' },
+		        { text: 'Package Price', value: 'price' },
+		        { text: 'Offer Price', value: 'offer' },
+		        { text: 'Dollar', value: 'offer', sortable: false },
+		        { text: 'Euro', value: 'offer', sortable: false },
+		        { text: 'Indo', value: 'offer', sortable: false },
+		        { text: 'Turkey', value: 'offer', sortable: false },
+		        { text: 'VND', value: 'offer', sortable: false },
+		        { text: 'Actions', value:'actions', sortable: false }
+	    	],
+	    	desserts: [],
+	    	headers2: [
+	    		{ text: 'Sl No.', value: 'id', width: '10%' },
+		        { text: 'Size', value: 'package_name', width: '25%' },
+		        { text: 'Dollar', value: 'offer', sortable: false },
+		        { text: 'Euro', value: 'offer', sortable: false },
+		        { text: 'Indo', value: 'offer', sortable: false },
+		        { text: 'Turkey', value: 'offer', sortable: false },
+		        { text: 'VND', value: 'offer', sortable: false },
+		        { text: 'Free Photo', value: 'offer', sortable: false },
+	    	],
+	      	desserts2: [],
+	    	rules: {
+	        	required: value => !!value || 'Required.',
+	        	number: value => {
+	            const abc = /^[0-9]\d*$/
+	            return abc.test(value) || 'Please input number.'
+	        	},
+	        	decimal: value => {
+	            const abc = /^\d+\.\d{0,10}$/
+	            return abc.test(value) || 'Please input number.'
+	        	},
+	      	},
+	      	dialog: false,
+	      	pagination: {
+		      page: 1,
+		      rowsPerPage: 10,
+		      totalItems: 0,
+		    },
+		    itemIdToDelete: {
+		    	id: null,
+		    	setting_id:null
+		    },
+		    loading: true,
+		    key: 0,
+		    keyPhotoPackage: 0,
+		    user: JSON.parse(localStorage.getItem('user')),
+		    persistent: true
+	    }
 	},
 	computed: {
     loadingCom(){

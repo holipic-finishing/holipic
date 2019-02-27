@@ -31,13 +31,13 @@
   			<v-card-title>
   	      <v-spacer></v-spacer>
           <div class="w-25">
-    	      <!-- <v-text-field
+    	      <v-text-field
     	        v-model="search"
     	        append-icon="search"
     	        label="Enter Search Value"
     	        single-line
     	        hide-details
-    	      ></v-text-field> -->
+    	      ></v-text-field>
           </div>
   	    </v-card-title>
   	    <!--End Search Component -->
@@ -45,7 +45,7 @@
   			<v-data-table
   			  :headers="headers"
   			  :items="itemsToView"
-  			  class="body-2 global-custom-table"
+  			  class="body-2 custom-table-order"
   			  :pagination.sync="pagination"
   			  :loading="loadingCom"
   			  item-key="id"
@@ -53,7 +53,6 @@
           :rows-per-page-items="rowsPerPageItems"
   			>
   				<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-
 
   				<!--Prop data -->
   				<template slot="items" slot-scope="props">
@@ -65,9 +64,9 @@
               <td v-else>No Room</td>
               <td v-if="props.item.customer && props.item.customer.user">{{ props.item.customer.user.email }}</td>
               <td v-else>No Email</td>
-              <td class="text-center">{{ props.item.total_amount_to_dollar }}</td>
-              <td class="text-center">{{ props.item.payment_method }}</td>
-              <td class="text-center">
+              <td >{{ props.item.total_amount_to_dollar }}</td>
+              <td>{{ props.item.payment_method }}</td>
+              <td>
                <!--  <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
                 <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
                 <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
@@ -193,25 +192,25 @@ export default {
         },
         { 
           text: 'Amount',
-          align: 'center',
+          align: 'left',
           value: 'total_amount_to_dollar',
           class: 'mb-icon',
         },
         { 
           text: 'Payment Method',
-          align: 'center',
+          align: 'left',
           value: 'payment_method',
           class: 'mb-icon',
         },
         {
           text: 'Status',
-          align: 'center',
+          align: 'left',
           value: 'actions',
           sortable: false,
         },
         {
           text: 'Action',
-          align: 'center',
+          align: 'left',
           sortable:false,
         }
       ],

@@ -56,16 +56,27 @@
 }
 
 .custom-table-customer{
-
+	
 	thead th:not(:nth-child(1)){
 		padding: 0 0px !important;
-		text-align:center !important;
-
 	}
 
 	tbody td:not(:nth-child(1)){
-		padding: 0 6px !important;
-		text-align:center !important;
+		padding: 0px 0px !important;
+		
+	}
+
+	.margin-left{
+    	padding-left: 0px !important;
+    	margin-left: 0px !important;
+    }
+    .th-margin{
+    	text-align:left !important;
+    	padding-left: 0px !important;
+    }
+
+    .btn-customer {
+		margin-left: 0px !important;
 	}
 }
 
@@ -84,7 +95,7 @@
 }
 
 .btn-customer{
-	min-width: 61px;
+	min-width: 100px;
 }
 
 .height-input-customer{

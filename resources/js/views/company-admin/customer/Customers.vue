@@ -51,7 +51,7 @@
 	            <th
 								v-for="header in props.headers"
 								:key="header.text"
-								:class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.text === 'Action' ? 'text-right' : '']"
+								:class="['column sortable th-margin', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.text === 'Action' ? 'text-right' : '']"
 								@click="changeSort(header.value)"
 	            >       	
 		            <v-tooltip bottom>
@@ -69,11 +69,11 @@
 
 					<template slot="items" slot-scope="props" >
 						<td>{{ props.item.id }}</td>
-						<td class="text-xs-left" >{{ props.item.name }}</td>
-						<td class="text-xs-left">{{ props.item.room.room_hash }}</td>
-						<td class="text-xs-left">{{ props.item.user.email }}</td>
-						<td class="text-xs-left">{{ props.item.customer_password }}</td>
-						<td class="text-xs-left">
+						<td class="text-left margin-left" >{{ props.item.name }}</td>
+						<td class="text-left margin-left">{{ props.item.room.room_hash }}</td>
+						<td class="text-left margin-left">{{ props.item.user.email }}</td>
+						<td class="text-left margin-left">{{ props.item.customer_password }}</td>
+						<td class="text-left margin-left">
 							<v-tooltip bottom>
 								<img :src="props.item.avatar" width="50px" slot="activator">
 								<span>
@@ -105,22 +105,22 @@
 						</td>
 
 						<td class="text-xs-left">
-							<v-btn color="success" small class="btn-customer btn-gradient-primary">Manage</v-btn>
+							<v-btn round small class="btn-customer ">Manage</v-btn>
 						</td>
 						<td class="text-xs-left">
-							<v-btn color="success" small class="btn-customer btn-gradient-primary">Manage</v-btn>
+							<v-btn round small class="btn-customer ">Manage</v-btn>
 						</td>
 						<td class="text-xs-left">
-							<v-btn color="success" small class="btn-customer btn-gradient-primary">100</v-btn>
+							<v-btn round small class="btn-customer">100</v-btn>
 						</td>
-						<td class="text-xs-left center-input-customer">
+						<td class="text-xs-left">
 							<v-text-field
 						  	name="name"
-						  	outline
+						  	label="Offer"
 						  	class="height-input-customer width-input"
 							></v-text-field>
 						</td>
-	        	<td class="text-right action-width">
+	        	<td class="text-left action-width">
 	        		<v-icon
 								small
 								class="mr-6 hover-icon margin-icon-customer"
@@ -197,15 +197,15 @@ export default {
     	items:[],
     	headers:[
 			{ text: 'ID', value: 'id', width: '1%'},	       
-			{ text: 'Name', value: 'name' },
-			{ text: 'Room', value: 'room.room_hash'},	
-			{ text: 'Email', value: 'user.email' },	
-			{ text: 'Password', value: 'customer_password' },		      
-			{ text: 'Avatar' },
-			{ text: 'Order'},
-			{ text: 'Invoice'},
-			{ text: 'Rest Photo'},
-			{ text: 'Set Offer(Rp)', width: '10%'},
+			{ text: 'Name', value: 'name',  align: 'left' },
+			{ text: 'Room', value: 'room.room_hash', align: 'left'},	
+			{ text: 'Email', value: 'user.email' , align: 'left'},	
+			{ text: 'Password', value: 'customer_password', align: 'left' },		      
+			{ text: 'Avatar' , align: 'left'},
+			{ text: 'Order', align: 'left'},
+			{ text: 'Invoice', align: 'left'},
+			{ text: 'Rest Photo', align: 'left'},
+			{ text: 'Set Offer(Rp)', width: '10%', align: 'left'},
       { text: 'Action', sortable: false ,width: '7%', value: 'actions'},  
 		],
 		pagination: {
@@ -295,5 +295,6 @@ export default {
     .margin-icon-customer{
     	margin-left:4px !important;
     }
+
 
 </style>

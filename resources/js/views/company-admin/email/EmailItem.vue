@@ -1,134 +1,120 @@
 <template>
-	<v-dialog 
+	<v-dialog
 		fixed
-		v-model="drawer" 
-		:right="!rtlLayout" 
+		v-model="drawer"
+		:right="!rtlLayout"
 		fullscreen hide-overlay transition="slide-x-reverse-transition"
 	>
 		<v-card class="h-100 position-relative">
-
 			<v-toolbar>
-	    	<v-toolbar-title class="text-capitalize">{{ eventType }} E-mail Templates</v-toolbar-title>
-	    	<v-spacer></v-spacer>
-	    	<v-toolbar-side-icon @click="closeDrawer">
-	      		<v-icon>
-	          		fas fa-times
-	        	</v-icon>
-	      	</v-toolbar-side-icon>
-    	</v-toolbar>
-	    <v-divider class="mt-0 mb-0"></v-divider>
+		    	<v-toolbar-title class="text-capitalize">{{ eventType }} E-mail Templates</v-toolbar-title>
+		    	<v-spacer></v-spacer>
+		    	<v-toolbar-side-icon @click="closeDrawer">
+		      		<v-icon>
+		          		fas fa-times
+		        	</v-icon>
+		      	</v-toolbar-side-icon>
+	    	</v-toolbar>
+	    	<v-divider class="mt-0 mb-0"></v-divider>
 
-    	<v-form
-    		ref="form"
-    		class="heigth-list-title"
-    		v-show="check"
-    		@submit.prevent="saveEmail"
-    	>
-	    	<v-list>
-					<!-- <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>	 -->
-					<v-list-tile class="height-80">
-		        <v-list-tile-content class="h-100">
-		          <v-list-tile-title class="content-flex-end h-100">
-		            <span class="font-weight-bold item-title-style position-item">Title</span>
-		            <span class="contain-text-field">
-		              <v-text-field
-		                class="font-weight-bold height-input"
-		                placeholder="Enter Title"
-		                v-model="itemToSave.email_title"
-		                outline
-		                name="email_title"
-		             	 	v-validate="'required'"
-		                :error-messages="errors.collect('email_title')"
-		                data-vv-name="email_title"
-		              ></v-text-field>
-		            </span>
-		          </v-list-tile-title>
-		        </v-list-tile-content>
-		      </v-list-tile>
-		      <v-divider class="mt-0 mb-0"></v-divider>
-		      <v-spacer></v-spacer>
+	    	<v-form
+	    		ref="form"
+	    		class="heigth-list-title"
+	    		v-show="check"
+	    		@submit.prevent="saveEmail"
+	    	>
+		    	<v-list>
+					<v-list-tile class="height-75">
+				        <v-list-tile-content class="h-100">
+				          	<v-list-tile-title class="content-flex-end h-100">
+					            <span class="item-title-style position-item">Title</span>
+					            <span class="contain-text-field">
+					              	<v-text-field
+						                class="height-input"
+						                placeholder="Enter Title"
+						                v-model="itemToSave.email_title"
+						                name="email_title"
+					             	 	v-validate="'required'"
+						                :error-messages="errors.collect('email_title')"
+						                data-vv-name="email_title"
+					              	></v-text-field>
+					            </span>
+				          	</v-list-tile-title>
+				        </v-list-tile-content>
+				     </v-list-tile>
+				     <v-divider class="mt-0 mb-0"></v-divider>
+				     <v-spacer></v-spacer>
 
-		    	<v-list-tile class="height-100">
-		        <v-list-tile-content class="h-100">
-		          <v-list-tile-title class="content-flex-end h-100">
-		            <span class="font-weight-bold item-title-style position-item">Email Content
-		            </span>
-		          </v-list-tile-title>
-		          <v-list-tile-title class="content-flex-end h-100">
-								<ckeditor 
-							  	id="editor1"
-						      v-model="itemToSave.email_content" 
-						      :config="config"
-						      v-validate="'required'"
-						      name="email_content"	  
-			           	class="style-ckeditor"
-						    ></ckeditor>
-		          </v-list-tile-title>
-		          <span v-show="errors.has('email_content')" class="help is-danger" style="color:red">{{ errors.first('email_content') }} </span>
-		        </v-list-tile-content>
-		      </v-list-tile>
-
-	    	</v-list>
-
-	    	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-		 			<v-btn type="submit" color="primary">Save</v-btn>
-	      	<v-btn @click="closeDrawer">Close</v-btn>
-	    	</v-card-actions>
-
-	    </v-form>  
+		    		<v-list-tile class="height-100">
+		        		<v-list-tile-content class="h-100">
+			          		<v-list-tile-title class="content-flex-end h-100 mt-2 mb-2">
+			            		<span class="font-weight-bold item-title-style position-item">
+									Email Content
+				            	</span>
+			          		</v-list-tile-title>
+				          	<v-list-tile-title class="content-flex-end h-100">
+								<ckeditor
+									id="editor1"
+								    v-model="itemToSave.email_content"
+								    :config="config"
+								    v-validate="'required'"
+								    name="email_content"
+					           		class="style-ckeditor"
+								></ckeditor>
+				          	</v-list-tile-title>
+		          			<span v-show="errors.has('email_content')" class="help is-danger" style="color:red">{{ errors.first('email_content') }} </span>
+		        		</v-list-tile-content>
+		      		</v-list-tile>
+	    		</v-list>
+	    		<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
+		 			<v-btn type="submit" color="indigo">Save</v-btn>
+	    		</v-card-actions>
+		    </v-form>
 
 	    	<!-- edit -->
-	    <div v-if="!check">
-	    	<v-list class="heigth-list-title">
-					<!-- <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>	 -->
-					<v-list-tile class="height-80">
-		        <v-list-tile-content class="h-100">
-		          <v-list-tile-title class="content-flex-end h-100">
-		            <span class="font-weight-bold item-title-style position-item">Title</span>
-		            <span class="contain-text-field">
-		              <v-text-field
-		                class="font-weight-bold height-input"
-		                placeholder="Enter Title"
-		                v-model="item.email_title"
-		                outline
-	                	@blur="editItem('email_title', item.email_title)"
-	                	@keyup.enter="editItem('email_title', item.email_title)"
-		              ></v-text-field>
-		            </span>
-		          </v-list-tile-title>
-		        </v-list-tile-content>
-		      </v-list-tile>
-		      <v-divider class="mt-0 mb-0"></v-divider>
-		      <v-spacer></v-spacer>
+	    	<div v-if="!check">
+	    		<v-list class="heigth-list-title">
+					<v-list-tile class="height-75">
+		        		<v-list-tile-content class="h-100">
+		          			<v-list-tile-title class="content-flex-end h-100">
+		            			<span class="item-title-style position-item">Title</span>
+					            <span class="contain-text-field">
+					              	<v-text-field
+						                class="height-input"
+						                placeholder="Enter Title"
+						                v-model="item.email_title"
+					                	@blur="editItem('email_title', item.email_title)"
+					                	@keyup.enter="editItem('email_title', item.email_title)"
+					              	></v-text-field>
+					            </span>
+		          			</v-list-tile-title>
+		        		</v-list-tile-content>
+		      		</v-list-tile>
+		      		<v-divider class="mt-0 mb-0"></v-divider>
+		      		<v-spacer></v-spacer>
 
-		   		<v-list-tile class="height-100">
-		        <v-list-tile-content class="h-100">
-		          <v-list-tile-title class="content-flex-end h-100">
-								<ckeditor 
-						      v-model="item.email_content" 
-						      :config="config"
-						      name="email_content1"	  
-			           		  class="style-ckeditor"
-					     	  @blur="editItem('email_content', item.email_content)"
-						      ></ckeditor>
-		          </v-list-tile-title>
-		          <span v-show="errors.has('email_content1')" class="help is-danger" style="color:red">{{ errors.first('email_content1') }} </span>
-		        </v-list-tile-content>
-		      </v-list-tile>
-
-	    	</v-list>
-
-	    	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-	      	<v-btn @click="closeDrawer">Close</v-btn>
-	    	</v-card-actions>
-
-	    </div>
-		</v-card>				
-	</v-dialog>	
+		   			<v-list-tile class="height-100">
+		        		<v-list-tile-content class="h-100">
+							<v-list-tile-title class="content-flex-end h-100 mt-2 mb-2">
+								<ckeditor
+							      	v-model="item.email_content"
+							      	:config="config"
+							      	name="email_content1"
+				           		  	class="style-ckeditor"
+						     	  	@blur="editItem('email_content', item.email_content)"
+						      	></ckeditor>
+		          			</v-list-tile-title>
+		          			<span v-show="errors.has('email_content1')" class="help is-danger" style="color:red">{{ errors.first('email_content1') }} </span>
+		        		</v-list-tile-content>
+		      		</v-list-tile>
+	    		</v-list>
+	    	</div>
+		</v-card>
+	</v-dialog>
 </template>
 
 <script>
-import Ckeditor from 'vue-ckeditor2'	
+import Ckeditor from 'vue-ckeditor2'
 import config from '../../../config'
 import { post } from '../../../api'
 import { mapGetters } from "vuex"
@@ -175,7 +161,7 @@ export default {
 		closeDrawer(){
 			this.drawer = false
 			this.resetData()
-			this.key = 0	
+			this.key = 0
 			this.itemToSave.email_content = ""
 		},
 		resetData(){
@@ -185,7 +171,7 @@ export default {
 		saveEmail(){
 			this.$validator.validateAll().then((result) => {
 				if(result){
-					
+
 					let url = config.API_URL + 'emails'
 					var regex = /(&nbsp;|<([^>]+)>)/ig
     				var strippedContent = this.itemToSave.email_content.replace(regex, '');
@@ -194,7 +180,7 @@ export default {
 						email_content : this.itemToSave.email_content,
 						format_email_content: strippedContent.slice(0, 190) + '....'
 					}
-	
+
 					post(url,param)
 					.then(res => {
 						if(res.data && res.data.success){
@@ -205,7 +191,7 @@ export default {
 			          message: this.alertMes,
 			          type: this.alertType,
 			          duration: 2000,
-			        })					
+			        })
 			        this.key = 0
 							this.$root.$emit('reload-data')
 						}
@@ -216,7 +202,7 @@ export default {
 		          message: 'System Error Occurred.',
 		          type: 'error',
 		          duration: 2000,
-		        })		
+		        })
 					})
 				}
 			});
@@ -250,26 +236,26 @@ export default {
 			.then((res) => {
 				if(res.data && res.data.success){
 	        this.alertType = 'success'
-	        this.alertMes = 'Update Item Successfully'					
+	        this.alertMes = 'Update Item Successfully'
 	        this.$notify({
 	          title: 'Success',
 	          message: this.alertMes,
 	          type: this.alertType,
 	          duration: 2000,
-	        })	
+	        })
 	        this.key = 0
 					this.$root.$emit('reload-data')
 				}
 			})
 			.catch((e) =>{
         this.alertType = 'error'
-        this.alertMes = 'System Error Occurred'         
+        this.alertMes = 'System Error Occurred'
 				this.$notify({
           title: 'Error',
           message: this.alertMes,
           type: this.alertType,
           duration: 2000,
-        })	
+        })
 			})
 
  		},
@@ -280,16 +266,16 @@ export default {
   	Validate(field_name,value){
  			if(!value){
         this.alertType = 'error'
-        this.alertMes = 'No ' + field_name + ' Yet'  
-        this.validate = false      
+        this.alertMes = 'No ' + field_name + ' Yet'
+        this.validate = false
         this.$notify({
           title: 'Error',
           message: this.alertMes,
           type: this.alertType,
           duration: 2000,
-        })	
+        })
  			}else {
- 				this.validate = true  
+ 				this.validate = true
  			}
  		}
 	},

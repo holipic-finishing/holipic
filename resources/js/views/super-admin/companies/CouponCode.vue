@@ -36,7 +36,7 @@
 		                <v-list-tile-title>
 		                	<v-tooltip top>
 		                		<span slot="activator">{{ couponCode.name }}</span>
-		                		<span>{{ couponCode.name }}</span>	  
+		                		<span>{{ couponCode.name }}</span>
 		                	</v-tooltip>
 		                </v-list-tile-title>
 		                <v-list-tile-sub-title>{{ couponCode.discount }} %</v-list-tile-sub-title>
@@ -51,7 +51,7 @@
 			                </v-icon>
 			                <span>Add</span>
 		              	</v-tooltip>
-										
+
 										<v-tooltip bottom v-else>
 			                <v-icon
 			                  color="green darken-1"
@@ -76,12 +76,6 @@
 	        </v-card>
 	      </v-flex>
 	    </v-layout>
-
-	    <!-- Close drawer button -->
-	    <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-	      <v-btn @click="closeDrawer">Close</v-btn>
-	    </v-card-actions>
-	    <!-- End close drawer button -->
 
 		</v-card>
 	</v-navigation-drawer>
@@ -124,7 +118,7 @@ export default {
 			})
 			.catch((err) =>{
 				console.log(err)
-			}) 
+			})
 		},
 		closeDrawer(){
 			this.drawer = false

@@ -1,17 +1,17 @@
 <template>
 	<v-layout row wrap>
-		<v-navigation-drawer 
-		fixed
-		v-model="drawerRight" 
-		right
-		temporary 
-		app 
-		clipped
-  		:width='widthComputed'
+		<v-navigation-drawer
+			fixed
+			v-model="drawerRight"
+			right
+			temporary
+			app
+			clipped
+	  		:width='widthComputed'
 		>
 			<v-card class="h-100 position-relative">
 
-				<v-toolbar>
+				<v-toolbar class="mb-3">
 					<v-toolbar-title class="text-capitalize">Add Photographer</v-toolbar-title>
 					<v-spacer></v-spacer>
 					<v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
@@ -20,7 +20,6 @@
 						</v-icon>
 					</v-toolbar-side-icon>
 				</v-toolbar>
-				<v-divider class="no-mg-bottom"></v-divider>
 
 				<v-form
 					ref="form"
@@ -29,111 +28,106 @@
 				>
 					<v-list class="heigth-list-title">
 
-						<!-- <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert> -->
-
-						<v-list-tile class="height-80">
+						<v-list-tile class="height-65">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Select Branch:</span>
+									<span class="item-title position-item">Select Branch:</span>
 									<span class="contain-text-field">
 										<v-select
-			                class="font-weight-bold height-input"
-			                outline
-			                :items="branches"
-			                item-value="id"
-            					item-text="name"
-			                v-model="photographer.branch_id"
-			                :rules="[rules.required]"
-			              ></v-select>
+											clearable
+							                :items="branches"
+							                item-value="id"
+			            					item-text="name"
+						                	v-model="photographer.branch_id"
+						                	:rules="[rules.required]"
+						                	placeholder="Select Branch"
+						                	class="height-input"
+						              	></v-select>
 									</span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+						<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-80">
+						<v-list-tile class="height-65">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Name:</span>
+									<span class="item-title position-item">Name:</span>
 									<span class="contain-text-field">
 										<v-text-field
-											class="font-weight-bold height-input"
-											placeholder="Enter Name"
+											class="height-input"
+											placeholder="Input Your Name"
 											v-model="photographer.name"
-											outline
 											:rules="[rules.required]"
 										></v-text-field>
 									</span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+						<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-80">
+						<v-list-tile class="height-65">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Phone Number:</span>
+									<span class="item-title position-item">Phone Number:</span>
 									<span class="contain-text-field">
 										<v-text-field
-											class="font-weight-bold height-input"
-											placeholder="Enter Phone"
+											class="height-input"
+											placeholder="Input Your Phone"
 											v-model="photographer.phone_number"
-											outline
 											:rules="[rules.required]"
 										></v-text-field>
 									</span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+						<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-80">
-							<v-list-tile-content class="h-100">
-								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Address:</span>
-									<span class="contain-text-field">
-										<v-text-field
-											class="font-weight-bold height-input"
-											placeholder="Enter Address"
+						<v-list-tile class="height-75">
+					    	<v-list-tile-content class="h-100">
+					          	<v-list-tile-title class="content-flex-end h-100">
+					            	<span class="item-title">Address:</span>
+					            	<span class="contain-text-field">
+										<v-textarea
+											placeholder="Input Your Address"
 											v-model="photographer.address"
-											outline
 											:rules="[rules.required]"
-										></v-text-field>
-									</span>
-								</v-list-tile-title>
-							</v-list-tile-content>
-						</v-list-tile>
-						<v-divider class="no-mg-bottom"></v-divider>
+											rows="1"
+										></v-textarea>
+					            	</span>
+					          	</v-list-tile-title>
+					     	</v-list-tile-content>
+				      	</v-list-tile>
+				      	<v-divider class="m-0"></v-divider>
 
-						<v-list-tile class="height-80">
+						<v-list-tile class="height-65">
 							<v-list-tile-content class="h-100">
 								<v-list-tile-title class="content-flex-end h-100">
-									<span class="font-weight-bold item-title position-item">Status:</span>
+									<span class="item-title position-item">Status:</span>
 									<span class="contain-text-field">
 										<v-select
-			                class="font-weight-bold height-input"
-			                outline
-			                :items="status"
-			                v-model="photographer.status"
-			                :rules="[rules.required]"
-			              ></v-select>
+											clearable
+							                :items="status"
+							                v-model="photographer.status"
+							                :rules="[rules.required]"
+							                placeholder="Select Status"
+							                class="height-input"
+							         	></v-select>
 									</span>
 								</v-list-tile-title>
 							</v-list-tile-content>
 						</v-list-tile>
+						<v-divider class="m-0"></v-divider>
+						<v-flex xs12 sm12 class="style-flex fix-style-flex">
+							<v-btn dark color="indigo" class="add-btn" @click="savePhotographer()">
+								Save
+							</v-btn>
+						</v-flex>
 
 					</v-list>
 				</v-form>
-				<v-spacer></v-spacer>
 
-				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-					<v-btn dark color="indigo" class="add-btn" @click="savePhotographer()">
-						Save
-					</v-btn>
-					<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-				</v-card-actions>
-
-			</v-card>      	
+			</v-card>
 		</v-navigation-drawer>
 	</v-layout>
 </template>
@@ -187,8 +181,8 @@ export default {
 			.then(response => {
 				if(response && response.data.success) {
 					this.branches = response.data.data
-				}			
-				
+				}
+
 			})
 			.catch(error => {
 				this.$notify({
@@ -202,7 +196,7 @@ export default {
 			if (this.$refs.form.validate()) {
 
   			let params = {information: this.photographer, userId: this.company.id}
-  			post(config.API_URL+'photographer', params)	
+  			post(config.API_URL+'photographer', params)
   			.then(response =>{
   				if(response && response.data.success) {
   					this.$root.$emit('reloadTablePhotographer')
@@ -237,4 +231,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.fix-style-flex{
+	float: right;
+}
+.style-flex {
+	padding: 5px 12px !important;
+	font-weight: 500 !important;
+}
 </style>

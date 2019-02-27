@@ -56,7 +56,7 @@
 		                placeholder="Enter package name"
 		                v-model="item.package_name"
  			            :rules="[rules.required]"
-		                outline       
+		                outline
 		              ></v-text-field>
 		            </span>
 		          </v-list-tile-title>
@@ -74,7 +74,7 @@
 		                placeholder="Enter secure storage"
 		               	v-model="item.secure_storage"
 	                    :rules="[rules.required]"
-		                outline                
+		                outline
 		              ></v-text-field>
 		            </span>
 		          </v-list-tile-title>
@@ -92,7 +92,7 @@
 		                placeholder="Enter file upload"
 		               	v-model="item.file_upload"
                     	:rules="[rules.required, rules.number]"
-		                outline                
+		                outline
 		              ></v-text-field>
 		            </span>
 		          </v-list-tile-title>
@@ -110,7 +110,7 @@
 		                placeholder="Minimum user"
 		              	v-model="item.minimum_user"
 	                    :rules="[rules.required, rules.number]"
-		                outline               
+		                outline
 		              ></v-text-field>
 		            </span>
 		          </v-list-tile-title>
@@ -129,7 +129,7 @@
 		              	v-model="item.max_user"
 	                    :rules="[rules.required]"
 		                outline
-		                			                
+
 		              ></v-text-field>
 		            </span>
 		          </v-list-tile-title>
@@ -166,7 +166,7 @@
 										v-model="item.expiration_date"
 										outline
 										placeholder="0"
-									></v-text-field>	
+									></v-text-field>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
@@ -245,12 +245,12 @@
 	        </v-list-tile>
 	        <v-divider class="mt-0 mb-0"></v-divider>
 
-	      </v-list>  
+	      </v-list>
    		</v-form>
 			<!-- End Add Package -->
-			
+
 			<!-- Setting Package -->
-   		<v-form ref="form1" @submit.prevent="savePackagesSetting" v-show="check == 'setting'" class="heigth-list-title"> 
+   		<v-form ref="form1" @submit.prevent="savePackagesSetting" v-show="check == 'setting'" class="heigth-list-title">
 	      <v-list two-line>
 	        <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 
@@ -266,7 +266,7 @@
 										@blur="editSetting('expiration_date', data.expiration_date)"
 										@keyup.enter="editSetting('expiration_date', data.expiration_date)"
 										outline
-									></v-text-field>	
+									></v-text-field>
 								</span>
 								<!-- <span class="position-item">
 									<v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
@@ -353,12 +353,12 @@
 					</v-list-tile>
 					<v-divider class="mt-0 mb-0"></v-divider>
 
-	      </v-list> 
+	      </v-list>
 	    </v-form>
 	    <!-- End setting package -->
-			
+
 			<!-- Edit package -->
-	    <v-form ref="form2"  v-show="check == 'edit'" class="heigth-list-title"> 
+	    <v-form ref="form2"  v-show="check == 'edit'" class="heigth-list-title">
 	      <v-list two-line>
 	        <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 
@@ -502,21 +502,16 @@
 					</v-list-tile>
 					<v-divider class="mt-0 mb-0"></v-divider>
 
-	      </v-list> 
+	      </v-list>
 	    </v-form>
 	    <!-- End Edit Package -->
-
-		 	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">						
-				<v-btn @click.stop="stopdrawerRight()">Close</v-btn>
-			</v-card-actions>
-
 		</v-card>
 	</v-navigation-drawer>
 </template>
 
 <script>
 import config from '../../../config/index.js'
-import { post, put } from '../../../api/index.js'	
+import { post, put } from '../../../api/index.js'
 import Vue from 'vue'
 import { getWithContentWrap } from '../../../helpers/helpers'
 
@@ -604,14 +599,14 @@ export default {
       this.fetchData(field)
 
     },
-      	
+
 	  fetchData(field){
 	   	post(config.API_URL + 'edit/package/' + this.data.id, field)
 			.then((res) => {
 				if(res.data && res.data.success){
 		      this.alertStt = true
 		      this.alertType = 'success'
-		      this.alertMes = 'Update Successfully'					
+		      this.alertMes = 'Update Successfully'
 		      setTimeout(() => {this.alertStt = false}, 1500)
 		      this.key = 0
 					this.$root.$emit('editItemSucess')
@@ -620,7 +615,7 @@ export default {
 			.catch((e) =>{
 				this.alertStt = true
         this.alertType = 'error'
-        this.alertMes = 'System Error Occurred'         
+        this.alertMes = 'System Error Occurred'
     		setTimeout(() => {this.alertStt = false}, 1500)
 			})
 	  },
@@ -640,7 +635,7 @@ export default {
 				if(res.data && res.data.success){
           this.alertStt = true
           this.alertType = 'success'
-          this.alertMes = 'Update Successfully'					
+          this.alertMes = 'Update Successfully'
           setTimeout(() => {this.alertStt = false}, 1500)
           this.key = 0
 					this.$root.$emit('editItemSucess')
@@ -650,7 +645,7 @@ export default {
 			.catch((e) =>{
 				this.alertStt = true
         this.alertType = 'error'
-        this.alertMes = 'System Error Occurred'         
+        this.alertMes = 'System Error Occurred'
     		setTimeout(() => {this.alertStt = false}, 1500)
 			})
     },

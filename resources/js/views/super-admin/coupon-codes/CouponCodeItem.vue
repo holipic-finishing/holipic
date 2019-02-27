@@ -16,7 +16,7 @@
       ref="form"
       lazy-validation
       class="heigth-list-title"
-    >    
+    >
       <!-- Add New Coupon -->
       <v-list v-if="!itemToLoad && eventType === 'add-new'">
         <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
@@ -315,12 +315,6 @@
 
     </v-form>
 
-    <!-- Close drawer button -->
-    <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-      <v-btn @click="closeDrawer">Close</v-btn>
-    </v-card-actions>
-    <!-- End close drawer button -->
-
   </v-card>
 </template>
 
@@ -371,13 +365,13 @@ export default {
       this.alertStt = true
       this.alertType = 'error'
       this.alertMes = errorMesg
-      setTimeout(() => {this.alertStt = false}, 2000)         
+      setTimeout(() => {this.alertStt = false}, 2000)
     },
     successAlert(successMesg){
       this.alertStt = true
       this.alertType = 'success'
       this.alertMes = successMesg
-      setTimeout(() => {this.alertStt = false}, 1000)         
+      setTimeout(() => {this.alertStt = false}, 1000)
     },
   	closeDrawer(){
   		this.$root.$emit('closeDrawerItem', false)

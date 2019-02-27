@@ -1,11 +1,11 @@
 <template>
 	<v-navigation-drawer
-		v-if="role_id === '2'" 
+		v-if="role_id === '2'"
     fixed
-    v-model="eWalletSidebar" 
+    v-model="eWalletSidebar"
     right
-    temporary 
-    app 
+    temporary
+    app
     clipped
   	:width='widthComputed'
 	>
@@ -52,10 +52,6 @@
 	      	</div>
 	      </v-tab-item>
 	    </v-tabs-items>
-
-	    <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-				<v-btn @click.stop="closeDrawerRight()">Close</v-btn>
-			</v-card-actions>
 		</v-card>
 	</v-navigation-drawer>
 </template>
@@ -64,7 +60,7 @@
 import { getWithContentWrap } from '../../../helpers/helpers.js'
 import EWalletTransactionsHistory from './EWalletComponents/EWalletTransactionsHistory.vue'
 import TopUp from './EWalletComponents/TopUp.vue'
-import WithDrawViaBank from './EWalletComponents/WithDrawViaBank.vue'	
+import WithDrawViaBank from './EWalletComponents/WithDrawViaBank.vue'
 
 export default {
 

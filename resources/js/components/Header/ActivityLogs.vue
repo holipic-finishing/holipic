@@ -7,11 +7,8 @@
 		origin="right top" z-index="99" content-class="cart-dropdown" transition="slide-y-transition" nudge-top="-20"
 	>
 		<v-badge right overlap slot="activator" title="Activity Logs" @click.native="hiddenMenuActivity()">
-			<span slot="badge" v-if="total>0">{{total}}</span>
-		
-			<i class="zmdi grey--text zmdi zmdi-ticket-star infinite wobble zmdi-hc-fw font-lg">
-				
-			</i>
+			<span slot="badge" v-if="total>0" class="caption">{{total}}</span>
+			<i class="zmdi grey--text zmdi zmdi-ticket-star infinite wobble zmdi-hc-fw font-lg"></i>
 		</v-badge>
 
 
@@ -35,9 +32,9 @@
 			<div v-else class="dropdown-content">
 				<vue-perfect-scrollbar  :settings="settings" class="custom-height">
 					<v-list two-line>
-						
+
 						<template v-for="(value, index) in data">
-							
+
 							<v-list-tile :key="index" class="hover_activity">
 								<!-- <div class="product-img mr-3">
 									<img height="55" width="55" :src="value.productImg">
@@ -52,7 +49,7 @@
 										<b>{{value.description_log}}</b> - {{value.updated_at}}
 									</span>
 								</v-list-tile-content>
-								
+
 								<v-list-tile-action @click="readActivityLog(value, index)">
 									<v-btn icon title="watch">
 										<i class="material-icons">
@@ -62,9 +59,9 @@
 								</v-list-tile-action>
 
 							</v-list-tile>
-							
+
 						</template>
-					
+
 					</v-list>
 				</vue-perfect-scrollbar>
 				<delete-confirmation-dialog
@@ -75,10 +72,10 @@
 				</delete-confirmation-dialog>
 			</div>
 			<v-card-actions >
-		        <v-btn 
+		        <v-btn
 		        	v-if="checkloadMore"
-		        	small 
-		        	color="primary" 
+		        	small
+		        	color="primary"
 		        	@click="loadMore(currentPage +1)"
 		        >
 		      		{{ $t('message.viewnotifition') }}
@@ -126,25 +123,25 @@ export default {
 			_this.total = _this.total + 1
 			// _this.data = []
 			// _this.getActivityLogs(1)
-			
+
 		}.bind(this));
-		
+
   	},
   	mounted() {
   		this.getActivityLogs(this.paginator.page)
   		this.companyName = this.user.company_name
   	},
   	computed: {
-   		
+
   	},
   	methods: {
-		getActivityLogs(page) 
+		getActivityLogs(page)
 		{
 			let params = {
                 perPage: this.paginator.perPageDay,
                 userId: this.user.id,
                 page: page
-            }	
+            }
 			getWithData(config.API_URL+'activity-log/show', params)
 			.then(response => {
 				if (response.data && response.data.success) {
@@ -162,12 +159,12 @@ export default {
 
 		   //          this.currentPage = response.data.data[0][1].current_page
 
-					// if(response.data.data[0][1].last_page > 1) 
+					// if(response.data.data[0][1].last_page > 1)
 					// {
 					// 	this.checkloadMore = true
 					// }
 				}
-				
+
 			})
 		},
 		loadMore(n)
@@ -180,7 +177,7 @@ export default {
 
             getWithData(config.API_URL+'activity-log/show', params)
 			.then(response => {
-				if (response.data && response.data.success) { 
+				if (response.data && response.data.success) {
 					let _this = this
 					var array = []
 
@@ -192,12 +189,12 @@ export default {
 
 		   //          this.currentPage = response.data.data[0][1].current_page
 
-					// if(response.data.data[0][1].current_page == response.data.data[0][1].last_page ) 
+					// if(response.data.data[0][1].current_page == response.data.data[0][1].last_page )
 					// {
 					// 	this.checkloadMore = false
 					// }
 				}
-				
+
 			})
 		},
 		readActivityLog(item, key) {
@@ -220,7 +217,7 @@ export default {
 		{
 			this.folowActivity
 		}
-		
+
   	}
 };
 </script>
@@ -231,10 +228,10 @@ export default {
 
 	.style-data {
 		text-align: center !important;
-		
+
 	}
 	.custom-height{
 		height: 350px !important;
 	}
-	
+
 </style>

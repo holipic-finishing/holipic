@@ -1,10 +1,10 @@
 <template>
-	<v-navigation-drawer 
+	<v-navigation-drawer
     fixed
-    v-model="drawerRight" 
+    v-model="drawerRight"
     right
-    temporary 
-    app 
+    temporary
+    app
     class="chat-sidebar-wrap"
     width="450"
   	>
@@ -20,11 +20,11 @@
 	      		</v-toolbar-side-icon>
 	    	</v-toolbar>
 		    <v-divider class="no-mg-bottom"></v-divider>
-			  
+
 			  <!-- Show information -->
 		    <v-list class="heigth-list-title">
 				<template>
-					
+
 					<v-list-tile>
 						<v-list-tile-content>
 				          	<v-list-tile-title class="content-flex">
@@ -94,19 +94,13 @@
 						</v-list-tile-content>
 					</v-list-tile>
 	     		 	<v-divider class="no-mg-bottom"></v-divider>
-					
 
-				</template>		
+
+				</template>
 
 	    	</v-list>
-	    
-	    <!-- End show information -->
 
-	    <!-- Close drawer button -->
-	    <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-	      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-	    </v-card-actions>
-	    <!-- End close drawer button -->
+	    <!-- End show information -->
 
 		</v-card>
 
@@ -128,7 +122,7 @@ export default {
   mounted() {
   	this.$root.$on('showInfoEwallet', res => {
   			this.drawerRight = true
-  			this.item = res.data 
+  			this.item = res.data
   	})
   }
 };

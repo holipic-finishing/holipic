@@ -21,6 +21,39 @@
 	margin: 0 auto;
 }
 
+.custom-booking{
+	padding-top:0px !important;
+	.v-toolbar{
+		box-shadow: none !important;
+	}
+	.v-toolbar__content {
+		height: auto !important;
+		margin-bottom: 5px !important;
+	}
+	.layout-booking {
+		margin-bottom: -36px !important;
+		.header-booking {
+			margin-top:15px !important;
+		}
+	}
+
+	.header-booking-timezone{
+		.v-input__control{
+			margin-left:24px !important;
+		}
+
+		.v-text-field {
+			top:-18px !important;
+		}
+	}
+}
+
+.dialog-date{
+	
+	box-shadow: 0px 0px 50px 0px #d0d0d0 !important;
+	
+}
+
 @media (max-width: 767px) {
     .row-changepass{
 		width: 60%;
@@ -270,3 +303,5 @@
 		margin-bottom: 0 !important;
 	}
 }
+
+

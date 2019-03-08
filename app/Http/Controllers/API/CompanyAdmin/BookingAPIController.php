@@ -79,4 +79,16 @@ class BookingAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Booking deleted successfully');
     }
+
+    public function sendMailCustomer($id)
+    {
+        $booking = $this->bookingRepo->handleSendEmailCustomer($id);
+
+        if(!$booking) {
+             return $this->sendError('Booking not found');
+        }
+
+        return $this->sendResponse($booking, 'Send email success');
+
+    }
 }

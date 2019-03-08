@@ -185,8 +185,10 @@ Route::group(['namespace' => 'API'],function(){
 		/************BookingAPIController***********/
 		Route::get('bookings', 'BookingAPIController@getBookings');
 		Route::get('booking/update/{id}', 'BookingAPIController@updateDateTime');
-		Route::get('booking/timezone/convert', 'BookingAPIController@convertTimezone');
+		Route::get('booking/timezone/convert'	, 'BookingAPIController@convertTimezone');
 		Route::delete('booking/{id}', 'BookingAPIController@destroy');
+		Route::get('booking/sendmail/{id}', 'BookingAPIController@sendMailCustomer');
+
 
 		/************TimezoneAPIController***********/
 		Route::get('timezones', 'TimezoneAPIController@getTimezones');

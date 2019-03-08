@@ -6,6 +6,9 @@ use InfyOm\Generator\Common\BaseRepository;
 use App\Models\Booking;
 use Carbon\Carbon;
 use App\Models\Timezone;
+use Mail;
+
+use App\Mail\SendMailBooking;
 /**
  *  Class BookingRepository
  *  @package App\Repositories
@@ -26,7 +29,7 @@ class BookingRepository extends BaseRepository
      * request: companyId, date
      * @return [type] [description]
      */
-    public function handleGetBookings($convertedDate = null)
+    public function handleGetBookings($convertedDate = null,$defaultTimezone = null)
     {
         $companyId = request('companyId');
 
@@ -69,10 +72,10 @@ class BookingRepository extends BaseRepository
 			            // }
 
 			            //If client change timezone
-			            if(!empty($convertedDate)) {
+			            // if(!empty($convertedDate)) {
 			            	
-			            	$query = $query->whereDate('date', $convertedDate);
-			            }																
+			            // 	$query = $query->whereDate('date', $convertedDate);
+			            // }																
 
 			            return $query;
 			})->get();
@@ -80,13 +83,15 @@ class BookingRepository extends BaseRepository
 			if(!empty($bookings)) {
 
 				$timezone = [];
-				if(!empty($timezoneId)) {
+				if(!empty($timezoneId) || $defaultTimezone != null) {
+                    $timezoneId = (!empty($timezoneId)) ? $timezoneId : $defaultTimezone;
 					$timezone = Timezone::find($timezoneId);
 				}
 
 				if($convertedDate != null) {
 
-					$bookings = $this->handleRequestTimezone($timezone, $bookings, $convertedDate);
+					$bookings = $this->handleRequestTimezone($timezone[0], $bookings, $convertedDate);
+                    
 				} else {
 					
 					$bookings = $this->handleRequestTimezone($timezone, $bookings, $date);
@@ -112,10 +117,9 @@ class BookingRepository extends BaseRepository
     				$newArray[] = $booking;
     			}	
     		}
-
     	} else {
 
-	    	foreach($bookings as $booking) 
+	    	foreach($bookings as $index => $booking) 
 			{
 				$utcDate = Carbon::parse($booking['date'].' '.$booking['time']);
 
@@ -130,6 +134,7 @@ class BookingRepository extends BaseRepository
 				$booking['time'] = $convertedTime->toTimeString();
 
 				$data[] = $booking;
+
 			}
 
 			foreach($data as $value) 
@@ -160,24 +165,29 @@ class BookingRepository extends BaseRepository
 
     public function handleConvertTimezone()
     {
-    	$timezone = Timezone::find(request('timezoneId'));
+        if(!empty(request('timezoneId'))) {
 
-    	$date = Carbon::parse(str_replace('T', ' ', request('datetime')));
+        	$timezone = Timezone::find(request('timezoneId'));
 
-    	$convertedDate = $date->setTimeZone($timezone['zone_name'])->toDateString();
+        	$date = Carbon::parse(str_replace('T', ' ', request('datetime')));
 
-    	$data = [];
+        	$convertedDate = $date->setTimeZone($timezone['zone_name'])->toDateString();
 
-    	$bookings = $this->handleGetBookings($convertedDate);
+        	$data = [];
 
-    	if(!empty($timezone)) {
-    		$data = $this->handleRequestTimezone($timezone, $bookings, $convertedDate);
-	
-    	} else {
-    		$data = $bookings;
-    	}
+        	$bookings = $this->handleGetBookings($convertedDate, $timezone);
 
-    	return $this->handleCutTime($data);
+        	if(!empty($timezone)) {
+        		$data = $this->handleRequestTimezone($timezone, $bookings, $convertedDate);
+    	
+        	} else {
+        		$data = $bookings;
+        	}
+
+        	return $this->handleCutTime($data);
+        }
+
+        return false;
     }
 
     public function handleUpdateDateTime($booking)
@@ -213,6 +223,25 @@ class BookingRepository extends BaseRepository
     	}
 
     	return false;
+    }
+
+    public function handleSendEmailCustomer($bookingId)
+    {
+
+        if(!empty($bookingId)) {
+
+            $booking = $this->scopeQuery(function($query) use ($bookingId){
+                            $query = $query->with('photographer')->with('customer.user')->whereId($bookingId);
+                            return $query;
+                        })->first();
+
+            \Mail::to($booking['customer']['user']['email'])->queue(new SendMailBooking($booking));
+
+            return $booking;
+            
+        }
+
+        return false;
     }
 
 }

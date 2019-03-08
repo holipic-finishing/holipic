@@ -119,12 +119,13 @@
 					        <td class="text-xs-left">
 					        	<span class="text-danger" v-if="props.item.checkout == 1 "> Booking</span>
 
-				                <span class="text-info" v-else>Pending</span>
+				                <span class="text-info" v-else>Cancel</span>
 					        </td>
 					        <td class="action-width text-xs-left">
 					        	<v-icon
 									small
 									class="mr-6 hover-icon"
+									
 									@click="showDialog(props.item.id)"
 								>
 									cancel
@@ -133,6 +134,8 @@
 								<v-icon
 									small
 									class="mr-6 hover-icon"
+									
+									@click="sendMail(props.item.id)"
 								>
 									send
 								</v-icon>
@@ -271,7 +274,7 @@ export default {
       	}
 	},
 	created() {
-		this.fetchData()
+		this.fetchData(this.now)
 		this.getTimezone()
 	},
    	methods: {
@@ -337,7 +340,7 @@ export default {
 				this.now = new Date().toISOString().substr(0,10)
 				tmpNow = this.now
 			} else {
-				this.now = this.defaultToday
+				this.now = new Date().toISOString().substr(0,10)
 				tmpNow = this.getNow(this.now)
 			}
 
@@ -372,9 +375,9 @@ export default {
 				console.log(error.response)
 			})
 		},
-		fetchData()
+		fetchData(now)
 		{
-			let params = {companyId: this.company.company_id, date: new Date().toISOString().substr(0, 10) }
+			let params = {companyId: this.company.company_id, date: now }
 			getWithData(config.API_URL+'bookings', params)
 			.then(response => {
 				if(response && response.data.success) {
@@ -464,10 +467,27 @@ export default {
 			.then(response => {
 				if(response && response.data.success) {
 					this.delDialog = false
-	  				this.fetchData()
+	  				this.fetchData(this.now)
 					this.$notify({
 			          title: 'Success',
 			          message: 'Deleted success',
+			          type: 'success',
+			          duration: 2000,
+			        })
+				}
+			})
+			.catch(error => {
+				console.log(error.response)
+			})
+		},
+		sendMail(id)
+		{
+			get(config.API_URL+'booking/sendmail/'+id)
+			.then(response => {
+				if(response && response.data.success) {
+					this.$notify({
+			          title: 'Success',
+			          message: response.data.message,
 			          type: 'success',
 			          duration: 2000,
 			        })

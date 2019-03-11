@@ -12,6 +12,7 @@ use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Repositories\ActivityLogRepository;
+use File;
 
 /**
  * Class PhotographerController
@@ -128,6 +129,14 @@ class PhotographerAPIController extends AppBaseController
 
         $name = $photographer['name'];
 
+        if(File::exists(public_path() .'/'. $photographer['identification_card'])) {
+            File::delete(public_path() .'/' .$photographer['identification_card']);
+        }
+
+        if(File::exists(public_path() .'/'. $photographer['avatar'])) {
+            File::delete(public_path().'/' . $photographer['avatar']);
+        }
+
         $photographer->delete();
 
         if(request('userId')) {
@@ -167,20 +176,40 @@ class PhotographerAPIController extends AppBaseController
     {
         $photographer = $this->photographerRepository->findWithoutFail($id);
 
+        $input = [];
+
         if (empty($photographer)) {
             return $this->sendError('Photographer not found');
         }
 
-        $input = request('params');
+        if(request('params')) {
 
-        if(request('params.status'))
-        {
+            $input = request('params');
+        }
+
+
+        if(request('params.status')){
             $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false] ;
         }
 
-        $photographer = $this->photographerRepository->update($input, $id);
+        if(request()->file('identification')) {
+            $input = $this->photographerRepository->handleUpdateIdentification(request()->file('identification'), $photographer);
+        }
 
-        return $this->sendResponse($photographer, 'Update Photographer successfully');
+        if(request()->file('avatar')) {
+
+            $input = $this->photographerRepository->handleUpdateAvatar(request()->file('avatar'), $photographer);
+        }
+        
+        try{    
+            $photographer = $this->photographerRepository->update($input, $id);
+
+            return $this->sendResponse($photographer, 'Update Photographer successfully');
+
+        } catch(\Exception $e) {
+                return $this->sendError('Could not save photographer!', 500);
+        }
+        
     }
 
     /* Target : Show all name, id photographer by branch id
@@ -200,6 +229,17 @@ class PhotographerAPIController extends AppBaseController
         }
 
         return $this->sendResponse($branch_photographer, 'Photographer successfully');
+    }
+
+    public function getDetailPhotographer($id)
+    {
+        $photographer = $this->photographerRepository->handleGetDetailPhotographer($id);
+
+        if(!$photographer) {
+            return $this->sendError('Photographer not found');
+        }
+
+        return $this->sendResponse($photographer, 'Get Photographer Detail Successfully');
     }
 
 }

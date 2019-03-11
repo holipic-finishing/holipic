@@ -240,7 +240,8 @@ const mutations = {
         vp.$notify.success({
             title: 'Success',
             message: 'Logged in successfully!',
-            showClose: false
+            showClose: false,
+            duration: 2000,
         })
     },
     loginUserFailure(state, error) {
@@ -248,7 +249,8 @@ const mutations = {
         vp.$notify.error({
             title: 'Error',
             message: error.message,
-            showClose: false
+            showClose: false,
+            duration: 2000,
         })
     },
     logoutUser(state) {
@@ -267,7 +269,8 @@ const mutations = {
         vp.$notify.success({
             title: 'Success',
             message: 'Registered account successfully!',
-            showClose: false
+            showClose: false,
+            duration: 2000,
         })
     },
     signUpUserFailure(state, error) {
@@ -293,7 +296,8 @@ const mutations = {
         vp.$notify.success({
             title: 'Success',
             message: 'Change password successfully!',
-            showClose: false
+            showClose: false,
+            duration: 2000,
         })
     },
      changepasswordError(state, error){
@@ -301,7 +305,8 @@ const mutations = {
         vp.$notify.error({
             title: 'Error',
             message: error,
-            showClose: false
+            showClose: false,
+            duration: 2000,
         })
     },
     editProfileSuccess(state, success){
@@ -318,7 +323,8 @@ const mutations = {
         vp.$notify.error({
             title: 'Error',
             message: error,
-            showClose: false
+            showClose: false,
+            duration: 2000,
         })
     }
 }

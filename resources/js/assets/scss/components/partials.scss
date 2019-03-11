@@ -304,4 +304,9 @@
 	}
 }
 
-
+.custom-height-75{
+	.v-list__tile {
+		padding: 15px 16px !important;
+	    height: auto !important;
+	}
+}

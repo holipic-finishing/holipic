@@ -37,6 +37,9 @@ import VeeValidate from 'vee-validate';
 import VueOffline from 'vue-offline'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import VuejsClipper from 'vuejs-clipper'
+
+
 
 import router from './router'
 import { store } from './store/store'
@@ -89,6 +92,7 @@ Vue.use(VeeValidate);
 Vue.use(require('vue-moment'))
 Vue.use(VueOffline)
 Vue.use(ElementUI);
+Vue.use(VuejsClipper)
 
 
 // Create VueI18n instance with options

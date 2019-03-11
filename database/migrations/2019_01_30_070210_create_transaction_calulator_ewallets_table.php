@@ -36,6 +36,6 @@ class CreateTransactionCalulatorEwalletsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('transaction_calulator_ewallets');
+        Schema::dropIfExists('transaction_calulator_ewallets');
     }
 }

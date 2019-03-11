@@ -130,7 +130,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::put('photographer/{id}', 'PhotographerAPIController@updatePhotographer');
 		Route::get('photographer/photographer-branch','PhotographerAPIController@getPhotographerByBranch');
 		Route::get('branch/photographers', 'PhotographerAPIController@getPhotographers');
-
+		Route::get('photographer/detail/{id}', 'PhotographerAPIController@getDetailPhotographer');
 
 		/*************BranchAPIController**************/
 		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');

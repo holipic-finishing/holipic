@@ -32,11 +32,7 @@ class AddCurrenciesToCompanyPackagesTable extends Migration
     public function down()
     {
         Schema::table('company_packages', function (Blueprint $table) {
-            Schema::dropIfExists('dollar');
-            Schema::dropIfExists('euro');
-            Schema::dropIfExists('indo');
-            Schema::dropIfExists('turkey');
-            Schema::dropIfExists('vn');
+            $table->dropColumn(['dollar', 'euro', 'indo', 'turkey', 'vn']);
         });
     }
 }

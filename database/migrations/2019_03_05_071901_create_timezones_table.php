@@ -12,7 +12,7 @@ class CreateTimezonesTable extends Migration
      *
      * @return void
      */
-    public function run()
+    public function up()
     {
 
         Schema::create('timezones', function (Blueprint $table) {

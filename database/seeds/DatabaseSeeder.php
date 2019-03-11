@@ -40,6 +40,10 @@ class DatabaseSeeder extends Seeder
         /**
          * Seed With Draw
          */
-        // $this->call(EwalletWithdrawSeeder::class);
+        $this->call(EwalletWithdrawSeeder::class);
+        $this->call(BookingsTableSeeder::class);
+        $this->call(TimezonesTableSeeder::class);
+
+        
     }
 }

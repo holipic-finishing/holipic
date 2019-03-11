@@ -48,8 +48,9 @@ class PhotographerRepository extends BaseRepository
     public function handleGetPhotographers()
     {
         $array = [];
+        $data = [];
 
-        if(request('companyId') && !empty(request('companyId'))) {
+        if(!empty(request('companyId'))) {
 
             $companyId = request('companyId');
 
@@ -57,14 +58,14 @@ class PhotographerRepository extends BaseRepository
                                 $q->whereCompanyId($companyId);
                     }]);
 
-            if(request('search') && !empty(request('search'))) {
+            if(!empty(request('search'))) {
                 $data = $data->where('name', 'like', '%'.request('search').'%');
             }
 
             $data = $data->get()->toArray();
         }
 
-        if(request('branchId') && !empty(request('branchId'))) {
+        if(!empty(request('branchId'))) {
 
             $branchId = request('branchId');
 
@@ -73,7 +74,7 @@ class PhotographerRepository extends BaseRepository
                     }])->get()->toArray();
         }
 
-        if($data && !empty($data)) {
+        if(!empty($data)) {
 
             foreach($data as $value)
             {

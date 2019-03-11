@@ -28,9 +28,7 @@ class AddColumnEmailAndIndenficationCardOnPhotographerTable extends Migration
     public function down()
     {
         Schema::table('photographers', function (Blueprint $table) {
-            Schema::dropIfExists('avatar');
-            Schema::dropIfExists('email');
-            Schema::dropIfExists('identification_card');
+            $table->dropColumn(['avatar', 'email', 'identification_card']);
         });
     }
 }

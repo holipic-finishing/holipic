@@ -27,7 +27,7 @@ class PhotographersTableSeeder extends Seeder
                     'address' => $faker->address,
                     'status' => $faker->boolean,
                     'branch_id' => $branch->id,
-                    'avatar' => $faker->image('/photographers/avatars'),
+                    'avatar' => $faker->image(public_path() . '/photographers/avatars'),
                     'email' => $faker->email,
                     'identification_card' => ''
                 ]);

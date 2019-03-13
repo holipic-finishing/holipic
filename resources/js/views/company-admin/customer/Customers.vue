@@ -175,7 +175,7 @@
 						</template>
 						<template v-if="t.valueTab==='snap-photos'">
 							<div>
-								This is Add Snap Photos
+								<snap-photo></snap-photo>
 							</div>
 						</template>
       				</v-tab-item>
@@ -206,14 +206,14 @@
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 import CustomerEdit from './CustomerEdit'
+import SnapPhoto from './SnapPhoto'
 import Booking from './Booking'
-
 
 export default {
 
 	name: 'Customers',
 	components: {
-		CustomerEdit, Booking
+		CustomerEdit, SnapPhoto, Booking
 	},
 	data () {
   	return {
@@ -231,7 +231,7 @@ export default {
 			{ text: 'Name', value: 'name',  align: 'left' },
 			{ text: 'Room', value: 'room.room_hash', align: 'left'},
 			{ text: 'Email', value: 'user.email' , align: 'left'},
-			{ text: 'Password', value: 'customer_password', align: 'left' },
+			{ text: 'Password', value: 'customer_password', align: 'left', width:'10%' },
 			{ text: 'Avatar' , align: 'left'},
 			{ text: 'Order', align: 'left'},
 			{ text: 'Invoice', align: 'left'},

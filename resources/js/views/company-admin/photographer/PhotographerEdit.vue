@@ -279,6 +279,10 @@
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 import { getWithContentWrap } from '../../../helpers/helpers'
+import { clipperBasic, clipperPreview, clipperUpload } from 'vuejs-clipper'
+
+Vue.use(VuejsClipper)
+
 
 export default {
 
@@ -317,6 +321,11 @@ export default {
 	    	dialog: false,
 	    	dialog2: false
 	    }
+  	},
+  	components: {
+    	clipperBasic,
+    	clipperPreview,
+    	clipperUpload
   	},
   	computed: {
 		widthComputed(){

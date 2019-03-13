@@ -304,6 +304,22 @@
 	}
 }
 
+.heigth-list-title {
+	.v-list__tile {
+		height: auto !important;
+	}
+	.custom-content-flex {
+		padding-top: 10px;
+		height: auto !important;
+		.v-text-field {
+			padding-top:0px !important;
+		}
+		.v-input__control{
+			width: 40px !important;
+		}
+	}
+}	
+
 .custom-height-75{
 	.v-list__tile {
 		padding: 15px 16px !important;

@@ -38,7 +38,7 @@ import VueOffline from 'vue-offline'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VuejsClipper from 'vuejs-clipper'
-import { clipperBasic, clipperPreview, clipperUpload} from 'vuejs-clipper'
+
 
 
 import router from './router'

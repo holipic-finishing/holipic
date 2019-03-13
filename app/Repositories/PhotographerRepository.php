@@ -79,6 +79,10 @@ class PhotographerRepository extends BaseRepository
             foreach($data as $value)
             {
                 if(!is_null($value['branch'])){
+                    $imgArr = explode('/', $value['avatar']);
+                    $imgName = end($imgArr);
+                    $link = url('photographers/avatars/' . $imgName);
+                    $value['avatar'] = $link;
                     $array[] = $value;
                 }
             }
@@ -200,6 +204,11 @@ class PhotographerRepository extends BaseRepository
                                 $query = $query->with('branch')->whereId($photographerId);
                                 return $query;
                             })->first();
+
+            $imgArr = explode('/', $photographer->avatar);
+            $imgName = end($imgArr);
+            $link = url('photographers/avatars/' . $imgName);
+            $photographer->avatar = $link;
 
             return $photographer;
         }

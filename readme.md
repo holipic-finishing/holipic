@@ -40,8 +40,8 @@ php artisan db:seed
 + public/files
 + public/image_uploads
 + public/photographers
-	- public/photographers/avatars
-	- public/phototgraphers/identification
++ public/photographers/avatars
++ public/phototgraphers/identification
 
 # Step 10 : Set Permission
 + sudo chmod -R 777 public/logos
@@ -58,7 +58,9 @@ php artisan db:seed
 
 # Step 12: Config Https
 + config https with apache2: 
-	+ https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-16-04
-	+ https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-18-04
++++ https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-16-04
++
++++ https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-apache-in-ubuntu-18-04
++
 + install openssh: sudo apt-get install openssh-server
 + copy file : apache-selfsigned.crt and apache-selfsigned.key to rsa_key folder

@@ -181,6 +181,18 @@ Route::group(['namespace' => 'API'],function(){
 		Route::resource('transaction_calulator_ewallets', 'TransactionCalulatorEwalletAPIController');
 		Route::get('e-wallet/transaction-history', 'TransactionCalulatorEwalletAPIController@getEWalletTransactionHistory');
 		Route::get('e-wallet/total-ewallet', 'TransactionCalulatorEwalletAPIController@calEwallet');
+
+		/************BookingAPIController***********/
+		Route::get('bookings', 'BookingAPIController@getBookings');
+		Route::get('booking/update/{id}', 'BookingAPIController@updateDateTime');
+		Route::get('booking/timezone/convert'	, 'BookingAPIController@convertTimezone');
+		Route::delete('booking/{id}', 'BookingAPIController@destroy');
+		Route::get('booking/sendmail/{id}', 'BookingAPIController@sendMailCustomer');
+
+
+		/************TimezoneAPIController***********/
+		Route::get('timezones', 'TimezoneAPIController@getTimezones');
+
 	});
 
 	/**************************************************

@@ -171,9 +171,7 @@
 							<customer-edit></customer-edit>
       					</template>
 						<template v-if="t.valueTab==='bookings'">
-							<div>
-								This is bookings
-							</div>
+							<booking></booking>
 						</template>
 						<template v-if="t.valueTab==='snap-photos'">
 							<div>
@@ -209,12 +207,13 @@ import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 import CustomerEdit from './CustomerEdit'
 import SnapPhoto from './SnapPhoto'
+import Booking from './Booking'
 
 export default {
 
 	name: 'Customers',
 	components: {
-		CustomerEdit,SnapPhoto
+		CustomerEdit, SnapPhoto, Booking
 	},
 	data () {
   	return {

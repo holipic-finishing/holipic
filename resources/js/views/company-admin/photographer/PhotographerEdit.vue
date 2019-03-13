@@ -281,9 +281,6 @@ import config from '../../../config/index.js'
 import { getWithContentWrap } from '../../../helpers/helpers'
 import { clipperBasic, clipperPreview, clipperUpload } from 'vuejs-clipper'
 
-Vue.use(VuejsClipper)
-
-
 export default {
 
   name: 'PhotographerEdit',

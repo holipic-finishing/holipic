@@ -17,22 +17,46 @@ class BookingsTableSeeder extends Seeder
 
         \App\Models\Booking::truncate();
 
-        $customers = \App\Models\Customer::all();
+        // $companies = \App\Models\Company::with(['branchs'])->get();
 
-        $photographers = \App\Models\Photographer::all();
+        $companies = \App\Models\Company::with(['branchs' => function ($query) {
+            return $query->with('customers')->with('photographers');
+        }])->get();
 
-        $randomCheckout = [1,0];
 
-        for($i=0; $i<=20; $i++) {
-        	\App\Models\Booking::create([
-        		'customer_id' => $customers[$i]['id'],
-                'photographer_id' => $photographers[$i]['id'],
-                'country' => $faker->address,
-                'checkout' => $faker->randomElement($randomCheckout),
-                'date' => $faker->date(),
-                'time' => $faker->time(),
-        	]);
-        }
+        foreach ($companies as $company) {
+            $branches = $company->branchs;
+            $photographer_ids = [];
+            $customer_ids = [];
+            
+            foreach ($branches as $branch) {
+                $photographers = $branch->photographers;
+                $customers = $branch->customers;
+
+
+                foreach ($photographers as $photographer) {
+                    $photographer_ids[] = $photographer->id;
+                }
+
+                foreach ($customers as $customer) {
+                    $customer_ids[] = $customer->id;
+                }
+            }
+
+            $randomCheckout = [1,0];
+
+            for($i=0; $i<=2000; $i++) {
+            	\App\Models\Booking::create([
+            		'customer_id' => $faker->randomElement($customer_ids),
+                    'photographer_id' => $faker->randomElement($photographer_ids),
+                    'country' => $faker->address,
+                    'checkout' => $faker->randomElement($randomCheckout),
+                    'date' => $faker->dateTimeBetween('-30 days', '+30 days'),
+                    'time' => $faker->time(),
+            	]);
+            }
+        };
+
 
     }
 }

@@ -108,6 +108,7 @@
 								</v-dialog>	
 					        </td>
 					        <td class="text-xs-left" v-if="props.item.photographer && props.item.photographer.branch">{{ props.item.photographer.branch.name }}</td>
+					        <td class="text-xs-left" v-else>No Photographer</td>
 					        <td class="text-xs-left" v-if="props.item.photographer">{{ props.item.photographer.name }}</td>
 					        <td class="text-xs-left" v-if="props.item.customer">{{ props.item.customer.room.room_hash }}</td>
 					        <td class="text-xs-left" v-if="props.item.customer">

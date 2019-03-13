@@ -279,9 +279,8 @@
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 import { getWithContentWrap } from '../../../helpers/helpers'
-import Vue from 'vue'
-import VuejsClipper from 'vuejs-clipper'
 import { clipperBasic, clipperPreview, clipperUpload } from 'vuejs-clipper'
+
 Vue.use(VuejsClipper)
 
 

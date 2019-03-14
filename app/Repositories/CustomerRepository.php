@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Customer;
 use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
+use File;
 
 /**
  * Class CustomerRepository
@@ -95,6 +96,10 @@ class CustomerRepository extends BaseRepository
                 return false;
             }
 
+            if (! File::exists(public_path()."/images/customer")) {
+                File::makeDirectory(public_path()."/images/customer");
+            }
+
             $name = time().'_'.$customer['id'].'_'.$image->getClientOriginalName();
             $input = ['avatar' => '/images/customer/'.$name];
 
@@ -105,7 +110,6 @@ class CustomerRepository extends BaseRepository
         if(!is_null($customer))
         {
             $customer = $customer->update($input);
-
             return $customer;
         }
 
@@ -143,7 +147,7 @@ class CustomerRepository extends BaseRepository
 
     public function handleUpdateBranchCustomer($id)
     {
-       $customer = $this->model->findOrFail($id);
+        $customer = $this->model->findOrFail($id);
 
         $input = request('params');
 
@@ -179,7 +183,7 @@ class CustomerRepository extends BaseRepository
             return $customer;
         }
 
-        return false;
+        // return false;
     }
 
     public function handleDeleteBranchCustomer($id)

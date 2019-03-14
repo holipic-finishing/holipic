@@ -1,14 +1,15 @@
 <template>
-	<v-navigation-drawer
-		fixed
-    v-model="drawerRight"
-  	right
+	 <v-navigation-drawer 
+    fixed
+    v-model="drawerRight" 
+    right
+    temporary 
+    app 
     clipped
-    app
-    :width='widthComputed'
-    temporary
-  >
-	  <v-card class="h-100 position-relative">
+  	:width='widthComputed'	
+  	>
+
+	    <v-card class="h-100 position-relative">
 			<v-toolbar>
     		<v-toolbar-title class="text-capitalize">Photographer Detail</v-toolbar-title>
 	    	<v-spacer></v-spacer>
@@ -54,9 +55,13 @@
 					</v-list-tile>
 	     		<v-divider class="no-mg-bottom"></v-divider>
 
-	     		<v-list-tile>
-						<v-list-tile-content>
-	          	<v-list-tile-title class="content-flex">
+
+	     		 	<!-- <v-list-tile class="height-address"> -->
+
+	     		<v-list-tile class="v-list-address">
+
+						<v-list-tile-content >
+	          	<v-list-tile-title class="content-flex ">
 		          	<span class="font-weight-bold item-title">Address:</span>
 		          	<span class="max-value">{{photographer.address}}</span>
         			</v-list-tile-title>
@@ -100,30 +105,32 @@
 
 <script>
 import { getWithContentWrap } from '../../../helpers/helpers'
-
 export default {
 
 	name: 'PhotographerDetail',
 
-	data () {
-    return {
-    	drawerRight: false,
-    	photographer: [],
-    	drawerHeaderStt: null,
-  		width: 0,
-    }
-	},
-	mounted() {
-		this.$root.$on('drawer-status', res => {
-  		this.drawerHeaderStt = res
-  	})
-
-		this.$root.$on('showInfoPhototographer', res => {
-			this.photographer = res.data
-			this.drawerRight = res.showNavigation
-			this.width = this.getCurrentWithContentWrap()
-		})
-	},
+  	data () {
+	    return {
+	    	drawerRight: false,
+	    	photographer: [],
+	    	width: 0,
+		   	drawerHeaderStt: null
+	    }
+  	},
+  	computed: {
+			widthComputed(){
+				return this.width
+			}
+  	},
+  	mounted()
+  	{
+  		this.$root.$on('showInfoPhototographer', res => {
+  			this.photographer = res.data
+  			this.drawerRight = res.showNavigation
+  			this.width = this.getCurrentWithContentWrap()	
+  		})
+  	},
+  	
 	methods: {
   	getCurrentWithContentWrap(){
   		return getWithContentWrap(this.drawerHeaderStt)

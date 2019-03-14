@@ -1,14 +1,13 @@
 <template>
 	<v-container fluid grid-list-xl>
-    <v-layout row wrap>
-      <app-card
-        colClasses="xl12 lg12 md12 sm12 xs12"
-        :fullScreen="true"
-        :reloadable="true"
-        :closeable="false"
-        :fullBlock="true"
-        class="p-0"
-      >
+		<v-layout row wrap>
+			<app-card
+				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5 rp-search"
+				:fullScreen="true"
+				:reloadable="true"
+				:closeable="false"
+			>
 				<v-toolbar flat color="white">
 	        <v-toolbar-title>
 	          Content Management System

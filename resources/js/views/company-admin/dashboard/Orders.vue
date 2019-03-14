@@ -45,7 +45,7 @@
   			<v-data-table
   			  :headers="headers"
   			  :items="itemsToView"
-  			  class="body-2 global-custom-table"
+  			  class="body-2 custom-table-order"
   			  :pagination.sync="pagination"
   			  :loading="loadingCom"
   			  item-key="id"
@@ -56,28 +56,64 @@
 
   				<!--Prop data -->
   				<template slot="items" slot-scope="props">
-					
-		    		<td>{{ props.item.id }}</td>
-            <td>{{ props.item.branch.name }}</td>
-            <td v-if="props.item.photographer && props.item.photographer.name">
-              {{ props.item.photographer.name }}
-            </td>
-            <td v-else>No Photographer</td>
-            <td v-if="props.item.customer && props.item.customer.room">{{ props.item.customer.room.room_hash }}</td>
-            <td v-else>No Room</td>
-            <td v-if="props.item.customer && props.item.customer.user">{{ props.item.customer.user.email }}</td>
-            <td v-else>No Email</td>
-            <td class="text-right">{{ props.item.total_amount_to_dollar }}</td>
-            <td class="text-center">{{ props.item.payment_method }}</td>
-		    		<td class="text-center">
-                <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
+  					
+  		    		<td>{{ props.item.id }}</td>
+              <td>{{ props.item.branch.name }}</td>
+              <td>{{ props.item.photographer.name }}</td>
+              <td v-if="props.item.customer && props.item.customer.room">{{ props.item.customer.room.room_hash }}</td>
+              <td v-else>No Room</td>
+              <td v-if="props.item.customer && props.item.customer.user">{{ props.item.customer.user.email }}</td>
+              <td v-else>No Email</td>
+              <td >{{ props.item.total_amount_to_dollar }}</td>
+              <td>{{ props.item.payment_method }}</td>
+              <td>
+               <!--  <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
                 <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
                 <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
-                <v-btn class="btn-gradient-primary ml-0 mr-0" color="primary" small v-if="props.item.status === 'PAID'">{{ props.item.status }}</v-btn>
-            </td>
-											
-	    	  </template>
+                <v-btn class="btn-gradient-primary ml-0 mr-0" color="primary" small v-if="props.item.status === 'PAID'">{{ props.item.status }}</v-btn> -->
 
+                <span class="text-success" v-if="props.item.status === 'DONE'">{{ props.item.status }}</span>
+
+                <span class="text-warning" v-if="props.item.status === 'PENDING'">{{ props.item.status }}</span>
+
+                <span class="text-danger" v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</span>
+
+                <span class="text-primary" v-if="props.item.status === 'PAID'">{{ props.item.status }}</span>
+
+                <span class="text-info" v-if="props.item.status === 'BOOKING'">{{ props.item.status }}</span>
+
+            </td>
+              <td class="text-right action-width">
+                <v-icon
+                  small
+                  class="mr-2 hover-icon"
+                  @click="showInfo(props.item)"
+                >
+                  visibility
+                </v-icon>
+                <v-icon
+                  small
+                  class="mr-2 hover-icon"
+                >
+                  edit
+                </v-icon>
+                <v-icon
+                  small
+                  class="mr-2 hover-icon"
+                >
+                  delete
+                </v-icon>
+              </td>              
+              <!-- <td>{{ props.item.purchase_date | moment("DD/MM/YYYY") }}</td>
+              <td>{{ props.item.download_date | moment("DD/MM/YYYY") }}</td>
+              <td>{{ props.item.created_at | moment("DD/MM/YYYY") }}</td>
+  		    		<td>
+                  <v-btn class="btn-gradient-success ml-0 mr-0" color="success" small v-if="props.item.status === 'DONE'">{{ props.item.status }}</v-btn>
+                  <v-btn class="btn-gradient-pink ml-0 mr-0" color="primary" small v-if="props.item.status === 'PENDING'">{{ props.item.status }}</v-btn>
+                  <v-btn class="btn-gradient-warning ml-0 mr-0" color="error" small v-if="props.item.status === 'CANCEL'">{{ props.item.status }}</v-btn>
+              </td> -->
+  											
+  	    	</template>
   				<!--No data -->
   			  <template slot="no-data">
   		      <v-alert :value="true" color="error" icon="warning">
@@ -90,12 +126,17 @@
             Your search for "{{ search }}" found no results.
           </v-alert>
 
-  			</v-data-table>
-  			<!--End Data Table Component -->
-  		</app-card>
-     
-  	</v-layout>
+
+			</v-data-table>
+			<!--End Data Table Component -->
+
+      <order-detail></order-detail>
+		</app-card>
+   
+	</v-layout>
+
   </v-container>
+
 </template>
 
 <script>
@@ -104,11 +145,15 @@ import config from '../../../config'
 import { get, post, put, del } from '../../../api'
 import { mapGetters } from "vuex"
 import Vue from 'vue'
+import OrderDetail from './OrderDetail.vue'
 
 export default {
   name: 'Orders',
 
   components:{
+    // TransactionItem
+    'order-detail':OrderDetail
+
   },
   data () {
     return {
@@ -147,21 +192,26 @@ export default {
         },
         { 
           text: 'Amount',
-          align: 'center',
+          align: 'left',
           value: 'total_amount_to_dollar',
           class: 'mb-icon',
         },
         { 
           text: 'Payment Method',
-          align: 'center',
+          align: 'left',
           value: 'payment_method',
           class: 'mb-icon',
         },
         {
           text: 'Status',
-          align: 'center',
+          align: 'left',
           value: 'actions',
           sortable: false,
+        },
+        {
+          text: 'Action',
+          align: 'left',
+          sortable:false,
         }
       ],
       pagination: {
@@ -191,7 +241,7 @@ export default {
     }
   },
   mounted () {
-  	this.$root.$on('loadTransactionsWithTime', res => {
+  	this.$root.$on('loadOdersWithTime', res => {
   		let params = res.params
   		this.params = params
   		this.loading = true
@@ -207,11 +257,18 @@ export default {
     	this.fetchData(this.params)
     })
 
+    this.$root.$on('searchTag', res => {
+      this.params = res
+      this.params.check =1
+      this.fetchData(this.params)
+    })
+
   },
   methods: {
     fetchData(params){
       params.company_id = this.company_id
-    	post(config.API_URL + 'order/history-order', params)
+      let url = config.API_URL + 'order/history-order'
+    	post(url, params)
 				.then((res) => {
 					if(res.data && res.data.success){
 						this.desserts = res.data.data
@@ -236,7 +293,6 @@ export default {
     deleteItem(){
       del(config.API_URL + 'orders/' + this.itemIdToDelete)
       .then((res) => {
-        console.log(res.data)
         if(res.data && res.data.success){
           Vue.notify({
                         type: 'success',
@@ -252,8 +308,12 @@ export default {
       .catch((e) =>{
         console.log(e)
       })
+    },
+    showInfo(item) {
+      this.$root.$emit('showDetailOrder', {showNavigation: true, data: item})
     }
   },
+  
 
   created(){
   	this.loading = true

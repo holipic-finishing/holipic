@@ -1,32 +1,30 @@
 <template>
 	<v-card class="h-100 position-relative">
 		<v-toolbar>
-	    <v-toolbar-title class="text-capitalize">Send Email</v-toolbar-title>
-	    <v-spacer></v-spacer>
-	    <v-toolbar-side-icon @click="closeDrawer">
-      	<v-icon>
-          fas fa-times
-        </v-icon>
-      </v-toolbar-side-icon>
-    </v-toolbar>
-    <v-divider class="mt-0 mb-0"></v-divider>
+	    	<v-toolbar-title class="text-capitalize">Send Email</v-toolbar-title>
+	    	<v-spacer></v-spacer>
+	    	<v-toolbar-side-icon @click="closeDrawer">
+		      	<v-icon>
+		          fas fa-times
+		        </v-icon>
+      		</v-toolbar-side-icon>
+    	</v-toolbar>
+    	<v-divider class="mt-0 mb-0"></v-divider>
 
-    <v-list class="heigth-list-title">
-			<!-- <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert> -->
-
-			<v-list-tile class="height-80 fix-height-80">
+    	<v-list class="heigth-list-title">
+			<v-list-tile class="height-65 fix-height-80">
 				<v-list-tile-content class="h-100">
-					<v-list-tile-title class="content-flex-end h-100">
-						<span class="font-weight-bold item-title position-item">To:</span>
-						<span class="contain-text-field fix-contain-text-field">
+					<v-list-tile-title class="content-flex-end h-100 align-items-center">
+						<span class="item-title position-item">To:</span>
+						<span class="contain-text-field">
 							<v-checkbox
-	              v-model="selectEmail"
-	              label="Select all"
-	              hide-details
-	              class="btn-style"
-	              color="indigo"
-	              @change="onCheckboxChange"
-	            ></v-checkbox>
+	              				v-model="selectEmail"
+					            label="Select all"
+					            hide-details
+					            class="btn-style"
+					            color="indigo"
+					            @change="onCheckboxChange"
+	            			></v-checkbox>
 						</span>
 					</v-list-tile-title>
 				</v-list-tile-content>
@@ -35,24 +33,17 @@
 
 			<v-list-tile class="margin-select-email" v-if="!selectEmail">
 				<v-flex xs12 sm12>
-          <v-select
-            v-model="value"
-            :items="customers"
-            chips
-            label="Email customers"
-            multiple
-            solo
-            persistent-hint
-          ></v-select>
-        </v-flex>
+		          	<v-select
+		            	v-model="value"
+			            :items="customers"
+			            chips
+			            label="Email customers"
+			            multiple
+			            persistent-hint
+		          	></v-select>
+		        </v-flex>
 			</v-list-tile>
 		</v-list>
-		<v-spacer></v-spacer>
-
-		<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-			<v-btn color="primary" @click="sendMail()">SEND</v-btn>
-			<v-btn @click="closeDrawer">Close</v-btn>
-		</v-card-actions>
 	</v-card>
 </template>
 
@@ -86,7 +77,7 @@ export default {
 			this.selectEmail = true
 		},
 		getCustomers() {
-			get(config.API_URL+'company/branches/customers/email?company_id='+this.company.company_id)
+			get(config.API_URL + 'customer-emails/?company_id=' + this.company.company_id)
 			.then(response => {
 				if(response && response.data.success) {
 					this.customers = response.data.data
@@ -122,22 +113,22 @@ export default {
 	          duration: 2000,
 	        })
 					return
-				} 
+				}
 
 				params = {email: this.value, templateId: this.item.id}
 			}
 
-			getWithData(config.API_URL+'company/branches/customer/send-email', params)
+			getWithData(config.API_URL + 'customer/send-email', params)
 			.then(response => {
 				if(response && response.data.success) {
 					this.alertType = 'success'
 					this.alertMes = "Send mail success"
 					this.$notify({
-	          title: 'Success',
-	          message: this.alertMes,
-	          type: this.alertType,
-	          duration: 2000,
-	        })
+			          	title: 'Success',
+			          	message: this.alertMes,
+			          	type: this.alertType,
+			          	duration: 2000,
+			        })
 				}
 			})
 		}
@@ -151,10 +142,5 @@ export default {
 	}
 	.margin-select-email{
 		padding-top:40px !important;
-	}
-	.fix-height-80{
-		height: 50px !important;
-		margin-top:0px !important;
-		margin-bottom:0px !important;
 	}
 </style>

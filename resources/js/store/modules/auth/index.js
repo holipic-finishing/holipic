@@ -5,14 +5,15 @@ import Vue from 'vue'
 import firebase from 'firebase';
 import Nprogress from 'nprogress';
 import router from '../../../router';
-import config from '../../../config/index.js'
+import config from '../../../config'
 // import {
 //     facebookAuthProvider,
 //     googleAuthProvider,
 //     twitterAuthProvider,
 //     githubAuthProvider
 // } from '../../../firebase';
-import  { post, get } from '../../../api/index.js'
+import  { post, get } from '../../../api'
+import { vp } from '../../../helpers/vp.js'
 
 
 const state = {
@@ -58,7 +59,6 @@ const actions = {
         post('/auth/loginSuperAdmin',params)
         .then(res => {
            if(res && res.data.success) {
-
             let data = res.data.data.user
              Nprogress.done();
                 setTimeout(() => {
@@ -77,7 +77,7 @@ const actions = {
     },
     changePasswordUserInDatabase(context, payload) {
         context.commit('loginUser');
-        let url = config.API_URL+'change-password'
+        let url = config.API_URL + 'change-password'
         let params = {
             access_token : payload.params.access_token,
             newPassword : payload.params.newPassword,
@@ -108,7 +108,7 @@ const actions = {
     },
     editUserProfileInDatabase(context, payload) {
         context.commit('loginUser');
-        let url = config.API_URL+'edit-user-profile'
+        let url = config.API_URL + 'edit-user-profile'
         let params = {
             id : payload.params.id,
             username : payload.params.username,
@@ -237,48 +237,49 @@ const mutations = {
         if(user.role_id == "3"){
             router.push('/branch-admin/dashboard')
         }
-        setTimeout(function(){
-            Vue.notify({
-                group: 'loggedIn',
-                type: 'success',
-                text: 'User Logged In Success!'
-            });
-       },1500);
+        vp.$notify.success({
+            title: 'Success',
+            message: 'Logged in successfully!',
+            showClose: false,
+            duration: 2000,
+        })
     },
     loginUserFailure(state, error) {
         Nprogress.done();
-        Vue.notify({
-            group: 'loggedIn',
-            type: 'error',
-            text: error.message
-        });
+        vp.$notify.error({
+            title: 'Error',
+            message: error.message,
+            showClose: false,
+            duration: 2000,
+        })
     },
     logoutUser(state) {
         state.user = null
         localStorage.removeItem('access_token')
         localStorage.removeItem('user')
         localStorage.removeItem('id_one_signal')
-        router.push("/login");
+        router.push("/login")
     },
     signUpUser(state) {
         Nprogress.start();
     },
     signUpUserSuccess(state, user) {
         state.user = localStorage.setItem('user', user);
-        router.push("/super-admin/dashboard");
-        Vue.notify({
-            group: 'loggedIn',
-            type: 'success',
-            text: 'Account Created!'
-        });
+        router.push("/super-admin/dashboard")
+        vp.$notify.success({
+            title: 'Success',
+            message: 'Registered account successfully!',
+            showClose: false,
+            duration: 2000,
+        })
     },
     signUpUserFailure(state, error) {
         Nprogress.done();
-         Vue.notify({
-            group: 'loggedIn',
-            type: 'error',
-            text: error.message
-        });
+        vp.$notify.error({
+            title: 'Error',
+            message: error.message,
+            showClose: false
+        })
     },
     signInUserWithAuth0Success(state, user) {
         state.user = user;
@@ -291,42 +292,40 @@ const mutations = {
     },
     changepasswordSuccess(state, success){
         Nprogress.done();
-        Vue.notify({
-            group: 'loggedIn',
-            type: 'success',
-            title: 'Message',
-            text: success,
-            duration: 5000
-        });
-         router.push('/super-admin/dashboard');
+        router.push('/super-admin/dashboard');
+        vp.$notify.success({
+            title: 'Success',
+            message: 'Change password successfully!',
+            showClose: false,
+            duration: 2000,
+        })
     },
      changepasswordError(state, error){
         Nprogress.done();
-        Vue.notify({
-            group: 'loggedIn',
-            type: 'error',
-
-            text: error
-        });
+        vp.$notify.error({
+            title: 'Error',
+            message: error,
+            showClose: false,
+            duration: 2000,
+        })
     },
     editProfileSuccess(state, success){
         Nprogress.done();
-        Vue.notify({
-            group: 'loggedIn',
-            type: 'success',
-            title: 'Message',
-            text: success,
-            duration: 5000
-        });
-         router.push('/super-admin/dashboard');
+        router.push('/super-admin/dashboard');
+        vp.$notify.success({
+            title: 'Success',
+            message: 'Edited profile successfully!',
+            showClose: false
+        })
     },
     editProfileError(state, error){
         Nprogress.done();
-        Vue.notify({
-            group: 'loggedIn',
-            type: 'error',
-            text: error
-        });
+        vp.$notify.error({
+            title: 'Error',
+            message: error,
+            showClose: false,
+            duration: 2000,
+        })
     }
 }
 

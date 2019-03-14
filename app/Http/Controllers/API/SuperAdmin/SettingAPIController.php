@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\SuperAdmin;
 
 use App\Http\Requests\API\CreateSettingAPIRequest;
 use App\Http\Requests\API\UpdateSettingAPIRequest;
@@ -131,13 +131,6 @@ class SettingAPIController extends AppBaseController
         $setting->delete();
 
         return $this->sendResponse($id, 'Setting deleted successfully');
-    }
-
-    public function getPackage(){
-        
-        $result = Package::with('setting')->get();
-
-        return $this->sendResponse($result, 'Packages successfully');
     }
 
     public function editSetting(Request $request, $itemId){

@@ -103,7 +103,7 @@ export default {
 
     getData(params){
 
-			let url = config.API_URL+'report-incomes-package'
+			let url = config.API_URL + 'super-admin-chart-report'
 
 			getWithData(url,params)
 			.then((res) => {
@@ -120,6 +120,8 @@ export default {
 
               this.$root.$emit('totalTransaction', total)
           		this.handleDataWeek(dataWeek);
+              this.getStartWeekAndEndWeekWithValue(dataWeek, this.chooes)
+              
 
 
 					}else {
@@ -131,6 +133,8 @@ export default {
               total = total.toFixed(3)
 		        this.$root.$emit('totalTransaction', total)
 						this.handleDataDaily(res.data.data);
+            this.getStartTimeAndEndTimeWithValue(res.data.data, this.chooes)
+
 					}
 				}
 				
@@ -141,28 +145,62 @@ export default {
 	},
 
 	handleDataDaily(data){
-			var lables = []
-	        var total = []
-	        _.forEach(data, function(value, key) {
-	            lables.push(key)
-	            total.push(value.total)
-	        });
+		var lables = []
+    var total = []
+    _.forEach(data, function(value, key) {
+            lables.push(key)
+            total.push(value.total)
+    });
 
-	        this.renderChartData(lables,total);
-
-		},
-
-	handleDataWeek(data){
-
-			var lables = []
-	        var total = []
-	        _.forEach(data, function(value, key) {
-	          lables.push(moment(value['startOfWeek']).format('MM-DD') + ' / ' + moment(value['endOfWeek']).format('MM-DD'))
-	          total.push(value.total)                      
-	        });
-	        this.renderChartData(lables,total);
+    this.renderChartData(lables,total);
 
 	},
+
+	handleDataWeek(data){
+		var lables = []
+    var total = []
+    _.forEach(data, function(value, key) {
+          lables.push(moment(value['startOfWeek']).format('MM-DD') + ' / ' + moment(value['endOfWeek']).format('MM-DD'))
+          total.push(value.total)                      
+    });
+    this.renderChartData(lables,total);
+
+	},
+
+   getStartWeekAndEndWeekWithValue(obj, typeTime){
+    var keys, firstKey, lastKey
+    keys = Object.keys(obj)
+    firstKey = Object.keys(obj)[0]
+    lastKey = keys[keys.length-1]
+    var timeObj = {
+      "firstTime" : "",
+      "lastTime" : "",
+      "typeTime" : typeTime
+    }
+
+    _.forEach(obj, function(value,key){
+      if (key == firstKey) {
+        timeObj.firstTime = value.startOfWeek
+      }
+      if (key == lastKey) {
+        timeObj.lastTime = value.endOfWeek
+      }
+    })
+    this.$root.$emit('load-time-in-menu-filter', timeObj)
+  },
+
+  getStartTimeAndEndTimeWithValue(obj, typeTime){
+    var keys, firstKey, lastKey
+    keys = Object.keys(obj)
+    firstKey = Object.keys(obj)[0]
+    lastKey = keys[keys.length-1]
+    var timeObj = {
+      "firstTime" : firstKey,
+      "lastTime" : lastKey,
+      "typeTime" : typeTime
+    }
+    this.$root.$emit('load-time-in-menu-filter', timeObj)
+  },
 
 
   }

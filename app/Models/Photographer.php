@@ -39,6 +39,9 @@ class Photographer extends Model
         'address',
         'status',
         'branch_id',
+        'avatar',
+        'email',
+        'identification_card'
     ];
 
     /**
@@ -52,6 +55,9 @@ class Photographer extends Model
         'address' => 'string',
         'status' => 'boolean',
         'branch_id' => 'integer',
+        'avatar' => 'string',
+        'email' => 'string',
+        'identification_card' => 'string'
     ];
 
     /**

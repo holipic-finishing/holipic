@@ -1,43 +1,58 @@
 <template>
 	<v-container fluid>
-		<app-card>
+		<app-card
+			colClasses="xl12 lg12 md12 sm12 xs12"
+			customClasses="p-0 elevation-5 rp-search"
+			:fullScreen="true"
+			:reloadable="true"
+			:closeable="false"
+			>
 			<package-item></package-item>
-			<page-title-bar></page-title-bar>
+			<!-- <page-title-bar></page-title-bar> -->
 
-			<v-toolbar flat color="white" class="plr-0">
+			<v-toolbar flat color="white">
+			        <v-toolbar-title>
+			          Package List
+			        </v-toolbar-title>
+		    </v-toolbar>
+      		<v-divider class="m-0"></v-divider>
+
+      		<v-card-title>
 				<v-spacer></v-spacer>
-				<v-text-field
-	        v-model="search"
-	        append-icon="search"
-	        label="Enter Search Value"
-	        single-line
-	        hide-details
-	        class="mr-3"
-		    ></v-text-field>
-		    <v-tooltip bottom>
-			    <v-btn 
-			    	@click="showAddItem()"
-			    	color="primary" 
-			    	dark
-			    	slot="activator"
-			    	fab
-			    	small
-			    >
-			    	<v-icon dark>fas fa-plus</v-icon>
-			    </v-btn>
-			    <span>Add New Packages</span>
-		    </v-tooltip>
-			</v-toolbar>
+				<div class="w-25">
+					<v-text-field
+				        v-model="search"
+				        append-icon="search"
+				        label="Enter Search Value"
+				        single-line
+				        hide-details
+				        class="mr-3"
+			   		></v-text-field>
+		   		</div>
+			    <v-tooltip bottom>
+				    <v-btn 
+				    	@click="showAddItem()"
+				    	color="btn-gradient-primary rp-btn-package" 
+				    	dark
+				    	slot="activator"
+				    	fab
+				    	small
+				    >
+				    	<v-icon dark>fas fa-plus</v-icon>
+				    </v-btn>
+				    <span>Add New Packages</span>
+			    </v-tooltip>
 
+			</v-card-title>
 			<v-data-table
-	      :headers="headers"
-	      :items="desserts"
-	      class="elevation-1 custom-table"
-	      :disable-initial-sort="true"
-	      :pagination.sync="pagination"
+		      :headers="headers"
+		      :items="desserts"
+		      class="elevation-1 custom-table"
+		      :disable-initial-sort="true"
+		      :pagination.sync="pagination"
 			  :loading="loadingCom"
 			  :search="search"
-		  >
+		  		>
 		    	<template slot="items" slot-scope="props">
 		    		<td class="text-xs-left">{{ props.item.package_name }}</td>
 			        <td class="text-xs-left">{{ props.item.short_description }}</td>
@@ -86,17 +101,17 @@
 			        </td>
 		    	</template>
 
-	      	<!--No data -->
-				  <template slot="no-data">
+	      			<!--No data -->
+				<template slot="no-data">
 			      <v-alert :value="true" color="error" icon="warning">
 			        Sorry, nothing to display here :(
 			      </v-alert>
 	    		</template>
 					
-					<!--Search no result -->
+				<!--Search no result -->
 	    		<v-alert slot="no-results" :value="true" color="error" icon="warning">
-	          Your search for "{{ search }}" found no results.
-	        </v-alert>
+	          		Your search for "{{ search }}" found no results.
+	        	</v-alert>
 
 			</v-data-table>
 
@@ -215,7 +230,7 @@ export default {
 	    },
 
 		deleteItem(id,setting_id){
-			let url = config.API_URL+'delete-package'
+			let url = config.API_URL + 'delete-package'
 
 			let params = {
 				id_packages : this.itemIdToDelete.id,

@@ -1,16 +1,18 @@
 <template>
-	<v-container fluid grid-list-xl>
+	<v-container fluid px-0 py-0 class="fix-croll-container">
     <v-layout row wrap>
-      <app-card
-        colClasses="xl12 lg12 md12 sm12 xs12"
-        :fullScreen="true"
-        :reloadable="true"
-        :closeable="false"
-        :fullBlock="true"
-        class="p-0"
-      >
+
+			<app-card
+				colClasses="xl12 lg12 md12 sm12 xs12"
+				customClasses="p-0 elevation-5 rp-search"
+				:fullScreen="true"
+				:reloadable="true"
+				:closeable="false"
+				:fullBlock="false"
+			>
+
 				<!-- Navigation drawer -->
-				<v-navigation-drawer 
+				<v-navigation-drawer
 		      fixed
 		      v-model="drawer1"
 		    	right
@@ -33,7 +35,7 @@
 				<!--Search Component -->
 				<v-card-title>
 	      	<v-spacer></v-spacer>
-	        <div class="w-25">
+	        <div class="w-25 input-search">
 	  	      <v-text-field
 	  	        v-model="search"
 	  	        append-icon="search"
@@ -42,20 +44,21 @@
 	  	        hide-details
 	  	      ></v-text-field>
 	        </div>
-					<v-btn fab dark small color="#5D92F4" class="ml-2 btn-gradient-primary" @click="showEmail()">
-						<v-icon dark >add</v-icon>
+
+					<v-btn small fab dark color="indigo" @click="showEmail()" class="ml-2 btn-gradient-primary custom-btn btn-add">
+							<v-icon dark>add</v-icon>
 					</v-btn>
-			    <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn" @click="exportCSV">
-						<v-icon small color="white" class="custom-v-icon">fas fa-file-excel</v-icon>
+			    <a target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary custom-btn btn-export" @click="exportCSV">
+						<v-icon small color="white" style="font-size:16px">fas fa-file-excel</v-icon>
 					</a>
 		    </v-card-title>
 
-		    <v-data-table 
-					:headers="headers" 
-					:items="items" 
+		    <v-data-table
+					:headers="headers"
+					:items="items"
 					class="body-2 global-custom-table"
-					:pagination.sync="pagination" 
-					:rows-per-page-items="rowsPerPageItems" 
+					:pagination.sync="pagination"
+					:rows-per-page-items="rowsPerPageItems"
 					default-sort="id:desc"
 					:search="search"
 				>
@@ -64,11 +67,12 @@
 						<td>{{ props.item.email_title }}</td>
 						<td>{{ props.item.format_email_content }}</td>
 						<td>
-							<v-btn 
-								small 
-								color="primary" 
-								@click="showEmailToSend(props.item)" 
-								class="btn-gradient-success ml-0 mr-0"
+							<v-btn
+								class="m-0"
+								small
+								color="indigo"
+								@click="showEmailToSend(props.item)"
+								dark
 							>
 								Send Email
 							</v-btn>
@@ -122,7 +126,7 @@ import { get, post, put, del, getWithData } from '../../../api'
 import EmailItem from './EmailItem.vue'
 import { mapGetters } from "vuex"
 import SendEmail from './SendEmail.vue'
-import { getWithContentWrap } from '../../../helpers/helpers'	
+import { getWithContentWrap } from '../../../helpers/helpers'
 
 
 export default {
@@ -141,18 +145,18 @@ export default {
 			drawer1:false,
 			pagination: {
 		  	rowsPerPage: 25,
-		  	sortBy: 'id', 
+		  	sortBy: 'id',
 		  	descending: false
 		  },
-	    headers: [	        
-				{ text: 'ID', value: 'id',  align: 'left', width: '5%', class: 'mb-icon'},	       
-				{ text: 'Title', value: 'email_title',width: '10%', class: 'mb-icon' },	
-				{ text: 'Description', value: 'format_email_content',width: '65%', class: 'mb-icon' },	      
-	    	{ text: 'Send Email',sortable: false ,width: '5%', class: 'mb-icon'},  
-	    	{ text: 'Action', sortable: false, width: '10%', align: 'right', class: 'mb-icon' },         
+	    headers: [
+				{ text: 'ID', value: 'id',  align: 'left', width: '5%', class: 'mb-icon'},
+				{ text: 'Title', value: 'email_title',width: '10%', class: 'mb-icon' },
+				{ text: 'Description', value: 'format_email_content',width: '65%', class: 'mb-icon' },
+		    	{ text: 'Send Email',sortable: false ,width: '5%', class: 'mb-icon'},
+		    	{ text: 'Action', sortable: false, width: '10%', align: 'right', class: 'mb-icon' },
 	    ],
-			items :[],
-			rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
+		items :[],
+		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 	    alertType: 'success',
 	    alertMes: '',
 	    authUser : JSON.parse(localStorage.getItem('user')),
@@ -165,18 +169,19 @@ export default {
 		}
 	},
 	created(){
-		this.fetchData()	
+		this.fetchData()
 	},
 	methods:{
 		getCurrentWithContentWrap(){
   		return getWithContentWrap(this.drawerHeaderStt)
-  	},
+  		},
 		showEmail(){
+
 			let obj = {
   				check : true,
   				showDrawer: true,
 	  		}
-  		this.$root.$emit('change-status', obj)
+  			this.$root.$emit('change-status', obj)
 		},
 		fetchData(){
 			let url = config.API_URL + 'emails'
@@ -203,7 +208,7 @@ export default {
 			let url = config.API_URL+'emails/'+this.itemIdToDelete
 			del(url)
 			.then((res) => {
-				this.fetchData();	
+				this.fetchData();
         this.alertType = 'success'
         this.alertMes = 'Delete Item Successfully'
         this.$notify({
@@ -211,7 +216,7 @@ export default {
           message: this.alertMes,
           type: this.alertType,
           duration: 2000,
-        })					
+        })
         this.dialog = false
 			})
 			.catch((err) =>{
@@ -220,14 +225,15 @@ export default {
           message: 'System Error Occurred',
           type: 'error',
           duration: 2000,
-        })	
+        })
 			})
 		},
 		exportCSV(){
 			let params = {
         company_id : this.authUser.company_id
-      }	
-			let url = config.API_URL+'company/export/customer'
+      }
+			let url = config.API_URL + 'export-customers'
+
 			getWithData(url,params)
 			.then(res => {
 				if(res.data && res.data.status){
@@ -236,11 +242,11 @@ export default {
 			})
 			.catch(err => {
 				this.$notify({
-          title: 'Success',
-          message: 'Cannot Export File.',
-          type: 'error',
-          duration: 2000,
-        })
+		        	title: 'Success',
+		          	message: 'Cannot Export File.',
+		          	type: 'error',
+		          	duration: 2000,
+       			 })
 			})
 		},
 		showEmailToSend(item){
@@ -253,38 +259,38 @@ export default {
 			this.itemIdToDelete = item
 		},
 		changeSort (column) {
-      var columnsNoSearch = ['actions']
-      if (columnsNoSearch.indexOf(column) > -1) {
-        return
-      }
-      this.loading = true
-      if (this.pagination.sortBy === column) {
-        this.pagination.descending = !this.pagination.descending
-      } else {
-        this.pagination.sortBy = column
-        this.pagination.descending = false
-      }
-      this.loading = false
-  	}
-	},
+      		var columnsNoSearch = ['actions']
+		      if (columnsNoSearch.indexOf(column) > -1) {
+		        return
+		      }
+		      this.loading = true
+		      if (this.pagination.sortBy === column) {
+		        this.pagination.descending = !this.pagination.descending
+		      } else {
+		        this.pagination.sortBy = column
+		        this.pagination.descending = false
+		      }
+		      this.loading = false
+		  	}
+		},
 	computed: {
 	 	...mapGetters(["rtlLayout",]),
 	 	widthComputed(){
   		return this.width
-  	}
-  },
-  mounted(){
-  	this.$root.$on('drawer-status', res => {
-  		this.drawerHeaderStt = res
-  	})
+  		}
+  	},
+	 mounted(){
+	  	this.$root.$on('drawer-status', res => {
+	  		this.drawerHeaderStt = res
+	  	})
 
-		this.$root.$on('reload-data', res => {
-     	this.fetchData()
-    })
+			this.$root.$on('reload-data', res => {
+	     	this.fetchData()
+	    })
 
-    this.$root.$on('closeDrawerItem', res => {
-     	this.drawer1 = res
-    })
+	    this.$root.$on('closeDrawerItem', res => {
+	     	this.drawer1 = res
+	    })
   }
 };
 </script>
@@ -302,7 +308,7 @@ export default {
 	&:hover{
  	 color: blue !important;
  	}
-} 
+}
 .a-icon {
 	right: 0px;
     position: absolute;

@@ -3,20 +3,40 @@
 		<v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="p-0 elevation-5"
+				customClasses="p-0 elevation-5 rp-search"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
 			>
 				<v-toolbar flat color="white">
-	        <v-toolbar-title>
-	          Company List
-	        </v-toolbar-title>
-		    </v-toolbar>
-      	<v-divider class="m-0"></v-divider>
+			        <v-toolbar-title>
+			          Company List
+			        </v-toolbar-title>
+		    	</v-toolbar>
+      			<v-divider class="m-0"></v-divider>
 
-      	<!--Search Component -->
+      			<!--Search Component -->
 				<v-card-title>
+
+		      		<!-- <v-spacer></v-spacer>
+			        <div class="w-25">
+			  	      <v-text-field
+			  	        v-model="search"
+			  	        append-icon="search"
+			  	        label="Enter Search Value"
+			  	        single-line
+			  	        hide-details
+			  	      ></v-text-field>
+			        </div>
+				    <v-tooltip bottom>
+					    <a :href="urlExport" target="_blank" slot="activator" class="btn btn-primary ml-2 btn-gradient-primary fix-btn-priamry">
+								<v-icon small color="white">fas fa-file-excel</v-icon>
+							</a>
+					    <span>Export companies</span>
+			   		 </v-tooltip>
+		    	</v-card-title> -->
+
+		    	<!--End Search Component -->
 		      <v-spacer></v-spacer>
 	        <div class="w-25">
 	  	      <v-text-field
@@ -35,6 +55,7 @@
 		    </v-tooltip>
 		    </v-card-title>
 		    <!--End Search Component -->
+
 
 		    <v-data-table 
 					:headers="headers" 
@@ -211,7 +232,7 @@
         dialog: false,
         itemIdToDelete: '',
         listPackage : [],
-        urlExport:config.API_URL+'exportexcel/companies',
+        urlExport:config.API_URL + 'companies/export-excel',
         drawerRight: false,
         pagination: {
 		  	rowsPerPage: 25,
@@ -261,7 +282,7 @@
 				var data = []
 				data.push('All')
 
-				get(config.API_URL+'list/packages')
+				get(config.API_URL + 'list-package')
 				.then((res) => {
 					_.forEach(res.data, function(value) {
 						data.push(value.package_name)

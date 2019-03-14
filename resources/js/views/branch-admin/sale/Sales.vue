@@ -1,9 +1,9 @@
 <template>
-	<v-container fluid pt-0 grid-list-xl mt-3>
+	<v-container fluid  px-0 py-0 grid-list-xl>
 		<v-layout row wrap>
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="p-0 elevation-5"
+				customClasses="p-0 elevation-5 rp-search"
 				:fullScreen="true"
 				:reloadable="true"
 				:closeable="false"
@@ -98,7 +98,7 @@
 					  				</v-card>
 								</v-flex>
 
-								<v-flex md1 sm12 xs12 align-center justify-center>
+								<v-flex md1 sm12 xs12 align-center justify-center class="custom-btn-sale">
 				  					<v-btn class="btn-gradient-primary" small fab dark @click="filterSale()">Go</v-btn>
 				  				</v-flex>
 				  		</v-layout>
@@ -116,9 +116,9 @@
 					  	        	hide-details
 					  	      	></v-text-field>
 				        	</div>
-						    <v-tooltip bottom class="icon-style">
+						    <v-tooltip bottom class="icon-style custom-btn-sale">
 						    	<v-btn slot="activator" small fab dark @click="exportSales()" class="ml-2 btn-gradient-primary">
-										<v-icon dark>fas fa-file-excel</v-icon>
+										<v-icon dark style="font-size:16px">fas fa-file-excel</v-icon>
 									</v-btn>
 							    <span>Export Sales</span>
 						    </v-tooltip>
@@ -259,7 +259,7 @@ export default {
 			})
 		},
 		getSalesList(){
-			get(config.API_URL+'branch/sales-list?branchId='+this.branch.branch_id)
+			get(config.API_URL + 'branch/sales-list?branchId=' + this.branch.branch_id)
 			.then(response => {
 				if(response && response.data.success) {
 					this.sales = response.data.data
@@ -317,7 +317,7 @@ export default {
                 branchId : this.branch.branch_id
             }
 
-            getWithData(config.API_URL+'branch/sales-list/export', params)
+            getWithData(config.API_URL + 'branch/sales-list/export', params)
 			.then(response => {
 				console.log(response)
 				if(response && response.data.status) {

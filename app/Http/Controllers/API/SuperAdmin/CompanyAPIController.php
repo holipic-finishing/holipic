@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\SuperAdmin;
 
 use App\Http\Requests\API\CreateCompanyAPIRequest;
 use App\Http\Requests\API\UpdateCompanyAPIRequest;
@@ -130,32 +130,10 @@ class CompanyAPIController extends AppBaseController
         return $this->sendResponse($id, 'Company deleted successfully');
     }
 
-    /**
-        TODO:
-        - function to search of list companies
-
-    */
-    
-    public function doSearch(Request $request){
-        $input = $request->all();
-        
-        $results = $this->companyRepository->search($input);
-
-
-        return $this->sendResponse($results->toArray(), 'Companies searched successfully');
-
-    }
-
-
     public function getTransactionHistory(Request $request){
         
         $input = $request->all();
 
-        // if($input['params'] == 'day'){
-        //     $results = $this->companyRepository->transactionHistoryDay($input);
-        // }
-
-        
         return $this->sendResponse($results->toArray(), 'Transaction History successfully');
     }
     
@@ -171,25 +149,6 @@ class CompanyAPIController extends AppBaseController
 
         return $this->sendResponse($companyInfo, 'Get Information Company Completed');
     }
-
-    /*  Target : function export email information customer by company id
-    *   GET company/export/customer
-    *   
-    */
-    public function exportEmailCustomerByCompanyId(Request $request){
-
-        $input = $request->all();
-    
-        $this->createLink($input['company_id']);
-
-        $results = $this->companyRepository->handleExportCustomerByCompanyId($input['company_id']);
-
-        return \Response::json([
-            'status' => true,
-            'link' => url('/files/'.$input['company_id'].'_Customer_email.csv')
-        ]);
-    }
-
 
     /**
      * Target : Create file CSV customer HEADER
@@ -214,27 +173,5 @@ class CompanyAPIController extends AppBaseController
         fputcsv($file,$keys);
         fclose($file); 
         return $csvPath;
-    }
-
-    public function getEmailCustomers()
-    {
-        $customers = $this->companyRepository->getCustomerByCompanyId(request('company_id'));
-
-        if(!empty($customers)) {
-            return $this->sendResponse($customers, 'Get Customer success');
-        }
-
-        return $this->sendError('Not data customer email');
-    }
-
-    public function sendEmailCustomers()
-    {
-        $customers = $this->companyRepository->handleSendMailToCustomers();
-
-        if(!$customers) {
-            return $this->sendError('Error send mail');
-        }
-
-        return $this->sendResponse($customers, 'Success send mail');
     }
 }

@@ -1,6 +1,6 @@
 <template>
 	<div >
-		<!-- <header-shop> </header-shop> -->
+		<header-shop> </header-shop>
 		<v-container fluid class="custom-container-sp">
 			<router-view></router-view>
 		</v-container>
@@ -8,13 +8,13 @@
 </template>
 
 <script>
-// import HeaderShop from './partials/Header'
+import HeaderShop from './partials/Header'
 
 export default {
 
   name: 'index',
   components: {
-  	// HeaderShop
+  	HeaderShop
   },
 
   data () {

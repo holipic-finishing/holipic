@@ -56,7 +56,9 @@
 								<v-img
 									:src="photo.src"
 									aspect-ratio="1"
-									class="grey lighten-2 "	
+									class="grey lighten-2 "
+									
+									height="300"	
 									>
 									<div class="content-info">
 										<v-icon color="white" @click="removeItem(index, photo)">cancel</v-icon>
@@ -252,9 +254,7 @@
 				</v-flex>
 
 				<v-flex xs10 class="v-flex-sp-r line-flex">
-					<v-card-text class="select-languages">
-						
-					</v-card-text>
+					
 				</v-flex>
 
 				<v-layout row wrap class="photo-selected ">
@@ -271,8 +271,8 @@
 									:ref="'imageSrc'+photo.id"
 									aspect-ratio="1"
 									class="grey lighten-2 hover-image"
-									width="420"
-									height="278"
+									
+									height="300"
 									:value="photo.src"
 									@click="selectPhoto(photo, $event)"
 									>
@@ -299,6 +299,7 @@
 					<v-dialog
 		     			 	v-model="dialog2"
 		      				width="1000"
+		      				class="v-dialog2"
 		    				>
 						<v-carousel class="custom-carousel" hide-delimiters>
 						    <v-carousel-item

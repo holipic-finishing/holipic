@@ -1,5 +1,6 @@
 <template>
 	<v-layout row wrap>
+		<!-- Selected photo-->
 		<app-card
 			colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card"
@@ -54,7 +55,7 @@
 						<v-card flat tile class="d-flex custom-d-flex">
 							<div class="grid-item pos-relative custom-grid-item">
 								<v-img
-									:src="photo.src"
+									:src="thumbnailDir+photo.name"
 									aspect-ratio="1"
 									class="grey lighten-2 "
 									
@@ -228,7 +229,9 @@
 				</v-layout>
 			</div>  
 		</app-card>
+		<!-- Selected photo-->
 
+		<!--Orther photo -->
 		<app-card
 			colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card"
@@ -257,7 +260,8 @@
 					
 				</v-flex>
 
-				<v-layout row wrap class="photo-selected ">
+				<v-layout row wrap class="photo-selected images">
+					
 					<v-flex
 						v-for="photo in photos"
 						xs12 sm3
@@ -267,54 +271,57 @@
 						<v-card flat tile class="d-flex custom-d-flex" >
 							<div class="grid-item pos-relative custom-grid-item">
 								<v-img
-									:src="photo.src"
-									:ref="'imageSrc'+photo.id"
+									:src="thumbnailDir + photo.name"
 									aspect-ratio="1"
 									class="grey lighten-2 hover-image"
-									
 									height="300"
-									:value="photo.src"
-									@click="selectPhoto(photo, $event)"
+									:key="photo.id"
+									@click="selectPhoto(photo)"
 									>
 								</v-img>
 							</div>
 						</v-card>
 
 						<div class="icon-frame-photo">
-						 	<span class="v-flex-sp-l" @click="showZoomImageAndSlide()">
-						 		<i class="material-icons">
+						 	<span class="v-flex-sp-l" @click="showZoomImageAndSlide(photo)">
+						 		<i class="material-icons cursor-v-card">
 									zoom_out_map
 								</i>
 						 	</span>
-						 	<span class="v-flex-sp-r">
-						 		<i class="material-icons" :class="'active-image'+photo.id">
+						 	<span class="v-flex-sp-r" >
+						 		<i class="material-icons cursor-v-card" :class="'active-image'+photo.id">
 									check_circle
 								</i>
 						 	</span>
-						</div>
-
-						
+						</div>	
 					</v-flex>
+	
+				 	<lightbox id="mylightbox" 
+				      ref="lightbox"
+				      :images="photos"
+				      :directory="thumbnailDir"
+				      :timeoutDuration="5000"
+				 	/>
 
-					<v-dialog
+					<!-- <v-dialog
 		     			 	v-model="dialog2"
 		      				width="1000"
 		      				class="v-dialog2"
 		    				>
-						<v-carousel class="custom-carousel" hide-delimiters>
+						<v-carousel class="custom-carousel" hide-delimiters >
 						    <v-carousel-item
-						      v-for="(item,i) in photos"
+						      v-for="(item,i) in photoZoom"
 						      :key="i"
 						      :src="item.src"
 						      width="50%"
-						      
 						    ></v-carousel-item>
 						</v-carousel>
-					</v-dialog>
+					</v-dialog> -->
 				</v-layout>
 			</div>
 		</app-card>
-
+		<!--Orther photo -->
+		
 		<app-card colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card custom-app-card-footer"
 			:withTabs="true">
@@ -325,7 +332,10 @@
 	</v-layout>
 </template>
 <script>
-import fancyBox from 'vue-fancybox';
+
+import Lightbox from 'vue-my-photos'
+import Vue from 'vue'
+Vue.component('lightbox', Lightbox);
 export default {
 
   name: 'SelectPhoto',
@@ -336,56 +346,56 @@ export default {
     	languages:['Eng'],
     	photos: [{
 						id: 1,
-						src: "/static/img/blog-1.jpg",
+						name: "blog-1.jpg",
 						caption: "Caption 1",
 						author: "Admin",
 						likes: "250"
 					},
 					{
 						id: 2,
-						src: "/static/img/blog-2.jpg",
+						name: "blog-2.jpg",
 						caption: "Caption 2",
 						author: "Erik Turner",
 						likes: "150"
 					},
 					{
 						id: 3,
-						src: "/static/img/blog-3.jpg",
+						name: "blog-3.jpg",
 						caption: "Caption 3",
 						author: "John Smith",
 						likes: "200"
 					},
 					{
 						id: 4,
-						src: "/static/img/blog-4.jpg",
+						name: "blog-4.jpg",
 						caption: "Caption 4",
 						author: "Antonio Rice",
 						likes: "300"
 					},
 					{
 						id: 5,
-						src: "/static/img/blog-5.jpg",
+						name: "blog-5.jpg",
 						caption: "Caption 5",
 						author: "Caleb Wilson",
 						likes: "400"
 					},
 					{
 						id: 6,
-						src: "/static/img/blog-6.jpg",
+						name: "blog-6.jpg",
 						caption: "Caption 6",
 						author: "Zachary Robbins",
 						likes: "50"
 					},
 					{
 						id: 7,
-						src: "/static/img/blog-7.jpg",
+						name: "blog-7.jpg",
 						caption: "Caption 7",
 						author: "Jon Wagner",
 						likes: "100"
 					},
 					{
 						id: 8,
-						src: "/static/img/blog-8.jpg",
+						name: "blog-8.jpg",
 						caption: "Caption 8",
 						author: "Dorothy Bass",
 						likes: "75"
@@ -400,7 +410,9 @@ export default {
 		number: 0,
 		typeDetail: 'Select detail',
 		count:0,
-		countOther:0
+		countOther:0,
+		photoZoom: [],
+		thumbnailDir: 'https://holipic.pth.com/static/img/'
     }
   },
   computed:{
@@ -455,7 +467,7 @@ export default {
   			this.number --
   		}
   	},
-  	selectPhoto(photo, $event)
+  	selectPhoto(photo)
   	{
   		var _this = this
 
@@ -477,17 +489,26 @@ export default {
   			this.count--
   			
   		}
-  		console.log(this.$refs['imageSrc']+photo.id)
-
-  		// fancyBox(e.target, this.photos);
   		
   	},
-  	showZoomImageAndSlide()
+  	showZoomImageAndSlide(photo)
   	{
-  		this.dialog2 = true
-  	}
-  	
+  		this.$refs.lightbox.show(photo.name);
+  		// const viewer = this.$el.querySelector('.images').$viewer
+    //     viewer.show()
 
+  		// this.dialog2 = true
+  		// this.photoZoom.push(photo);
+  		// _.forEach(this.photos, (value,index) => {
+  		// 	if(value.id != photo.id){
+  		// 		this.photoZoom.push(value);
+  		// 	}
+  		// })
+  	},
+  	resetPhotoZoom()
+  	{
+  		alert('hung')
+  	}
   }
 }
 </script>
@@ -516,7 +537,7 @@ export default {
 }
 .cart{
 	position: fixed;
-	z-index:999;
+	z-index:100;
 	background-color:white !important;
 	right: 63px;
 	border-radius:2px;
@@ -540,7 +561,6 @@ export default {
 
 .line-cart{
 	border-right: 2px solid #5d92f4;
-    /* background-color: white; */
     padding-right: 20px;
 }
 
@@ -570,4 +590,17 @@ export default {
 	cursor: pointer;
 }
 
+.thumbnailfade-leave-active,
+.thumbnailfade-enter-active {
+  transition: all 0.4s ease;
+}
+
+.thumbnailfade-enter-active {
+  transition-delay: 0.4s;
+}
+
+.thumbnailfade-enter,
+.thumbnailfade-leave-to {
+  opacity: 0;
+}
 </style>

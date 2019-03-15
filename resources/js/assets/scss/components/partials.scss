@@ -369,6 +369,9 @@
 				    float: right;
 				    position: absolute;
 				}
+				.hover-image{
+					border:none;
+				}
 				.hover-image:hover{
 					opacity: 0.5;
 				}
@@ -379,6 +382,7 @@
 				margin-top:10px;
 
 			}
+			
 		}
 	}
 }
@@ -436,5 +440,68 @@
 .v-dialog__content{
 	.v-dialog--active{
 		max-height: 100%;
+	}
+}
+
+#mylightbox{
+	.lightbox{
+		background: rgba(0, 0, 0, 0.7);
+	}
+	.lightbox-main{
+		.lightbox-image{
+			width: 80%;
+		    margin: 0 auto;
+		    height: 100%;
+		}
+	}
+}
+
+.v-dialog__content{
+	.v-dialog-package{
+		width: 1000px !important;
+		height: auto !important;
+	}
+	.v-dialog{
+		.container-package-ramdom{
+			background-color: white;
+			/*border: 1px solid black;*/
+		    padding: 40px 20px !important;
+		    .layout {
+		    	flex-wrap:nowrap !important;
+		    }
+		    &--flex{    	
+    			padding: 0px !important;
+    			box-shadow: 0 1px 15px 1px rgba(69, 65, 78, 0.48);
+    			margin: 0px 20px;
+    			.white--text{
+    				margin: 0 auto;
+    			}
+    			.app-full-content {
+    				.font-xl{
+    					font-size:30px !important;
+    				}
+    				sub{
+    					color:red !important;
+    					font-size: 30px;
+    					text-decoration: line-through;
+    					font-weight: normal;
+    				}
+    				.font-3x{
+    					font-size: 2rem;
+    				}
+
+    				.list-group-item{
+    					border-bottom: 1px solid #e0e0e0;
+    					border-top: 1px solid #e0e0e0;
+    				}
+
+    			}
+    			.app-card{
+    				.app-footer{
+    					border-top:none !important;
+    				}
+    			}
+    		}
+		}
 	}
 }

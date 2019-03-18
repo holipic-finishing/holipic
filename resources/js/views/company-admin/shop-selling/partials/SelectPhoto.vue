@@ -33,14 +33,14 @@
 						<div class="ml-4 width-select">
 							<v-select
 					          :items="currencies"
-					          label="USD"
+					          v-model="selectCurrency"
 					        ></v-select>
 				    	</div>
 
 				    	<div class="ml-4 width-select">
 					        <v-select
 					          :items="languages"
-					          label="Eng"
+					          v-model="selectLanguage"
 					        ></v-select>
 				    	</div>
 					</v-card-text>
@@ -455,7 +455,9 @@ export default {
   data () {
     return {
     	currencies:['USD'],
-    	languages:['Eng'],
+    	languages:['ENG', 'EST', 'RUS', 'FIN' ],
+    	selectCurrency: 'USD',
+    	selectLanguage: 'ENG',
     	photos: [{
 						id: 1,
 						name: "blog-1.jpg",
@@ -616,9 +618,6 @@ export default {
   				this.photoOpened = this.photos2[index]
   			}
   		})
-
-  		// this.dialog = false
-  		// this.dialog = true
   		
   	},
   	increase(photoOpened, quantity)
@@ -670,13 +669,6 @@ export default {
   	},
   	setQuantity(photo, quantity)
   	{
-  		// var index = this.photos2.indexOf(photo);
-  		// console.log(index)
-			// if (index !== -1){
-			// 	this.photos2[index].quantity = quantity
-			// 	this.photoOpened = this.photos2[index]
-			// 	console.log(this.photos2)
-			// }
   		_.forEach(this.photos2, (value,index) => {
   			if(value['id'] == photo.id) {
   				this.photos2[index]['quantity'] = quantity

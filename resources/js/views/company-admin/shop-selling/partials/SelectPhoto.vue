@@ -47,7 +47,7 @@
 				</v-flex>
 				<v-layout row wrap class="photo-selected ">
 					<v-flex
-						v-for="(photo,index) in photos2"
+						v-for="(photo,index) in changePhotos2"
 						xs12 sm3
 						d-flex
 						:key="photo.id"
@@ -78,25 +78,26 @@
 							</div>
 						</v-card>
 
-						<div class="parent-select-detail" @click="showDetail(photo.id)">
-							<span class="select-detail">{{typeDetailReturn}}</span>
+						<div class="parent-select-detail" @click="showDetail(photo)">
+							<span class="select-detail" :class="'select-detail'+photo.id" >{{photo.type}}</span>
 							<span class="number-detail">
 								<i class="fas fa-caret-down"></i>		
 							</span>
 							<div class="line-detail"></div>
 						</div>
 
+						<!-- v-dialog show choose package -->
 						<v-dialog
-		     			 	v-model="dialog"
+		     			 	v-model="dialog_nouse"
 		      				width="400"
 		      				temporary
-		      				v-if="photoId == photo.id"
+		      				v-show="photoId == photo.id"
 		    				>
 		    				<v-card>
 						        <v-container fluid>
 								    <v-layout row >
 								      	<v-flex xs3 >
-									        <v-card tile flat class="cursor-v-card" :class="typeDetailReturn === 't1' ? 'hover-v-card' : '' " @click="activeClass('t1')">
+									        <v-card tile flat class="cursor-v-card" :class="photo.type == '10x15'  ? 'hover-v-card' : '' " @click="activeClass('t1', photo.id, '10x15')">
 									        	<v-card-text>
 									          		10x15
 									          	</v-card-text>
@@ -108,9 +109,19 @@
 												      <v-icon dark>remove</v-icon>
 												    </v-btn>
 										          	<v-text-field
+										          	 v-if="photo.type == '10x15'"
+											            single-line
+	            										solo
+											            v-model="photo.quantity"
+											        ></v-text-field>
+
+											        <v-text-field
+										          	 v-else
 											            single-line
 	            										solo
 											            v-model="number"
+											            :disabled="activeText"
+											            @change="test(photo.type)"
 											        ></v-text-field>
 											          <v-btn  normal @click="increase()">
 												      <v-icon dark>add</v-icon>
@@ -121,7 +132,7 @@
 									
 								    <v-layout row>
 								      	<v-flex xs3 >
-									        <v-card  tile flat class="cursor-v-card" :class="typeDetailReturn === 't2' ? 'hover-v-card' : '' " @click="activeClass('t2')">
+									        <v-card  tile flat class="cursor-v-card" :class="photo.type == '15x21'? 'hover-v-card' : '' " @click="activeClass('t2', photo.id, '15x21')">
 									          <v-card-text>
 									          	15x21
 									          </v-card-text>
@@ -134,9 +145,20 @@
 												      <v-icon dark>remove</v-icon>
 												    </v-btn>
 										          	<v-text-field
+										          	v-if="photo.type == '15x21'"
 											            single-line
 	            										solo
+											            v-model="photo.quantity"
+											            @keyup="setQuantity(photo, photo.quantity)"
+											          ></v-text-field>
+
+											          <v-text-field
+										          	v-else
+											            single-line
+	            										solo
+	            										:disabled="activeText"
 											            v-model="number"
+											            @change="test(photo.type)"
 											          ></v-text-field>
 											          <v-btn  normal @click="increase()">
 												      <v-icon dark>add</v-icon>
@@ -147,7 +169,7 @@
 
 								    <v-layout row>
 								      	<v-flex xs3 >
-									        <v-card  tile flat class="cursor-v-card" :class="typeDetailReturn === 't3' ? 'hover-v-card' : '' " @click="activeClass('t3')">
+									        <v-card  tile flat class="cursor-v-card" :class="photo.type == '20x30'? 'hover-v-card' : (photo.type == '20x30' && typeDetail == 't3') ? 'hover-v-card' : '' " @click="activeClass('t3', photo.id, '20x30')">
 									          <v-card-text>
 									          	20x30
 									          </v-card-text>
@@ -160,9 +182,20 @@
 												      <v-icon dark>remove</v-icon>
 												    </v-btn>
 										          	<v-text-field
+										          	v-if="photo.type == '20x30'"
 											            single-line
 	            										solo
+											            v-model="photo.quantity"
+											            @keyup="setQuantity(photo, photo.quantity)"
+											          ></v-text-field>
+
+											          <v-text-field
+										          		v-else
+											            single-line
+	            										solo
+	            										:disabled="activeText"
 											            v-model="number"
+											            @change="test(photo.type)"
 											          ></v-text-field>
 											          <v-btn  normal @click="increase()">
 												      <v-icon dark>add</v-icon>
@@ -173,7 +206,7 @@
 
 								    <v-layout row>
 								      	<v-flex xs3 >
-									        <v-card  tile flat class="cursor-v-card" :class="typeDetailReturn === 't4' ? 'hover-v-card' : '' " @click="activeClass('t4')">
+									        <v-card  tile flat class="cursor-v-card" :class="photo.type == 'Digital' ? 'hover-v-card' : '' " @click="activeClass('t4', photo.id, 'Digital')">
 									          <v-card-text>
 									          	Digital
 									          </v-card-text>
@@ -186,9 +219,20 @@
 												      <v-icon dark>remove</v-icon>
 												    </v-btn>
 										          	<v-text-field
+										          		v-if="photo.type == 'Digital'"
+										          		@keyup="setQuantity(photo, photo.quantity)"
+											            single-line
+	            										solo
+											            v-model="photo.quantity"
+											          ></v-text-field>
+
+											          <v-text-field
+										          		v-else
+										          		:disabled="activeText"
 											            single-line
 	            										solo
 											            v-model="number"
+											            @change="test(photo.type)"
 											          ></v-text-field>
 											          <v-btn  normal @click="increase()">
 												      <v-icon dark>add</v-icon>
@@ -199,7 +243,7 @@
 
 								    <v-layout row>
 								      	<v-flex xs3 >
-									        <v-card  tile flat class="cursor-v-card" :class="typeDetailReturn === 't5' ? 'hover-v-card' : '' " @click="activeClass('t5')">
+									        <v-card  tile flat class="cursor-v-card" :class="photo.type == 'Album' ? 'hover-v-card' : '' " @click="activeClass('t5', photo.id, 'Album')">
 									          <v-card-text>
 									          	Album
 									          </v-card-text>
@@ -212,9 +256,20 @@
 												      <v-icon dark>remove</v-icon>
 												    </v-btn>
 										          	<v-text-field
+										          	v-if="photo.type == 'Album'"
 											            single-line
 	            										solo
+											            v-model="photo.quantity"
+											            @keyup="setQuantity(photo, photo.quantity)"
+											          ></v-text-field>
+
+											          <v-text-field
+										          	v-else
+											            single-line
+	            										solo
+	            										:disabled="activeText"
 											            v-model="number"
+											            @change="test(photo.type)"
 											          ></v-text-field>
 											          <v-btn  normal @click="increase()">
 												      <v-icon dark>add</v-icon>
@@ -225,8 +280,65 @@
 								</v-container>
 						      </v-card>
 		    			</v-dialog>
+		    			<!-- v-dialog show choose package -->
 					</v-flex>
 				</v-layout>
+
+				<v-dialog
+     			 	v-model="dialog"
+      				width="400"
+      				temporary
+      				content-class="v-dialog-custom"
+    				>
+    				<v-card>
+				        <v-container fluid>
+						    <v-layout row v-for="type in photoTypes" :key="type.id">
+						      	<v-flex xs3 >
+							        <v-card tile flat class="cursor-v-card" :class="type.active && photoOpened.type == type.type ? 'hover-v-card' : '' " @click="activeClass(type)">
+							        	<v-card-text>
+							          		{{type.type}}
+							          	</v-card-text>
+							        </v-card>
+						      	</v-flex>
+							    <v-flex xs9 class="flex-v-number">   
+							        <v-list-tile >
+							          		<v-btn normal @click="decrease()" v-if="photoOpened !== null && photoOpened.type == type.type ">
+										      <v-icon dark>remove</v-icon>
+										    </v-btn>
+										    <v-btn normal v-else :disabled="true">
+										      <v-icon dark>remove</v-icon>
+										    </v-btn>
+								          	<v-text-field
+								          		v-if="photoOpened !== null && photoOpened.type == type.type "
+									            single-line
+        										solo
+									            v-model="photoOpened.quantity"
+									            @keyup="setQuantity(photoOpened, photoOpened.quantity)"
+									        >
+									        </v-text-field>
+
+									        <v-text-field
+								          		v-else
+								          		:disabled="true"
+									            single-line
+        										solo
+									            v-model="number"
+									        ></v-text-field>
+
+									        <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-if="photoOpened !== null && photoOpened.type == type.type ">
+										      	<v-icon dark>add</v-icon>
+										    </v-btn>
+
+										     <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-else :disabled="true">
+										      	<v-icon dark>add</v-icon>
+										    </v-btn>
+
+							        </v-list-tile> 
+							    </v-flex>
+						    </v-layout>
+						</v-container>
+				      </v-card>
+    			</v-dialog>
 			</div>  
 		</app-card>
 		<!-- Selected photo-->
@@ -321,7 +433,7 @@
 			</div>
 		</app-card>
 		<!--Orther photo -->
-		
+
 		<app-card colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card custom-app-card-footer"
 			:withTabs="true">
@@ -405,6 +517,7 @@ export default {
 				],
 		items:[{id: 1, name: 'hung'},{id:2, name: 'hung2'}],
 		dialog:false,
+		dialog_nouse:false,
 		dialog2:false,
 		photoId:'',
 		number: 0,
@@ -412,7 +525,29 @@ export default {
 		count:0,
 		countOther:0,
 		photoZoom: [],
-		thumbnailDir: 'https://holipic.pth.com/static/img/'
+		thumbnailDir: 'https://holipic.pth.com/static/img/',
+		activeText: true,
+		photoTypes: [
+			{
+				id: 't1',
+				type: '10x15',
+				active: false,
+				quantity: 1
+			},
+			{
+				id: 't2',
+				type: '15x21',
+				active: false,
+				quantity: 1
+			},
+			{
+				id: 't3',
+				type: 'Digital',
+				active: false,
+				quantity: 1
+			},
+		],
+		photoOpened: null
     }
   },
   computed:{
@@ -427,6 +562,10 @@ export default {
   	countOtherPhoto()
   	{
   		return this.countOther
+  	},
+  	changePhotos2()
+  	{
+        return this.photos2
   	}
   },
   created(){
@@ -447,30 +586,58 @@ export default {
   			$('.active-image'+value.id).css("color", "#464D69");
   		})
   	},
-  	showDetail(id)
+  	showDetail(photo)
   	{
   		this.dialog = true
-  		this.photoId = id
+  		this.photoId = photo.id
+  		this.photoOpened = photo
+  		_.forEach(this.photoTypes, (item, index) => {
+  			if (item.type == photo.type) {
+  				this.photoTypes[index]['active'] = true
+  			}
+
+  			this.photoTypes[index]['quantity'] = 1
+  		})
   	},
   	activeClass(type)
   	{
-  		this.typeDetail = type
+  		this.typeDetail = type.type
+
+  		_.forEach(this.photoTypes, (item, index) => {
+  			this.photoTypes[index]['active'] = false
+  			if (item.type == type.type) {
+  				this.photoTypes[index]['active'] = true
+  			}
+  		})
+
+  		_.forEach(this.photos2, (value, index) => {
+  			if(value['id'] == this.photoId) {
+  				this.photos2[index]['type'] = type.type
+  				this.photoOpened = this.photos2[index]
+  			}
+  		})
+
+  		// this.dialog = false
+  		// this.dialog = true
+  		
   	},
-  	increase()
+  	increase(photoOpened, quantity)
   	{
-  		this.number ++
+  		this.photoOpened.quantity ++
+  		this.dialog = false
+  		this.dialog = true
   	},
   	decrease()
   	{
-  		if(this.number > 0)
+  		if(this.photoOpened.quantity > 1)
   		{
-  			this.number --
+  			this.photoOpened.quantity --
+  			this.dialog = false
+  			this.dialog = true
   		}
   	},
   	selectPhoto(photo)
   	{
-  		var _this = this
-
   		var photoSelected = _.find(this.photos2, (value,key) => { 
   			return value['id'] == photo.id; 
   		});
@@ -478,36 +645,47 @@ export default {
   		if(photoSelected == undefined)
   		{
   			this.photos2.push(photo)
+  			var length = this.photos2.length
+  			this.photos2[length-1].type = 'Digital'
+  			this.photos2[length-1].quantity = 1
   			$('.active-image'+photo.id).css("color", "#5d92f4");
-  			this.count++
-  			
+  			this.count++  			
   		} else {
 			var index = this.photos2.indexOf(photo);
 			if (index !== -1) this.photos2.splice(index, 1);
 
   			$('.active-image'+photo.id).css("color", "#464D69");
-  			this.count--
-  			
+  			this.count--	
   		}
+
+  		_.forEach(this.photoTypes, (item, index) => {
+  			this.photoTypes[index]['quantity'] = 1	
+  		})
   		
   	},
   	showZoomImageAndSlide(photo)
   	{
   		this.$refs.lightbox.show(photo.name);
-  		// const viewer = this.$el.querySelector('.images').$viewer
-    //     viewer.show()
-
-  		// this.dialog2 = true
-  		// this.photoZoom.push(photo);
-  		// _.forEach(this.photos, (value,index) => {
-  		// 	if(value.id != photo.id){
-  		// 		this.photoZoom.push(value);
-  		// 	}
-  		// })
+  	
   	},
-  	resetPhotoZoom()
+  	setQuantity(photo, quantity)
   	{
-  		alert('hung')
+  		// var index = this.photos2.indexOf(photo);
+  		// console.log(index)
+			// if (index !== -1){
+			// 	this.photos2[index].quantity = quantity
+			// 	this.photoOpened = this.photos2[index]
+			// 	console.log(this.photos2)
+			// }
+  		_.forEach(this.photos2, (value,index) => {
+  			if(value['id'] == photo.id) {
+  				this.photos2[index]['quantity'] = quantity
+  			}
+  		})
+  	},
+  	test(type)
+  	{
+  		alert(type)
   	}
   }
 }

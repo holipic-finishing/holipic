@@ -504,4 +504,35 @@
     		}
 		}
 	}
+	.v-dialog-custom{
+		.v-card{
+			overflow: hidden;
+		}
+		.flex-v-number{
+			.v-text-field{
+				.v-text-field__slot{
+					input {
+						text-align:center;
+					}
+				}
+				
+			}
+		}
+		.container{
+			margin-left: 12px;
+			.layout{
+				.cursor-v-card{
+					height: 75%;
+				    top: 7px;
+				    text-align: center;
+				    border-radius: 3px;
+				    .v-card__text{
+				    	margin-top: 0px !important;
+		    			padding: 7px 0px !important;
+				    }
+				}
+			}
+		}
+		
+	}
 }

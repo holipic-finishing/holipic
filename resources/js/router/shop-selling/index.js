@@ -1,5 +1,5 @@
-import Index from '../../views/company-admin/shop-selling/index.vue'
-import SelectPhoto from '../../views/company-admin/shop-selling/partials/SelectPhoto.vue'
+import Index from '../../views/shop-selling/index.vue'
+import SelectPhoto from '../../views/shop-selling/partials/SelectPhoto.vue'
 
 
 export default {

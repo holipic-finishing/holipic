@@ -12,7 +12,6 @@ import BranchAdminRoutes from './branch-admin';
 import CustomerRoutes from './customer';
 import ShopSellingRoutes from './shop-selling';
 
-
 // Dashboard components
 import mini from '../container/MiniSidebarLayout.vue'
 
@@ -25,6 +24,7 @@ Vue.use(Router)
 var routers = [];
 routers = [
 	ShopSellingRoutes,
+	CustomerRoutes,
 	AuthRoutes,
 	SuperAdminRoutes,
 	CompanyAdminRoutes,

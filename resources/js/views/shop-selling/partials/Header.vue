@@ -12,13 +12,13 @@
 	      	<i class="material-icons font-material-header">
 				card_giftcard
 			</i>
-	      PACKGES
+	     {{$t('message.albumPackage')}}
   		</v-btn>
       <v-btn flat>
       	<i class="material-icons font-material-header">
 				add_a_photo
 			</i>
-      	ADD NEW PHOTO
+      	{{$t('message.addNewPhoto')}}
       </v-btn>
     </v-toolbar-items>
     <v-dialog
@@ -49,7 +49,7 @@
 								</ul>
 							</div>
 							<div class="app-footer">
-								<v-btn block color="primary" large>Buy Now</v-btn>
+								<v-btn block color="primary" large>{{$t('message.buyNow')}}</v-btn>
 							</div>
 						</div>
 					</v-flex>
@@ -73,7 +73,7 @@
 								</ul>
 							</div>
 							<div class="app-footer">
-								<v-btn block color="success" large>Buy Now</v-btn>
+								<v-btn block color="success" large>{{$t('message.buyNow')}}</v-btn>
 							</div>
 						</div>
 					</v-flex>
@@ -97,7 +97,7 @@
 								</ul>
 							</div>
 							<div class="app-footer">
-								<v-btn block large color="warning">Buy Now</v-btn>
+								<v-btn block large color="warning">{{$t('message.buyNow')}}</v-btn>
 							</div>
 						</div>
 					</v-flex>
@@ -121,7 +121,7 @@
 								</ul>
 							</div>
 							<div class="app-footer">
-								<v-btn block color="error" large>Buy Now</v-btn>
+								<v-btn block color="error" large>{{$t('message.buyNow')}}</v-btn>
 							</div>
 						</div>
 					</v-flex>
@@ -141,6 +141,9 @@ export default {
     return {
     	dialog: false
     }
+  },
+  mounted(){
+  	this.$i18n.locale = 'en';
   },
   methods:{
   	showPackage()

@@ -20,7 +20,7 @@
 				<v-flex xs6 class="v-flex-sp-l">
 					<v-card-text>
 						<span class="ml-3">
-						Selected 
+						{{$t('message.selectedPhoto')}} 
 						 <v-btn fab dark small color="primary" @click="removeAllItem()">
 					      <v-icon dark>clear</v-icon>
 					    </v-btn>
@@ -41,6 +41,7 @@
 					        <v-select
 					          :items="languages"
 					          v-model="selectLanguage"
+					          @change="changeLanguage()"
 					        ></v-select>
 				    	</div>
 					</v-card-text>
@@ -352,7 +353,7 @@
 			<div class="mb-5 ml-5 mr-5">
 				<v-flex xs2 class="v-flex-sp-l">
 					<v-card-text >
-						<span class="ml-3">Others</span> 
+						<span class="ml-3">{{$t('message.otherPhoto')}}</span> 
 						<span class="ml-3 pt-3 top-relative"><i class="material-icons">
 							filter
 						</i>
@@ -552,6 +553,9 @@ export default {
 		photoOpened: null
     }
   },
+  mounted(){
+  	this.$i18n.locale = 'en'
+  },
   computed:{
   	typeDetailReturn()
   	{
@@ -675,6 +679,19 @@ export default {
   			}
   		})
   	},
+  	changeLanguage()
+  	{
+  		// console.log(this.selectLanguage)
+  		if(this.selectLanguage == 'EST') {
+  			this.$i18n.locale = 'es'
+  		}else if(this.selectLanguage == 'RUS'){
+  			this.$i18n.locale = 'ru'
+  		}else if(this.selectLanguage == 'FIN'){
+  			this.$i18n.locale = 'fi'
+  		}else {
+  			this.$i18n.locale = 'en'
+  		}
+  	},
   	test(type)
   	{
   		alert(type)
@@ -709,7 +726,7 @@ export default {
 	position: fixed;
 	z-index:100;
 	background-color:white !important;
-	right: 63px;
+	right: 55px;
 	border-radius:2px;
 	-moz-box-shadow: 0 0 5px #888;
 	-webkit-box-shadow: 0 0 5px#888;
@@ -718,6 +735,7 @@ export default {
 	padding:5px 10px ;
 	cursor:pointer;
 	padding-top: 10px;
+	top: 195px;
 }
 
 .cart .detail-cart{

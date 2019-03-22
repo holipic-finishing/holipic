@@ -193,6 +193,8 @@ Route::group(['namespace' => 'API'],function(){
 		/************TimezoneAPIController***********/
 		Route::get('timezones', 'TimezoneAPIController@getTimezones');
 
+		/************SnapPhotoAPIController***********/
+		Route::post('snap-photo', 'SnapPhotoAPIController@createSnapPhoto');
 	});
 
 	/**************************************************
@@ -209,3 +211,6 @@ Route::group(['namespace' => 'API'],function(){
 
 
 
+
+
+// Route::resource('snapphotos', 'SnapPhotoAPIController');

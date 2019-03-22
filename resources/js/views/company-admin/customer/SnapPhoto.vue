@@ -98,6 +98,7 @@
 							>
 								add_circle
 							</v-icon>
+
 						</td>
 					</template>
 
@@ -148,6 +149,7 @@ export default {
 
   	data () {
     	return {
+    		items2: ['a','b','c'],
     		headers: [	        
 				{ text: 'Date', value: 'name' },
 				{ text: 'Room', value: 'room' },

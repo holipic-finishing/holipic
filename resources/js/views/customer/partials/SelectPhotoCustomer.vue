@@ -388,6 +388,9 @@ export default {
 		this.photos2.splice(index, 1);
 		this.count --
 		$('.active-image'+photo.id).css("color", "#464D69");
+
+		//send event basket
+  		this.$root.$emit('sendEventCountBasket', this.count)
   	},
   	removeAllItem()
   	{
@@ -457,14 +460,18 @@ export default {
   			this.photos2[length-1].type = 'Digital'
   			this.photos2[length-1].quantity = 1
   			$('.active-image'+photo.id).css("color", "#5d92f4");
-  			this.count++  			
+  			this.count++
+
   		} else {
 			var index = this.photos2.indexOf(photo);
 			if (index !== -1) this.photos2.splice(index, 1);
 
   			$('.active-image'+photo.id).css("color", "#464D69");
-  			this.count--	
+  			this.count--
   		}
+
+  		//send event basket
+  		this.$root.$emit('sendEventCountBasket', this.count)
 
   		_.forEach(this.photoTypes, (item, index) => {
   			this.photoTypes[index]['quantity'] = 1	

@@ -41,9 +41,10 @@ class DatabaseSeeder extends Seeder
          * Seed With Draw
          */
         $this->call(EwalletWithdrawSeeder::class);
+        $this->call(SnapPhotosTableSeeder::class);     
+        
         $this->call(BookingsTableSeeder::class);
         $this->call(TimezonesTableSeeder::class);
 
-        
     }
 }

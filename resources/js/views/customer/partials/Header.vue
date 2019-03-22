@@ -8,9 +8,9 @@
 
     <v-toolbar-items class="hidden-sm-and-down">
     	
-      	<v-btn flat>
+      	<v-btn flat @click="showBasket()">
       		<span class="quantity-cart">
-      			<p>10</p>
+      			<p>{{countBasket}}</p>
       		</span>
       		<span>
       			<i class="material-icons font-material-header">
@@ -22,7 +22,7 @@
   		</v-btn>
       <v-btn flat @click="downloadPhoto()">
       	<span class="quantity-dowload">
-      		<p>4</p>
+      		<p>{{countDownload}}</p>
       	</span>
       	<span>
       		<i class="fa fa-download font-material-header" aria-hidden="true"></i>	
@@ -79,9 +79,11 @@
 		    </v-card>
 	    </v-dialog>
 	</v-layout>
-	<div>
+
+
+		<!-- Dialog download file -->
 		<v-dialog v-model="dialog2" scrollable max-width="200px" content-class="custom-dialog-download"
-		 hide-overlay >
+		 hide-overlay>
 			<v-card>
 			  	<v-list-tile>
 				  	<div>Preparing download</div>
@@ -119,7 +121,48 @@
 			  </v-list>
 			</v-card>
 		</v-dialog>
-	</div>
+		<!-- Dialog download file -->
+		<v-dialog v-model="dialog3" scrollable content-class="custom-dialog-basket" max-width="1200">
+			<v-container>
+				
+		  			<table class="table">
+					    <thead class="thead-light">
+					      <tr>
+					        <th>Selected</th>
+					        <th>Product</th>
+					        <th>Quanity</th>
+					        <th>Total Price</th>
+					        <th></th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					        <td><img src="https://helpx.adobe.com/nz/illustrator/how-to/design-draw-shapes/_jcr_content/main-pars/image.img.jpg/5857-design-draw-shapes_hero.jpg" width="60px" height="60px"></td>
+					        <td class="mt-3 pt-4">Digital</td>
+					        <td class="mt-3 pt-4">1</td>
+					        <td class="total-price pt-4">Rp 15000</td>
+					        <td class="icon-clear">
+					        	<v-btn icon>
+						        	<v-icon>clear</v-icon>
+						      </v-btn>
+					        </td>
+					      </tr>
+					      <tr>
+					        <td><img src="https://blogphotoshop.com/wp-content/uploads/2019/01/illustrator-cs6.png" width="60px" height="60px"></td>
+					        <td class="mt-3 pt-4">Digital</td>
+					        <td class="mt-3 pt-4">1</td>
+					        <td class="total-price pt-4">Rp 15000</td>
+					        <td class="icon-clear">
+					        	<v-btn icon>
+						        	<v-icon>clear</v-icon>
+						      	</v-btn>
+					        </td>
+					      </tr>
+					    </tbody>
+					</table>
+				
+			</v-container>			
+		</v-dialog>
 </div>
 
 </template>
@@ -133,9 +176,17 @@ export default {
     return {
     	dialog: false,
     	dialog2:false,
+    	dialog3:false,
     	showDetail: true,
-    	icon: 'keyboard_arrow_down'
+    	icon: 'keyboard_arrow_down',
+    	countBasket: 0,
+    	countDownload: 0
     }
+  },
+  mounted() {
+  	this.$root.$on('sendEventCountBasket', res => {
+  		this.countBasket = res
+  	})
   },
   methods:{
   	showPackage()
@@ -157,6 +208,10 @@ export default {
   		this.dialog2 = false
   		this.showDetail = true
   		this.icon = 'keyboard_arrow_down'
+  	},
+  	showBasket()
+  	{
+  		this.dialog3 = true
   	}
   }
 };
@@ -210,5 +265,12 @@ export default {
 .r-download{
 	right: 10px;
     position: absolute;
+}
+
+.total-price{
+	width: 150px;
+}
+.icon-clear{
+	width: 40px;
 }
 </style>

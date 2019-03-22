@@ -724,7 +724,7 @@ export default {
 }
 .cart{
 	position: fixed;
-	z-index:100;
+	z-index:7;
 	background-color:white !important;
 	right: 55px;
 	border-radius:2px;
@@ -791,4 +791,6 @@ export default {
 .thumbnailfade-leave-to {
   opacity: 0;
 }
+
+
 </style>

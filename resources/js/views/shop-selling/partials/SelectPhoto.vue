@@ -448,7 +448,10 @@
 
 import Lightbox from 'vue-my-photos'
 import Vue from 'vue'
-Vue.component('lightbox', Lightbox);
+import config from '../../../config'
+
+Vue.component('lightbox', Lightbox)
+
 export default {
 
   name: 'SelectPhoto',
@@ -459,65 +462,65 @@ export default {
     	languages:['ENG', 'EST', 'RUS', 'FIN' ],
     	selectCurrency: 'USD',
     	selectLanguage: 'ENG',
-    	photos: [{
-						id: 1,
-						name: "blog-1.jpg",
-						caption: "Caption 1",
-						author: "Admin",
-						likes: "250"
-					},
-					{
-						id: 2,
-						name: "blog-2.jpg",
-						caption: "Caption 2",
-						author: "Erik Turner",
-						likes: "150"
-					},
-					{
-						id: 3,
-						name: "blog-3.jpg",
-						caption: "Caption 3",
-						author: "John Smith",
-						likes: "200"
-					},
-					{
-						id: 4,
-						name: "blog-4.jpg",
-						caption: "Caption 4",
-						author: "Antonio Rice",
-						likes: "300"
-					},
-					{
-						id: 5,
-						name: "blog-5.jpg",
-						caption: "Caption 5",
-						author: "Caleb Wilson",
-						likes: "400"
-					},
-					{
-						id: 6,
-						name: "blog-6.jpg",
-						caption: "Caption 6",
-						author: "Zachary Robbins",
-						likes: "50"
-					},
-					{
-						id: 7,
-						name: "blog-7.jpg",
-						caption: "Caption 7",
-						author: "Jon Wagner",
-						likes: "100"
-					},
-					{
-						id: 8,
-						name: "blog-8.jpg",
-						caption: "Caption 8",
-						author: "Dorothy Bass",
-						likes: "75"
-					}
-				],
-		photos2: [
-				],
+    	photos: [
+			{
+				id: 1,
+				name: "blog-1.jpg",
+				caption: "Caption 1",
+				author: "Admin",
+				likes: "250"
+			},
+			{
+				id: 2,
+				name: "blog-2.jpg",
+				caption: "Caption 2",
+				author: "Erik Turner",
+				likes: "150"
+			},
+			{
+				id: 3,
+				name: "blog-3.jpg",
+				caption: "Caption 3",
+				author: "John Smith",
+				likes: "200"
+			},
+			{
+				id: 4,
+				name: "blog-4.jpg",
+				caption: "Caption 4",
+				author: "Antonio Rice",
+				likes: "300"
+			},
+			{
+				id: 5,
+				name: "blog-5.jpg",
+				caption: "Caption 5",
+				author: "Caleb Wilson",
+				likes: "400"
+			},
+			{
+				id: 6,
+				name: "blog-6.jpg",
+				caption: "Caption 6",
+				author: "Zachary Robbins",
+				likes: "50"
+			},
+			{
+				id: 7,
+				name: "blog-7.jpg",
+				caption: "Caption 7",
+				author: "Jon Wagner",
+				likes: "100"
+			},
+			{
+				id: 8,
+				name: "blog-8.jpg",
+				caption: "Caption 8",
+				author: "Dorothy Bass",
+				likes: "75"
+			}
+		],
+		photos2: [],
 		items:[{id: 1, name: 'hung'},{id:2, name: 'hung2'}],
 		dialog:false,
 		dialog_nouse:false,
@@ -528,7 +531,7 @@ export default {
 		count:0,
 		countOther:0,
 		photoZoom: [],
-		thumbnailDir: 'https://holipic.pth.com/static/img/',
+		thumbnailDir: config.BASE_URL + '/static/img/',
 		activeText: true,
 		photoTypes: [
 			{

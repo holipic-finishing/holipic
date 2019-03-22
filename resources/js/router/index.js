@@ -10,11 +10,14 @@ import SuperAdminRoutes from './super-admin';
 import CompanyAdminRoutes from './company-admin';
 import BranchAdminRoutes from './branch-admin';
 import CustomerRoutes from './customer';
+import ShopSellingRoutes from './shop-selling';
 
 // Dashboard components
 import mini from '../container/MiniSidebarLayout.vue'
 
 import PageNotFound from '../views/partials/pages/page404'
+import UploadPhoto from '../views/partials/upload-photos/UploadPhotos.vue'
+
 
 
 
@@ -22,10 +25,12 @@ Vue.use(Router)
 
 var routers = [];
 routers = [
+	ShopSellingRoutes,
+	CustomerRoutes,
 	AuthRoutes,
 	SuperAdminRoutes,
 	CompanyAdminRoutes,
-	BranchAdminRoutes,
+	BranchAdminRoutes
 	// {
  //    	// Page Not Found
  //    	path: '*',

@@ -18,7 +18,7 @@ import mini from '../container/MiniSidebarLayout.vue'
 import PageNotFound from '../views/partials/pages/page404'
 import UploadPhoto from '../views/partials/upload-photos/UploadPhotos.vue'
 
-
+import Room from '../views/shop-selling/room/index.vue'
 
 
 Vue.use(Router)
@@ -30,7 +30,11 @@ routers = [
 	AuthRoutes,
 	SuperAdminRoutes,
 	CompanyAdminRoutes,
-	BranchAdminRoutes
+	BranchAdminRoutes,
+	{
+    	path: '/room-tab',
+    	component: Room
+  	}
 	// {
  //    	// Page Not Found
  //    	path: '*',

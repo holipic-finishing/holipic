@@ -12,7 +12,7 @@
 				</i>
 				<div class="detail-cart">
 					<span class="line-cart">$</span>
-					<span class="line-cart-1">1250</span>
+					<span class="line-cart-1">{{total}}</span>
 					<span class="line-cart-2">Order</span>		
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 					<v-card-text>
 						<span class="ml-3">
 						{{$t('message.selectedPhoto')}} 
-						 <v-btn fab dark small color="primary" @click="removeAllItem()">
+						 <v-btn fab dark small color="primary" @click="removeAllItem()" class="color-blue-shopselling">
 					      <v-icon dark>clear</v-icon>
 					    </v-btn>
 						({{countSelected}})
@@ -60,7 +60,8 @@
 									aspect-ratio="1"
 									class="grey lighten-2 "
 									
-									height="300"	
+									height="300"
+									contain
 									>
 									<div class="content-info">
 										<v-icon color="white" @click="removeItem(index, photo)">cancel</v-icon>
@@ -80,7 +81,7 @@
 						</v-card>
 
 						<div class="parent-select-detail" @click="showDetail(photo)">
-							<span class="select-detail" :class="'select-detail'+photo.id" >{{photo.type}}</span>
+							<span class="select-detail" :class="'select-detail'+photo.id" >{{photo.size}}</span>
 							<span class="number-detail">
 								<i class="fas fa-caret-down"></i>		
 							</span>
@@ -88,7 +89,7 @@
 						</div>
 
 						<!-- v-dialog show choose package -->
-						<v-dialog
+						<!-- <v-dialog
 		     			 	v-model="dialog_nouse"
 		      				width="400"
 		      				temporary
@@ -280,7 +281,7 @@
 								    </v-layout>
 								</v-container>
 						      </v-card>
-		    			</v-dialog>
+		    			</v-dialog> -->
 		    			<!-- v-dialog show choose package -->
 					</v-flex>
 				</v-layout>
@@ -295,22 +296,22 @@
 				        <v-container fluid>
 						    <v-layout row v-for="type in photoTypes" :key="type.id">
 						      	<v-flex xs3 >
-							        <v-card tile flat class="cursor-v-card" :class="type.active && photoOpened.type == type.type ? 'hover-v-card' : '' " @click="activeClass(type)">
+							        <v-card tile flat class="cursor-v-card" :class="type.active && photoOpened.size == type.size ? 'hover-v-card' : '' " @click="activeClass(type)">
 							        	<v-card-text>
-							          		{{type.type}}
+							          		{{type.size}}
 							          	</v-card-text>
 							        </v-card>
 						      	</v-flex>
 							    <v-flex xs9 class="flex-v-number">   
 							        <v-list-tile >
-							          		<v-btn normal @click="decrease()" v-if="photoOpened !== null && photoOpened.type == type.type ">
+							          		<v-btn normal @click="decrease()" v-if="photoOpened !== null && photoOpened.size == type.size ">
 										      <v-icon dark>remove</v-icon>
 										    </v-btn>
 										    <v-btn normal v-else :disabled="true">
 										      <v-icon dark>remove</v-icon>
 										    </v-btn>
 								          	<v-text-field
-								          		v-if="photoOpened !== null && photoOpened.type == type.type "
+								          		v-if="photoOpened !== null && photoOpened.size == type.size "
 									            single-line
         										solo
 									            v-model="photoOpened.quantity"
@@ -326,7 +327,7 @@
 									            v-model="number"
 									        ></v-text-field>
 
-									        <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-if="photoOpened !== null && photoOpened.type == type.type ">
+									        <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-if="photoOpened !== null && photoOpened.size == type.size ">
 										      	<v-icon dark>add</v-icon>
 										    </v-btn>
 
@@ -390,6 +391,7 @@
 									height="300"
 									:key="photo.id"
 									@click="selectPhoto(photo)"
+									contain
 									>
 								</v-img>
 							</div>
@@ -435,19 +437,22 @@
 		</app-card>
 		<!--Orther photo -->
 
-		<app-card colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
+		<!-- <app-card colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card custom-app-card-footer"
 			:withTabs="true">
 			<div class="footer-shop-selling">
 				
 			</div>
-		</app-card>
+		</app-card> -->
 	</v-layout>
 </template>
 <script>
 
 import Lightbox from 'vue-my-photos'
 import Vue from 'vue'
+import config from '../../../config/index'
+import  { get, post, put, del, getWithData } from '../../../api/index.js'
+
 Vue.component('lightbox', Lightbox);
 export default {
 
@@ -531,26 +536,28 @@ export default {
 		thumbnailDir: 'https://holipic.pth.com/static/img/',
 		activeText: true,
 		photoTypes: [
-			{
-				id: 't1',
-				type: '10x15',
-				active: false,
-				quantity: 1
-			},
-			{
-				id: 't2',
-				type: '15x21',
-				active: false,
-				quantity: 1
-			},
-			{
-				id: 't3',
-				type: 'Digital',
-				active: false,
-				quantity: 1
-			},
+			// {
+			// 	id: 't1',
+			// 	type: '10x15',
+			// 	active: false,
+			// 	quantity: 1
+			// },
+			// {
+			// 	id: 't2',
+			// 	type: '15x21',
+			// 	active: false,
+			// 	quantity: 1
+			// },
+			// {
+			// 	id: 't3',
+			// 	type: 'Digital',
+			// 	active: false,
+			// 	quantity: 1
+			// },
 		],
-		photoOpened: null
+		photoOpened: null,
+		total:0,
+		number: 0
     }
   },
   mounted(){
@@ -576,11 +583,21 @@ export default {
   },
   created(){
   	this.countOther = this.photos.length
+  	this.getDataPackage()
   },
   methods:{
   	removeItem(index,photo)
   	{
 		this.photos2.splice(index, 1);
+
+		let totalNew = 0
+
+		if(this.photos2.length > 0) {
+			this.getPricePackage(this.photos2)
+		}else {
+			this.total = 0
+		}
+
 		this.count --
 		$('.active-image'+photo.id).css("color", "#464D69");
   	},
@@ -591,6 +608,8 @@ export default {
   		_.forEach(this.photos, (value,index) => {
   			$('.active-image'+value.id).css("color", "#464D69");
   		})
+
+  		this.total = 0
   	},
   	showDetail(photo)
   	{
@@ -598,7 +617,7 @@ export default {
   		this.photoId = photo.id
   		this.photoOpened = photo
   		_.forEach(this.photoTypes, (item, index) => {
-  			if (item.type == photo.type) {
+  			if (item.size == photo.size) {
   				this.photoTypes[index]['active'] = true
   			}
 
@@ -607,28 +626,39 @@ export default {
   	},
   	activeClass(type)
   	{
-  		this.typeDetail = type.type
+  		this.typeDetail = type.size
 
   		_.forEach(this.photoTypes, (item, index) => {
   			this.photoTypes[index]['active'] = false
-  			if (item.type == type.type) {
+  			if (item.size == type.size) {
   				this.photoTypes[index]['active'] = true
   			}
   		})
 
+  		let numberActive = 0
+
   		_.forEach(this.photos2, (value, index) => {
   			if(value['id'] == this.photoId) {
-  				this.photos2[index]['type'] = type.type
+  				this.photos2[index]['size'] = type.size
   				this.photoOpened = this.photos2[index]
+  				this.photoOpened.quantity = 1
   			}
+
+  			get(config.API_URL+'photo-package/search?size='+value['size'])
+	  		.then(res => {
+	  			if(res && res.data.success) {
+  					numberActive = numberActive + (value['quantity'] *res.data.data.dollar)
+	  				this.total = numberActive
+	  			}
+	  		})
   		})
-  		
   	},
   	increase(photoOpened, quantity)
   	{
   		this.photoOpened.quantity ++
   		this.dialog = false
   		this.dialog = true
+  		this.setQuantity(this.photoOpened, this.photoOpened.quantity)
   	},
   	decrease()
   	{
@@ -637,6 +667,7 @@ export default {
   			this.photoOpened.quantity --
   			this.dialog = false
   			this.dialog = true
+  			this.setQuantity(this.photoOpened, this.photoOpened.quantity)
   		}
   	},
   	selectPhoto(photo)
@@ -649,14 +680,25 @@ export default {
   		{
   			this.photos2.push(photo)
   			var length = this.photos2.length
-  			this.photos2[length-1].type = 'Digital'
+
+  			this.photos2[length-1].size = 'DIGITAL'
   			this.photos2[length-1].quantity = 1
-  			$('.active-image'+photo.id).css("color", "#5d92f4");
-  			this.count++  			
+  			$('.active-image'+photo.id).css("color", "#00C1F8");
+
+  			this.count++
+  			this.getPricePackage(this.photos2)
   		} else {
 			var index = this.photos2.indexOf(photo);
 			if (index !== -1) this.photos2.splice(index, 1);
 
+			var totalNew = 0 
+
+			if(this.photos2.length > 0) {
+				this.getPricePackage(this.photos2)
+			} else {
+				this.total = 0
+			}
+			
   			$('.active-image'+photo.id).css("color", "#464D69");
   			this.count--	
   		}
@@ -666,6 +708,20 @@ export default {
   		})
   		
   	},
+  	getPricePackage(photos)
+  	{
+  		var totalNew = 0
+  		_.forEach(photos, (value, index) => {
+			get(config.API_URL+'photo-package/search?size='+value['size'])
+		  		.then(res => {
+		  			if(res && res.data.success) {
+			  			totalNew = totalNew + (value['quantity'] * res.data.data.dollar)
+			  			this.total = totalNew
+		  			}
+		  	})	
+		})
+  	},
+
   	showZoomImageAndSlide(photo)
   	{
   		this.$refs.lightbox.show(photo.name);
@@ -673,15 +729,23 @@ export default {
   	},
   	setQuantity(photo, quantity)
   	{
+  		let totalNew = 0 
   		_.forEach(this.photos2, (value,index) => {
   			if(value['id'] == photo.id) {
   				this.photos2[index]['quantity'] = quantity
   			}
+
+  			get(config.API_URL+'photo-package/search?size='+value['size'])
+	  		.then(res => {
+	  			if(res && res.data.success) {
+  					totalNew = totalNew + (value['quantity'] * res.data.data.dollar)
+	  				this.total = totalNew	
+	  			}
+	  		})
   		})
   	},
   	changeLanguage()
   	{
-  		// console.log(this.selectLanguage)
   		if(this.selectLanguage == 'EST') {
   			this.$i18n.locale = 'es'
   		}else if(this.selectLanguage == 'RUS'){
@@ -691,6 +755,18 @@ export default {
   		}else {
   			this.$i18n.locale = 'en'
   		}
+  	},
+  	getDataPackage()
+  	{
+  		get(config.API_URL+'photo_packages')
+  		.then(res => {
+  			if(res && res.data.success){
+  				this.photoTypes = res.data.data
+  			}
+  		})
+  		.catch(err => {
+  			console.log(err.response)
+  		})
   	},
   	test(type)
   	{
@@ -743,17 +819,17 @@ export default {
     display: none;   
 }
 .cart:hover .detail-cart{
-	color:#5d92f4;
+	color:#00C1F8;
 	display: block;
 }
 
 .line-cart{
-	border-right: 2px solid #5d92f4;
+	border-right: 2px solid #00C1F8;
     padding-right: 20px;
 }
 
 .line-cart-1{
-	border-right: 2px solid #5d92f4;
+	border-right: 2px solid #00C1F8;
 	padding-right: 20px;
 	margin-left:20px;
 }

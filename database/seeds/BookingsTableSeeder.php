@@ -77,7 +77,6 @@ class BookingsTableSeeder extends Seeder
                 }
 
                 /*Add detail booking table*/
-
             }
         };
 

@@ -70,4 +70,17 @@ class SnapPhotoRepository extends BaseRepository
 
         return $snapPhoto;
     }
+
+    public function handleFindRoom()
+    {
+        $room = Room::whereRoomHash('R'.trim(request('room')))->first();
+
+        if(!empty($room)) {
+            $snapPhoto = $this->model->with('snapPhotoDetails')->whereRoomId($room['id'])->first();
+
+            return $snapPhoto;
+        }
+
+        return false;
+    }
 }

@@ -50,5 +50,10 @@ class SnapPhoto extends Model
         'room_id' => 'exit'
     ];
 
+    public function snapPhotoDetails()
+    {
+        return $this->hasMany('App\Models\SnapPhotoDetail', 'snap_photo_id', 'id');
+    }
+
     
 }

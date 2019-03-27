@@ -132,4 +132,15 @@ class SnapPhotoAPIController extends AppBaseController
         $snapPhoto = $this->snapPhotoRepository->handleCreateSnapPhoto();
         return $this->sendResponse($snapPhoto, 'Create snap photo for room successfully');
     }
+
+    public function findRoomCheckDetailSnapPhoto()
+    {
+        $roomHavePhoto = $this->snapPhotoRepository->handleFindRoom();
+
+        if(!$roomHavePhoto) {
+            return $this->sendError('Can not find room');
+        }
+
+        return $this->sendResponse($roomHavePhoto, 'Login room success');
+    }
 }

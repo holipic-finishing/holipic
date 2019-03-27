@@ -195,6 +195,14 @@ Route::group(['namespace' => 'API'],function(){
 
 		/************SnapPhotoAPIController***********/
 		Route::post('snap-photo', 'SnapPhotoAPIController@createSnapPhoto');
+
+		Route::get('room/snap-photo', 'SnapPhotoAPIController@findRoomCheckDetailSnapPhoto');
+
+		/************SnapPhotoAPIController***********/
+		Route::get('photo-package/search', 'PhotoPackageAPIController@searchPhotoPackage');
+
+		
+
 	});
 
 	/**************************************************

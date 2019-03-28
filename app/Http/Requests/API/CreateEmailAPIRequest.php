@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\CompanyAdmin\Email;
+use App\Models\Email;
 use InfyOm\Generator\Request\APIRequest;
 
 class CreateEmailAPIRequest extends APIRequest

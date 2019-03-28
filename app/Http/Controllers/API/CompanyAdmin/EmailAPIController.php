@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\CompanyAdmin;
 
 use App\Http\Requests\API\CreateEmailAPIRequest;
 use App\Http\Requests\API\UpdateEmailAPIRequest;
-use App\Models\CompanyAdmin\Email;
+use App\Models\Email;
 use App\Repositories\CompanyAdminRepositories\EmailRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;

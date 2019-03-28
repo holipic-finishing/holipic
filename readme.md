@@ -64,3 +64,29 @@ php artisan db:seed
 +
 + install openssh: sudo apt-get install openssh-server
 + copy file : apache-selfsigned.crt and apache-selfsigned.key to rsa_key folder
+
+# Step 13: Install Supervisor
++ https://laravel.com/docs/5.7/queues#supervisor-configuration
++ sudo apt-get install supervisor
++ cd /etc/supervisor/conf.d/
++ sudo touch holipic-worker.conf
++ sudo nano holipic-worker.conf
+
+[program:holipic-worker.conf]
+process_name=%(program_name)s_%(process_num)02d
+command=php /your-path/holipic/artisan queue:listen --sleep=3 --tries=3
+autostart=true
+autorestart=true
+user=username
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/your-path-logs/supervisor.log
+
++ Start supervisor
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start all
+
+# Step 13: Config cronjob
++ sudo crontab -e
++ * * * * * php /your-path/holipic/artisan schedule:run >> /dev/null 2>&1

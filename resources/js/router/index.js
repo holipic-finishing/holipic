@@ -34,12 +34,12 @@ routers = [
 	{
     	path: '/room-tab',
     	component: Room
+  	},
+	{
+    	// Page Not Found
+    	path: '*',
+    	component: PageNotFound
   	}
-	// {
- //    	// Page Not Found
- //    	path: '*',
- //    	component: PageNotFound
- //  	}
 ];
 
 var router = new Router({

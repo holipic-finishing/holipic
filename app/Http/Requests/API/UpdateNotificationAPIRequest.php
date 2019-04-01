@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\CompanyAdmin\Notification;
+use App\Models\Notification;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdateNotificationAPIRequest extends APIRequest

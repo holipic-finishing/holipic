@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\CompanyAdmin\Pages;
+use App\Models\Pages;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdatePagesAPIRequest extends APIRequest

@@ -5,7 +5,8 @@
 		:right="!rtlLayout"
 		fullscreen hide-overlay transition="slide-x-reverse-transition"
 	>
-		<v-card class="h-100 position-relative">
+		<v-card >
+			<div class="h-100 position-relative">
 			<v-toolbar>
 		    	<v-toolbar-title class="text-capitalize">Add Snap Photo</v-toolbar-title>
 		    	<v-spacer></v-spacer>
@@ -16,11 +17,11 @@
 		      	</v-toolbar-side-icon>
 	    	</v-toolbar>
 	    	<v-divider class="mt-0 mb-0"></v-divider>
-
-
 	    	<v-container grid-list-md >	
-		    	<v-layout row wrap> 
-				    <v-flex xs6 >
+	    		<v-form ref="formSnapPhoto" v-model="valid" lazy-validation>
+		    	<v-layout row wrap>
+		    		
+		    			<v-flex xs6 >
 				        <v-list class="heigth-list-title">
 							<template>
 								<v-list-tile>
@@ -53,6 +54,7 @@
 									          	:items="photographers"
 									          	item-value="id"
 			            					  	item-text="name"
+			            					  	v-model="valuePhotographer"
 									          	:rules="[rules.required]"
 									        ></v-select>
 										</v-list-tile-title>
@@ -71,6 +73,7 @@
 									  		<span class="font-weight-bold item-title">Room:</span>
 								  		  	<v-text-field
 									            label="Room"
+									            v-model="room"
 									            :rules="[rules.required, rules.number]"
 								          	></v-text-field>
 										</v-list-tile-title>
@@ -87,7 +90,7 @@
 									<v-list-tile-content>
 										<v-list-tile-title class="content-flex custom-content-flex">
 								  			<span class="font-weight-bold item-title">
-								  				<v-btn color="primary">Created</v-btn>
+								  				<v-btn color="primary" @click="saveSnapPhoto()">Created</v-btn>
 								  			</span>
 										</v-list-tile-title>
 									</v-list-tile-content>
@@ -95,8 +98,11 @@
 							</template>
 						</v-list>
 				    </v-flex>
+		    		
 		    	</v-layout>
-    		</v-container>    	
+		    	</v-form>
+    		</v-container>   
+    		</div> 	
 		</v-card>
 	</v-dialog>
 </template>
@@ -118,13 +124,16 @@ export default {
 	    	photographers: [],
 	    	company: JSON.parse(localStorage.getItem('user')),
 	    	valueBranch: '',
+	    	valuePhotographer:'',
 	    	rules: {
 		        required: value => !!value || 'This field is required.',
 		        number: value => {
 		          	const pt = /^[0-9]\d*$/
 		          	return pt.test(value) || 'Please input number.'
 		      	}
-	    	}
+	    	},
+	    	room:'',
+	    	valid: true
 	    }
   	},
   	computed:{
@@ -148,42 +157,48 @@ export default {
 			get(url)
 			.then(res => {
 				if(res.data && res.data.success){
-					// var data = res.data.data
-					// var vm = this
-					// _.forEach(data, function(value,key){
-					// 	vm.items.push(value)					
-					// })
 					this.branches = res.data.data
 				}
 			})
 			.catch(err => {
-				console.log(err)
+				console.log(err.response)
 			})
 		},
 		changeBranch(item){		
-			// if(item == 0) {
-			// 	this.phographers =  [{
-		 	//        	id:'0',
-		 	//        	name:'-- Select Photographer --'	
-		 	//        }]
-			// } 
 			
 			var url = config.API_URL+'photographer/photographer-branch?branchId='+item
 			get(url)
 			.then(res => {
 				if(res && res.data.success){
 					this.photographers = res.data.data
-					// var vm = this
-					// _.forEach(data, function(value,key){
-					// 	vm.photographers.push(value)
-							
-					// })
-					console.log(this.photographers)
 				}
 			})	
 			.catch(err =>{
 
 			})
+		},
+		saveSnapPhoto()
+		{	
+			if(this.$refs.formSnapPhoto.validate())
+			{
+				let params = {branchId: this.valueBranch, photographerId: this.valuePhotographer, room: this.room}
+
+				post(config.API_URL+'snap-photo', params)
+				.then(res => {
+					if(res && res.data.success) {
+						this.$notify({
+					          title: 'Success',
+					          message: res.data.message,
+					          type: 'success',
+					          duration: 2000,
+					    })
+					}
+				})
+				.catch(err => {
+					console.log(err.response)
+				})
+			}
+				
 		}
   }
 };

@@ -59,5 +59,13 @@ class PhotoPackageRepository extends BaseRepository
         return $data;
     }
 
+    public function handleSearchPhotoPackage()
+    {
+        if(!empty(request('size'))) {
+            $photoPackage = $this->model->whereSize(trim(request('size')))->first();
 
+            return $photoPackage;
+        }
+
+    }
 }

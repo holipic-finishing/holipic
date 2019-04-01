@@ -1,7 +1,7 @@
 <template>
-	<v-toolbar dark color="primary">
+	<v-toolbar dark color="primary" class="custom-toolbar">
     	<v-btn icon>
-    		<i class="material-icons ">
+    		<i class="material-icons color-text-header">
 				reply_all
 			</i>
     	</v-btn>
@@ -12,13 +12,13 @@
 	      	<i class="material-icons font-material-header">
 				card_giftcard
 			</i>
-	     {{$t('message.albumPackage')}}
+	     <span class="color-text-header">{{$t('message.albumPackage')}}</span>
   		</v-btn>
       <v-btn flat>
       	<i class="material-icons font-material-header">
 				add_a_photo
 			</i>
-      	{{$t('message.addNewPhoto')}}
+      	<span class="color-text-header">{{$t('message.addNewPhoto')}}</span>
       </v-btn>
     </v-toolbar-items>
     <v-dialog
@@ -154,5 +154,8 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
+.color-text-header{
+	color: #70778F !important;
+}
 </style>

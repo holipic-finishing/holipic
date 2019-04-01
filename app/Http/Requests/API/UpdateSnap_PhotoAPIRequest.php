@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\Email;
+use App\Models\Snap_Photo;
 use InfyOm\Generator\Request\APIRequest;
 
-class CreateEmailAPIRequest extends APIRequest
+class UpdateSnap_PhotoAPIRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,6 @@ class CreateEmailAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Email::$rules;
+        return Snap_Photo::$rules;
     }
 }

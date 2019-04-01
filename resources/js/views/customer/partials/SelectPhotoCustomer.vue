@@ -6,16 +6,6 @@
 			customClasses="custom-app-card"
 			:withTabs="true"	
 			>
-			<!-- <div class="cart">
-				<i class="material-icons">
-					shopping_cart
-				</i>
-				<div class="detail-cart">
-					<span class="line-cart">$</span>
-					<span class="line-cart-1">1250</span>
-					<span class="line-cart-2">Order</span>		
-				</div>
-			</div> -->
 			<div class=" ml-5 mr-5">
 				<v-flex xs2 class="v-flex-sp-l">
 					<v-card-text >
@@ -65,7 +55,8 @@
 									:src="thumbnailDir+photo.name"
 									aspect-ratio="1"
 									class="grey lighten-2 "
-									height="300"	
+									height="300"
+									contain
 									>
 									<div class="content-info">
 										<v-icon color="white" @click="removeItem(index, photo)">cancel</v-icon>
@@ -91,7 +82,7 @@
 								</i>
 						 	</span>
 						 	<span class="v-flex-sp-r" >
-						 		<i class="material-icons cursor-v-card" style="color:rgb(93, 146, 244)">
+						 		<i class="material-icons cursor-v-card" style="color:#00C1F8">
 									check_circle
 								</i>
 						 	</span>
@@ -107,61 +98,6 @@
 				 	/>
 				</v-layout>
 
-				<v-dialog
-     			 	v-model="dialog"
-      				width="400"
-      				temporary
-      				content-class="v-dialog-custom"
-    				>
-    				<v-card>
-				        <v-container fluid>
-						    <v-layout row v-for="type in photoTypes" :key="type.id">
-						      	<v-flex xs3 >
-							        <v-card tile flat class="cursor-v-card" :class="type.active && photoOpened.type == type.type ? 'hover-v-card' : '' " @click="activeClass(type)">
-							        	<v-card-text>
-							          		{{type.type}}
-							          	</v-card-text>
-							        </v-card>
-						      	</v-flex>
-							    <v-flex xs9 class="flex-v-number">   
-							        <v-list-tile >
-							          		<v-btn normal @click="decrease()" v-if="photoOpened !== null && photoOpened.type == type.type ">
-										      <v-icon dark>remove</v-icon>
-										    </v-btn>
-										    <v-btn normal v-else :disabled="true">
-										      <v-icon dark>remove</v-icon>
-										    </v-btn>
-								          	<v-text-field
-								          		v-if="photoOpened !== null && photoOpened.type == type.type "
-									            single-line
-        										solo
-									            v-model="photoOpened.quantity"
-									            @keyup="setQuantity(photoOpened, photoOpened.quantity)"
-									        >
-									        </v-text-field>
-
-									        <v-text-field
-								          		v-else
-								          		:disabled="true"
-									            single-line
-        										solo
-									            v-model="number"
-									        ></v-text-field>
-
-									        <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-if="photoOpened !== null && photoOpened.type == type.type ">
-										      	<v-icon dark>add</v-icon>
-										    </v-btn>
-
-										     <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-else :disabled="true">
-										      	<v-icon dark>add</v-icon>
-										    </v-btn>
-
-							        </v-list-tile> 
-							    </v-flex>
-						    </v-layout>
-						</v-container>
-				      </v-card>
-    			</v-dialog>
 			</div>  
 		</app-card>
 		<!-- Selected photo-->
@@ -212,6 +148,7 @@
 									height="300"
 									:key="photo.id"
 									@click="selectPhoto(photo)"
+									contain
 									>
 								</v-img>
 							</div>
@@ -243,13 +180,13 @@
 		</app-card>
 		<!--Orther photo -->
 
-		<app-card colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
+		<!-- <app-card colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card custom-app-card-footer"
 			:withTabs="true">
 			<div class="footer-shop-selling">
 				
 			</div>
-		</app-card>
+		</app-card> -->
 	</v-layout>
 </template>
 <script>
@@ -388,6 +325,9 @@ export default {
 		this.photos2.splice(index, 1);
 		this.count --
 		$('.active-image'+photo.id).css("color", "#464D69");
+
+		//send event basket
+  		this.$root.$emit('sendEventCountBasket', this.count)
   	},
   	removeAllItem()
   	{
@@ -456,15 +396,19 @@ export default {
   			var length = this.photos2.length
   			this.photos2[length-1].type = 'Digital'
   			this.photos2[length-1].quantity = 1
-  			$('.active-image'+photo.id).css("color", "#5d92f4");
-  			this.count++  			
+  			$('.active-image'+photo.id).css("color", "#00C1F8");
+  			this.count++
+
   		} else {
 			var index = this.photos2.indexOf(photo);
 			if (index !== -1) this.photos2.splice(index, 1);
 
   			$('.active-image'+photo.id).css("color", "#464D69");
-  			this.count--	
+  			this.count--
   		}
+
+  		//send event basket
+  		this.$root.$emit('sendEventCountBasket', this.count)
 
   		_.forEach(this.photoTypes, (item, index) => {
   			this.photoTypes[index]['quantity'] = 1	

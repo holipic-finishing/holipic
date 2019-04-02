@@ -107,17 +107,6 @@ export default {
 		            
 		        }
 		},
-		// {
-	 //        path: '/company-admin/content-pages',
-	 //        component: CMS,
-	 //        name: 'cms',
-	 //        meta: {
-	 //        	requiresAuth:true,
-  //        		companyAuth:true,
-	 //            title: 'message.contenPages',
-	 //            breadcrumb: 'Company / CMS'
-	 //        }
-	 //    },
 	    {
 	        path: '/company-admin/upload',
 	        component: UploadPhotos,

@@ -13,6 +13,7 @@
 </template>
 
 <script>
+
 import MultipleUpload from './components/MultipleUpload'
 import DropzoneUpload from './components/DropzoneUpload'
 

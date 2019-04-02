@@ -146,7 +146,7 @@ import Compressor from 'compressorjs'
 
 export default {
 
-  name: 'UploadMultipleImagePlugin',
+  name: 'MultipleImageUploadPlugin',
 
   props: {
     dragText: {

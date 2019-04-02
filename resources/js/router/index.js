@@ -16,7 +16,6 @@ import ShopSellingRoutes from './shop-selling';
 import mini from '../container/MiniSidebarLayout.vue'
 
 import PageNotFound from '../views/partials/pages/page404'
-import UploadPhoto from '../views/partials/upload-photos/UploadPhotos.vue'
 
 import Room from '../views/shop-selling/room/index.vue'
 

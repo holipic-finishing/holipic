@@ -77,7 +77,7 @@ const actions = {
     },
     changePasswordUserInDatabase(context, payload) {
         context.commit('loginUser');
-        let url = config.API_URL+'change-password'
+        let url = config.API_URL + 'change-password'
         let params = {
             access_token : payload.params.access_token,
             newPassword : payload.params.newPassword,
@@ -108,7 +108,7 @@ const actions = {
     },
     editUserProfileInDatabase(context, payload) {
         context.commit('loginUser');
-        let url = config.API_URL+'edit-user-profile'
+        let url = config.API_URL + 'edit-user-profile'
         let params = {
             id : payload.params.id,
             username : payload.params.username,
@@ -237,30 +237,49 @@ const mutations = {
         if(user.role_id == "3"){
             router.push('/branch-admin/dashboard')
         }
-        vp.$notify.success('Logged in successfully!')
+        vp.$notify.success({
+            title: 'Success',
+            message: 'Logged in successfully!',
+            showClose: false,
+            duration: 2000,
+        })
     },
     loginUserFailure(state, error) {
         Nprogress.done();
-        vp.$notify.error(error.message)
+        vp.$notify.error({
+            title: 'Error',
+            message: error.message,
+            showClose: false,
+            duration: 2000,
+        })
     },
     logoutUser(state) {
         state.user = null
         localStorage.removeItem('access_token')
         localStorage.removeItem('user')
         localStorage.removeItem('id_one_signal')
-        router.push("/login");
+        router.push("/login")
     },
     signUpUser(state) {
         Nprogress.start();
     },
     signUpUserSuccess(state, user) {
         state.user = localStorage.setItem('user', user);
-        router.push("/super-admin/dashboard");
-        vp.$notify.success('Registered account successfully!');
+        router.push("/super-admin/dashboard")
+        vp.$notify.success({
+            title: 'Success',
+            message: 'Registered account successfully!',
+            showClose: false,
+            duration: 2000,
+        })
     },
     signUpUserFailure(state, error) {
         Nprogress.done();
-        vp.$notify.error(error.message)
+        vp.$notify.error({
+            title: 'Error',
+            message: error.message,
+            showClose: false
+        })
     },
     signInUserWithAuth0Success(state, user) {
         state.user = user;
@@ -273,21 +292,40 @@ const mutations = {
     },
     changepasswordSuccess(state, success){
         Nprogress.done();
-        vp.$notify.success('Change password successfully!');
         router.push('/super-admin/dashboard');
+        vp.$notify.success({
+            title: 'Success',
+            message: 'Change password successfully!',
+            showClose: false,
+            duration: 2000,
+        })
     },
      changepasswordError(state, error){
         Nprogress.done();
-        vp.$notify.error(error);
+        vp.$notify.error({
+            title: 'Error',
+            message: error,
+            showClose: false,
+            duration: 2000,
+        })
     },
     editProfileSuccess(state, success){
         Nprogress.done();
-        vp.$notify.success('Edited profile successfully!');
         router.push('/super-admin/dashboard');
+        vp.$notify.success({
+            title: 'Success',
+            message: 'Edited profile successfully!',
+            showClose: false
+        })
     },
     editProfileError(state, error){
         Nprogress.done();
-        vp.$notify.error(error);
+        vp.$notify.error({
+            title: 'Error',
+            message: error,
+            showClose: false,
+            duration: 2000,
+        })
     }
 }
 

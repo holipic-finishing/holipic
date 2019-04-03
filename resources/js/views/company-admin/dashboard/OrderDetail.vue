@@ -1,11 +1,11 @@
 <template>
-	<v-navigation-drawer 
+	<v-navigation-drawer
 	    fixed
-	    v-model="drawerRight" 
+	    v-model="drawerRight"
 	    right
-	    temporary 
-	    app 
-	    this.width = this.getCurrentWithContentWrap()
+	    temporary
+	    app
+	    clipped
   		:width='widthComputed'
   		>
 
@@ -20,21 +20,21 @@
 	      		</v-toolbar-side-icon>
 	    </v-toolbar>
 		    <v-divider class="no-mg-bottom"></v-divider>
-			  
+
 			  <!-- Show information -->
 		    <v-list class="heigth-list-title">
-				
+
 				<v-list-tile>
 					<v-list-tile-content>
 			          	<v-list-tile-title class="content-flex">
 				          	<span class="font-weight-bold item-title"> Branch:</span>
-				          	<span class="max-value">{{order.branch.name}}</span>
+				          	<span class="max-value" v-if="order && order.branch">{{order.branch.name}}</span>
 	          			</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 	     		 <v-divider class="no-mg-bottom"></v-divider>
 
-				
+
 				<v-list-tile>
 					<v-list-tile-content>
 			          	<v-list-tile-title class="content-flex">
@@ -87,7 +87,7 @@
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
-	      		<v-divider class="no-mg-bottom"></v-divider>	
+	      		<v-divider class="no-mg-bottom"></v-divider>
 
 	      		<v-list-tile>
 					<v-list-tile-content>
@@ -108,7 +108,7 @@
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
-	      		<v-divider class="no-mg-bottom"></v-divider>	
+	      		<v-divider class="no-mg-bottom"></v-divider>
 
 	      		<v-list-tile>
 					<v-list-tile-content>
@@ -118,13 +118,10 @@
 			          	</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
-	      		<v-divider class="no-mg-bottom"></v-divider>	
+	      		<v-divider class="no-mg-bottom"></v-divider>
 
 	    	</v-list>
 
-		    <v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-		      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-		    </v-card-actions>
 		    <!-- End close drawer button -->
 		</v-card>
   	</v-navigation-drawer>

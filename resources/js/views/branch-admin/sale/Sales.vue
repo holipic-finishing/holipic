@@ -259,7 +259,7 @@ export default {
 			})
 		},
 		getSalesList(){
-			get(config.API_URL+'branch/sales-list?branchId='+this.branch.branch_id)
+			get(config.API_URL + 'branch/sales-list?branchId=' + this.branch.branch_id)
 			.then(response => {
 				if(response && response.data.success) {
 					this.sales = response.data.data
@@ -317,7 +317,7 @@ export default {
                 branchId : this.branch.branch_id
             }
 
-            getWithData(config.API_URL+'branch/sales-list/export', params)
+            getWithData(config.API_URL + 'branch/sales-list/export', params)
 			.then(response => {
 				console.log(response)
 				if(response && response.data.status) {

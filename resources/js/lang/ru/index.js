@@ -444,5 +444,12 @@ export default {
    hardware: 'аппаратные средства',
    directional: 'направленный',
    mapAliases: 'Карта (Псевдонимы)',
-   dateAndTime: 'Дата и время'
+   dateAndTime: 'Дата и время',
+
+   //Shop Selling
+  albumPackage: 'Пакет альбомов',
+  addNewPhoto: 'добавить новое фото',
+  selectedPhoto: 'выбранное фото',
+  otherPhoto: 'другое фото',
+  buyNow: 'купить сейчас'
 }

@@ -34,7 +34,7 @@
 							<div class="text-total text-xs-right">
 								<h4 class="primary--text mb-0">{{ (!searchResult.length && on_search ==1) ? 0 : total}}$</h4>
 							</div>
-						</div>			
+						</div>
 					</div>
           	</v-list-tile-content>
 		</v-list-tile>
@@ -48,11 +48,11 @@
                 <v-list-tile-title v-text="item.title"></v-list-tile-title>
                 <v-list-tile-sub-title v-text="item.dated" class="text-style"></v-list-tile-sub-title>
               </v-list-tile-content>
-  			  
+
   			  <v-list-tile-action class="content-list">
               	 <p>&nbsp;</p>
               </v-list-tile-action>
-              
+
               <v-list-tile-action>
                 <p class="success--text mb-0" v-if="item.status == 'RECIVED'">+{{item.new_amount}}</p>
                 <p class="mb-0" v-else>-{{item.new_amount}}</p>
@@ -69,11 +69,6 @@
 			</v-list-tile>
         </v-list>
 
-        <v-spacer></v-spacer>
-      	<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end">
-	      <v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-	    </v-card-actions> 
-        
  </v-navigation-drawer>
 	   			 <!-- end -->
 </template>
@@ -169,15 +164,15 @@ export default {
   		},
 		getData(id, page, search){
 
-			let url = config.API_URL+'transaction/history'
+			let url = config.API_URL + 'company/history-transactions'
 
 			let params = {
                 perPage: this.paginator.perPageDay,
                 userId: id,
                 page: page,
                 search:search
-            }	
-            
+            }
+
 			getWithData(url,params)
 			.then((res)=>{
 				if (res.data && res.data.success) {
@@ -190,7 +185,7 @@ export default {
 					 _.forEach(res.data.data,function(value,key){
 
 					 	if(key == "Day") {
-							
+
 							vm.check = 0
 							vm.invisibleButtonLoadMore(value)
 
@@ -207,11 +202,11 @@ export default {
 		},
 
 		switchTime(timevalue){
-			
+
 			switch (timevalue) {
 			    case 'Day':
 			    		if(this.currentFilterValue == ''){
-			      	 		this.firstpage.firstPageDay = this.firstpage.firstPageDay + 1 
+			      	 		this.firstpage.firstPageDay = this.firstpage.firstPageDay + 1
 			       			return this.firstpage.firstPageDay
 			    		} else {
 			    			this.first_page_search.searchPageDay = this.first_page_search.searchPageDay + 1
@@ -220,7 +215,7 @@ export default {
 			        break;
 			    case 'Week':
 			    		if(this.currentFilterValue==''){
-				        	this.firstpage.firstPageWeek = this.firstpage.firstPageWeek + 1 
+				        	this.firstpage.firstPageWeek = this.firstpage.firstPageWeek + 1
 				       		return this.firstpage.firstPageWeek
 			    		} else {
 			    			this.first_page_search.searchPageWeek = this.first_page_search.searchPageWeek + 1
@@ -228,17 +223,17 @@ export default {
 			    		}
 			        break;
 			    case 'Month':
-			    		if(this.currentFilterValue==''){	
-				       		this.firstpage.firstPageMonth = this.firstpage.firstPageMonth + 1 
+			    		if(this.currentFilterValue==''){
+				       		this.firstpage.firstPageMonth = this.firstpage.firstPageMonth + 1
 				       		return this.firstpage.firstPageMonth
 			    		} else {
 							this.first_page_search.searchPageMonth = this.first_page_search.searchPageMonth + 1
-			    			return this.first_page_search.searchPageMonth			    			
+			    			return this.first_page_search.searchPageMonth
 			    		}
 			        break;
 			    case 'Year':
-			    		if(this.currentFilterValue==''){	
-				        	this.firstpage.firstPageYear = this.firstpage.firstPageYear + 1 
+			    		if(this.currentFilterValue==''){
+				        	this.firstpage.firstPageYear = this.firstpage.firstPageYear + 1
 				       		return this.firstpage.firstPageYear
 			    		} else {
 			    			this.first_page_search.searchPageYear = this.first_page_search.searchPageYear + 1
@@ -254,7 +249,7 @@ export default {
 
   			this.resetPageSreach()
 			this.typeTime = timevalue
-			
+
 			let option
 
 			let vm = this
@@ -274,7 +269,7 @@ export default {
 
 		getDataWithTimeValue(value,page,search){
 
-			let url = config.API_URL+'transaction/history/item'
+			let url = config.API_URL + 'company/history-transactions/filter'
 
 			let params = {
                 perPage: this.paginator.perPageDay,
@@ -282,8 +277,8 @@ export default {
                 search:search,
                 page: page,
                 time: value
-            }	
-       
+            }
+
 			getWithData(url, params)
 			.then((res)=>{
 				if (res.data && res.data.success) {
@@ -299,27 +294,27 @@ export default {
 						this.searchResult = []
 					}
 
-					if(this.currentFilterValue !==''){	
+					if(this.currentFilterValue !==''){
 						this.on_search = 1
 						if(resItem.length) {
 							_.forEach(resItem, function(value,key){
-								
+
 								vm.searchResult.push(value)
 							})
-						
+
 							vm.totalAmount(vm.searchResult)
-				    
+
 				        } else {
 				        	this.on_search = 1
 				        }
 
 					} else {
-						
+
 						_.forEach(resItem, function(value,key){
 
 							vm.option.push(value)
 						})
-								
+
 						vm.totalAmount(vm.option)
 					}
 				}
@@ -332,7 +327,7 @@ export default {
 
 		addTenItem(timevalue){
 			this.makeParams()
-			if(this.currentFilterValue !==''){	
+			if(this.currentFilterValue !==''){
 				this.searchFilter(timevalue)
 			}
 			else {
@@ -343,7 +338,7 @@ export default {
 			        self.reload = false;
 			        self.getDataWithTimeValue(timevalue,page,this.search)
 			      }, 1500);
-			}	
+			}
 		},
 
 		stopdrawerRight(){
@@ -351,7 +346,7 @@ export default {
 			this.reset()
 			this.resetPageSreach()
 		},
-		
+
 		makeParams(){
 
 			let searchValues = []
@@ -364,9 +359,9 @@ export default {
 		},
 
 		searchFilter(timevalue){
-			
+
            	this.makeParams()
-            if(this.currentFilterValue ==''){	
+            if(this.currentFilterValue ==''){
             	this.resetPageSreach()
             }
             else {
@@ -374,7 +369,7 @@ export default {
 	            let page = this.switchTime(timevalue)
 	            this.getDataWithTimeValue(timevalue,page,this.search)
             }
-	  	
+
 	    },
 
 	    reset(){
@@ -399,7 +394,7 @@ export default {
 
 	    totalAmount(data){
 	    	var total_revenue = 0
-			var total_expenditure = 0    	
+			var total_expenditure = 0
 	    	_.forEach(data, function(v_1, k_1){
 				if(v_1.status == 'RECIVED') {
 					var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(3)
@@ -409,7 +404,7 @@ export default {
                 	data[k_1]['new_amount'] = new_amount
                 } else {
                 	var new_amount = parseFloat(v_1.amount * v_1.transactionexchange.exchange_rate_to_dollar).toFixed(3)
-                	total_expenditure =total_expenditure + parseFloat(new_amount) 
+                	total_expenditure =total_expenditure + parseFloat(new_amount)
 
                 	data[k_1]['new_amount'] = new_amount
                 }
@@ -417,10 +412,10 @@ export default {
 			this.total = (total_revenue - total_expenditure).toFixed(3)
 	    },
 
-	    invisibleButtonLoadMore(value){   		    	
+	    invisibleButtonLoadMore(value){
 	    	if(value.to == value.total){
 	    		this.check = 1
-	    	}	    	
+	    	}
 	    }
 
   	},

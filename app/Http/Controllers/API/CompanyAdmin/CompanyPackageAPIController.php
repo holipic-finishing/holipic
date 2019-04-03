@@ -134,7 +134,7 @@ class CompanyPackageAPIController extends AppBaseController
 
         $result = $this->companyPackageRepository->getCompanyPackages($input);
 
-        return $this->sendResponse($result->toArray(), 'Company Packages retrieved successfully');
+        return $this->sendResponse($result, 'Company Packages retrieved successfully');
     }
 
     public function addPackage(Request $request) 

@@ -4,18 +4,18 @@
 		:close-on-content-click="false"
 		offset-y
 		left
-		origin="right top" 
-		z-index="99" 
-		content-class="cart-dropdown" 
-		transition="slide-y-transition" 
+		origin="right top"
+		z-index="99"
+		content-class="cart-dropdown"
+		transition="slide-y-transition"
 		nudge-top="-20"
 	>
 		<v-badge
-			right 
-			overlap 
+			right
+			overlap
 			slot="activator"
 		>
-			<span slot="badge" v-if="countNotifications != 0">{{countNotifications}}</span>
+			<span slot="badge" v-if="countNotifications != 0" class="caption">{{countNotifications}}</span>
 			<i class="zmdi grey--text zmdi-notifications-active infinite wobble zmdi-hc-fw font-lg"></i>
 		</v-badge>
 		<v-card>
@@ -30,10 +30,10 @@
 							<v-list-tile :key="index" :class="!notification.is_read ? 'style-content not-read' : 'style-content'" @click="updateIsReadById(notification)">
 								<div class="product-img mr-3">
 								<v-tooltip bottom v-if="notification.is_read == true">
-									<v-btn 
+									<v-btn
 									slot="activator"
-									flat 
-									icon 
+									flat
+									icon
 									color="#000000"
 
 									>
@@ -42,10 +42,10 @@
 								<!-- <span>{{ $t('message.hidingRead') }}</span> -->
 								</v-tooltip>
 								<v-tooltip bottom v-if="notification.is_read == false">
-									<v-btn 
+									<v-btn
 									slot="activator"
-									flat 
-									icon 
+									flat
+									icon
 									color="#00c2e0"
 									>
 										<v-icon>fiber_manual_record</v-icon>
@@ -59,12 +59,12 @@
 										{{notification.created_at}}
 									</span>
 								</v-list-tile-content>
-								
+
 							</v-list-tile>
 						</template>
 
 					</v-list>
-					
+
 				</vue-perfect-scrollbar>
 			</div>
 			<div v-else>
@@ -79,9 +79,9 @@
 				</v-list>
 			</div>
 		<!-- 	<v-card-actions v-if="paginator.to !== paginator.total">
-		        <v-btn 
-		        	small 
-		        	color="primary" 
+		        <v-btn
+		        	small
+		        	color="primary"
 		        	@click="showAllnotification()"
 		        >
 		      		More..
@@ -140,7 +140,7 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 						this.paginator.currentPage = res.data.data.current_page
 						this.notifications = data
 					}
-				})	
+				})
 				.catch(err => {
 					console.log(err)
 				})
@@ -172,14 +172,14 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 						this.removeNotification(item)
 						// this.$root.$emit('refresh-datav2', true)
 
-						
+
 					}
-				})	
+				})
 				.catch(err => {
 					console.log(err)
 				})
 			},
-	
+
 			showAllnotification(){
 				var useAut = this.user
 				this.paginator.currentPage = this.paginator.currentPage + 1
@@ -199,14 +199,14 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 				// 		// this.paginator.total = res.data.data.total
 				// 		var vm = this
 				// 		var dataItem = vm.notifications
-					
+
 				// 		_.forEach(data, function(value, key){
 				// 			dataItem.push(value)
 				// 		})
 				// 		console.log(dataItem)
 				// 		// vm.notifications = _.uniqBy(dataItem,'id')
 				// 	}
-				})	
+				})
 				.catch(err => {
 					console.log(err)
 				})
@@ -219,18 +219,18 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 					});
 					this.newnotification.splice(index1, 1);
 				}
-				
+
 				var index2 = this.notifications.findIndex(function(value){
 					return value.id == item.id
 				});
                 this.notifications.splice(index2, 1);
-                
-               
+
+
 
 
 			},
-			
-	
+
+
 
 		},
 		created(){
@@ -252,9 +252,9 @@ import Notifications from '../../views/company-admin/notifications/Notifications
 				if(this.newnotification && this.newnotification.length){
 					// this.arrNotifi.unshift(this.newnotification[0])
 					this.notifications.unshift(this.newnotification[0])
-					
+
 				}
-				
+
 				return this.notifications.length
 			},
 		},

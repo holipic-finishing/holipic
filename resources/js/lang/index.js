@@ -11,6 +11,8 @@ import ko from './ko';
 import it from './it';
 import hu from './hu';
 import tr from './tr';
+import es from './es';
+import fi from './fi';
 
 export default {
     en: {
@@ -51,5 +53,11 @@ export default {
     },
     tr: {
         message: tr
+    },
+    es: {
+        message: es
+    },
+    fi: {
+        message: fi
     }
 }

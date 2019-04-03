@@ -1,17 +1,19 @@
 <template>
-	<v-navigation-drawer 
-	fixed
-	v-model="drawerRight" 
-	right
-	temporary 
-	app 
-	this.width = this.getCurrentWithContentWrap()
-  :width='widthComputed'
+	<v-navigation-drawer
+		fixed
+		v-model="drawerRight"
+		right
+		temporary
+		app
+		clipped
+	  	:width='widthComputed'
 	>
 		<v-card class="h-100 position-relative">
-
-			<v-toolbar>
-				<v-toolbar-title class="text-capitalize">Add Branch</v-toolbar-title>
+			<!-- Toolbar Header -->
+			<v-toolbar class="mb-3">
+				<v-toolbar-title class="text-capitalize">
+					Add Branch
+				</v-toolbar-title>
 				<v-spacer></v-spacer>
 				<v-toolbar-side-icon @click.stop="drawerRight = !drawerRight">
 					<v-icon>
@@ -19,8 +21,8 @@
 					</v-icon>
 				</v-toolbar-side-icon>
 			</v-toolbar>
-			<v-divider class="no-mg-bottom"></v-divider>
-
+			<!--End Toolbar Header -->
+			<!-- Form Add New Branch -->
 			<v-form
 				ref="form"
 				v-model="valid"
@@ -28,109 +30,100 @@
 			>
 				<v-list class="heigth-list-title">
 
-					<!-- <v-alert v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert> -->
-
-					<v-list-tile class="height-80">
+					<v-list-tile class="height-65">
 						<v-list-tile-content class="h-100">
 							<v-list-tile-title class="content-flex-end h-100">
-								<span class="font-weight-bold item-title position-item">Branch Name:</span>
+								<span class="item-title position-item">Branch Name:</span>
 								<span class="contain-text-field">
 									<v-text-field
-										class="font-weight-bold height-input"
-										placeholder="Enter Branch Name"
+										class="height-input"
+										placeholder="Input Your Branch Name"
 										v-model="branch.branchName"
-										outline
 										:rules="[rules.required]"
 									></v-text-field>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
-					<v-divider class="no-mg-bottom"></v-divider>
+					<v-divider class="m-0"></v-divider>
 
-					<v-list-tile class="height-80">
+					<v-list-tile class="height-65">
 						<v-list-tile-content class="h-100">
 							<v-list-tile-title class="content-flex-end h-100">
-								<span class="font-weight-bold item-title position-item">Username:</span>
+								<span class="item-title position-item">Username:</span>
 								<span class="contain-text-field">
 									<v-text-field
-										class="font-weight-bold height-input"
-										placeholder="Enter Username"
+										class="height-input"
+										placeholder="Input Your Username"
 										v-model="branch.username"
-										outline
 										:rules="[rules.required]"
 									></v-text-field>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
-					<v-divider class="no-mg-bottom"></v-divider>
+					<v-divider class="m-0"></v-divider>
 
-					<v-list-tile class="height-80">
+					<v-list-tile class="height-65">
 						<v-list-tile-content class="h-100">
 							<v-list-tile-title class="content-flex-end h-100">
-								<span class="font-weight-bold item-title position-item">Password:</span>
+								<span class="item-title position-item">Password:</span>
 								<span class="contain-text-field">
 									<v-text-field
-										class="font-weight-bold height-input"
-										placeholder="Enter Password"
+										class="height-input"
+										placeholder="Input Your Password"
 										v-model="branch.password"
-										outline
 										:rules="[rules.required]"
 									></v-text-field>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
-					<v-divider class="no-mg-bottom"></v-divider>
+					<v-divider class="m-0"></v-divider>
 
-					<v-list-tile class="height-80">
-						<v-list-tile-content class="h-100">
-							<v-list-tile-title class="content-flex-end h-100">
-								<span class="font-weight-bold item-title position-item">Address:</span>
-								<span class="contain-text-field">
-									<v-text-field
-										class="font-weight-bold height-input"
-										placeholder="Enter Address"
+					<v-list-tile class="height-75">
+				    	<v-list-tile-content class="h-100">
+				          	<v-list-tile-title class="content-flex-end h-100">
+				            	<span class="item-title">Address:</span>
+				            	<span class="contain-text-field">
+									<v-textarea
+										placeholder="Input Your Address"
 										v-model="branch.address"
-										outline
 										:rules="[rules.required]"
-									></v-text-field>
-								</span>
-							</v-list-tile-title>
-						</v-list-tile-content>
-					</v-list-tile>
-					<v-divider class="no-mg-bottom"></v-divider>
+										rows="1"
+									></v-textarea>
+				            	</span>
+				          	</v-list-tile-title>
+				     	</v-list-tile-content>
+			      	</v-list-tile>
+					<v-divider class="m-0"></v-divider>
 
-					<v-list-tile class="height-80">
+					<v-list-tile class="height-65">
 						<v-list-tile-content class="h-100">
 							<v-list-tile-title class="content-flex-end h-100">
-								<span class="font-weight-bold item-title position-item">Phone:</span>
+								<span class="item-title position-item">Phone:</span>
 								<span class="contain-text-field">
 									<v-text-field
-										class="font-weight-bold height-input"
-										placeholder="Enter Phone"
+										class="height-input"
+										placeholder="Input Your Phone"
 										v-model="branch.phone"
-										outline
 										:rules="[rules.required]"
 									></v-text-field>
 								</span>
 							</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
-					<v-divider class="no-mg-bottom"></v-divider>
+					<v-divider class="m-0"></v-divider>
+
+					<v-flex xs12 sm12 class="style-flex fix-style-flex">
+						<v-btn dark color="indigo" class="add-btn" @click="saveBranch()">
+							Save
+						</v-btn>
+					</v-flex>
 
 				</v-list>
-
-				<v-card-actions class="w-100 border border-left-0 border-right-0 border-bottom-0 pr-4 bottom-position flex-end fix-flex-end">
-					<v-btn dark color="indigo" class="add-btn" @click="saveBranch()">
-						Save
-					</v-btn>
-					<v-btn @click.stop="drawerRight = !drawerRight">Close</v-btn>
-				</v-card-actions>
-				
 			</v-form>
-		</v-card>      	
+		</v-card>
 	</v-navigation-drawer>
 </template>
 
@@ -155,9 +148,9 @@ export default {
     	valid: true,
     	company: JSON.parse(localStorage.getItem('user')),
     	alertStt:false,
-			alertType:'success',
-			alertMes: '',
-			width: 0,
+		alertType:'success',
+		alertMes: '',
+		width: 0,
 	   	drawerHeaderStt: null
     }
   },
@@ -175,8 +168,8 @@ export default {
   		this.branch = {}
   		this.$refs.form.reset()
   		this.drawerRight =  response.showNavigation
-  		this.width = this.getCurrentWithContentWrap()	
-  	
+  		this.width = this.getCurrentWithContentWrap()
+
   	})
   },
   methods: {
@@ -191,25 +184,24 @@ export default {
   				if(response && response.data.success) {
   					this.$root.$emit('reloadTableBranch')
   					this.alertType = 'success'
-						this.alertMes = response.data.message
-
-						this.$notify({
-		          title: 'Success',
-		          message: this.alertMes,
-		          type: this.alertType,
-		          duration: 2000,
-		        })
+					this.alertMes = response.data.message
+					this.$notify({
+			          title: 'Success',
+			          message: this.alertMes,
+			          type: this.alertType,
+			          duration: 2000,
+			        })
   				}
   			})
   			.catch(error => {
   				this.alertType = 'error'
-					this.alertMes = error.response.data.message
-					this.$notify({
-	          title: 'Error',
-	          message: this.alertMes,
-	          type: this.alertType,
-	          duration: 2000,
-	        })
+				this.alertMes = error.response.data.message
+				this.$notify({
+		          title: 'Error',
+		          message: this.alertMes,
+		          type: this.alertType,
+		          duration: 2000,
+		        })
   			})
   		}
   	}
@@ -218,9 +210,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.fix-flex-end{
-		margin-bottom: 0px;
-		position:absolute;
-		bottom: 0px;
-	}
+.fix-style-flex{
+	float: right;
+}
+.style-flex {
+	padding: 5px 12px !important;
+	font-weight: 500 !important;
+}
 </style>

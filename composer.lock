@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "beaaf1fe0aa5eacfe77f212c8cbfb387",
-    "content-hash": "1bfe71207a6dc626c683956690235ce3",
+    "hash": "9a1186f9dda750214c113b85b459cfa4",
+    "content-hash": "5d41b15d50f73f9da10c0744c12067d2",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -1075,7 +1075,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/InfyOmLabs/laravel-generator/zipball/c1941c8004aaca0a9e581f325470b3c662ff1fbe",
+                "url": "https://api.github.com/repos/InfyOmLabs/laravel-generator/zipball/35aea8b02b6b8c385ae576061467cfd13311dcc1",
                 "reference": "c1941c8004aaca0a9e581f325470b3c662ff1fbe",
                 "shasum": ""
             },
@@ -1236,7 +1236,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2018-05-29T14:19:03+00:00"
+            "time": "2018-05-29 14:19:03"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -3118,7 +3118,7 @@
                 }
             ],
             "description": "Service for chunked upload with several js providers",
-            "time": "2018-09-11T09:26:38+00:00"
+            "time": "2018-09-11 09:26:38"
         },
         {
             "name": "predis/predis",

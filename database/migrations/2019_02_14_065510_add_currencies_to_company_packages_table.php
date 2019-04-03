@@ -14,11 +14,13 @@ class AddCurrenciesToCompanyPackagesTable extends Migration
     public function up()
     {
         Schema::table('company_packages', function (Blueprint $table) {
-            $table->integer('dollar');
-            $table->integer('euro');
-            $table->integer('indo');
-            $table->integer('turkey');
-            $table->integer('vn');
+            $table->decimal('dollar', 30, 10)->default(0,0);
+            $table->decimal('euro', 30, 10)->default(0,0);
+            $table->decimal('indo', 30, 10)->default(0,0);
+            $table->decimal('turkey', 30, 10)->default(0,0);
+            $table->decimal('vn', 30, 10)->default(0,0);
+            $table->decimal('price', 30,10)->nullable()->default(0,0)->change();
+            $table->decimal('offer', 30,10)->nullable()->default(0,0)->change();
         });
     }
 
@@ -30,11 +32,7 @@ class AddCurrenciesToCompanyPackagesTable extends Migration
     public function down()
     {
         Schema::table('company_packages', function (Blueprint $table) {
-            Schema::dropIfExists('dollar');
-            Schema::dropIfExists('euro');
-            Schema::dropIfExists('indo');
-            Schema::dropIfExists('turkey');
-            Schema::dropIfExists('vn');
+            $table->dropColumn(['dollar', 'euro', 'indo', 'turkey', 'vn']);
         });
     }
 }

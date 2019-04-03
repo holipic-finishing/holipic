@@ -4,7 +4,7 @@
 *********  ROUTER FOR LANDING PAGE   ***************
 ****************************************************/
 
-Route::get('','API\PackageAPIController@listPackage');
+Route::get('','API\SuperAdmin\PackageAPIController@listPackage');
 
 Route::namespace('API')->group(function(){
 	Route::namespace('Auth')->group(function(){
@@ -27,7 +27,6 @@ Route::namespace('API')->group(function(){
 
 Route::post('users/signup', 'UserController@signUp')->name('users.signup');
 Route::get('users/activation', 'UserController@activationAccount')->name('users.activation');
-
 /***************************************************
 *********  ROUTER FOR ADMIN PAGE   *****************
 ****************************************************/
@@ -40,10 +39,6 @@ Route::get('/{any}', function () {
 /****************************************
 *********  ROUTER TEST  *****************
 *****************************************/
-
-// Route::get('test', function() {
-
-// });
 
 
 

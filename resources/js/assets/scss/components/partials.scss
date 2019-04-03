@@ -21,6 +21,39 @@
 	margin: 0 auto;
 }
 
+.custom-booking{
+	padding-top:0px !important;
+	.v-toolbar{
+		box-shadow: none !important;
+	}
+	.v-toolbar__content {
+		height: auto !important;
+		margin-bottom: 5px !important;
+	}
+	.layout-booking {
+		margin-bottom: -36px !important;
+		.header-booking {
+			margin-top:15px !important;
+		}
+	}
+
+	.header-booking-timezone{
+		.v-input__control{
+			margin-left:24px !important;
+		}
+
+		.v-text-field {
+			top:-18px !important;
+		}
+	}
+}
+
+.dialog-date{
+	
+	box-shadow: 0px 0px 50px 0px #d0d0d0 !important;
+	
+}
+
 @media (max-width: 767px) {
     .row-changepass{
 		width: 60%;
@@ -41,14 +74,11 @@
 	}
 }
 
-
 .width-input{
   .v-input__slot{
     min-width: 140px !important;
     width: 140px !important;
-    
     text-align:left !important;
-    
   }
 }
 
@@ -59,19 +89,19 @@
 }
 
 .custom-table-customer{
+	.margin-left{
+    	padding-left: 0px !important;
+    	margin-left: 0px !important;
+    }
+    .th-margin{
+    	text-align:left !important;
+    }
 
-	thead th:not(:nth-child(1)){
-		padding: 0 0px !important;
-		text-align:center !important;
-		
-	}
-
-	tbody td:not(:nth-child(1)){
-		padding: 0 6px !important;
-		text-align:center !important;
+    .btn-customer {
+		margin-left: 0px !important;
 	}
 }
-	
+
 @media (max-width: 1366px) {
     .action-width{
 		text-align:center;
@@ -87,7 +117,7 @@
 }
 
 .btn-customer{
-	min-width: 61px;
+	min-width: 100px;
 }
 
 .height-input-customer{
@@ -162,14 +192,14 @@
 .custom-v-select{
 	.height-input-customer {
 		.v-select__selections {
-			padding-top: 0px !important; 
+			padding-top: 0px !important;
 			font-size:15px !important;
 		}
 		.v-input__append-inner{
 			margin-top: 6px !important;
 		}
 	}
-	
+
 }
 
 .custom-btn{
@@ -179,6 +209,7 @@
   	border-radius: 50%;
   	padding-top: 5px !important;
   	box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+	flex: none !important;
 }
 
 .grid-template-column{
@@ -210,3 +241,94 @@
 .btn-add {
 	padding-top:1px !important;
 }
+
+
+.custom-flex-appcard{
+	.app-card-content {
+
+	display: flex !important;
+	height: 80px !important;
+	}
+}
+
+.fix-flex-photographer{
+	margin-left:30px !important;
+}
+
+.search-photographer{
+	color:black;
+	.v-input__slot {
+		background-color:white !important;
+		color:black;
+	}
+	.v-input__control{
+		.v-text-field__slot input{
+			color: black;
+		}
+
+	}
+}
+
+.custom-profile-body{
+	.layout {
+		.flex{
+			display: grid !important;
+		}
+	}
+}
+
+.btn-add-photographer{
+	.v-btn {
+		width: 115px !important;
+		right: 0px;
+	    position: absolute;
+	    margin-right: 45px;
+	}
+}
+
+.media-image {
+	text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top:5px;
+}
+
+
+.active-list-title{
+	background: rgba(0,0,0,0.05);
+}
+
+.label-mb-0{
+	label{
+		margin-bottom: 0 !important;
+	}
+}
+
+.heigth-list-title {
+	.v-list__tile {
+		height: auto !important;
+	}
+	.custom-content-flex {
+		padding-top: 10px;
+		height: auto !important;
+		.v-text-field {
+			padding-top:0px !important;
+		}
+		.v-input__control{
+			width: 40px !important;
+		}
+	}
+}	
+
+.custom-height-75{
+	.v-list__tile {
+		padding: 15px 16px !important;
+	    height: auto !important;
+	}
+}
+
+.custom-container-sp{
+	padding: 0px !important;
+}
+
+

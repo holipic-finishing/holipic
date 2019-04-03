@@ -230,7 +230,7 @@ export default {
 	    },
 
 		deleteItem(id,setting_id){
-			let url = config.API_URL+'delete-package'
+			let url = config.API_URL + 'delete-package'
 
 			let params = {
 				id_packages : this.itemIdToDelete.id,

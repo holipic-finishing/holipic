@@ -10,27 +10,35 @@ import SuperAdminRoutes from './super-admin';
 import CompanyAdminRoutes from './company-admin';
 import BranchAdminRoutes from './branch-admin';
 import CustomerRoutes from './customer';
+import ShopSellingRoutes from './shop-selling';
 
 // Dashboard components
 import mini from '../container/MiniSidebarLayout.vue'
 
 import PageNotFound from '../views/partials/pages/page404'
 
+import Room from '../views/shop-selling/room/index.vue'
 
 
 Vue.use(Router)
 
 var routers = [];
 routers = [
+	ShopSellingRoutes,
+	CustomerRoutes,
 	AuthRoutes,
 	SuperAdminRoutes,
 	CompanyAdminRoutes,
 	BranchAdminRoutes,
-	// {
- //    	// Page Not Found
- //    	path: '*',
- //    	component: PageNotFound
- //  	}
+	{
+    	path: '/room-tab',
+    	component: Room
+  	},
+	{
+    	// Page Not Found
+    	path: '*',
+    	component: PageNotFound
+  	}
 ];
 
 var router = new Router({

@@ -491,5 +491,13 @@ export default {
   ewallet: 'Ewallet Withdraw',
   sidebarUpload: 'Upload Photos',
   AvailableBalanceIs0 : 'Your balance is 30, please add more money',
-  withDrawProcessed : 'The withdrawal request has been processed'
+  withDrawProcessed : 'The withdrawal request has been processed',
+
+  //Shop Selling
+  albumPackage: 'Album Package',
+  addNewPhoto: 'Add New Photo',
+  selectedPhoto: 'Selected',
+  otherPhoto: 'Others',
+  buyNow: 'Buy Now'
+
 }

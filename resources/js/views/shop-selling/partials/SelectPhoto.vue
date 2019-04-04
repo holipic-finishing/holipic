@@ -377,7 +377,7 @@
 				<v-layout row wrap class="photo-selected images">
 					
 					<v-flex
-						v-for="photo in photos"
+						v-for="(photo,index) in photos"
 						xs12 sm3
 						d-flex
 						:key="photo.id"
@@ -390,15 +390,21 @@
 									class="grey lighten-2 hover-image"
 									height="300"
 									:key="photo.id"
-									@click="selectPhoto(photo)"
+									@click="selectPhoto(photo,index)"
 									contain
 									>
 								</v-img>
+								
+								
+								<!-- <a class="fancybox" :href="thumbnailDir + photo.name" data-fancybox="images" data-caption="Backpackers following a dirt trail">
+						    		<img :src="thumbnailDir + photo.name" />
+						  		</a> -->
+
 							</div>
 						</v-card>
 
 						<div class="icon-frame-photo">
-						 	<span class="v-flex-sp-l" @click="showZoomImageAndSlide(photo)">
+						 	<span class="v-flex-sp-l" @click="showZoomImageAndSlide(photo,index)">
 						 		<i class="material-icons cursor-v-card">
 									zoom_out_map
 								</i>
@@ -410,31 +416,38 @@
 						 	</span>
 						</div>	
 					</v-flex>
-	
-				 	<lightbox id="mylightbox" 
+					
+				 	<!-- <lightbox id="mylightbox" 
 				      ref="lightbox"
 				      :images="photos"
 				      :directory="thumbnailDir"
 				      :timeoutDuration="5000"
-				 	/>
-
-					<!-- <v-dialog
+				 	/> -->
+					
+					<!-- <div class="list" v-for="(n, index) in imageList" :data-index="index">
+					  <img @click="open($event)" :src="n.url">
+					</div> -->
+					<!-- 	<v-dialog
 		     			 	v-model="dialog2"
 		      				width="1000"
 		      				class="v-dialog2"
-		    				>
-						<v-carousel class="custom-carousel" hide-delimiters >
+		    				> -->
+						<!-- <v-carousel class="custom-carousel" hide-delimiters >
 						    <v-carousel-item
 						      v-for="(item,i) in photoZoom"
 						      :key="i"
 						      :src="item.src"
 						      width="50%"
 						    ></v-carousel-item>
-						</v-carousel>
-					</v-dialog> -->
+						</v-carousel> -->
+					<!-- </v-dialog> -->
 				</v-layout>
 			</div>
 		</app-card>
+		<div>
+			<vue-gallery-slideshow :images="photos" :index="index" @close="index = null"></vue-gallery-slideshow>
+
+		</div>
 		<!--Orther photo -->
 
 		<!-- <app-card colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
@@ -452,8 +465,10 @@ import Lightbox from 'vue-my-photos'
 import Vue from 'vue'
 import config from '../../../config'
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
+import VueGallerySlideshow from './GallerySlideshow.vue'
 
 Vue.component('lightbox', Lightbox);
+
 
 export default {
 
@@ -521,6 +536,20 @@ export default {
 				caption: "Caption 8",
 				author: "Dorothy Bass",
 				likes: "75"
+			},
+			{
+				id: 9,
+				name: "blog-8.jpg",
+				caption: "Caption 8",
+				author: "Dorothy Bass",
+				likes: "75"
+			},
+			{
+				id: 10,
+				name: "blog-8.jpg",
+				caption: "Caption 8",
+				author: "Dorothy Bass",
+				likes: "75"
 			}
 		],
 		photos2: [],
@@ -531,7 +560,7 @@ export default {
 		photoId:'',
 		number: 0,
 		typeDetail: 'Select detail',
-		count:0,
+		count:0,	
 		countOther:0,
 		photoZoom: [],
 		thumbnailDir: config.BASE_URL + '/static/img/',
@@ -558,8 +587,12 @@ export default {
 		],
 		photoOpened: null,
 		total:0,
-		number: 0
+		number: 0,
+	    index: null
     }
+  },
+  components: {
+    VueGallerySlideshow
   },
   mounted(){
   	this.$i18n.locale = 'en'
@@ -587,6 +620,7 @@ export default {
   	this.getDataPackage()
   },
   methods:{
+  	
   	removeItem(index,photo)
   	{
 		this.photos2.splice(index, 1);
@@ -673,6 +707,7 @@ export default {
   	},
   	selectPhoto(photo)
   	{
+  		
   		var photoSelected = _.find(this.photos2, (value,key) => { 
   			return value['id'] == photo.id; 
   		});
@@ -723,10 +758,9 @@ export default {
 		})
   	},
 
-  	showZoomImageAndSlide(photo)
+  	showZoomImageAndSlide(photo,index)
   	{
-  		this.$refs.lightbox.show(photo.name);
-  	
+  		this.index = index  	
   	},
   	setQuantity(photo, quantity)
   	{
@@ -775,6 +809,7 @@ export default {
   	}
   }
 }
+
 </script>
 
 <style lang="scss" scoped>

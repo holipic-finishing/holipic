@@ -203,44 +203,7 @@ export default {
           { text: 'Checkout', sortable: false},
           { text: 'Action', sortable: false },
         ],
- 		desserts: [
-          // {
-          // 	id: 1,
-          //   name: '5:00',
-          //   calories: 159,
-          //   fat: 6.0,
-          //   carbs: 24,
-          //   protein: 4.0,
-          //   iron: '1%'
-          // },
-          // {
-          // 	id:2,
-          //   name: '14:20',
-          //   calories: 237,
-          //   fat: 9.0,
-          //   carbs: 37,
-          //   protein: 4.3,
-          //   iron: '1%'
-          // },
-          // {
-          // 	id:3,
-          //   name: '6:37',
-          //   calories: 262,
-          //   fat: 16.0,
-          //   carbs: 23,
-          //   protein: 6.0,
-          //   iron: '7%'
-          // },
-          // {
-          // 	id:4,
-          //   name: '5:00',
-          //   calories: 305,
-          //   fat: 3.7,
-          //   carbs: 67,
-          //   protein: 4.3,
-          //   iron: '8%'
-          // }
-        ],
+ 		desserts: [],
         todayDate: new Date(),
         menu: false,
         checkDate: '',

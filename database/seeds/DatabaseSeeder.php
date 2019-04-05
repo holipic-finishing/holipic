@@ -22,29 +22,33 @@ class DatabaseSeeder extends Seeder
         
         /**
          *
-         * Don't run seed of TransactionsTableSeeder
+         * Don't run seed of TransactionsTableSeeder, RoomsTableSeeder
          *
          */
 
         // $this->call(TransactionsTableSeeder::class);
-        $this->call(RoomsTableSeeder::class);
+        // $this->call(RoomsTableSeeder::class);
+        
+        $this->call(CompanyPackagesTableSeeder::class);
+        $this->call(PhotoPackagesTableSeeder::class);
         $this->call(BranchesTableSeeder::class);
         $this->call(PhotographersTableSeeder::class);
         $this->call(PagesTableSeeder::class);   
         $this->call(SettingsTableSeeder::class);
         $this->call(CustomersTableSeeder::class);
+        $this->call(BookingsTableSeeder::class);
         $this->call(OrderTableSeeder::class);
-        $this->call(CompanyPackagesTableSeeder::class);
-        $this->call(PhotoPackagesTableSeeder::class);
-        
+
         /**
-         * Seed With Draw
+         * Seed Withdraw
          */
         $this->call(EwalletWithdrawSeeder::class);
-        $this->call(SnapPhotosTableSeeder::class);     
-        
-        $this->call(BookingsTableSeeder::class);
         $this->call(TimezonesTableSeeder::class);
-
+        
+        /**
+         * Seed Image
+         */
+        $this->call(ListingsTableSeeder::class);
+        
     }
 }

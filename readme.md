@@ -28,28 +28,26 @@ php artisan key:generate
 + Config database
 + Config domain
 + Config protocol
-+ Config port (redis, socket)
++ Config port (redis, so cket)
 
 # Step 8: Migrate and seeding 
 php artisan migrate
 php artisan db:seed
 
 # Step 9: Create folder
-+ public/logos
-+ public/avatars
-+ public/files
-+ public/image_uploads
++ public/company_logos
 + public/photographers
 + public/photographers/avatars
-+ public/phototgraphers/identification
++ public/phototgraphers/identifications
++ public/customer_avatars
++ public/files
 
 # Step 10 : Set Permission
-+ sudo chmod -R 777 public/logos
 + sudo chmod -R 777 storage
-+ sudo chmod -R 777 public/avatars
-+ sudo chmod -R 777 public/files
-+ sudo chmod -R 777 public/image_uploads
++ sudo chmod -R 777 public/company_logos
 + sudo chmod -R 777 public/photographers
++ sudo chmod -R 777 public/customer_avatars
++ sudo chmod -R 777 public/files
 
 # Step 11: Run project
 + npm run watch-poll

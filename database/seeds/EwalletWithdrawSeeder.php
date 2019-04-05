@@ -26,7 +26,7 @@ class EwalletWithdrawSeeder extends Seeder
         	array_push($listcompany, $company->id);
         }
 
-        for($i = 0 ; $i <= 100 ; $i++ ){
+        for($i = 0 ; $i <= 500 ; $i++ ){
             $company_id = $faker->randomElement($listcompany);
 
             $fk = new Faker\Generator();
@@ -43,7 +43,6 @@ class EwalletWithdrawSeeder extends Seeder
                 'company_id'            => $company_id,
 
             ]);
-            sleep(1);
         }
     }
 }

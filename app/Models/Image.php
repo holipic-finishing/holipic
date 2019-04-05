@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 /**
- * Class ImageUpload.
+ * Class Images.
  *
- * @package namespace App\Entities;
+ * @package namespace App\Models;
  */
-class ImageUpload extends Model implements Transformable
+class Image extends Model implements Transformable
 {
     use TransformableTrait, SoftDeletes;
 
@@ -20,7 +22,7 @@ class ImageUpload extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = ['filename', 'branch_id', 'photographer_id', 'room_id'];
+    protected $fillable = ['filename', 'img_type', 'is_booking', 'listing_id'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -29,4 +31,8 @@ class ImageUpload extends Model implements Transformable
      */
     protected $dates = ['deleted_at'];
 
+    public function listing()
+    {
+        return $this->belongsTo('App\Models\Listing', 'listing_id', 'id');
+    }
 }

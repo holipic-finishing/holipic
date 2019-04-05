@@ -16,13 +16,13 @@ class CreateTimezonesTable extends Migration
     {
 
         Schema::create('timezones', function (Blueprint $table) {
-                $table->increments('id');
-                $table->string('country_code');
-                $table->string('country_name');
-                $table->string('zone_name');
-                $table->integer('gmt_offset');
-                $table->string('timestamp');
-                $table->timestamps();
+            $table->increments('id');
+            $table->string('country_code');
+            $table->string('country_name');
+            $table->string('zone_name');
+            $table->integer('gmt_offset');
+            $table->string('timestamp');
+            $table->timestamps();
         });
     }
 

@@ -486,70 +486,80 @@ export default {
 				name: "blog-1.jpg",
 				caption: "Caption 1",
 				author: "Admin",
-				likes: "250"
+				likes: "250",
+				checked:false
 			},
 			{
 				id: 2,
 				name: "blog-2.jpg",
 				caption: "Caption 2",
 				author: "Erik Turner",
-				likes: "150"
+				likes: "150",
+				checked:false
 			},
 			{
 				id: 3,
 				name: "blog-3.jpg",
 				caption: "Caption 3",
 				author: "John Smith",
-				likes: "200"
+				likes: "200",
+				checked:false
 			},
 			{
 				id: 4,
 				name: "blog-4.jpg",
 				caption: "Caption 4",
 				author: "Antonio Rice",
-				likes: "300"
+				likes: "300",
+				checked:false
 			},
 			{
 				id: 5,
 				name: "blog-5.jpg",
 				caption: "Caption 5",
 				author: "Caleb Wilson",
-				likes: "400"
+				likes: "400",
+				checked:false
 			},
 			{
 				id: 6,
 				name: "blog-6.jpg",
 				caption: "Caption 6",
 				author: "Zachary Robbins",
-				likes: "50"
+				likes: "50",
+				checked:false
 			},
 			{
 				id: 7,
 				name: "blog-7.jpg",
 				caption: "Caption 7",
 				author: "Jon Wagner",
-				likes: "100"
+				likes: "100",
+				checked:false
 			},
 			{
 				id: 8,
 				name: "blog-8.jpg",
 				caption: "Caption 8",
 				author: "Dorothy Bass",
-				likes: "75"
+				likes: "75",
+				checked:false
 			},
 			{
 				id: 9,
 				name: "blog-8.jpg",
 				caption: "Caption 8",
 				author: "Dorothy Bass",
-				likes: "75"
+				likes: "75",
+				checked:false
 			},
 			{
 				id: 10,
 				name: "blog-8.jpg",
 				caption: "Caption 8",
 				author: "Dorothy Bass",
-				likes: "75"
+				likes: "75",
+				checked:false
 			}
 		],
 		photos2: [],
@@ -596,6 +606,15 @@ export default {
   },
   mounted(){
   	this.$i18n.locale = 'en'
+  	this.$root.$on('photo-chosses', res => {
+  		var vm = this
+  		var arr = [];
+		_.forEach(vm.photos2, function(v) {
+		  	arr.push(v);
+		});
+		var result = _.unionBy(arr, res, "id");
+		vm.photos2 = result
+  	})
   },
   computed:{
   	typeDetailReturn()
@@ -651,6 +670,7 @@ export default {
   		this.dialog = true
   		this.photoId = photo.id
   		this.photoOpened = photo
+
   		_.forEach(this.photoTypes, (item, index) => {
   			if (item.size == photo.size) {
   				this.photoTypes[index]['active'] = true
@@ -714,6 +734,7 @@ export default {
 
   		if(photoSelected == undefined)
   		{
+  			photo.checked = true
   			this.photos2.push(photo)
   			var length = this.photos2.length
 
@@ -724,6 +745,7 @@ export default {
   			this.count++
   			this.getPricePackage(this.photos2)
   		} else {
+  			photo.checked = true
 			var index = this.photos2.indexOf(photo);
 			if (index !== -1) this.photos2.splice(index, 1);
 
@@ -760,7 +782,8 @@ export default {
 
   	showZoomImageAndSlide(photo,index)
   	{
-  		this.index = index  	
+  		this.index = index 
+  		this.$root.$emit('array-photos', this.photos2); 	
   	},
   	setQuantity(photo, quantity)
   	{

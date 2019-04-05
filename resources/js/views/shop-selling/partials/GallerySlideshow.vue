@@ -3,13 +3,15 @@
     <div class="vgs custom-vgs" v-if="imgIndex !== null">
       <div class="wrap-fancybox">
         <button type="button" class="vgs__close" @click="close">&times;</button>
-        <button type="button" class="vgs-check" @click="checkItem(item)">
-          <i class="material-icons cursor-v-card custom-icon" :class="'active-image'+item.id" >
-                  check_circle
-          </i></button>
         <button type="button" class="vgs__prev" v-if="isMultiple" @click.stop="onPrev">&lsaquo;</button>
-        <div class="vgs__container" @click.stop="onNext" v-if="images">
-          <img class="vgs__container__img" @click.stop="onNext" :src="thumbnailDir + imageUrl">
+        <div class="vgs__container" v-if="images">
+          <div class="vgs_image">
+            <button type="button" class="vgs-check" @click="checkItem(item)">
+            <i class="material-icons cursor-v-card custom-icon active-image">
+                    check_circle
+            </i></button>
+            <img class="vgs__container__img" @click.stop="onNext" :src="thumbnailDir + imageUrl">
+          </div>
         </div>
         <button type="button" class="vgs__next" v-if="isMultiple" @click.stop="onNext">&rsaquo;</button>
       </div>
@@ -19,13 +21,14 @@
           class="vgs__gallery__container custom-container"
           v-if="images"
         >
-          <div v-for="(image, i) in images">
+          <div v-for="(image, i) in changeItem">
             <img
               class="vgs__gallery__container__img"
               :src="thumbnailDir + image.name"
               @click.stop="onClickThumb(image, i)"
               :key="i"
-              :class="{ 'vgs__gallery__container__img--active': i === imgIndex}"
+              :id="'chooess'+image.id"
+              :class="{'vgs__gallery__container__img--active': i === imgIndex}"
             >
           </div>
         </div>
@@ -33,13 +36,14 @@
     </div>
   </transition>
 </template>
+              <!-- :class="{'vgs__gallery__container__img--active': i === imgIndex}" -->
 
 <script>
 
 import config from '../../../config'
 export default {
   props: ["images", "index"],
-  mounted() {
+  mounted() { 
     window.addEventListener("keydown", e => {
       if (e.keyCode === 37) {
         this.onPrev();
@@ -48,6 +52,7 @@ export default {
         this.onNext();
       }
     });
+
   },
   watch: {
     index(val) {
@@ -57,6 +62,7 @@ export default {
   methods: {
     close() {
       this.imgIndex = null;
+      this.$root.$emit('photo-chosses', this.selectphoto);
       this.$emit("close");
     },
     onPrev() {
@@ -67,11 +73,16 @@ export default {
         this.imgIndex = this.images.length - 1;
       }
       var item = this.item;
-      console.log(item);
-      // this.acctionImage(item);
+      $('.active-image').css("color", "#fff");
+      
+      if(item.checked) { 
+        $('#chooess'+item.id).css("border", "3px solid #0074f9");     
+        $('.active-image').css("color", "#244293");
+      } 
       this.updateThumbails();
     },
     onNext() {
+      
       if (this.imgIndex === null) return;
       if (this.imgIndex < this.images.length - 1) {
         this.imgIndex++;
@@ -79,12 +90,19 @@ export default {
         this.imgIndex = 0;
       }
       var item = this.item;
-      this.acctionImage(item);
+      $('.active-image').css('color', '#fff');
+      if(item.checked) {
+        $('#chooess'+item.id).css({"border":"3px solid #0074f9"});  
+        $('.active-image').css("color", "#244293");
+      }
       this.updateThumbails();
     },
     onClickThumb(image, index) {
       this.imgIndex = index;
-      this.acctionImage(image);
+      $('.active-image').css('color', '#fff');
+      if(image.checked) {
+        $('.active-image').css("color", "#244293");
+      }
       this.updateThumbails();
     },
     updateThumbails() {
@@ -117,27 +135,27 @@ export default {
       }
     },
     checkItem(item) {
-
         this.acctionImage(item);
-        this.$root.$emit('photo-chosses', item);
     },
     acctionImage(item) {
-        console.log(item);
         var photoSelected = _.find(this.selectphoto, (value,key) => { 
           return value['id'] == item.id; 
         });
-
         if(photoSelected == undefined) {    
+          item.checked = true;
+          item.size = 'DIGITAL'
+          item.quantity = 1
           this.selectphoto.push(item)
-          $('.active-image'+item.id).css("color", "#244293");
-        
+          $('#chooess'+item.id).css({"border":"3px solid #0074f9"});  
+          $('.active-image').css("color", "#244293");
         } else { 
+          item.checked = false;
           var index = this.selectphoto.indexOf(item);
           if (index !== -1) this.selectphoto.splice(index, 1);
-          $('.active-image'+item.id).css("color", "#fff");
+          $('#chooess'+item.id).css({"border":""});  
+          $('.active-image').css("color", "#fff");
         
         } 
-        console.log(this.photoSelected);
     }
   },
   computed: {
@@ -149,6 +167,9 @@ export default {
     },
     isMultiple() {
       return this.images.length > 1;
+    },
+    changeItem(){
+      return this.images;
     }
   },
   data() {
@@ -172,7 +193,7 @@ $radius-medium: 8px;
 $radius-large: 12px;
 // Breakpoints
 $screen-xs: 480px;
-$screen-sm: 768px;
+$screen-sm: 500px;
 $screen-md: 992px;
 $screen-lg: 1200px;
 // So media queries don't overlap when required, provide a maximum
@@ -182,10 +203,6 @@ $screen-md-max: ($screen-lg - 1);
 @mixin respond-to($media) {
   @if $media==xs {
     @media (max-width: $screen-xs-max) {
-      @content;
-    }
-  } @else if $media==sm {
-    @media (min-width: $screen-sm) and (max-width: $screen-sm-max) {
       @content;
     }
   } @else if $media==md {
@@ -317,7 +334,7 @@ $screen-md-max: ($screen-lg - 1);
       object-fit: cover;
       display: inline-block;
       float: none;
-      margin:0px 10px 10px 10px;
+      margin:0px 10px 10px 0px;
       cursor: pointer;
       opacity: 0.6;
       border-radius: $radius-medium;
@@ -345,8 +362,8 @@ $screen-md-max: ($screen-lg - 1);
 
 }
 .wrap-fancybox {
-  flex: 1 1 70%;
-  max-width: 70%;
+  flex: 1 1 80%;
+  max-width: 80%;
   padding: 0;
   position: relative;
   padding: 50px;
@@ -357,22 +374,24 @@ $screen-md-max: ($screen-lg - 1);
 }
 .custom-gallery {
   position: relative;
-  max-width: 30%;
-  flex: 1 1 30%;
+  max-width: 20%;
+  flex: 1 1 20%;
   margin: 0;
   background: #fffd;
   padding-top: 20px;
+  overflow-y: scroll;
 }
 .custom-container {
     display: flex;
     flex-wrap: wrap;
     height: auto;
+    justify-content: center;
 }
 .vgs-check {
     color: #fff;
     position: absolute;
-    top: 270px;
-    right: 50px;
+    top: 0;
+    right: 0;
     background-color: transparent;
     border: none;
     font-size: 25px;
@@ -387,5 +406,15 @@ $screen-md-max: ($screen-lg - 1);
 .custom-icon {
   font-size: 40px !important;
 }
-
+@media (max-width: 499px) {
+    .wrap-fancybox {
+        max-width: 100%;
+    }
+}
+.vgs_image {
+  position: relative;
+}
+.active-chosses {
+  border: 3px solid #0074f9 !important;
+}
 </style>

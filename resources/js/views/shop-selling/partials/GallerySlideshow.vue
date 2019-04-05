@@ -229,7 +229,7 @@ export default {
 </script>
 
 <style lang="scss">
-$black-alpha-80: rgba(0, 0, 0, 0.95);
+$black-alpha-80: rgba(0, 0, 0, 0.8);
 $black: #000;
 $white: #fff;
 $radius-medium: 8px;
@@ -317,7 +317,6 @@ $screen-md-max: ($screen-lg - 1);
   }
   &__container {
     padding: 47px;
-    background: mediumseagreen;
     position: absolute;
     overflow: hidden;
     cursor: pointer;
@@ -328,7 +327,6 @@ $screen-md-max: ($screen-lg - 1);
     right: 0.5rem;
     height: 60vh;
     border-radius: $radius-large;
-    background-color: $black;
     @include respond-to(xs) {
       width: 100%;
       max-width: 100%;
@@ -343,6 +341,7 @@ $screen-md-max: ($screen-lg - 1);
       width: 100%;
       height: 100%;
       object-fit: contain;
+      border-radius: 10px;
     }
   }
 }

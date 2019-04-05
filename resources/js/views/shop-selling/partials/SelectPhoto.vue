@@ -608,12 +608,24 @@ export default {
   	this.$i18n.locale = 'en'
   	this.$root.$on('photo-chosses', res => {
   		var vm = this
-  		var arr = [];
-		_.forEach(vm.photos2, function(v) {
-		  	arr.push(v);
-		});
-		var result = _.unionBy(arr, res, "id");
-		vm.photos2 = result
+  // 		var arr = [];
+		// _.forEach(vm.photos2, function(v) {
+		//   	arr.push(v);
+		// });
+		// var result = _.unionBy(arr, res, "id");
+		vm.photos2 = res
+		_.forEach(res, (value,index) => {
+            _.forEach(vm.photos, (v,i) => {
+              if(value.id === v.id){
+                  $(document).ready(function() {
+                      $('.active-image'+v.id).css("color", "#00C1F8");
+                  })
+              } else {
+                     $('.active-image'+v.id).css("color", "#464D69");
+
+              }
+          })
+        })
   	})
   },
   computed:{
@@ -643,6 +655,8 @@ export default {
   	removeItem(index,photo)
   	{
 		this.photos2.splice(index, 1);
+
+		photo.checked = false
 
 		let totalNew = 0
 
@@ -745,7 +759,7 @@ export default {
   			this.count++
   			this.getPricePackage(this.photos2)
   		} else {
-  			photo.checked = true
+  			photo.checked = false
 			var index = this.photos2.indexOf(photo);
 			if (index !== -1) this.photos2.splice(index, 1);
 

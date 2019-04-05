@@ -52,7 +52,21 @@ export default {
         this.onNext();
       }
     });
-
+    this.$root.$on('array-photos', res => {
+      var vm = this
+      if(res && res.length){
+        vm.selectphoto = res
+        _.forEach(res, (value,index) => {
+            _.forEach(vm.images, (v,i) => {
+              if(value.id === v.id){
+                  $(document).ready(function() {
+                      $('#chooess'+v.id).css("border", "3px solid #0074f9"); 
+                  })
+              }
+          })
+        })
+      }
+    })
   },
   watch: {
     index(val) {
@@ -77,6 +91,7 @@ export default {
       
       if(item.checked) { 
         $('#chooess'+item.id).css("border", "3px solid #0074f9");     
+        
         $('.active-image').css("color", "#244293");
       } 
       this.updateThumbails();
@@ -84,25 +99,34 @@ export default {
     onNext() {
       
       if (this.imgIndex === null) return;
+      
       if (this.imgIndex < this.images.length - 1) {
+      
         this.imgIndex++;
       } else {
+      
         this.imgIndex = 0;
       }
       var item = this.item;
+
       $('.active-image').css('color', '#fff');
+      
       if(item.checked) {
         $('#chooess'+item.id).css({"border":"3px solid #0074f9"});  
+      
         $('.active-image').css("color", "#244293");
       }
       this.updateThumbails();
     },
     onClickThumb(image, index) {
       this.imgIndex = index;
+      
       $('.active-image').css('color', '#fff');
-      if(image.checked) {
+      
+      if(image.checked) {     
         $('.active-image').css("color", "#244293");
       }
+      
       this.updateThumbails();
     },
     updateThumbails() {
@@ -110,8 +134,11 @@ export default {
         return;
       }
       const galleryWidth = this.$refs.gallery.clientWidth;
+
       const currThumbsWidth = this.imgIndex * this.thumbnailWidth;
+      
       const maxThumbsWidth = this.images.length * this.thumbnailWidth;
+      
       const centerPos =
         Math.floor(galleryWidth / (this.thumbnailWidth * 2)) *
         this.thumbnailWidth;
@@ -138,17 +165,22 @@ export default {
         this.acctionImage(item);
     },
     acctionImage(item) {
+
         var photoSelected = _.find(this.selectphoto, (value,key) => { 
           return value['id'] == item.id; 
         });
+
         if(photoSelected == undefined) {    
+      
           item.checked = true;
           item.size = 'DIGITAL'
           item.quantity = 1
           this.selectphoto.push(item)
           $('#chooess'+item.id).css({"border":"3px solid #0074f9"});  
           $('.active-image').css("color", "#244293");
+      
         } else { 
+      
           item.checked = false;
           var index = this.selectphoto.indexOf(item);
           if (index !== -1) this.selectphoto.splice(index, 1);
@@ -160,6 +192,17 @@ export default {
   },
   computed: {
     imageUrl() {
+      var arr_image = this.images;
+      var index_image = this.imgIndex
+      $(document).ready(function() {
+          if(arr_image[index_image].checked){
+         
+            $('.active-image').css("color", "#244293");
+          } else {
+         
+            $('.active-image').css("color", "#fff");
+          }
+      })
       return this.images[this.imgIndex].name;
     },
     item() {

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImageUploadsTable extends Migration
+class DropIsBookingColumnToListingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateImageUploadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('image_uploads', function (Blueprint $table) {
-            $table->increments('id');
-            $table->text('filename');
-            $table->timestamps();
+        Schema::table('listings', function (Blueprint $table) {
+            $table->dropColumn('is_booking');
         });
     }
 
@@ -27,6 +25,8 @@ class CreateImageUploadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('image_uploads');
+        Schema::table('listings', function (Blueprint $table) {
+            $table->boolean('is_booking')->default(0);
+        });
     }
 }

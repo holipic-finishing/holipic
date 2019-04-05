@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\UserRole;
-use InfyOm\Generator\Request\APIRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CreateUserRoleAPIRequest extends APIRequest
+class ListingUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class CreateUserRoleAPIRequest extends APIRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,6 +23,8 @@ class CreateUserRoleAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return UserRole::$rules;
+        return [
+            //
+        ];
     }
 }

@@ -8,7 +8,7 @@ use App\Models\Company;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\activationMail;
 use Response;
-use App\Http\Requests\UserSignupRequest;
+use App\Http\Requests\API\UserSignupRequest;
 
 class UserController extends Controller
 {

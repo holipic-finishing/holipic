@@ -7,11 +7,11 @@ use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class ImageUpload.
+ * Class Cart.
  *
- * @package namespace App\Entities;
+ * @package namespace App\Models;
  */
-class ImageUpload extends Model implements Transformable
+class Cart extends Model implements Transformable
 {
     use TransformableTrait;
 
@@ -20,6 +20,6 @@ class ImageUpload extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = ['filename'];
+    protected $fillable = [];
 
 }

@@ -237,7 +237,7 @@ export default {
 			{ text: 'Invoice', align: 'left'},
 			{ text: 'Rest Photo', align: 'left'},
 			{ text: 'Set Offer(Rp)', width: '10%', align: 'left'},
-      { text: 'Action', sortable: false ,width: '7%', value: 'actions'},
+      		{ text: 'Action', sortable: false ,width: '7%', value: 'actions'},
 		],
 		pagination: {
 		  	rowsPerPage: 25

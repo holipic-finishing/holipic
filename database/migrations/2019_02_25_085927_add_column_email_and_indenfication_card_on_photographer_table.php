@@ -14,9 +14,9 @@ class AddColumnEmailAndIndenficationCardOnPhotographerTable extends Migration
     public function up()
     {
         Schema::table('photographers', function (Blueprint $table) {
-             $table->string('avatar')->nullable();
-             $table->string('email')->nullable();
-             $table->string('identification_card')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('email')->nullable();
+            $table->string('identification_card')->nullable();
         });
     }
 

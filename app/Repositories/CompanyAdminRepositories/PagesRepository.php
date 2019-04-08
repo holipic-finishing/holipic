@@ -2,7 +2,7 @@
 
 namespace App\Repositories\CompanyAdminRepositories;
 
-use App\Models\CompanyAdmin\Pages;
+use App\Models\Pages;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**

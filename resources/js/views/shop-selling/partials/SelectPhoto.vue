@@ -446,10 +446,11 @@
 
 import Lightbox from 'vue-my-photos'
 import Vue from 'vue'
-import config from '../../../config/index'
+import config from '../../../config'
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 
 Vue.component('lightbox', Lightbox);
+
 export default {
 
   name: 'SelectPhoto',
@@ -517,7 +518,6 @@ export default {
 						likes: "75"
 					}
 				],
-		// photos: [],
 		photos2: [],
 		items:[{id: 1, name: 'hung'},{id:2, name: 'hung2'}],
 		dialog:false,
@@ -529,7 +529,7 @@ export default {
 		count:0,
 		countOther:0,
 		photoZoom: [],
-		thumbnailDir: 'https://holipic.pth.com/static/img/',
+		thumbnailDir: config.BASE_URL + '/static/img/',
 		activeText: true,
 		photoTypes: [
 			// {

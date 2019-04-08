@@ -18,13 +18,13 @@ class CreateOrdersTable extends Migration
             $table->integer('branch_id');
             $table->integer('photographer_id');
             $table->integer('customer_id');
-            $table->decimal('total_amount',30,15);
+            $table->decimal('total_amount', 30, 15)->nullable();
             $table->datetime('purchase_date')->nullable();
             $table->datetime('download_date')->nullable();
-            $table->string('payment_method');
-            $table->string('purchase_from');
+            $table->string('payment_method')->nullable();
+            $table->string('purchase_from')->nullable();
             $table->string('status');
-            $table->string('invoice');
+            $table->string('invoice')->nullable();
             $table->timestamps();
         });
     }

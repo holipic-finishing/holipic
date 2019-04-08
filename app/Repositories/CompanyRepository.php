@@ -6,7 +6,7 @@ use App\Models\Company;
 use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
 use DB ;
-use App\Models\CompanyAdmin\Email;
+use App\Models\Email;
 use App\Mail\SendMailCustomers;
 /**
  * Class CompanyRepository

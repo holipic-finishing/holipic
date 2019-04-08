@@ -28,28 +28,26 @@ php artisan key:generate
 + Config database
 + Config domain
 + Config protocol
-+ Config port (redis, socket)
++ Config port (redis, so cket)
 
 # Step 8: Migrate and seeding 
 php artisan migrate
 php artisan db:seed
 
 # Step 9: Create folder
-+ public/logos
-+ public/avatars
-+ public/files
-+ public/image_uploads
++ public/company_logos
 + public/photographers
 + public/photographers/avatars
-+ public/phototgraphers/identification
++ public/phototgraphers/identifications
++ public/customer_avatars
++ public/files
 
 # Step 10 : Set Permission
-+ sudo chmod -R 777 public/logos
 + sudo chmod -R 777 storage
-+ sudo chmod -R 777 public/avatars
-+ sudo chmod -R 777 public/files
-+ sudo chmod -R 777 public/image_uploads
++ sudo chmod -R 777 public/company_logos
 + sudo chmod -R 777 public/photographers
++ sudo chmod -R 777 public/customer_avatars
++ sudo chmod -R 777 public/files
 
 # Step 11: Run project
 + npm run watch-poll
@@ -64,3 +62,29 @@ php artisan db:seed
 +
 + install openssh: sudo apt-get install openssh-server
 + copy file : apache-selfsigned.crt and apache-selfsigned.key to rsa_key folder
+
+# Step 13: Install Supervisor
++ https://laravel.com/docs/5.7/queues#supervisor-configuration
++ sudo apt-get install supervisor
++ cd /etc/supervisor/conf.d/
++ sudo touch holipic-worker.conf
++ sudo nano holipic-worker.conf
+
+[program:holipic-worker.conf]
+process_name=%(program_name)s_%(process_num)02d
+command=php /your-path/holipic/artisan queue:listen --sleep=3 --tries=3
+autostart=true
+autorestart=true
+user=username
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/your-path-logs/supervisor.log
+
++ Start supervisor
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start all
+
+# Step 13: Config cronjob
++ sudo crontab -e
++ * * * * * php /your-path/holipic/artisan schedule:run >> /dev/null 2>&1

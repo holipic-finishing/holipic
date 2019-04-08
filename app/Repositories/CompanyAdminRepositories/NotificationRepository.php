@@ -2,7 +2,7 @@
 
 namespace App\Repositories\CompanyAdminRepositories;
 
-use App\Models\CompanyAdmin\Notification;
+use App\Models\Notification;
 use InfyOm\Generator\Common\BaseRepository;
 use DB;
 use App\Events\RedisEventNotification;

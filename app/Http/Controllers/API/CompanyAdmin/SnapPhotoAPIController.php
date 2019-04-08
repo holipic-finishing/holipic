@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\API\CompanyAdmin;
 
-use App\Http\Requests\API\CreateSnap_PhotoAPIRequest;
-use App\Http\Requests\API\UpdateSnap_PhotoAPIRequest;
 use App\Models\SnapPhoto;
 use App\Repositories\SnapPhotoRepository;
 use Illuminate\Http\Request;
@@ -51,7 +49,7 @@ class SnapPhotoAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateSnap_PhotoAPIRequest $request)
+    public function store(Request $request)
     {
         $input = $request->all();
 
@@ -89,7 +87,7 @@ class SnapPhotoAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateSnap_PhotoAPIRequest $request)
+    public function update($id, Update $request)
     {
         $input = $request->all();
 

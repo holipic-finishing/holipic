@@ -21,7 +21,7 @@ class CouponCodeTableSeeder extends Seeder
 
         for ($i=0; $i < 10 ; $i++) {
         	$from_date = $faker->dateTimeBetween('-2 months', '-1 months');
-        	$to_date = $faker->dateTimeBetween('now', '+6 months');
+        	$to_date = $faker->dateTimeBetween('now', '+2 months');
 
             \App\Models\CouponCode::create([
                 'name' => ucwords(str_replace('.', '',$faker->sentence(2, true)) . ' coupon'),

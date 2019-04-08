@@ -16,7 +16,6 @@ import ShopSellingRoutes from './shop-selling';
 import mini from '../container/MiniSidebarLayout.vue'
 
 import PageNotFound from '../views/partials/pages/page404'
-import UploadPhoto from '../views/partials/upload-photos/UploadPhotos.vue'
 
 import Room from '../views/shop-selling/room/index.vue'
 import BookingConfirm from '../views/shop-selling/BookingConfirm.vue'
@@ -40,12 +39,12 @@ routers = [
   	{
   		path:'/shop-selling/confirm-booking',
   		component: BookingConfirm
+  	},
+	{
+    	// Page Not Found
+    	path: '*',
+    	component: PageNotFound
   	}
-	// {
- //    	// Page Not Found
- //    	path: '*',
- //    	component: PageNotFound
- //  	}
 ];
 
 var router = new Router({

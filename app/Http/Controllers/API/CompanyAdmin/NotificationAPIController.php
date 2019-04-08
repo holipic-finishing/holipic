@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\CompanyAdmin;
 
 use App\Http\Requests\API\CreateNotificationAPIRequest;
 use App\Http\Requests\API\UpdateNotificationAPIRequest;
-use App\Models\CompanyAdmin\Notification;
+use App\Models\Notification;
 use App\Repositories\CompanyAdminRepositories\NotificationRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;

@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\ImageUploadCreateRequest;
-use App\Http\Requests\ImageUploadUpdateRequest;
 use App\Repositories\ImageUploadRepository;
 use App\Validators\ImageUploadValidator;
 use App\Http\Controllers\API\BaseApiController;
@@ -71,13 +68,13 @@ class ImageUploadsController extends BaseApiController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ImageUploadCreateRequest $request
+     * @param  Requests $request
      *
      * @return \Illuminate\Http\Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function fileStore(ImageUploadCreateRequest $request)
+    public function fileStore(Requests $request)
     {
         try {
             $requestData = $request->all();
@@ -190,14 +187,14 @@ class ImageUploadsController extends BaseApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  ImageUploadUpdateRequest $request
+     * @param  Request $request
      * @param  string            $id
      *
      * @return Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(ImageUploadUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
 

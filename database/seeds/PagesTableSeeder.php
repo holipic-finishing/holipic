@@ -13,7 +13,7 @@ class PagesTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         
-        \App\Models\CompanyAdmin\Pages::truncate();
+        \App\Models\Pages::truncate();
 
         DB::table('pages')->insert(
         [

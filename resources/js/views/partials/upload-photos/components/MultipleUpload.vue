@@ -1,23 +1,23 @@
 <template>
   <div>
-		<upload-multiple-image-plugin
+		<multiple-image-upload-plugin
 	    @upload-success="uploadImageSuccess"
 	    @before-remove="beforeRemove"
 	    @edit-image="editImage"
 	    @data-change="dataChange"
 	    :data-images="images"
-	  ></upload-multiple-image-plugin>
+	  ></multiple-image-upload-plugin>
 	</div>
 </template>
 
 <script>
-import UploadMultipleImagePlugin from '../plugins/UploadMultipleImagePlugin'
+import MultipleImageUploadPlugin from '../../../../plugins/multiple-upload/MultipleImageUploadPlugin'
 
 export default {
 
   name: 'MultipleUpload',
   components: {
-    UploadMultipleImagePlugin,
+    MultipleImageUploadPlugin,
   },
   data () {
     return {

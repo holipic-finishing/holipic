@@ -49,6 +49,7 @@ class DatabaseSeeder extends Seeder
          * Seed Image
          */
         $this->call(ListingsTableSeeder::class);
+        $this->call(ImagesTableSeeder::class);
         
     }
 }

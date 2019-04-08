@@ -1,12 +1,12 @@
 <template>
-	 <v-navigation-drawer 
-    fixed
-    v-model="drawerRight" 
-    right
-    temporary 
-    app 
-    clipped
-  	:width='widthComputed'	
+	<v-navigation-drawer 
+	    fixed
+	    v-model="drawerRight" 
+	    right
+	    temporary 
+	    app 
+	    clipped
+	  	:width='widthComputed'	
   	>
 
 	    <v-card class="h-100 position-relative">

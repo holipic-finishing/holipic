@@ -271,7 +271,7 @@ class CompanyOrderAPIController extends AppBaseController
 
            
         }
-        return $this->sendResponse($results, 'Order updated successfully');
+        return $this->sendResponse($results, 'Successfully');
 
         // return $this->sendResponse($results->toArray(), 'Order updated successfully');
     }

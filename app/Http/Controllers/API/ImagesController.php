@@ -1,41 +1,41 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\CartCreateRequest;
-use App\Http\Requests\CartUpdateRequest;
-use App\Repositories\CartRepository;
-use App\Validators\CartValidator;
+use App\Http\Requests\ImagesCreateRequest;
+use App\Http\Requests\ImagesUpdateRequest;
+use App\Repositories\ImagesRepository;
+use App\Validators\ImagesValidator;
 
 /**
- * Class CartsController.
+ * Class ImagesController.
  *
  * @package namespace App\Http\Controllers;
  */
-class CartsController extends Controller
+class ImagesController extends Controller
 {
     /**
-     * @var CartRepository
+     * @var ImagesRepository
      */
     protected $repository;
 
     /**
-     * @var CartValidator
+     * @var ImagesValidator
      */
     protected $validator;
 
     /**
-     * CartsController constructor.
+     * ImagesController constructor.
      *
-     * @param CartRepository $repository
-     * @param CartValidator $validator
+     * @param ImagesRepository $repository
+     * @param ImagesValidator $validator
      */
-    public function __construct(CartRepository $repository, CartValidator $validator)
+    public function __construct(ImagesRepository $repository, ImagesValidator $validator)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -49,38 +49,38 @@ class CartsController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $carts = $this->repository->all();
+        $images = $this->repository->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $carts,
+                'data' => $images,
             ]);
         }
 
-        return view('carts.index', compact('carts'));
+        return view('images.index', compact('images'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  CartCreateRequest $request
+     * @param  ImagesCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(CartCreateRequest $request)
+    public function store(ImagesCreateRequest $request)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $cart = $this->repository->create($request->all());
+            $image = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'Cart created.',
-                'data'    => $cart->toArray(),
+                'message' => 'Images created.',
+                'data'    => $image->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -110,16 +110,16 @@ class CartsController extends Controller
      */
     public function show($id)
     {
-        $cart = $this->repository->find($id);
+        $image = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $cart,
+                'data' => $image,
             ]);
         }
 
-        return view('carts.show', compact('cart'));
+        return view('images.show', compact('image'));
     }
 
     /**
@@ -131,32 +131,32 @@ class CartsController extends Controller
      */
     public function edit($id)
     {
-        $cart = $this->repository->find($id);
+        $image = $this->repository->find($id);
 
-        return view('carts.edit', compact('cart'));
+        return view('images.edit', compact('image'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  CartUpdateRequest $request
+     * @param  ImagesUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(CartUpdateRequest $request, $id)
+    public function update(ImagesUpdateRequest $request, $id)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $cart = $this->repository->update($request->all(), $id);
+            $image = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'Cart updated.',
-                'data'    => $cart->toArray(),
+                'message' => 'Images updated.',
+                'data'    => $image->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -194,11 +194,11 @@ class CartsController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'Cart deleted.',
+                'message' => 'Images deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'Cart deleted.');
+        return redirect()->back()->with('message', 'Images deleted.');
     }
 }

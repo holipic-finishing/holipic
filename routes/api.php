@@ -164,6 +164,7 @@ Route::group(['namespace' => 'API'],function(){
 		/*************PhotoPackageAPIController**********/
 		Route::post('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
 		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
+		Route::get('photo-package/search', 'PhotoPackageAPIController@searchPhotoPackage');
 
 		/************CompanyOrderAPIController***********/
 		Route::get('order/orders-company', 'CompanyOrderAPIController@getAllOrderCompany');
@@ -192,17 +193,6 @@ Route::group(['namespace' => 'API'],function(){
 
 		/************TimezoneAPIController***********/
 		Route::get('timezones', 'TimezoneAPIController@getTimezones');
-
-		/************SnapPhotoAPIController***********/
-		Route::post('snap-photo', 'SnapPhotoAPIController@createSnapPhoto');
-
-		Route::get('room/snap-photo', 'SnapPhotoAPIController@findRoomCheckDetailSnapPhoto');
-
-		/************SnapPhotoAPIController***********/
-		Route::get('photo-package/search', 'PhotoPackageAPIController@searchPhotoPackage');
-
-		
-
 	});
 
 	/**************************************************
@@ -216,9 +206,3 @@ Route::group(['namespace' => 'API'],function(){
 
 	});
 });	
-
-
-
-
-
-// Route::resource('snapphotos', 'SnapPhotoAPIController');

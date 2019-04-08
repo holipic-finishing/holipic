@@ -73,10 +73,11 @@ class SnapPhotoRepository extends BaseRepository
 
     public function handleFindRoom()
     {
-        $room = Room::whereRoomHash('R'.trim(request('room')))->first();
+        $room = Room::whereRoomNumber(request('room'))->orderBy('created_at', 'DESC')->first();
 
         if(!empty($room)) {
             $snapPhoto = $this->model->with('snapPhotoDetails')->whereRoomId($room['id'])->first();
+            $snapPhoto['room_number'] = $room['room_number'];
 
             return $snapPhoto;
         }

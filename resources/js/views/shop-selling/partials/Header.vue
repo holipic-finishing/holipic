@@ -29,102 +29,103 @@
 		<v-container fluid grid-list-xl pt-0 class="container-package-ramdom">
 			<div class="pricing-wrapper">
 				<v-layout row wrap>
-					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex">
+					<template v-for="value in packages">
+					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex" v-if="value.package_name == 'Package 1'">
 						<div class="app-card text-xs-center">
 							<div class="app-card-title primary d-custom-flex justify-space-between">
-								<h3 class="mb-0 white--text">PACKAGE 1</h3>
-								
+								<h3 class="mb-0 white--text">{{value.package_name}}</h3>
 							</div>
-							<div class="app-full-content">
-								<h2 class="font-3x">
-									<span class="font-xl">2500000RP.</span>
-									<sub>300000</sub>
-								</h2>
-								<ul class="list-unstyled list-group-flush">
-									<li class="list-group-item">21 photos Print</li>
-									<li class="list-group-item">Mini Album</li>
-									<li class="list-group-item">21 photos on the disc</li>
-									<li class="list-group-item">.....</li>
-									
-								</ul>
-							</div>
-							<div class="app-footer">
-								<v-btn block color="primary" large>{{$t('message.buyNow')}}</v-btn>
-							</div>
+							
+								<div class="app-full-content" >
+									<h2 class="font-3x">
+										<span class="font-xl">{{value.price}}RP.</span>
+										<sub>{{value.offer}}</sub>
+									</h2>
+									<ul class="list-unstyled list-group-flush">
+										<li class="list-group-item">21 photos Print</li>
+										<li class="list-group-item">Mini Album</li>
+										<li class="list-group-item">21 photos on the disc</li>
+										<li class="list-group-item">.....</li>
+									</ul>
+								</div>
+								<div class="app-footer">
+									<v-btn block color="primary" large @click="choosePackage(value.package_name)">{{$t('message.buyNow')}}</v-btn>
+								</div>
+							
 						</div>
 					</v-flex>
-					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex">
+					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex" v-else-if="value.package_name == 'Package 2'">
 						<div class="app-card text-xs-center">
 							<div class="app-card-title success white--text d-custom-flex justify-space-between">
-								<h3 class="mb-0 white--text">PACKAGE 2</h3>
+								<h3 class="mb-0 white--text">{{value.package_name}}</h3>
 								
 							</div>
 							<div class="app-full-content">
 								<h2 class="font-3x">
-									<span class="font-xl">3500000RP.</span>
-									<sub>450000</sub>
+									<span class="font-xl">{{value.price}}RP.</span>
+									<sub>{{value.offer}}</sub>
 								</h2>
 								<ul class="list-unstyled list-group-flush">
 									<li class="list-group-item">30 photos Print</li>
 									<li class="list-group-item">1 Photobook</li>
 									<li class="list-group-item">30 photos on the disc</li>
 									<li class="list-group-item">1 Poster (20x30)</li>
-									<!-- <li class="list-group-item">1 GB Storage</li> -->
+								
 								</ul>
 							</div>
 							<div class="app-footer">
-								<v-btn block color="success" large>{{$t('message.buyNow')}}</v-btn>
+								<v-btn block color="success" large @click="choosePackage(value.package_name)">{{$t('message.buyNow')}}</v-btn>
 							</div>
 						</div>
 					</v-flex>
-					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex">
+					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex" v-else-if="value.package_name == 'Package 3'">
 						<div class="app-card text-xs-center">
 							<div class="app-card-title warning white--text d-custom-flex justify-space-between">
-								<h3 class="mb-0 white--text ">PACKAGE 3</h3>
+								<h3 class="mb-0 white--text ">{{value.package_name}}</h3>
 								
 							</div>
 							<div class="app-full-content">
 								<h2 class="font-3x">
-									<span class="font-xl">4500000RP.</span>
-									<sub>550000</sub>
+									<span class="font-xl">{{value.price}}RP.</span>
+									<sub>{{value.offer}}</sub>
 								</h2>
 								<ul class="list-unstyled list-group-flush">
 									<li class="list-group-item">40 photos Print</li>
 									<li class="list-group-item">Handmade Album</li>
 									<li class="list-group-item">40 photos on the disc</li>
 									<li class="list-group-item">2 Poster (20x30)</li>
-									<!-- <li class="list-group-item">1 GB Storage</li> -->
+									
 								</ul>
 							</div>
 							<div class="app-footer">
-								<v-btn block large color="warning">{{$t('message.buyNow')}}</v-btn>
+								<v-btn block large color="warning" @click="choosePackage(value.package_name)">{{$t('message.buyNow')}}</v-btn>
 							</div>
 						</div>
 					</v-flex>
-					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex">
+					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex" v-else>
 						<div class="app-card text-xs-center">
 							<div class="app-card-title error white--text d-custom-flex justify-space-between">
-								<h3 class="mb-0 white--text">PACKAGE 4</h3>
+								<h3 class="mb-0 white--text">{{value.package_name}}</h3>
 								
 							</div>
 							<div class="app-full-content">
 								<h2 class="font-3x">
-									<span class="font-xl">6000000RP.</span>
-									<sub>750000</sub>
+									<span class="font-xl">{{value.price}}RP.</span>
+									<sub>{{value.offer}}</sub>
 								</h2>
 								<ul class="list-unstyled list-group-flush">
 									<li class="list-group-item">50 photos Print</li>
 									<li class="list-group-item">Large Albume</li>
 									<li class="list-group-item">50 photos on the disc</li>
 									<li class="list-group-item">2 Poster (20x30)</li>
-									<!-- <li class="list-group-item">1 GB Storage</li> -->
 								</ul>
 							</div>
 							<div class="app-footer">
-								<v-btn block color="error" large>{{$t('message.buyNow')}}</v-btn>
+								<v-btn block color="error" large @click="choosePackage(value.package_name)">{{$t('message.buyNow')}}</v-btn>
 							</div>
 						</div>
 					</v-flex>
+					</template>
 				</v-layout>
 			</div>
 		</v-container>
@@ -133,22 +134,44 @@
 </template>
 
 <script>
+import config from '../../../config/index'
+import  { get, post, put, del, getWithData } from '../../../api/index.js'
+
 export default {
 
   name: 'Header',
 
   data () {
     return {
-    	dialog: false
+    	dialog: false,
+    	packages :[]
     }
   },
   mounted(){
   	this.$i18n.locale = 'en';
+
+  	this.showAllPackages()
   },
   methods:{
   	showPackage()
   	{
   		this.dialog = true
+  	},
+  	showAllPackages()
+  	{
+  		get(config.API_URL+'shop-selling/packages')
+  		.then(res => {
+  			if(res && res.data.success) {
+  				this.packages = res.data.data
+  			}
+  		})
+  		.catch(err => {
+  			console.log(err.response)
+  		})
+  	},
+  	choosePackage(value)
+  	{
+  		this.$root.$emit('typePackage',{name: value})
   	}
   }
 }

@@ -6,7 +6,7 @@
 			customClasses="custom-app-card"
 			:withTabs="true"	
 			>
-			<div class="cart">
+			<div class="cart" @click="checkout()">
 				<i class="material-icons">
 					shopping_cart
 				</i>
@@ -243,7 +243,7 @@
 									      </v-flex>
 								    </v-layout>
 
-								    <v-layout row>
+								    <v-layout row>	
 								      	<v-flex xs3 >
 									        <v-card  tile flat class="cursor-v-card" :class="photo.type == 'Album' ? 'hover-v-card' : '' " @click="activeClass('t5', photo.id, 'Album')">
 									          <v-card-text>
@@ -318,7 +318,6 @@
 									            @keyup="setQuantity(photoOpened, photoOpened.quantity)"
 									        >
 									        </v-text-field>
-
 									        <v-text-field
 								          		v-else
 								          		:disabled="true"
@@ -326,15 +325,12 @@
         										solo
 									            v-model="number"
 									        ></v-text-field>
-
 									        <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-if="photoOpened !== null && photoOpened.size == type.size ">
 										      	<v-icon dark>add</v-icon>
 										    </v-btn>
-
-										     <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-else :disabled="true">
+										    <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-else :disabled="true">
 										      	<v-icon dark>add</v-icon>
 										    </v-btn>
-
 							        </v-list-tile> 
 							    </v-flex>
 						    </v-layout>
@@ -377,7 +373,7 @@
 				<v-layout row wrap class="photo-selected images">
 					
 					<v-flex
-						v-for="photo in photos"
+						v-for="(photo,index) in photos"
 						xs12 sm3
 						d-flex
 						:key="photo.id"
@@ -390,7 +386,7 @@
 									class="grey lighten-2 hover-image"
 									height="300"
 									:key="photo.id"
-									@click="selectPhoto(photo)"
+									@click="selectPhoto(index,photo)"
 									contain
 									>
 								</v-img>
@@ -521,8 +517,8 @@ export default {
 						likes: "75"
 					}
 				],
-		photos2: [
-				],
+		// photos: [],
+		photos2: [],
 		items:[{id: 1, name: 'hung'},{id:2, name: 'hung2'}],
 		dialog:false,
 		dialog_nouse:false,
@@ -562,6 +558,37 @@ export default {
   },
   mounted(){
   	this.$i18n.locale = 'en'
+
+  	this.$root.$on('typePackage', res => {
+  		this.checkCondition(res.name, this.count)
+  	})
+
+  	// var roomPhoto = JSON.parse(localStorage.getItem('photoRoom'))
+
+  	// roomPhoto = roomPhoto.snap_photo_details
+
+  	// var array = []
+
+  	// _.forEach(roomPhoto, (value,index) => {
+  	// 	value['name'] = value['image_resize'].slice(13, value['image_resize'].length)
+
+  	// 	array.push(value)
+  	// });
+
+  	// this.photos = array
+  	 
+  	if(JSON.parse(localStorage.getItem('photoSelected'))) {
+  		this.photos2 = JSON.parse(localStorage.getItem('photoSelected'))
+
+  		this.getPricePackage(this.photos2)
+
+  		this.count = this.photos2.length
+
+  		_.forEach(this.photos2, (value,index) => {
+  			$('.active-image'+value.id).css("color", "#00C1F8");
+  		})
+  	}
+
   },
   computed:{
   	typeDetailReturn()
@@ -605,9 +632,12 @@ export default {
   	{
   		this.photos2 = []
   		this.count = 0
+  		
   		_.forEach(this.photos, (value,index) => {
   			$('.active-image'+value.id).css("color", "#464D69");
   		})
+
+  		localStorage.setItem('photoSelected', JSON.stringify(this.photos2))
 
   		this.total = 0
   	},
@@ -652,6 +682,7 @@ export default {
 	  			}
 	  		})
   		})
+  		
   	},
   	increase(photoOpened, quantity)
   	{
@@ -670,7 +701,7 @@ export default {
   			this.setQuantity(this.photoOpened, this.photoOpened.quantity)
   		}
   	},
-  	selectPhoto(photo)
+  	selectPhoto(index,photo)
   	{
   		var photoSelected = _.find(this.photos2, (value,key) => { 
   			return value['id'] == photo.id; 
@@ -688,7 +719,8 @@ export default {
   			this.count++
   			this.getPricePackage(this.photos2)
   		} else {
-			var index = this.photos2.indexOf(photo);
+
+			var index = this.photos2.indexOf(photoSelected);
 			if (index !== -1) this.photos2.splice(index, 1);
 
 			var totalNew = 0 
@@ -768,9 +800,38 @@ export default {
   			console.log(err.response)
   		})
   	},
-  	test(type)
+  	checkCondition(namePackage, count)
   	{
-  		alert(type)
+  		var messagePackage = ''
+
+  		if(namePackage == 'Package 1' && count < 21) {
+  			messagePackage = 'Please choose 21 image'
+  			
+  		} else if(namePackage == 'Package 2' && count < 30) {
+  			messagePackage = 'Please choose 30 image'
+  			
+  		} else if(namePackage == 'Package 3' && count < 40) {
+  			messagePackage = 'Please choose 40 image'
+  			
+  		}else {
+  			messagePackage	 = 'Please choose 50 image'
+  			
+  		}
+
+  		this.$notify({
+          title: 'Notification',
+          message: messagePackage,
+          type: 'error',
+          duration: 2000,
+		})
+  	},
+  	checkout()
+  	{
+  		localStorage.setItem('photoSelected', JSON.stringify(this.photos2))
+
+  		if(this.photos2.length > 0 ) {
+  			this.$router.push('/shop-selling/confirm-booking')
+  		}
   	}
   }
 }

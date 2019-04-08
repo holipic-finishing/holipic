@@ -201,7 +201,9 @@ Route::group(['namespace' => 'API'],function(){
 		/************SnapPhotoAPIController***********/
 		Route::get('photo-package/search', 'PhotoPackageAPIController@searchPhotoPackage');
 
-		
+		/**Shop selling**/
+
+		Route::get('shop-selling/packages', 'CompanyPackageAPIController@showAllPackage');
 
 	});
 

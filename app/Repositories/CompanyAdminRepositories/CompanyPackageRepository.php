@@ -72,4 +72,22 @@ class CompanyPackageRepository extends BaseRepository
 
         return $this->model->create($arrItem);
     }
+
+    public function handleshowAllPackages()
+    {
+        $packages = $this->model->all()->take(4);
+
+        $array = [];
+
+        foreach($packages as $package) 
+        {
+            $package['price'] = number_format($package['price'], 2, ',', '');
+
+            $package['offer'] = number_format($package['offer'], 2, ',', '');
+
+            $array[] = $package;
+        }
+
+        return $array;
+    }
 }

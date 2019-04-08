@@ -17,6 +17,7 @@ class CreateRoomsTable extends Migration
             $table->increments('id');
             $table->integer('room_number');
             $table->string('room_hash');
+            $table->timestamps();
         });
     }
 

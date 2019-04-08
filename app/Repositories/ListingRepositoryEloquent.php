@@ -25,7 +25,23 @@ class ListingRepositoryEloquent extends BaseRepository implements ListingReposit
         return Listing::class;
     }
 
+    /**
+     * [handleGetPhotos description]
+     * @return [type] [description]
+     */
+    public function handleGetPhotos()
+    {
+        $room = \App\Models\Room::whereRoomNumber(request('room'))->latest()->first();
+
+        if(!empty($room)) {
+            $roomPhoto = $this->model->with('images')->whereRoomId($room['id'])->first();
     
+            return $roomPhoto;
+        }
+
+        return false;
+
+    }
 
     /**
      * Boot up the repository, pushing criteria

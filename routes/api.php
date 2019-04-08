@@ -164,6 +164,7 @@ Route::group(['namespace' => 'API'],function(){
 		/*************PhotoPackageAPIController**********/
 		Route::post('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
 		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
+		Route::get('photo-package/search', 'PhotoPackageAPIController@searchPhotoPackage');
 
 		/************CompanyOrderAPIController***********/
 		Route::get('order/orders-company', 'CompanyOrderAPIController@getAllOrderCompany');
@@ -196,7 +197,7 @@ Route::group(['namespace' => 'API'],function(){
 		/************SnapPhotoAPIController***********/
 		Route::post('snap-photo', 'SnapPhotoAPIController@createSnapPhoto');
 
-		Route::get('room/snap-photo', 'SnapPhotoAPIController@findRoomCheckDetailSnapPhoto');
+		// Route::get('room/snap-photo', 'SnapPhotoAPIController@findRoomCheckDetailSnapPhoto');
 
 		/************SnapPhotoAPIController***********/
 		Route::get('photo-package/search', 'PhotoPackageAPIController@searchPhotoPackage');
@@ -217,10 +218,9 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('branch/sales-list/export', 'BranchOrderAPIController@exportSalesListBranch');
 
 	});
+
+	Route::group(['namespace' => 'ShopSelling'], function() {
+		Route::get('room/show-photo', 'ListingController@getPhoto');
+
+	});
 });	
-
-
-
-
-
-// Route::resource('snapphotos', 'SnapPhotoAPIController');

@@ -1,41 +1,41 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\ListingCreateRequest;
-use App\Http\Requests\ListingUpdateRequest;
-use App\Repositories\ListingRepository;
-use App\Validators\ListingValidator;
+use App\Http\Requests\ImagesCreateRequest;
+use App\Http\Requests\ImagesUpdateRequest;
+use App\Repositories\ImagesRepository;
+use App\Validators\ImagesValidator;
 
 /**
- * Class ListingsController.
+ * Class ImagesController.
  *
  * @package namespace App\Http\Controllers;
  */
-class ListingsController extends Controller
+class ImagesController extends Controller
 {
     /**
-     * @var ListingRepository
+     * @var ImagesRepository
      */
     protected $repository;
 
     /**
-     * @var ListingValidator
+     * @var ImagesValidator
      */
     protected $validator;
 
     /**
-     * ListingsController constructor.
+     * ImagesController constructor.
      *
-     * @param ListingRepository $repository
-     * @param ListingValidator $validator
+     * @param ImagesRepository $repository
+     * @param ImagesValidator $validator
      */
-    public function __construct(ListingRepository $repository, ListingValidator $validator)
+    public function __construct(ImagesRepository $repository, ImagesValidator $validator)
     {
         $this->repository = $repository;
         $this->validator  = $validator;
@@ -49,38 +49,38 @@ class ListingsController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $listings = $this->repository->all();
+        $images = $this->repository->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $listings,
+                'data' => $images,
             ]);
         }
 
-        return view('listings.index', compact('listings'));
+        return view('images.index', compact('images'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ListingCreateRequest $request
+     * @param  ImagesCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(ListingCreateRequest $request)
+    public function store(ImagesCreateRequest $request)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $listing = $this->repository->create($request->all());
+            $image = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'Listing created.',
-                'data'    => $listing->toArray(),
+                'message' => 'Images created.',
+                'data'    => $image->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -110,16 +110,16 @@ class ListingsController extends Controller
      */
     public function show($id)
     {
-        $listing = $this->repository->find($id);
+        $image = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $listing,
+                'data' => $image,
             ]);
         }
 
-        return view('listings.show', compact('listing'));
+        return view('images.show', compact('image'));
     }
 
     /**
@@ -131,32 +131,32 @@ class ListingsController extends Controller
      */
     public function edit($id)
     {
-        $listing = $this->repository->find($id);
+        $image = $this->repository->find($id);
 
-        return view('listings.edit', compact('listing'));
+        return view('images.edit', compact('image'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  ListingUpdateRequest $request
+     * @param  ImagesUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(ListingUpdateRequest $request, $id)
+    public function update(ImagesUpdateRequest $request, $id)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $listing = $this->repository->update($request->all(), $id);
+            $image = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'Listing updated.',
-                'data'    => $listing->toArray(),
+                'message' => 'Images updated.',
+                'data'    => $image->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -194,11 +194,11 @@ class ListingsController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'Listing deleted.',
+                'message' => 'Images deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'Listing deleted.');
+        return redirect()->back()->with('message', 'Images deleted.');
     }
 }

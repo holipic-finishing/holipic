@@ -61,12 +61,12 @@ export default {
   methods: {
   	loginRoom()
   	{
-  		get(config.API_URL+'room/snap-photo?room='+this.room)
+  		get(config.API_URL+'room/show-photo?room='+this.room)
   		.then(res => {
   			if(res && res.data.success) {
   				var data = res.data.data
-  				localStorage.setItem('photoRoom', JSON.stringify(res.data.data))
-  				this.$router.push({name: 'ShopSelling', params :{data: res.data.data}}) 
+  				localStorage.setItem('photoRoom', JSON.stringify(data))
+  				this.$router.push({name: 'ShopSelling', params :{data: data}}) 
   			}
   		})
   		.catch(err => {

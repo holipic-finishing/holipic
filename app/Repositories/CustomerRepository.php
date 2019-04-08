@@ -45,9 +45,14 @@ class CustomerRepository extends BaseRepository
         
         if(!empty($companyId)) {
 
-            $customers = $this->model->with('user')->with('room')->with(['branch' => function($q) use ($companyId) {
-                    $q->whereCompanyId($companyId);
-            }])->get()->toArray();
+            $customers = $this->model
+                            ->with('user')
+                            ->with('room')
+                            ->with(['branch' => function($q) use ($companyId) {
+                                
+                                $q->whereCompanyId($companyId);
+                            
+                            }])->get()->toArray();
 
 
             foreach($customers as $customer) 
@@ -55,7 +60,7 @@ class CustomerRepository extends BaseRepository
                 if($customer['branch'] != null)
                 {
                     $fileName = $this->createLinkAvatar($customer['avatar']);
-                    $customer['avatar'] = asset('avatars/' . $fileName);
+                    $customer['avatar'] = asset('customer_avatars/' . $fileName);
                     $data[] = $customer;
                 }
             }

@@ -39,6 +39,7 @@ class ImagesTableSeeder extends Seeder
         		$original_img = $faker->image($path . '/original', 1920, 1080, $faker->randomElement($categories), false);
 
         		Image::configure(array('driver' => 'imagick'));
+                
         		$compressed_img = Image::make($path . '/original/' . $original_img);
         		$compressed_img->resize(640, 480);
         		$compressed_img->insert(public_path() . '/images/watermark.png', 'center');

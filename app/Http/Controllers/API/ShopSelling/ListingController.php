@@ -1,44 +1,44 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\ShopSelling;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
-use App\Http\Requests\CartCreateRequest;
-use App\Http\Requests\CartUpdateRequest;
-use App\Repositories\CartRepository;
-use App\Validators\CartValidator;
+use App\Http\Requests\ListingCreateRequest;
+use App\Http\Requests\ListingUpdateRequest;
+use App\Repositories\ListingRepository;
+use App\Http\Controllers\AppBaseController;
 
 /**
- * Class CartsController.
+ * Class ListingsController.
  *
  * @package namespace App\Http\Controllers;
  */
-class CartsController extends Controller
+class ListingController extends AppBaseController
 {
     /**
-     * @var CartRepository
+     * @var ListingRepository
      */
     protected $repository;
 
     /**
-     * @var CartValidator
+     * @var ListingValidator
      */
-    protected $validator;
+    // protected $validator;
 
     /**
-     * CartsController constructor.
+     * ListingsController constructor.
      *
-     * @param CartRepository $repository
-     * @param CartValidator $validator
+     * @param ListingRepository $repository
+     * @param ListingValidator $validator
      */
-    public function __construct(CartRepository $repository, CartValidator $validator)
+    public function __construct(ListingRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        // $this->validator  = $validator;
     }
 
     /**
@@ -49,38 +49,38 @@ class CartsController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $carts = $this->repository->all();
+        $listings = $this->repository->all();
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $carts,
+                'data' => $listings,
             ]);
         }
 
-        return view('carts.index', compact('carts'));
+        return view('listings.index', compact('listings'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  CartCreateRequest $request
+     * @param  ListingCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(CartCreateRequest $request)
+    public function store(ListingCreateRequest $request)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $cart = $this->repository->create($request->all());
+            $listing = $this->repository->create($request->all());
 
             $response = [
-                'message' => 'Cart created.',
-                'data'    => $cart->toArray(),
+                'message' => 'Listing created.',
+                'data'    => $listing->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -110,16 +110,16 @@ class CartsController extends Controller
      */
     public function show($id)
     {
-        $cart = $this->repository->find($id);
+        $listing = $this->repository->find($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $cart,
+                'data' => $listing,
             ]);
         }
 
-        return view('carts.show', compact('cart'));
+        return view('listings.show', compact('listing'));
     }
 
     /**
@@ -131,32 +131,32 @@ class CartsController extends Controller
      */
     public function edit($id)
     {
-        $cart = $this->repository->find($id);
+        $listing = $this->repository->find($id);
 
-        return view('carts.edit', compact('cart'));
+        return view('listings.edit', compact('listing'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  CartUpdateRequest $request
+     * @param  ListingUpdateRequest $request
      * @param  string            $id
      *
      * @return Response
      *
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update(CartUpdateRequest $request, $id)
+    public function update(ListingUpdateRequest $request, $id)
     {
         try {
 
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $cart = $this->repository->update($request->all(), $id);
+            $listing = $this->repository->update($request->all(), $id);
 
             $response = [
-                'message' => 'Cart updated.',
-                'data'    => $cart->toArray(),
+                'message' => 'Listing updated.',
+                'data'    => $listing->toArray(),
             ];
 
             if ($request->wantsJson()) {
@@ -194,11 +194,42 @@ class CartsController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'Cart deleted.',
+                'message' => 'Listing deleted.',
                 'deleted' => $deleted,
             ]);
         }
 
-        return redirect()->back()->with('message', 'Cart deleted.');
+        return redirect()->back()->with('message', 'Listing deleted.');
+    }
+
+    public function loginRoom()
+    {
+        $room = $this->repository->handleLoginRoom();
+
+        if(!$room) {
+            return $this->sendError('Room does not exits');
+        }
+
+        return $this->sendResponse($room, 'Login room success'); 
+    }
+
+    /**
+     * [getPhoto description]
+     * @param  int $room
+     * @return Response
+     */
+    public function getPhoto()
+    {
+        $photos = $this->repository->handleGetPhotos();
+
+        if(!$photos) {
+            return $this->sendError('Room does not exits');
+        }
+
+        if(!empty($photos)) {
+            return $this->sendResponse($photos, 'Get photo success'); 
+        }
+
+        return $this->sendError('Not data photo');
     }
 }

@@ -35,4 +35,9 @@ class Image extends Model implements Transformable
     {
         return $this->belongsTo('App\Models\Listing', 'listing_id', 'id');
     }
+
+    public function imageSelected()
+    {
+        return $this->hasOne('App\Models\Cart', 'image_id', 'id');
+    }
 }

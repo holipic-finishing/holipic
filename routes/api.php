@@ -193,6 +193,19 @@ Route::group(['namespace' => 'API'],function(){
 
 		/************TimezoneAPIController***********/
 		Route::get('timezones', 'TimezoneAPIController@getTimezones');
+
+		/************SnapPhotoAPIController***********/
+		Route::post('snap-photo', 'SnapPhotoAPIController@createSnapPhoto');
+
+		// Route::get('room/snap-photo', 'SnapPhotoAPIController@findRoomCheckDetailSnapPhoto');
+
+		/************SnapPhotoAPIController***********/
+		Route::get('photo-package/search', 'PhotoPackageAPIController@searchPhotoPackage');
+
+		/**Shop selling**/
+
+		Route::get('shop-selling/packages', 'CompanyPackageAPIController@showAllPackage');
+
 	});
 
 	/**************************************************
@@ -203,6 +216,20 @@ Route::group(['namespace' => 'API'],function(){
 		/************BranchOrderAPIController***********/
 		Route::get('branch/sales-list', 'BranchOrderAPIController@getSalesList');
 		Route::get('branch/sales-list/export', 'BranchOrderAPIController@exportSalesListBranch');
+
+	});
+
+
+	/**************************************************
+	**************LIST ROUTES SHOP SELLING*************
+	***************************************************/
+	Route::group(['namespace' => 'ShopSelling'], function() {
+
+		Route::get('room/login', 'ListingController@loginRoom');
+		Route::get('room/show-photo', 'ListingController@getPhoto');
+		Route::post('cart/add-photo', 'CartController@addPhoto');
+		Route::delete('cart/delete-photo', 'CartController@deletePhoto');
+		// Route::get('room/photo-selected', 'CartController@getPhotoSelected');
 
 	});
 });	

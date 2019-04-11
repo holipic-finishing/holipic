@@ -18,6 +18,8 @@ import mini from '../container/MiniSidebarLayout.vue'
 import PageNotFound from '../views/partials/pages/page404'
 
 import Room from '../views/shop-selling/room/index.vue'
+import BookingConfirm from '../views/shop-selling/BookingConfirm.vue'
+
 
 
 Vue.use(Router)
@@ -33,6 +35,10 @@ routers = [
 	{
     	path: '/room-tab',
     	component: Room
+  	},
+  	{
+  		path:'/shop-selling/confirm-booking',
+  		component: BookingConfirm
   	},
 	{
     	// Page Not Found
@@ -111,6 +117,19 @@ router.beforeEach((to, from, next) => {
 		} 
 		next()
 		
+	}
+
+	if(to.meta.requiresRoom){
+		const roomLogin = JSON.parse(localStorage.getItem('roomLogin'))
+		if(roomLogin) {
+			next({
+				path:'/shop-selling',
+			})
+		}else{
+			next({
+				path:'/room-tab',
+			})
+		}
 	}
 
   	Nprogress.done()

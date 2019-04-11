@@ -316,20 +316,28 @@
 
 .room-margin{
 	margin: 0 auto !important;
+	background-image: url("http://mrdan.com/wp-content/uploads/2018/03/Background-Services-Home-Page-compressed.jpg");
+	background-color: #68c2ff;
 	
-	overflow: none;
-	padding: 30px 0px !important;
+	/*overflow: none;
+	padding: 30px 0px !important;*/
+	height: 100vh;
+	width: 100vw;
 }
 
 .card-around {
 	 width: 800px;
     height: 800px;
-	background: #E0F4FC !important;
+	background: #6fbdf2 !important;
     -moz-border-radius: 25px;
     -webkit-border-radius: 25px;
     --border-radius: 25px;
     border-radius: 25px;
     padding: 7px 0px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+   	margin: 0 auto;
     .v-list-title--room {
     	position: absolute;
     	z-index: 999;
@@ -379,5 +387,194 @@
 			}
 		}
 }
+
+.booking-app-card{
+	height: 100vh;
+	overflow: hidden;
+}
+
+/**Booking**/
+.header-confirm-booking{
+	background-color: #00C1F8;
+	color:white;
+}
+
+@media only screen and (max-width: 959px)
+{
+	.hidden-sm-and-down {
+		display: block !important; 
+	}
+}
+.body-booking{
+	.box-body-booking{
+
+	    box-shadow: 0 0 10px grey;
+	    border-radius: 5px;
+	    background-color: #f4f4f4;
+	}
+	/*.flex-9{
+		display: flex;*/
+		.body-booking-p-left{
+			width: 350px;	
+		}
+		.body-booking-p-right{
+			width: 260px;	
+		}
+		.container-content-image-booking{
+			margin: 0px !important;
+		}
+		.content-title-booking{
+			    text-align: center;
+			    margin-top: 30px;
+			    background-color: gainsboro;
+			    padding: 13px 0px;
+			   /* margin: 30px 50px 0px 50px;*/
+			    border-radius: 5px;
+			    height: 50px;
+			    margin-bottom: 30px;
+			    font-size:20px;
+
+		}
+		.content-footer-booking{
+		    margin-top: 30px;
+		    background-color: gainsboro;
+		    padding: 13px 0px;
+		    height: 50px;
+		    margin-bottom: 30px;
+		    display: inline-flex;
+    		justify-content: space-between;
+    		width: 100%;
+    		&--left{
+    			margin-left: 10px;
+    			font-weight: bold;
+    		}
+    		&--right{
+    			margin-right: 10px;
+    			font-weight: bold;
+
+    		}
+		}
+		.content-table-booking{
+			margin-top:30px !important;
+		}
+		table {
+			background-color: gainsboro;
+			.th-formate{
+				left:10px;
+				position: relative;
+				&--td{
+					left:10px;
+					position: relative;
+				}
+			}
+			.th-quantity{
+				text-align:center;
+				&--td{
+					text-align: center;
+				}
+			}
+			.th-cost{
+				float: right;
+			    right: 12px;
+			    position: relative;
+				&--td{
+					
+				    left: 30px;
+				    position: relative;
+				}
+			}
+			
+		}
+	/*}*/
+	.flex-3{
+		display: flex;
+		.content-confirm-booking{
+			width: 100vw;
+			
+			box-shadow: 0 0 5px grey;
+			.layout-content-confirm-booking{
+				justify-content: center;
+			}
+			.container-content-confirm-booking{
+				padding:30px 0px !important;
+				margin-top:25px;
+			}
+			.content-confirm-booking--btn{
+				margin-top:5px !important;
+				.btn-finish-booking{
+					background-color: #00C1F8 !important;
+				}
+
+			}
+			&--left{
+				background: #00C1F8;
+			    padding-right: 0px;
+			    height: 50px;
+			    border-right: 1px #f5f1f1 solid;
+			    text-align: center;
+			    &--icon {
+			    	font-size:20px;
+			    	color:white;
+			    	padding:10px 0px;
+			    }
+			}
+			&--right{
+				margin-left:5px;
+			}
+		}
+	}
+	
+}
+
+@media only screen and (max-width: 320px)  {
+	.custom-toolbar {
+		.v-toolbar__content{
+			display: -webkit-inline-box;
+		}
+	}
+	.custom-app-card{
+		.v-flex-sp-l{
+			.v-card__text{
+				width: 192px;
+    			display: inline-table;
+			}
+		}
+		.line-flex {
+		    width: 60px;
+    		display: inline-table;
+	        right: 20px;
+   			position: relative;
+		}
+	}
+}
+
+@media only screen and (min-width: 321px) and (max-width: 480px) {
+	.custom-app-card{
+		.v-flex-sp-l{
+			.v-card__text{
+				width: 192px;
+    			display: inline-table;
+			}
+		}
+		.line-flex {
+			width: 220px;
+		}
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+	.custom-app-card{
+		.v-card__text{
+			width: 192px;
+			display: inline-table;
+		}
+		.line-flex{
+			width: 500px !important;
+		}
+	}
+}
+
+
+
 
 

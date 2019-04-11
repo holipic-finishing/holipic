@@ -8,9 +8,13 @@ export default {
    	children: [
    		{
 	        path: '/shop-selling/show-photo',
-	        component: SelectPhoto
+	        component: SelectPhoto,
+	        name: 'ShopSelling',
+	        meta: {
+	            requiresRoom: true      
+		    }
 	        
-	    }
+	    }   
 	],
 	
 }

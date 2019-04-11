@@ -1,4 +1,4 @@
-<template>
+<template class="custom-room">
 	<div class="room-margin">
 		<v-card class="card-around">
 		  	<v-list-tile-avatar class="v-list__tile__avatar--wh">
@@ -61,14 +61,21 @@ export default {
   methods: {
   	loginRoom()
   	{
-  		get(config.API_URL+'room/snap-photo?room='+this.room)
+  		get(config.API_URL+'room/login?room='+this.room)
   		.then(res => {
   			if(res && res.data.success) {
-  				console.log(res.data.data)
+  				var data = res.data.data
+  				localStorage.setItem('roomLogin', JSON.stringify(data))
+  				this.$router.push({name: 'ShopSelling', params :{data: data}}) 
   			}
   		})
   		.catch(err => {
-  			console.log(err.response)
+  			this.$notify({
+	          title: 'Error',
+	          message: err.response.data.message,
+	          type: 'error',
+	          duration: 2000,
+	        })
   		})
   	}
   }

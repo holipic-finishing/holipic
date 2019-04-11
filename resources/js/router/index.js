@@ -120,8 +120,8 @@ router.beforeEach((to, from, next) => {
 	}
 
 	if(to.meta.requiresRoom){
-		const photoRoom = JSON.parse(localStorage.getItem('photoRoom'))
-		if(photoRoom) {
+		const roomLogin = JSON.parse(localStorage.getItem('roomLogin'))
+		if(roomLogin) {
 			next({
 				path:'/shop-selling',
 			})

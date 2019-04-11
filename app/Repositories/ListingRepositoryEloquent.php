@@ -25,18 +25,52 @@ class ListingRepositoryEloquent extends BaseRepository implements ListingReposit
         return Listing::class;
     }
 
+    public function handleLoginRoom()
+    {
+        $room = \App\Models\Room::whereRoomNumber(request('room'))->latest()->first();
+
+        if(!empty($room)) {
+            return $room;
+        }
+
+        return false;
+    }
+
     /**
      * [handleGetPhotos description]
      * @return [type] [description]
      */
     public function handleGetPhotos()
     {
-        $room = \App\Models\Room::whereRoomNumber(request('room'))->latest()->first();
 
-        if(!empty($room)) {
-            $roomPhoto = $this->model->with('images')->whereRoomId($room['id'])->first();
-    
-            return $roomPhoto;
+        $roomPhoto = $this->model->with(['images.imageSelected','room'])->whereRoomId(request('room'))->first()->toArray();
+
+        if(!empty($roomPhoto)) {
+
+            $array = [];
+
+            foreach($roomPhoto['images'] as $value)
+            {
+                if($value['img_type'] == "COMPRESSED") {
+                    $value['checked'] = false;
+                    $value['name'] = $value['filename'];
+                    if($value['image_selected'] != null) {
+                        $value['checked'] = true;
+                        $value['image_selected']['name'] = $value['filename'];
+                        $photoPackage = \App\Models\PhotoPackage::find($value['image_selected']['photo_package_id']);
+                        $value['image_selected']['size'] = $photoPackage->size;
+
+                    }
+                    $array[] = $value;
+                }
+
+            }
+            
+            $dir = '/storage/images/'.$roomPhoto['room']['room_hash'].'/compressed/';
+
+            $roomPhoto['images'] = $array;
+
+            return [$roomPhoto, $dir];
         }
 
         return false;

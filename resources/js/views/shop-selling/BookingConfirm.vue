@@ -231,66 +231,12 @@
 						<div class="col-4" style="overflow: auto;">
 							<div class="container">
 								<div class="row" style="height: 300px;" >
-									<div class="col-4 mb-3" v-for="photo in albumPhotos">
-										<v-img :src="'/static/img/'+photo.name"></v-img>
-									</div>
-									<!-- <div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
+									<div class="col-4 mb-3" v-for="(photo,index) in albumPhotos" >
+										<v-img :src="thumbnailDir+photo.name" :lazy-src="thumbnailDir+photo.name"></v-img>
 
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
+										
 									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									<div class="col-4 mb-3">
-										<v-img src="static/avatars/user-8.jpg"></v-img>
-									</div>
-									 -->
-									
+																		
 								</div>
 							</div>
 						</div>
@@ -312,31 +258,7 @@
 		      			  				<td class="th-quantity--td pt-3" v-else>0</td>
 		      			  				<td class="th-cost--td pt-3 td-custom">{{detail.priceNew}}</td>
 		      			  			</tr>
-		      			  			<!-- <tr>
-		      			  				<td class="th-formate--td pt-3">FRAME</td>
-		      			  				<td class="th-quantity--td pt-3">0</td>
-		      			  				<td class="th-cost--td pt-3">Rp 0</td>
-		      			  			</tr>
-		      			  			<tr>
-		      			  				<td class="th-formate--td pt-3">4R</td>
-		      			  				<td class="th-quantity--td pt-3">0</td>
-		      			  				<td class="th-cost--td pt-3" >Rp 0</td>
-		      			  			</tr>
-		      			  			<tr>
-		      			  				<td class="th-formate--td pt-3">6R</td>
-		      			  				<td class="th-quantity--td pt-3">0</td>
-		      			  				<td class="th-cost--td pt-3">Rp 0</td>
-		      			  			</tr>
-		      			  			<tr>
-		      			  				<td class="th-formate--td pt-3">10R</td>
-		      			  				<td class="th-quantity--td pt-3">0</td>
-		      			  				<td class="th-cost--td pt-3">Rp 0</td>
-		      			  			</tr> -->
-		      			  			<!-- <tr>
-		      			  				<td class="th-formate--td pt-3 pb-3"></td>
-		      			  				<td class="th-quantity--td pt-3 pb-3"></td>
-		      			  				<td class="th-cost--td pt-3 pb-3"></td>
-		      			  			</tr> -->
+		      			  			
 		  			  			</table>
 
 		  			  			<div class="content-footer-booking">
@@ -464,10 +386,15 @@ export default {
     	
     	albumPhotos: JSON.parse(localStorage.getItem('photoSelected')),
     	detailBooking: [],
-    	customerBooking:{name:'', room:'', email:'', mobile:'', date:''}
+    	customerBooking:{name:'', room:'', email:'', mobile:'', date:''},
+    	thumbnailDir:''
     }
   },
   mounted() {
+
+  	var roomLogin = JSON.parse(localStorage.getItem('roomLogin'))
+
+    this.thumbnailDir = localStorage.getItem('thumbnailDir')
 
   	var groupArray = _.groupBy(this.albumPhotos, 'size');
 
@@ -485,7 +412,7 @@ export default {
 		quantity = 0
 	})
 
-	this.customerBooking.room = (JSON.parse(localStorage.getItem('photoRoom'))).room_number
+	this.customerBooking.room = (JSON.parse(localStorage.getItem('roomLogin'))).room_number
 
 	this.customerBooking.date = new Date().toISOString().substr(0, 10)
 

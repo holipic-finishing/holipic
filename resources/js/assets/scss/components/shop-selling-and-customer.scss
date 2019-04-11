@@ -398,6 +398,13 @@
 	background-color: #00C1F8;
 	color:white;
 }
+
+@media only screen and (max-width: 959px)
+{
+	.hidden-sm-and-down {
+		display: block !important; 
+	}
+}
 .body-booking{
 	.box-body-booking{
 
@@ -517,6 +524,54 @@
 		}
 	}
 	
+}
+
+@media only screen and (max-width: 320px)  {
+	.custom-toolbar {
+		.v-toolbar__content{
+			display: -webkit-inline-box;
+		}
+	}
+	.custom-app-card{
+		.v-flex-sp-l{
+			.v-card__text{
+				width: 192px;
+    			display: inline-table;
+			}
+		}
+		.line-flex {
+		    width: 60px;
+    		display: inline-table;
+	        right: 20px;
+   			position: relative;
+		}
+	}
+}
+
+@media only screen and (min-width: 321px) and (max-width: 480px) {
+	.custom-app-card{
+		.v-flex-sp-l{
+			.v-card__text{
+				width: 192px;
+    			display: inline-table;
+			}
+		}
+		.line-flex {
+			width: 220px;
+		}
+	}
+}
+
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+	.custom-app-card{
+		.v-card__text{
+			width: 192px;
+			display: inline-table;
+		}
+		.line-flex{
+			width: 500px !important;
+		}
+	}
 }
 
 

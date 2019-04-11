@@ -202,6 +202,17 @@ class ListingController extends AppBaseController
         return redirect()->back()->with('message', 'Listing deleted.');
     }
 
+    public function loginRoom()
+    {
+        $room = $this->repository->handleLoginRoom();
+
+        if(!$room) {
+            return $this->sendError('Room does not exits');
+        }
+
+        return $this->sendResponse($room, 'Login room success'); 
+    }
+
     /**
      * [getPhoto description]
      * @param  int $room
@@ -215,7 +226,7 @@ class ListingController extends AppBaseController
             return $this->sendError('Room does not exits');
         }
 
-        if(!empty($photos->toArray())) {
+        if(!empty($photos)) {
             return $this->sendResponse($photos, 'Get photo success'); 
         }
 

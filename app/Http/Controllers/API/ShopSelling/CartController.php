@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\ShopSelling;
 
 use Illuminate\Http\Request;
 
@@ -11,13 +11,14 @@ use App\Http\Requests\CartCreateRequest;
 use App\Http\Requests\CartUpdateRequest;
 use App\Repositories\CartRepository;
 use App\Validators\CartValidator;
+use App\Http\Controllers\AppBaseController;
 
 /**
  * Class CartsController.
  *
  * @package namespace App\Http\Controllers;
  */
-class CartsController extends Controller
+class CartController extends AppBaseController
 {
     /**
      * @var CartRepository
@@ -25,20 +26,14 @@ class CartsController extends Controller
     protected $repository;
 
     /**
-     * @var CartValidator
-     */
-    protected $validator;
-
-    /**
      * CartsController constructor.
      *
      * @param CartRepository $repository
      * @param CartValidator $validator
      */
-    public function __construct(CartRepository $repository, CartValidator $validator)
+    public function __construct(CartRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
     }
 
     /**
@@ -200,5 +195,28 @@ class CartsController extends Controller
         }
 
         return redirect()->back()->with('message', 'Cart deleted.');
+    }
+
+    public function addPhoto()
+    {
+        $cart = $this->repository->handleAddPhoto();
+
+        return $this->sendResponse($cart, 'Add photo success'); 
+    }
+
+    public function deletePhoto()
+    {
+        $cart = $this->repository->handleDeletePhoto();
+
+        if($cart) {
+            return $this->sendResponse([],'Delete success'); 
+        }
+    }
+
+    public function getPhotoSelected()
+    {
+        $photos = $this->repository->handleGetPhotoSelected();
+
+        return $this->sendResponse($photos,'Get photo selected success'); 
     }
 }

@@ -15,11 +15,13 @@ class Cart extends Model implements Transformable
 {
     use TransformableTrait;
 
+    protected $table = 'carts';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['image_id', 'quantity', 'company_package_id', 'photo_package_id', 'price'];
 
 }

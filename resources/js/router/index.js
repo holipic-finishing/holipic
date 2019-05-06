@@ -19,6 +19,9 @@ import PageNotFound from '../views/partials/pages/page404'
 
 import Room from '../views/shop-selling/room/index.vue'
 import BookingConfirm from '../views/shop-selling/BookingConfirm.vue'
+import ShopSellingLogin from '../views/shop-selling/Login.vue'
+import ShopSellingDashboard from '../views/shop-selling/Dashboard.vue'
+import CustomerLogin from '../views/customer/Login.vue'
 
 
 
@@ -39,6 +42,18 @@ routers = [
   	{
   		path:'/shop-selling/confirm-booking',
   		component: BookingConfirm
+  	},
+  	{
+  		path:'/shop-selling/login',
+  		component: ShopSellingLogin
+  	},
+  	{
+  		path:'/shop-selling/dashboard',
+  		component: ShopSellingDashboard
+  	},
+  	{
+  		path:'/customer/login',
+  		component: CustomerLogin
   	},
 	{
     	// Page Not Found

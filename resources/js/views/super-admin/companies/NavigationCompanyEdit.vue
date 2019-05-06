@@ -235,7 +235,7 @@ export default {
 			    params = {address: this.company.address};
 			    break;
 			  case "description":
-			     params = {description: this.company.description};
+			    params = {description: this.company.description};
 			    break;
 			  default:
 			    params = {phone: this.company.phone};

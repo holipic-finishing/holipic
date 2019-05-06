@@ -29,7 +29,7 @@ class BookingRepository extends BaseRepository
      * request: companyId, date
      * @return [type] [description]
      */
-    public function handleGetBookings($convertedDate = null,$defaultTimezone = null)
+    public function handleGetBookings($convertedDate = null,$defaultTimezone = null, $checkTimezone = true)
     {
         $companyId = request('companyId');
 
@@ -38,13 +38,14 @@ class BookingRepository extends BaseRepository
         $timezoneId = request('timezone');
 
         if(!empty($timezoneId)) {
+
         	$timezone = Timezone::find($timezoneId);
 
         	$valueDate =  Carbon::parse($date);
 
 			$valueDate = Carbon::createFromFormat('Y-m-d H:i:s', $valueDate, $timezone['zone_name']);
 
-			$date = $valueDate->setTimeZone('UTC');
+            $date = $valueDate->setTimeZone('UTC');
 
 			$date = $date->toDateString();
 
@@ -78,7 +79,9 @@ class BookingRepository extends BaseRepository
 			            // }																
 
 			            return $query;
-			})->get();
+			})->get()->toArray();
+
+
 
 			if(!empty($bookings)) {
 
@@ -88,14 +91,18 @@ class BookingRepository extends BaseRepository
 					$timezone = Timezone::find($timezoneId);
 				}
 
-				if($convertedDate != null) {
+                if($checkTimezone) {
 
-					$bookings = $this->handleRequestTimezone($timezone[0], $bookings, $convertedDate);
-                    
-				} else {
-					
-					$bookings = $this->handleRequestTimezone($timezone, $bookings, $date);
-				}
+    				if($convertedDate != null) {
+
+    					$bookings = $this->handleRequestTimezone($timezone[0], $bookings, $convertedDate);
+                        
+    				} else {
+    					
+    					$bookings = $this->handleRequestTimezone($timezone, $bookings, $date);
+    				}
+                }
+
 				
 				return $this->handleCutTime($bookings);
     		}		
@@ -123,28 +130,28 @@ class BookingRepository extends BaseRepository
 			{
 				$utcDate = Carbon::parse($booking['date'].' '.$booking['time']);
 
-				$convertedDate = $utcDate->setTimeZone($timezone['zone_name']);
+                $convertedDate = $utcDate->setTimeZone($timezone['zone_name']);
 
 				$booking['date'] = $convertedDate->toDateString();
 
 				$utcTime = Carbon::parse($booking['time']);
 
-				$convertedTime = $utcTime->setTimeZone($timezone['zone_name']);
+                $convertedTime = $utcTime->setTimeZone($timezone['zone_name']);
 
-				$booking['time'] = $convertedTime->toTimeString();
+                $booking['time'] = $convertedTime->toTimeString();
 
 				$data[] = $booking;
 
 			}
-
+            
 			foreach($data as $value) 
 			{
 				if($value['date'] == $date) {
 					$newArray[] = $value;
 				}
 			}
-    	}
 
+    	}
 
 		return $newArray;
     }
@@ -166,20 +173,22 @@ class BookingRepository extends BaseRepository
     public function handleConvertTimezone()
     {
         if(!empty(request('timezoneId'))) {
-
+            
         	$timezone = Timezone::find(request('timezoneId'));
 
         	$date = Carbon::parse(str_replace('T', ' ', request('datetime')));
 
-        	$convertedDate = $date->setTimeZone($timezone['zone_name'])->toDateString();
+            $date = Carbon::parse(substr($date,0 ,strlen($date)));
 
+            $convertedDate = $date->setTimeZone($timezone['zone_name'])->toDateString();
+            
         	$data = [];
 
-        	$bookings = $this->handleGetBookings($convertedDate, $timezone);
+            $bookings = $this->handleGetBookings($convertedDate, $timezone, false);
 
         	if(!empty($timezone)) {
         		$data = $this->handleRequestTimezone($timezone, $bookings, $convertedDate);
-    	
+                
         	} else {
         		$data = $bookings;
         	}
@@ -199,9 +208,11 @@ class BookingRepository extends BaseRepository
     	$time = request('time');
 
     	if(!empty($timezoneId)){
+            
     		$timezone = Timezone::find($timezoneId);
 
     		if($timezone && $time){
+
     			$valueTime =  Carbon::parse($booking['date'].' '.$time);
     			$time = Carbon::createFromFormat('Y-m-d H:i:s', $valueTime, $timezone['zone_name']);
     			$utc = $time->setTimeZone('UTC');
@@ -210,9 +221,10 @@ class BookingRepository extends BaseRepository
     		}
 
     		if($timezone && $date) {
+
     			$valueDate =  Carbon::parse($date.' '.$booking['time']);
     			$date = Carbon::createFromFormat('Y-m-d H:i:s', $valueDate, $timezone['zone_name']);
-				$utc = $date->setTimeZone('UTC');
+                $utc = $date->setTimeZone('UTC');
 				$utc = $utc->toDateString();
 				$input = ['date' => $utc];
     		}
@@ -227,18 +239,17 @@ class BookingRepository extends BaseRepository
 
     public function handleSendEmailCustomer($bookingId)
     {
-
+        
         if(!empty($bookingId)) {
 
-            $booking = $this->scopeQuery(function($query) use ($bookingId){
+            $booking =  $this->scopeQuery(function($query) use ($bookingId){
                             $query = $query->with('photographer')->with('customer.user')->whereId($bookingId);
                             return $query;
                         })->first();
 
-            \Mail::to($booking['customer']['user']['email'])->queue(new SendMailBooking($booking));
+            \Mail::to($booking['customer']['user']['email'])->later(now()->addMinutes(3), new SendMailBooking($booking)); //queue delay 3 minutes, it will insert 1 job in table job afer 3 minutes will run and delete record in table
 
             return $booking;
-            
         }
 
         return false;

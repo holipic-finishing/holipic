@@ -53,14 +53,20 @@ class ListingRepositoryEloquent extends BaseRepository implements ListingReposit
             {
                 if($value['img_type'] == "COMPRESSED") {
                     $value['checked'] = false;
-                    $value['name'] = $value['filename'];
-                    if($value['image_selected'] != null) {
-                        $value['checked'] = true;
-                        $value['image_selected']['name'] = $value['filename'];
-                        $photoPackage = \App\Models\PhotoPackage::find($value['image_selected']['photo_package_id']);
-                        $value['image_selected']['size'] = $photoPackage->size;
 
+                    $value['name'] = $value['filename'];
+
+                    if($value['image_selected'] != null) {
+
+                        $value['checked'] = true;
+
+                        $value['image_selected']['name'] = $value['filename'];
+
+                        $photoPackage = \App\Models\PhotoPackage::find($value['image_selected']['photo_package_id']);
+
+                        $value['image_selected']['size'] = $photoPackage->size;
                     }
+
                     $array[] = $value;
                 }
 

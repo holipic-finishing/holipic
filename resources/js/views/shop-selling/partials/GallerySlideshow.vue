@@ -1,6 +1,8 @@
 <template>
 	<transition name="modal">
+
 		<div class="vgs custom-vgs" v-if="showGallery">
+
 			<div class="wrap-fancybox">
 				<button type="button" class="vgs__close" @click="close">&times;</button>
 				<button type="button" class="vgs__prev" v-if="isMultiple" @click.stop="onPrev">&lsaquo;</button>
@@ -135,7 +137,7 @@ export default {
 			
 				$('.active-image').css("color", "#244293");
 			}
-			this.updateThumbails();
+			// this.updateThumbails();
 		},
 		onClickThumb(image, index) {
 			this.imgIndex = index;
@@ -147,6 +149,8 @@ export default {
 			}
 			
 			this.updateThumbails();
+
+			
 		},
 		updateThumbails() {
 			if (!this.$refs.gallery) {
@@ -415,8 +419,8 @@ $screen-md-max: ($screen-lg - 1);
 		transition: all 200ms ease-in-out;
 		width: 100%;
 		&__img {
-			width: 100px;
-			height: 100px;
+			width: 100%;
+    height: 100%;
 			object-fit: cover;
 			display: inline-block;
 			float: none;
@@ -426,7 +430,8 @@ $screen-md-max: ($screen-lg - 1);
 			border-radius: $radius-medium;
 		}
 		&__img--active {
-			width: 100px;
+			width: 100%;
+    height: 100%;
 			display: inline-block;
 			float: none;
 			opacity: 1;
@@ -463,13 +468,13 @@ $screen-md-max: ($screen-lg - 1);
 	max-width: 20%;
 	flex: 1 1 20%;
 	margin: 0;
-	background: #fffd;
+	
 	padding-top: 20px;
 	overflow-y: scroll;
 	position: static;
 }
 .custom-container {
-		display: flex;
+		display: block;
 		flex-wrap: wrap;
 		height: auto;
 		justify-content: center;

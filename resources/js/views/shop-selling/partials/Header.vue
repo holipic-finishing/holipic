@@ -5,6 +5,7 @@
 				reply_all
 			</i>
     	</v-btn>
+    	
     <v-spacer></v-spacer>
 
     <v-toolbar-items class="hidden-sm-and-down">

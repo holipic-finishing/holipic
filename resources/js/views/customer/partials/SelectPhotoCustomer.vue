@@ -1,5 +1,7 @@
 <template>
 	<v-layout row wrap>
+		
+		<payment></payment>
 		<!-- Selected photo-->
 		<app-card
 			colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
@@ -111,7 +113,8 @@
 			<div class="mb-5 ml-5 mr-5">
 				<v-flex xs2 class="v-flex-sp-l">
 					<v-card-text >
-						<span class="ml-3">Purchase</span> 
+						<span class="ml-3">Purchase</span>
+
 						<span class="ml-3 pt-3 top-relative"><i class="material-icons">
 							filter
 						</i>
@@ -193,10 +196,15 @@
 
 import Lightbox from 'vue-my-photos'
 import Vue from 'vue'
+import Popup from './Popup.vue'
+import Payment from './Payment.vue'
 Vue.component('lightbox', Lightbox);
 export default {
 
   name: 'SelectPhoto',
+  components: {
+  	Popup,Payment
+  },
 
   data () {
     return {

@@ -32,6 +32,11 @@ Route::get('users/activation', 'UserController@activationAccount')->name('users.
 *********  ROUTER FOR ADMIN PAGE   *****************
 ****************************************************/
 
+Route::get('test', function() {
+	$c = Carbon\Carbon::parse('2017-06-14T08:22:29.296-03:00')->format('d/m/Y h:i:s');
+	dd($c);
+});
+
 Route::get('/{any}', function () {
    return view('index');
 })->where('any', '^(?!api).*$');

@@ -18,230 +18,22 @@
 				<div class="title-booking--line"></div>
 			</div>
 			<div class="body-booking">
-				<!-- <v-layout justify-center>
-					<v-flex xs12 sm9 md9 lg9 class="box-body-booking">
-					    <v-card row>
-					    	<v-layout>
-					    		<v-flex xs12 sm8 md8 lg8 class="flex-9">
-					      			<v-layout row>
-					      			  	<v-flex xs6 sm6 md6 lg6>
-					      			  		<v-container class="container-content-image-booking">
-					      			  			<v-layout wrap >
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-2.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-3.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-4.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-5.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-6.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-7.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-8.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-9.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-7.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-7.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-8.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-9.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-7.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-8.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-9.jpg"></v-img>
-					      			  				</v-flex>
-					      			  				<v-flex xs3 sm3 md3 lg3 ml-3 mb-3>
-					      			  					<v-img src="static/avatars/user-7.jpg"></v-img>
-					      			  				</v-flex>
-					      			  			</v-layout>
-					      			  		</v-container>
-					      			  		
-					      			  	</v-flex>
-					      			  	<v-flex xs6 sm6 md6 lg6>
-					      			  		<div class="content-title-booking">
-					      			  			ORDER DETAIL
-					      			  		</div>
-					      			  		
-				      			  			<table>
-					      			  			<tr>
-					      			  				<th class="th-formate pt-3" >Formate</th>
-					      			  				<th class="th-quantity pt-3" >Quantity</th>
-					      			  				<th class="th-cost pt-3" >Cost</th>
-					      			  			</tr>
-					      			  			<tr>
-					      			  				<td class="th-formate--td pt-3">DIGITAL</td>
-					      			  				<td class="th-quantity--td pt-3" >1</td>
-					      			  				<td class="th-cost--td pt-3">Rp 150000</td>
-					      			  			</tr>
-					      			  			<tr>
-					      			  				<td class="th-formate--td pt-3">FRAME</td>
-					      			  				<td class="th-quantity--td pt-3">0</td>
-					      			  				<td class="th-cost--td pt-3">Rp 0</td>
-					      			  			</tr>
-					      			  			<tr>
-					      			  				<td class="th-formate--td pt-3">4R</td>
-					      			  				<td class="th-quantity--td pt-3">0</td>
-					      			  				<td class="th-cost--td pt-3" >Rp 0</td>
-					      			  			</tr>
-					      			  			<tr>
-					      			  				<td class="th-formate--td pt-3">6R</td>
-					      			  				<td class="th-quantity--td pt-3">0</td>
-					      			  				<td class="th-cost--td pt-3">Rp 0</td>
-					      			  			</tr>
-					      			  			<tr>
-					      			  				<td class="th-formate--td pt-3">10R</td>
-					      			  				<td class="th-quantity--td pt-3">0</td>
-					      			  				<td class="th-cost--td pt-3">Rp 0</td>
-					      			  			</tr>
-					      			  			<tr>
-					      			  				<td class="th-formate--td pt-3 pb-3">Photo Slate</td>
-					      			  				<td class="th-quantity--td pt-3 pb-3">0</td>
-					      			  				<td class="th-cost--td pt-3 pb-3">Rp 0</td>
-					      			  			</tr>
-				      			  			</table>
-
-				      			  			<div class="content-footer-booking">
-				      			  				<div class="content-footer-booking--left">
-				      			  					TOTAL
-				      			  				</div>
-				      			  				<div class="content-footer-booking--right">
-				      			  					150000 RP
-				      			  				</div>
-				      			  			</div>
-					      			  	</v-flex>
-					      			</v-layout>
-					      		</v-flex>
-					      		<v-flex xs12 sm4 md4 lg4 class="flex-3">
-					      			<v-card class='content-confirm-booking' row>
-					      				<v-container class="container-content-confirm-booking">
-						      			  	<v-layout wrap class="layout-content-confirm-booking">
-						      			  		<v-flex xs2 lg2 md2 sm2 class="content-confirm-booking--left">
-						      			  			<span class="content-confirm-booking--left--icon">
-						      			  				<i class="far fa-user"></i>
-						      			  			</span>
-						      			  		</v-flex>
-						      			  		<v-flex xs9 lg9 md9 sm9 class="content-confirm-booking--right">
-						      			  			<div class="content-confirm-booking--right--input">
-						      			  				<v-text-field
-												            v-model="first"
-												            label=""
-												            solo
-												        ></v-text-field>
-						      			  			</div>
-						      			  		</v-flex>
-
-						      			  		<v-flex xs2 lg2 md2 sm2 class="content-confirm-booking--left">
-						      			  			<span class="content-confirm-booking--left--icon">
-						      			  				<i class="zmdi zmdi-format-list-numbered"></i>
-						      			  			</span>
-						      			  		</v-flex>
-						      			  		<v-flex xs9 lg9 md9 sm9 class="content-confirm-booking--right">
-						      			  			<div class="content-confirm-booking--right--input">
-						      			  				<v-text-field
-												            v-model="first"
-												            label=""
-												            solo
-												        ></v-text-field>
-						      			  			</div>
-						      			  		</v-flex>
-
-						      			  		<v-flex xs2 lg2 md2 sm2 class="content-confirm-booking--left">
-						      			  			<span class="content-confirm-booking--left--icon">
-						      			  				<i class="fas fa-envelope"></i>
-						      			  			</span>
-						      			  		</v-flex>
-						      			  		<v-flex xs9 lg9 md9 sm9 class="content-confirm-booking--right">
-						      			  			<div class="content-confirm-booking--right--input">
-						      			  				<v-text-field
-												            v-model="first"
-												            label=""
-												            solo
-												        ></v-text-field>
-						      			  			</div>
-						      			  		</v-flex>
-
-						      			  		<v-flex xs2 lg2 md2 sm2 class="content-confirm-booking--left">
-						      			  			<span class="content-confirm-booking--left--icon">
-						      			  				<i class="fas fa-phone"></i>
-						      			  			</span>
-						      			  		</v-flex>
-						      			  		<v-flex xs9 lg9 md9 sm9 class="content-confirm-booking--right">
-						      			  			<div class="content-confirm-booking--right--input">
-						      			  				<v-text-field
-												            v-model="first"
-												            label=""
-												            solo
-												        ></v-text-field>
-						      			  			</div>
-						      			  		</v-flex>
-
-						      			  		<v-flex xs2 lg2 md2 sm2 class="content-confirm-booking--left">
-						      			  			<span class="content-confirm-booking--left--icon">
-						      			  				<i class="far fa-calendar-alt"></i>
-						      			  			</span>
-						      			  		</v-flex>
-						      			  		<v-flex xs9 lg9 md9 sm9 class="content-confirm-booking--right">
-						      			  			<div class="content-confirm-booking--right--input">
-						      			  				<v-text-field
-												            v-model="first"
-												            label=""
-												            solo
-												        ></v-text-field>
-						      			  			</div>
-						      			  		</v-flex>
-
-						      			  		<v-flex xs12 lg12 md12 sm12 class="content-confirm-booking--btn">
-						      			  			<v-btn depressed large color="primary">FINISH BOOKING
-						      			  				<i class="fas fa-arrow-right" style="margin-left:10px"></i>
-						      			  			</v-btn>
-						      			  		</v-flex>
-						      			  	</v-layout>
-					      				</v-container>
-					      			</v-card>
-					      		</v-flex>
-					    	</v-layout>
-					      	
-					    </v-card>
-					</v-flex>
-				</v-layout> -->
 				<v-container>
 					<div class="row box-body-booking">
-						<div class="col-4" style="overflow: auto;">
-							<div class="container">
+						<div class="col-4 col-image" style="overflow: auto;">
+							<div class="container container-image">
 								<div class="row" style="height: 300px;" >
 									<div class="col-4 mb-3" v-for="(photo,index) in albumPhotos" >
-										<v-img :src="thumbnailDir+photo.name" :lazy-src="thumbnailDir+photo.name"></v-img>
-
-										
+										<v-img :src="thumbnailDir+photo.name" :lazy-src="thumbnailDir+photo.name">
+											
+										</v-img>
 									</div>
 																		
 								</div>
 							</div>
 						</div>
-						<div class="col-4">
-							<div class="container">
+						<div class="col-4 col-type">
+							<div class="container container-type">
 							  	<div class="content-title-booking">
 	      			  				ORDER DETAIL
 		      			  		</div>
@@ -272,7 +64,7 @@
 	  			  			</div>
 						</div>
 
-						<div class="col-4 flex-3">
+						<div class="col-4 flex-3 col-info">
 							<v-card class='content-confirm-booking' row>
 			      				<v-container class="container-content-confirm-booking">
 				      			  	<v-layout wrap class="layout-content-confirm-booking">

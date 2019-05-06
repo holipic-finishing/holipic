@@ -47,6 +47,7 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
                 'price' => $photoPackage->dollar * $photo['quantity']));
 
         } else {
+
             $cart = $this->model->create([
                 'image_id' => $photo['id'], 
                 'quantity' => $photo['quantity'], 
@@ -82,6 +83,7 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
             foreach($listing['images'] as $image) 
             {
                 if($image['image_selected'] != null) {
+                    
                     $photoPackge = \App\Models\PhotoPackage::find($image['image_selected']['photo_package_id']);
                     $image['image_selected']['size'] = $photoPackge->size; 
                     $image['image_selected']['name'] = $image['filename'];

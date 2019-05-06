@@ -265,6 +265,7 @@
 				.then((res) => {
 					if(res.data && res.data.success){
 						this.desserts = res.data.data
+						console.log(this.desserts)
 					}
 				})
 				.catch((e) =>{

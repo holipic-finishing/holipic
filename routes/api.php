@@ -206,6 +206,8 @@ Route::group(['namespace' => 'API'],function(){
 
 		Route::get('shop-selling/packages', 'CompanyPackageAPIController@showAllPackage');
 
+		Route::post('shop-selling/order-confirm', 'CompanyOrderAPIController@createOrderConfirm');
+
 	});
 
 	/**************************************************
@@ -230,6 +232,13 @@ Route::group(['namespace' => 'API'],function(){
 		Route::post('cart/add-photo', 'CartController@addPhoto');
 		Route::delete('cart/delete-photo', 'CartController@deletePhoto');
 		// Route::get('room/photo-selected', 'CartController@getPhotoSelected');
+
+	});
+
+	Route::group(['namespace' => 'Customer'], function() {
+		Route::post('customer/order-image', 'CustomerAPIController@orderImage');
+
+		Route::get('customer/list-image-selected', 'CustomerAPIController@getImageSelected');
 
 	});
 });	

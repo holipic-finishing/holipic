@@ -47,6 +47,7 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
                 'price' => $photoPackage->dollar * $photo['quantity']));
 
         } else {
+
             $cart = $this->model->create([
                 'image_id' => $photo['id'], 
                 'quantity' => $photo['quantity'], 
@@ -69,12 +70,60 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
 
     }
 
-    public function handleGetPhotoSelected()
+    // public function handleGetPhotoSelected()
+    // {
+    //     $listing = \App\Models\Listing::with(['images' => function($query) {
+    //                     $query->with('imageSelected');
+    //                 }])->whereRoomId(request('room'))->first()->toArray();
+
+    //     $photos = [];
+
+    //     if(count($listing['images']) > 0) {
+            
+    //         foreach($listing['images'] as $image) 
+    //         {
+    //             if($image['image_selected'] != null) {
+                    
+    //                 $photoPackge = \App\Models\PhotoPackage::find($image['image_selected']['photo_package_id']);
+    //                 $image['image_selected']['size'] = $photoPackge->size; 
+    //                 $image['image_selected']['name'] = $image['filename'];
+    //                 $image['image_selected']['checked'] = true;
+    //                 $photos[] = $image['image_selected'];   
+    //             }   
+    //         }
+    //     }
+
+    //     return $photos;  
+    // }
+
+    public function handleCustomerOrderImage()
+    {
+        $image = request('photo');
+
+        $cart = $this->model->whereImageId($image['id'])->first();
+
+        if(!empty($cart)) {
+
+            $cart = $cart->delete();
+        }else{
+            $cart = $this->model->create([
+                    'image_id' => $image['id'], 
+                    'quantity' => 1, 
+                    'photo_package_id' => 2,
+                    'price' => 2
+                ]);
+        }
+
+        return $cart;
+    }
+
+    public function handleGetPhotoSelectedNew()
     {
         $listing = \App\Models\Listing::with(['images' => function($query) {
+                        $query->where('is_booking', '0')->where('img_type', 'COMPRESSED');
                         $query->with('imageSelected');
-                    }])->whereRoomId(request('room'))->first()->toArray();
-
+                    }])->whereRoomId(request('roomId'))->first()->toArray();
+        
         $photos = [];
 
         if(count($listing['images']) > 0) {
@@ -82,6 +131,7 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
             foreach($listing['images'] as $image) 
             {
                 if($image['image_selected'] != null) {
+                    
                     $photoPackge = \App\Models\PhotoPackage::find($image['image_selected']['photo_package_id']);
                     $image['image_selected']['size'] = $photoPackge->size; 
                     $image['image_selected']['name'] = $image['filename'];
@@ -91,7 +141,11 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
             }
         }
 
-        return $photos;  
+        $roomPhoto =  \App\Models\Room::find(request('roomId'));
+
+        $dir = '/storage/images/'.$roomPhoto->room_hash.'/compressed/';
+
+        return [$photos, $dir];  
     }
 
     /**

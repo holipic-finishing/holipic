@@ -10,11 +10,12 @@
 				<i class="material-icons">
 					shopping_cart
 				</i>
-				<div class="detail-cart">
+				<!-- <div class="detail-cart">
 					<span class="line-cart">$</span>
 					<span class="line-cart-1">{{total}}</span>
 					<span class="line-cart-2">Order</span>		
-				</div>
+				</div> -->
+				<popup-card></popup-card>
 			</div>
 			<div class=" ml-5 mr-5">
 				<v-flex xs6 class="v-flex-sp-l">
@@ -88,7 +89,6 @@
 							<div class="line-detail"></div>
 						</div>
 
-						
 					</v-flex>
 				</v-layout>
 
@@ -244,7 +244,8 @@
 			</div>
 		</app-card>
 		<div v-if="activeGallery">
-			<vue-gallery-slideshow :images="photos" :index="index" @close="index = null" :dir="thumbnailDir"></vue-gallery-slideshow>
+			<vue-gallery-slideshow :images="photos" :index="index" @close="index = null" :dir="thumbnailDir">
+			</vue-gallery-slideshow>
 		</div>
 		<!--Orther photo -->
 
@@ -264,6 +265,7 @@ import Vue from 'vue'
 import config from '../../../config'
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import VueGallerySlideshow from './GallerySlideshow.vue'
+import PopupCard from './PopupCard.vue'
 
 Vue.component('lightbox', Lightbox);
 
@@ -271,6 +273,9 @@ Vue.component('lightbox', Lightbox);
 export default {
 
   name: 'SelectPhoto',
+  components: {
+  	 'popup-card' : PopupCard ,VueGallerySlideshow
+  },
 
   data () {
     return {
@@ -279,86 +284,86 @@ export default {
     	selectCurrency: 'USD',
     	selectLanguage: 'ENG',
   //   	photos: [
-		// 	{
-		// 		id: 1,
-		// 		name: "blog-1.jpg",
-		// 		caption: "Caption 1",
-		// 		author: "Admin",
-		// 		likes: "250",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 2,
-		// 		name: "blog-2.jpg",
-		// 		caption: "Caption 2",
-		// 		author: "Erik Turner",
-		// 		likes: "150",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 3,
-		// 		name: "blog-3.jpg",
-		// 		caption: "Caption 3",
-		// 		author: "John Smith",
-		// 		likes: "200",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 4,
-		// 		name: "blog-4.jpg",
-		// 		caption: "Caption 4",
-		// 		author: "Antonio Rice",
-		// 		likes: "300",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 5,
-		// 		name: "blog-5.jpg",
-		// 		caption: "Caption 5",
-		// 		author: "Caleb Wilson",
-		// 		likes: "400",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 6,
-		// 		name: "blog-6.jpg",
-		// 		caption: "Caption 6",
-		// 		author: "Zachary Robbins",
-		// 		likes: "50",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 7,
-		// 		name: "blog-7.jpg",
-		// 		caption: "Caption 7",
-		// 		author: "Jon Wagner",
-		// 		likes: "100",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 8,
-		// 		name: "blog-8.jpg",
-		// 		caption: "Caption 8",
-		// 		author: "Dorothy Bass",
-		// 		likes: "75",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 9,
-		// 		name: "blog-8.jpg",
-		// 		caption: "Caption 8",
-		// 		author: "Dorothy Bass",
-		// 		likes: "75",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 10,
-		// 		name: "blog-8.jpg",
-		// 		caption: "Caption 8",
-		// 		author: "Dorothy Bass",
-		// 		likes: "75",
-		// 		checked:false
-		// 	}
+			// 	{
+			// 		id: 1,
+			// 		name: "blog-1.jpg",
+			// 		caption: "Caption 1",
+			// 		author: "Admin",
+			// 		likes: "250",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 2,
+			// 		name: "blog-2.jpg",
+			// 		caption: "Caption 2",
+			// 		author: "Erik Turner",
+			// 		likes: "150",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 3,
+			// 		name: "blog-3.jpg",
+			// 		caption: "Caption 3",
+			// 		author: "John Smith",
+			// 		likes: "200",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 4,
+			// 		name: "blog-4.jpg",
+			// 		caption: "Caption 4",
+			// 		author: "Antonio Rice",
+			// 		likes: "300",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 5,
+			// 		name: "blog-5.jpg",
+			// 		caption: "Caption 5",
+			// 		author: "Caleb Wilson",
+			// 		likes: "400",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 6,
+			// 		name: "blog-6.jpg",
+			// 		caption: "Caption 6",
+			// 		author: "Zachary Robbins",
+			// 		likes: "50",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 7,
+			// 		name: "blog-7.jpg",
+			// 		caption: "Caption 7",
+			// 		author: "Jon Wagner",
+			// 		likes: "100",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 8,
+			// 		name: "blog-8.jpg",
+			// 		caption: "Caption 8",
+			// 		author: "Dorothy Bass",
+			// 		likes: "75",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 9,
+			// 		name: "blog-8.jpg",
+			// 		caption: "Caption 8",
+			// 		author: "Dorothy Bass",
+			// 		likes: "75",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 10,
+			// 		name: "blog-8.jpg",
+			// 		caption: "Caption 8",
+			// 		author: "Dorothy Bass",
+			// 		likes: "75",
+			// 		checked:false
+			// 	}
 		// ],
 		photos:[],
 		photos2: [],
@@ -383,9 +388,7 @@ export default {
 	    activeGallery:false
     }
   },
-  components: {
-    VueGallerySlideshow
-  },
+  
   mounted(){
   	this.$i18n.locale = 'en'
 
@@ -444,7 +447,7 @@ export default {
   },
   created(){
   	this.countOther = this.photos.length
-  	
+
   	this.getDataPackage()
   	
   	this.getPhotoFromRoom()	
@@ -534,6 +537,8 @@ export default {
 	  			}
 	  		})
   		})
+
+  		this.$root.$emit('updatePopupCard', this.photos2)
   	},
   	increase(photoOpened, quantity)
   	{
@@ -542,6 +547,7 @@ export default {
   		this.dialog = true
   		this.setQuantity(this.photoOpened, this.photoOpened.quantity)
   		this.addPhotoSelectedIntoDB(this.photoOpened)
+
   	},
   	decrease()
   	{
@@ -601,7 +607,9 @@ export default {
 
   		_.forEach(this.photoTypes, (item, index) => {
   			this.photoTypes[index]['quantity'] = 1	
-  		})		
+  		})
+
+  		this.$root.$emit('updatePopupCard', this.photos2)		
   	},
   	addPhotoSelectedIntoDB(photo)
   	{
@@ -615,7 +623,6 @@ export default {
   	{
   		del(config.API_URL+'cart/delete-photo?imageId='+imageId)
   		.then(res => {
-  			console.log(res.data)
   		})
   	},
 
@@ -658,6 +665,8 @@ export default {
 	  		})
 
   			this.addPhotoSelectedIntoDB(photo)
+
+  			this.$root.$emit('updatePopupCard', this.photos2)
   		}, 2000)
   	,
   	changeLanguage()
@@ -698,6 +707,8 @@ export default {
   						this.photos2.push(value['image_selected'])	
   					}
   				})
+
+  				this.$root.$emit('updatePopupCard', this.photos2)
 
   				this.count = this.photos2.length
 
@@ -786,7 +797,7 @@ export default {
 	z-index:7;
 	background-color:white !important;
 	right: 55px;
-	border-radius:2px;
+	border-radius:8px;
 	-moz-box-shadow: 0 0 5px #888;
 	-webkit-box-shadow: 0 0 5px#888;
 	box-shadow: 0 0 5px #888;
@@ -798,7 +809,7 @@ export default {
 }
 
 .cart .detail-cart{
-    float: left;
+    
     display: none;   
 }
 .cart:hover .detail-cart{
@@ -849,6 +860,34 @@ export default {
 .thumbnailfade-enter,
 .thumbnailfade-leave-to {
   opacity: 0;
+}
+
+.borderless td, .borderless th {
+    border: none;
+}
+.title-table{
+	display: flex;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+table {
+	width: 270px;
+	margin-bottom:0px !important;
+}
+
+.checkout-table{
+	background-color: #00C1F8;
+    border-bottom: 5px;
+    border-radius: 0px 0px 8px 8px;
+    height: 40px;
+    padding: 10px 10px;
+    color:white;
+    display: flex;
+    justify-content: space-between;
+    font-weight:bold;
+    font-size:16px;
 }
 
 

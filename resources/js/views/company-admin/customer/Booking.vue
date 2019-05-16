@@ -376,8 +376,9 @@ export default {
 			let time = ''
 
 			if(this.valueTimezone == '') {
-				time = new Date().toISOString().substr(0,10)
-				this.now = time
+				// time = new Date().toISOString().substr(0,10)
+				// this.now = time
+				this.fetchData(this.now)
 			} else {
 				let timezoneSelected = _.find(this.timezonesData, (item) => {
 					return item.id == this.valueTimezone;
@@ -386,37 +387,36 @@ export default {
 				time = moment_timezone.tz(this.getNow(this.now), timezoneSelected['zone_name']).format();
 
 				this.defaultToday = this.now
-			}
 
-			let params = {companyId: this.company.company_id, 
-						  datetime: time, 
-						  timezoneId: this.valueTimezone 
-						 }
+				let params = {companyId: this.company.company_id, 
+						  	  datetime: time, 
+						      timezoneId: this.valueTimezone 
+						     }
 
-			getWithData(config.API_URL+'booking/timezone/convert', params)
-			.then(response => {
-				if(response && response.data.success) {
-					this.desserts = response.data.data
+				getWithData(config.API_URL+'booking/timezone/convert', params)
+				.then(response => {
+					if(response && response.data.success) {
+						this.desserts = response.data.data
 
+						this.$notify({
+				          title: 'Success',
+				          message: 'Convert timezone success',
+				          type: 'success',
+				          duration: 2000,
+				        })
+					}
+				})
+				.catch(error => {
+					console.log(error.response)
+					this.desserts = []
 					this.$notify({
-			          title: 'Success',
-			          message: 'Convert timezone success',
-			          type: 'success',
-			          duration: 2000,
-			        })
-
-				}
-			})
-			.catch(error => {
-				console.log(error.response)
-				this.desserts = []
-				this.$notify({
-			          title: 'Success',
-			          message: 'Booking not data',
-			          type: 'success',
-			          duration: 2000,
-			        })
-			})
+				          title: 'Success',
+				          message: 'Booking not data',
+				          type: 'success',
+				          duration: 2000,
+				        })
+				})
+			}	
 		},
 		getNow(now) {
 			return moment(now  + ' ' + moment().format('HH:mm:ss')).format('YYYY-MM-DD HH:mm:ss');

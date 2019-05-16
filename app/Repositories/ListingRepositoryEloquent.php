@@ -42,39 +42,45 @@ class ListingRepositoryEloquent extends BaseRepository implements ListingReposit
      */
     public function handleGetPhotos()
     {
+        try {
+            $roomPhoto = $this->model->with(['images.imageSelected','room'])->whereRoomId(request('room'))->first()->toArray();
 
-        $roomPhoto = $this->model->with(['images.imageSelected','room'])->whereRoomId(request('room'))->first()->toArray();
+            if(!empty($roomPhoto)) {
 
-        if(!empty($roomPhoto)) {
+                $array = [];
 
-            $array = [];
+                foreach($roomPhoto['images'] as $value)
+                {
+                    if($value['img_type'] == "COMPRESSED") {
+                        $value['checked'] = false;
 
-            foreach($roomPhoto['images'] as $value)
-            {
-                if($value['img_type'] == "COMPRESSED") {
-                    $value['checked'] = false;
-                    $value['name'] = $value['filename'];
-                    if($value['image_selected'] != null) {
-                        $value['checked'] = true;
-                        $value['image_selected']['name'] = $value['filename'];
-                        $photoPackage = \App\Models\PhotoPackage::find($value['image_selected']['photo_package_id']);
-                        $value['image_selected']['size'] = $photoPackage->size;
+                        $value['name'] = $value['filename'];
 
+                        if($value['image_selected'] != null) {
+
+                            $value['checked'] = true;
+
+                            $value['image_selected']['name'] = $value['filename'];
+
+                            $photoPackage = \App\Models\PhotoPackage::find($value['image_selected']['photo_package_id']);
+
+                            $value['image_selected']['size'] = $photoPackage->size;
+                        }
+
+                        $array[] = $value;
                     }
-                    $array[] = $value;
                 }
+                
+                $dir = '/storage/images/'.$roomPhoto['room']['room_hash'].'/compressed/';
 
+                $roomPhoto['images'] = $array;
+
+                return [$roomPhoto, $dir];
             }
-            
-            $dir = '/storage/images/'.$roomPhoto['room']['room_hash'].'/compressed/';
-
-            $roomPhoto['images'] = $array;
-
-            return [$roomPhoto, $dir];
         }
-
-        return false;
-
+        catch(\Exception $e) {
+            return false;
+        }
     }
 
     /**

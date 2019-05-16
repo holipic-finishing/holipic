@@ -1,6 +1,9 @@
 <template>
 	<v-layout row wrap>
+		<popup></popup>
+		<payment v-if="checkPayment"></payment>
 		<!-- Selected photo-->
+
 		<app-card
 			colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card"
@@ -15,11 +18,12 @@
 						</i>
 						</span>
 						<span class="ml-1">
-							({{countSelected}})
+							<!-- ({{countSelected}}) -->
+							(0)
 						</span>
 						<span class="ml-1 pt-3 top-relative">
 							<i class="material-icons">
-								keyboard_arrow_down
+								keyboard_arrow_down	
 							</i>
 						</span>
 					</v-card-text>
@@ -43,12 +47,12 @@
 					</v-card-text>
 				</v-flex>
 				<v-layout row wrap class="photo-selected ">
-					<v-flex
+					<!-- <v-flex
 						v-for="(photo,index) in changePhotos2"
 						xs12 sm3
 						d-flex
 						:key="photo.id"
-					>
+						>
 						<v-card flat tile class="d-flex custom-d-flex">
 							<div class="grid-item pos-relative custom-grid-item">
 								<v-img
@@ -95,7 +99,7 @@
 				      :images="photos2"
 				      :directory="thumbnailDir"
 				      :timeoutDuration="5000"
-				 	/>
+				 	/> -->
 				</v-layout>
 
 			</div>  
@@ -111,7 +115,8 @@
 			<div class="mb-5 ml-5 mr-5">
 				<v-flex xs2 class="v-flex-sp-l">
 					<v-card-text >
-						<span class="ml-3">Purchase</span> 
+						<span class="ml-3">Purchase</span>
+
 						<span class="ml-3 pt-3 top-relative"><i class="material-icons">
 							filter
 						</i>
@@ -132,7 +137,6 @@
 				</v-flex>
 
 				<v-layout row wrap class="photo-selected images">
-					
 					<v-flex
 						v-for="photo in photos"
 						xs12 sm3
@@ -141,16 +145,18 @@
 					>
 						<v-card flat tile class="d-flex custom-d-flex" >
 							<div class="grid-item pos-relative custom-grid-item">
+
 								<v-img
 									:src="thumbnailDir + photo.name"
 									aspect-ratio="1"
 									class="grey lighten-2 hover-image"
 									height="300"
 									:key="photo.id"
-									@click="selectPhoto(photo)"
+									@click="photo.is_booking == false ? selectPhoto(photo) : ''"
 									contain
 									>
 								</v-img>
+								
 							</div>
 						</v-card>
 
@@ -160,7 +166,8 @@
 									zoom_out_map
 								</i>
 						 	</span>
-						 	<span class="v-flex-sp-r" >
+
+						 	<span class="v-flex-sp-r" v-if="photo.image_selected == null">
 						 		<i class="material-icons cursor-v-card" :class="'active-image'+photo.id">
 									check_circle
 								</i>
@@ -178,6 +185,7 @@
 				</v-layout>
 			</div>
 		</app-card>
+
 		<!--Orther photo -->
 
 		<!-- <app-card colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
@@ -188,15 +196,25 @@
 			</div>
 		</app-card> -->
 	</v-layout>
+
 </template>
 <script>
 
+import config from '../../../config'
+import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import Lightbox from 'vue-my-photos'
 import Vue from 'vue'
+import Popup from './Popup.vue'
+import Payment from './Payment.vue'
 Vue.component('lightbox', Lightbox);
+
+
 export default {
 
   name: 'SelectPhoto',
+  components: {
+  	Popup,Payment
+  },
 
   data () {
     return {
@@ -204,65 +222,65 @@ export default {
     	languages:['ENG'],
     	selectCurrency: 'USD',
     	selectLanguage: 'ENG',
-    	photos: [{
-						id: 1,
-						name: "blog-1.jpg",
-						caption: "Caption 1",
-						author: "Admin",
-						likes: "250"
-					},
-					{
-						id: 2,
-						name: "blog-2.jpg",
-						caption: "Caption 2",
-						author: "Erik Turner",
-						likes: "150"
-					},
-					{
-						id: 3,
-						name: "blog-3.jpg",
-						caption: "Caption 3",
-						author: "John Smith",
-						likes: "200"
-					},
-					{
-						id: 4,
-						name: "blog-4.jpg",
-						caption: "Caption 4",
-						author: "Antonio Rice",
-						likes: "300"
-					},
-					{
-						id: 5,
-						name: "blog-5.jpg",
-						caption: "Caption 5",
-						author: "Caleb Wilson",
-						likes: "400"
-					},
-					{
-						id: 6,
-						name: "blog-6.jpg",
-						caption: "Caption 6",
-						author: "Zachary Robbins",
-						likes: "50"
-					},
-					{
-						id: 7,
-						name: "blog-7.jpg",
-						caption: "Caption 7",
-						author: "Jon Wagner",
-						likes: "100"
-					},
-					{
-						id: 8,
-						name: "blog-8.jpg",
-						caption: "Caption 8",
-						author: "Dorothy Bass",
-						likes: "75"
-					}
-				],
-		photos2: [
-				],
+    // 	photos: [{
+				// 		id: 1,
+				// 		name: "blog-1.jpg",
+				// 		caption: "Caption 1",
+				// 		author: "Admin",
+				// 		likes: "250"
+				// 	},
+				// 	{
+				// 		id: 2,
+				// 		name: "blog-2.jpg",
+				// 		caption: "Caption 2",
+				// 		author: "Erik Turner",
+				// 		likes: "150"
+				// 	},
+				// 	{
+				// 		id: 3,
+				// 		name: "blog-3.jpg",
+				// 		caption: "Caption 3",
+				// 		author: "John Smith",
+				// 		likes: "200"
+				// 	},
+				// 	{
+				// 		id: 4,
+				// 		name: "blog-4.jpg",
+				// 		caption: "Caption 4",
+				// 		author: "Antonio Rice",
+				// 		likes: "300"
+				// 	},
+				// 	{
+				// 		id: 5,
+				// 		name: "blog-5.jpg",
+				// 		caption: "Caption 5",
+				// 		author: "Caleb Wilson",
+				// 		likes: "400"
+				// 	},
+				// 	{
+				// 		id: 6,
+				// 		name: "blog-6.jpg",
+				// 		caption: "Caption 6",
+				// 		author: "Zachary Robbins",
+				// 		likes: "50"
+				// 	},
+				// 	{
+				// 		id: 7,
+				// 		name: "blog-7.jpg",
+				// 		caption: "Caption 7",
+				// 		author: "Jon Wagner",
+				// 		likes: "100"
+				// 	},
+				// 	{
+				// 		id: 8,
+				// 		name: "blog-8.jpg",
+				// 		caption: "Caption 8",
+				// 		author: "Dorothy Bass",
+				// 		likes: "75"
+				// 	}
+				// ],
+		photos2: [],
+		photos: [],
 		items:[{id: 1, name: 'hung'},{id:2, name: 'hung2'}],
 		dialog:false,
 		dialog_nouse:false,
@@ -273,7 +291,8 @@ export default {
 		count:0,
 		countOther:0,
 		photoZoom: [],
-		thumbnailDir: 'https://holipic.pth.com/static/img/',
+		// thumbnailDir: 'https://holipic.pth.com/static/img/',
+		thumbnailDir:'',
 		activeText: true,
 		photoTypes: [
 			{
@@ -295,7 +314,10 @@ export default {
 				quantity: 1
 			},
 		],
-		photoOpened: null
+		photoOpened: null,
+		thumbnailDir:'',
+		customer: JSON.parse(localStorage.getItem('customer')),
+		checkPayment: false
     }
   },
   computed:{
@@ -316,8 +338,26 @@ export default {
         return this.photos2
   	}
   },
+  mounted() {
+  	this.$root.$on('activeSelectedImage', res => {
+  		var key = _.findIndex(this.photos2, function(value) { 
+  					return value.image_id == res; 
+  				});
+
+		this.photos2.splice(key, 1);
+
+  		$('.active-image'+res).show();
+  		
+  	})
+
+  	this.$root.$on('showPopupPayment', res => this.checkPayment = true)
+  },
   created(){
+  	this.getPhotoFromRoom()
+
   	this.countOther = this.photos.length
+
+
   },
   methods:{
   	removeItem(index,photo)
@@ -325,6 +365,11 @@ export default {
 		this.photos2.splice(index, 1);
 		this.count --
 		$('.active-image'+photo.id).css("color", "#464D69");
+
+		del(config.API_URL+'cart/delete-photo?imageId='+photo.id)
+  		.then(res => {
+
+  		})
 
 		//send event basket
   		this.$root.$emit('sendEventCountBasket', this.count)
@@ -366,8 +411,7 @@ export default {
   				this.photos2[index]['type'] = type.type
   				this.photoOpened = this.photos2[index]
   			}
-  		})
-  		
+  		})	
   	},
   	increase(photoOpened, quantity)
   	{
@@ -390,30 +434,35 @@ export default {
   			return value['id'] == photo.id; 
   		});
 
+  		console.log(photoSelected)
+
   		if(photoSelected == undefined)
   		{
   			this.photos2.push(photo)
   			var length = this.photos2.length
   			this.photos2[length-1].type = 'Digital'
   			this.photos2[length-1].quantity = 1
-  			$('.active-image'+photo.id).css("color", "#00C1F8");
+  			// $('.active-image'+photo.id).css("color", "#00C1F8");
+  			$('.active-image'+photo.id).hide();
   			this.count++
-
+  			this.addPhotoSelectedIntoDB(photo)
+  			this.$root.$emit('sendEventCountBasket', this.count)
   		} else {
 			var index = this.photos2.indexOf(photo);
 			if (index !== -1) this.photos2.splice(index, 1);
-
-  			$('.active-image'+photo.id).css("color", "#464D69");
-  			this.count--
+  			$('.active-image'+photo.id).show();
+  			this.addPhotoSelectedIntoDB(photo)
+  			this.$root.$emit('sendEventCountBasket', this.count)
+  			//$('.active-image'+photo.id).css("color", "#464D69");
+  			//this.count--
   		}
 
   		//send event basket
-  		this.$root.$emit('sendEventCountBasket', this.count)
-
   		_.forEach(this.photoTypes, (item, index) => {
   			this.photoTypes[index]['quantity'] = 1	
   		})
-  		
+
+  		console.log(this.photos2)
   	},
   	showZoomImageAndSlide(photo)
   	{
@@ -432,9 +481,27 @@ export default {
   			}
   		})
   	},
-  	test(type)
+  	getPhotoFromRoom()
   	{
-  		alert(type)
+  		get(config.API_URL+'room/show-photo?room='+this.customer.room_id)
+  		.then(res => {
+  			if(res && res.data.success){
+  				
+  				this.thumbnailDir = res.data.data[1]
+
+  				this.photos = res.data.data[0]['images']
+  			}
+  		})
+  		.catch(err => {
+  			console.log(err.response)
+  		})
+  	},
+  	addPhotoSelectedIntoDB(photo)
+  	{	let params = {photo}
+  		post(config.API_URL+'customer/order-image', params)
+  		.then(res => {
+
+  		})
   	}
   }
 }

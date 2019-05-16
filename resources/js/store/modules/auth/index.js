@@ -60,7 +60,7 @@ const actions = {
         .then(res => {
            if(res && res.data.success) {
             let data = res.data.data.user
-             Nprogress.done();
+            Nprogress.done();
                 setTimeout(() => {
                     context.commit('loginUserSuccess', data);
                 }, 500)     
@@ -224,10 +224,19 @@ const mutations = {
     loginUserSuccess(state, user) {
         
         state.user = user;
-        localStorage.setItem('user',JSON.stringify(user))
+        
         state.isUserSigninWithAuth0 = false
         var access_token = user.access_token        
-        localStorage.setItem('access_token',access_token)    
+        localStorage.setItem('access_token',access_token)
+
+        if(user.role_id == "1" || user.role_id == "2" || user.role_id == "3") {
+            localStorage.setItem('user',JSON.stringify(user))
+        } else if(user.role_id == "4") {
+            localStorage.setItem('customer',JSON.stringify(user))
+        } else {
+            localStorage.setItem('shopSelling',JSON.stringify(user))
+        }
+
         if(user.role_id == "1"){
             router.push('/super-admin/dashboard')
         }
@@ -236,6 +245,12 @@ const mutations = {
         }
         if(user.role_id == "3"){
             router.push('/branch-admin/dashboard')
+        }
+        if(user.role_id == '4') {
+            router.push('/customer/show-photo')
+        }
+        if(user.role_id == '5') {
+            router.push('/shop-selling/dashboard')
         }
         vp.$notify.success({
             title: 'Success',

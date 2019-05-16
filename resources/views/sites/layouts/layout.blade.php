@@ -35,12 +35,16 @@
 
 	@yield('content')
 	
+
+	
+	
 	{{-- @include('sites.partials.banner-intro') --}}
 	
 	<!-- Pricing section starts -->
 
 	<!-- Mega Footer section starts -->
 	@include('sites.partials.footer')
+	
 	<!-- Footer section ends -->
 	
 	@include('sites.partials.scripts')

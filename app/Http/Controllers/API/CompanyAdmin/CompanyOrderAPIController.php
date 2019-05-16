@@ -315,4 +315,15 @@ class CompanyOrderAPIController extends AppBaseController
         return $this->sendResponse($results, 'count values of tag successfully');
     }
 
+    public function createOrderConfirm()
+    {
+        if(request('params')) {
+            $customer = $this->orderRepository->handleOrderConfirm();
+
+            return $this->sendResponse([], 'Save data success');
+        }
+
+        return $this->sendError('Can not save data');
+    }
+
 }

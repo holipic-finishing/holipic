@@ -22,8 +22,7 @@ import BookingConfirm from '../views/shop-selling/BookingConfirm.vue'
 import ShopSellingLogin from '../views/shop-selling/Login.vue'
 import ShopSellingDashboard from '../views/shop-selling/Dashboard.vue'
 import CustomerLogin from '../views/customer/Login.vue'
-
-
+import CustomerResetPassword from '../views/customer/ResetPassword.vue'
 
 Vue.use(Router)
 
@@ -49,11 +48,19 @@ routers = [
   	},
   	{
   		path:'/shop-selling/dashboard',
-  		component: ShopSellingDashboard
+  		component: ShopSellingDashboard,
+  		meta: {
+  			shopSellingAuth: true
+  		}
   	},
   	{
   		path:'/customer/login',
-  		component: CustomerLogin
+  		component: CustomerLogin,
+  		name: 'CustomerLogin'
+  	},
+  	{
+  		path:'/customer/reset-password',
+  		component: CustomerResetPassword
   	},
 	{
     	// Page Not Found
@@ -77,10 +84,11 @@ router.beforeEach((to, from, next) => {
 	if(to.meta.requiresAuth) {
 		const authUser = JSON.parse(localStorage.getItem('user'))
 		const token = localStorage.getItem('access_token')
-		if(!authUser || !token) {
+
+		if(!authUser) {
 				next({
-				path: '/login'
-			})
+					path: '/login'
+				})
 		}
 		else if(to.meta.adminAuth) {
 			const authUser = JSON.parse(localStorage.getItem('user'))
@@ -92,7 +100,7 @@ router.beforeEach((to, from, next) => {
 				})
 			}
 		} else if(to.meta.companyAuth) {
-			const authUser = JSON.parse(localStorage.getItem('user'))
+			const authUser = JSON.parse(localStorage.getItem('user'))		
 			if(authUser.role_id == "2"){
 				next()
 			} else {
@@ -114,7 +122,7 @@ router.beforeEach((to, from, next) => {
 		if(to.path === '/login'){
 			const authUser = JSON.parse(localStorage.getItem('user'))
 			const token = localStorage.getItem('access_token')
-			if(authUser || token) {
+			if(authUser) {
 				if(authUser.role_id == "1" ){
 					next({
 						path:'/super-admin/dashboard',
@@ -130,8 +138,23 @@ router.beforeEach((to, from, next) => {
 				}
 			}	
 		} 
+		if(to.path === '/customer/login') {
+			const customer = JSON.parse(localStorage.getItem('customer'))
+			if(customer && customer.role_id == "4") {
+				next({
+					path: 'customer/show-photo'
+				})
+			}
+		}
+		if(to.path === '/shop-selling/login') {
+			const shopSelling = JSON.parse(localStorage.getItem('shopSelling'))
+			if(shopSelling && shopSelling.role_id == "5") {
+				next({
+					path: 'shop-selling/dashboard'
+				})
+			}
+		}
 		next()
-		
 	}
 
 	if(to.meta.requiresRoom){
@@ -143,6 +166,32 @@ router.beforeEach((to, from, next) => {
 		}else{
 			next({
 				path:'/room-tab',
+			})
+		}
+	}
+
+	if(to.meta.customerAuth) {
+		const customerAuth = JSON.parse(localStorage.getItem('customer'))
+		if(customerAuth) {
+			if(customerAuth.role_id == '4') {
+				next()
+			} 
+		} else {
+			next({
+				path: '/customer/login'
+			})
+		}
+	}
+
+	if(to.meta.shopSellingAuth) {
+		const shopSellingAuth = JSON.parse(localStorage.getItem('shopSelling'))
+		if(shopSellingAuth) {
+			if(shopSellingAuth.role_id == '5') {
+				next()
+			} 
+		} else {
+			next({
+				path: '/shop-selling/login'
 			})
 		}
 	}

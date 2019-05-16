@@ -5,7 +5,7 @@
 		    	<v-card height="auto" class="v-card-payment">
 		    		<v-card-title class="v-card-payment--header">
 		    			<div class="line">
-		    			<v-toolbar-side-icon @click="checkPopup = false">
+		    			<v-toolbar-side-icon @click="checkPayment = false">
 							<v-icon>
 								fas fa-times
 							</v-icon>
@@ -23,8 +23,6 @@
 			                </v-list-tile-sub-title>
               			</v-list-tile-content>
 		    		</v-card-title>
-
-		    		<!-- <v-divider></v-divider> -->
 
 		    		<v-card-title class="title-note">Have a promocode?</v-card-title>
 		    		<v-card class="v-card-info-payment">
@@ -99,6 +97,9 @@ export default {
         	name: [val => (val || '').length > 0 || 'This field is required']
         },
     }
+  },
+  mounted(){
+  	this.$root.$on('showPopupPayment', res => this.checkPayment = true)
   }
 }
 </script>

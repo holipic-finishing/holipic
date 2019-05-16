@@ -10,9 +10,13 @@
 							</v-icon>
 						</v-toolbar-side-icon>
 		    		</v-card-title>
-		    		<v-card-title>
+
+		    		<v-card-title class="v-card-title-offer">
 		    			<v-img src="https://lh3.googleusercontent.com/cEk27DnlDACU9301ifc_g0RUbwbTQnbU5E0zcWHK031GXYR-fcn9tRWPJm0JDCKvquU" max-width="100%">
 		       			</v-img>
+		       			<div class="offer_top">
+				        	<h1><span>BEST OFFER FOR YOU</span></h1>
+				       </div>
 		    		</v-card-title>
 		    		<v-card-title class="v-card-title--text">Get Now Rest Of 10 Photos!.
 		    			<br> Only for Rp 1000000

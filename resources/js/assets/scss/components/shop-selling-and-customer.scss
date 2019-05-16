@@ -240,7 +240,12 @@
     min-width: 430px !important;
     .v-card {
     	.custom-divider{
-    		border-color: #424242 !important;
+    		border-color: #e0e0e0 !important;
+    		margin:0px !important;
+    	}
+    	.v-list-title-profile-customer:hover{
+    		background-color: #f2f2f2;
+    		cursor: pointer;
     	}
     }
 	.v-card__title{
@@ -312,7 +317,7 @@
     margin: 0px !important;
 }
 
-/*room*/
+/*==========room=========*/
 
 .room-margin{
 	margin: 0 auto !important;
@@ -791,6 +796,9 @@
 			}
 			
 		}
+		.v-flex-category:hover{
+			cursor: pointer;
+		}
 	}
 }
 
@@ -932,6 +940,29 @@
 				width:45%;
 			}
 		}
+		.v-card-title-offer{
+		  	position: relative;
+		  	text-align: center;
+		  	color: white;
+		  	.offer_top {
+		  	  	position: absolute;
+			  	top: 80%;
+			  	left: 50%;
+			  	transform: translate(-50%, -50%);
+			  	h1 {
+			  	    margin: 0px;
+				    text-align: center;
+				    color: #fff;
+				    font-size: 20px;
+				    line-height: 22px;
+				    font-weight: normal;
+				    span{
+				    	border: 3px solid #fff;
+    					padding: 10px 15px;
+				    }
+			  	}
+		  	}
+		}
 		.v-card__title{
 			&--custom{
 				right:0px;
@@ -998,8 +1029,23 @@
 		}
 	}	
 }
+@media only screen and (min-width: 481px) and (max-width: 767px)  {
+	.popup{
+		.v-card {
+			width: auto !important;
+		}
+	}
+	.custom-dialog-basket{
+		width:550px !important;
+	}
+}
 
-
-
-
+@media only screen and (min-width: 320px) and (max-width: 767px)  {
+	.custom-dialog-basket{
+		max-width: 85% !important;
+		.container {
+			width: 100%;
+		}
+	}
+}
 

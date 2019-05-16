@@ -23,9 +23,9 @@ export default {
     }
   },
   mounted() {
-    $(".mouse-right").on("contextmenu",function(e){
-      return false;
-    });
+    // $(".mouse-right").on("contextmenu",function(e){
+    //   return false;
+    // });
 
     // $(document).keydown(function(e){
     //   if(e.which === 123){

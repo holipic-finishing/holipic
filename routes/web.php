@@ -20,6 +20,12 @@ Route::namespace('API')->group(function(){
 		
 		Route::post('loginSuperAdmin','LoginController@loginSuperAdmin');
 
+		Route::get('forgot-password', 'LoginController@sendEmailResetPassword');
+
+		Route::get('customer/confirm-forgot-password', 'LoginController@confirmForgotPassword');
+
+		Route::post('customer/update-password', 'LoginController@updatePassword');
+
 		Route::get('logout','LoginController@logoutAuth');
 		
 	});
@@ -34,7 +40,9 @@ Route::get('users/activation', 'UserController@activationAccount')->name('users.
 
 Route::get('test', function() {
 	$c = Carbon\Carbon::parse('2017-06-14T08:22:29.296-03:00')->format('d/m/Y h:i:s');
-	dd($c);
+	$str = rand(); 
+	$result = hash("sha256", $str); 
+//	print_r($result2);
 });
 
 Route::get('/{any}', function () {

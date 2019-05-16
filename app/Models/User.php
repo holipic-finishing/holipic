@@ -68,7 +68,7 @@ class User extends Authenticatable
 
         $token =(string)(new Builder())->setId('4f1g23a12aa', true) 
                         ->setIssuedAt(time())
-                        ->setExpiration(time() + 1209600) 
+                        ->setExpiration(time() + 120) //1290600 == 14day
                         ->set('username', $this->first_name) 
                         ->set('email', $this->email) 
                         ->set('id', $this->id) 

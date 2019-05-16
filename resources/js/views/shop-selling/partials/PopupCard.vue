@@ -33,20 +33,20 @@ export default {
   name: 'PopupCard',
   data () {
     return {
-    	albumPhotos: JSON.parse(localStorage.getItem('photoSelected')),
+    	albumPhotos: '',
     	detailBooking:[]
     }
   },
   mounted() {
   	this.$root.$on('updatePopupCard', res => {
   		this.detailBooking = []
-
+  		
   		this.handleGroupType(res)
   	})
 
   },
   created() {
-  		this.handleGroupType(this.albumPhotos)
+  		// this.handleGroupType(this.albumPhotos)
   },
   methods: {
   	handleGroupType(photos) {
@@ -84,8 +84,6 @@ export default {
 
 			  		this.detailBooking.push(value)
   				})
-
-  				console.log(this.detailBooking)
   			}
   		})
   		.catch(err => {

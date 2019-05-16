@@ -31,7 +31,8 @@
 			<div class="pricing-wrapper">
 				<v-layout row wrap>
 					<template v-for="value in packages">
-					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex" v-if="value.package_name == 'Package 1'">
+
+					<v-flex xs12 sm12 md3 lg3 xl12 class="container-package-ramdom--flex" v-if="value.package_name == 'Package 1'">
 						<div class="app-card text-xs-center">
 							<div class="app-card-title primary d-custom-flex justify-space-between">
 								<h3 class="mb-0 white--text">{{value.package_name}}</h3>
@@ -55,7 +56,7 @@
 							
 						</div>
 					</v-flex>
-					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex" v-else-if="value.package_name == 'Package 2'">
+					<v-flex xs12 sm12 md3 lg3 xl12 class="container-package-ramdom--flex" v-else-if="value.package_name == 'Package 2'">
 						<div class="app-card text-xs-center">
 							<div class="app-card-title success white--text d-custom-flex justify-space-between">
 								<h3 class="mb-0 white--text">{{value.package_name}}</h3>
@@ -79,7 +80,7 @@
 							</div>
 						</div>
 					</v-flex>
-					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex" v-else-if="value.package_name == 'Package 3'">
+					<v-flex xs12 sm12 md3 lg3 xl12 class="container-package-ramdom--flex" v-else-if="value.package_name == 'Package 3'">
 						<div class="app-card text-xs-center">
 							<div class="app-card-title warning white--text d-custom-flex justify-space-between">
 								<h3 class="mb-0 white--text ">{{value.package_name}}</h3>
@@ -103,7 +104,7 @@
 							</div>
 						</div>
 					</v-flex>
-					<v-flex xs12 sm6 md6 lg3 class="container-package-ramdom--flex" v-else>
+					<v-flex xs12 sm12 md3 lg3 xl12 class="container-package-ramdom--flex" v-else>
 						<div class="app-card text-xs-center">
 							<div class="app-card-title error white--text d-custom-flex justify-space-between">
 								<h3 class="mb-0 white--text">{{value.package_name}}</h3>

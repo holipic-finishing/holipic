@@ -9,6 +9,7 @@ use Lcobucci\JWT\Parser;
 use App\Http\Controllers\API\BaseApiController;
 use App\Models\Branch;
 use App\Models\Company;
+use Mail;
 
 
 
@@ -91,12 +92,10 @@ class LoginController extends BaseApiController
 
         } catch (\Exception $e){
 
-            return ('An unexpected error occurred. Please try again...');
-            
+            return ('An unexpected error occurred. Please try again...');       
         }
 
     }
-
 
     public function reNewToken()
     {
@@ -113,11 +112,11 @@ class LoginController extends BaseApiController
 
     public function loginSuperAdmin(UserLoginAPIRequest $request)
     {
-
         $result = strpos($request['email'],'@');
         $credentials = $request->only(['email', 'password']);
         $email = $credentials['email'];
         $dataInfoLogin = null;
+
         try{
             if(strpos($request['email'],'@') !== false) {
                 $user = $this->userRepo->findUserIsExits($email);
@@ -137,11 +136,10 @@ class LoginController extends BaseApiController
 
                 return [
                     "success"=> false,
-                    "message"=>'Email or User Name address not exist in system',
+                    "message"=>'Email or Username address not exist in system',
 
                 ];
             }
-           
            
             if (! $token = auth()->attempt($dataInfoLogin)) {
                     return [
@@ -149,8 +147,8 @@ class LoginController extends BaseApiController
                         "message"=> 'Password provider was incorrect'
                     ];
                 }
-            
 
+            
             if(!$this->userRepo->checkUserCommpanyExits(auth()->user())) {
                 return [
                     "success"=> false,
@@ -173,7 +171,6 @@ class LoginController extends BaseApiController
             ];
 
         } catch (\Exception $e){
-
             // return ('An unexpected error occurred. Please try again...');
             return $e;
             
@@ -231,9 +228,111 @@ class LoginController extends BaseApiController
                 'company_logo' => $company->logo
             ];
         }
-
+        if($user->role_id == '4') {
+            $data = [
+                'role_id'      => $user->role_id,
+                'full_name'    => $user->customer->name,
+                'avatar'       => $user->customer->avatar,
+                'access_token' => $user->access_token,
+                'email'        => $user->email,
+                'id'           => $user->id,
+                'room_id'      => $user->customer->room_id
+            ];
+        }
+        if($user->role_id == '5') {
+            $data = [
+                'role_id'      => $user->role_id,
+                'access_token' => $user->access_token,
+                'email'        => $user->email,
+                
+            ];
+        }
         return $data;
-
     }
 
+    public function sendEmailResetPassword()
+    {
+        $user = $this->userRepo->findUserIsExits(request('email'));
+        
+        if($user) {
+
+            $token = $this->userRepo->handleCreateOrUpdatePasswordReset($user);
+
+            Mail::to($user->email)->send(new \App\Mail\SendMailForgotPasswordCustomer($user, $token));
+
+            return $this->responseSuccess('Send email success', null);
+        }
+
+        return $this->responseError('Email does not exist', null);
+    }
+
+    public function confirmForgotPassword()
+    {
+        if(!request('token')) {
+            return redirect('customer/reset-password');
+        }
+
+        // $jwtPayload = $this->userRepo->handleTokenForgotPassword();
+        $token = $this->userRepo->handleTokenForgotPassword();
+
+        if(!empty($token)) {
+            if($token->life_time >  time()) {
+                return redirect('customer/reset-password?token='.request('token').'&email='.$token->email); //render component vue
+            } else {
+                return redirect('customer/reset-password?exp=expired');
+            }
+        }
+
+        return redirect('customer/reset-password');
+
+        // if(!empty($jwtPayload) && $jwtPayload->exp) {
+        //     if($jwtPayload->exp > time() + 60)
+        //     {
+        //         return redirect('customer/reset-password?token='.request('token').'&email='.$jwtPayload->email); //render component vue
+        //         // dd($time,$jwtPayload->exp,'conhan');
+        //     } else {
+        //         // $time = time() + 60;
+        //         // dd($time,$jwtPayload->exp,'hethan');
+        //         return redirect('customer/reset-password?exp=expired');   
+        //     }
+        // } 
+    }
+
+    public function updatePassword()
+    {
+        if(!request('token') || !request('email')) {
+           return $this->responseError('Not find token or email', null);
+        }
+
+        $token = $this->userRepo->handleTokenForgotPassword();
+
+        if(!empty($token)) {
+            if($token->life_time > time() && request('email') == $token->email) {
+
+                $data = $this->userRepo->handleUpdatePassword();
+
+                if($data) {
+                    return $this->responseSuccess('Reset password successfully', null);
+                }
+
+                return $this->responseError('Email does not exist', null);
+            }
+        }
+
+        return $this->responseError('The token is incorrect or expired', null);
+
+        // $jwtPayload = $this->userRepo->handleTokenForgotPassword();
+
+        // if(!empty($jwtPayload) && $jwtPayload->exp && $jwtPayload->exp > time() + 60) {
+
+        //     if(request('email') == $jwtPayload->email) {
+
+        //         $data = $this->userRepo->handleUpdatePassword();
+
+        //         return $this->responseSuccess('Reset password successfully', null);
+        //     }
+        // }
+
+        // return $this->responseError('The token is incorrect or expired', null);
+    }
 }

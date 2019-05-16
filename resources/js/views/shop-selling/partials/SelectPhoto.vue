@@ -284,86 +284,86 @@ export default {
     	selectCurrency: 'USD',
     	selectLanguage: 'ENG',
   //   	photos: [
-		// 	{
-		// 		id: 1,
-		// 		name: "blog-1.jpg",
-		// 		caption: "Caption 1",
-		// 		author: "Admin",
-		// 		likes: "250",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 2,
-		// 		name: "blog-2.jpg",
-		// 		caption: "Caption 2",
-		// 		author: "Erik Turner",
-		// 		likes: "150",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 3,
-		// 		name: "blog-3.jpg",
-		// 		caption: "Caption 3",
-		// 		author: "John Smith",
-		// 		likes: "200",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 4,
-		// 		name: "blog-4.jpg",
-		// 		caption: "Caption 4",
-		// 		author: "Antonio Rice",
-		// 		likes: "300",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 5,
-		// 		name: "blog-5.jpg",
-		// 		caption: "Caption 5",
-		// 		author: "Caleb Wilson",
-		// 		likes: "400",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 6,
-		// 		name: "blog-6.jpg",
-		// 		caption: "Caption 6",
-		// 		author: "Zachary Robbins",
-		// 		likes: "50",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 7,
-		// 		name: "blog-7.jpg",
-		// 		caption: "Caption 7",
-		// 		author: "Jon Wagner",
-		// 		likes: "100",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 8,
-		// 		name: "blog-8.jpg",
-		// 		caption: "Caption 8",
-		// 		author: "Dorothy Bass",
-		// 		likes: "75",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 9,
-		// 		name: "blog-8.jpg",
-		// 		caption: "Caption 8",
-		// 		author: "Dorothy Bass",
-		// 		likes: "75",
-		// 		checked:false
-		// 	},
-		// 	{
-		// 		id: 10,
-		// 		name: "blog-8.jpg",
-		// 		caption: "Caption 8",
-		// 		author: "Dorothy Bass",
-		// 		likes: "75",
-		// 		checked:false
-		// 	}
+			// 	{
+			// 		id: 1,
+			// 		name: "blog-1.jpg",
+			// 		caption: "Caption 1",
+			// 		author: "Admin",
+			// 		likes: "250",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 2,
+			// 		name: "blog-2.jpg",
+			// 		caption: "Caption 2",
+			// 		author: "Erik Turner",
+			// 		likes: "150",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 3,
+			// 		name: "blog-3.jpg",
+			// 		caption: "Caption 3",
+			// 		author: "John Smith",
+			// 		likes: "200",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 4,
+			// 		name: "blog-4.jpg",
+			// 		caption: "Caption 4",
+			// 		author: "Antonio Rice",
+			// 		likes: "300",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 5,
+			// 		name: "blog-5.jpg",
+			// 		caption: "Caption 5",
+			// 		author: "Caleb Wilson",
+			// 		likes: "400",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 6,
+			// 		name: "blog-6.jpg",
+			// 		caption: "Caption 6",
+			// 		author: "Zachary Robbins",
+			// 		likes: "50",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 7,
+			// 		name: "blog-7.jpg",
+			// 		caption: "Caption 7",
+			// 		author: "Jon Wagner",
+			// 		likes: "100",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 8,
+			// 		name: "blog-8.jpg",
+			// 		caption: "Caption 8",
+			// 		author: "Dorothy Bass",
+			// 		likes: "75",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 9,
+			// 		name: "blog-8.jpg",
+			// 		caption: "Caption 8",
+			// 		author: "Dorothy Bass",
+			// 		likes: "75",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 10,
+			// 		name: "blog-8.jpg",
+			// 		caption: "Caption 8",
+			// 		author: "Dorothy Bass",
+			// 		likes: "75",
+			// 		checked:false
+			// 	}
 		// ],
 		photos:[],
 		photos2: [],
@@ -607,7 +607,9 @@ export default {
 
   		_.forEach(this.photoTypes, (item, index) => {
   			this.photoTypes[index]['quantity'] = 1	
-  		})		
+  		})
+
+  		this.$root.$emit('updatePopupCard', this.photos2)		
   	},
   	addPhotoSelectedIntoDB(photo)
   	{
@@ -621,7 +623,6 @@ export default {
   	{
   		del(config.API_URL+'cart/delete-photo?imageId='+imageId)
   		.then(res => {
-  			console.log(res.data)
   		})
   	},
 
@@ -706,6 +707,8 @@ export default {
   						this.photos2.push(value['image_selected'])	
   					}
   				})
+
+  				this.$root.$emit('updatePopupCard', this.photos2)
 
   				this.count = this.photos2.length
 

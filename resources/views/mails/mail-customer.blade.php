@@ -27,25 +27,33 @@
 	</style>
 </head>
 <body>
-	<table cellpadding="0" cellspacing="0" style="width:100%">
-	  <tr>
-	   <td align="center" style="padding: 40px 0 30px 0;">
-	     <img src="https://www.holipic.com/wp-content/uploads/2015/10/HOLIPIC-LOGO.png" alt="Creating Email Magic" width="30%" style="display: block;" />
-	   </td>
-	</tr>
-	<tr style="padding: 0px 20px">
-		<td>
-	   		<span class="title-mail">{{$content['email_title']}}</span>
-	   	</td>
-	</tr>
-	  
-	<tr style="padding: 0px 20px">
-  		<td style="padding: 20px 0 30px 0;" >
-   			<span class="content-email">{{$content['format_email_content']}}</span>
-  		</td>
- 	</tr>
-	  
- 	</table>
+	@if(!isset($email) && !isset($password))
+		<table cellpadding="0" cellspacing="0" style="width:100%">
+		  <tr>
+		   <td align="center" style="padding: 40px 0 30px 0;">
+		     <img src="https://www.holipic.com/wp-content/uploads/2015/10/HOLIPIC-LOGO.png" alt="Creating Email Magic" width="30%" style="display: block;" />
+		   </td>
+		</tr>
+		<tr style="padding: 0px 20px">
+			<td>
+		   		<span class="title-mail">{{$content['email_title']}}</span>
+		   	</td>
+		</tr>
+		  
+		<tr style="padding: 0px 20px">
+	  		<td style="padding: 20px 0 30px 0;" >
+	   			<span class="content-email">{{$content['format_email_content']}}</span>
+	  		</td>
+	 	</tr>
+		  
+	 	</table>
+	@else
+	<h3>Please login holipic with account</h3>
+	<br>
+	<span>Email: {{$email}}</span>
+	<br>
+	<span>Password: {{$password}}</span>
+	@endif
 	{{-- <div class="container">
 		@if(isset($content)) 
 			<div class="row">

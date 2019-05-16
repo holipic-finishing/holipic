@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use InfyOm\Generator\Common\BaseRepository;
 use Carbon\Carbon;
 use DB;
+use Mail;
 
 /**
  * Class OrderRepository
@@ -1448,6 +1449,64 @@ class OrderRepository extends BaseRepository
     return $allOrders;
   }
 
+    public function handleOrderConfirm()
+    {
+        $images = request('images');
+
+        $params = request('params');
+
+        $password = random_int(100000, 900000);
+
+        $listing = \App\Models\Listing::whereRoomId($params['roomId'])->first();
+
+        $user = \App\Models\User::create([
+                    'last_name' => '-',
+                    'first_name' => '-',
+                    'email' => $params['email'],
+                    'role_id' => 4,
+                    'password' => bcrypt($password),
+                    'active' => false
+                ]);
+
+        $customer = \App\Models\Customer::create([
+                    'name' => $params['name'],
+                    'address' => '-',
+                    'customer_password' => $password,
+                    'user_id' => $user['id'],
+                    'room_id' => $params['roomId'],
+                    'branch_id' => '1' //Data example because still branch_id from shop-selling
+                ]);
+
+        $this->model->create([
+            'branch_id' => $listing->branch_id,
+            'photographer_id' => $listing->photographer_id,
+            'customer_id' => $customer['id'],
+            'total_amount' => $params['total'],
+            'purchase_date' => $params['date'],
+            'payment_method' => 'CASH',
+            'purchase_from' => 'SHOP',
+            'status' => 'DONE',
+            'currency_id' => '1',
+            'invoice' => 'INV' . time() . rand(1000000, 9999999)   
+        ]);
+
+        $this->handleUpdateImagesBuy($images);
+
+        $account = ['email' => $user->email, 'password' => $password];
+
+        Mail::to($user->email)->send(new \App\Mail\SendMailAccountCustomer($account));
+
+        return $user;
+    }
+
+    public function handleUpdateImagesBuy($images)
+    {
+        foreach ($images as $key => $value) {
+            $image = \App\Models\Image::find($value['image_id']);
+
+            $image = $image->update(['is_booking' => true]);
+        }
+    }
 
 }
 

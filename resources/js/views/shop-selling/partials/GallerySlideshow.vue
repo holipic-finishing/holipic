@@ -12,12 +12,33 @@
 						<i class="material-icons cursor-v-card custom-icon active-image">
 										check_circle
 						</i></button>
-						<img class="vgs__container__img" @click.stop="onNext" :src="thumbnailDir + imageUrl">
+						<div>
+							<img class="vgs__container__img" @click.stop="onNext" :src="thumbnailDir + imageUrl">
+							
+							<div class="vgs_thumbnail">
+								<template v-for="(image, i) in changeItem">
+									<img
+										class="vgs__gallery__container__img"
+										:src="thumbnailDir + image.name"
+										@click.stop="onClickThumb(image, i)"
+										:key="i"
+										:id="'chooess'+image.id"
+										:class="{'border-thumbnail': image.checked == true}"
+									>
+								</template>
+							</div>
+							<div class="vgs_slideshow">
+								<i class="far fa-play-circle" style="font-size:50px;"></i>
+								<span>SLIDE SHOW</span>
+							</div>
+						</div>
+
 					</div>
 				</div>
 				<button type="button" class="vgs__next" v-if="isMultiple" @click.stop="onNext">&rsaquo;</button>
+
 			</div>
-			<div class="vgs__gallery custom-gallery" v-if="isMultiple" ref="gallery">
+			<!-- <div class="vgs__gallery custom-gallery" v-if="isMultiple" ref="gallery">
 				<div class="vgs__gallery__title" v-if="images">{{ imgIndex + 1 }} / {{ images.length }}</div>
 				<div
 					class="vgs__gallery__container custom-container"
@@ -34,7 +55,7 @@
 						>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</transition>
 </template>
@@ -53,7 +74,8 @@ export default {
 			thumbnailWidth: 120,
 			thumbnailDir: '',
 			selectphoto: [],
-			showGallery:false
+			showGallery:false,
+			thumbnail:[]
 		};
 	},
 	mounted() { 
@@ -69,19 +91,21 @@ export default {
 		this.$root.$on('array-photos', res => {
 			this.showGallery = true
 			var vm = this
+						
 			if(res && res.length){
 				vm.selectphoto = res
 				_.forEach(res, (value,index) => {
-						_.forEach(vm.images, (v,i) => {
-							if(value.image_id === v.id){
-								$(document).ready(function() {
-										$('#chooess'+v.id).css("border", "3px solid #0074f9"); 
+					_.forEach(vm.images, (v,i) => {
+						if(value.image_id === v.id){
+							$(document).ready(function() {
+								// $('#chooess'+v.id).css("border", "3px solid #0074f9"); 
 
-								})
-							}
+							})
+						}
 					})
 				})
 			}
+
 		})
 
 		var roomLogin = JSON.parse(localStorage.getItem('roomLogin'))
@@ -94,6 +118,35 @@ export default {
 		}
 	},
 	methods: {
+		showThumbnail(images, imgIndex)
+		{
+			var array = []
+
+			var arrayExcept = []
+
+			_.forEach(images, (value,index) =>{
+				
+				if(index>imgIndex) {
+					if(array.length <= 2) {
+						array.push(value)
+						
+					}
+				}
+				if(index != imgIndex) {
+					arrayExcept.push(value)
+				}
+			})
+
+			if(array.length < 3) {
+				_.forEach(arrayExcept, (value,index) => {
+					if(array.length < 3 ) {
+						array.push(value)
+					}
+				})
+			}
+
+			return array
+		},
 		close() {
 			this.imgIndex = null;
 			this.showGallery = false;
@@ -111,7 +164,7 @@ export default {
 			$('.active-image').css("color", "#fff");
 			
 			if(item.checked) { 
-				$('#chooess'+item.id).css("border", "3px solid #0074f9");     
+				// $('#chooess'+item.id).css("border", "3px solid #0074f9");     
 				
 				$('.active-image').css("color", "#244293");
 			} 
@@ -133,11 +186,10 @@ export default {
 			$('.active-image').css('color', '#fff');
 			
 			if(item.checked) {
-				$('#chooess'+item.id).css({"border":"3px solid #0074f9"});  
+				// $('#chooess'+item.id).css({"border":"3px solid #0074f9"});  
 			
 				$('.active-image').css("color", "#244293");
-			}
-			// this.updateThumbails();
+			}	
 		},
 		onClickThumb(image, index) {
 			this.imgIndex = index;
@@ -149,7 +201,6 @@ export default {
 			}
 			
 			this.updateThumbails();
-
 			
 		},
 		updateThumbails() {
@@ -224,13 +275,13 @@ export default {
 				} 
 		},
 		addPhotoSelectedIntoDB(photo)
-  	{
-  		let params = {photo}
-  		post(config.API_URL+'cart/add-photo',params)
-  		.then(res => {
+  		{
+	  		let params = {photo}
+	  		post(config.API_URL+'cart/add-photo',params)
+	  		.then(res => {
 
-  		})
-  	},
+	  		})
+  		},
   	deletePhotoUnselected(imageId)
   	{
   		del(config.API_URL+'cart/delete-photo?imageId='+imageId)
@@ -241,6 +292,7 @@ export default {
 	},
 	computed: {
 		imageUrl() {
+			
 			var arr_image = this.images;
 			var index_image;
 			if(this.imgIndex) { 
@@ -248,6 +300,8 @@ export default {
 			} else {
 				index_image = 0
 			}
+
+			this.thumbnail = this.showThumbnail(this.images, index_image)
 			
 			$(document).ready(function() {
 					
@@ -260,7 +314,6 @@ export default {
 					}
 			})
 				return this.images[index_image].name;
-			
 		},
 		item() {
 			return this.images[this.imgIndex];
@@ -269,7 +322,10 @@ export default {
 			return this.images.length > 1;
 		},
 		changeItem(){
-			return this.images;
+			return this.thumbnail;
+		},
+		autoSlide(){
+			
 		}
 	}
 	
@@ -369,7 +425,7 @@ $screen-md-max: ($screen-lg - 1);
 		overflow: hidden;
 		cursor: pointer;
 		overflow: hidden;
-		max-width: 100vh;
+		width:70%;
 		margin: 0.5rem auto 0;
 		left: 0.5rem;
 		right: 0.5rem;
@@ -390,6 +446,24 @@ $screen-md-max: ($screen-lg - 1);
 			height: 100%;
 			object-fit: contain;
 			border-radius: 10px;
+			
+		}
+		.vgs_thumbnail{
+			color: red;
+		    position: absolute;
+		    top: 10%;
+		    right: 5%;
+		    width: 250px;
+		    .border-thumbnail {
+		    	border: 3px solid #00C1F8 !important;
+		    }
+		}
+		.vgs_slideshow{
+			color:white;
+			display: flex;
+		    justify-content: center;
+		    flex-direction: column;
+		    align-items: center;
 		}
 	}
 }
@@ -420,14 +494,14 @@ $screen-md-max: ($screen-lg - 1);
 		width: 100%;
 		&__img {
 			width: 100%;
-    height: 100%;
+    		height: 100%;
 			object-fit: cover;
 			display: inline-block;
 			float: none;
-			margin:0px 10px 10px 0px;
+			margin:0px 10px 20px 0px;
 			cursor: pointer;
-			opacity: 0.6;
-			border-radius: $radius-medium;
+			border: 2px solid white;
+			border-radius: 3px;
 		}
 		&__img--active {
 			width: 100%;
@@ -435,7 +509,6 @@ $screen-md-max: ($screen-lg - 1);
 			display: inline-block;
 			float: none;
 			opacity: 1;
-			border: 3px solid indianred;
 		}
 	}
 }

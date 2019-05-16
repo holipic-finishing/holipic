@@ -18,7 +18,7 @@
 			          label="ENG"
 			        ></v-overflow-btn>
 			  		
-			      	<v-btn flat>
+			      	<v-btn flat @click="logout">
 			      		<img src="images/LOGOUT.png" width="40px" height="40px"/>
 			      	</v-btn>
 	    		</v-toolbar-items>
@@ -86,6 +86,13 @@ export default {
   		if(old) {
   			alert(old)
   		}
+  	}
+  },
+  methods: {
+  	logout() 
+  	{
+  		localStorage.removeItem('shopSelling')
+  		this.$router.push('/shop-selling/login')
   	}
   }
 }

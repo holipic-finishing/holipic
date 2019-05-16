@@ -49,28 +49,28 @@
 		      
 		        <v-divider class="custom-divider"></v-divider>
 		        
-		          	<v-list-tile>
+		          	<v-list-tile class="v-list-title-profile-customer">
 		          		<span class="ml-3 mr-3 f-span c-span"> <i class="fas fa-credit-card"></i> </span>
 		          		
 		          		<span class="c-span">Purchase Details</span>
 		          	</v-list-tile>
-		          	<v-list-tile>
+		          	<v-list-tile class="v-list-title-profile-customer">
 		          		<span class="ml-3 mr-3 f-span c-span"><i class="material-icons">filter_vintage</i></span>
 		          		<span class="c-span">Voucher</span>
 		          	</v-list-tile>
 
-		          	<v-list-tile>
+		          	<v-list-tile class="v-list-title-profile-customer">
 		          		<span class="ml-3 mr-3 f-span c-span"><i class="material-icons">feedback</i></span>
 		          		<span class="c-span">Feedback</span>
 		          	</v-list-tile>
  
-		          	<v-list-tile>
+		          	<v-list-tile class="v-list-title-profile-customer">
 		          		<span class="ml-3 mr-3 f-span c-span"><i class="material-icons">access_time</i></span>
 		          		<span class="c-span">Account Expiry</span>
 		          	</v-list-tile>
 		        
 		        <v-divider class="custom-divider"></v-divider>
-		        <v-card-actions>
+		        <v-card-actions class="v-list-title-profile-customer">
 		        	<i class="fas fa-sign-out-alt ml-4 mr-3 f-span c-span"></i>
 		          	<!-- <v-btn flat @click="dialog = false"> -->
 		          		<span class="c-span">Logout</span>
@@ -122,6 +122,8 @@
 			</v-card>
 		</v-dialog>
 		<!-- Dialog download file -->
+
+		<!--Dialog table cart-->
 		<v-dialog v-model="dialog3" scrollable content-class="custom-dialog-basket" max-width="1200">
 			<v-container>
 	  			<table class="table">
@@ -135,18 +137,18 @@
 				      </tr>
 				    </thead>
 				    <tbody>
-				      <tr>
-				        <td><img src="https://helpx.adobe.com/nz/illustrator/how-to/design-draw-shapes/_jcr_content/main-pars/image.img.jpg/5857-design-draw-shapes_hero.jpg" width="60px" height="60px"></td>
-				        <td class="mt-3 pt-4">Digital</td>
-				        <td class="mt-3 pt-4">1</td>
-				        <td class="total-price pt-4">Rp 15000</td>
+				      <tr v-for="(image,index) in imageSelected">
+				        <td><img :src="dir+image.name" width="60px" height="60px"></td>
+				        <td class="mt-3 pt-4">{{image.size}}</td>
+				        <td class="mt-3 pt-4">{{image.quantity}}</td>
+				        <td class="total-price pt-4">{{image.price}}</td>
 				        <td class="icon-clear">
-				        	<v-btn icon>
+				        	<v-btn icon @click="deleteImageSelected(image.image_id,index)">
 					        	<v-icon>clear</v-icon>
 					      </v-btn>
 				        </td>
 				      </tr>
-				      <tr>
+				      <!-- <tr>
 				        <td><img src="https://blogphotoshop.com/wp-content/uploads/2019/01/illustrator-cs6.png" width="60px" height="60px"></td>
 				        <td class="mt-3 pt-4">Digital</td>
 				        <td class="mt-3 pt-4">1</td>
@@ -156,7 +158,7 @@
 					        	<v-icon>clear</v-icon>
 					      	</v-btn>
 				        </td>
-				      </tr>
+				      </tr> -->
 				    </tbody>
 				</table>
 				<v-divider></v-divider>
@@ -165,14 +167,14 @@
 				  		
 				  	</v-flex>
 				  	<v-flex md3 xs3 lg3>
-				  		<span style="font-weight: bold;margin-left: 25px;">Total: .....</span>
+				  		<span style="font-weight: bold;margin-left: 25px;">Total: {{total}}</span>
 				  	</v-flex>
 
 				  	<v-flex md10 xs10 lg10>
 				  		
 				  	</v-flex>
 				  	<v-flex md2 xs2 lg2>
-				  		<v-btn color="warning">purchase</v-btn>
+				  		<v-btn color="warning" @click="processPayment()">purchase</v-btn>
 				  	</v-flex>
 	  	
 				</v-layout>
@@ -184,6 +186,9 @@
 </template>
 
 <script>
+import {get, post, del} from '../../../api/index.js'
+import config from '../../../config/index.js'
+
 export default {
 
   name: 'Header',
@@ -196,13 +201,22 @@ export default {
     	showDetail: true,
     	icon: 'keyboard_arrow_down',
     	countBasket: 0,
-    	countDownload: 0
+    	countDownload: 0,
+    	customer: JSON.parse(localStorage.getItem('customer')),
+    	imageSelected: [],
+    	dir:'',
+    	total:''
     }
   },
   mounted() {
   	this.$root.$on('sendEventCountBasket', res => {
   		this.countBasket = res
+ 		this.imageSelected = []
+  		this.showImageSelected()
   	})
+  },
+  created(){
+  	this.showImageSelected()
   },
   methods:{
   	showPackage()
@@ -228,6 +242,32 @@ export default {
   	showBasket()
   	{
   		this.dialog3 = true
+  	},
+  	showImageSelected()
+  	{
+  		get(config.API_URL+'customer/list-image-selected?roomId='+this.customer.room_id)
+  		.then(res => {
+  			if(res.data && res.data.success) {
+  				this.imageSelected = res.data.data[0]
+  				this.dir = res.data.data[1]
+  				this.countBasket = this.imageSelected.length
+  				this.total = _.sumBy(this.imageSelected, function(v) { return parseInt(v.price); });
+  			}
+  		})
+  	},
+  	deleteImageSelected(imageId,index)
+  	{
+  		del(config.API_URL+'cart/delete-photo?imageId='+imageId)
+  		.then(res => {
+  			this.imageSelected.splice(index, 1)
+  			this.countBasket = this.imageSelected.length
+  			this.$root.$emit('activeSelectedImage', imageId)
+  		})
+  	},
+  	processPayment()
+  	{
+  		this.dialog3 = false
+  		this.$root.$emit('showPopupPayment')
   	}
   }
 };

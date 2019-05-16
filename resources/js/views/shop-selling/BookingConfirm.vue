@@ -58,7 +58,7 @@
 		  			  					TOTAL
 		  			  				</div>
 		  			  				<div class="content-footer-booking--right">
-		  			  					150000 RP
+		  			  					{{total}}
 		  			  				</div>
 		  			  			</div>
 	  			  			</div>
@@ -67,7 +67,9 @@
 						<div class="col-4 flex-3 col-info">
 							<v-card class='content-confirm-booking' row>
 			      				<v-container class="container-content-confirm-booking">
+			      					<v-form ref="form">
 				      			  	<v-layout wrap class="layout-content-confirm-booking">
+				      			  		
 				      			  		<v-flex xs2 lg2 md2 sm2 class="content-confirm-booking--left">
 				      			  			<span class="content-confirm-booking--left--icon">
 				      			  				<i class="far fa-user"></i>
@@ -76,9 +78,10 @@
 				      			  		<v-flex xs9 lg9 md9 sm9 class="content-confirm-booking--right">
 				      			  			<div class="content-confirm-booking--right--input">
 				      			  				<v-text-field
-										            v-model="first"
+										            v-model="customerBooking.name"
 										            label=""
 										            solo
+										            :rules="nameRules"
 										        ></v-text-field>
 				      			  			</div>
 				      			  		</v-flex>
@@ -94,6 +97,7 @@
 										            v-model="customerBooking.room"
 										            label=""
 										            solo
+										            disabled
 										        ></v-text-field>
 				      			  			</div>
 				      			  		</v-flex>
@@ -106,9 +110,10 @@
 				      			  		<v-flex xs9 lg9 md9 sm9 class="content-confirm-booking--right">
 				      			  			<div class="content-confirm-booking--right--input">
 				      			  				<v-text-field
-										            v-model="first"
+										            v-model="customerBooking.email"
 										            label=""
 										            solo
+										             :rules="emailRules"
 										        ></v-text-field>
 				      			  			</div>
 				      			  		</v-flex>
@@ -121,9 +126,10 @@
 				      			  		<v-flex xs9 lg9 md9 sm9 class="content-confirm-booking--right">
 				      			  			<div class="content-confirm-booking--right--input">
 				      			  				<v-text-field
-										            v-model="first"
+										            v-model="customerBooking.mobile"
 										            label=""
 										            solo
+										            :rules="phoneRules"
 										        ></v-text-field>
 				      			  			</div>
 				      			  		</v-flex>
@@ -139,16 +145,19 @@
 										            v-model="customerBooking.date"
 										            label=""
 										            solo
+										            disabled
 										        ></v-text-field>
 				      			  			</div>
 				      			  		</v-flex>
 
 				      			  		<v-flex xs12 lg12 md12 sm12 class="content-confirm-booking--btn">
-				      			  			<v-btn depressed large color="primary" class="btn-finish-booking">FINISH BOOKING
+				      			  			<v-btn depressed large color="primary" class="btn-finish-booking" @click="checkout">FINISH BOOKING
 				      			  				<i class="fas fa-arrow-right" style="margin-left:10px"></i>
 				      			  			</v-btn>
 				      			  		</v-flex>
+				      			  	
 				      			  	</v-layout>
+				      			  	</v-form>
 			      				</v-container>
 					      	</v-card>
 						</div>
@@ -179,12 +188,26 @@ export default {
     	albumPhotos: JSON.parse(localStorage.getItem('photoSelected')),
     	detailBooking: [],
     	customerBooking:{name:'', room:'', email:'', mobile:'', date:''},
-    	thumbnailDir:''
+    	thumbnailDir:'',
+    	nameRules: [
+	    	v => !!v || 'Name is required',
+	        v => (v && v.length <= 10) || 'Password must be less than 10 characters'
+		],
+		emailRules: [
+	        v => !!v || 'E-mail is required',
+	        v => /.+@.+/.test(v) || 'E-mail must be valid'
+	    ],
+	    phoneRules:[
+	    	v => !!v || 'Phone is required'
+	        // v => /^[0-9]*$/.test(v) || 'phoneRules'
+	    ],
+	    roomLogin: JSON.parse(localStorage.getItem('roomLogin')),
+	    total:0
     }
   },
   mounted() {
 
-  	var roomLogin = JSON.parse(localStorage.getItem('roomLogin'))
+  	// var roomLogin = JSON.parse(localStorage.getItem('roomLogin'))
 
     this.thumbnailDir = localStorage.getItem('thumbnailDir')
 
@@ -204,7 +227,7 @@ export default {
 		quantity = 0
 	})
 
-	this.customerBooking.room = (JSON.parse(localStorage.getItem('roomLogin'))).room_number
+	this.customerBooking.room = this.roomLogin.room_number
 
 	this.customerBooking.date = new Date().toISOString().substr(0, 10)
 
@@ -232,6 +255,8 @@ export default {
 			  			value['priceNew'] = 0
 			  		}
 
+			  		this.total = this.total + value['priceNew']
+
 			  		this.detailBooking.push(value)
   				})
   			}
@@ -239,6 +264,27 @@ export default {
   		.catch(err => {
   			console.log(err.response)
   		})
+  	},
+  	checkout()
+  	{
+  		if(this.$refs.form.validate()){
+  			let images = JSON.parse(localStorage.getItem('photoSelected'));
+
+  			let params = { params: {
+  								name: this.customerBooking.name , 
+		  						roomId: this.roomLogin.id, 
+		  						email: this.customerBooking.email,
+		  				 		phone: this.customerBooking.mobile, 
+		  				 		date: this.customerBooking.date,
+		  				 		total: this.total
+  						   },
+  						   images: images
+  						}
+  			post(config.API_URL+'shop-selling/order-confirm', params)
+  			.then(res => {
+
+  			})
+  		}
   	}
   }
 }

@@ -1,6 +1,6 @@
 <template>
 	<v-toolbar dark color="primary" class="custom-toolbar">
-    	<v-btn icon>
+    	<v-btn icon @click="back">
     		<i class="material-icons color-text-header">
 				reply_all
 			</i>
@@ -174,6 +174,10 @@ export default {
   	choosePackage(value)
   	{
   		this.$root.$emit('typePackage',{name: value})
+  	},
+  	back()
+  	{
+  		this.$router.push('/shop-selling/dashboard')
   	}
   }
 }

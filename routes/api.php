@@ -111,6 +111,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('export-customers','CompanyAPIController@exportEmailCustomerByCompanyId');
 		Route::get('customer-emails', 'CompanyAPIController@getCustomerEmails');
 		Route::get('customer/send-email', 'CompanyAPIController@sendEmailCustomer');
+		Route::post('company/upload-photo', 'CompanyAPIController@uploadPhoto');
 
 		/*************PagesAPIController**************/
 		Route::post('edit/page/{itemId}','PagesAPIController@editPage');

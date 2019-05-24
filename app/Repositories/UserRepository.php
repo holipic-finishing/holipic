@@ -109,9 +109,7 @@ class UserRepository extends BaseRepository
 
             return $user; 
         }
-
-        return false;
-         
+        return false; 
     }
 
     public function handleCreateOrUpdatePasswordReset($user)
@@ -134,9 +132,7 @@ class UserRepository extends BaseRepository
                                 'life_time' => time() + 120
                             ]);
         }
-
         return $token;
-
     }
 
 }

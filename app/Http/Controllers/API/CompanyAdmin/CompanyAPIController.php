@@ -65,4 +65,17 @@ class CompanyAPIController extends AppBaseController
 
         return $this->sendResponse($customers, 'Success send mail');
     }
+
+    public function uploadPhoto()
+    {
+        $file = request('UploadFiles');
+
+        if($file) {
+            // $file = $file->getClientOriginalExtension();
+
+            $name = $file->getClientOriginalName();
+
+            dd($name);
+        }
+    }
 }

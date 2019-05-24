@@ -40,14 +40,11 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
         $cart = $this->model->whereImageId($imageId)->first();
 
         if(!empty($cart)) {
-
             $cart = $this->model->whereId($cart->id)->update(array(
                 'quantity' => $photo['quantity'], 
                 'photo_package_id' => $photoPackage->id,
                 'price' => $photoPackage->dollar * $photo['quantity']));
-
         } else {
-
             $cart = $this->model->create([
                 'image_id' => $photo['id'], 
                 'quantity' => $photo['quantity'], 
@@ -103,7 +100,6 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
         $cart = $this->model->whereImageId($image['id'])->first();
 
         if(!empty($cart)) {
-
             $cart = $cart->delete();
         }else{
             $cart = $this->model->create([
@@ -127,11 +123,9 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
         $photos = [];
 
         if(count($listing['images']) > 0) {
-            
             foreach($listing['images'] as $image) 
             {
                 if($image['image_selected'] != null) {
-                    
                     $photoPackge = \App\Models\PhotoPackage::find($image['image_selected']['photo_package_id']);
                     $image['image_selected']['size'] = $photoPackge->size; 
                     $image['image_selected']['name'] = $image['filename'];

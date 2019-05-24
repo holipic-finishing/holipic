@@ -77,11 +77,11 @@ class SnapPhotoRepository extends BaseRepository
 
         if(!empty($room)) {
             $snapPhoto = $this->model->with('snapPhotoDetails')->whereRoomId($room['id'])->first();
+
             $snapPhoto['room_number'] = $room['room_number'];
 
             return $snapPhoto;
         }
-
         return false;
     }
 }

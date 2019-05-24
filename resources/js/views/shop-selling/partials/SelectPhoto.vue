@@ -367,7 +367,6 @@ export default {
 		// ],
 		photos:[],
 		photos2: [],
-		items:[{id: 1, name: 'hung'},{id:2, name: 'hung2'}],
 		dialog:false,
 		dialog_nouse:false,
 		dialog2:false,
@@ -382,14 +381,15 @@ export default {
 		photoTypes: [],
 		photoOpened: null,
 		total:0,
-		number: 0,
 	    index: null,
 	    room: JSON.parse(localStorage.getItem('roomLogin')),
-	    activeGallery:false
+	    activeGallery:false,
+	    packageId:''
     }
   },
   
   mounted(){
+  	console.log($(window).width())
   	this.$i18n.locale = 'en'
 
   	this.$root.$on('typePackage', res => {
@@ -421,7 +421,6 @@ export default {
 					});
   		this.photos[key].checked = res.checked
   	})
-
   },
   computed:{
   	typeDetailReturn()
@@ -547,7 +546,6 @@ export default {
   		this.dialog = true
   		this.setQuantity(this.photoOpened, this.photoOpened.quantity)
   		this.addPhotoSelectedIntoDB(this.photoOpened)
-
   	},
   	decrease()
   	{
@@ -605,9 +603,9 @@ export default {
   			this.count--	
   		}
 
-  		_.forEach(this.photoTypes, (item, index) => {
-  			this.photoTypes[index]['quantity'] = 1	
-  		})
+  		// _.forEach(this.photoTypes, (item, index) => {
+  		// 	this.photoTypes[index]['quantity'] = 1	
+  		// })
 
   		this.$root.$emit('updatePopupCard', this.photos2)		
   	},
@@ -625,7 +623,6 @@ export default {
   		.then(res => {
   		})
   	},
-
   	getPricePackage(photos)
   	{
   		var totalNew = 0
@@ -642,9 +639,7 @@ export default {
   	showZoomImageAndSlide(photo,index)
   	{
   		this.index = index
-
   		this.$root.$emit('array-photos', this.photos2); 	
-
   	},
   	setQuantity : _.debounce( 
   		function(photo, quantity) {
@@ -734,26 +729,40 @@ export default {
   	{
   		var messagePackage = ''
 
-  		if(namePackage == 'Package 1' && count < 21) {
-  			messagePackage = 'Please choose 21 image'
-  			
+  		var packageId = ''
+
+  		if(namePackage == 'Package 1' && count < 3) {
+  			messagePackage = 'Please choose 21 image'	
   		} else if(namePackage == 'Package 2' && count < 30) {
   			messagePackage = 'Please choose 30 image'
-  			
   		} else if(namePackage == 'Package 3' && count < 40) {
   			messagePackage = 'Please choose 40 image'
-  			
-  		}else {
+  		}else if(namePackage == 'Package 4' && count < 50){
   			messagePackage	 = 'Please choose 50 image'
-  			
   		}
 
-  		this.$notify({
-          title: 'Notification',
-          message: messagePackage,
-          type: 'error',
-          duration: 2000,
-		})
+  		if(messagePackage != '') {
+	  		this.$notify({
+	          title: 'Notification',
+	          message: messagePackage,
+	          type: 'error',
+	          duration: 2000,
+			})
+  		}else{
+  			switch(namePackage) {
+  				case 'Package 1' :
+  					this.packageId = 1
+  					break;
+  				case 'Package 2' :
+  					this.packageId = 2
+  					break;
+  				case 'Package 3' :
+  					this.packageId = 3
+  					break;
+  				default:
+  					this.packageId = 4
+  			}	
+  		}
   	},
   	checkout()
   	{

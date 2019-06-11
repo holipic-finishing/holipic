@@ -22,7 +22,7 @@
 					<div class="row box-body-booking">
 						<div class="col-4 col-image" style="overflow: auto;">
 							<div class="container container-image">
-								<div class="row" style="height: 300px;" >
+								<div class="row" >
 									<div class="col-4 mb-3" v-for="(photo,index) in albumPhotos" >
 										<v-img :src="thumbnailDir+photo.name" :lazy-src="thumbnailDir+photo.name">
 											
@@ -184,7 +184,6 @@ export default {
   data () {
     return {
     	first: '',
-    	
     	albumPhotos: JSON.parse(localStorage.getItem('photoSelected')),
     	detailBooking: [],
     	customerBooking:{name:'', room:'', email:'', mobile:'', date:''},
@@ -268,9 +267,9 @@ export default {
   	checkout()
   	{
   		if(this.$refs.form.validate()){
-  			let images = JSON.parse(localStorage.getItem('photoSelected'));
+  			let images 	= JSON.parse(localStorage.getItem('photoSelected'));
 
-  			let params = { params: {
+  			let params 	= { params: {
   								name: this.customerBooking.name , 
 		  						roomId: this.roomLogin.id, 
 		  						email: this.customerBooking.email,
@@ -333,5 +332,4 @@ export default {
 table > tr:last-child td {
 	padding-bottom:10px;
 }
-
 </style>

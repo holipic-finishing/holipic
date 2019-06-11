@@ -128,8 +128,7 @@ export default {
 				
 				if(index>imgIndex) {
 					if(array.length <= 2) {
-						array.push(value)
-						
+						array.push(value)	
 					}
 				}
 				if(index != imgIndex) {
@@ -189,16 +188,20 @@ export default {
 				// $('#chooess'+item.id).css({"border":"3px solid #0074f9"});  
 			
 				$('.active-image').css("color", "#244293");
-			}	
+			}
 		},
 		onClickThumb(image, index) {
-			this.imgIndex = index;
+			// this.imgIndex = index;
 			
 			$('.active-image').css('color', '#fff');
 			
 			if(image.checked) {     
 				$('.active-image').css("color", "#244293");
 			}
+
+			this.imgIndex = _.findIndex(this.images, function(value) { 
+						return value.id == image.id; 
+					});
 			
 			this.updateThumbails();
 			

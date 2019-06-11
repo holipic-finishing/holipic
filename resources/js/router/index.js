@@ -161,11 +161,11 @@ router.beforeEach((to, from, next) => {
 		const roomLogin = JSON.parse(localStorage.getItem('roomLogin'))
 		if(roomLogin) {
 			next({
-				path:'/shop-selling',
+				path:'/shop-selling/show-photo',
 			})
 		}else{
 			next({
-				path:'/room-tab',
+				path:'/shop-selling/dashboard',
 			})
 		}
 	}

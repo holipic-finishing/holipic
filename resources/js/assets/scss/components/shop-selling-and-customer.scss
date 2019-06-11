@@ -189,7 +189,6 @@
 						text-align:center;
 					}
 				}
-				
 			}
 		}
 		.container{
@@ -205,6 +204,67 @@
 		    			padding: 7px 0px !important;
 				    }
 				}
+			}
+		}
+		/*shop selling css popup room*/
+		.v-card-room{
+			border-radius: 10px !important;
+		}
+		.container-room{
+			margin-left:0px !important;
+			.v-layout-room{
+				display: flex;
+	    		justify-content: center;
+	    		.flex-text-room{
+	    			display: contents;
+	    			.text-field-room{
+	    				.primary--text {
+	    					caret-color: rgb(0, 193, 248) !important;
+	    					color:rgb(0, 193, 248) !important;
+	    				}
+	    			}
+	    			.v-input {
+	    				.v-input__control{
+	    					input {
+	    						color:rgb(0, 193, 248);
+	    					}
+	    				}
+	    			}
+	    		}
+	    		.flex-number-room{
+	    			display: flex;
+    				justify-content: space-around;
+    				margin-bottom: 20px;
+    				.number-circle {
+    				  display: inline-table;
+					  border-radius: 80%;
+					  width: 70px;
+					  height: 70px !important;
+					  padding: 13px;
+					  background: #fff;
+					  border: 2px solid #666;
+					  color: #666;
+					  text-align: center;
+					  font: 32px Arial, sans-serif;
+					  background-color: #e0e0e0 !important;
+					}
+					.number-circle:hover {
+						cursor: pointer;
+						border: 2px solid rgb(0, 193, 248);
+					  	color: rgb(0, 193, 248);
+					}
+	    		}
+	    		.flex-action-room{
+	    			max-width: 70% !important;
+	    			.v-btn {
+	    				background:rgb(0, 193, 248) !important;
+	    				font-size:20px;
+	    				height: 40px !important;
+	    			}
+	    		}
+			}
+			.text-field-room{
+				width: 90%;
 			}
 		}
 		
@@ -578,7 +638,7 @@
     					justify-content: center;
     					.row {
     						display: flex;
-    						justify-content: center;
+    						/*justify-content: center;*/
     						height: auto !important;
     						width: 100%;
     					}
@@ -949,6 +1009,10 @@
 			  	top: 80%;
 			  	left: 50%;
 			  	transform: translate(-50%, -50%);
+			  	width: 300px;
+			  	border: 2px solid #fff;
+			  	height: 60px;
+			  	padding:20px 0px !important;
 			  	h1 {
 			  	    margin: 0px;
 				    text-align: center;
@@ -957,8 +1021,7 @@
 				    line-height: 22px;
 				    font-weight: normal;
 				    span{
-				    	border: 3px solid #fff;
-    					padding: 10px 15px;
+    					/*padding: 10px 15px;*/
 				    }
 			  	}
 		  	}

@@ -33,6 +33,7 @@
         "vue-template-compiler": "^2.5.17"
     },
     "dependencies": {
+        "@syncfusion/ej2-vue-inputs": "^17.1.47",
         "amcharts3": "^3.21.13",
         "auth0-js": "^9.7.3",
         "babel-cli": "^6.26.0",

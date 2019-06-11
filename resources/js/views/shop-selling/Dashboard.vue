@@ -5,7 +5,6 @@
 	    		<h4 class="color-text-header">BRANCH NAME</h4>
 	    	</v-btn>
 	    	<v-spacer></v-spacer>
-	    	
 	    	<div class="toolbar-shop-right">
 	    		<v-toolbar-items class="hidden-sm-and-down v-toolbar-item-shop">
 			      	<v-overflow-btn
@@ -23,12 +22,12 @@
 			      	</v-btn>
 	    		</v-toolbar-items>
 	    	</div>
-	    	
 		</v-toolbar>
+
 		<v-container fluid class="v-container-shop">
 			<v-layout row wrap class="custom-row">
 				<v-flex xs12 lg3 md6 sm6>
-					<div class="v-flex-category">
+					<div class="v-flex-category" @click="showRoomLogin">
 						<img src="shop_selling/ICONEYE.png" width="90%" class="v-flex-category--image"/>
 						<span class="v-flex-category--title">See Photos</span>
 					</div>
@@ -52,11 +51,56 @@
 					</div>
 				</v-flex>
 			</v-layout>
-
+				<v-dialog
+     			 	v-model="dialog"
+      				width="400"
+      				temporary
+      				content-class="v-dialog-custom"
+    				>
+    				<v-card class="v-card-room">
+				        <v-container fluid class="container-room">
+						    <v-layout row wrap class="v-layout-room">
+						    	<v-flex xs12 lg12 md12 sm12 class="flex-text-room">
+							      	<div class="text-field-room">
+							      		 <v-text-field
+									      v-model="roomNumber"
+									      label="Type here room number"
+									      required
+									    ></v-text-field>
+							      	</div>
+						      	</v-flex>
+						      	<v-flex xs12 lg12 md12 sm12 class="flex-number-room">
+							      	<div class="number-circle" @click="typeNumberRoom(1)">1</div>
+							      	<div class="number-circle" @click="typeNumberRoom(2)">2</div>
+									<div class="number-circle" @click="typeNumberRoom(3)">3</div>
+						      	</v-flex>
+						      	<v-flex xs12 lg12 md12 sm12 class="flex-number-room">
+							      	<div class="number-circle" @click="typeNumberRoom(4)">4</div>
+							      	<div class="number-circle" @click="typeNumberRoom(5)">5</div>
+									<div class="number-circle" @click="typeNumberRoom(6)">6</div>
+						      	</v-flex>
+						      	<v-flex xs12 lg12 md12 sm12 class="flex-number-room">
+							      	<div class="number-circle" @click="typeNumberRoom(7)">7</div>
+							      	<div class="number-circle" @click="typeNumberRoom(8)">8</div>
+									<div class="number-circle" @click="typeNumberRoom(9)">9</div>
+						      	</v-flex>
+						      	<v-flex xs12 lg12 md12 sm12 class="flex-number-room">
+							      	<div class="number-circle" @click="typeNumberRoom('remove')">x</div>
+							      	<div class="number-circle" @click="typeNumberRoom(0)">0</div>
+									<div class="number-circle" @click="typeNumberRoom('removeOne')"><i class="fas fa-arrow-left"></i></div>
+						      	</v-flex>
+						      	<v-flex xs12 lg12 md12 sm12 class="flex-action-room">
+						      		<v-btn color="primary" @click="loginRoom">
+						      			ENTER &nbsp;<i class="fas fa-arrow-right"></i>
+						      		</v-btn>
+						      	</v-flex>
+						    </v-layout>
+						</v-container>
+				      </v-card>
+    			</v-dialog>
 		</v-container>
 		
 		<div class="footer">
-			
   			<span class="span-footer">Term & Conditions</span>
   			<span class="span-footer">Privacy Policy</span>
   			<span class="span-footer">Refund Policy</span>
@@ -65,6 +109,9 @@
 </template>
 
 <script>
+import  { get, post, put, del, getWithData } from '../../api/index.js'
+import config from '../../config/index.js'
+
 export default {
 
   name: 'Dashboard',
@@ -73,26 +120,52 @@ export default {
     return {
     	dropdown_font: ['USD', 'EURO'],
     	languages: ['ENG', 'INDO'],
-    	textChange:''
+    	textChange:'',
+    	dialog:false,
+    	roomNumber: ''
     }
-  },
-  watch: {
-  	textChange(newtext,old)
-  	{
-  		if(newtext) {
-  			console.log("co cai moi" + newtext)
-  		}
-
-  		if(old) {
-  			alert(old)
-  		}
-  	}
   },
   methods: {
   	logout() 
   	{
   		localStorage.removeItem('shopSelling')
+  		localStorage.removeItem('roomLogin')
+  		localStorage.removeItem('photoSelected')
+  		localStorage.removeItem('thumbnailDir')
   		this.$router.push('/shop-selling/login')
+  	},
+  	showRoomLogin()
+  	{
+  		this.dialog = true
+  	},
+  	typeNumberRoom(value)
+  	{
+  		if(value == 'remove') {
+  			this.roomNumber = ''
+  		} else if(value == 'removeOne') {
+  			this.roomNumber = this.roomNumber.substring(0, this.roomNumber.length - 1);
+  		}else{
+  			this.roomNumber = this.roomNumber+value
+  		}
+  	},
+  	loginRoom()
+  	{
+  		get(config.API_URL+'room/login?room='+this.roomNumber)
+  		.then(res => {
+  			if(res && res.data.success) {
+  				var data = res.data.data
+  				localStorage.setItem('roomLogin', JSON.stringify(data))
+  				this.$router.push({name: 'ShopSelling', params :{data: data}}) 
+  			}
+  		})
+  		.catch(err => {
+  			this.$notify({
+	          title: 'Error',
+	          message: err.response.data.message,
+	          type: 'error',
+	          duration: 2000,
+	        })
+  		})
   	}
   }
 }
@@ -123,6 +196,6 @@ export default {
 	margin:0px 15px !important;
 	padding: 15px 0px;
 	font-size:17px;
-
 }
+
 </style>

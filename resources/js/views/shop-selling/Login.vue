@@ -23,6 +23,7 @@
 							      :rules="emailRules"
 							      label="Email"
 							      required
+							      @keyup.enter="login"
 							    ></v-text-field>
 
 							    <v-text-field
@@ -31,6 +32,7 @@
 							      :rules="passwordRules"
 							      label="Password"
 							      required
+							      @keyup.enter="login"
 							    ></v-text-field>
 
 							    <v-btn
@@ -80,7 +82,6 @@ export default {
       validate () {
         if (this.$refs.form.validate()) {
           this.snackbar = true
-          alert(1)
         }
       },
       login() {
@@ -89,7 +90,6 @@ export default {
 			        email: this.email,
 			        password: this.password
 	      		};
-
 	      		this.$store.dispatch("signinUserInDatabase", {user});
   			}
 	    }

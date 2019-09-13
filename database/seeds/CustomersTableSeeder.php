@@ -16,11 +16,11 @@ class CustomersTableSeeder extends Seeder
 
         \App\Models\Customer::truncate();
         \App\Models\Room::truncate();
-        
+
         $branches = \App\Models\Branch::all();
 
         foreach ($branches as $branch) {
-            for ($i=0; $i < rand(7,20) ; $i++) {
+            for ($i=0; $i < rand(5,10) ; $i++) {
                 $password = $faker->password;
 
                 $user =  \App\Models\User::create([

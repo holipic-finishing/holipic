@@ -9,8 +9,8 @@ var fs = require('fs');
 var https = require('https');
 
 var app = https.createServer({
-    key: fs.readFileSync('../rsa_key/apache-selfsigned.key'),
-    cert: fs.readFileSync('../rsa_key/apache-selfsigned.crt'),
+    key: fs.readFileSync('../rsa_key/holipic.key'),
+    cert: fs.readFileSync('../rsa_key/holipic.pem'),
 });
 
 app.listen(SOCKET_IO_PORT);
@@ -39,7 +39,7 @@ io.on('connection',function(socket){
     //     socket.join(joinRoom);
     //     console.log('a client has joined room '+ joinRoom);
     // });
-     
+
     // socket.on('leave', function (leaveroom) {
     //     socket.leave(leaveroom);
     //     console.log('a client has leave room '+ leaveroom);
@@ -67,7 +67,7 @@ redis.on('pmessage',function(partner, channel, message){
 	console.log('----------------Start------------------');
     console.log(channel + ": " + message);
     console.log('---------------------------------------');
-	
+
 	if(channel == 'view-listings') {
 		message = JSON.parse(message);
 	    io.emit(channel, message.data.notification);

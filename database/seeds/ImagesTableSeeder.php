@@ -28,7 +28,7 @@ class ImagesTableSeeder extends Seeder
 
         	$room_folder_name = $listing->room->room_hash;
         	$path = storage_path() . '/images/' . $room_folder_name;
-        	
+
         	if (!file_exists($path)) {
 	            File::makeDirectory($path . '/compressed', $mode = 0777, true, true);
 	            File::makeDirectory($path . '/original', $mode = 0777, true, true);
@@ -38,14 +38,14 @@ class ImagesTableSeeder extends Seeder
 
         		$original_img = $faker->image($path . '/original', 1920, 1080, $faker->randomElement($categories), false);
 
-        		Image::configure(array('driver' => 'imagick'));
-                
+        		Image::configure(array('driver' => 'gd'));
+
         		$compressed_img = Image::make($path . '/original/' . $original_img);
         		$compressed_img->resize(640, 480);
         		$compressed_img->insert(public_path() . '/images/watermark.png', 'center');
         		$compressed_img->encode('data-url');
         		$compressed_img->save($path . '/compressed/' . 'thumbnail_' . $original_img, 70);
-        		
+
         		\App\Models\Image::create([
         			'filename' => $original_img,
         			'img_type' => 'ORIGINAL',

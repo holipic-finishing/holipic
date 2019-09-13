@@ -9,7 +9,6 @@
 
     // MY STYLES
     echo styles([
-        //example
         'css/libraries/animate.css',
         'css/libraries/custom.css',
         'css/libraries/pages.css',

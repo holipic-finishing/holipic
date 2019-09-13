@@ -6,17 +6,17 @@
 	<div class="session-right text-xs-center style-left">
 		<div class="session-table-cell">
 			<div class="session-content">
-				<img 
+				<img
 					:src="appLogo"
-					class="img-responsive mb-3" 
-					width="150" 
-					height="78" 
+					class="img-responsive mb-3"
+					width="150"
+					height="78"
 				/>
 				<router-view></router-view>
 			</div>
 		</div>
 	</div>
-</div>			
+</div>
 </template>
 
 <script>
@@ -33,8 +33,8 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .style-left {
-	margin-left: 0px;
+	margin-left: 0px !important;
 }
 </style>

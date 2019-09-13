@@ -5,24 +5,24 @@
 		<router-link to="/session/login">{{$t('message.login')}}</router-link>
 	</p>
 	<v-form v-model="valid" class="mb-4">
-		<v-text-field 
-			label="Username" 
-			v-model="name" 
-			:rules="nameRules" 
-			:counter="20" 
+		<v-text-field
+			label="Username"
+			v-model="name"
+			:rules="nameRules"
+			:counter="20"
 			required
 		></v-text-field>
-		<v-text-field 
-			label="E-mail ID" 
-			v-model="email" 
-			:rules="emailRules" 
+		<v-text-field
+			label="E-mail ID"
+			v-model="email"
+			:rules="emailRules"
 			required
 		></v-text-field>
-		<v-text-field 
-			label="Password" 
-			v-model="password" 
-			:rules="passwordRules" 
-			type="password" 
+		<v-text-field
+			label="Password"
+			v-model="password"
+			:rules="passwordRules"
+			type="password"
 			required
 		></v-text-field>
 		<v-btn large @click="submit" block color="primary" class="mb-3">{{$t('message.signUp')}}</v-btn>
@@ -125,7 +125,7 @@ export default {
 </script>
 <style lang="css" scoped>
 .session-wrapper .session-right {
-    margin-left: 0rem !important; 
+    margin-left: 0rem !important;
 }
 </style>
 

@@ -6,7 +6,6 @@ import 'vuetify/dist/vuetify.css'
 import 'nprogress/nprogress.css'
 
 // Icon Files
-import 'weather-icons/css/weather-icons.min.css'
 import '../assets/themify-icons/themify-icons.css'
 
 // leaflet map css

@@ -18,9 +18,12 @@ class RoomsTableSeeder extends Seeder
         
         // create rooms 
         for ($i=0; $i < 100 ; $i++) {
+            $now = now();
             \App\Models\Room::create([
-                'room_number' => rand(100, 500),
-                'room_hash' => 'R'.$faker->randomNumber(6),
+                'room_number'   => rand(100, 500),
+                'room_hash'     => 'R'.$faker->randomNumber(6),
+                'added_date'    => $now, 
+                'updated_date'  => $now,
             ]);
         }
     }

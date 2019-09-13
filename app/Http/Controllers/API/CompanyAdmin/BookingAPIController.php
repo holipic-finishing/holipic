@@ -46,6 +46,7 @@ class BookingAPIController extends AppBaseController
         }
 
         if(!empty(request('timezoneId'))) {
+
             $booking =  $this->bookingRepo->handleUpdateDateTime($booking);   
         } else {
             $input = request()->except('timezoneId');

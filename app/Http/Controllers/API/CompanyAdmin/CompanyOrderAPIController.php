@@ -271,7 +271,7 @@ class CompanyOrderAPIController extends AppBaseController
 
            
         }
-        return $this->sendResponse($results, 'Order updated successfully');
+        return $this->sendResponse($results, 'Successfully');
 
         // return $this->sendResponse($results->toArray(), 'Order updated successfully');
     }
@@ -313,6 +313,17 @@ class CompanyOrderAPIController extends AppBaseController
         $input = $request->all();
         $results =  $this->orderRepository->countValuesOfTag($input);
         return $this->sendResponse($results, 'count values of tag successfully');
+    }
+
+    public function createOrderConfirm()
+    {
+        if(request('params')) {
+            $customer = $this->orderRepository->handleOrderConfirm();
+
+            return $this->sendResponse([], 'Save data success');
+        }
+
+        return $this->sendError('Can not save data');
     }
 
 }

@@ -79,10 +79,15 @@ class PhotographerRepository extends BaseRepository
             foreach($data as $value)
             {
                 if(!is_null($value['branch'])){
-                    $imgArr = explode('/', $value['avatar']);
-                    $imgName = end($imgArr);
-                    $link = url('photographers/avatars/' . $imgName);
-                    $value['avatar'] = $link;
+
+                    $fileName_ava = $this->createLink($value['avatar']);
+                    $avatar = asset('photographers/avatars/' . $fileName_ava);
+                    $value['avatar'] = $avatar;
+
+                    $fileName_id = $this->createLink($value['identification_card']);
+                    $identification_card = asset('photographers/identifications/' . $fileName_id);
+                    $value['identification_card'] = $identification_card;
+
                     $array[] = $value;
                 }
             }
@@ -91,6 +96,12 @@ class PhotographerRepository extends BaseRepository
         }
 
         return false;
+    }
+
+    function createLink($link){
+        $components = explode("/", $link);
+        $fileName = end($components);
+        return $fileName;
     }
 
     /**

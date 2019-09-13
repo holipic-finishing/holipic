@@ -17,12 +17,9 @@ class BookingsTableSeeder extends Seeder
 
         \App\Models\Booking::truncate();
 
-        // $companies = \App\Models\Company::with(['branchs'])->get();
-
         $companies = \App\Models\Company::with(['branchs' => function ($query) {
             return $query->with('customers')->with('photographers');
         }])->get();
-
 
         foreach ($companies as $company) {
             $branches = $company->branchs;
@@ -44,9 +41,10 @@ class BookingsTableSeeder extends Seeder
             }
 
             $randomCheckout = [1,0];
+            $rand = rand(10, 20);
 
-            for($i=0; $i<=2000; $i++) {
-            	\App\Models\Booking::create([
+            for($i=0; $i<$rand; $i++) {
+            	$booking = \App\Models\Booking::create([
             		'customer_id' => $faker->randomElement($customer_ids),
                     'photographer_id' => $faker->randomElement($photographer_ids),
                     'country' => $faker->address,

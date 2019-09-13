@@ -78,30 +78,6 @@ export const menus = {
 			items:null,
 			role_id : 2
 		},
-		// {
-		// 	action: 'fas fa-newspaper',
-		// 	title: 'message.sibarContentPages',
-		// 	active: true,
-		// 	path: '/content-pages',
-		// 	items:null,
-		// 	role_id : 2
-		// },
-		// {
-		// 	action: 'fas fa-cloud-upload-alt',
-		// 	title: 'message.sidebarUpload',
-		// 	active: true,
-		// 	path: '/upload',
-		// 	items:null,
-		// 	role_id : 2
-		// },
-		// {		
-		// 	action: 'fab fa-intercom',
-		// 	title: 'message.sales',
-		// 	active: true,
-		// 	path: '/sales',
-		// 	items:null,
-		// 	role_id : 2
-		// },
 		{
 			action: 'fas fa-mail-bulk',
 			title: 'message.emails',
@@ -172,20 +148,4 @@ export const menus = {
 			path: '/ewallet-withdraw'
 		}
 	],
-	// 'message.modules': [
-	// 	{
-	// 		action: 'zmdi-email',
-	// 		title: 'message.inbox',
-	// 		active: false,
-	// 		items: null,
-	// 		path: '/inbox'
-	// 	},
-	// 	{
-	// 		action: 'zmdi-comments',
-	// 		title: 'message.chat',
-	// 		active: false,
-	// 		items: null,
-	// 		path: '/chat'
-	// 	}
-	// ],
 }

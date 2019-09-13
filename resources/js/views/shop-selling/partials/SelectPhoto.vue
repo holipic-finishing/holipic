@@ -6,22 +6,23 @@
 			customClasses="custom-app-card"
 			:withTabs="true"	
 			>
-			<div class="cart">
+			<div class="cart" @click="checkout()">
 				<i class="material-icons">
 					shopping_cart
 				</i>
-				<div class="detail-cart">
+				<!-- <div class="detail-cart">
 					<span class="line-cart">$</span>
-					<span class="line-cart-1">1250</span>
+					<span class="line-cart-1">{{total}}</span>
 					<span class="line-cart-2">Order</span>		
-				</div>
+				</div> -->
+				<popup-card></popup-card>
 			</div>
 			<div class=" ml-5 mr-5">
 				<v-flex xs6 class="v-flex-sp-l">
 					<v-card-text>
 						<span class="ml-3">
 						{{$t('message.selectedPhoto')}} 
-						 <v-btn fab dark small color="primary" @click="removeAllItem()">
+						 <v-btn fab dark small color="primary" @click="removeAllItem()" class="color-blue-shopselling">
 					      <v-icon dark>clear</v-icon>
 					    </v-btn>
 						({{countSelected}})
@@ -60,7 +61,8 @@
 									aspect-ratio="1"
 									class="grey lighten-2 "
 									
-									height="300"	
+									height="300"
+									contain
 									>
 									<div class="content-info">
 										<v-icon color="white" @click="removeItem(index, photo)">cancel</v-icon>
@@ -80,208 +82,13 @@
 						</v-card>
 
 						<div class="parent-select-detail" @click="showDetail(photo)">
-							<span class="select-detail" :class="'select-detail'+photo.id" >{{photo.type}}</span>
+							<span class="select-detail" :class="'select-detail'+photo.id" >{{photo.size}}</span>
 							<span class="number-detail">
 								<i class="fas fa-caret-down"></i>		
 							</span>
 							<div class="line-detail"></div>
 						</div>
 
-						<!-- v-dialog show choose package -->
-						<v-dialog
-		     			 	v-model="dialog_nouse"
-		      				width="400"
-		      				temporary
-		      				v-show="photoId == photo.id"
-		    				>
-		    				<v-card>
-						        <v-container fluid>
-								    <v-layout row >
-								      	<v-flex xs3 >
-									        <v-card tile flat class="cursor-v-card" :class="photo.type == '10x15'  ? 'hover-v-card' : '' " @click="activeClass('t1', photo.id, '10x15')">
-									        	<v-card-text>
-									          		10x15
-									          	</v-card-text>
-									        </v-card>
-								      	</v-flex>
-									    <v-flex xs9 class="flex-v-number">   
-									        <v-list-tile >
-									          		<v-btn normal @click="decrease()">
-												      <v-icon dark>remove</v-icon>
-												    </v-btn>
-										          	<v-text-field
-										          	 v-if="photo.type == '10x15'"
-											            single-line
-	            										solo
-											            v-model="photo.quantity"
-											        ></v-text-field>
-
-											        <v-text-field
-										          	 v-else
-											            single-line
-	            										solo
-											            v-model="number"
-											            :disabled="activeText"
-											            @change="test(photo.type)"
-											        ></v-text-field>
-											          <v-btn  normal @click="increase()">
-												      <v-icon dark>add</v-icon>
-												    </v-btn>
-									        </v-list-tile> 
-									    </v-flex>
-								    </v-layout>
-									
-								    <v-layout row>
-								      	<v-flex xs3 >
-									        <v-card  tile flat class="cursor-v-card" :class="photo.type == '15x21'? 'hover-v-card' : '' " @click="activeClass('t2', photo.id, '15x21')">
-									          <v-card-text>
-									          	15x21
-									          </v-card-text>
-									        </v-card>
-								      	</v-flex>
-									      <v-flex xs9 class="flex-v-number">
-									        
-									          	<v-list-tile >
-									          		<v-btn normal @click="decrease()">
-												      <v-icon dark>remove</v-icon>
-												    </v-btn>
-										          	<v-text-field
-										          	v-if="photo.type == '15x21'"
-											            single-line
-	            										solo
-											            v-model="photo.quantity"
-											            @keyup="setQuantity(photo, photo.quantity)"
-											          ></v-text-field>
-
-											          <v-text-field
-										          	v-else
-											            single-line
-	            										solo
-	            										:disabled="activeText"
-											            v-model="number"
-											            @change="test(photo.type)"
-											          ></v-text-field>
-											          <v-btn  normal @click="increase()">
-												      <v-icon dark>add</v-icon>
-												    </v-btn>
-									          	</v-list-tile> 
-									      </v-flex>
-								    </v-layout>
-
-								    <v-layout row>
-								      	<v-flex xs3 >
-									        <v-card  tile flat class="cursor-v-card" :class="photo.type == '20x30'? 'hover-v-card' : (photo.type == '20x30' && typeDetail == 't3') ? 'hover-v-card' : '' " @click="activeClass('t3', photo.id, '20x30')">
-									          <v-card-text>
-									          	20x30
-									          </v-card-text>
-									        </v-card>
-								      	</v-flex>
-									     <v-flex xs9 class="flex-v-number">
-									        
-									          	<v-list-tile >
-									          		<v-btn normal @click="decrease()">
-												      <v-icon dark>remove</v-icon>
-												    </v-btn>
-										          	<v-text-field
-										          	v-if="photo.type == '20x30'"
-											            single-line
-	            										solo
-											            v-model="photo.quantity"
-											            @keyup="setQuantity(photo, photo.quantity)"
-											          ></v-text-field>
-
-											          <v-text-field
-										          		v-else
-											            single-line
-	            										solo
-	            										:disabled="activeText"
-											            v-model="number"
-											            @change="test(photo.type)"
-											          ></v-text-field>
-											          <v-btn  normal @click="increase()">
-												      <v-icon dark>add</v-icon>
-												    </v-btn>
-									          	</v-list-tile> 
-									      </v-flex>
-								    </v-layout>
-
-								    <v-layout row>
-								      	<v-flex xs3 >
-									        <v-card  tile flat class="cursor-v-card" :class="photo.type == 'Digital' ? 'hover-v-card' : '' " @click="activeClass('t4', photo.id, 'Digital')">
-									          <v-card-text>
-									          	Digital
-									          </v-card-text>
-									        </v-card>
-								      	</v-flex>
-									      <v-flex xs9 class="flex-v-number">
-									        
-									          	<v-list-tile >
-									          		<v-btn normal @click="decrease()">
-												      <v-icon dark>remove</v-icon>
-												    </v-btn>
-										          	<v-text-field
-										          		v-if="photo.type == 'Digital'"
-										          		@keyup="setQuantity(photo, photo.quantity)"
-											            single-line
-	            										solo
-											            v-model="photo.quantity"
-											          ></v-text-field>
-
-											          <v-text-field
-										          		v-else
-										          		:disabled="activeText"
-											            single-line
-	            										solo
-											            v-model="number"
-											            @change="test(photo.type)"
-											          ></v-text-field>
-											          <v-btn  normal @click="increase()">
-												      <v-icon dark>add</v-icon>
-												    </v-btn>
-									          	</v-list-tile> 
-									      </v-flex>
-								    </v-layout>
-
-								    <v-layout row>
-								      	<v-flex xs3 >
-									        <v-card  tile flat class="cursor-v-card" :class="photo.type == 'Album' ? 'hover-v-card' : '' " @click="activeClass('t5', photo.id, 'Album')">
-									          <v-card-text>
-									          	Album
-									          </v-card-text>
-									        </v-card>
-								      	</v-flex>
-									      <v-flex xs9 class="flex-v-number">
-									        
-									          	<v-list-tile >
-									          		<v-btn normal @click="decrease()">
-												      <v-icon dark>remove</v-icon>
-												    </v-btn>
-										          	<v-text-field
-										          	v-if="photo.type == 'Album'"
-											            single-line
-	            										solo
-											            v-model="photo.quantity"
-											            @keyup="setQuantity(photo, photo.quantity)"
-											          ></v-text-field>
-
-											          <v-text-field
-										          	v-else
-											            single-line
-	            										solo
-	            										:disabled="activeText"
-											            v-model="number"
-											            @change="test(photo.type)"
-											          ></v-text-field>
-											          <v-btn  normal @click="increase()">
-												      <v-icon dark>add</v-icon>
-												    </v-btn>
-									          	</v-list-tile> 
-									      </v-flex>
-								    </v-layout>
-								</v-container>
-						      </v-card>
-		    			</v-dialog>
-		    			<!-- v-dialog show choose package -->
 					</v-flex>
 				</v-layout>
 
@@ -295,29 +102,28 @@
 				        <v-container fluid>
 						    <v-layout row v-for="type in photoTypes" :key="type.id">
 						      	<v-flex xs3 >
-							        <v-card tile flat class="cursor-v-card" :class="type.active && photoOpened.type == type.type ? 'hover-v-card' : '' " @click="activeClass(type)">
+							        <v-card tile flat class="cursor-v-card" :class="type.active && photoOpened.size == type.size ? 'hover-v-card' : '' " @click="activeClass(type)">
 							        	<v-card-text>
-							          		{{type.type}}
+							          		{{type.size}}
 							          	</v-card-text>
 							        </v-card>
 						      	</v-flex>
 							    <v-flex xs9 class="flex-v-number">   
 							        <v-list-tile >
-							          		<v-btn normal @click="decrease()" v-if="photoOpened !== null && photoOpened.type == type.type ">
+							          		<v-btn normal @click="decrease()" v-if="photoOpened !== null && photoOpened.size == type.size ">
 										      <v-icon dark>remove</v-icon>
 										    </v-btn>
 										    <v-btn normal v-else :disabled="true">
 										      <v-icon dark>remove</v-icon>
 										    </v-btn>
 								          	<v-text-field
-								          		v-if="photoOpened !== null && photoOpened.type == type.type "
+								          		v-if="photoOpened !== null && photoOpened.size == type.size "
 									            single-line
         										solo
 									            v-model="photoOpened.quantity"
 									            @keyup="setQuantity(photoOpened, photoOpened.quantity)"
 									        >
 									        </v-text-field>
-
 									        <v-text-field
 								          		v-else
 								          		:disabled="true"
@@ -325,15 +131,12 @@
         										solo
 									            v-model="number"
 									        ></v-text-field>
-
-									        <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-if="photoOpened !== null && photoOpened.type == type.type ">
+									        <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-if="photoOpened !== null && photoOpened.size == type.size ">
 										      	<v-icon dark>add</v-icon>
 										    </v-btn>
-
-										     <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-else :disabled="true">
+										    <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-else :disabled="true">
 										      	<v-icon dark>add</v-icon>
 										    </v-btn>
-
 							        </v-list-tile> 
 							    </v-flex>
 						    </v-layout>
@@ -376,7 +179,7 @@
 				<v-layout row wrap class="photo-selected images">
 					
 					<v-flex
-						v-for="photo in photos"
+						v-for="(photo,index) in photos"
 						xs12 sm3
 						d-flex
 						:key="photo.id"
@@ -389,14 +192,18 @@
 									class="grey lighten-2 hover-image"
 									height="300"
 									:key="photo.id"
-									@click="selectPhoto(photo)"
+									@click="selectPhoto(photo,index)"
+									contain
 									>
 								</v-img>
+								
+								<!-- <img :src="thumbnailDir + photo.name"/> -->
+
 							</div>
 						</v-card>
 
 						<div class="icon-frame-photo">
-						 	<span class="v-flex-sp-l" @click="showZoomImageAndSlide(photo)">
+						 	<span class="v-flex-sp-l" @click="showZoomImageAndSlide(photo,index)">
 						 		<i class="material-icons cursor-v-card">
 									zoom_out_map
 								</i>
@@ -408,40 +215,47 @@
 						 	</span>
 						</div>	
 					</v-flex>
-	
-				 	<lightbox id="mylightbox" 
+					
+				 	<!-- <lightbox id="mylightbox" 
 				      ref="lightbox"
 				      :images="photos"
 				      :directory="thumbnailDir"
 				      :timeoutDuration="5000"
-				 	/>
-
-					<!-- <v-dialog
+				 	/> -->
+					
+					<!-- <div class="list" v-for="(n, index) in imageList" :data-index="index">
+					  <img @click="open($event)" :src="n.url">
+					</div> -->
+					<!-- 	<v-dialog
 		     			 	v-model="dialog2"
 		      				width="1000"
 		      				class="v-dialog2"
-		    				>
-						<v-carousel class="custom-carousel" hide-delimiters >
+		    				> -->
+						<!-- <v-carousel class="custom-carousel" hide-delimiters >
 						    <v-carousel-item
 						      v-for="(item,i) in photoZoom"
 						      :key="i"
 						      :src="item.src"
 						      width="50%"
 						    ></v-carousel-item>
-						</v-carousel>
-					</v-dialog> -->
+						</v-carousel> -->
+					<!-- </v-dialog> -->
 				</v-layout>
 			</div>
 		</app-card>
+		<div v-if="activeGallery">
+			<vue-gallery-slideshow :images="photos" :index="index" @close="index = null" :dir="thumbnailDir">
+			</vue-gallery-slideshow>
+		</div>
 		<!--Orther photo -->
 
-		<app-card colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
+		<!-- <app-card colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card custom-app-card-footer"
 			:withTabs="true">
 			<div class="footer-shop-selling">
 				
 			</div>
-		</app-card>
+		</app-card> -->
 	</v-layout>
 </template>
 <script>
@@ -449,12 +263,19 @@
 import Lightbox from 'vue-my-photos'
 import Vue from 'vue'
 import config from '../../../config'
+import  { get, post, put, del, getWithData } from '../../../api/index.js'
+import VueGallerySlideshow from './GallerySlideshow.vue'
+import PopupCard from './PopupCard.vue'
 
-Vue.component('lightbox', Lightbox)
+Vue.component('lightbox', Lightbox);
+
 
 export default {
 
   name: 'SelectPhoto',
+  components: {
+  	 'popup-card' : PopupCard ,VueGallerySlideshow
+  },
 
   data () {
     return {
@@ -462,102 +283,144 @@ export default {
     	languages:['ENG', 'EST', 'RUS', 'FIN' ],
     	selectCurrency: 'USD',
     	selectLanguage: 'ENG',
-    	photos: [
-			{
-				id: 1,
-				name: "blog-1.jpg",
-				caption: "Caption 1",
-				author: "Admin",
-				likes: "250"
-			},
-			{
-				id: 2,
-				name: "blog-2.jpg",
-				caption: "Caption 2",
-				author: "Erik Turner",
-				likes: "150"
-			},
-			{
-				id: 3,
-				name: "blog-3.jpg",
-				caption: "Caption 3",
-				author: "John Smith",
-				likes: "200"
-			},
-			{
-				id: 4,
-				name: "blog-4.jpg",
-				caption: "Caption 4",
-				author: "Antonio Rice",
-				likes: "300"
-			},
-			{
-				id: 5,
-				name: "blog-5.jpg",
-				caption: "Caption 5",
-				author: "Caleb Wilson",
-				likes: "400"
-			},
-			{
-				id: 6,
-				name: "blog-6.jpg",
-				caption: "Caption 6",
-				author: "Zachary Robbins",
-				likes: "50"
-			},
-			{
-				id: 7,
-				name: "blog-7.jpg",
-				caption: "Caption 7",
-				author: "Jon Wagner",
-				likes: "100"
-			},
-			{
-				id: 8,
-				name: "blog-8.jpg",
-				caption: "Caption 8",
-				author: "Dorothy Bass",
-				likes: "75"
-			}
-		],
+  //   	photos: [
+			// 	{
+			// 		id: 1,
+			// 		name: "blog-1.jpg",
+			// 		caption: "Caption 1",
+			// 		author: "Admin",
+			// 		likes: "250",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 2,
+			// 		name: "blog-2.jpg",
+			// 		caption: "Caption 2",
+			// 		author: "Erik Turner",
+			// 		likes: "150",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 3,
+			// 		name: "blog-3.jpg",
+			// 		caption: "Caption 3",
+			// 		author: "John Smith",
+			// 		likes: "200",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 4,
+			// 		name: "blog-4.jpg",
+			// 		caption: "Caption 4",
+			// 		author: "Antonio Rice",
+			// 		likes: "300",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 5,
+			// 		name: "blog-5.jpg",
+			// 		caption: "Caption 5",
+			// 		author: "Caleb Wilson",
+			// 		likes: "400",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 6,
+			// 		name: "blog-6.jpg",
+			// 		caption: "Caption 6",
+			// 		author: "Zachary Robbins",
+			// 		likes: "50",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 7,
+			// 		name: "blog-7.jpg",
+			// 		caption: "Caption 7",
+			// 		author: "Jon Wagner",
+			// 		likes: "100",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 8,
+			// 		name: "blog-8.jpg",
+			// 		caption: "Caption 8",
+			// 		author: "Dorothy Bass",
+			// 		likes: "75",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 9,
+			// 		name: "blog-8.jpg",
+			// 		caption: "Caption 8",
+			// 		author: "Dorothy Bass",
+			// 		likes: "75",
+			// 		checked:false
+			// 	},
+			// 	{
+			// 		id: 10,
+			// 		name: "blog-8.jpg",
+			// 		caption: "Caption 8",
+			// 		author: "Dorothy Bass",
+			// 		likes: "75",
+			// 		checked:false
+			// 	}
+		// ],
+		photos:[],
 		photos2: [],
-		items:[{id: 1, name: 'hung'},{id:2, name: 'hung2'}],
 		dialog:false,
 		dialog_nouse:false,
 		dialog2:false,
 		photoId:'',
 		number: 0,
 		typeDetail: 'Select detail',
-		count:0,
+		count:0,	
 		countOther:0,
 		photoZoom: [],
 		thumbnailDir: config.BASE_URL + '/static/img/',
 		activeText: true,
-		photoTypes: [
-			{
-				id: 't1',
-				type: '10x15',
-				active: false,
-				quantity: 1
-			},
-			{
-				id: 't2',
-				type: '15x21',
-				active: false,
-				quantity: 1
-			},
-			{
-				id: 't3',
-				type: 'Digital',
-				active: false,
-				quantity: 1
-			},
-		],
-		photoOpened: null
+		photoTypes: [],
+		photoOpened: null,
+		total:0,
+	    index: null,
+	    room: JSON.parse(localStorage.getItem('roomLogin')),
+	    activeGallery:false,
+	    packageId:''
     }
   },
+  
   mounted(){
+  	console.log($(window).width())
   	this.$i18n.locale = 'en'
+
+  	this.$root.$on('typePackage', res => {
+  		this.checkCondition(res.name, this.count)
+  	})
+
+  	this.$root.$on('photo-chosses', res => {
+  		this.photos2 = res
+
+		_.forEach(res, (value,index) => {
+            _.forEach(this.photos, (v,i) => {
+              	if(value.image_id === v.id){
+                  	$(document).ready(function() {
+                      $('.active-image'+v.id).css("color", "#00C1F8");
+                  	})
+                  	
+              } else {
+                    $('.active-image'+v.id).css("color", "#464D69");
+              }
+          })
+        })
+
+        this.getPricePackage(this.photos2)
+  	})
+
+  	this.$root.$on('updatePhoto', res => {
+  		var key = _.findIndex(this.photos, function(value) { 
+						return value.id == res.data.id; 
+					});
+  		this.photos[key].checked = res.checked
+  	})
   },
   computed:{
   	typeDetailReturn()
@@ -572,6 +435,10 @@ export default {
   	{
   		return this.countOther
   	},
+  	changePhotos()
+  	{	
+  		return this.photos
+  	},
   	changePhotos2()
   	{
         return this.photos2
@@ -579,29 +446,60 @@ export default {
   },
   created(){
   	this.countOther = this.photos.length
+
+  	this.getDataPackage()
+  	
+  	this.getPhotoFromRoom()	
   },
   methods:{
   	removeItem(index,photo)
   	{
 		this.photos2.splice(index, 1);
+
+		let totalNew = 0
+
+		if(this.photos2.length > 0) {
+			this.getPricePackage(this.photos2)
+		}else {
+			this.total = 0
+		}
+
 		this.count --
-		$('.active-image'+photo.id).css("color", "#464D69");
+
+		this.deletePhotoUnselected(photo.image_id)
+
+		this.photos[index].checked = false
+
+		$('.active-image'+photo.image_id).css("color", "#464D69");
   	},
   	removeAllItem()
   	{
+  		_.forEach(this.photos2, (value,index) => {
+  			this.deletePhotoUnselected(value.image_id)
+  		})
+
+  		this.getPhotoFromRoom()
+
   		this.photos2 = []
+
   		this.count = 0
+  		
   		_.forEach(this.photos, (value,index) => {
   			$('.active-image'+value.id).css("color", "#464D69");
   		})
+
+  		// localStorage.setItem('photoSelected', JSON.stringify(this.photos2))
+
+  		this.total = 0
   	},
   	showDetail(photo)
   	{
   		this.dialog = true
   		this.photoId = photo.id
   		this.photoOpened = photo
+
   		_.forEach(this.photoTypes, (item, index) => {
-  			if (item.type == photo.type) {
+  			if (item.size == photo.size) {
   				this.photoTypes[index]['active'] = true
   			}
 
@@ -610,28 +508,44 @@ export default {
   	},
   	activeClass(type)
   	{
-  		this.typeDetail = type.type
+  		this.typeDetail = type.size
 
   		_.forEach(this.photoTypes, (item, index) => {
   			this.photoTypes[index]['active'] = false
-  			if (item.type == type.type) {
+  			if (item.size == type.size) {
   				this.photoTypes[index]['active'] = true
   			}
   		})
 
+  		this.addPhotoSelectedIntoDB(this.photoOpened)
+
+  		let numberActive = 0
+
   		_.forEach(this.photos2, (value, index) => {
   			if(value['id'] == this.photoId) {
-  				this.photos2[index]['type'] = type.type
+  				this.photos2[index]['size'] = type.size
   				this.photoOpened = this.photos2[index]
+  				this.photoOpened.quantity = 1
   			}
+
+  			get(config.API_URL+'photo-package/search?size='+value['size'])
+	  		.then(res => {
+	  			if(res && res.data.success) {
+  					numberActive = numberActive + (value['quantity'] *res.data.data.dollar)
+	  				this.total = numberActive
+	  			}
+	  		})
   		})
-  		
+
+  		this.$root.$emit('updatePopupCard', this.photos2)
   	},
   	increase(photoOpened, quantity)
   	{
   		this.photoOpened.quantity ++
   		this.dialog = false
   		this.dialog = true
+  		this.setQuantity(this.photoOpened, this.photoOpened.quantity)
+  		this.addPhotoSelectedIntoDB(this.photoOpened)
   	},
   	decrease()
   	{
@@ -640,51 +554,118 @@ export default {
   			this.photoOpened.quantity --
   			this.dialog = false
   			this.dialog = true
+  			this.setQuantity(this.photoOpened, this.photoOpened.quantity)
+  			this.addPhotoSelectedIntoDB(this.photoOpened)
   		}
   	},
-  	selectPhoto(photo)
+  	selectPhoto(photo,index)
   	{
   		var photoSelected = _.find(this.photos2, (value,key) => { 
-  			return value['id'] == photo.id; 
+  			return value.image_id == photo.id; 
   		});
 
   		if(photoSelected == undefined)
   		{
+  			photo.checked = true
+  			photo.image_id = photo.id
   			this.photos2.push(photo)
-  			var length = this.photos2.length
-  			this.photos2[length-1].type = 'Digital'
-  			this.photos2[length-1].quantity = 1
-  			$('.active-image'+photo.id).css("color", "#5d92f4");
-  			this.count++  			
-  		} else {
-			var index = this.photos2.indexOf(photo);
-			if (index !== -1) this.photos2.splice(index, 1);
 
+  			var length = this.photos2.length
+
+  			this.photos2[length-1].size = 'DIGITAL'
+  			this.photos2[length-1].quantity = 1
+  			$('.active-image'+photo.id).css("color", "#00C1F8");
+
+  			this.count++
+  			this.getPricePackage(this.photos2)
+
+  			this.addPhotoSelectedIntoDB(photo)
+  		} else {
+  			var key = _.findIndex(this.photos2, function(value) { 
+  					return value.image_id == photo.id; 
+  				});
+
+			this.photos2.splice(key, 1);
+
+  			photo.checked = false
+
+			this.deletePhotoUnselected(photo.id)
+
+			var totalNew = 0 
+
+			if(this.photos2.length > 0) {
+				this.getPricePackage(this.photos2)
+			} else {
+				this.total = 0
+			}
+			
   			$('.active-image'+photo.id).css("color", "#464D69");
   			this.count--	
   		}
 
-  		_.forEach(this.photoTypes, (item, index) => {
-  			this.photoTypes[index]['quantity'] = 1	
-  		})
-  		
+  		// _.forEach(this.photoTypes, (item, index) => {
+  		// 	this.photoTypes[index]['quantity'] = 1	
+  		// })
+
+  		this.$root.$emit('updatePopupCard', this.photos2)		
   	},
-  	showZoomImageAndSlide(photo)
+  	addPhotoSelectedIntoDB(photo)
   	{
-  		this.$refs.lightbox.show(photo.name);
-  	
-  	},
-  	setQuantity(photo, quantity)
-  	{
-  		_.forEach(this.photos2, (value,index) => {
-  			if(value['id'] == photo.id) {
-  				this.photos2[index]['quantity'] = quantity
-  			}
+  		let params = {photo}
+  		post(config.API_URL+'cart/add-photo',params)
+  		.then(res => {
+
   		})
   	},
+  	deletePhotoUnselected(imageId)
+  	{
+  		del(config.API_URL+'cart/delete-photo?imageId='+imageId)
+  		.then(res => {
+  		})
+  	},
+  	getPricePackage(photos)
+  	{
+  		var totalNew = 0
+  		_.forEach(photos, (value, index) => {
+			get(config.API_URL+'photo-package/search?size='+value['size'])
+		  		.then(res => {
+		  			if(res && res.data.success) {
+			  			totalNew = totalNew + (value['quantity'] * res.data.data.dollar)
+			  			this.total = totalNew
+		  			}
+		  	})	
+		})
+  	},
+  	showZoomImageAndSlide(photo,index)
+  	{
+  		this.index = index
+  		this.$root.$emit('array-photos', this.photos2); 	
+  	},
+  	setQuantity : _.debounce( 
+  		function(photo, quantity) {
+	  	
+	  		let totalNew = 0 
+	  		_.forEach(this.photos2, (value,index) => {
+	  			if(value['id'] == photo.id) {
+	  				this.photos2[index]['quantity'] = quantity
+	  			}
+
+	  			get(config.API_URL+'photo-package/search?size='+value['size'])
+		  		.then(res => {
+		  			if(res && res.data.success) {
+	  					totalNew = totalNew + (value['quantity'] * res.data.data.dollar)
+		  				this.total = totalNew	
+		  			}
+		  		})
+	  		})
+
+  			this.addPhotoSelectedIntoDB(photo)
+
+  			this.$root.$emit('updatePopupCard', this.photos2)
+  		}, 2000)
+  	,
   	changeLanguage()
   	{
-  		// console.log(this.selectLanguage)
   		if(this.selectLanguage == 'EST') {
   			this.$i18n.locale = 'es'
   		}else if(this.selectLanguage == 'RUS'){
@@ -695,12 +676,107 @@ export default {
   			this.$i18n.locale = 'en'
   		}
   	},
-  	test(type)
+  	getDataPackage()
   	{
-  		alert(type)
+  		get(config.API_URL+'photo_packages')
+  		.then(res => {
+  			if(res && res.data.success){
+  				this.photoTypes = res.data.data
+  			}
+  		})
+  		.catch(err => {
+  			console.log(err.response)
+  		})
+  	},
+  	getPhotoFromRoom()
+  	{
+  		get(config.API_URL+'room/show-photo?room='+this.room.id)
+  		.then(res => {
+  			if(res && res.data.success){
+  				
+  				this.thumbnailDir = res.data.data[1]
+  				this.photos = res.data.data[0]['images']
+
+  				_.forEach(this.photos, (value,index) => {
+  					if(value['image_selected'] !== null) {
+  						this.photos2.push(value['image_selected'])	
+  					}
+  				})
+
+  				this.$root.$emit('updatePopupCard', this.photos2)
+
+  				this.count = this.photos2.length
+
+  				this.countOther = this.photos.length
+
+        		this.getPricePackage(this.photos2)
+
+  				_.forEach(this.photos2, (value) => {
+  					$(document).ready(function() {
+  						$('.active-image'+value.image_id).css("color", "#00C1F8");
+  					})
+  				})	
+  			}
+  		})
+  		.then(res => {
+  			this.activeGallery = true
+  		})
+  		.catch(err => {
+  			console.log(err.response)
+  		})
+  	},
+  	checkCondition(namePackage, count)
+  	{
+  		var messagePackage = ''
+
+  		var packageId = ''
+
+  		if(namePackage == 'Package 1' && count < 3) {
+  			messagePackage = 'Please choose 21 image'	
+  		} else if(namePackage == 'Package 2' && count < 30) {
+  			messagePackage = 'Please choose 30 image'
+  		} else if(namePackage == 'Package 3' && count < 40) {
+  			messagePackage = 'Please choose 40 image'
+  		}else if(namePackage == 'Package 4' && count < 50){
+  			messagePackage	 = 'Please choose 50 image'
+  		}
+
+  		if(messagePackage != '') {
+	  		this.$notify({
+	          title: 'Notification',
+	          message: messagePackage,
+	          type: 'error',
+	          duration: 2000,
+			})
+  		}else{
+  			switch(namePackage) {
+  				case 'Package 1' :
+  					this.packageId = 1
+  					break;
+  				case 'Package 2' :
+  					this.packageId = 2
+  					break;
+  				case 'Package 3' :
+  					this.packageId = 3
+  					break;
+  				default:
+  					this.packageId = 4
+  			}	
+  		}
+  	},
+  	checkout()
+  	{
+  		localStorage.setItem('photoSelected', JSON.stringify(this.photos2))
+
+  		localStorage.setItem('thumbnailDir', this.thumbnailDir)
+
+  		if(this.photos2.length > 0 ) {
+  			this.$router.push('/shop-selling/confirm-booking')
+  		}
   	}
   }
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -727,10 +803,10 @@ export default {
 }
 .cart{
 	position: fixed;
-	z-index:100;
+	z-index:7;
 	background-color:white !important;
 	right: 55px;
-	border-radius:2px;
+	border-radius:8px;
 	-moz-box-shadow: 0 0 5px #888;
 	-webkit-box-shadow: 0 0 5px#888;
 	box-shadow: 0 0 5px #888;
@@ -742,21 +818,21 @@ export default {
 }
 
 .cart .detail-cart{
-    float: left;
+    
     display: none;   
 }
 .cart:hover .detail-cart{
-	color:#5d92f4;
+	color:#00C1F8;
 	display: block;
 }
 
 .line-cart{
-	border-right: 2px solid #5d92f4;
+	border-right: 2px solid #00C1F8;
     padding-right: 20px;
 }
 
 .line-cart-1{
-	border-right: 2px solid #5d92f4;
+	border-right: 2px solid #00C1F8;
 	padding-right: 20px;
 	margin-left:20px;
 }
@@ -794,4 +870,34 @@ export default {
 .thumbnailfade-leave-to {
   opacity: 0;
 }
+
+.borderless td, .borderless th {
+    border: none;
+}
+.title-table{
+	display: flex;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+table {
+	width: 270px;
+	margin-bottom:0px !important;
+}
+
+.checkout-table{
+	background-color: #00C1F8;
+    border-bottom: 5px;
+    border-radius: 0px 0px 8px 8px;
+    height: 40px;
+    padding: 10px 10px;
+    color:white;
+    display: flex;
+    justify-content: space-between;
+    font-weight:bold;
+    font-size:16px;
+}
+
+
 </style>

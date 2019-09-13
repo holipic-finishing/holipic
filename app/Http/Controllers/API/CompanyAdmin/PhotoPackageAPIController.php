@@ -40,7 +40,20 @@ class PhotoPackageAPIController extends AppBaseController
         $this->photoPackageRepository->pushCriteria(new LimitOffsetCriteria($request));
         $photoPackages = $this->photoPackageRepository->all();
 
-        return $this->sendResponse($photoPackages->toArray(), 'Photo Packages retrieved successfully');
+        $newArray = [];
+
+        foreach($photoPackages as $key => $photoPackage) 
+        {
+            if($photoPackage['size'] != 'FRAME') {
+                $photoPackage['active'] = false;
+
+                $photoPackage['quantity'] = 1;
+
+                $newArray[] = $photoPackage;
+            } 
+        }
+
+        return $this->sendResponse($newArray, 'Photo Packages retrieved successfully');
     }
 
     /**
@@ -157,6 +170,13 @@ class PhotoPackageAPIController extends AppBaseController
             return $this->sendError('System Error Occurred');
         }
 
+    }
+
+    public function searchPhotoPackage()
+    {
+        $photoPackage = $this->photoPackageRepository->handleSearchPhotoPackage();
+
+        return $this->sendResponse($photoPackage, 'Package updated successfully');
     }
 
 }

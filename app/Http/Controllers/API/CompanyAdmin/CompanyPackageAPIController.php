@@ -168,4 +168,11 @@ class CompanyPackageAPIController extends AppBaseController
         }
 
     }
+
+    public function showAllPackage()
+    {
+        $packages = $this->companyPackageRepository->handleshowAllPackages();
+
+        return $this->sendResponse($packages, 'Package successfully');
+    }
 }

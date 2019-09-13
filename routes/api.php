@@ -111,6 +111,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('export-customers','CompanyAPIController@exportEmailCustomerByCompanyId');
 		Route::get('customer-emails', 'CompanyAPIController@getCustomerEmails');
 		Route::get('customer/send-email', 'CompanyAPIController@sendEmailCustomer');
+		Route::post('company/upload-photo', 'CompanyAPIController@uploadPhoto');
 
 		/*************PagesAPIController**************/
 		Route::post('edit/page/{itemId}','PagesAPIController@editPage');
@@ -164,6 +165,7 @@ Route::group(['namespace' => 'API'],function(){
 		/*************PhotoPackageAPIController**********/
 		Route::post('get-photo-package', 'PhotoPackageAPIController@getPhotoPackage');
 		Route::post('edit/photoPackage/{itemId}', 'PhotoPackageAPIController@editPackage');
+		Route::get('photo-package/search', 'PhotoPackageAPIController@searchPhotoPackage');
 
 		/************CompanyOrderAPIController***********/
 		Route::get('order/orders-company', 'CompanyOrderAPIController@getAllOrderCompany');
@@ -193,6 +195,20 @@ Route::group(['namespace' => 'API'],function(){
 		/************TimezoneAPIController***********/
 		Route::get('timezones', 'TimezoneAPIController@getTimezones');
 
+		/************SnapPhotoAPIController***********/
+		Route::post('snap-photo', 'SnapPhotoAPIController@createSnapPhoto');
+
+		// Route::get('room/snap-photo', 'SnapPhotoAPIController@findRoomCheckDetailSnapPhoto');
+
+		/************SnapPhotoAPIController***********/
+		Route::get('photo-package/search', 'PhotoPackageAPIController@searchPhotoPackage');
+
+		/**Shop selling**/
+
+		Route::get('shop-selling/packages', 'CompanyPackageAPIController@showAllPackage');
+
+		Route::post('shop-selling/order-confirm', 'CompanyOrderAPIController@createOrderConfirm');
+
 	});
 
 	/**************************************************
@@ -205,7 +221,25 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('branch/sales-list/export', 'BranchOrderAPIController@exportSalesListBranch');
 
 	});
+
+
+	/**************************************************
+	**************LIST ROUTES SHOP SELLING*************
+	***************************************************/
+	Route::group(['namespace' => 'ShopSelling'], function() {
+
+		Route::get('room/login', 'ListingController@loginRoom');
+		Route::get('room/show-photo', 'ListingController@getPhoto');
+		Route::post('cart/add-photo', 'CartController@addPhoto');
+		Route::delete('cart/delete-photo', 'CartController@deletePhoto');
+		// Route::get('room/photo-selected', 'CartController@getPhotoSelected');
+
+	});
+
+	Route::group(['namespace' => 'Customer'], function() {
+		Route::post('customer/order-image', 'CustomerAPIController@orderImage');
+
+		Route::get('customer/list-image-selected', 'CustomerAPIController@getImageSelected');
+
+	});
 });	
-
-
-

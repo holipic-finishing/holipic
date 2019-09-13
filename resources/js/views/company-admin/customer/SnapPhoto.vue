@@ -1,122 +1,62 @@
 <template>
-	<v-container fluid px-0 py-0 class="fix-croll-container">
-		<v-layout row wrap>
-			<app-card
-				colClasses="xl12 lg12 md12 sm12 xs12"
-				customClasses="rp-0 elevation-5 rp-search"
-				:fullScreen="true"
-				:reloadable="true"
-				:closeable="false"
-				:fullBlock="false"
-			>
+	<div>
+		<!-- Table Component -->
+	  	<v-data-table 
+			:headers="headers" 
+			:items="items" 
+			class="body-2 custom-table-customer"
+			:pagination.sync="pagination" 
+			:rows-per-page-items="rowsPerPageItems" 
+			default-sort="id:desc"
+			:search="search"
+		>
+			<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+			<!--Header -->
 
-				<v-toolbar flat color="white">
-			        <v-toolbar-title>
-			          Snap Photo
-			        </v-toolbar-title>
-			    </v-toolbar>
-      			<v-divider class="m-0"></v-divider>
+			<template slot="items" slot-scope="props">
+				<td>{{ props.item.date }}</td>
+				<td>{{ props.item.room }}</td>
+				<td>{{ props.item.branch }}</td>
+				<td>{{ props.item.photographer }}</td>
+				<td>
+					<v-icon
+						class="mr-2 upload-photo"
+						@click=""
+					>
+						cloud_upload
+					</v-icon>
 
-				<!--Search Component -->
-				<v-card-title>
-		      		<v-spacer></v-spacer>
-				      	<div class="w-25">
-				  	      	<v-text-field
-					  	        v-model="search"
-					  	        append-icon="search"
-					  	        label="Enter Search Value"
-					  	        single-line
-					  	        hide-details
-				  	      	></v-text-field>
-			        	</div>
-			    		<v-btn small fab dark @click="showFromAdd()" class="ml-2 btn-gradient-primary rp-btn-add-export">
-							<v-icon dark>add</v-icon>
-						</v-btn>
-		    	</v-card-title>
+				</td>
+				<td>{{ props.item.total }}</td>
+	      		<td class="action-width">
+					<v-icon
+						small
+						class="mr-2 hover-icon"	
+					>
+						add_circle
+					</v-icon>
+					<v-icon
+						small
+						class="mr-2 hover-icon"
+					>
+						delete
+					</v-icon>
+				</td>
+			</template>
 
-		    <!-- Table Component -->
-			  	<v-data-table 
-					:headers="headers" 
-					:items="items" 
-					class="body-2 custom-table-customer"
-					:pagination.sync="pagination" 
-					:rows-per-page-items="rowsPerPageItems" 
-					default-sort="id:desc"
-					:search="search"
-				>
-					<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-					<!--Header -->
-					<template slot="headers" slot-scope="props">
-	         			<tr>
-				            <th
-								v-for="header in props.headers"
-								:key="header.text"
-								:class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-								@click="changeSort(header.value)"
-				            >
-				            	<div class="custom-header">
-					              	<v-tooltip bottom>
-						                <span slot="activator" class="text-capitalize font-weight-bold">
-						                  	{{ header.text }}
-						                </span>
-						                <span>
-						                  	{{ header.text }}
-						                </span>
-					              	</v-tooltip>
-					              	<v-icon v-if="header.value != 'actions'">arrow_upward</v-icon>
-				            	</div>
-			           		</th>
-          				</tr>
-        			</template>
-
-					<template slot="items" slot-scope="props">
-						<td class="text-xs-left">{{ props.item.date }}</td>
-						<td class="text-xs-left">{{ props.item.room }}</td>
-						<td class="text-xs-left">{{ props.item.branch }}</td>
-						<td class="text-xs-left">{{ props.item.photographer }}</td>
-						<td class="text-xs-left">
-							<v-icon
-								class="mr-2 upload-photo"
-								@click=""
-							>
-								cloud_upload
-							</v-icon>
-
-						</td>
-						<td class="text-xs-left">{{ props.item.total }}</td>
-			      		<td class="text-xs-left action-width">
-							<v-icon
-								small
-								class="mr-2 hover-icon"
-							>
-								delete
-							</v-icon>
-
-							<v-icon
-								small
-								class="mr-2 hover-icon"	
-							>
-								add_circle
-							</v-icon>
-						</td>
-					</template>
-
-					<!--No data -->
-					<template slot="no-data">
-			      		<v-alert :value="true" color="error" icon="warning">
-		        			Sorry, nothing to display here :(
-			      		</v-alert>
-    				</template>
-						
-					<!--Search no result -->
-		    		<v-alert slot="no-results" :value="true" color="error" icon="warning">
-	          			Your search for "{{ search }}" found no results.
-        			</v-alert>
-				</v-data-table>
-		    <!-- End Table Component -->
-			</app-card>
-		</v-layout>
-		<snap-photo-add></snap-photo-add>
+			<!--No data -->
+			<template slot="no-data">
+	      		<v-alert :value="true" color="error" icon="warning">
+        			Sorry, nothing to display here :(
+	      		</v-alert>
+			</template>
+				
+			<!--Search no result -->
+    		<v-alert slot="no-results" :value="true" color="error" icon="warning">
+      			Your search for "{{ search }}" found no results.
+			</v-alert>
+		</v-data-table>
+		 
 
 		<v-dialog v-model="dialog" persistent max-width="450">
       		<v-card>
@@ -134,11 +74,14 @@
         		</v-card-actions>
       		</v-card>
     	</v-dialog>
-	</v-container>
+	</div>
+
 </template>
 
 <script>
+
 import SnapPhotoAdd from './SnapPhotoAdd'
+
 export default {
 
   	name: 'SnapPhoto',
@@ -148,6 +91,7 @@ export default {
 
   	data () {
     	return {
+    		items2: ['a','b','c'],
     		headers: [	        
 				{ text: 'Date', value: 'name' },
 				{ text: 'Room', value: 'room' },
@@ -155,7 +99,7 @@ export default {
 				{ text: 'Photographer', value: 'photographer' },	
 				{ text: 'Photos', value: 'photo' },		      
 				{ text: 'Total Photos', value: 'total' },		     
-		        { text: 'Action', sortable: false },         
+		        { text: 'Action', align: 'center', sortable: false },         
 			],
 			items: [
 				{ date: '2019-03-09 10:30:03',room: '9292', branch: '101', photographer: '101', photo: '', total: '18'},
@@ -172,20 +116,6 @@ export default {
     	}
   	},
   	methods: {
-  		changeSort (column) {
-			var columnsNoSearch = ['actions']
-      		if (columnsNoSearch.indexOf(column) > -1) {
-        		return
-      		}
-      		this.loading = true
-      		if (this.pagination.sortBy === column) {
-        		this.pagination.descending = !this.pagination.descending
-      		} else {
-        		this.pagination.sortBy = column
-        		this.pagination.descending = false
-      		}
-      		this.loading = false
-    	},
     	showFromAdd(){
     		this.$root.$emit('formSnapPhotoAdd', {activeform: true})
     	}

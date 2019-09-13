@@ -121,7 +121,7 @@
 											  <v-list class="heigth-list-title">
 													<template>
 
-														<v-list-tile>
+														<v-list-tile class="v-list-title--margin">
 															<v-list-tile-content>
 													          	<v-list-tile-title class="content-flex">
 														          	<span class="font-weight-bold item-title">Address:</span>
@@ -130,7 +130,7 @@
 															</v-list-tile-content>
 														</v-list-tile>
 
-														<v-list-tile>
+														<v-list-tile class="v-list-title--margin">
 															<v-list-tile-content>
 													          	<v-list-tile-title class="content-flex">
 														          	<span class="font-weight-bold item-title">Phone number:</span>
@@ -139,7 +139,7 @@
 															</v-list-tile-content>
 														</v-list-tile>
 
-														<v-list-tile>
+														<v-list-tile class="v-list-title--margin">
 															<v-list-tile-content>
 													          	<v-list-tile-title class="content-flex">
 														          	<span class="font-weight-bold item-title">Email:</span>
@@ -148,7 +148,7 @@
 															</v-list-tile-content>
 														</v-list-tile>
 
-														<v-list-tile>
+														<v-list-tile class="v-list-title--margin">
 															<v-list-tile-content>
 													          	<v-list-tile-title class="content-flex">
 														          	<span class="font-weight-bold item-title">Branch:</span>
@@ -157,7 +157,7 @@
 															</v-list-tile-content>
 														</v-list-tile>
 
-														<v-list-tile>
+														<v-list-tile class="v-list-title--margin">
 															<v-list-tile-content>
 													          	<v-list-tile-title class="content-flex">
 														          	<span class="font-weight-bold item-title">Status:</span>
@@ -166,7 +166,7 @@
 															</v-list-tile-content>
 														</v-list-tile>
 
-														<v-list-tile class="heigth-list-title-style">
+														<v-list-tile class="heigth-list-title-style v-list-title--margin">
 															<v-list-tile-content>
 													          	<v-list-tile-title class="content-flex">
 														          	<span class="font-weight-bold item-title">ID Copy:</span>

@@ -2,7 +2,7 @@
 
 namespace App\Repositories\CompanyAdminRepositories;
 
-use App\Models\CompanyAdmin\Email;
+use App\Models\Email;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**

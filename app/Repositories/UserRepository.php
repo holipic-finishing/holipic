@@ -6,6 +6,7 @@ use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
 use App\Repositories\CompanyAdminRepositories\NotificationRepository;
 use Spatie\Activitylog\Models\Activity;
+use App\Models\PasswordReset;
 
 /**
  * Class UserRepository
@@ -75,6 +76,63 @@ class UserRepository extends BaseRepository
         }
 
         return true;
+    }
+
+    // public function handleTokenForgotPassword()
+    // {
+    //     $tokenParts = explode(".", request('token'));
+
+    //     $tokenHeader = base64_decode($tokenParts[0]);
+
+    //     $tokenPayload = base64_decode($tokenParts[1]);
+
+    //     $jwtHeader = json_decode($tokenHeader);
+
+    //     $jwtPayload = json_decode($tokenPayload);
+
+    //     return $jwtPayload;
+    // }
+
+    public function handleTokenForgotPassword()
+    {
+        $token = \App\Models\PasswordReset::whereToken(request('token'))->first();
+
+        return $token;
+    }
+
+    public function handleUpdatePassword()
+    {
+        $user = $this->findUserIsExits(request('email'));
+
+        if(!empty($user)) {
+            $user = $user->update(['password' => request('password')]);
+
+            return $user; 
+        }
+        return false; 
+    }
+
+    public function handleCreateOrUpdatePasswordReset($user)
+    {
+        $token = hash("sha256", rand());
+
+        $email = PasswordReset::whereEmail($user->email)->first();
+
+        if(!empty($email)) {
+
+            $passwordReset = $email->update([
+                                'token' => $token,
+                                'life_time' => time() + 120
+                            ]);
+        }else {
+
+            $passwordReset = PasswordReset::create([
+                                'email' => $user->email, 
+                                'token' => $token, 
+                                'life_time' => time() + 120
+                            ]);
+        }
+        return $token;
     }
 
 }

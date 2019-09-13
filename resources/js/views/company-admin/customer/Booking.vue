@@ -203,44 +203,7 @@ export default {
           { text: 'Checkout', sortable: false},
           { text: 'Action', sortable: false },
         ],
- 		desserts: [
-          // {
-          // 	id: 1,
-          //   name: '5:00',
-          //   calories: 159,
-          //   fat: 6.0,
-          //   carbs: 24,
-          //   protein: 4.0,
-          //   iron: '1%'
-          // },
-          // {
-          // 	id:2,
-          //   name: '14:20',
-          //   calories: 237,
-          //   fat: 9.0,
-          //   carbs: 37,
-          //   protein: 4.3,
-          //   iron: '1%'
-          // },
-          // {
-          // 	id:3,
-          //   name: '6:37',
-          //   calories: 262,
-          //   fat: 16.0,
-          //   carbs: 23,
-          //   protein: 6.0,
-          //   iron: '7%'
-          // },
-          // {
-          // 	id:4,
-          //   name: '5:00',
-          //   calories: 305,
-          //   fat: 3.7,
-          //   carbs: 67,
-          //   protein: 4.3,
-          //   iron: '8%'
-          // }
-        ],
+ 		desserts: [],
         todayDate: new Date(),
         menu: false,
         checkDate: '',
@@ -413,8 +376,9 @@ export default {
 			let time = ''
 
 			if(this.valueTimezone == '') {
-				time = new Date().toISOString().substr(0,10)
-				this.now = time
+				// time = new Date().toISOString().substr(0,10)
+				// this.now = time
+				this.fetchData(this.now)
 			} else {
 				let timezoneSelected = _.find(this.timezonesData, (item) => {
 					return item.id == this.valueTimezone;
@@ -423,37 +387,36 @@ export default {
 				time = moment_timezone.tz(this.getNow(this.now), timezoneSelected['zone_name']).format();
 
 				this.defaultToday = this.now
-			}
 
-			let params = {companyId: this.company.company_id, 
-						  datetime: time, 
-						  timezoneId: this.valueTimezone 
-						 }
+				let params = {companyId: this.company.company_id, 
+						  	  datetime: time, 
+						      timezoneId: this.valueTimezone 
+						     }
 
-			getWithData(config.API_URL+'booking/timezone/convert', params)
-			.then(response => {
-				if(response && response.data.success) {
-					this.desserts = response.data.data
+				getWithData(config.API_URL+'booking/timezone/convert', params)
+				.then(response => {
+					if(response && response.data.success) {
+						this.desserts = response.data.data
 
+						this.$notify({
+				          title: 'Success',
+				          message: 'Convert timezone success',
+				          type: 'success',
+				          duration: 2000,
+				        })
+					}
+				})
+				.catch(error => {
+					console.log(error.response)
+					this.desserts = []
 					this.$notify({
-			          title: 'Success',
-			          message: 'Convert timezone success',
-			          type: 'success',
-			          duration: 2000,
-			        })
-
-				}
-			})
-			.catch(error => {
-				console.log(error.response)
-				this.desserts = []
-				this.$notify({
-			          title: 'Success',
-			          message: 'Booking not data',
-			          type: 'success',
-			          duration: 2000,
-			        })
-			})
+				          title: 'Success',
+				          message: 'Booking not data',
+				          type: 'success',
+				          duration: 2000,
+				        })
+				})
+			}	
 		},
 		getNow(now) {
 			return moment(now  + ' ' + moment().format('HH:mm:ss')).format('YYYY-MM-DD HH:mm:ss');

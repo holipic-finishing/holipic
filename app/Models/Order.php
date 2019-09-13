@@ -3,6 +3,7 @@
 namespace App\Models;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 /**
  * Class Order
@@ -157,6 +158,7 @@ class Order extends Model
                         $system_fee = ($model->total_amount * $fee) / 100; 
                     }
                     else{
+                        
                         $purchase_date = $model->purchase_date->format('Y-m-d h:m:s');
                         if($purchase_date >= $coupon_code->from_date && $purchase_date <= $coupon_code->to_date){
                            

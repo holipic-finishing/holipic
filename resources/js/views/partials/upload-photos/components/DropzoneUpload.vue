@@ -207,7 +207,7 @@ export default {
           return info;
         },
         transformFile: function transformFile(file, done) {
-            console.log(file)
+            // console.log(file)
             if ((this.options.resizeWidth || this.options.resizeHeight) && file.type.match(/image.*/)) {
                 return this.resizeImage(file, this.options.resizeWidth, this.options.resizeHeight, this.options.resizeMethod, done);
             } else {

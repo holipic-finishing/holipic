@@ -15,11 +15,9 @@ yarn-error.log
 .phpunit.result.cache
 /public/bower_components/
 /public/js/app.js
-/public/logos/
 /public/fonts/vendor/
-/public/image_uploads/
-/public/images/customer/
-/public/avatars/
+/public/company_logos/
+/public/customer_avatars/
 /public/files/
 /public/photographers/
-
+/storage/images/

@@ -1,7 +1,6 @@
 <template>
 	<v-container fluid px-0 py-0 class="fix-croll-container">
 		<v-layout row wrap>
-		<!-- <div id="app"> -->
 			<app-card
 				colClasses="xl12 lg12 md12 sm12 xs12"
 				customClasses="p-0 elevation-5 rp-search"
@@ -10,7 +9,6 @@
 				:closeable="false"
 				:fullBlock="false"
 			>
-
 				<v-toolbar flat color="white" tabs>
 			        <v-toolbar-title>
 			          	Customers Manage
@@ -180,7 +178,6 @@
 						</template>
       				</v-tab-item>
 				</v-tabs-items>
-
 			</app-card>
 		</v-layout>
 		<v-dialog v-model="dialog" persistent max-width="450">
@@ -203,7 +200,7 @@
 </template>
 
 <script>
-import  { get, post, put, del, getWithData } from '../../../api/index.js'
+import { get, post, put, del, getWithData } from '../../../api/index.js'
 import config from '../../../config/index.js'
 import CustomerEdit from './CustomerEdit'
 import SnapPhoto from './SnapPhoto'
@@ -237,7 +234,7 @@ export default {
 			{ text: 'Invoice', align: 'left'},
 			{ text: 'Rest Photo', align: 'left'},
 			{ text: 'Set Offer(Rp)', width: '10%', align: 'left'},
-      { text: 'Action', sortable: false ,width: '7%', value: 'actions'},
+      		{ text: 'Action', sortable: false ,width: '7%', value: 'actions'},
 		],
 		pagination: {
 		  	rowsPerPage: 25

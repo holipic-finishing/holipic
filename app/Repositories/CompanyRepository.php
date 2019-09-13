@@ -6,7 +6,7 @@ use App\Models\Company;
 use App\Models\User;
 use InfyOm\Generator\Common\BaseRepository;
 use DB ;
-use App\Models\CompanyAdmin\Email;
+use App\Models\Email;
 use App\Mail\SendMailCustomers;
 /**
  * Class CompanyRepository
@@ -253,11 +253,13 @@ class CompanyRepository extends BaseRepository
     //  @From : func: getCustomerByCompanyId()
     public function getEmailCustomer($attributes){
         $data = [];
-        foreach ($attributes as $key => $value) {
-            foreach ($value->branchs as $k => $item) {
-               foreach ($item->customers as $k_1 => $v) {
-                    array_push($data, $v->user->email);
-               }
+        foreach ($attributes[0]['branchs'] as $branch) 
+        { 
+            foreach ($branch['customers'] as $customer) 
+            {
+                $email = $customer->user['email'];
+
+                array_push($data, $email);
             }
         }
 

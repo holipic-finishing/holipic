@@ -25,7 +25,7 @@ class CompanysTableSeeder extends Seeder
                 'name' => $faker->company,
                 'description' => $faker->sentence(6, true),
                 'address' => $faker->address,
-                'logo' => $faker->image(public_path() . '/logos'),
+                'logo' => $faker->image(public_path() . '/company_logos'),
                 'owner_id' => $user->id,
                 'phone' => $faker->phoneNumber,
             ]);

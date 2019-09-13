@@ -8,15 +8,14 @@ use App\Models\Company;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\activationMail;
 use Response;
-use App\Http\Requests\UserSignupRequest;
+use App\Http\Requests\API\UserSignupRequest;
 
 class UserController extends Controller
 {
    	/**
-   
-   	TODO:
-   	- function to signup new account
-   	-@param : company_name, first_name, last_name, email, password,	package_id, role_id
+   	    TODO:
+   	    @param function to signup new account
+   	    @param : company_name, first_name, last_name, email, password,	package_id, role_id
       
     */
    
@@ -27,9 +26,9 @@ class UserController extends Controller
         if($check != null){
 
             return [
-                    "success"=> false,
-                    "message"=> 'Email had existed',
-                ];
+                "success"=> false,
+                "message"=> 'Email had existed',
+            ];
         }
         
         $user = User::create([
@@ -59,17 +58,15 @@ class UserController extends Controller
         \Mail::to($request['email'])->queue(new activationMail($data));  
 
         return [
-                "success"=> true,
-                "message"=> 'Please login your email to active your account',
-            ];
+            "success"=> true,
+            "message"=> 'Please login your email to active your account',
+        ];
             
     }
 
     /**
-
         TODO:
         - function create access_token
-
     */
     
 
@@ -84,13 +81,10 @@ class UserController extends Controller
 
 
     /**
-
     	TODO:
     	- function to activate account
     	- @param : access_token
-
     */
-    
     protected function activationAccount(Request $request){
     	$input = $request->all() ;
 

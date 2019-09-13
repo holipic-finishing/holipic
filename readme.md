@@ -31,8 +31,8 @@ php artisan key:generate
 + bower install
 
 ## Step 8: Migrate and seeding 
-php artisan migrate
-php artisan db:seed
++ php artisan migrate
++ php artisan db:seed
 
 ## Step 9: Create folder
 + public/company_logos

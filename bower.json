@@ -1,5 +1,5 @@
 {
-    "name": "Bower Json File",
+    "name": "bower.json",
     "description": "",
     "main": "",
     "authors": [
@@ -17,8 +17,11 @@
     ],
     "dependencies": {
         "bootstrap": "v4.1.3",
-        "swiper": "https://github.com/nolimits4web/swiper.git#^4.4.2",
+        "font-awesome-sass": "4.7.0",
         "magnific-popup": "^1.1.0",
-        "slicknav": "^1.0.10"
+        "swiper": "https://github.com/nolimits4web/swiper.git#^4.4.2",
+        "slicknav": "^1.0.10",
+        "wow": "wowjs#^1.1.2",
+        "underscore": "^1.9.1"
     }
 }

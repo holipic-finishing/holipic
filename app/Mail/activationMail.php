@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class activationMail extends Mailable
+class ActivationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -35,6 +35,6 @@ class activationMail extends Mailable
         $urlActivation = $domain.$access_token;
 
         return $this->subject('Mail From Holipic')
-                    ->view('mails.activationMail',compact('fullname', 'urlActivation'));
+                    ->view('mails.activation-mail',compact('fullname', 'urlActivation'));
     }
 }

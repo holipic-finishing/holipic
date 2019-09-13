@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Company;
 use Illuminate\Support\Facades\Hash;
-use App\Mail\activationMail;
-use Response;
+use App\Mail\ActivationMail;
 use App\Http\Requests\API\UserSignupRequest;
 
 class UserController extends Controller
@@ -16,13 +15,13 @@ class UserController extends Controller
    	    TODO:
    	    @param function to signup new account
    	    @param : company_name, first_name, last_name, email, password,	package_id, role_id
-      
+
     */
-   
+
     public function signUp(UserSignupRequest $request){
 
         $check = User::where('email', $request['email'])->first();
-       
+
         if($check != null){
 
             return [
@@ -30,7 +29,7 @@ class UserController extends Controller
                 "message"=> 'Email had existed',
             ];
         }
-        
+
         $user = User::create([
             'first_name' => $request['first_name'],
             'last_name' => $request['last_name'],
@@ -55,20 +54,20 @@ class UserController extends Controller
             'access_token' => $user->access_token
         );
 
-        \Mail::to($request['email'])->queue(new activationMail($data));  
+        \Mail::to($request['email'])->queue(new ActivationMail($data));
 
         return [
             "success"=> true,
             "message"=> 'Please login your email to active your account',
         ];
-            
+
     }
 
     /**
         TODO:
         - function create access_token
     */
-    
+
 
      public function reNewToken($user)
     {

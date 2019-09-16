@@ -34,8 +34,8 @@ import 'font-awesome/css/font-awesome.min.css'
 import config from './config'
 import globalComponents from './globalComponents'
 import primaryTheme from './themes/primaryTheme'
-import './lib/vuelyScript'
-import './lib/vuelyCss'
+require('./lib/vuelyScript')
+require('./lib/vuelyCss')
 import messages from './lang';
 import App from './App.vue'
 

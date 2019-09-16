@@ -34,7 +34,7 @@ class ImagesTableSeeder extends Seeder
 	            File::makeDirectory($path . '/original', $mode = 0777, true, true);
 	        }
 
-        	for ($i=0; $i < rand(80, 100); $i++) {
+        	for ($i=0; $i < rand(10, 30); $i++) {
 
         		$original_img = $faker->image($path . '/original', 1920, 1080, $faker->randomElement($categories), false);
 

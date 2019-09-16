@@ -27,7 +27,7 @@ class ImagesTableSeeder extends Seeder
         foreach ($listings as $listing) {
 
         	$room_folder_name = $listing->room->room_hash;
-        	$path = storage_path() . '/images/' . $room_folder_name;
+        	$path = storage_path() . '/app/public/images/' . $room_folder_name;
 
         	if (!file_exists($path)) {
 	            File::makeDirectory($path . '/compressed', $mode = 0777, true, true);

@@ -35,7 +35,32 @@ import config from './config'
 import globalComponents from './globalComponents'
 import primaryTheme from './themes/primaryTheme'
 // import './lib/vuelyScript';
-import './lib/vuelyCss';
+// import './lib/vuelyCss';
+
+/* ======= All App File Include Here ======= */
+// Vuetify Css
+import 'vuetify/dist/vuetify.css'
+
+// nprogress
+import 'nprogress/nprogress.css'
+
+// Icon Files
+import '../assets/themify-icons/themify-icons.css'
+
+// leaflet map css
+import 'leaflet/dist/leaflet.css'
+
+// Slick Slider
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+// animate css
+import '../assets/animate.css';
+
+// Global Scss File
+import '../assets/scss/_style.scss'
+
+
 import messages from './lang';
 import App from './App.vue'
 

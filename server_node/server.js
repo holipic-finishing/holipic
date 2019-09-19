@@ -7,15 +7,16 @@ var REDIS_PORT 	 = process.env.REDIS_PORT;
 
 var fs = require('fs');
 var https = require('https');
+var app = require('express')();
 
-var app = https.createServer({
+var server = https.createServer({
     key: fs.readFileSync('../rsa_key/holipic.key'),
     cert: fs.readFileSync('../rsa_key/holipic.pem'),
-});
+}, app);
 
-app.listen(SOCKET_IO_PORT);
+server.listen(SOCKET_IO_PORT);
 
-var io = require('socket.io').listen(app);
+var io = require('socket.io').listen(server);
 
 io.set('transports', [
     'websocket',

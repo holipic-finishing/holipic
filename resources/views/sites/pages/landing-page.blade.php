@@ -43,6 +43,7 @@
     </section>
     <!-- Banner Section Ends -->
 
+    <!-- Version History Secton starts -->
     <section class="version-history-layout-1" id="benefits">
         <div class="container">
             <div class="row">
@@ -425,11 +426,11 @@
                         <div role="tabpanel" class="tab-pane fade show active" id="monthly" aria-labelledby="monthly-tab">
                             <div class="row">
                                 <!-- Pricing single start -->
-                                @if(!empty($list))
+                                @if(!empty($packages))
                                 @php
-                                    $amounts = count($list);
+                                    $amounts = count($packages);
                                 @endphp
-                                @foreach( $list as $value)
+                                @foreach( $packages as $value)
 
                                 <div class="col-md-6 common-package-discount">
                                     <div class="pricing-box-wrapper common-pricing-box">
@@ -450,13 +451,13 @@
                                                     <li {{$value->package_name=="Basic" ? "class=title-basic" : " class=title-enterprise"}}>
                                                         {{$value->fee}}%
                                                     </li>
-                                                    <li>
+                                                    {{-- <li>
                                                         @if($value->package_name=="Basic")
                                                             {{$value->secure_storage}} GB secure storage
                                                         @else
                                                             {{$value->secure_storage}} GB secure storage
                                                         @endif
-                                                    </li>
+                                                    </li> --}}
                                                     <li>{{$value->file_upload}} GB file upload</li>
 
                                                     <li>
@@ -474,12 +475,12 @@
                                         @if($value->package_name=="Basic")
 
                                             <div class="btn-buynow">
-                                                <a data-package='1' class="select-package" href="#signup" id="{{ $value->id }}">START TO BASIC</a>
+                                                <a data-package='1' class="select-package" href="/register" id="{{ $value->id }}">START TO BASIC</a>
                                             </div>
                                         @else
 
                                             <div class="btn-buynow btn-enterprise">
-                                                <a data-package='2' class="select-package" href="#signup" id="{{ $value->id }}">UPDATE TO PRO</a>
+                                                <a data-package='2' class="select-package" href="/register" id="{{ $value->id }}">UPDATE TO PRO</a>
                                             </div>
                                         @endif
                                     </div>
@@ -495,319 +496,4 @@
             </div>
         </div>
     </section>
-
-    <!-- Login popup -->
-    <div class="popup-page mfp-with-anim mfp-hide" id="login">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="myaccount-form">
-                    <h3>Welcome back, <br />
-                    Please sign in to your account</h3>
-
-                    <div id="message-form-login" style="color:#05cbfc; font-size:13px">
-
-                        </div>
-                        <form method="post" id="form-signin">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
-
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="fa fa-user"></span>
-                                    </div>
-
-                                    <input type="text" class="form-control" placeholder="Enter Your Email" name=
-                                    "email" >
-
-                                </div>
-                                <div id="message-form-signin-email" class="text-error"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="fa fa-lock"></span>
-                                    </div>
-
-                                    <input type="password" class="form-control" placeholder="Enter Your Password" name="password" >
-                                </div>
-                                <div id="message-form-signin-password" class="text-error"></div>
-                            </div>
-
-                            <div class="account-row">
-                                <div class="account-left">
-                                    <label class="account-checkbox">
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                        <b>Remember Me</b>
-                                    </label>
-                                </div>
-
-                                <div class="account-right text-right">
-                                    <a href="#" class="forget-password">Forgot Password?</a>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <button type="submit" class="btn-submit">Login</button>
-                                <a href="#signup" class="btn-submit has-popup">Sign Up</a>
-                                {{-- <input type="submit" value="Login" class="btn-submit" /> --}}
-                            </div>
-                        </form>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="myaccount-image-note">
-                    <figure>
-                        <img src="images/logo-large.png" alt="" />
-                    </figure>
-
-
-                    <p>Lorem Ipsum is simply dummy text of the printing and this typesetting industry. Lorem Ipsum has been the.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End login popup -->
-
-    <!-- SignUp popup -->
-    <div class="popup-page mfp-with-anim mfp-hide" id="signup">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="myaccount-form">
-                    <h3>Let's get started,<br />
-                    Sign Up just in minute</h3>
-
-                    <form id="frmRegister">
-                        {!! csrf_field() !!}
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="fa fa-user"></span>
-                                </div>
-
-                                <input type="text" name="first_name" class="form-control" placeholder="Enter Your First Name">
-
-                            </div>
-                            <div id="message-form-signup-first_name" class="text-error"></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="fa fa-user"></span>
-                                </div>
-
-                                <input type="text" name="last_name" class="form-control" placeholder="Enter Your last Name">
-
-                            </div>
-                            <div id="message-form-signup-last_name" class="text-error"></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="fa fa-building"></span>
-                                </div>
-
-                                <input type="text" name="company_name" class="form-control" placeholder="Enter Your Company Name">
-                            </div>
-                            <div id="message-form-signup-company_name" class="text-error"></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="fa fa-envelope-o"></span>
-                                </div>
-
-                                <input type="text" name="email" class="form-control" placeholder="Enter Your Email">
-                            </div>
-                            <div id="message-form-signup-email" class="text-error"></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="fa fa-lock"></span>
-                                </div>
-
-                                <input type="password" name="password" class="form-control" placeholder="Enter Your Password">
-                            </div>
-                            <div id="message-form-signup-password" class="text-error"></div>
-                        </div>
-                        <div class="single-row">
-                            <label class="account-checkbox">
-                                <input type="checkbox" name="checkbox" class="text-error" >
-                                <span class="checkmark"></span>
-                                <b>I read and agree to <a href="#">Terms & Conditions</a></b>
-                            </label>
-                            <div id="message-form-signup-checkbox" class="text-error checkbox-error"></div>
-                        </div>
-                        <div id="message-form-signup" class="text-error"></div>
-                        <div class="form-group">
-                            <input type="submit" id='signup-submit' value="Sign Up" class="btn-submit" />
-                            <p class="other-text">have an account? <a href="#login" class="has-popup">Sign in</a></p>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="myaccount-image-note">
-                    <figure>
-                        <img src="images/logo-large.png" alt="" />
-                    </figure>
-
-                    <p>Lorem Ipsum is simply dummy text of the printing and this typesetting industry. Lorem Ipsum has been the.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End signup popup -->
-
-@endsection
-@section('scripts')
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-            var package = null;
-            $(".select-package").click(function(){
-                var elem = $(this)
-                package = elem.data('package');
-                $("#frmRegister").append("<input type='hidden' name='package_id' value='"+package+"'>");
-            });
-
-
-            $("#frmRegister").submit(function(e) {
-                e.preventDefault();
-                var form = $(this);
-                $.ajax({
-                    type: "POST",
-                    url: 'users/signup',
-                    data: form.serialize(),
-                    success: function(data) {
-                        if(data && data.success == true) {
-                            $('#message-form-signup-first_name').empty();
-                            $('#message-form-signup-last_name').empty();
-                            $('#message-form-signup-company_name').empty();
-                            $('#message-form-signup-email').empty();
-                            $('#message-form-signup-password').empty();
-                            $('#message-form-signup-checkbox').empty();
-                            $('#message-form-signup').empty();
-                            $("#message-form-signup").append("<span class='label label-important' style='color:#05cbfc'>"+" "+data.message+"</span>");
-                        } else if(data && data.success == false){
-                            $('#message-form-signup-first_name').empty();
-                            $('#message-form-signup-last_name').empty();
-                            $('#message-form-signup-company_name').empty();
-                            $('#message-form-signup-email').empty();
-                            $('#message-form-signup-password').empty();
-                            $('#message-form-signup-checkbox').empty();
-                            $('#message-form-signup').empty();
-                            $("#message-form-signup").append("<span class='label label-important' style='color:red'>"+" "+data.message+"</span>");
-                        }
-                    },
-                    error: function(error) {
-                        if(error) {
-                            $('#message-form-signup-first_name').empty();
-                            $('#message-form-signup-last_name').empty();
-                            $('#message-form-signup-company_name').empty();
-                            $('#message-form-signup-email').empty();
-                            $('#message-form-signup-password').empty();
-                            $('#message-form-signup-checkbox').empty();
-                            _.each(error.responseJSON.errors, function(val,key){
-                                var id = '#message-form-signup-'+key;
-                                $(id).append("<span class='label label-important' style='color:red'>"+" "+val+"</span>");
-                            });
-                        }
-                    }
-                });
-
-            });
-
-            $("#form-signin").submit(function(e) {
-
-                e.preventDefault();
-                var form = $(this);
-                $.ajax({
-                    type: "POST",
-                    url: 'landing-page/login',
-                    data: form.serialize(),
-                    success: function(data){
-                        if(data && data.success == false) {
-                            $('#message-form-signin-email').empty();
-                            $('#message-form-signin-password').empty();
-
-                            if(data.email == false) {
-                                $('#message-form-signin-email').append("<span class='label label-important' style='color:red'>"+" "+data.message+"</span>");
-                            }
-                            if(data.password == false) {
-                                $('#message-form-signin-password').append("<span class='label label-important' style='color:red'>"+" "+data.message+"</span>");
-                            }
-                        } else {
-                            window.localStorage.setItem('access_token', data.data.user.access_token)
-                            window.localStorage.setItem('user', JSON.stringify(data.data.user))
-                            window.location.href = "/company-admin";
-                        }
-
-                    },
-                    error: function(error) {
-                        $('#message-form-signin-email').empty();
-                        $('#message-form-signin-password').empty();
-
-                        _.each(error.responseJSON.errors, function(val,key){
-                            var id = '#message-form-signin-'+key;
-                            $(id).append("<span class='label label-important' style='color:red'>"+" "+val+"</span>");
-                        });
-                    }
-                });
-            });
-
-            function reset() {
-                var array = [
-                    $('#message-form-signup-first_name').empty(),
-                    $('#message-form-signup-last_name').empty(),
-                    $('#message-form-signup-company_name').empty(),
-                    $('#message-form-signup-email').empty(),
-                    $('#message-form-signup-password').empty(),
-                    $('#message-form-signup-checkbox').empty(),
-                    $('#message-form-signup').empty(),
-                    $('#message-form-signin-email').empty(),
-                    $('#message-form-signin-password').empty(),
-                ]
-
-                return array;
-            }
-
-            function ficPopup(item) {
-                $(item).magnificPopup({
-                    items: {
-                        src: '#signup',
-                        type: 'inline'
-                    },
-                    fixedContentPos: true,
-                    fixedBgPos: true,
-                    overflowY: 'auto',
-                    closeBtnInside: true,
-                    removalDelay: 300,
-                    mainClass: 'mfp-zoom-in',
-                    callbacks: {
-                        open: function() {
-                            // $('html').css('margin-right', 0);
-                            // $('html').css('overflow', 'auto');
-                            // $('body').css('position', 'fixed');
-                        },
-                        close: function() {
-                            $('body').css('position','');
-                            reset();
-                        }
-                    }
-                });
-            }
-
-            var amounts = "<?php echo($amounts) ?>"
-
-            for(i = 1; i <= amounts; i++) {
-                var id_button = '#' +i;
-                ficPopup(id_button);
-            }
-        });
-    </script>
 @endsection

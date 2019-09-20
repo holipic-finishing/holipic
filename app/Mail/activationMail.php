@@ -17,6 +17,7 @@ class ActivationMail extends Mailable
      * @return void
      */
     protected $user;
+
     public function __construct($user)
     {
         $this->user = $user;
@@ -29,12 +30,11 @@ class ActivationMail extends Mailable
      */
     public function build()
     {
-        $fullname =  $this->user['fullname'];
-        $access_token = $this->user['access_token'];
-        $domain = \Config::get('testHolipic.url').'users/activation?access_token=';
-        $urlActivation = $domain.$access_token;
+        $fullname =  $this->user->first_name . " " . $this->user->last_name;
+        $access_token = $this->user->access_token;
+        $activation_link = env('APP_URL') . '/landing-page/active?access_token=' . $access_token;
 
         return $this->subject('Mail From Holipic')
-                    ->view('mails.activation-mail',compact('fullname', 'urlActivation'));
+            ->view('mails.activation-mail', compact('fullname', 'activation_link'));
     }
 }

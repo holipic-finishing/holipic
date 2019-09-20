@@ -11,8 +11,6 @@ var APP_PROTOCOL = process.env.MIX_APP_PROTOCOL;
 var APP_DOMAIN = APP_PROTOCOL + '://' + process.env.MIX_APP_DOMAIN;
 
 export default {
-  API_URL: APP_DOMAIN + '/api/',
-  // API_URL: 'http://159.65.140.235/api/auth/',
-  BASE_URL: APP_DOMAIN,
-  // BASE_URL: 'http://159.65.140.235/',
+    API_URL: APP_DOMAIN + '/api/',
+    BASE_URL: APP_DOMAIN,
 }

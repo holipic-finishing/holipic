@@ -5,11 +5,11 @@
 </head>
 <body>
 	<div>
-		<img src="https://www.holipic.com/wp-content/uploads/2015/10/HOLIPIC-LOGO.png">
+        <img src="{{ secure_asset('images/HOLIPIC-LOGO.png') }}">
 	</div>
 	<div> Hello <b>{{$fullname}} </b></div>
 	<p>Click here to active your account</p>
-    <p><a href="{{ $urlActivation }}">{{ $urlActivation }}</a></p>
+    <p><a href="{{ $activation_link }}" target="_blank">{{ $activation_link }}</a></p>
     <p>Thank you</p>
     <p>From Holipic</p>
 </body>

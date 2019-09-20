@@ -49,54 +49,6 @@ class LoginController extends BaseApiController
 
     }
 
-    public function login(UserLoginAPIRequest $request)
-    {
-        
-        $credentials = $request->only(['email', 'password']);
-        $email = $credentials['email'];
-
-        try{
-            $user = $this->userRepo->findUserIsExits($email);
-            if (empty($user)) {
-
-                return [
-                    "success"=> false,
-                    "email" => false,
-                    "message"=>'Email address not exist in system',
-
-                ];
-            }
-
-            if (! $token = auth()->attempt($credentials)) {
-
-                return [
-                    "success"=> false,
-                    "password" => false,
-                    "message"=> 'Password provider was incorrect'
-                ];
-            }
-
-            $data = [
-                'status' => $token,
-                'user' => auth()->user(),
-            ];
-
-            $this->reNewToken();
-
-            return [
-                "success" => true,
-                "data" => $data,
-            ];
-
-            //return view('welcome', ['token' => $data['user']['access_token'], 'currentUser' => $data['user']]);
-
-        } catch (\Exception $e){
-
-            return ('An unexpected error occurred. Please try again...');       
-        }
-
-    }
-
     public function reNewToken()
     {
         $user = auth()->user();
@@ -104,7 +56,7 @@ class LoginController extends BaseApiController
         $user->save();
     }
 
-    public function logout() 
+    public function logout()
     {
         auth()->logout();
         return redirect('landing-page');
@@ -130,7 +82,7 @@ class LoginController extends BaseApiController
                 ];
 
                 $dataInfoLogin = $dataUser;
-            } 
+            }
 
             if (empty($user)) {
 
@@ -140,7 +92,7 @@ class LoginController extends BaseApiController
 
                 ];
             }
-           
+
             if (! $token = auth()->attempt($dataInfoLogin)) {
                     return [
                         "success"=> false,
@@ -148,14 +100,14 @@ class LoginController extends BaseApiController
                     ];
                 }
 
-            
+
             if(!$this->userRepo->checkUserCommpanyExits(auth()->user())) {
                 return [
                     "success"=> false,
                     "message"=> 'Current account is block'
                 ];
             }
-            
+
             $this->reNewToken();
 
             $userInfo = $this->informationUser(auth()->user());
@@ -173,7 +125,7 @@ class LoginController extends BaseApiController
         } catch (\Exception $e){
             // return ('An unexpected error occurred. Please try again...');
             return $e;
-            
+
         }
 
     }
@@ -244,7 +196,7 @@ class LoginController extends BaseApiController
                 'role_id'      => $user->role_id,
                 'access_token' => $user->access_token,
                 'email'        => $user->email,
-                
+
             ];
         }
         return $data;
@@ -253,7 +205,7 @@ class LoginController extends BaseApiController
     public function sendEmailResetPassword()
     {
         $user = $this->userRepo->findUserIsExits(request('email'));
-        
+
         if($user) {
 
             $token = $this->userRepo->handleCreateOrUpdatePasswordReset($user);
@@ -293,9 +245,9 @@ class LoginController extends BaseApiController
         //     } else {
         //         // $time = time() + 60;
         //         // dd($time,$jwtPayload->exp,'hethan');
-        //         return redirect('customer/reset-password?exp=expired');   
+        //         return redirect('customer/reset-password?exp=expired');
         //     }
-        // } 
+        // }
     }
 
     public function updatePassword()

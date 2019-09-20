@@ -1,16 +1,13 @@
 <template>
 <div class="session-wrapper">
-	<div class="session-left">
-		<!-- <session-slider-widget></session-slider-widget> -->
-	</div>
-	<div class="session-right text-xs-center style-left">
+	<div class="session-right text-xs-center ml-0">
 		<div class="session-table-cell">
-			<div class="session-content">
+			<div class="session-content text-center">
 				<img
 					:src="appLogo"
-					class="img-responsive mb-3"
-					width="150"
-					height="78"
+					class="d-inline-block img-responsive mb-3 rounded"
+					width="100"
+					height="100"
 				/>
 				<router-view></router-view>
 			</div>
@@ -34,7 +31,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.style-left {
-	margin-left: 0px !important;
-}
+
 </style>

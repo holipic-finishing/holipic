@@ -6,15 +6,15 @@
  */
 
 require('./bootstrap');
-
 window.Vue = require('vue');
+
 import 'babel-polyfill';
 import Vue from 'vue'
 
 /**
  * Import Vue Plugins
  */
-import Vuetify from 'vuetify'
+import vuetify from './plugins/vuetify'
 import VueBreadcrumbs from 'vue2-breadcrumbs'
 import Notifications from 'vue-notification'
 import velocity from 'velocity-animate'
@@ -26,11 +26,6 @@ import VuejsClipper from 'vuejs-clipper'
 import router from './router'
 import { store } from './store/store'
 
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import '@mdi/font/css/materialdesignicons.css'
-import '@fortawesome/fontawesome-free/css/all.css'
-import 'font-awesome/css/font-awesome.min.css'
-
 import config from './config'
 import globalComponents from './globalComponents'
 import primaryTheme from './themes/primaryTheme'
@@ -38,8 +33,6 @@ import primaryTheme from './themes/primaryTheme'
 // import './lib/vuelyCss';
 
 /* ======= All App File Include Here ======= */
-// Vuetify Css
-import 'vuetify/dist/vuetify.css'
 // nprogress
 import 'nprogress/nprogress.css'
 // leaflet map css
@@ -63,11 +56,6 @@ axios.defaults.baseURL = config.BASE_URL;
 axios.defaults.headers.common['Authorization'] = access_token;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-
-Vue.use(Vuetify, {
-	theme: store.getters.selectedTheme.theme,
-	iconfont: 'md' || 'mdi' || 'fa' || 'fa4'
-});
 Vue.use(VueI18n)
 Vue.use(VueBreadcrumbs)
 Vue.use(Notifications, { velocity })
@@ -86,9 +74,10 @@ const i18n = new VueI18n({
 
 /* eslint-disable no-new */
 new Vue({
-	store,
+    vuetify,
+    store,
 	i18n,
-	router,
+    router,
 	template: '<app></app>',
 	// render: h => h(App),
 	components: { App }

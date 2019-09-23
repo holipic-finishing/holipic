@@ -78,7 +78,7 @@ var router = new Router({
 // ------------------ Config Navigations guards before each v2 ------------------------
 // ------------------------------------------------------------------------------------
 
-router.beforeEach((to, from, next) => { 
+router.beforeEach((to, from, next) => {
 	Nprogress.start()
 
 	if(to.meta.requiresAuth) {
@@ -100,7 +100,7 @@ router.beforeEach((to, from, next) => {
 				})
 			}
 		} else if(to.meta.companyAuth) {
-			const authUser = JSON.parse(localStorage.getItem('user'))		
+			const authUser = JSON.parse(localStorage.getItem('user'))
 			if(authUser.role_id == "2"){
 				next()
 			} else {
@@ -117,7 +117,7 @@ router.beforeEach((to, from, next) => {
 					path:'/branch-admin/dashboard',
 				})
 			}
-		} 
+		}
 	} else {
 		if(to.path === '/login'){
 			const authUser = JSON.parse(localStorage.getItem('user'))
@@ -136,10 +136,10 @@ router.beforeEach((to, from, next) => {
 						path:'/branch-admin/dashboard',
 					})
 				}
-			}	
-		} 
+			}
+		}
 		if(to.path === '/customer/login') {
-			const customer = JSON.parse(localStorage.getItem('customer'))
+			const customer = JSON.parse(localStorage.getItem('user'))
 			if(customer && customer.role_id == "4") {
 				next({
 					path: 'customer/show-photo'
@@ -147,7 +147,7 @@ router.beforeEach((to, from, next) => {
 			}
 		}
 		if(to.path === '/shop-selling/login') {
-			const shopSelling = JSON.parse(localStorage.getItem('shopSelling'))
+			const shopSelling = JSON.parse(localStorage.getItem('user'))
 			if(shopSelling && shopSelling.role_id == "5") {
 				next({
 					path: 'shop-selling/dashboard'
@@ -171,11 +171,11 @@ router.beforeEach((to, from, next) => {
 	}
 
 	if(to.meta.customerAuth) {
-		const customerAuth = JSON.parse(localStorage.getItem('customer'))
+		const customerAuth = JSON.parse(localStorage.getItem('user'))
 		if(customerAuth) {
 			if(customerAuth.role_id == '4') {
 				next()
-			} 
+			}
 		} else {
 			next({
 				path: '/customer/login'
@@ -184,11 +184,11 @@ router.beforeEach((to, from, next) => {
 	}
 
 	if(to.meta.shopSellingAuth) {
-		const shopSellingAuth = JSON.parse(localStorage.getItem('shopSelling'))
+		const shopSellingAuth = JSON.parse(localStorage.getItem('user'))
 		if(shopSellingAuth) {
 			if(shopSellingAuth.role_id == '5') {
 				next()
-			} 
+			}
 		} else {
 			next({
 				path: '/shop-selling/login'

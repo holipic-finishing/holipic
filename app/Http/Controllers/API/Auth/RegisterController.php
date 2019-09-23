@@ -81,11 +81,11 @@ class RegisterController extends BaseApiController
 
                 event(new Registered($user));
 
-                return this->responseSuccess("A verification link has been sent to your email account. Please check your email to active your account");
+                return $this->responseSuccess("Register successfully!");
             }
 
         } catch (\Exception $e) {
-            return $this->responseError("System error: " . $e->getMessage())
+            return $this->responseError("System error: " . $e->getMessage());
         }
     }
 }

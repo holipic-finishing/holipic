@@ -9,6 +9,7 @@ import Login from '../../views/auth/Login';
 import SignUp from '../../views/auth/SignUp';
 import ForgotPassword from '../../views/auth/ForgotPassword';
 import ResetPassword from '../../views/auth/ResetPassword';
+import EmailVerify from '../../views/auth/EmailVerify';
 
 export default {
 	path: '/',
@@ -39,6 +40,15 @@ export default {
 	        component: ForgotPassword,
 	        meta: {
 				title: 'message.forgotPassword',
+				breadcrumb: 'Forgot Password'
+	        }
+        },
+        {
+	        path: '/email/verify',
+	        name: 'email-verify',
+	        component: EmailVerify,
+	        meta: {
+				title: 'message.emailVerify',
 				breadcrumb: 'Forgot Password'
 	        }
 	    },

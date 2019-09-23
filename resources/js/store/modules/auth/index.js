@@ -15,7 +15,7 @@ import {
 
 const state = {
     user: localStorage.getItem('user'),
-    isUserSigninWithAuth0: Boolean(localStorage.getItem('isUserSigninWithAuth0'))
+    hasVerifiedEmail: false
 }
 
 // getters
@@ -23,14 +23,14 @@ const getters = {
     getUser: state => {
         return state.user;
     },
-    isUserSigninWithAuth0: state => {
-        return state.isUserSigninWithAuth0;
+    IS_VERIFIED_EMAIL(state) {
+        return state.hasVerifiedEmail;
     }
 }
 
 // actions
 const actions = {
-    signinUserInDatabase(context, payload) {
+    signinUser(context, payload) {
         const {
             user
         } = payload;
@@ -41,17 +41,27 @@ const actions = {
             password: user.password
         }
 
-        post('/auth/loginSuperAdmin', params)
-            .then(res => {
-                if (res && res.data.success) {
-                    let data = res.data.data.user
-                    Nprogress.done();
+        post('auth/signinUser', params)
+            .then(response => {
+                Nprogress.done();
+                if (response && response.success) {
+
+                    var access_token = response.data.authData.token_type + ' ' + response.data.authData.access_token;
+                    localStorage.setItem('access_token', access_token);
+                    localStorage.setItem('user', JSON.stringify(response.data.user))
+                    context.commit('loginUserSuccess', response.data.user);
+
                     setTimeout(() => {
-                        context.commit('loginUserSuccess', data);
+                        if (!response.data.authData.hasVerifiedEmail) {
+                            router.push('email/verify')
+                        } else {
+                            context.dispatch('pushRouteWithRole', router)
+                        }
                     }, 500)
                 } else {
+
                     setTimeout(() => {
-                        context.commit('loginUserFailure', res.data);
+                        context.commit('loginUserFailure', response.message);
                     }, 500)
                 }
 
@@ -117,7 +127,6 @@ const actions = {
             })
             .catch(err => {
                 context.commit('editProfileError', err);
-
             })
     },
     logoutUserFromDatabase(context) {
@@ -136,22 +145,106 @@ const actions = {
             })
     },
     registerUser(context, payload) {
-        const user  = payload.userDetail;
-        context.commit('registerUser');
 
+        const user = payload.userDetail;
+        Nprogress.start();
 
         post('auth/register', user)
             .then(response => {
                 Nprogress.done();
-                console.log(response)
-                // setTimeout(() => {
-                //     context.commit('registerUserSuccess', response);
-                // }, 500)
+                if (response && response.success) {
+                    router.push("/login")
+                    setTimeout(() => {
+                        vp.$notify({
+                            type: 'success',
+                            title: response.message,
+                            duration: 3000
+                        })
+                    }, 1000)
+                }
             })
             .catch(error => {
-                console.log(error)
-                // context.commit('registerUserFailure', error);
+                Nprogress.done();
+                vp.$notify({
+                    type: 'error',
+                    title: error.message,
+                    duration: 3000
+                })
             });
+    },
+    hasVerifiedEmail(context, payload) {
+        Nprogress.start();
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('access_token');
+        post('email/verify')
+            .then(response => {
+                Nprogress.done();
+                if(response && response.success) {
+                    context.commit('SET_HAS_VERIFIED_EMAIL', true)
+                } else {
+                    context.commit('SET_HAS_VERIFIED_EMAIL', false)
+                }
+            })
+            .catch(error => {
+                console.log("System error")
+            })
+    },
+    verifyEmail(context, payload){
+        Nprogress.start();
+        const url = payload.queryURL.split(config.API_URL)[1]
+        post(url)
+            .then(response => {
+                Nprogress.done();
+                if(response && response.success) {
+                    context.commit('SET_HAS_VERIFIED_EMAIL', true)
+                } else {
+                    context.commit('SET_HAS_VERIFIED_EMAIL', false)
+                }
+            })
+            .catch(error => {
+                console.log("System error")
+            })
+    },
+    pushRouteWithRole(context, payload) {
+
+        var role = context.getters.getUser.role_id
+
+        switch(role) {
+            case "1":
+                payload.push('/super-admin/dashboard')
+                break;
+            case "2":
+                payload.push('/company-admin/dashboard')
+                break;
+            case "3":
+                payload.push('/branch-admin/dashboard')
+                break;
+            case "4":
+                router.push('/customer/show-photo')
+                break;
+            case "5":
+                router.push('/shop-selling/dashboard')
+                break;
+            default:
+                break;
+        }
+    },
+    resendEmail(context, payload){
+        post('email/resend')
+            .then(response => {
+                Nprogress.done();
+                if(response && response.success) {
+                    vp.$notify({
+                        type: 'success',
+                        title: response.message,
+                        duration: 2000,
+                    })
+                } else {
+
+                }
+            })
+            .catch(error => {
+                console.log("System error")
+            })
     }
 
     /**********************************
@@ -177,50 +270,20 @@ const mutations = {
     loginUser(state) {
         Nprogress.start();
     },
-    loginUserSuccess(state, user) {
+    loginUserSuccess(state, data) {
 
-        state.user = user;
-
-        state.isUserSigninWithAuth0 = false
-        var access_token = user.access_token
-        localStorage.setItem('access_token', access_token)
-
-        if (user.role_id == "1" || user.role_id == "2" || user.role_id == "3") {
-            localStorage.setItem('user', JSON.stringify(user))
-        } else if (user.role_id == "4") {
-            localStorage.setItem('customer', JSON.stringify(user))
-        } else {
-            localStorage.setItem('shopSelling', JSON.stringify(user))
-        }
-
-        if (user.role_id == "1") {
-            router.push('/super-admin/dashboard')
-        }
-        if (user.role_id == "2") {
-            router.push('/company-admin/dashboard')
-        }
-        if (user.role_id == "3") {
-            router.push('/branch-admin/dashboard')
-        }
-        if (user.role_id == '4') {
-            router.push('/customer/show-photo')
-        }
-        if (user.role_id == '5') {
-            router.push('/shop-selling/dashboard')
-        }
-        vp.$notify.success({
-            title: 'Success',
-            message: 'Logged in successfully!',
-            showClose: false,
+        state.user = data;
+        vp.$notify({
+            type: 'success',
+            title: 'Logged in successfully!',
             duration: 2000,
         })
     },
     loginUserFailure(state, error) {
         Nprogress.done();
-        vp.$notify.error({
-            title: 'Error',
-            message: error.message,
-            showClose: false,
+        vp.$notify({
+            type: 'error',
+            title: error,
             duration: 2000,
         })
     },
@@ -230,27 +293,6 @@ const mutations = {
         localStorage.removeItem('user')
         localStorage.removeItem('id_one_signal')
         router.push("/login")
-    },
-    registerUser(state) {
-        Nprogress.start();
-    },
-    registerUserSuccess(state, user) {
-        state.user = localStorage.setItem('user', user);
-        router.push("/super-admin/dashboard")
-        vp.$notify.success({
-            title: 'Success',
-            message: 'Registered account successfully!',
-            showClose: false,
-            duration: 2000,
-        })
-    },
-    registerUserFailure(state, error) {
-        Nprogress.done();
-        vp.$notify.error({
-            title: 'Error',
-            message: error.message,
-            showClose: false
-        })
     },
     changepasswordSuccess(state, success) {
         Nprogress.done();
@@ -288,6 +330,9 @@ const mutations = {
             showClose: false,
             duration: 2000,
         })
+    },
+    SET_HAS_VERIFIED_EMAIL(state, data) {
+        state.hasVerifiedEmail = data;
     }
 }
 

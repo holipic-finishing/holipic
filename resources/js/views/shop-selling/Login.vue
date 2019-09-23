@@ -2,14 +2,14 @@
 	<v-container fluid white class="container-shop-login">
     	<v-layout row class= "v-layout-shop-login">
     		<v-flex xs3>
-		       
+
 		    </v-flex>
 		    <v-flex xs6>
 		        <v-card  tile flat >
 		          	<v-card-title primary-title class="v-card-title-h1">WELCOME</v-card-title>
-		          	
+
 		          		<v-img src="shop_selling/logo-holipic-new.png" width="150px" style="display: inline-block;"/>
-		          	
+
 		          	<v-card-text>Login to Start Selling Photos</v-card-text>
 		          	<v-card tile flat  class="v-card-shop">
 		          		<div class="custom-shop-form" style="color:black !important;">
@@ -49,7 +49,7 @@
 		        </v-card>
 		    </v-flex>
 		    <v-flex xs3>
-		        
+
 		    </v-flex>
     	</v-layout>
 	</v-container>
@@ -90,7 +90,7 @@ export default {
 			        email: this.email,
 			        password: this.password
 	      		};
-	      		this.$store.dispatch("signinUserInDatabase", {user});
+	      		this.$store.dispatch("signinUser", {user});
   			}
 	    }
   }

@@ -7,7 +7,7 @@
     <v-spacer></v-spacer>
 
     <v-toolbar-items class="hidden-sm-and-down">
-    	
+
       	<v-btn flat @click="showBasket()">
       		<span class="quantity-cart">
       			<p>{{countBasket}}</p>
@@ -18,14 +18,14 @@
 				</i>
       		</span>
 	      	<span class="name-cart">Basket</span>
-	      	
+
   		</v-btn>
       <v-btn flat @click="downloadPhoto()">
       	<span class="quantity-dowload">
       		<p>{{countDownload}}</p>
       	</span>
       	<span>
-      		<i class="fa fa-download font-material-header" aria-hidden="true"></i>	
+      		<i class="fa fa-download font-material-header" aria-hidden="true"></i>
       	</span>
       	<span class="name-cart">Download</span>
       </v-btn>
@@ -46,12 +46,12 @@
 			        <v-icon>keyboard_arrow_right</v-icon>
 			      </v-btn>
 		    	</v-card-title>
-		      
+
 		        <v-divider class="custom-divider"></v-divider>
-		        
+
 		          	<v-list-tile class="v-list-title-profile-customer">
 		          		<span class="ml-3 mr-3 f-span c-span"> <i class="fas fa-credit-card"></i> </span>
-		          		
+
 		          		<span class="c-span">Purchase Details</span>
 		          	</v-list-tile>
 		          	<v-list-tile class="v-list-title-profile-customer">
@@ -63,12 +63,12 @@
 		          		<span class="ml-3 mr-3 f-span c-span"><i class="material-icons">feedback</i></span>
 		          		<span class="c-span">Feedback</span>
 		          	</v-list-tile>
- 
+
 		          	<v-list-tile class="v-list-title-profile-customer">
 		          		<span class="ml-3 mr-3 f-span c-span"><i class="material-icons">access_time</i></span>
 		          		<span class="c-span">Account Expiry</span>
 		          	</v-list-tile>
-		        
+
 		        <v-divider class="custom-divider"></v-divider>
 		        <v-card-actions class="v-list-title-profile-customer">
 		        	<i class="fas fa-sign-out-alt ml-4 mr-3 f-span c-span"></i>
@@ -102,7 +102,7 @@
 								</i>
 							</v-btn>
 				  		</span>
-				  	</div>  
+				  	</div>
 			  	</v-list-tile>
 			  <v-list class="v-list--header-customer ml-3" v-if="showDetail">
 			  	<span>
@@ -117,7 +117,7 @@
 				      color="blue-grey"
 				    ></v-progress-circular>
 			    </span>
-			    
+
 			  </v-list>
 			</v-card>
 		</v-dialog>
@@ -164,22 +164,22 @@
 				<v-divider></v-divider>
 				<v-layout row wrap>
 				  	<v-flex md9 xs9 lg9>
-				  		
+
 				  	</v-flex>
 				  	<v-flex md3 xs3 lg3>
 				  		<span style="font-weight: bold;margin-left: 25px;">Total: {{total}}</span>
 				  	</v-flex>
 
 				  	<v-flex md10 xs10 lg10>
-				  		
+
 				  	</v-flex>
 				  	<v-flex md2 xs2 lg2>
 				  		<v-btn color="warning" @click="processPayment()">purchase</v-btn>
 				  	</v-flex>
-	  	
+
 				</v-layout>
-				
-			</v-container>			
+
+			</v-container>
 		</v-dialog>
 </div>
 
@@ -202,7 +202,7 @@ export default {
     	icon: 'keyboard_arrow_down',
     	countBasket: 0,
     	countDownload: 0,
-    	customer: JSON.parse(localStorage.getItem('customer')),
+    	customer: JSON.parse(localStorage.getItem('user')),
     	imageSelected: [],
     	dir:'',
     	total:''

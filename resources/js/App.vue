@@ -16,10 +16,6 @@
 import { mapGetters } from "vuex";
 
 export default {
-  data() {
-    return {
-    };
-  },
   mounted() {
     // if (
     //   this.selectedLocale.locale === "he" ||

@@ -85,14 +85,10 @@
 </template>
 
 <script>
-// import SessionSliderWidget from "../../components/Widgets/SessionSlider";
 import AppConfig from "../../constants/AppConfig";
 
 export default {
-	name: "SignUp",
-	components: {
-		// SessionSliderWidget
-	},
+    name: "SignUp",
 	data() {
 		return {
             valid: true,

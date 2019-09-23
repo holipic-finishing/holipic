@@ -18,8 +18,8 @@ Route::group(['namespace' => 'API'],function(){
     Route::namespace('Auth')->prefix('auth')->group(function(){
 
         Route::post('register', 'RegisterController@register');
+        Route::post('signinUser','LoginController@signinUser');
 
-		Route::post('loginSuperAdmin','LoginController@loginSuperAdmin');
 		Route::get('forgot-password', 'LoginController@sendEmailResetPassword');
 		Route::get('customer/confirm-forgot-password', 'LoginController@confirmForgotPassword');
 		Route::post('customer/update-password', 'LoginController@updatePassword');
@@ -30,9 +30,9 @@ Route::group(['namespace' => 'API'],function(){
 
 Route::middleware(['auth:api'])->group(function () {
     // Email Verification Routes...
+    Route::post('email/verify', 'Auth\VerificationController@check')->name('verification.notice');
     Route::post('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
     Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
-    Route::post('email/verify', 'Auth\VerificationController@show')->name('verification.notice');
 });
 
 

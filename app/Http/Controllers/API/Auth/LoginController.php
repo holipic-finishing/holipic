@@ -46,14 +46,6 @@ class LoginController extends BaseApiController
     {
         // $this->middleware('guest')->except('logout');
         $this->userRepo = $userRepo;
-
-    }
-
-    public function reNewToken()
-    {
-        $user = auth()->user();
-        $user->access_token = $user->generateAccessToken();
-        $user->save();
     }
 
     public function logout()
@@ -62,18 +54,16 @@ class LoginController extends BaseApiController
         return redirect('landing-page');
     }
 
-    public function loginSuperAdmin(UserLoginAPIRequest $request)
+    public function signinUser(UserLoginAPIRequest $request)
     {
-        $result = strpos($request['email'],'@');
         $credentials = $request->only(['email', 'password']);
         $email = $credentials['email'];
         $dataInfoLogin = null;
 
-        try{
-            if(strpos($request['email'],'@') !== false) {
+        try {
+            if (strpos($request['email'], '@') !== false) {
                 $user = $this->userRepo->findUserIsExits($email);
                 $dataInfoLogin = $credentials;
-
             } else {
                 $user = $this->userRepo->findUserByUserName($email);
                 $dataUser = [
@@ -87,118 +77,109 @@ class LoginController extends BaseApiController
             if (empty($user)) {
 
                 return [
-                    "success"=> false,
-                    "message"=>'Email or Username address not exist in system',
+                    "success" => false,
+                    "message" => 'Email or Username address not exist in system',
 
                 ];
             }
 
-            if (! $token = auth()->attempt($dataInfoLogin)) {
-                    return [
-                        "success"=> false,
-                        "message"=> 'Password provider was incorrect'
-                    ];
-                }
-
-
-            if(!$this->userRepo->checkUserCommpanyExits(auth()->user())) {
+            if (!$token = auth()->attempt($dataInfoLogin)) {
                 return [
-                    "success"=> false,
-                    "message"=> 'Current account is block'
+                    "success" => false,
+                    "message" => 'Password provider was incorrect'
                 ];
             }
 
-            $this->reNewToken();
+
+            if (!$this->userRepo->checkUserCommpanyExits(auth()->user())) {
+                return [
+                    "success" => false,
+                    "message" => 'Current account is block'
+                ];
+            }
+
+            $authData = $this->makeResponseWithToken($token);
 
             $userInfo = $this->informationUser(auth()->user());
 
-            $data = [
-                'status' => $token,
-                'user' => $userInfo,
+            $dataResponse = [
+                'user'      => $userInfo,
+                'authData'  => $authData
             ];
 
-            return [
-                "success" => true,
-                "data" => $data,
-            ];
+            return $this->responseSuccess('Login successfully!', $dataResponse);
 
-        } catch (\Exception $e){
-            // return ('An unexpected error occurred. Please try again...');
-            return $e;
-
+        } catch (\Exception $e) {
+            return $this->responseError('An unexpected error occurred.', $e);
         }
-
     }
 
-    public function logoutAuth(){
+    public function logoutAuth()
+    {
         auth()->logout();
         return [
-                "success" => true
-            ];
+            "success" => true
+        ];
     }
 
-    public function informationUser($user){
+    public function informationUser($user)
+    {
 
-        if($user->role_id == '1') {
+        if ($user->role_id == '1') {
             $data = [
+                'id'           => $user->id,
+                'full_name'    => $user->first_name . ' ' .  $user->last_name,
                 'role_id'      => $user->role_id,
                 'username'     => $user->username,
-                'full_name'    => $user->first_name . ' ' .  $user->last_name,
-                'access_token' => $user->access_token,
                 'email'        => $user->email,
-                'id'           => $user->id
             ];
         }
-        if($user->role_id == '2') {
+        if ($user->role_id == '2') {
             $company = Company::where('owner_id', $user->id)->first();
             $data = [
+                'id'           => $user->id,
+                'full_name'    => $user->first_name . ' ' .  $user->last_name,
                 'role_id'      => $user->role_id,
                 'username'     => $user->username,
-                'full_name'    => $user->first_name . ' ' .  $user->last_name,
-                'access_token' => $user->access_token,
                 'email'        => $user->email,
-                'id'           => $user->id,
                 'company_id'   => $company->id,
                 'company_name' => $company->name,
                 'company_logo' => $company->logo
             ];
         }
-        if($user->role_id == '3') {
+        if ($user->role_id == '3') {
             $branch = Branch::where('user_id', $user->id)->first();
             $company = Company::where('id', $branch->company_id)->first();
             $data = [
+                'id'           => $user->id,
+                'full_name'    => $user->first_name . ' ' .  $user->last_name,
                 'role_id'      => $user->role_id,
                 'username'     => $user->username,
-                'full_name'    => $user->first_name . ' ' .  $user->last_name,
-                'access_token' => $user->access_token,
                 'email'        => $user->email,
-                'id'           => $user->id,
-                'branch_id'    => $branch->id,
-                'branch_name'  => $branch->name,
                 'company_id'   => $company->id,
                 'company_name' => $company->name,
-                'company_logo' => $company->logo
+                'company_logo' => $company->logo,
+                'branch_id'    => $branch->id,
+                'branch_name'  => $branch->name,
             ];
         }
-        if($user->role_id == '4') {
+        if ($user->role_id == '4') {
             $data = [
-                'role_id'      => $user->role_id,
-                'full_name'    => $user->customer->name,
-                'avatar'       => $user->customer->avatar,
-                'access_token' => $user->access_token,
-                'email'        => $user->email,
                 'id'           => $user->id,
+                'full_name'    => $user->customer->name,
+                'role_id'      => $user->role_id,
+                'email'        => $user->email,
+                'avatar'       => $user->customer->avatar,
                 'room_id'      => $user->customer->room_id
             ];
         }
-        if($user->role_id == '5') {
+        if ($user->role_id == '5') {
             $data = [
                 'role_id'      => $user->role_id,
-                'access_token' => $user->access_token,
                 'email'        => $user->email,
-
             ];
         }
+
         return $data;
     }
 
@@ -206,7 +187,7 @@ class LoginController extends BaseApiController
     {
         $user = $this->userRepo->findUserIsExits(request('email'));
 
-        if($user) {
+        if ($user) {
 
             $token = $this->userRepo->handleCreateOrUpdatePasswordReset($user);
 
@@ -220,16 +201,16 @@ class LoginController extends BaseApiController
 
     public function confirmForgotPassword()
     {
-        if(!request('token')) {
+        if (!request('token')) {
             return redirect('customer/reset-password');
         }
 
         // $jwtPayload = $this->userRepo->handleTokenForgotPassword();
         $token = $this->userRepo->handleTokenForgotPassword();
 
-        if(!empty($token)) {
-            if($token->life_time >  time()) {
-                return redirect('customer/reset-password?token='.request('token').'&email='.$token->email); //render component vue
+        if (!empty($token)) {
+            if ($token->life_time >  time()) {
+                return redirect('customer/reset-password?token=' . request('token') . '&email=' . $token->email); //render component vue
             } else {
                 return redirect('customer/reset-password?exp=expired');
             }
@@ -252,18 +233,18 @@ class LoginController extends BaseApiController
 
     public function updatePassword()
     {
-        if(!request('token') || !request('email')) {
-           return $this->responseError('Not find token or email', null);
+        if (!request('token') || !request('email')) {
+            return $this->responseError('Not find token or email', null);
         }
 
         $token = $this->userRepo->handleTokenForgotPassword();
 
-        if(!empty($token)) {
-            if($token->life_time > time() && request('email') == $token->email) {
+        if (!empty($token)) {
+            if ($token->life_time > time() && request('email') == $token->email) {
 
                 $data = $this->userRepo->handleUpdatePassword();
 
-                if($data) {
+                if ($data) {
                     return $this->responseSuccess('Reset password successfully', null);
                 }
 

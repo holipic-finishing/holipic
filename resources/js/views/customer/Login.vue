@@ -78,7 +78,7 @@
 				          		<span class="style-span--note">All Rights Reserved @ Holipic 2019</span>
 				          	</v-card-title>
 			          	</div>
-			          	
+
 			        </v-card>
 				</div>
 			</div>
@@ -122,7 +122,7 @@ export default {
 		}
 	},
 	created() {
-		
+
 	},
 	methods: {
 	  	validate () {
@@ -137,7 +137,7 @@ export default {
 			        password: this.password
 	      		};
 
-	      		this.$store.dispatch("signinUserInDatabase", {user});
+	      		this.$store.dispatch("signinUser", {user});
   			}
 	    },
 	    resetPassword()

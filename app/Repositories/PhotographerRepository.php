@@ -81,11 +81,11 @@ class PhotographerRepository extends BaseRepository
                 if(!is_null($value['branch'])){
 
                     $fileName_ava = $this->createLink($value['avatar']);
-                    $avatar = asset('photographers/avatars/' . $fileName_ava);
+                    $avatar = asset('photographers/' . $fileName_ava);
                     $value['avatar'] = $avatar;
 
                     $fileName_id = $this->createLink($value['identification_card']);
-                    $identification_card = asset('photographers/identifications/' . $fileName_id);
+                    $identification_card = asset('photographers/' . $fileName_id);
                     $value['identification_card'] = $identification_card;
 
                     $array[] = $value;
@@ -108,7 +108,7 @@ class PhotographerRepository extends BaseRepository
      * [handelSavePhotographer description]
      * @return [type] [description]
      */
-    
+
     public function handelSavePhotographer()
     {
         $input = request()->all();
@@ -172,7 +172,7 @@ class PhotographerRepository extends BaseRepository
     public function handleUpdateIdentification($image, $photographer)
     {
         if(File::exists(public_path() .'/'. $photographer['identification_card'])) {
-             
+
             File::delete(public_path() .'/' .$photographer['identification_card']);
         }
 
@@ -224,6 +224,6 @@ class PhotographerRepository extends BaseRepository
             return $photographer;
         }
 
-        return false; 
+        return false;
     }
 }

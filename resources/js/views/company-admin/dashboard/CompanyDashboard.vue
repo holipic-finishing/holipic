@@ -515,7 +515,7 @@
 			  	<v-flex xl2 lg2 md2 sm6 xs12 b-50>
 			  		<v-chip class="chip-style" color="indigo" text-color="white" outline @click = "searchTag(paid.name)">
 				        <v-avatar class="indigo darken-4 chip-style">{{paid.value}}</v-avatar>
-				         
+
 				        <span style="color: #1a237e"> {{paid.name}}</span>
 				    </v-chip>
 			  	</v-flex>
@@ -524,7 +524,7 @@
 			  		<v-chip class="chip-style" color="orange" text-color="white" outline @click = "searchTag(pending.name)">
 				        <v-avatar class="orange darken-4 chip-style">{{pending.value}}</v-avatar>
 				        <span style="color: #e65100"> {{pending.name}}</span>
-				        
+
 				    </v-chip>
 			  	</v-flex>
 
@@ -538,7 +538,7 @@
 			  		<v-chip class="chip-style" color="primary" text-color="white" outline @click = "searchTag(booking.name)">
 				        <v-avatar class="primary darken-4 chip-style">{{booking.value}}</v-avatar>
 				        <span style="color: #003385"> {{booking.name}}</span>
-				        
+
 				    </v-chip>
 			  	</v-flex>
 
@@ -556,8 +556,6 @@ import Vue from 'vue'
 // charts component
 import LineChart from './LineChart.js'
 import { ChartConfig } from "../../../constants/chart-config";
-//config
-import config from '../../../config/index.js'
 import { get, getWithData, post } from '../../../api'
 import moment from 'moment'
 import Orders from './Orders'
@@ -656,15 +654,15 @@ export default {
 			this.$root.$emit('searchTag', this.paramsSearchTag)
 		},
 		countValuesOfTag(){
-			var url = config.API_URL + 'order/countValuesOfTag?companyId=' + this.company_id
+			var url = 'order/countValuesOfTag?companyId=' + this.company_id
 			get(url)
 			.then((response) => {
-				if(response.data && response.data.success){
-					this.done.value = response.data.data.done
-					this.paid.value = response.data.data.paid
-					this.pending.value = response.data.data.pending
-					this.cancel.value = response.data.data.cancel
-					this.booking.value = response.data.data.booking
+				if(response && response.success){
+					this.done.value = response.data.done
+					this.paid.value = response.data.paid
+					this.pending.value = response.data.pending
+					this.cancel.value = response.data.cancel
+					this.booking.value = response.data.booking
 				}
 			})
 			.catch((err) => {
@@ -1039,11 +1037,11 @@ export default {
 		},
 
 		getListBranch(){
-			var url = config.API_URL+'company/branch-company?companyId='+this.company_id
+			var url = 'company/branch-company?companyId='+this.company_id
 			get(url)
 			.then((response) => {
-				if(response.data && response.data.success){
-					var data = response.data.data
+				if(response && response.success){
+					var data = response.data
 					var vm = this
 					_.forEach(data, function(value,key){
 						vm.listBranch.push(value)
@@ -1056,11 +1054,11 @@ export default {
 		},
 
 		changeBranch(item){
-			var url = config.API_URL+'photographer/photographer-branch?branchId='+item.branch_id
+			var url = 'photographer/photographer-branch?branchId='+item.branch_id
 			get(url)
 			.then(res => {
-				if(res.data && res.data.success){
-					var data = res.data.data
+				if(res && res.success){
+					var data = res.data
 					var vm = this
 					_.forEach(data, function(value,key){
 						vm.listPhotographer.push(value)

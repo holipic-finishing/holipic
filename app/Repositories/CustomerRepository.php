@@ -42,25 +42,25 @@ class CustomerRepository extends BaseRepository
         $companyId = request('companyId');
 
         $data = [];
-        
+
         if(!empty($companyId)) {
 
             $customers = $this->model
                             ->with('user')
                             ->with('room')
                             ->with(['branch' => function($q) use ($companyId) {
-                                
+
                                 $q->whereCompanyId($companyId);
-                            
+
                             }])->get()->toArray();
 
 
-            foreach($customers as $customer) 
+            foreach($customers as $customer)
             {
                 if($customer['branch'] != null)
                 {
                     $fileName = $this->createLinkAvatar($customer['avatar']);
-                    $customer['avatar'] = asset('customer_avatars/' . $fileName);
+                    $customer['avatar'] = asset($fileName);
                     $data[] = $customer;
                 }
             }
@@ -79,9 +79,9 @@ class CustomerRepository extends BaseRepository
 
     public function handleUpdateCustomer($id)
     {
-        $customer = $this->model->findOrFail($id); 
+        $customer = $this->model->findOrFail($id);
 
-        $input = request('params'); 
+        $input = request('params');
 
         if(request('params.status')) {
             $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false] ;
@@ -124,10 +124,10 @@ class CustomerRepository extends BaseRepository
     public function handelGetBranchCustomers($input)
     {
         $companyId = $input['company_id'];
-        $user_id = $input['id']; 
+        $user_id = $input['id'];
 
         $data = [];
-        
+
         if($companyId && $companyId != '') {
             $customers = $this->model
                                 ->with('user')
@@ -136,7 +136,7 @@ class CustomerRepository extends BaseRepository
                                                      $q->whereCompanyId($companyId)->whereUserId($user_id);
                                         }])->get()->toArray();
 
-            foreach($customers as $customer) 
+            foreach($customers as $customer)
             {
                 if($customer['branch'] != null)
                 {
@@ -193,12 +193,12 @@ class CustomerRepository extends BaseRepository
 
     public function handleDeleteBranchCustomer($id)
     {
-        $customer = $this->model->find($id); 
+        $customer = $this->model->find($id);
         if (empty($customer)) {
             return $this->sendError('Customer not found');
         }
 
-        $user = User::where('id', '=', $customer->user_id)->first(); 
+        $user = User::where('id', '=', $customer->user_id)->first();
         if (empty($user)) {
             return $this->sendError('User not found');
         }

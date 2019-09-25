@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6,6 +5,7 @@
  */
 
 require('./bootstrap');
+
 window.Vue = require('vue');
 
 import 'babel-polyfill';
@@ -14,7 +14,18 @@ import Vue from 'vue'
 /**
  * Import Vue Plugins
  */
-import vuetify from './plugins/vuetify'
+// Use Plugins
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import '@mdi/font/css/materialdesignicons.css'
+import '@fortawesome/fontawesome-free/css/all.css'
+import 'font-awesome/css/font-awesome.min.css'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.css'
+Vue.use(Vuetify, {
+    theme: store.getters.selectedTheme.theme,
+    iconfont: 'md' || 'mdi' || 'fa' || 'fa4'
+});
+
 import VueBreadcrumbs from 'vue2-breadcrumbs'
 import Notifications from 'vue-notification'
 import velocity from 'velocity-animate'
@@ -24,7 +35,9 @@ import VueOffline from 'vue-offline'
 import VuejsClipper from 'vuejs-clipper'
 
 import router from './router'
-import { store } from './store/store'
+import {
+    store
+} from './store/store'
 
 import config from './config'
 import globalComponents from './globalComponents'
@@ -58,7 +71,9 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 Vue.use(VueI18n)
 Vue.use(VueBreadcrumbs)
-Vue.use(Notifications, { velocity })
+Vue.use(Notifications, {
+    velocity
+})
 Vue.use(Fullscreen);
 Vue.use(require('vue-moment'))
 Vue.use(VueOffline)
@@ -68,17 +83,18 @@ Vue.use(globalComponents);
 
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-	locale: store.getters.selectedLocale.locale, // set locale
-	messages, // set locale messages
+    locale: store.getters.selectedLocale.locale, // set locale
+    messages, // set locale messages
 })
 
 /* eslint-disable no-new */
 new Vue({
-    vuetify,
     store,
-	i18n,
+    i18n,
     router,
-	template: '<app></app>',
-	// render: h => h(App),
-	components: { App }
+    template: '<app></app>',
+    // render: h => h(App),
+    components: {
+        App
+    }
 }).$mount('#app')

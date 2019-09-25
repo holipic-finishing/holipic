@@ -1,43 +1,56 @@
 <template>
-	<v-menu offset-y origin="right top" left content-class="language-dropdown" transition="slide-y-transition" nudge-top="-10" class="v-step-3">
-		<v-btn icon large slot="activator">
-			<img class="img-responsive" :src="`/static/icon-languages/${selectedLocale.icon}.png`">
-		</v-btn>
-		<div class="dropdown-content">
-			<div class="dropdown-top d-custom-flex justify-space-between primary">
-				<span class="white--text fw-bold">Languages</span>
-				<span class="v-badge warning">1 NEW</span>
-			</div>
-			<v-list class="dropdown-list">
-				<v-list-tile v-for="language in languages" :key="language.name" @click="changeLanguage(language)">
-					<img class="img-responsive mr-3" :src="`/static/flag-icons/${language.icon}.png`">
-					<span>{{ language.name }}</span>
-				</v-list-tile>
-			</v-list>
-		</div>
-	</v-menu>
+  <v-menu
+    offset-y
+    origin="right top"
+    left
+    content-class="language-dropdown"
+    transition="slide-y-transition"
+    nudge-top="-10"
+    class="v-step-3"
+  >
+    <v-btn icon large slot="activator">
+      <img class="img-responsive h-30" :src="`/static/icon-languages/${selectedLocale.icon}.png`" />
+    </v-btn>
+    <div class="dropdown-content">
+      <div class="dropdown-top d-custom-flex justify-space-between primary">
+        <span class="white--text fw-bold">Languages</span>
+        <span class="v-badge warning">1 NEW</span>
+      </div>
+      <v-list class="dropdown-list">
+        <v-list-tile
+          v-for="language in languages"
+          :key="language.name"
+          @click="changeLanguage(language)"
+        >
+          <img class="img-responsive mr-3" :src="`/static/flag-icons/${language.icon}.png`" />
+          <span>{{ language.name }}</span>
+        </v-list-tile>
+      </v-list>
+    </div>
+  </v-menu>
 </template>
 
 <script>
-	import {
-		mapGetters
-	} from "vuex";
-	
-	export default {
-		computed: {
-			...mapGetters(["selectedLocale", "languages"])
-		},
-		methods: {
-			changeLanguage(language) {
-				this.$i18n.locale = language.locale;
-				this.$store.dispatch("changeLanguage", language);
-			}
-		}
-	};
+import { mapGetters } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters(["selectedLocale", "languages"])
+  },
+  methods: {
+    changeLanguage(language) {
+      this.$i18n.locale = language.locale;
+      this.$store.dispatch("changeLanguage", language);
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
-	.theme--light.v-btn {
-	    color: #F5F5F5;
-	}
+.theme--light.v-btn {
+  color: #f5f5f5;
+}
+.h-30{
+    height: 30px;
+}
 </style>

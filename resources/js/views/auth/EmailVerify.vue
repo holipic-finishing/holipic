@@ -80,6 +80,13 @@ export default {
         if (!$.isEmptyObject(queryURL)) {
             this.verify(queryURL);
         }
+
+        var _this = this
+        window.addEventListener('focus', function(){
+            _this.$store.dispatch("hasVerifiedEmail", {
+                router: this.$router
+            });
+        });
 	}
 };
 </script>

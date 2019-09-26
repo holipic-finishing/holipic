@@ -2,16 +2,19 @@ import Index from '../../views/customer/index.vue'
 import Photo from '../../views/customer/partials/SelectPhotoCustomer.vue'
 
 export default{
-	path:'/customer-page',
+	path:'/customer',
 	component: Index,
-	redirect: '/customer/show-photo',
+	redirect: '/customer/photos',
 	children: [
-		{
-			path:'/customer/show-photo',
+        {
+            path:'photos',
 			component: Photo,
 			meta: {
-         		customerAuth:true
+                requiresAuth: true,
+                customerAuth:true,
+                title: 'Customer Photos',
+	            breadcrumb: 'Customer Photos'
 	        }
-		}
+        },
 	]
 }

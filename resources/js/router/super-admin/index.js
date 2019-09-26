@@ -39,7 +39,6 @@ export default {
 	        meta: {
 	        	requiresAuth: true,
 	        	adminAuth:true,
-         		// companyAuth:false,
 	            title: 'message.ecommerce',
 	            breadcrumb: 'Dashboard'
 	        }
@@ -50,7 +49,6 @@ export default {
 	        meta: {
 	        	requiresAuth: true,
 	        	adminAuth:true,
-         		// companyAuth:false,
 	            title: 'message.company',
 	            breadcrumb: 'Company / List'
 	        }
@@ -61,7 +59,6 @@ export default {
 	        meta: {
 	            requiresAuth: true,
 	            adminAuth:true,
-         		// companyAuth:false,
 	            title: 'message.couponCode',
 	            breadcrumb: 'Coupon Code / List'
 	        }
@@ -72,7 +69,6 @@ export default {
 	        meta: {
 	            requiresAuth: true,
 	            adminAuth:true,
-         		// companyAuth:false,
 	            title: 'message.package',
 	            breadcrumb: 'Packages / List'
 	        }
@@ -83,7 +79,6 @@ export default {
 	        meta: {
 	            requiresAuth: true,
 	            adminAuth:true,
-         		// companyAuth:false,
 	            title: 'message.changePassword',
 	            breadcrumb: 'Change Password'
 	        }
@@ -94,7 +89,6 @@ export default {
 	        meta: {
 	            requiresAuth: true,
 	            adminAuth:true,
-         		// companyAuth:false,
 	            title: 'message.changePassword',
 	            breadcrumb: 'Change Password'
 	        }

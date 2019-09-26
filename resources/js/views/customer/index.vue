@@ -1,31 +1,26 @@
 <template>
-	<div>
-		<header-page> </header-page>
-		<v-container fluid class="custom-container-sp">
-      <!-- thanh hung -->
-			<router-view></router-view>
-		</v-container>
-	</div>
+  <div>
+    <header-page></header-page>
+    <v-container fluid class="custom-container-sp">
+      <router-view></router-view>
+    </v-container>
+  </div>
 </template>
 
 <script>
-import HeaderPage from './partials/Header'
+import HeaderPage from "./partials/Header";
 
 export default {
-
-  name: 'index',
+  name: "index",
   components: {
-  	HeaderPage
+    HeaderPage
   },
 
-  data () {
-    return {
-
-    }
+  data() {
+    return {};
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-
 </style>

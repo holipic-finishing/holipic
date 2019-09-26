@@ -200,7 +200,6 @@
 </template>
 <script>
 
-import config from '../../../config'
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import Lightbox from 'vue-my-photos'
 import Vue from 'vue'
@@ -366,7 +365,7 @@ export default {
 		this.count --
 		$('.active-image'+photo.id).css("color", "#464D69");
 
-		del(config.API_URL+'cart/delete-photo?imageId='+photo.id)
+		del('cart/delete-photo?imageId='+photo.id)
   		.then(res => {
 
   		})
@@ -483,13 +482,13 @@ export default {
   	},
   	getPhotoFromRoom()
   	{
-  		get(config.API_URL+'room/show-photo?room='+this.customer.room_id)
+  		get('room/show-photo?room='+this.customer.room_id)
   		.then(res => {
-  			if(res && res.data.success){
+  			if(res && res.success){
 
-  				this.thumbnailDir = res.data.data[1]
+  				this.thumbnailDir = res.data[1]
 
-  				this.photos = res.data.data[0]['images']
+  				this.photos = res.data[0]['images']
   			}
   		})
   		.catch(err => {
@@ -498,7 +497,7 @@ export default {
   	},
   	addPhotoSelectedIntoDB(photo)
   	{	let params = {photo}
-  		post(config.API_URL+'customer/order-image', params)
+  		post('customer/order-image', params)
   		.then(res => {
 
   		})

@@ -117,9 +117,7 @@ class LoginController extends BaseApiController
     public function logoutAuth()
     {
         auth()->logout();
-        return [
-            "success" => true
-        ];
+        return $this->responseSuccess('Logout successfully!');
     }
 
     public function informationUser($user)

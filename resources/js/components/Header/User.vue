@@ -27,7 +27,7 @@
           </v-list-tile>
         </template>
         <template v-else>
-          <v-list-tile @click="logoutUser" :key="userLink.id">
+          <v-list-tile @click="$store.dispatch('logoutUser', $router)" :key="userLink.id">
             <i :class="userLink.icon"></i>
             <span>{{$t(userLink.title)}}</span>
           </v-list-tile>
@@ -74,13 +74,6 @@ export default {
     };
   },
   methods: {
-    logoutUser() {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("user");
-      // this.$router.push('/session/login')
-      this.$router.push("/login");
-      this.$store.dispatch("logoutUserFromDatabase", this.$router);
-    },
     getMenuLink(path) {
       return "/" + getCurrentAppLayout(this.$router) + path;
     }

@@ -18,12 +18,12 @@ Route::group(['namespace' => 'API'],function(){
     Route::namespace('Auth')->prefix('auth')->group(function(){
 
         Route::post('register', 'RegisterController@register');
-        Route::post('signinUser','LoginController@signinUser');
+        Route::post('signinUser', 'LoginController@signinUser');
+        Route::post('logout', 'LoginController@logoutAuth')->middleware('jwt');
 
 		Route::get('forgot-password', 'LoginController@sendEmailResetPassword');
 		Route::get('customer/confirm-forgot-password', 'LoginController@confirmForgotPassword');
 		Route::post('customer/update-password', 'LoginController@updatePassword');
-		Route::get('logout','LoginController@logoutAuth');
 
     });
 });

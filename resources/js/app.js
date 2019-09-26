@@ -1,11 +1,4 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
-
 window.Vue = require('vue');
 
 import 'babel-polyfill';
@@ -14,7 +7,7 @@ import Vue from 'vue'
 /**
  * Import Vue Plugins
  */
-// Use Plugins
+//Vuetify v1.x plugin
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@mdi/font/css/materialdesignicons.css'
 import '@fortawesome/fontawesome-free/css/all.css'
@@ -26,20 +19,44 @@ Vue.use(Vuetify, {
     iconfont: 'md' || 'mdi' || 'fa' || 'fa4'
 });
 
+// VueI18n plugin
+import VueI18n from 'vue-i18n'
+Vue.use(VueI18n)
+
+// Vue breadcrumbs
 import VueBreadcrumbs from 'vue2-breadcrumbs'
+Vue.use(VueBreadcrumbs)
+
+// Notification plugin
 import Notifications from 'vue-notification'
 import velocity from 'velocity-animate'
-import VueI18n from 'vue-i18n'
-import Fullscreen from 'vue-fullscreen'
-import VueOffline from 'vue-offline'
-import VuejsClipper from 'vuejs-clipper'
+Vue.use(Notifications, {
+    velocity
+})
 
+// Fullscren plugin
+import Fullscreen from 'vue-fullscreen'
+Vue.use(Fullscreen)
+
+//Vue offline
+import VueOffline from 'vue-offline'
+Vue.use(VueOffline)
+
+// Vue clipper
+import VuejsClipper from 'vuejs-clipper'
+Vue.use(VuejsClipper)
+
+// vue-router
 import router from './router'
+
+// vuex
 import {
     store
 } from './store/store'
 
+// config url
 import config from './config'
+
 import globalComponents from './globalComponents'
 import primaryTheme from './themes/primaryTheme'
 // import './lib/vuelyScript';
@@ -69,22 +86,15 @@ axios.defaults.baseURL = config.BASE_URL;
 axios.defaults.headers.common['Authorization'] = access_token;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-Vue.use(VueI18n)
-Vue.use(VueBreadcrumbs)
-Vue.use(Notifications, {
-    velocity
-})
-Vue.use(Fullscreen);
+
 Vue.use(require('vue-moment'))
-Vue.use(VueOffline)
-Vue.use(VuejsClipper)
 Vue.use(globalComponents);
 
 
-// Create VueI18n instance with options
+// create VueI18n instance with options
 const i18n = new VueI18n({
-    locale: store.getters.selectedLocale.locale, // set locale
-    messages, // set locale messages
+    locale: store.getters.selectedLocale.locale,
+    messages,
 })
 
 /* eslint-disable no-new */
@@ -93,7 +103,6 @@ new Vue({
     i18n,
     router,
     template: '<app></app>',
-    // render: h => h(App),
     components: {
         App
     }

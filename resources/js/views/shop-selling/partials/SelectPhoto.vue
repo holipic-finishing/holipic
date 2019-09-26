@@ -4,7 +4,7 @@
 		<app-card
 			colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card"
-			:withTabs="true"	
+			:withTabs="true"
 			>
 			<div class="cart" @click="checkout()">
 				<i class="material-icons">
@@ -13,7 +13,7 @@
 				<!-- <div class="detail-cart">
 					<span class="line-cart">$</span>
 					<span class="line-cart-1">{{total}}</span>
-					<span class="line-cart-2">Order</span>		
+					<span class="line-cart-2">Order</span>
 				</div> -->
 				<popup-card></popup-card>
 			</div>
@@ -21,7 +21,7 @@
 				<v-flex xs6 class="v-flex-sp-l">
 					<v-card-text>
 						<span class="ml-3">
-						{{$t('message.selectedPhoto')}} 
+						{{$t('message.selectedPhoto')}}
 						 <v-btn fab dark small color="primary" @click="removeAllItem()" class="color-blue-shopselling">
 					      <v-icon dark>clear</v-icon>
 					    </v-btn>
@@ -60,7 +60,7 @@
 									:src="thumbnailDir+photo.name"
 									aspect-ratio="1"
 									class="grey lighten-2 "
-									
+
 									height="300"
 									contain
 									>
@@ -84,7 +84,7 @@
 						<div class="parent-select-detail" @click="showDetail(photo)">
 							<span class="select-detail" :class="'select-detail'+photo.id" >{{photo.size}}</span>
 							<span class="number-detail">
-								<i class="fas fa-caret-down"></i>		
+								<i class="fas fa-caret-down"></i>
 							</span>
 							<div class="line-detail"></div>
 						</div>
@@ -108,7 +108,7 @@
 							          	</v-card-text>
 							        </v-card>
 						      	</v-flex>
-							    <v-flex xs9 class="flex-v-number">   
+							    <v-flex xs9 class="flex-v-number">
 							        <v-list-tile >
 							          		<v-btn normal @click="decrease()" v-if="photoOpened !== null && photoOpened.size == type.size ">
 										      <v-icon dark>remove</v-icon>
@@ -137,13 +137,13 @@
 										    <v-btn normal @click="increase(photoOpened, photoOpened.quantity)" v-else :disabled="true">
 										      	<v-icon dark>add</v-icon>
 										    </v-btn>
-							        </v-list-tile> 
+							        </v-list-tile>
 							    </v-flex>
 						    </v-layout>
 						</v-container>
 				      </v-card>
     			</v-dialog>
-			</div>  
+			</div>
 		</app-card>
 		<!-- Selected photo-->
 
@@ -151,12 +151,12 @@
 		<app-card
 			colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card"
-			:withTabs="true"	
+			:withTabs="true"
 			>
 			<div class="mb-5 ml-5 mr-5">
 				<v-flex xs2 class="v-flex-sp-l">
 					<v-card-text >
-						<span class="ml-3">{{$t('message.otherPhoto')}}</span> 
+						<span class="ml-3">{{$t('message.otherPhoto')}}</span>
 						<span class="ml-3 pt-3 top-relative"><i class="material-icons">
 							filter
 						</i>
@@ -173,11 +173,11 @@
 				</v-flex>
 
 				<v-flex xs10 class="v-flex-sp-r line-flex">
-					
+
 				</v-flex>
 
 				<v-layout row wrap class="photo-selected images">
-					
+
 					<v-flex
 						v-for="(photo,index) in photos"
 						xs12 sm3
@@ -196,7 +196,7 @@
 									contain
 									>
 								</v-img>
-								
+
 								<!-- <img :src="thumbnailDir + photo.name"/> -->
 
 							</div>
@@ -213,16 +213,16 @@
 									check_circle
 								</i>
 						 	</span>
-						</div>	
+						</div>
 					</v-flex>
-					
-				 	<!-- <lightbox id="mylightbox" 
+
+				 	<!-- <lightbox id="mylightbox"
 				      ref="lightbox"
 				      :images="photos"
 				      :directory="thumbnailDir"
 				      :timeoutDuration="5000"
 				 	/> -->
-					
+
 					<!-- <div class="list" v-for="(n, index) in imageList" :data-index="index">
 					  <img @click="open($event)" :src="n.url">
 					</div> -->
@@ -253,7 +253,7 @@
 			customClasses="custom-app-card custom-app-card-footer"
 			:withTabs="true">
 			<div class="footer-shop-selling">
-				
+
 			</div>
 		</app-card> -->
 	</v-layout>
@@ -373,7 +373,7 @@ export default {
 		photoId:'',
 		number: 0,
 		typeDetail: 'Select detail',
-		count:0,	
+		count:0,
 		countOther:0,
 		photoZoom: [],
 		thumbnailDir: config.BASE_URL + '/static/img/',
@@ -387,7 +387,7 @@ export default {
 	    packageId:''
     }
   },
-  
+
   mounted(){
   	console.log($(window).width())
   	this.$i18n.locale = 'en'
@@ -405,7 +405,7 @@ export default {
                   	$(document).ready(function() {
                       $('.active-image'+v.id).css("color", "#00C1F8");
                   	})
-                  	
+
               } else {
                     $('.active-image'+v.id).css("color", "#464D69");
               }
@@ -416,8 +416,8 @@ export default {
   	})
 
   	this.$root.$on('updatePhoto', res => {
-  		var key = _.findIndex(this.photos, function(value) { 
-						return value.id == res.data.id; 
+  		var key = _.findIndex(this.photos, function(value) {
+						return value.id == res.data.id;
 					});
   		this.photos[key].checked = res.checked
   	})
@@ -436,7 +436,7 @@ export default {
   		return this.countOther
   	},
   	changePhotos()
-  	{	
+  	{
   		return this.photos
   	},
   	changePhotos2()
@@ -448,8 +448,8 @@ export default {
   	this.countOther = this.photos.length
 
   	this.getDataPackage()
-  	
-  	this.getPhotoFromRoom()	
+
+  	this.getPhotoFromRoom()
   },
   methods:{
   	removeItem(index,photo)
@@ -483,7 +483,7 @@ export default {
   		this.photos2 = []
 
   		this.count = 0
-  		
+
   		_.forEach(this.photos, (value,index) => {
   			$('.active-image'+value.id).css("color", "#464D69");
   		})
@@ -528,10 +528,10 @@ export default {
   				this.photoOpened.quantity = 1
   			}
 
-  			get(config.API_URL+'photo-package/search?size='+value['size'])
+  			get('photo-package/search?size='+value['size'])
 	  		.then(res => {
-	  			if(res && res.data.success) {
-  					numberActive = numberActive + (value['quantity'] *res.data.data.dollar)
+	  			if(res && res.success) {
+  					numberActive = numberActive + (value['quantity'] *res.data.dollar)
 	  				this.total = numberActive
 	  			}
 	  		})
@@ -560,8 +560,8 @@ export default {
   	},
   	selectPhoto(photo,index)
   	{
-  		var photoSelected = _.find(this.photos2, (value,key) => { 
-  			return value.image_id == photo.id; 
+  		var photoSelected = _.find(this.photos2, (value,key) => {
+  			return value.image_id == photo.id;
   		});
 
   		if(photoSelected == undefined)
@@ -581,8 +581,8 @@ export default {
 
   			this.addPhotoSelectedIntoDB(photo)
   		} else {
-  			var key = _.findIndex(this.photos2, function(value) { 
-  					return value.image_id == photo.id; 
+  			var key = _.findIndex(this.photos2, function(value) {
+  					return value.image_id == photo.id;
   				});
 
 			this.photos2.splice(key, 1);
@@ -591,35 +591,35 @@ export default {
 
 			this.deletePhotoUnselected(photo.id)
 
-			var totalNew = 0 
+			var totalNew = 0
 
 			if(this.photos2.length > 0) {
 				this.getPricePackage(this.photos2)
 			} else {
 				this.total = 0
 			}
-			
+
   			$('.active-image'+photo.id).css("color", "#464D69");
-  			this.count--	
+  			this.count--
   		}
 
   		// _.forEach(this.photoTypes, (item, index) => {
-  		// 	this.photoTypes[index]['quantity'] = 1	
+  		// 	this.photoTypes[index]['quantity'] = 1
   		// })
 
-  		this.$root.$emit('updatePopupCard', this.photos2)		
+  		this.$root.$emit('updatePopupCard', this.photos2)
   	},
   	addPhotoSelectedIntoDB(photo)
   	{
   		let params = {photo}
-  		post(config.API_URL+'cart/add-photo',params)
+  		post('cart/add-photo',params)
   		.then(res => {
 
   		})
   	},
   	deletePhotoUnselected(imageId)
   	{
-  		del(config.API_URL+'cart/delete-photo?imageId='+imageId)
+  		del('cart/delete-photo?imageId='+imageId)
   		.then(res => {
   		})
   	},
@@ -627,34 +627,34 @@ export default {
   	{
   		var totalNew = 0
   		_.forEach(photos, (value, index) => {
-			get(config.API_URL+'photo-package/search?size='+value['size'])
+			get('photo-package/search?size='+value['size'])
 		  		.then(res => {
-		  			if(res && res.data.success) {
-			  			totalNew = totalNew + (value['quantity'] * res.data.data.dollar)
+		  			if(res && res.success) {
+			  			totalNew = totalNew + (value['quantity'] * res.data.dollar)
 			  			this.total = totalNew
 		  			}
-		  	})	
+		  	})
 		})
   	},
   	showZoomImageAndSlide(photo,index)
   	{
   		this.index = index
-  		this.$root.$emit('array-photos', this.photos2); 	
+  		this.$root.$emit('array-photos', this.photos2);
   	},
-  	setQuantity : _.debounce( 
+  	setQuantity : _.debounce(
   		function(photo, quantity) {
-	  	
-	  		let totalNew = 0 
+
+	  		let totalNew = 0
 	  		_.forEach(this.photos2, (value,index) => {
 	  			if(value['id'] == photo.id) {
 	  				this.photos2[index]['quantity'] = quantity
 	  			}
 
-	  			get(config.API_URL+'photo-package/search?size='+value['size'])
+	  			get('photo-package/search?size='+value['size'])
 		  		.then(res => {
-		  			if(res && res.data.success) {
-	  					totalNew = totalNew + (value['quantity'] * res.data.data.dollar)
-		  				this.total = totalNew	
+		  			if(res && res.success) {
+	  					totalNew = totalNew + (value['quantity'] * res.data.dollar)
+		  				this.total = totalNew
 		  			}
 		  		})
 	  		})
@@ -678,10 +678,10 @@ export default {
   	},
   	getDataPackage()
   	{
-  		get(config.API_URL+'photo_packages')
+  		get('photo_packages')
   		.then(res => {
-  			if(res && res.data.success){
-  				this.photoTypes = res.data.data
+  			if(res && res.success){
+  				this.photoTypes = res.data
   			}
   		})
   		.catch(err => {
@@ -690,16 +690,16 @@ export default {
   	},
   	getPhotoFromRoom()
   	{
-  		get(config.API_URL+'room/show-photo?room='+this.room.id)
+  		get('room/show-photo?room='+this.room.id)
   		.then(res => {
-  			if(res && res.data.success){
-  				
-  				this.thumbnailDir = res.data.data[1]
-  				this.photos = res.data.data[0]['images']
+  			if(res && res.success){
+
+  				this.thumbnailDir = res.data[1]
+  				this.photos = res.data[0]['images']
 
   				_.forEach(this.photos, (value,index) => {
   					if(value['image_selected'] !== null) {
-  						this.photos2.push(value['image_selected'])	
+  						this.photos2.push(value['image_selected'])
   					}
   				})
 
@@ -715,7 +715,7 @@ export default {
   					$(document).ready(function() {
   						$('.active-image'+value.image_id).css("color", "#00C1F8");
   					})
-  				})	
+  				})
   			}
   		})
   		.then(res => {
@@ -732,7 +732,7 @@ export default {
   		var packageId = ''
 
   		if(namePackage == 'Package 1' && count < 3) {
-  			messagePackage = 'Please choose 21 image'	
+  			messagePackage = 'Please choose 21 image'
   		} else if(namePackage == 'Package 2' && count < 30) {
   			messagePackage = 'Please choose 30 image'
   		} else if(namePackage == 'Package 3' && count < 40) {
@@ -761,7 +761,7 @@ export default {
   					break;
   				default:
   					this.packageId = 4
-  			}	
+  			}
   		}
   	},
   	checkout()
@@ -818,8 +818,8 @@ export default {
 }
 
 .cart .detail-cart{
-    
-    display: none;   
+
+    display: none;
 }
 .cart:hover .detail-cart{
 	color:#00C1F8;

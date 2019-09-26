@@ -16,7 +16,7 @@
 			          :items="languages"
 			          label="ENG"
 			        ></v-overflow-btn>
-			  		
+
 			      	<v-btn flat @click="logout">
 			      		<img src="images/LOGOUT.png" width="40px" height="40px"/>
 			      	</v-btn>
@@ -99,7 +99,7 @@
 				      </v-card>
     			</v-dialog>
 		</v-container>
-		
+
 		<div class="footer">
   			<span class="span-footer">Term & Conditions</span>
   			<span class="span-footer">Privacy Policy</span>
@@ -126,7 +126,7 @@ export default {
     }
   },
   methods: {
-  	logout() 
+  	logout()
   	{
   		localStorage.removeItem('shopSelling')
   		localStorage.removeItem('roomLogin')
@@ -150,12 +150,12 @@ export default {
   	},
   	loginRoom()
   	{
-  		get(config.API_URL+'room/login?room='+this.roomNumber)
+  		get('room/login?room='+this.roomNumber)
   		.then(res => {
-  			if(res && res.data.success) {
-  				var data = res.data.data
+  			if(res && res.success) {
+  				var data = res.data
   				localStorage.setItem('roomLogin', JSON.stringify(data))
-  				this.$router.push({name: 'ShopSelling', params :{data: data}}) 
+  				this.$router.push({name: 'ShopSelling', params :{data: data}})
   			}
   		})
   		.catch(err => {

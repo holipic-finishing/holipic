@@ -81,11 +81,11 @@ class PhotographerRepository extends BaseRepository
                 if(!is_null($value['branch'])){
 
                     $fileName_ava = $this->createLink($value['avatar']);
-                    $avatar = asset('photographers/' . $fileName_ava);
+                    $avatar = asset('photographers/avatars/' . $fileName_ava);
                     $value['avatar'] = $avatar;
 
                     $fileName_id = $this->createLink($value['identification_card']);
-                    $identification_card = asset('photographers/' . $fileName_id);
+                    $identification_card = asset('photographers/identifications' . $fileName_id);
                     $value['identification_card'] = $identification_card;
 
                     $array[] = $value;
@@ -99,6 +99,7 @@ class PhotographerRepository extends BaseRepository
     }
 
     function createLink($link){
+        $link = str_replace("\\", "/", $link);
         $components = explode("/", $link);
         $fileName = end($components);
         return $fileName;
@@ -215,7 +216,7 @@ class PhotographerRepository extends BaseRepository
                                 $query = $query->with('branch')->whereId($photographerId);
                                 return $query;
                             })->first();
-
+            $photographer->avatar = str_replace("\\", "/", $photographer->avatar);
             $imgArr = explode('/', $photographer->avatar);
             $imgName = end($imgArr);
             $link = url('photographers/avatars/' . $imgName);

@@ -25,10 +25,10 @@
 								<div class="row" >
 									<div class="col-4 mb-3" v-for="(photo,index) in albumPhotos" >
 										<v-img :src="thumbnailDir+photo.name" :lazy-src="thumbnailDir+photo.name">
-											
+
 										</v-img>
 									</div>
-																		
+
 								</div>
 							</div>
 						</div>
@@ -37,7 +37,7 @@
 							  	<div class="content-title-booking">
 	      			  				ORDER DETAIL
 		      			  		</div>
-		      			  		
+
 		  			  			<table style="width: 100%">
 		      			  			<tr>
 		      			  				<th class="th-formate pt-3" >Formate</th>
@@ -50,7 +50,7 @@
 		      			  				<td class="th-quantity--td pt-3" v-else>0</td>
 		      			  				<td class="th-cost--td pt-3 td-custom">{{detail.priceNew}}</td>
 		      			  			</tr>
-		      			  			
+
 		  			  			</table>
 
 		  			  			<div class="content-footer-booking">
@@ -69,7 +69,7 @@
 			      				<v-container class="container-content-confirm-booking">
 			      					<v-form ref="form">
 				      			  	<v-layout wrap class="layout-content-confirm-booking">
-				      			  		
+
 				      			  		<v-flex xs2 lg2 md2 sm2 class="content-confirm-booking--left">
 				      			  			<span class="content-confirm-booking--left--icon">
 				      			  				<i class="far fa-user"></i>
@@ -155,7 +155,7 @@
 				      			  				<i class="fas fa-arrow-right" style="margin-left:10px"></i>
 				      			  			</v-btn>
 				      			  		</v-flex>
-				      			  	
+
 				      			  	</v-layout>
 				      			  	</v-form>
 			      				</v-container>
@@ -172,7 +172,6 @@
 </template>
 
 <script>
-import config from '../../config/index.js'
 import  { get, post, put, del, getWithData } from '../../api/index.js'
 
 import moment from 'moment'
@@ -239,10 +238,10 @@ export default {
   	},
   	getDataPackage(array)
   	{
-  		get(config.API_URL+'photo_packages')
+  		get('photo_packages')
   		.then(res => {
-  			if(res && res.data.success){
-  				_.forEach(res.data.data, (value,index) => {
+  			if(res && res.success){
+  				_.forEach(res.data, (value,index) => {
 			  		_.forEach(array, (value2, index2) => {
 			  			if(value['size'] == value2['name']) {
 			  				value['quantity'] = value2['quantity']
@@ -270,16 +269,16 @@ export default {
   			let images 	= JSON.parse(localStorage.getItem('photoSelected'));
 
   			let params 	= { params: {
-  								name: this.customerBooking.name , 
-		  						roomId: this.roomLogin.id, 
+  								name: this.customerBooking.name ,
+		  						roomId: this.roomLogin.id,
 		  						email: this.customerBooking.email,
-		  				 		phone: this.customerBooking.mobile, 
+		  				 		phone: this.customerBooking.mobile,
 		  				 		date: this.customerBooking.date,
 		  				 		total: this.total
   						   },
   						   images: images
   						}
-  			post(config.API_URL+'shop-selling/order-confirm', params)
+  			post('shop-selling/order-confirm', params)
   			.then(res => {
 
   			})

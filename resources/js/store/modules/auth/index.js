@@ -129,18 +129,16 @@ const actions = {
                 context.commit('editProfileError', err);
             })
     },
-    logoutUserFromDatabase(context) {
+    logoutUser(context) {
         Nprogress.start();
-        let url = '/auth/logout'
-        get(url)
+        post('auth/logout')
             .then((res) => {
                 Nprogress.done();
                 setTimeout(() => {
-                    context.commit('logoutUser');
+                    context.commit('logoutUserSuccess');
                 }, 500)
             })
             .catch(error => {
-                console.log(error);
                 context.commit('loginUserFailure', error);
             })
     },
@@ -178,7 +176,7 @@ const actions = {
         post('email/verify')
             .then(response => {
                 Nprogress.done();
-                if(response && response.success) {
+                if (response && response.success) {
                     context.commit('SET_HAS_VERIFIED_EMAIL', true)
                 } else {
                     context.commit('SET_HAS_VERIFIED_EMAIL', false)
@@ -188,13 +186,13 @@ const actions = {
                 console.log("System error")
             })
     },
-    verifyEmail(context, payload){
+    verifyEmail(context, payload) {
         Nprogress.start();
         const url = payload.queryURL.split(config.API_URL)[1]
         post(url)
             .then(response => {
                 Nprogress.done();
-                if(response && response.success) {
+                if (response && response.success) {
                     context.commit('SET_HAS_VERIFIED_EMAIL', true)
                 } else {
                     context.commit('SET_HAS_VERIFIED_EMAIL', false)
@@ -208,7 +206,7 @@ const actions = {
 
         var role = context.getters.getUser.role_id
 
-        switch(role) {
+        switch (role) {
             case "1":
                 payload.push('/super-admin/dashboard')
                 break;
@@ -228,11 +226,11 @@ const actions = {
                 break;
         }
     },
-    resendEmail(context, payload){
+    resendEmail(context, payload) {
         post('email/resend')
             .then(response => {
                 Nprogress.done();
-                if(response && response.success) {
+                if (response && response.success) {
                     vp.$notify({
                         type: 'success',
                         title: response.message,
@@ -287,7 +285,7 @@ const mutations = {
             duration: 2000,
         })
     },
-    logoutUser(state) {
+    logoutUserSuccess(state) {
         state.user = null
         localStorage.removeItem('access_token')
         localStorage.removeItem('user')

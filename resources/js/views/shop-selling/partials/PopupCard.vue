@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import config from '../../../config'
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 
 export default {
@@ -40,7 +39,7 @@ export default {
   mounted() {
   	this.$root.$on('updatePopupCard', res => {
   		this.detailBooking = []
-  		
+
   		this.handleGroupType(res)
   	})
 
@@ -67,10 +66,10 @@ export default {
   	},
   	getDataPackage(array)
   	{
-  		get(config.API_URL+'photo_packages')
+  		get('photo_packages')
   		.then(res => {
-  			if(res && res.data.success){
-  				_.forEach(res.data.data, (value,index) => {
+  			if(res && res.success){
+  				_.forEach(res.data, (value,index) => {
 			  		_.forEach(array, (value2, index2) => {
 			  			if(value['size'] == value2['name']) {
 			  				value['quantity'] = value2['quantity']

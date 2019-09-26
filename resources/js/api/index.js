@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from '../config';
-import router from '../router'
+import router from '../router';
 
 const API_URL = config.API_URL;
 var access_token = localStorage.getItem('access_token');
@@ -10,16 +10,17 @@ axios.defaults.headers.common['Authorization'] = access_token;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 axios.interceptors.response.use(
-    function(response) {
+    function (response) {
 
+        console.log(response)
         if (response && response.data) {
-            return response.data
+            return response.data;
         }
 
-        return response
+        return response;
 
     },
-    function(err) {
+    function (err) {
 
         // expired token error
         if (err && err.response && err.response.status === 401) {
@@ -45,8 +46,8 @@ axios.interceptors.response.use(
 
 export function get(url) {
     return axios({
-    	method: 'GET',
-    	url: API_URL + url
+        method: 'GET',
+        url: API_URL + url
     })
 }
 
@@ -60,9 +61,9 @@ export function getWithData(url, data) {
 
 export function post(url, data) {
     return axios({
-    	method: 'POST',
-    	url: API_URL + url,
-    	data: data
+        method: 'POST',
+        url: API_URL + url,
+        data: data
     })
 }
 

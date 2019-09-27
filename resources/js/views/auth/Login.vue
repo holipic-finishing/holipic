@@ -1,36 +1,44 @@
 <template>
-  <div>
-    <h2 class="mb-3">{{$t('message.loginToAdmin')}}</h2>
-    <p class="fs-14">Enter email and password to access control panel of Holipic.</p>
+  <v-content class="pb-md-20 pb-sm-5">
+    <v-card class="shadow-none bg-color">
+      <v-card-title
+        class="font-weight-bold display-1 justify-content-center"
+      >
+        {{$t('message.loginToAdmin')}}
+      </v-card-title>
+      <v-card-text class="text-muted text-center h2 lead">
+        Enter email and password to access control panel of Holipic.
+      </v-card-text>
 
-    <v-form v-model="valid" class="mb-4" ref="form">
-      <v-text-field
-        label="E-mail"
-        v-model="email"
-        :rules="emailRules"
-        required
-        @keyup.enter="login"
-      ></v-text-field>
+      <v-form v-model="valid" class="mb-4" ref="form">
+        <v-text-field
+          label="E-mail"
+          v-model="email"
+          :rules="emailRules"
+          required
+          @keyup.enter="login"
+        ></v-text-field>
 
-      <v-text-field
-        label="Password"
-        v-model="password"
-        type="password"
-        :rules="passwordRules"
-        required
-        @keyup.enter="login"
-      ></v-text-field>
+        <v-text-field
+          label="Password"
+          v-model="password"
+          type="password"
+          :rules="passwordRules"
+          required
+          @keyup.enter="login"
+        ></v-text-field>
 
-      <v-checkbox color="primary" label="Remember me" v-model="checkbox"></v-checkbox>
+        <v-checkbox color="primary" label="Remember me" v-model="checkbox"></v-checkbox>
 
-      <router-link class="mb-1" to="/session/forgot-password">{{ $t('message.forgotPassword') }}?</router-link>
-      <div>
-        <v-btn large @click="login" block color="primary">{{ $t('message.loginNow') }}</v-btn>
-      </div>
-    </v-form>
+        <router-link class="mb-1" to="/session/forgot-password">{{ $t('message.forgotPassword') }}?</router-link>
+        <div>
+          <v-btn large @click="login" block color="primary">{{ $t('message.loginNow') }}</v-btn>
+        </div>
+      </v-form>
+    </v-card>
 
-    <notifications animation-type="velocity"/>
-  </div>
+    <notifications animation-type="velocity" />
+  </v-content>
 </template>
 
 <script>
@@ -68,8 +76,7 @@ export default {
     },
 
     login() {
-    	if (this.$refs.form.validate()) {
-
+      if (this.$refs.form.validate()) {
         const user = {
           email: this.email,
           password: this.password

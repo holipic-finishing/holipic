@@ -14,13 +14,13 @@ import {
 
 
 const state = {
-    user: localStorage.getItem('user'),
+    user: JSON.parse(localStorage.getItem('user')),
     hasVerifiedEmail: false
 }
 
 // getters
 const getters = {
-    getUser: state => {
+    getUser(state) {
         return state.user;
     },
     IS_VERIFIED_EMAIL(state) {
@@ -52,8 +52,12 @@ const actions = {
                     context.commit('loginUserSuccess', response.data.user);
 
                     setTimeout(() => {
-                        if (!response.data.authData.hasVerifiedEmail) {
-                            router.push('email/verify')
+                        if(response.data.user.role_id != "4") {
+                            if (!response.data.authData.hasVerifiedEmail) {
+                                router.push('email/verify')
+                            } else {
+                                context.dispatch('pushRouteWithRole', router)
+                            }
                         } else {
                             context.dispatch('pushRouteWithRole', router)
                         }
@@ -203,8 +207,8 @@ const actions = {
             })
     },
     pushRouteWithRole(context, payload) {
-
         var role = context.getters.getUser.role_id
+        console.log(context)
 
         switch (role) {
             case "1":
@@ -220,7 +224,7 @@ const actions = {
                 router.push('/customer/show-photo')
                 break;
             case "5":
-                router.push('/shop-selling/dashboard')
+                router.push('/shop/dashboard')
                 break;
             default:
                 break;

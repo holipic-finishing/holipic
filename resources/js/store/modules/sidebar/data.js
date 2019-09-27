@@ -7,7 +7,7 @@ export const menus = {
         ///////							        //////
         //////////////////////////////////////////////
         {
-            action: 'zmdi-view-dashboard',
+            action: 'fas fa-tachometer-alt',
             title: 'message.dashboard',
             active: true,
             path: '/dashboard',
@@ -15,7 +15,7 @@ export const menus = {
             role_id: 3
         },
         {
-            action: 'zmdi zmdi-account-add',
+            action: 'far fa-images',
             title: 'message.photographers',
             active: false,
             path: '/photographers',
@@ -31,7 +31,7 @@ export const menus = {
             role_id: 3
         },
         {
-            action: 'zmdi-pin-assistant',
+            action: 'fas fa-address-book',
             title: 'message.customer',
             active: false,
             path: '/customers',

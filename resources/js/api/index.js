@@ -12,7 +12,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.interceptors.response.use(
     function (response) {
 
-        console.log(response)
         if (response && response.data) {
             return response.data;
         }

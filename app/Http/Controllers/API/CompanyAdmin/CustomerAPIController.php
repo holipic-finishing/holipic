@@ -134,7 +134,7 @@ class CustomerAPIController extends AppBaseController
 
         $customer->delete();
 
-        $this->activityRepo->insertActivityLog(request('userId'), 'Delete Customer '.$name);
+        $this->activityRepo->insertActivityLog(request('userId'), 'Delete Customer ' . $name);
 
         return $this->sendResponse($id, 'Customer deleted successfully');
     }
@@ -143,7 +143,7 @@ class CustomerAPIController extends AppBaseController
     {
         $customers = $this->customerRepository->handelGetCustomers();
 
-        if(!$customers) {
+        if (!$customers) {
             return $this->sendError('Customer not found');
         }
 
@@ -154,7 +154,7 @@ class CustomerAPIController extends AppBaseController
     {
         $customer = $this->customerRepository->handleUpdateCustomer($id);
 
-        if(!$customer) {
+        if (!$customer) {
             return $this->sendError('Error update customer');
         }
 
@@ -168,11 +168,11 @@ class CustomerAPIController extends AppBaseController
 
     public function getBranchCustomers(Request $request)
     {
-        $input = $request->all(); 
+        $input = $request->all();
 
         $customers = $this->customerRepository->handelGetBranchCustomers($input);
 
-        if(!$customers) {
+        if (!$customers) {
             return $this->sendError('Customer not found');
         }
 
@@ -183,7 +183,7 @@ class CustomerAPIController extends AppBaseController
     {
         $customer = $this->customerRepository->handleUpdateBranchCustomer($id);
 
-        if(!$customer) {
+        if (!$customer) {
             return $this->sendError('Error update customer');
         }
 
@@ -196,16 +196,13 @@ class CustomerAPIController extends AppBaseController
 
         if ($customer == true) {
             return $this->sendResponse($id, 'Customer deleted successfully');
-            
         } else {
             return $this->sendError('Error delete customer');
         }
-
     }
 
     public function exportEmailBranchCustomers()
-    { 
+    {
         return \Excel::download(new ListEmailBranchCustomers(request('userId')), 'ListEmailBranchCustomers.xlsx');
     }
-
 }

@@ -1,36 +1,39 @@
 <template>
-  <div>
-    <h2 class="mb-3">{{$t('message.emailVerify')}}</h2>
+  <v-content class="pb-md-20 pb-sm-5">
     <v-card class="shadow-none bg-color">
-      <v-card-title primary-title class="justify-content-center">
-        <div class="text-center">
-          <div
-            class="lead font-weight-bold"
-            v-if="!hasVerifiedEmail"
-          >A verification link has been sent to your email account. Please check your email to active your account</div>
-          <div class="lead font-weight-bold" v-else>Your email has been verification. Thanks!</div>
-        </div>
-      </v-card-title>
-      <v-card-actions>
-        <v-btn
-          large
-          @click="resent"
-          block
-          color="primary"
+      <v-card-title
+        class="font-weight-bold display-1 justify-content-center"
+      >{{$t('message.emailVerify')}}</v-card-title>
+      <v-card-text class="text-muted text-center h2 lead">
+        <span
           v-if="!hasVerifiedEmail"
+        >A verification link has been sent to your email account. Please check your email to active your account</span>
+        <span v-else>Your email has been verification. Thanks!</span>
+      </v-card-text>
+      <v-card-actions class="pl-md-5 pr-md-5">
+        <v-btn
+          dark
+          large
+          block
+          color="#2EA3F2"
+          v-if="!hasVerifiedEmail"
+          class="font-weight-bold rounded"
+          @click="resent"
         >{{ $t('message.resend') }}</v-btn>
 
         <v-btn
+          dark
           large
           block
-          color="primary"
+          color="#2EA3F2"
+          class="font-weight-bold rounded"
           v-else
           @click="$store.dispatch('pushRouteWithRole', $router)"
         >Go to Dasboard</v-btn>
       </v-card-actions>
     </v-card>
     <notifications animation-type="velocity" />
-  </div>
+  </v-content>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -79,7 +82,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.bg-color {
-  background-color: #fafafa;
+@media (min-width: 768px) {
+    .pb-md-20 {
+        padding-bottom: 20rem !important;
+    }
 }
 </style>

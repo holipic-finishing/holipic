@@ -22,13 +22,13 @@
 		background-color: #7d7d7d;
     	height: 2px;
     	width: 100%;
- 
+
     	margin: 30px 0px;
 	}
 	.photo-selected{
 		width:100%;
 		margin:0 auto !important;
-		 
+
 		.d-flex{
 			flex-direction: column;
 			padding:0px 10px;
@@ -55,7 +55,7 @@
 				margin-top:10px;
 
 			}
-			
+
 		}
 	}
 }
@@ -93,7 +93,7 @@
 .v-window-item{
 	.v-carousel__item{
 		margin: 0 auto !important;
-	}	
+	}
 }
 
 .custom-carousel{
@@ -143,7 +143,7 @@
 		    .layout {
 		    	flex-wrap:nowrap !important;
 		    }
-		    &--flex{    	
+		    &--flex{
     			padding: 0px !important;
     			box-shadow: 0 1px 15px 1px rgba(69, 65, 78, 0.48);
     			margin: 0px 20px;
@@ -267,7 +267,7 @@
 				width: 90%;
 			}
 		}
-		
+
 	}
 }
 
@@ -316,7 +316,7 @@
 				position: absolute;
 			}
 		}
-		
+
 	}
 	.v-card__actions{
 		padding-bottom: 15px !important;
@@ -383,7 +383,7 @@
 	margin: 0 auto !important;
 	background-image: url("http://mrdan.com/wp-content/uploads/2018/03/Background-Services-Home-Page-compressed.jpg");
 	background-color: #68c2ff;
-	
+
 	/*overflow: none;
 	padding: 30px 0px !important;*/
 	height: 100vh;
@@ -417,7 +417,7 @@
     			input {
     				text-align: center;
     			}
-    			
+
     		}
     	}
     }
@@ -467,7 +467,7 @@
 @media only screen and (max-width: 959px)
 {
 	.hidden-sm-and-down {
-		display: block !important; 
+		display: block !important;
 	}
 }
 .body-booking{
@@ -480,10 +480,10 @@
 	/*.flex-9{
 		display: flex;*/
 		.body-booking-p-left{
-			width: 350px;	
+			width: 350px;
 		}
 		.body-booking-p-right{
-			width: 260px;	
+			width: 260px;
 		}
 		.container-content-image-booking{
 			margin: 0px !important;
@@ -543,19 +543,19 @@
 			    right: 12px;
 			    position: relative;
 				&--td{
-					
+
 				    left: 30px;
 				    position: relative;
 				}
 			}
-			
+
 		}
 	/*}*/
 	.flex-3{
 		display: flex;
 		.content-confirm-booking{
 			width: 100vw;
-			
+
 			box-shadow: 0 0 5px grey;
 			.layout-content-confirm-booking{
 				justify-content: center;
@@ -588,7 +588,7 @@
 			}
 		}
 	}
-	
+
 }
 
 @media only screen and (max-width: 320px)  {
@@ -691,10 +691,10 @@
 
 .container-shop-login {
 	padding: 0px !important;
-	.v-layout-shop-login {
-		align-items: center;
-    	height: 100vh;
-	}
+	// .v-layout-shop-login {
+	// 	align-items: center;
+    // 	height: 100vh;
+	// }
 	.v-card{
 		color: black !important;
 		text-align: center;
@@ -733,7 +733,7 @@
 				}
 				.v-input__slot:after{
 					border-bottom: 2px solid #2AC8FF;
-					
+
 				}
 				input:after {
 					border-bottom: 2px solid #2AC8FF;
@@ -810,11 +810,11 @@
 						color:#0ebff6 !important;
 						font-size:40px !important;
 
-					}	
-				}							
+					}
+				}
 			}
 		}
-		
+
 	}
 }
 .div-shop {
@@ -854,7 +854,7 @@
     			display: inline-block;
     			align-self: flex-end;
 			}
-			
+
 		}
 		.v-flex-category:hover{
 			cursor: pointer;
@@ -875,15 +875,15 @@
 			button {
 				display: contents;
 			}
-			
-			
+
+
 		}
 		.v-toolbar__content{
 			display: contents;
 			.v-btn-header-branch{
 				width: 100%;
 			}
-		
+
 		}
 		.v-btn:before {
 			height: auto !important;
@@ -1090,7 +1090,7 @@
 			justify-content: space-between;
 			font-weight: bold;
 		}
-	}	
+	}
 }
 @media only screen and (min-width: 481px) and (max-width: 767px)  {
 	.popup{

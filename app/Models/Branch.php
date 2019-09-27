@@ -22,7 +22,7 @@ class Branch extends Model
     protected static $logFillable = true;
 
     public $table = 'branches';
-    
+
     protected $dates = ['deleted_at'];
 
 
@@ -36,7 +36,7 @@ class Branch extends Model
      * @var array
      */
     protected $casts = [
-        
+
     ];
 
     /**
@@ -45,7 +45,7 @@ class Branch extends Model
      * @var array
      */
     public static $rules = [
-        
+
     ];
 
     public function photographers()
@@ -72,5 +72,10 @@ class Branch extends Model
     {
         return $this->belongsTo('App\Models\Company', 'company_id', 'id');
     }
-    
+
+    public function sellers()
+    {
+        return $this->hasMany('App\Models\Customer', 'branch_id', 'id');
+    }
+
 }

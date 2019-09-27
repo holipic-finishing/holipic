@@ -27,7 +27,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'username',
         'email',
         'password',
-        'access_token',
         'active',
         'package_id',
         'role_id',
@@ -48,7 +47,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'password' => 'string',
         'email_verified_at'  => 'string',
         'role_id' => 'string',
-        'access_token' => 'string',
         'id_one_signal' => 'string'
     ];
 
@@ -65,7 +63,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public static $rules = [
         'email' => 'required',
         'username' => 'unique:users, username'
-
     ];
 
     public function generateAccessToken()
@@ -111,6 +108,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function customer()
     {
         return $this->hasOne('App\Models\Customer', 'user_id', 'id');
+    }
+
+    public function seller()
+    {
+        return $this->hasOne('App\Models\Seller', 'user_id', 'id');
     }
 
     // Rest omitted for brevity

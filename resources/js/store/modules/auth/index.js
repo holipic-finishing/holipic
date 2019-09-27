@@ -52,7 +52,7 @@ const actions = {
                     context.commit('loginUserSuccess', response.data.user);
 
                     setTimeout(() => {
-                        if(response.data.user.role_id != "4") {
+                        if(response.data.user.role_id != "5") {
                             if (!response.data.authData.hasVerifiedEmail) {
                                 router.push('email/verify')
                             } else {
@@ -208,7 +208,6 @@ const actions = {
     },
     pushRouteWithRole(context, payload) {
         var role = context.getters.getUser.role_id
-        console.log(context)
 
         switch (role) {
             case "1":
@@ -221,7 +220,7 @@ const actions = {
                 payload.push('/branch-admin/dashboard')
                 break;
             case "4":
-                router.push('/customer/show-photo')
+                router.push('/customer/dashboard')
                 break;
             case "5":
                 router.push('/shop/dashboard')

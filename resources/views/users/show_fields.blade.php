@@ -34,12 +34,6 @@
     <p>{!! $user->password !!}</p>
 </div>
 
-<!-- Access Token Field -->
-<div class="form-group">
-    {!! Form::label('access_token', 'Access Token:') !!}
-    <p>{!! $user->access_token !!}</p>
-</div>
-
 <!-- Active Field -->
 <div class="form-group">
     {!! Form::label('active', 'Active:') !!}

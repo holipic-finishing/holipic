@@ -13,18 +13,24 @@ class ShopSellerTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         $faker = Faker\Factory::create();
+        \App\Models\Seller::truncate();
 
         $branches = \App\Models\Branch::all();
 
         foreach ($branches as $branch) {
             for ($i=0; $i < rand(2, 5) ; $i++) {
-                \App\Models\User::create([
+                $user = \App\Models\User::create([
                     'first_name' => $faker->firstName,
                     'last_name' => $faker->lastName,
                     'username' => $faker->userName.$faker->userName,
-                    'email' => $faker->email,
+                    'email' => rand(1,100) . $faker->email,
                     'password' => bcrypt(123456),
                     'role_id' => 5,
+                ]);
+
+                \App\Models\Seller::create([
+                    'user_id' => $user['id'],
+                    'branch_id' => $branch->id,
                 ]);
             }
         }

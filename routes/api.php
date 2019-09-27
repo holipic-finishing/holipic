@@ -254,7 +254,9 @@ Route::group(['namespace' => 'API', 'middleware' => 'jwt'],function(){
 		Route::get('room/login', 'ListingController@loginRoom');
 		Route::get('room/show-photo', 'ListingController@getPhoto');
 		Route::post('cart/add-photo', 'CartController@addPhoto');
-		Route::delete('cart/delete-photo', 'CartController@deletePhoto');
+        Route::delete('cart/delete-photo', 'CartController@deletePhoto');
+        Route::resource('sellers', 'SellerAPIController');
+
 		// Route::get('room/photo-selected', 'CartController@getPhotoSelected');
 
 	});

@@ -47,7 +47,6 @@ trait MakeUserTrait
             'last_name' => $fake->word,
             'email' => $fake->word,
             'password' => $fake->word,
-            'access_token' => $fake->word,
             'active' => $fake->randomDigitNotNull,
             'package_id' => $fake->randomDigitNotNull,
             'created_at' => $fake->word,

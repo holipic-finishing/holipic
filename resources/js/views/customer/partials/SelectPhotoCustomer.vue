@@ -143,7 +143,7 @@
 						d-flex
 						:key="photo.id"
 					>
-						<v-card flat tile class="d-flex custom-d-flex" >
+						<v-card flat tile class="d-flex custom-d-flex">
 							<div class="grid-item pos-relative custom-grid-item">
 
 								<v-img
@@ -462,7 +462,7 @@ export default {
   		})
 
   		console.log(this.photos2)
-  	},
+	},
   	showZoomImageAndSlide(photo)
   	{
   		this.$refs.lightbox.show(photo.name);

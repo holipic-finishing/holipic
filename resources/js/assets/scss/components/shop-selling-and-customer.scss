@@ -32,6 +32,7 @@
 		.d-flex{
 			flex-direction: column;
 			padding:0px 10px;
+			height: auto !important;
 			.parent-select-detail {
 				margin-top:10px ;
 			}
@@ -903,36 +904,48 @@
 .v-container-customer-login{
     max-width: 100%;
     padding:0px !important;
-    background-color: white;
+	background-color: white;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
     .box-shawdom-login{
     	/*padding:100px;*/
 	    justify-content: center;
 	    display: flex;
-	    /*overflow: hidden;*/
+		overflow: hidden;
+		max-height: 100vh;
+		height: auto;
+		padding: 15px 0;
     }
    	.custom-box-shawdom{
    		width: 80%;
-   		transform: translateY(5%);
+		   // transform: translateY(5%);
+		padding: 20px 0;
    		box-shadow: -2px 6px 15px 2px rgba(0, 0, 0, 0.3);
    	}
     .left-col-login{
     	max-width: auto;
     	background-color: white;
-    	height: 90vh;
+		// height: 90vh;
+		height: 100%;
     	padding: 30px 50px;
     	display: flex;
-	    float: left;
+	    // float: left;
 	    justify-content: center;
 	    align-items: center;
     }
     .right-col-login{
     	background-color: white;
-    	height: 90vh;
-    	padding: 50px 60px 50px 10px;
+		// height: 90vh;
+		height: 100%;
+    	padding: 25px 15px 25px 10px;
     	text-align: center;
     	display: flex;
-	    justify-content: center;
-	    /*align-items: center;*/
+		justify-content: space-around;
+		flex-direction: column;
+		.v-card__title {
+			padding: 10px;
+		}
 	    .v-card{
 	    	    width: 90%;
 	    	    display: unset;
@@ -1091,6 +1104,64 @@
 			font-weight: bold;
 		}
 	}	
+}
+
+@media only screen and (max-width: 1199px) {
+	.v-container-customer-login {
+		.box-shawdom-login {
+			padding: 15px 40px;
+			max-height: unset;
+		}
+		.custom-box-shawdom {
+			width: 100%;
+		}
+		.left-col-login {
+			padding: 30px;
+		}
+	}
+}
+@media only screen and (max-width: 991px) {
+	.v-container-customer-login {
+		.row {
+			display: flex;
+		}
+		.left-col-login {
+			flex: 1 1 55%;
+			max-width: 55%;
+		}
+		.right-col-login {
+			flex: 1 1 45%;
+			max-width: 45%;
+		}
+	}
+}
+@media only screen and (max-width: 767px) {
+	.v-container-customer-login {
+		.left-col-login {
+			flex: 1 1 100%;
+			max-width: 100%;
+			height: auto;
+			display: none;
+		}
+		.right-col-login {
+			flex: 1 1 100%;
+			max-width: 100%;
+			height: auto;
+			.v-card {
+				display: block;
+			}
+		}
+		.box-shawdom-login {
+			padding: 15px 20px;
+		}
+		.right-col-login {
+			.v-card {
+				width: 100%;
+				padding: 15px 15px 30px;
+			}
+		}
+	
+	}
 }
 @media only screen and (min-width: 481px) and (max-width: 767px)  {
 	.popup{

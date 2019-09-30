@@ -457,7 +457,7 @@ export default {
   package : "Package List",
   plan: "Plans",
   changePassword : "Change Password",
-  listPackage : "List Package",   
+  listPackage : "List Package",
   chartCompany: "Company Infomation & Chart",
   totalAmountCompany: 'Total Amount Company',
   settingPackageSystem: "Setting Packages System",
@@ -498,6 +498,9 @@ export default {
   addNewPhoto: 'Add New Photo',
   selectedPhoto: 'Selected',
   otherPhoto: 'Others',
-  buyNow: 'Buy Now'
+  buyNow: 'Buy Now',
+
+  emailVerify: 'Verify email',
+  resend: 'Resend'
 
 }

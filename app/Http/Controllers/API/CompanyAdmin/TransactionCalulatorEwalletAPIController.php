@@ -25,7 +25,7 @@ class TransactionCalulatorEwalletAPIController extends AppBaseController
     /** @var  TransactionCalulatorEwalletRepository */
     private $transactionCalulatorEwalletRepository;
     private $notificationRepository;
-    const STATUS_DONE = 'DONE' ;
+    const STATUS_DONE = 'DONE';
 
     public function __construct(TransactionCalulatorEwalletRepository $transactionCalulatorEwalletRepo, NotificationRepository $notificationRepo)
     {
@@ -140,28 +140,26 @@ class TransactionCalulatorEwalletAPIController extends AppBaseController
     *   @param  Request
     *   return Json
     */
-    public function getEWalletTransactionHistory(Request $request){
+    public function getEWalletTransactionHistory(Request $request)
+    {
 
         $input = $request->all();
 
-        $result = $this->transactionCalulatorEwalletRepository->eWalletTransactionHistory($input,self::STATUS_DONE);
+        $result = $this->transactionCalulatorEwalletRepository->eWalletTransactionHistory($input, self::STATUS_DONE);
 
         return $this->sendResponse($result, 'Transactions retrieved successfully');
-
     }
 
-    public function calEwallet(Request $request){
+    public function calEwallet(Request $request)
+    {
         $input = $request->all();
 
         $results = $this->transactionCalulatorEwalletRepository->calculatorEwallet($input);
- 
-        if($results <= 0) {
 
-            $this->notificationRepository->createNotifi($input['user_id'], 'AvailableBalanceIs0','Available balance is 0');
+        if ($results <= 0) {
+
+            $this->notificationRepository->createNotifi($input['user_id'], 'AvailableBalanceIs0', 'Available balance is 0');
         }
         return $results;
     }
-
-
-    
 }

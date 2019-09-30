@@ -8,12 +8,12 @@ use App\Http\Controllers\Controller;
 class BaseApiController extends Controller
 {
     /**
-	 * Response success
-	 * @param  string  $message
-	 * @param  array  $data
-	 * @param  integer $status
-	 * @return \Illuminate\Http\JsonResponse
-	 */
+     * Response success
+     * @param  string  $message
+     * @param  array  $data
+     * @param  integer $status
+     * @return \Illuminate\Http\JsonResponse
+     */
     protected function responseSuccess($message = null, $data = null, $status = 200)
     {
         return \Response::json([
@@ -63,23 +63,22 @@ class BaseApiController extends Controller
      * @param  boolean $isLogin
      * @return array
      */
-    protected function makeResponseUserData($token = null, $isLogin = false)
+    protected function makeResponseWithToken($token = null)
     {
-        $user = auth()->user();
+        $hasVerifiedEmail = auth()->user()->hasVerifiedEmail();
+
         $data = [
-            'user' => $user,
+            'hasVerifiedEmail' => $hasVerifiedEmail,
         ];
 
-        if(!empty($token)){
+        if (!empty($token)) {
             $data = array_merge($data, [
                 'access_token' => $token,
                 'token_type' => 'Bearer',
                 'expires_in' => auth()->factory()->getTTL() * 60,
             ]);
-
-            // Save user logged in
         }
-        
+
         return $data;
     }
 }

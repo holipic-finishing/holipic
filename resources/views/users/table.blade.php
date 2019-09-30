@@ -19,7 +19,6 @@
             <td>{!! $user->last_name !!}</td>
             <td>{!! $user->email !!}</td>
             <td>{!! $user->password !!}</td>
-            <td>{!! $user->access_token !!}</td>
             <td>{!! $user->active !!}</td>
             <td>
                 {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}

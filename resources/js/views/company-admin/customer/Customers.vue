@@ -201,7 +201,6 @@
 
 <script>
 import { get, post, put, del, getWithData } from '../../../api/index.js'
-import config from '../../../config/index.js'
 import CustomerEdit from './CustomerEdit'
 import SnapPhoto from './SnapPhoto'
 import Booking from './Booking'
@@ -241,7 +240,7 @@ export default {
     	},
 		rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }],
 		company: JSON.parse(localStorage.getItem('user')),
-		urlExport: config.API_URL+'company/branches/customers/export?companyId='+JSON.parse(localStorage.getItem('user')).company_id,
+		urlExport: 'company/branches/customers/export?companyId='+JSON.parse(localStorage.getItem('user')).company_id,
 		itemIdToDelete:'',
 		loading:false
   	}
@@ -254,10 +253,10 @@ export default {
 	},
 	methods:{
 		fetchData() {
-	  		get(config.API_URL+'company/branches/customers?companyId='+this.company.company_id)
+	  		get('company/branches/customers?companyId='+this.company.company_id)
 	  		.then(response => {
-	  			if(response && response.data.success) {
-	  				this.items = response.data.data
+	  			if(response && response.success) {
+	  				this.items = response.data
 	  			}
 	  		})
 	  		.catch(error => {
@@ -266,9 +265,9 @@ export default {
 	  	},
 	  	deleteItem() {
 	  		var userId = this.company.id
-	  		del(config.API_URL+'company/branches/customer/delete/'+this.itemIdToDelete+'?userId='+userId)
+	  		del('company/branches/customer/delete/'+this.itemIdToDelete+'?userId='+userId)
 	  		.then(response => {
-	  			if(response && response.data.success) {
+	  			if(response && response.success) {
 	  				this.dialog = false
 	  				this.fetchData()
 	  				this.$notify({

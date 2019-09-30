@@ -210,7 +210,7 @@ class ListingController extends AppBaseController
             return $this->sendError('Room does not exits');
         }
 
-        return $this->sendResponse($room, 'Login room success'); 
+        return $this->sendResponse($room, 'Login room success');
     }
 
     /**
@@ -227,7 +227,7 @@ class ListingController extends AppBaseController
         }
 
         if(!empty($photos)) {
-            return $this->sendResponse($photos, 'Get photo success'); 
+            return $this->sendResponse($photos, 'Get photo success');
         }
 
         return $this->sendError('Not data photo');

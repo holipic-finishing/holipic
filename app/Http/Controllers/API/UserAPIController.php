@@ -136,32 +136,32 @@ class UserAPIController extends AppBaseController
     public function changePassWord(Request $request) {
         try {
 
-            $token = (new Parser())->parse((string) $request['access_token']);         
+            $token = (new Parser())->parse((string) $request['access_token']);
             $email=  $token->getClaim('email');
-      
+
             $user = User::where('email',$email)->first();
 
-            if (!password_verify($request['oldPassword'], $user->password)) {   
+            if (!password_verify($request['oldPassword'], $user->password)) {
                 return response()->json(['success' => false, 'message' => 'The password current incorrect']);
             }
 
             if(strcmp($request['oldPassword'], $request['newPassword']) == 0)
             {
                 return response()->json([
-                        'success' => false, 
+                        'success' => false,
                         'message' => 'The new password cannot be the same as the old password'
                 ]);
             }
 
             if(strcmp($request['newPassword'], $request['confirmPassword']) != 0 ) {
                 return response()->json([
-                        'success' => false, 
+                        'success' => false,
                         'message' => 'The new password does not match'
                 ]);
             }
 
             $this->notificationRepository->createNotifi($user->id, 'changePasswordSuccess','Change Password Success');
-            
+
             if($user){
                 $user = User::where('email',$email)->first()->update([
                                 'password' => Hash::make($request['newPassword'])
@@ -178,18 +178,18 @@ class UserAPIController extends AppBaseController
 
             return $this->sendResponse($user, 'Change password success');
         }
-        
+
          catch (Exception $e) {
              return $e;
         }
-       
-        
+
+
     }
 
 
     public function getUserProfile($id)
     {
-        $user = $this->userRepository->findWithoutFail($id); 
+        $user = $this->userRepository->findWithoutFail($id);
 
         return $this->sendResponse($user->toArray(), 'User retrieved successfully');
     }
@@ -197,40 +197,40 @@ class UserAPIController extends AppBaseController
     public function userProfile(Request $request)
     {
        try {
-            $user = User::where('id',$request['id'])->first(); 
+            $user = User::where('id',$request['id'])->first();
 
             $checkUsernameExits = User::where('username', $request['username'])->where('id', '!=', $request['id'])->first();
             $checkEmailExits = User::where('email', $request['email'])->where('id', '!=', $request['id'])->first();
 
             if ($checkUsernameExits != '') {
                 return response()->json([
-                        'success' => false, 
+                        'success' => false,
                         'message' => 'The username was exist!'
                 ]);
-            } 
+            }
 
             if ($checkEmailExits != '') {
                 return response()->json([
-                        'success' => false, 
+                        'success' => false,
                         'message' => 'The email was exist!'
                 ]);
-            } 
+            }
 
             $this->notificationRepository->createNotifi($user->id, 'editProfileSuccess','Edit Profile Success');
 
             $user->update($request->all());
-       
+
             // Save activity logs
-            $log = Activity::all()->last(); 
+            $log = Activity::all()->last();
             $log['user_id'] = $user->id;
-            $log['description_log'] = 'Edit Profile'; 
+            $log['description_log'] = 'Edit Profile';
             $log->save();
 
             event(new \App\Events\RedisEventActivityLog($log));
 
             return $this->sendResponse($user, 'Edit Profile success');
         }
-        
+
          catch (Exception $e) {
              return $e;
         }
@@ -262,7 +262,7 @@ class UserAPIController extends AppBaseController
         $user = User::where('email',$input['email'])->first()->update([
 
                         'id_one_signal' => $id_one_signal
-                    ]);  
+                    ]);
 
         return $this->sendResponse($user, 'Updata success');
 

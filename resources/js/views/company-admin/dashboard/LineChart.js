@@ -1,218 +1,224 @@
-import { Line } from 'vue-chartjs'
+import {
+    Line
+} from 'vue-chartjs'
 import config from '../../../config'
 import Vue from 'vue'
 import moment from "moment"
-import {ChartConfig} from "../../../constants/chart-config"
-import {hexToRgbA} from "../../../helpers/helpers"
-import { get, getWithData } from '../../../api'
+import {
+    ChartConfig
+} from "../../../constants/chart-config"
+import {
+    hexToRgbA
+} from "../../../helpers/helpers"
+import {
+    get,
+    getWithData
+} from '../../../api'
 
 
 export default {
-  extends: Line,
-  data() {
-    return {
-      data: [],
-      labels: [],
-      gradient1: null,
-      line: null,
-      options: {
-        responsive: true, 
-        maintainAspectRatio: false,
-        scales: {
-           yAxes: [{
-              ticks: {
-                 beginAtZero: true,
-                 display: false
-              },
-              gridLines: {
-                 display: false,
-                 drawBorder: false,
-                 drawTicks: false
-              }
-           }],
-           xAxes: [{
-              ticks: {
-                 display: true,
-                 beginAtZero: true
-              },
-              gridLines: {
-                 display: false,
-                 drawBorder: false
-              }
-           }]
-        },
-        legend: {
-           display: false
+    extends: Line,
+    data() {
+        return {
+            data: [],
+            labels: [],
+            gradient1: null,
+            line: null,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            display: false
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false,
+                            drawTicks: false
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            display: true,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                }
+            },
+            chooes: '',
+            company_id: JSON.parse(localStorage.getItem('user')).company_id,
+
         }
-  	  },
-      chooes:'',
-      company_id:JSON.parse(localStorage.getItem('user')).company_id,
+    },
+    created() {
+        this.fetchData();
 
-    }
-  },
-  created(){
-    this.fetchData();
+    },
 
-  },
+    mounted() {
 
-  mounted() {
-    
-    this.$root.$on('companyChart', res => {
-        this.countIncome(res.params)     
-       	this.getData(res.params)
-       	this.chooes = res.chooes
-    });
-  },
+        this.$root.$on('companyChart', res => {
+            this.countIncome(res.params)
+            this.getData(res.params)
+            this.chooes = res.chooes
+        });
+    },
 
-  methods: {
-    renderChartData(labels, data){
-    
-      let gradientColor = ' '
-      this.gradient1 = this.$refs.canvas.getContext('2d').createLinearGradient(0, 200, 0, 0)
-      this.gradient1.addColorStop(0, hexToRgbA(ChartConfig.color.white, 0.2))
-      this.gradient1.addColorStop(0.5, hexToRgbA(ChartConfig.color.info, 0.2))
+    methods: {
+        renderChartData(labels, data) {
 
-      this.renderChart({
-          labels: labels,
-          datasets: [
-            {
-                label: 'Total Income',
-                data: data,
-                backgroundColor: this.gradient1,
-                borderColor: ChartConfig.color.info,
-                lineTension: 0.4,
-                fill: true
+            let gradientColor = ' '
+            this.gradient1 = this.$refs.canvas.getContext('2d').createLinearGradient(0, 200, 0, 0)
+            this.gradient1.addColorStop(0, hexToRgbA(ChartConfig.color.white, 0.2))
+            this.gradient1.addColorStop(0.5, hexToRgbA(ChartConfig.color.info, 0.2))
+
+            this.renderChart({
+                labels: labels,
+                datasets: [{
+                    label: 'Total Income',
+                    data: data,
+                    backgroundColor: this.gradient1,
+                    borderColor: ChartConfig.color.info,
+                    lineTension: 0.4,
+                    fill: true
+                }]
+            }, this.options);
+        },
+
+        fetchData() {
+            let params = {
+                defaultDay: 'default',
             }
-         ]
-      }, this.options);
-    },
- 
-    fetchData() {
-  		let params = {
-  					defaultDay :  'default',
-  		}
-    
-      this.countIncome(params);
-      this.getData(params);
-    },
 
-    getData(params){
-      let url = config.API_URL + 'company-admin-chart'
-      params.company_id = this.company_id
-			getWithData(url,params)
-			.then((res) => {
-				if(res.data.success && res){
-					if(this.chooes == "Week") {
-						var dataWeek =[]
-						var total = 0
-              _.forEach(res.data.data,function(value,key){
-                dataWeek.unshift(value);
-                total = total + parseFloat(value.total)
+            this.countIncome(params);
+            this.getData(params);
+        },
 
-              });
-              total = total.toFixed(3)
+        getData(params) {
+            let url = 'company-admin-chart'
+            params.company_id = this.company_id
+            getWithData(url, params)
+                .then((res) => {
+                    if (res.success && res) {
+                        if (this.chooes == "Week") {
+                            var dataWeek = []
+                            var total = 0
+                            _.forEach(res.data, function (value, key) {
+                                dataWeek.unshift(value);
+                                total = total + parseFloat(value.total)
 
-              this.$root.$emit('totalTransaction', total)
-          		this.handleDataWeek(dataWeek)
-              this.getStartWeekAndEndWeekWithValue(dataWeek, this.chooes)
+                            });
+                            total = total.toFixed(3)
 
-					}else {
-						var total = 0
-						_.forEach(res.data.data,function(value,key){
-		            total = total + parseFloat(value.total)
-   
-		          });
-            total = total.toFixed(3)
-		        
-            this.$root.$emit('totalTransaction', total)
-						this.handleDataDaily(res.data.data)
-            this.getStartTimeAndEndTimeWithValue(res.data.data, this.chooes)
-					}
-				}
-				
-			})
-			.catch((err) => {
-				console.log(err)
-			})
-	},
+                            this.$root.$emit('totalTransaction', total)
+                            this.handleDataWeek(dataWeek)
+                            this.getStartWeekAndEndWeekWithValue(dataWeek, this.chooes)
 
-  getStartWeekAndEndWeekWithValue(obj, typeTime){
-    var keys, firstKey, lastKey
-    keys = Object.keys(obj)
-    firstKey = Object.keys(obj)[0]
-    lastKey = keys[keys.length-1]
-    var timeObj = {
-      "firstTime" : "",
-      "lastTime" : "",
-      "typeTime" : typeTime
+                        } else {
+                            var total = 0
+                            _.forEach(res.data, function (value, key) {
+                                total = total + parseFloat(value.total)
+
+                            });
+                            total = total.toFixed(3)
+
+                            this.$root.$emit('totalTransaction', total)
+                            this.handleDataDaily(res.data)
+                            this.getStartTimeAndEndTimeWithValue(res.data, this.chooes)
+                        }
+                    }
+
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        },
+
+        getStartWeekAndEndWeekWithValue(obj, typeTime) {
+            var keys, firstKey, lastKey
+            keys = Object.keys(obj)
+            firstKey = Object.keys(obj)[0]
+            lastKey = keys[keys.length - 1]
+            var timeObj = {
+                "firstTime": "",
+                "lastTime": "",
+                "typeTime": typeTime
+            }
+
+            _.forEach(obj, function (value, key) {
+                if (key == firstKey) {
+                    timeObj.firstTime = value.startOfWeek
+                }
+                if (key == lastKey) {
+                    timeObj.lastTime = value.endOfWeek
+                }
+            })
+            this.$root.$emit('load-time-in-menu-filter', timeObj)
+        },
+
+        getStartTimeAndEndTimeWithValue(obj, typeTime) {
+            var keys, firstKey, lastKey
+            keys = Object.keys(obj)
+            firstKey = Object.keys(obj)[0]
+            lastKey = keys[keys.length - 1]
+            var timeObj = {
+                "firstTime": firstKey,
+                "lastTime": lastKey,
+                "typeTime": typeTime
+            }
+            this.$root.$emit('load-time-in-menu-filter', timeObj)
+        },
+
+        handleDataDaily(data) {
+            var lables = []
+            var total = []
+            _.forEach(data, function (value, key) {
+                lables.push(key)
+                total.push(value.total)
+            });
+
+            this.renderChartData(lables, total);
+
+        },
+
+        handleDataWeek(data) {
+            var lables = []
+            var total = []
+            _.forEach(data, function (value, key) {
+                lables.push(moment(value['startOfWeek']).format('MM-DD') + ' / ' + moment(value['endOfWeek']).format('MM-DD'))
+                total.push(value.total)
+            });
+            this.renderChartData(lables, total);
+
+        },
+
+        countIncome(params) {
+            let url = 'order/count-income'
+            params.company_id = this.company_id
+            getWithData(url, params)
+                .then((res) => {
+                    if (res.success && res) {
+                        var totalImcome = res.data
+                        this.$root.$emit('totalImcome', totalImcome)
+                    }
+
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+
+        },
+
+
+
     }
-
-    _.forEach(obj, function(value,key){
-      if (key == firstKey) {
-        timeObj.firstTime = value.startOfWeek
-      }
-      if (key == lastKey) {
-        timeObj.lastTime = value.endOfWeek
-      }
-    })
-    this.$root.$emit('load-time-in-menu-filter', timeObj)
-  },
-
-  getStartTimeAndEndTimeWithValue(obj, typeTime){
-    var keys, firstKey, lastKey
-    keys = Object.keys(obj)
-    firstKey = Object.keys(obj)[0]
-    lastKey = keys[keys.length-1]
-    var timeObj = {
-      "firstTime" : firstKey,
-      "lastTime" : lastKey,
-      "typeTime" : typeTime
-    }
-    this.$root.$emit('load-time-in-menu-filter', timeObj)
-  },
-
-	handleDataDaily(data){
-			var lables = []
-      var total = []
-      _.forEach(data, function(value, key) {
-          lables.push(key)
-          total.push(value.total)
-      });
-
-      this.renderChartData(lables,total);
-
-		},
-
-	handleDataWeek(data){
-			var lables = []
-      var total = []
-      _.forEach(data, function(value, key) {
-        lables.push(moment(value['startOfWeek']).format('MM-DD') + ' / ' + moment(value['endOfWeek']).format('MM-DD'))
-        total.push(value.total)                      
-      });
-      this.renderChartData(lables,total);
-
-	},
-
-  countIncome(params){
-      let url = config.API_URL + 'order/count-income'
-      params.company_id = this.company_id
-      getWithData(url,params)
-      .then((res) => {
-          if(res.data.success && res){
-            var totalImcome = res.data.data
-            this.$root.$emit('totalImcome', totalImcome)
-          }
-        
-      })
-      .catch((err) => {
-          console.log(err)
-      })
-
-  },
-  
-
-
-  }
 }
-

@@ -11,7 +11,7 @@ use Log;
 
 class NewNotification
 {
-     private $oneSignal;
+    private $oneSignal;
     /**
      * Create the event listener.
      *
@@ -20,7 +20,9 @@ class NewNotification
     public function __construct()
     {
         $this->oneSignal = new OneSignal(
-            env("ONESIGNAL_AUTH_KEY"), env("ONESIGNAL_APP_ID"), env("ONESIGNAL_APP_REST_KEY")
+            env("ONESIGNAL_AUTH_KEY"),
+            env("ONESIGNAL_APP_ID"),
+            env("ONESIGNAL_APP_REST_KEY")
         );
     }
 
@@ -32,14 +34,14 @@ class NewNotification
      */
     public function handle(RedisEventNotification $event)
     {
-        $domain = env("MIX_APP_PROTOCOL")  . "://" . env("MIX_APP_DOMAIN");
-        
+        $domain = env("MIX_APP_PROTOCOL")  . "://" . env("MIX_APP_DOMAAIN");
+
         $oneSingalNotification = new Notification($this->oneSignal);
-        
+
         $notification = $event->notification;
         $id_one_signal = $event->id_one_signal;
-        
-        $arr_id_signal = explode(',',$id_one_signal);
+
+        $arr_id_signal = explode(',', $id_one_signal);
 
 
         $notificationData = [
@@ -62,6 +64,5 @@ class NewNotification
         ];
 
         $createNotification = $oneSingalNotification->create($notificationData);
- 
     }
 }

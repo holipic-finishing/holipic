@@ -7,12 +7,12 @@
 		<app-card
 			colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card"
-			:withTabs="true"	
+			:withTabs="true"
 			>
 			<div class=" ml-5 mr-5">
 				<v-flex xs2 class="v-flex-sp-l">
 					<v-card-text >
-						<span class="ml-3">Download</span> 
+						<span class="ml-3">Download</span>
 						<span class="ml-3 pt-3 top-relative"><i class="material-icons">
 							filter
 						</i>
@@ -23,7 +23,7 @@
 						</span>
 						<span class="ml-1 pt-3 top-relative">
 							<i class="material-icons">
-								keyboard_arrow_down	
+								keyboard_arrow_down
 							</i>
 						</span>
 					</v-card-text>
@@ -90,11 +90,11 @@
 									check_circle
 								</i>
 						 	</span>
-						</div>	
+						</div>
 
 					</v-flex>
 
-					<lightbox id="mylightbox" 
+					<lightbox id="mylightbox"
 				      ref="lightboxdownload"
 				      :images="photos2"
 				      :directory="thumbnailDir"
@@ -102,7 +102,7 @@
 				 	/> -->
 				</v-layout>
 
-			</div>  
+			</div>
 		</app-card>
 		<!-- Selected photo-->
 
@@ -110,7 +110,7 @@
 		<app-card
 			colClasses="xl12 lg12 md12 xs12 d-xs-half-block w-full"
 			customClasses="custom-app-card"
-			:withTabs="true"	
+			:withTabs="true"
 			>
 			<div class="mb-5 ml-5 mr-5">
 				<v-flex xs2 class="v-flex-sp-l">
@@ -133,7 +133,7 @@
 				</v-flex>
 
 				<v-flex xs10 class="v-flex-sp-r line-flex">
-					
+
 				</v-flex>
 
 				<v-layout row wrap class="photo-selected images">
@@ -156,7 +156,7 @@
 									contain
 									>
 								</v-img>
-								
+
 							</div>
 						</v-card>
 
@@ -172,10 +172,10 @@
 									check_circle
 								</i>
 						 	</span>
-						</div>	
+						</div>
 					</v-flex>
-	
-				 	<lightbox id="mylightbox" 
+
+				 	<lightbox id="mylightbox"
 				      ref="lightbox"
 				      :images="photos"
 				      :directory="thumbnailDir"
@@ -192,7 +192,7 @@
 			customClasses="custom-app-card custom-app-card-footer"
 			:withTabs="true">
 			<div class="footer-shop-selling">
-				
+
 			</div>
 		</app-card> -->
 	</v-layout>
@@ -200,7 +200,6 @@
 </template>
 <script>
 
-import config from '../../../config'
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
 import Lightbox from 'vue-my-photos'
 import Vue from 'vue'
@@ -316,7 +315,7 @@ export default {
 		],
 		photoOpened: null,
 		thumbnailDir:'',
-		customer: JSON.parse(localStorage.getItem('customer')),
+		customer: JSON.parse(localStorage.getItem('user')),
 		checkPayment: false
     }
   },
@@ -340,14 +339,14 @@ export default {
   },
   mounted() {
   	this.$root.$on('activeSelectedImage', res => {
-  		var key = _.findIndex(this.photos2, function(value) { 
-  					return value.image_id == res; 
+  		var key = _.findIndex(this.photos2, function(value) {
+  					return value.image_id == res;
   				});
 
 		this.photos2.splice(key, 1);
 
   		$('.active-image'+res).show();
-  		
+
   	})
 
   	this.$root.$on('showPopupPayment', res => this.checkPayment = true)
@@ -366,7 +365,7 @@ export default {
 		this.count --
 		$('.active-image'+photo.id).css("color", "#464D69");
 
-		del(config.API_URL+'cart/delete-photo?imageId='+photo.id)
+		del('cart/delete-photo?imageId='+photo.id)
   		.then(res => {
 
   		})
@@ -411,7 +410,7 @@ export default {
   				this.photos2[index]['type'] = type.type
   				this.photoOpened = this.photos2[index]
   			}
-  		})	
+  		})
   	},
   	increase(photoOpened, quantity)
   	{
@@ -430,8 +429,8 @@ export default {
   	},
   	selectPhoto(photo)
   	{
-  		var photoSelected = _.find(this.photos2, (value,key) => { 
-  			return value['id'] == photo.id; 
+  		var photoSelected = _.find(this.photos2, (value,key) => {
+  			return value['id'] == photo.id;
   		});
 
   		console.log(photoSelected)
@@ -459,7 +458,7 @@ export default {
 
   		//send event basket
   		_.forEach(this.photoTypes, (item, index) => {
-  			this.photoTypes[index]['quantity'] = 1	
+  			this.photoTypes[index]['quantity'] = 1
   		})
 
   		console.log(this.photos2)
@@ -467,7 +466,7 @@ export default {
   	showZoomImageAndSlide(photo)
   	{
   		this.$refs.lightbox.show(photo.name);
-  	
+
   	},
   	showZoomImageAndSlideDownload(photo)
   	{
@@ -483,13 +482,13 @@ export default {
   	},
   	getPhotoFromRoom()
   	{
-  		get(config.API_URL+'room/show-photo?room='+this.customer.room_id)
+  		get('room/show-photo?room='+this.customer.room_id)
   		.then(res => {
-  			if(res && res.data.success){
-  				
-  				this.thumbnailDir = res.data.data[1]
+  			if(res && res.success){
 
-  				this.photos = res.data.data[0]['images']
+  				this.thumbnailDir = res.data[1]
+
+  				this.photos = res.data[0]['images']
   			}
   		})
   		.catch(err => {
@@ -498,7 +497,7 @@ export default {
   	},
   	addPhotoSelectedIntoDB(photo)
   	{	let params = {photo}
-  		post(config.API_URL+'customer/order-image', params)
+  		post('customer/order-image', params)
   		.then(res => {
 
   		})
@@ -546,7 +545,7 @@ export default {
 
 .cart .detail-cart{
     float: left;
-    display: none;   
+    display: none;
 }
 .cart:hover .detail-cart{
 	color:#5d92f4;

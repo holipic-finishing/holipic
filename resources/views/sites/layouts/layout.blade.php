@@ -31,25 +31,20 @@
 			<div class="diamond"></div>
 			<div class="diamond"></div>
 		</div>
-	</div>
-	<!-- Preloader Ends -->
-	@include('sites.partials.header')
+    </div>
 
+    {{-- Header Section --}}
+    @include('sites.partials.header')
+
+    {{-- Content --}}
 	@yield('content')
 
-
-
-
-	{{-- @include('sites.partials.banner-intro') --}}
-
-	<!-- Pricing section starts -->
-
-	<!-- Mega Footer section starts -->
+	<!-- Footer Section -->
 	@include('sites.partials.footer')
 
-	<!-- Footer section ends -->
+    {{-- Globle script --}}
+    @include('sites.partials.scripts')
 
-	@include('sites.partials.scripts')
 	@yield('scripts')
 </body>
 </html>

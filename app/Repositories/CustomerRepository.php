@@ -15,7 +15,7 @@ use File;
  * @method Customer findWithoutFail($id, $columns = ['*'])
  * @method Customer find($id, $columns = ['*'])
  * @method Customer first($columns = ['*'])
-*/
+ */
 class CustomerRepository extends BaseRepository
 {
     /**
@@ -42,25 +42,22 @@ class CustomerRepository extends BaseRepository
         $companyId = request('companyId');
 
         $data = [];
-        
-        if(!empty($companyId)) {
+
+        if (!empty($companyId)) {
 
             $customers = $this->model
-                            ->with('user')
-                            ->with('room')
-                            ->with(['branch' => function($q) use ($companyId) {
-                                
-                                $q->whereCompanyId($companyId);
-                            
-                            }])->get()->toArray();
+                ->with('user')
+                ->with('room')
+                ->with(['branch' => function ($q) use ($companyId) {
+
+                    $q->whereCompanyId($companyId);
+                }])->get()->toArray();
 
 
-            foreach($customers as $customer) 
-            {
-                if($customer['branch'] != null)
-                {
+            foreach ($customers as $customer) {
+                if ($customer['branch'] != null) {
                     $fileName = $this->createLinkAvatar($customer['avatar']);
-                    $customer['avatar'] = asset('customer_avatars/' . $fileName);
+                    $customer['avatar'] = asset($fileName);
                     $data[] = $customer;
                 }
             }
@@ -71,7 +68,8 @@ class CustomerRepository extends BaseRepository
         return false;
     }
 
-    function createLinkAvatar($link){
+    function createLinkAvatar($link)
+    {
         $components = explode("/", $link);
         $fileName = end($components);
         return $fileName;
@@ -79,41 +77,40 @@ class CustomerRepository extends BaseRepository
 
     public function handleUpdateCustomer($id)
     {
-        $customer = $this->model->findOrFail($id); 
+        $customer = $this->model->findOrFail($id);
 
-        $input = request('params'); 
+        $input = request('params');
 
-        if(request('params.status')) {
-            $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false] ;
+        if (request('params.status')) {
+            $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false];
         }
 
         if (request('params.email')) {
             User::where('id', '=', $customer->user_id)->update($input);
         }
 
-        if(request()->file('avatar')) {
+        if (request()->file('avatar')) {
 
             $image = request()->file('avatar');
 
             $typeFile = $image->getClientOriginalExtension();
 
-            if($typeFile != 'jpg' && $typeFile != 'png' && $typeFile != 'jpeg'){
+            if ($typeFile != 'jpg' && $typeFile != 'png' && $typeFile != 'jpeg') {
                 return false;
             }
 
-            if (! File::exists(public_path()."/images/customer")) {
-                File::makeDirectory(public_path()."/images/customer");
+            if (!File::exists(public_path() . "/images/customer")) {
+                File::makeDirectory(public_path() . "/images/customer");
             }
 
-            $name = time().'_'.$customer['id'].'_'.$image->getClientOriginalName();
-            $input = ['avatar' => '/images/customer/'.$name];
+            $name = time() . '_' . $customer['id'] . '_' . $image->getClientOriginalName();
+            $input = ['avatar' => '/images/customer/' . $name];
 
             $destinationPath = public_path('/images/customer');
             $image->move($destinationPath, $name);
         }
 
-        if(!is_null($customer))
-        {
+        if (!is_null($customer)) {
             $customer = $customer->update($input);
             return $customer;
         }
@@ -124,22 +121,22 @@ class CustomerRepository extends BaseRepository
     public function handelGetBranchCustomers($input)
     {
         $companyId = $input['company_id'];
-        $user_id = $input['id']; 
+        $user_id = $input['id'];
 
         $data = [];
-        
-        if($companyId && $companyId != '') {
-            $customers = $this->model
-                                ->with('user')
-                                ->with('room')
-                                ->with(['branch' => function($q) use ($companyId, $user_id) {
-                                                     $q->whereCompanyId($companyId)->whereUserId($user_id);
-                                        }])->get()->toArray();
 
-            foreach($customers as $customer) 
-            {
-                if($customer['branch'] != null)
-                {
+        if ($companyId && $companyId != '') {
+            $customers = $this->model
+                ->with('user')
+                ->with('room')
+                ->with(['branch' => function ($q) use ($companyId, $user_id) {
+                    $q->whereCompanyId($companyId)->whereUserId($user_id);
+                }])->get()->toArray();
+
+            foreach ($customers as $customer) {
+                if ($customer['branch'] != null) {
+                    $customer['avatar'] = explode("/",str_replace("\\", "/", $customer['avatar']));
+                    $customer['avatar'] = asset('customer_avatars/' . end($customer['avatar']));
                     $data[] = $customer;
                 }
             }
@@ -156,33 +153,32 @@ class CustomerRepository extends BaseRepository
 
         $input = request('params');
 
-        if(request('params.status')) {
-            $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false] ;
+        if (request('params.status')) {
+            $input = request('params.status') == 'Active' ? ['status' => true] : ['status' => false];
         }
 
         if (request('params.email')) {
             User::where('id', '=', $customer->user_id)->update($input);
         }
 
-        if(request()->file('avatar')) {
+        if (request()->file('avatar')) {
 
             $image = request()->file('avatar');
 
             $typeFile = $image->getClientOriginalExtension();
 
-            if($typeFile != 'jpg' && $typeFile != 'png' && $typeFile != 'jpeg'){
+            if ($typeFile != 'jpg' && $typeFile != 'png' && $typeFile != 'jpeg') {
                 return false;
             }
 
-            $name = time().'_'.$customer['id'].'_'.$image->getClientOriginalName();
-            $input = ['avatar' => '/images/customer/'.$name];
+            $name = time() . '_' . $customer['id'] . '_' . $image->getClientOriginalName();
+            $input = ['avatar' => '/images/customer/' . $name];
 
             $destinationPath = public_path('/images/customer');
             $image->move($destinationPath, $name);
         }
 
-        if(!is_null($customer))
-        {
+        if (!is_null($customer)) {
             $customer = $customer->update($input);
 
             return $customer;
@@ -193,12 +189,12 @@ class CustomerRepository extends BaseRepository
 
     public function handleDeleteBranchCustomer($id)
     {
-        $customer = $this->model->find($id); 
+        $customer = $this->model->find($id);
         if (empty($customer)) {
             return $this->sendError('Customer not found');
         }
 
-        $user = User::where('id', '=', $customer->user_id)->first(); 
+        $user = User::where('id', '=', $customer->user_id)->first();
         if (empty($user)) {
             return $this->sendError('User not found');
         }

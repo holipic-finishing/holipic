@@ -70,7 +70,7 @@ class ListingRepositoryEloquent extends BaseRepository implements ListingReposit
                         $array[] = $value;
                     }
                 }
-                
+
                 $dir = '/storage/images/'.$roomPhoto['room']['room_hash'].'/compressed/';
 
                 $roomPhoto['images'] = $array;
@@ -90,5 +90,5 @@ class ListingRepositoryEloquent extends BaseRepository implements ListingReposit
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
 }

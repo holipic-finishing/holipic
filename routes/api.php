@@ -12,12 +12,35 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group(['namespace' => 'API'],function(){
+
+    /************************** AUTH******************************/
+    Route::namespace('Auth')->prefix('auth')->group(function(){
+
+        Route::post('register', 'RegisterController@register');
+        Route::post('signinUser', 'LoginController@signinUser');
+        Route::post('logout', 'LoginController@logoutAuth')->middleware('jwt');
+
+		Route::get('forgot-password', 'LoginController@sendEmailResetPassword');
+		Route::get('customer/confirm-forgot-password', 'LoginController@confirmForgotPassword');
+		Route::post('customer/update-password', 'LoginController@updatePassword');
+
+    });
+});
+
+Route::middleware(['auth:api'])->group(function () {
+    // Email Verification Routes...
+    Route::post('email/verify', 'Auth\VerificationController@check')->name('verification.notice');
+    Route::post('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+    Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+});
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['namespace' => 'API'],function(){
+Route::group(['namespace' => 'API', 'middleware' => 'jwt'],function(){
 
 	/***********************************************
 	**********	LIST ROUTER RESOURCE   *************
@@ -38,7 +61,7 @@ Route::group(['namespace' => 'API'],function(){
 
 	/*************Different Controllers**************/
 	Route::get('super-admin-chart-report', 'ReportController@totalIncomeReport');
-	Route::get('company-admin-chart', 'ReportController@getInfoForChartCompanyAdmin');	
+	Route::get('company-admin-chart', 'ReportController@getInfoForChartCompanyAdmin');
 
 	/**************************************************
 	*********LIST ROUTES SUPER ADMIN**********
@@ -82,7 +105,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('delete-package', 'PackageAPIController@deletePackage');
 		Route::post('edit/package/{itemId}', 'PackageAPIController@editPackage');
 
-		
+
 	});
 
 	/***************************************************
@@ -123,7 +146,7 @@ Route::group(['namespace' => 'API'],function(){
 		/*************BranchAPIController**************/
 		Route::get('company/branches', 'BranchAPIController@getBranchesCompany');
 		Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
-		
+
 		/*************PhotographerAPIController**************/
 		Route::get('photographers', 'PhotographerAPIController@getPhotographers');
 		Route::delete('photographer/{id}', 'PhotographerAPIController@destroy');
@@ -138,7 +161,7 @@ Route::group(['namespace' => 'API'],function(){
 		Route::post('company/branch', 'BranchAPIController@saveBranchCompany');
 		Route::get('company/branch-company','BranchAPIController@getBranchByCompanyId');
 
-	
+
 		/*************CustomerAPIController**************/
 		Route::get('company/branches/customers', 'CustomerAPIController@getCustomers');
 		Route::patch('company/branches/customer/{id}', 'CustomerAPIController@updateCustomer');
@@ -231,7 +254,9 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('room/login', 'ListingController@loginRoom');
 		Route::get('room/show-photo', 'ListingController@getPhoto');
 		Route::post('cart/add-photo', 'CartController@addPhoto');
-		Route::delete('cart/delete-photo', 'CartController@deletePhoto');
+        Route::delete('cart/delete-photo', 'CartController@deletePhoto');
+        Route::resource('sellers', 'SellerAPIController');
+
 		// Route::get('room/photo-selected', 'CartController@getPhotoSelected');
 
 	});
@@ -242,4 +267,4 @@ Route::group(['namespace' => 'API'],function(){
 		Route::get('customer/list-image-selected', 'CustomerAPIController@getImageSelected');
 
 	});
-});	
+});

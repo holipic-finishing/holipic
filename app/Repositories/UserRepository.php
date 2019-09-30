@@ -28,7 +28,6 @@ class UserRepository extends BaseRepository
         'last_name',
         'email',
         'password',
-        'access_token',
         'active',
         'package_id'
     ];
@@ -57,7 +56,7 @@ class UserRepository extends BaseRepository
             return $query->where('email', $email)->where('role_id', 2);
         })->first();
 
-    } 
+    }
 
     public function findUserByUserName($userName)
     {
@@ -65,7 +64,7 @@ class UserRepository extends BaseRepository
         return $this->scopeQuery(function($query) use ($userName){
             return $query->where('username', $userName);
         })->first();
-    } 
+    }
 
     public function checkUserCommpanyExits($user)
     {
@@ -107,9 +106,9 @@ class UserRepository extends BaseRepository
         if(!empty($user)) {
             $user = $user->update(['password' => request('password')]);
 
-            return $user; 
+            return $user;
         }
-        return false; 
+        return false;
     }
 
     public function handleCreateOrUpdatePasswordReset($user)
@@ -127,8 +126,8 @@ class UserRepository extends BaseRepository
         }else {
 
             $passwordReset = PasswordReset::create([
-                                'email' => $user->email, 
-                                'token' => $token, 
+                                'email' => $user->email,
+                                'token' => $token,
                                 'life_time' => time() + 120
                             ]);
         }

@@ -85,7 +85,7 @@ class PhotographerRepository extends BaseRepository
                     $value['avatar'] = $avatar;
 
                     $fileName_id = $this->createLink($value['identification_card']);
-                    $identification_card = asset('photographers/identifications/' . $fileName_id);
+                    $identification_card = asset('photographers/identifications' . $fileName_id);
                     $value['identification_card'] = $identification_card;
 
                     $array[] = $value;
@@ -99,6 +99,7 @@ class PhotographerRepository extends BaseRepository
     }
 
     function createLink($link){
+        $link = str_replace("\\", "/", $link);
         $components = explode("/", $link);
         $fileName = end($components);
         return $fileName;
@@ -108,7 +109,7 @@ class PhotographerRepository extends BaseRepository
      * [handelSavePhotographer description]
      * @return [type] [description]
      */
-    
+
     public function handelSavePhotographer()
     {
         $input = request()->all();
@@ -172,7 +173,7 @@ class PhotographerRepository extends BaseRepository
     public function handleUpdateIdentification($image, $photographer)
     {
         if(File::exists(public_path() .'/'. $photographer['identification_card'])) {
-             
+
             File::delete(public_path() .'/' .$photographer['identification_card']);
         }
 
@@ -215,7 +216,7 @@ class PhotographerRepository extends BaseRepository
                                 $query = $query->with('branch')->whereId($photographerId);
                                 return $query;
                             })->first();
-
+            $photographer->avatar = str_replace("\\", "/", $photographer->avatar);
             $imgArr = explode('/', $photographer->avatar);
             $imgName = end($imgArr);
             $link = url('photographers/avatars/' . $imgName);
@@ -224,6 +225,6 @@ class PhotographerRepository extends BaseRepository
             return $photographer;
         }
 
-        return false; 
+        return false;
     }
 }

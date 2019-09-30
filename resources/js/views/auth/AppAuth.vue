@@ -1,40 +1,35 @@
 <template>
-<div class="session-wrapper">
-	<div class="session-left">
-		<!-- <session-slider-widget></session-slider-widget> -->
-	</div>
-	<div class="session-right text-xs-center style-left">
-		<div class="session-table-cell">
-			<div class="session-content">
-				<img
-					:src="appLogo"
-					class="img-responsive mb-3"
-					width="150"
-					height="78"
-				/>
-				<router-view></router-view>
-			</div>
-		</div>
-	</div>
-</div>
+  <v-content>
+    <v-container fluid fill-height white>
+      <v-layout align-center justify-center>
+        <v-flex xs12 sm8 md4>
+          <div class="session-content text-center">
+            <v-img
+              :src="appLogo"
+              class="d-inline-block img-responsive mb-3 rounded"
+              width="150"
+              height="150"
+            />
+            <router-view></router-view>
+          </div>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
 import AppConfig from "../../constants/AppConfig";
 export default {
-
-  name: 'AppAuth',
-
-  data () {
+  name: "AppAuth",
+  data() {
     return {
-    	appLogo: AppConfig.appLogo2
-    }
+      appLogo: AppConfig.appLogo2
+    };
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.style-left {
-	margin-left: 0px !important;
-}
+
 </style>

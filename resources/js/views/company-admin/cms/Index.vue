@@ -30,11 +30,11 @@
 	    	</v-card-title>
 
 	    	<v-data-table
-					:headers="headers" 
-					:items="desserts" 
-					class="body-2 global-custom-table" 
-					:pagination.sync="pagination" 
-					:rows-per-page-items="rowsPerPageItems" 
+					:headers="headers"
+					:items="desserts"
+					class="body-2 global-custom-table"
+					:pagination.sync="pagination"
+					:rows-per-page-items="rowsPerPageItems"
 					:search="search"
 				>
 					<template slot="headers" slot-scope="props">
@@ -44,7 +44,7 @@
 								:key="header.text"
 								:class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.text === 'Action' ? 'text-right' : '']"
 								@click="changeSort(header.value)"
-	            >       	
+	            >
 		            <v-tooltip bottom>
 		                <span slot="activator" class="text-capitalize font-weight-bold">
 		                  {{ header.text }}
@@ -78,17 +78,17 @@
 			        Sorry, nothing to display here :(
 			      </v-alert>
 	    		</template>
-					
+
 					<!--Search no result -->
 		    	<v-alert slot="no-results" :value="true" color="error" icon="warning">
 	          Your search for "{{ search }}" found no results.
 	        </v-alert>
 
 				</v-data-table>
-				<v-dialog 
+				<v-dialog
 					fixed
-					v-model="drawer" 
-					:right="!rtlLayout" 
+					v-model="drawer"
+					:right="!rtlLayout"
 					fullscreen hide-overlay transition="slide-x-reverse-transition"
 				>
 					<cms-item :eventType="eventType" :item="item"></cms-item>
@@ -116,16 +116,16 @@ export default {
     		drawer:false,
     		pagination: {
 				  	rowsPerPage: 25,
-				  	sortBy: 'id', 
+				  	sortBy: 'id',
 				  	descending: false
 		    },
 		    item: null,
       		eventType: '',
-		    headers: [	        
-					{ text: 'ID', value: 'id',  align: 'left', width: '3%'},	       
-					{ text: 'Page Title', value: 'page_title', width: '20%' },	
-					{ text: 'Page Content', value: 'page_content' },	      
-		      { text: 'Action', sortable: false, width: '3%', value: 'actions' },         
+		    headers: [
+					{ text: 'ID', value: 'id',  align: 'left', width: '3%'},
+					{ text: 'Page Title', value: 'page_title', width: '20%' },
+					{ text: 'Page Content', value: 'page_content' },
+		      { text: 'Action', sortable: false, width: '3%', value: 'actions' },
 		    ],
 				desserts :[],
 				rowsPerPageItems: [25, 50, 100, { "text": "$vuetify.dataIterator.rowsPerPageAll", "value": -1 }]
@@ -136,11 +136,11 @@ export default {
   	},
   	methods:{
   		fetchData(){
-  			let url = config.API_URL + 'pages'
+  			let url = 'pages'
   			get(url)
   			.then(res => {
-  				if(res.data && res.data.success){
-					this.desserts = res.data.data
+  				if(res && res.success){
+					this.desserts = res.data
 				}
   			})
   			.catch(err =>{

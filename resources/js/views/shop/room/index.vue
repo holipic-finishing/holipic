@@ -5,14 +5,14 @@
 		  		<v-layout row wrap class="layout-position">
 		  			<!-- <v-flex xs6 md6 lg6 class="flex-line-room-left">
 		  				<div class="hr-room" style="z-index: 999; width: 200px; height: 3px; background-color: white;  transform: rotate(-45deg); right:0px; float:right;">
-		  					
+
 		  				</div>
 		  			</v-flex> -->
 
-		  			
+
 		  			<!-- <v-flex xs6 md6 lg6 class="flex-line-room-right">
 		  			  	<div class="hr-room" style="z-index: 999; width: 200px; height: 3px; background-color: white; position: absolute; transform: rotate(-45deg);">
-		  			  		
+
 		  			  	</div>
 		  			</v-flex> -->
 
@@ -41,7 +41,7 @@
 				</v-img>
   			</v-list-tile-avatar>
 
-		</v-card>	
+		</v-card>
 	</div>
 </template>
 
@@ -66,7 +66,7 @@ export default {
   			if(res && res.data.success) {
   				var data = res.data.data
   				localStorage.setItem('roomLogin', JSON.stringify(data))
-  				this.$router.push({name: 'ShopSelling', params :{data: data}}) 
+  				this.$router.push({path: '/shop/photos', params :{data: data}})
   			}
   		})
   		.catch(err => {

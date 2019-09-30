@@ -155,7 +155,7 @@ export default {
   			if(res && res.success) {
   				var data = res.data
   				localStorage.setItem('roomLogin', JSON.stringify(data))
-  				this.$router.push({name: 'ShopSelling', params :{data: data}})
+  				this.$router.push({path: '/shop/photos', params :{data: data}})
   			}
   		})
   		.catch(err => {

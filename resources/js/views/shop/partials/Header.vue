@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar dark color="primary" class="custom-toolbar">
+  <v-toolbar dark color="primary" class="custom-toolbar" v-if="$route.path === '/shop/photos'">
     <v-btn icon @click="back">
       <i class="material-icons color-text-header">reply_all</i>
     </v-btn>

@@ -234,7 +234,7 @@ export default {
   methods:{
   	backPageShopSelling()
   	{
-  		this.$router.push('/shop-selling')
+  		this.$router.push('/shop')
   	},
   	getDataPackage(array)
   	{

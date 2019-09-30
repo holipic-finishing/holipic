@@ -14,10 +14,10 @@ import SuperAdminRoutes from './super-admin';
 import CompanyAdminRoutes from './company-admin';
 import BranchAdminRoutes from './branch-admin';
 import CustomerRoutes from './customer';
-import ShopSellingRoutes from './shop-selling';
+import ShopSellingRoutes from './shop';
 
 import PageNotFound from '../views/partials/pages/page404';
-import Room from '../views/shop-selling/room/index.vue';
+import Room from '../views/shop/room/index.vue';
 
 Vue.use(Router)
 

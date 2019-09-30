@@ -15,7 +15,7 @@ import EmailVerify from '../../views/auth/EmailVerify';
 import CustomerLogin from '../../views/customer/Login.vue';
 import CustomerResetPassword from '../../views/customer/ResetPassword.vue';
 
-import ShopSellingLogin from '../../views/shop-selling/Login.vue';
+import ShopSellingLogin from '../../views/shop/Login.vue';
 
 export const BaseAuth = {
     path: '/',

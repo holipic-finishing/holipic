@@ -132,7 +132,7 @@ export default {
   		localStorage.removeItem('roomLogin')
   		localStorage.removeItem('photoSelected')
   		localStorage.removeItem('thumbnailDir')
-  		this.$router.push('/shop-selling/login')
+  		this.$router.push('/shop/login')
   	},
   	showRoomLogin()
   	{

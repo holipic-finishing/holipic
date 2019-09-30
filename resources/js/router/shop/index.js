@@ -1,13 +1,13 @@
-import Index from '../../views/shop-selling/index.vue';
-import SelectPhoto from '../../views/shop-selling/partials/SelectPhoto.vue';
+import Index from '../../views/shop/index.vue';
+import SelectPhoto from '../../views/shop/partials/SelectPhoto.vue';
 
-import BookingConfirm from '../../views/shop-selling/BookingConfirm.vue';
-import ShopSellingDashboard from '../../views/shop-selling/Dashboard.vue';
+import BookingConfirm from '../../views/shop/BookingConfirm.vue';
+import ShopSellingDashboard from '../../views/shop/Dashboard.vue';
 
 export default {
 	path: '/shop',
    	component: Index,
-   	redirect: '/shop/photos',
+   	redirect: '/shop/dashboard',
    	children: [
    		{
 	        path: 'photos',

@@ -34,7 +34,7 @@ class CompanyPackageRepository extends BaseRepository
         return CompanyPackage::class;
     }
 
-    public function getCompanyPackages($input) 
+    public function getCompanyPackages($input)
     {
         $packages = $this->model->where('company_id', '=', $input)->get();
 
@@ -58,7 +58,7 @@ class CompanyPackageRepository extends BaseRepository
     }
 
     public function addCompanyPackageItem($input)
-    { 
+    {
         $arrItem = array(
                     'package_name' => $input['package_name'],
                     'price' => $input['price'],
@@ -68,7 +68,7 @@ class CompanyPackageRepository extends BaseRepository
                     'photo_on_disc' => $input['photo_on_disc'],
                     'poster' => $input['poster'],
                     'company_id' => $input['company_id'],
-                ); 
+                );
 
         return $this->model->create($arrItem);
     }
@@ -79,7 +79,7 @@ class CompanyPackageRepository extends BaseRepository
 
         $array = [];
 
-        foreach($packages as $package) 
+        foreach($packages as $package)
         {
             $package['price'] = number_format($package['price'], 2, ',', '');
 

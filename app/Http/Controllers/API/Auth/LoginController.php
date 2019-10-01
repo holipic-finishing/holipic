@@ -9,6 +9,7 @@ use Lcobucci\JWT\Parser;
 use App\Http\Controllers\API\BaseApiController;
 use App\Models\Branch;
 use App\Models\Company;
+use App\Models\Seller;
 use Mail;
 
 
@@ -122,7 +123,6 @@ class LoginController extends BaseApiController
 
     public function informationUser($user)
     {
-
         if ($user->role_id == '1') {
             $data = [
                 'id'           => $user->id,
@@ -172,9 +172,12 @@ class LoginController extends BaseApiController
             ];
         }
         if ($user->role_id == '5') {
+            $seller = Seller::where('user_id', $user->id)->with('branch')->first();
+
             $data = [
                 'role_id'      => $user->role_id,
                 'email'        => $user->email,
+                'branch_name'  => $seller->branch->name,
             ];
         }
 

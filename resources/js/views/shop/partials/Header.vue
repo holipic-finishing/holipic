@@ -1,21 +1,36 @@
 <template>
-  <v-toolbar dark color="primary" class="custom-toolbar" v-if="$route.path === '/shop/photos'">
-    <v-btn icon @click="back">
-      <i class="material-icons color-text-header">reply_all</i>
-    </v-btn>
-    <v-spacer></v-spacer>
+  <v-toolbar app flat>
+    <v-container mx-auto py-0>
+      <v-layout class="align-items-center" v-if="$route.path === '/shop/dashboard'">
+        <v-toolbar-title>{{ branchName }}</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-overflow-btn :items="currencies" label="currency" class="custom-overflow-btn"></v-overflow-btn>
+          <v-overflow-btn :items="languages" label="language" class="custom-overflow-btn"></v-overflow-btn>
+          <v-btn fab flat medium @click="logout" class="ml-md-4 ml-sm-2">
+            <v-img src="images/LOGOUT.png" width="50px" height="45px" />
+          </v-btn>
+        </v-toolbar-items>
+      </v-layout>
 
-    <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat @click="showPackage()">
-        <i class="material-icons font-material-header">card_giftcard</i>
-        <span class="color-text-header">{{$t('message.albumPackage')}}</span>
-      </v-btn>
-      <v-btn flat>
-        <i class="material-icons font-material-header">add_a_photo</i>
-        <span class="color-text-header">{{$t('message.addNewPhoto')}}</span>
-      </v-btn>
-    </v-toolbar-items>
+      <v-layout class="align-items-center" v-else>
+        <v-btn large icon @click="$router.push('/shop/dashboard')">
+          <i class="material-icons color-text-header">reply_all</i>
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn flat @click="dialog = true" class="custom-header-btn">
+            <i class="material-icons font-material-header">card_giftcard</i>
+            <span>{{$t('message.albumPackage')}}</span>
+          </v-btn>
 
+          <v-btn flat class="custom-header-btn">
+            <i class="material-icons font-material-header">add_a_photo</i>
+            <span>{{$t('message.addNewPhoto')}}</span>
+          </v-btn>
+        </v-toolbar-items>
+      </v-layout>
+    </v-container>
     <v-dialog v-model="dialog" content-class="v-dialog-package" temporary>
       <v-container fluid grid-list-xl pt-0 class="container-package-ramdom">
         <div class="pricing-wrapper">
@@ -63,7 +78,7 @@
 </template>
 
 <script>
-import { get, post, put, del, getWithData } from "../../../api";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Header",
@@ -71,55 +86,85 @@ export default {
   data() {
     return {
       dialog: false,
-      packages: []
+      currencies: ["USD", "EURO"],
+      languages: ["ENG", "INDO"],
+      branchName: JSON.parse(localStorage.getItem("user")).branch_name
     };
   },
-  mounted() {
+  created() {
     this.$i18n.locale = "en";
-
-    this.showAllPackages();
+    this.$store.dispatch("getPackages");
+  },
+  computed: {
+    ...mapGetters({
+      packages: "packages"
+    })
   },
   methods: {
-    showPackage() {
-      this.dialog = true;
-    },
-    showAllPackages() {
-      axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-        "access_token"
-      );
-      get("shop-selling/packages")
-        .then(res => {
-          if (res && res.success) {
-            this.packages = res.data;
-          }
-        })
-        .catch(err => {
-          console.log(err.response);
-        });
-    },
     choosePackage(value) {
+      alert("choose package");
       this.$root.$emit("typePackage", { name: value });
     },
-    back() {
-      this.$router.push("/shop/dashboard");
-    },
     colorPackage(key) {
-      if (key == 0) {
-        return "primary";
-      } else if (key == 1) {
-        return "success";
-      } else if (key == 2) {
-        return "warning";
-      } else {
-        return "error";
+      let color = "";
+      switch (key) {
+        case 0:
+          color = "primary";
+          break;
+        case 1:
+          color = "success";
+          break;
+        case 2:
+          color = "warning";
+          break;
+        default:
+          color = "error";
       }
+      return color;
+    },
+    logout() {
+      localStorage.removeItem("shopSelling");
+      localStorage.removeItem("roomLogin");
+      localStorage.removeItem("photoSelected");
+      localStorage.removeItem("thumbnailDir");
+
+      this.$store.dispatch("logoutUser", {
+        redirectAfterLogout: "/shop/login"
+      });
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-.color-text-header {
-  color: #70778f !important;
+<style lang="scss">
+.custom-overflow-btn {
+  min-width: 110px;
+  .v-icon {
+    font-size: 40px !important;
+    color: #0ebff6 !important;
+  }
+  .v-messages {
+    min-height: 0 !important;
+  }
+  .v-input__slot {
+    box-shadow: none !important;
+  }
+  .v-input__slot:after {
+    color: #0ebff6 !important;
+  }
+  .v-input__append-inner {
+    width: 20px !important;
+  }
+}
+.custom-header-btn {
+  .v-btn__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span {
+      color: #70778f;
+      font-size: 14px;
+    }
+  }
 }
 </style>

@@ -1,12 +1,12 @@
 /**
  * Auth Module
  */
+import axios from 'axios';
 import Nprogress from 'nprogress';
 import router from '../../../router';
-import config from '../../../config'
+import config from '../../../config';
 import {
-    post,
-    get
+    post
 } from '../../../api'
 import {
     vp
@@ -49,10 +49,12 @@ const actions = {
                     var access_token = response.data.authData.token_type + ' ' + response.data.authData.access_token;
                     localStorage.setItem('access_token', access_token);
                     localStorage.setItem('user', JSON.stringify(response.data.user))
+                    axios.defaults.headers.common['Authorization'] = access_token;
+
                     context.commit('loginUserSuccess', response.data.user);
 
                     setTimeout(() => {
-                        if(response.data.user.role_id != "5") {
+                        if (response.data.user.role_id != "5") {
                             if (!response.data.authData.hasVerifiedEmail) {
                                 router.push('email/verify')
                             } else {
@@ -133,13 +135,13 @@ const actions = {
                 context.commit('editProfileError', err);
             })
     },
-    logoutUser(context) {
+    logoutUser(context, payload) {
         Nprogress.start();
         post('auth/logout')
             .then((res) => {
                 Nprogress.done();
                 setTimeout(() => {
-                    context.commit('logoutUserSuccess');
+                    context.commit('logoutUserSuccess', payload.redirectAfterLogout);
                 }, 500)
             })
             .catch(error => {
@@ -288,12 +290,12 @@ const mutations = {
             duration: 2000,
         })
     },
-    logoutUserSuccess(state) {
+    logoutUserSuccess(state, path) {
         state.user = null
         localStorage.removeItem('access_token')
         localStorage.removeItem('user')
         localStorage.removeItem('id_one_signal')
-        router.push("/login")
+        router.push(path)
     },
     changepasswordSuccess(state, success) {
         Nprogress.done();

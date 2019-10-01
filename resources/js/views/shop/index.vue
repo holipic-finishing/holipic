@@ -1,33 +1,19 @@
 <template>
-  <div class="mouse-right">
-    <header-shop></header-shop>
-    <v-container fluid class="custom-container-sp">
+  <v-content :class="$route.path === '/shop/dashboard' ? 'vh-100 overflow-hidden' : ''">
+    <shop-header></shop-header>
+    <v-container fluid white fill-height>
       <router-view></router-view>
     </v-container>
-  </div>
+  </v-content>
 </template>
 
 <script>
-import HeaderShop from "./partials/Header";
+import ShopHeader from "./partials/Header";
 
 export default {
   name: "Shop",
   components: {
-    HeaderShop
-  },
-
-  data() {
-    return {};
-  },
-  mounted() {
-    // $(".mouse-right").on("contextmenu",function(e){
-    //   return false;
-    // });
-    // $(document).keydown(function(e){
-    //   if(e.which === 123){
-    //      return false;
-    //   }
-    // });
+    ShopHeader
   }
 };
 </script>

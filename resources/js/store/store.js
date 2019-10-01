@@ -3,10 +3,10 @@ import Vuex from 'vuex'
 
 // modules
 import auth from './modules/auth';
-// import chat from './modules/chat';
 import settings from './modules/settings';
 import sidebar from './modules/sidebar';
-import notifications from './modules/notifications'
+import notifications from './modules/notifications';
+import shop from './modules/shop';
 
 Vue.use(Vuex);
 
@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
         auth,
         settings,
         sidebar,
-        notifications
+        notifications,
+        shop
     }
 })

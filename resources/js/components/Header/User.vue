@@ -27,7 +27,7 @@
           </v-list-tile>
         </template>
         <template v-else>
-          <v-list-tile @click="$store.dispatch('logoutUser', $router)" :key="userLink.id">
+          <v-list-tile @click="$store.dispatch('logoutUser', {redirectAfterLogout: '/login'})" :key="userLink.id">
             <i :class="userLink.icon"></i>
             <span>{{$t(userLink.title)}}</span>
           </v-list-tile>

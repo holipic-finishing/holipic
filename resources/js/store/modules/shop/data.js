@@ -4,5 +4,8 @@ export const listApiRequest = {
         action: 'Get List Company Package',
         path: 'shop-selling/packages',
         method: 'get'
+    },
+    test: {
+
     }
 }

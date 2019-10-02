@@ -46,7 +46,7 @@ class Listing extends Model implements Transformable
     }
 
     public function images(){
-        return $this->hasMany(\App\Models\Image::class, 'listing_id','id');
+        return $this->hasMany('App\Models\Image', 'listing_id','id');
     }
 
 }

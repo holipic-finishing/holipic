@@ -12,6 +12,14 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.interceptors.response.use(
     function (response) {
 
+        console.log(response)
+        const newtoken = _.get(response, 'headers.authorization')
+        console.log(newtoken)
+        if (newtoken) {
+            localStorage.setItem('access_token', newtoken);
+            axios.defaults.headers.common['Authorization'] = newtoken;
+        }
+
         if (response && response.data) {
             return response.data;
         }

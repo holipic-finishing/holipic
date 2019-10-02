@@ -78,4 +78,9 @@ class Branch extends Model
         return $this->hasMany('App\Models\Customer', 'branch_id', 'id');
     }
 
+    public function listings()
+    {
+        return $this->hasMany('App\Models\Listing', 'branch_id', 'id');
+    }
+
 }

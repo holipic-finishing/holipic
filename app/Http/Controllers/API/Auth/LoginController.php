@@ -178,6 +178,7 @@ class LoginController extends BaseApiController
                 'role_id'      => $user->role_id,
                 'email'        => $user->email,
                 'branch_name'  => $seller->branch->name,
+                'branch_id'  => $seller->branch->id,
             ];
         }
 

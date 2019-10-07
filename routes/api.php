@@ -261,7 +261,7 @@ Route::group(['namespace' => 'API', 'middleware' => 'jwt'],function(){
 
 
         Route::post('getRooms', 'ShopController@getRooms');
-        Route::post('getPhotos', 'ShopController@getPhotos');
+        Route::post('getPhotosWithRoomHash', 'ShopController@getPhotosWithRoomHash');
 
 
 	});

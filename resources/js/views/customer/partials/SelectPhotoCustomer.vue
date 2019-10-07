@@ -175,12 +175,12 @@
 						</div>
 					</v-flex>
 
-				 	<lightbox id="mylightbox"
+				 	<!-- <lightbox id="mylightbox"
 				      ref="lightbox"
 				      :images="photos"
 				      :directory="thumbnailDir"
 				      :timeoutDuration="5000"
-				 	/>
+				 	/> -->
 
 				</v-layout>
 			</div>
@@ -201,11 +201,11 @@
 <script>
 
 import  { get, post, put, del, getWithData } from '../../../api/index.js'
-import Lightbox from 'vue-my-photos'
+// import Lightbox from 'vue-my-photos'
 import Vue from 'vue'
 import Popup from './Popup.vue'
 import Payment from './Payment.vue'
-Vue.component('lightbox', Lightbox);
+// Vue.component('lightbox', Lightbox);
 
 
 export default {

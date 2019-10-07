@@ -41,24 +41,40 @@ class ShopController extends AppBaseController
         return $this->sendResponse($rooms, 'Successfully!');
     }
 
-    public function getPhotos(Request $request)
+    public function getPhotosWithRoomHash(Request $request)
     {
         $request = $request->all();
         $room_hash = $request['room_hash'];
+
         $listings = $this->roomRepo->with(['listings' => function($listing){
+
             $listing->with(['images' => function($images){
+
                 $images->where('img_type', 'COMPRESSED');
             }]);
-        }])->findByField('room_hash', $room_hash)->pluck('listings')->first();
+        }])->findByField('room_hash', $room_hash);
+
+        if($listings) {
+
+            $listings = $listings->pluck('listings')->first();
+        }
 
         $images = [];
 
         foreach($listings as $listing) {
             foreach($listing->images as $image) {
-                $images[] = $image;
+
+                $images[] = asset('storage/images/'. $room_hash . '/compressed/' . $image['filename']);
             }
         }
 
-        return $this->sendResponse($images, 'Successfully!');
+        $photo_packages = \App\Models\PhotoPackage::all();
+
+        $result = [
+            'images' => $images,
+            'photo_packages' => $photo_packages
+        ];
+
+        return $this->sendResponse($result, 'Successfully!');
     }
 }

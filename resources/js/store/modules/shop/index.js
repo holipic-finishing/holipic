@@ -8,7 +8,9 @@ import {
 
 const state = {
     packages: [],
-    shopRooms: []
+    shopRooms: [],
+    shopImages: [],
+    photoPackages: [],
 }
 
 const actions = {
@@ -38,12 +40,13 @@ const actions = {
         })
     },
     viewPhotos(context, payload) {
-        post('getPhotos', {
+        post('getPhotosWithRoomHash', {
             room_hash: payload
         })
         .then((res) => {
             if(res && res.success) {
-                console.log(res.data)
+                context.commit('shopImages', res.data.images)
+                context.commit('photoPackages', res.data.photo_packages)
             }
         })
         .catch((err) => {
@@ -58,6 +61,12 @@ const mutations = {
     },
     shopRooms(state, data) {
         state.shopRooms = data;
+    },
+    shopImages(state, data) {
+        state.shopImages = data;
+    },
+    photoPackages(state, data) {
+        state.photoPackages = data;
     }
 }
 
@@ -67,6 +76,12 @@ const getters = {
     },
     shopRooms(state) {
         return state.shopRooms;
+    },
+    shopImages(state) {
+        return state.shopImages;
+    },
+    photoPackages(state) {
+        return state.photoPackages;
     }
 }
 

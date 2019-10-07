@@ -99,23 +99,27 @@ export default {
       }
     },
     viewPhotos() {
-      this.$store.dispatch('viewPhotos', this.roomSelected)
-    //   get("room/login?room=" + this.roomNumber)
-    //     .then(res => {
-    //       if (res && res.success) {
-    //         var data = res.data;
-    //         localStorage.setItem("roomLogin", JSON.stringify(data));
-    //         this.$router.push({ path: "/shop/photos", params: { data: data } });
-    //       }
-    //     })
-    //     .catch(err => {
-    //       this.$notify({
-    //         title: "Error",
-    //         message: err.response.data.message,
-    //         type: "error",
-    //         duration: 2000
-    //       });
-    //     });
+
+      this.$router.push({
+        name: "shop-photos",
+        params: { roomId: this.roomSelected }
+      });
+      //   get("room/login?room=" + this.roomNumber)
+      //     .then(res => {
+      //       if (res && res.success) {
+      //         var data = res.data;
+      //         localStorage.setItem("roomLogin", JSON.stringify(data));
+      //         this.$router.push({ path: "/shop/photos", params: { data: data } });
+      //       }
+      //     })
+      //     .catch(err => {
+      //       this.$notify({
+      //         title: "Error",
+      //         message: err.response.data.message,
+      //         type: "error",
+      //         duration: 2000
+      //       });
+      //     });
     }
   }
 };
@@ -178,8 +182,8 @@ export default {
   }
 }
 .custom-radio-group {
-    .v-input__control{
-        width: 100%;
-    }
+  .v-input__control {
+    width: 100%;
+  }
 }
 </style>

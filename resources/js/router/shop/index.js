@@ -1,8 +1,8 @@
 import Index from '../../views/shop/index.vue';
-import SelectPhoto from '../../views/shop/partials/SelectPhoto.vue';
+import Photos from '../../views/shop/Photos';
 
 import BookingConfirm from '../../views/shop/BookingConfirm.vue';
-import ShopSellingDashboard from '../../views/shop/Dashboard.vue';
+import Dashboard from '../../views/shop/Dashboard.vue';
 
 export default {
 	path: '/shop',
@@ -10,8 +10,8 @@ export default {
    	redirect: '/shop/dashboard',
    	children: [
    		{
-	        path: 'photos',
-	        component: SelectPhoto,
+	        path: 'photos/:roomId',
+            component: Photos,
 	        name: 'shop-photos',
 	        meta: {
                 requiresAuth: true,
@@ -33,7 +33,7 @@ export default {
         },
         {
             path: 'dashboard',
-            component: ShopSellingDashboard,
+            component: Dashboard,
             meta: {
                 requiresAuth: true,
                 shopAuth: true,

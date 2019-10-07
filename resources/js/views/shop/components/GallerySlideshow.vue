@@ -1,6 +1,6 @@
 <template>
   <transition name="modal">
-    <div class="vgs custom-vgs" v-if="showGallery">
+    <div class="vgs custom-vgs">
       <div class="wrap-fancybox">
         <button type="button" class="vgs__close" @click="close">&times;</button>
         <button type="button" class="vgs__prev" v-if="isMultiple" @click.stop="onPrev">&lsaquo;</button>
@@ -10,13 +10,13 @@
               <i class="material-icons cursor-v-card custom-icon active-image">check_circle</i>
             </button>
             <div>
-              <img class="vgs__container__img" @click.stop="onNext" :src="thumbnailDir + imageUrl" />
+              <img class="vgs__container__img" @click.stop="onNext" :src="imageUrl" />
 
               <div class="vgs_thumbnail">
                 <template v-for="(image, i) in changeItem">
                   <img
                     class="vgs__gallery__container__img"
-                    :src="thumbnailDir + image.name"
+                    :src="image"
                     @click.stop="onClickThumb(image, i)"
                     :key="i"
                     :id="'chooess'+image.id"
@@ -59,14 +59,13 @@
 import config from "../../../config";
 import { get, post, put, del, getWithData } from "../../../api/index.js";
 export default {
-  props: ["images", "index", "dir"],
+  props: ["images", "index"],
   data() {
     return {
       imgIndex: "",
       image: null,
       galleryXPos: 0,
       thumbnailWidth: 120,
-      thumbnailDir: "",
       selectphoto: [],
       showGallery: false,
       thumbnail: []
@@ -101,8 +100,6 @@ export default {
     });
 
     var roomLogin = JSON.parse(localStorage.getItem("roomLogin"));
-
-    this.thumbnailDir = this.dir;
   },
   watch: {
     index(val) {
@@ -287,8 +284,6 @@ export default {
         index_image = 0;
       }
 
-      this.thumbnail = this.showThumbnail(this.images, index_image);
-
       $(document).ready(function() {
         if (arr_image[index_image]["checked"]) {
           $(".active-image").css("color", "#244293");
@@ -296,7 +291,7 @@ export default {
           $(".active-image").css("color", "#fff");
         }
       });
-      return this.images[index_image].name;
+      return this.images[index_image];
     },
     item() {
       return this.images[this.imgIndex];

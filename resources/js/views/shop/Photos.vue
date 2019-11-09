@@ -28,7 +28,7 @@
 
       <v-flex xs12>
         <v-layout wrap>
-          <template v-for="(photo,index) in changePhotos2">
+          <template v-for="(photo,index) in photoSelectedComputed">
             <v-flex
               xs12
               sm6
@@ -46,7 +46,7 @@
                   class="rounded grey lighten-2"
                 >
                   <div class="pt-end">
-                    <v-icon color="white" large @click="removeItem(index, photo)">cancel</v-icon>
+                    <v-icon color="white" large @click="removeItem(photo, index)">cancel</v-icon>
                   </div>
                   <template v-slot:placeholder>
                     <v-layout fill-height align-center justify-center ma-0>
@@ -54,9 +54,6 @@
                     </v-layout>
                   </template>
                 </v-img>
-                <!-- <figcaption>
-                  <h4>Holipic</h4>
-                </figcaption>-->
               </figure>
 
               <!--  -->
@@ -89,7 +86,7 @@
                       <v-btn flat icon>
                         <v-icon small>fas fa-minus</v-icon>
                       </v-btn>
-                      <span>5</span>
+                      <span>0</span>
                       <v-btn flat icon>
                         <v-icon small>fas fa-plus</v-icon>
                       </v-btn>
@@ -102,7 +99,7 @@
         </v-layout>
       </v-flex>
 
-      <v-flex xs12>
+      <v-flex xs12 mt-5>
         <v-layout class="d-flex align-items-center mb-5">
           <v-flex xs2>
             <div class="ml-md-3 d-flex align-items-center">
@@ -129,12 +126,11 @@
               :key="index"
               class="pl-md-3 pr-md-3 pt-md-3 pl-sm-2 pr-sm-2 pt-sm-2"
             >
-              <figure class="img-wrapper-2">
+              <figure class="img-wrapper-2" @click="selectPhoto(photo,index)">
                 <v-img
                   aspect-ratio="1.7778"
                   :src="photo"
                   :lazy-src="photo"
-                  @click="selectPhoto(photo,index)"
                   height="350"
                   class="rounded grey lighten-2"
                 >
@@ -153,7 +149,7 @@
                 <v-btn flat icon @click="showSildeWithImageId(index)" class="ml-0 mr-0">
                   <v-icon>zoom_out_map</v-icon>
                 </v-btn>
-                <v-btn flat icon class="ml-0 mr-0" disabled>
+                <v-btn flat icon class="ml-0 mr-0" :color="photoSelected.indexOf(photo) > -1 ? 'green' : ''">
                   <!-- :class="'active-image'+photo.id" -->
                   <v-icon>check_circle</v-icon>
                 </v-btn>
@@ -166,13 +162,13 @@
       <v-dialog v-model="dialog" fullscreen>
         <v-carousel
           hide-delimiters
-          :cycle="slideAction"
           height="100%"
           dark
           prev-icon="fas fa-chevron-circle-left"
           next-icon="fas fa-chevron-circle-right"
           class="pt-custom-carousel"
           @click.native="click"
+          multiple
         >
           <v-carousel-item v-for="(item,i) in slidePhotosComputed" :key="i" @click="click">
             <v-img
@@ -217,7 +213,7 @@
             </v-img>
             <div class="pt-slide-show">
               <div>
-                <v-btn flat icon @click="slideShow">
+                <v-btn flat icon @click="slideShows">
                   <v-icon
                     large
                     color="white"
@@ -228,9 +224,7 @@
                 <span class="white--text">SLIDE SHOW {{slideAction ? 'OPEN' : 'CLOSE'}}</span>
               </div>
             </div>
-            <!-- <v-btn flat icon dark class="pt-close-slide"> -->
             <v-icon @click="closeSlide" color="white" large class="pt-close-slide">fas fa-times</v-icon>
-            <!-- </v-btn> -->
           </v-carousel-item>
         </v-carousel>
       </v-dialog>
@@ -262,9 +256,11 @@ export default {
     return {
       dialog: false,
       slideAction: false,
+      slideShowInterval: null,
+      index: 1,
       slidePhotos: [],
       threePhotos: [],
-      index: 1,
+      photoSelected: [],
       //   currencies: ["USD"],
       //   languages: ["ENG", "EST", "RUS", "FIN"],
       //   selectCurrency: "USD",
@@ -336,8 +332,7 @@ export default {
     //       return this.typeDetail;
     //     },
     countSelected() {
-      //   return this.count;
-      return 5;
+      return this.photoSelected.length;
     },
     countOtherPhoto() {
       return this.shopImages.length;
@@ -345,12 +340,8 @@ export default {
     //     changePhotos() {
     //       return this.photos;
     //     },
-    changePhotos2() {
-      let tmp = [];
-      this.shopImages.forEach((element, key) => {
-        if (key < 5) tmp.push(element);
-      });
-      return tmp;
+    photoSelectedComputed() {
+      return this.photoSelected;
     }
   },
   async created() {
@@ -365,12 +356,34 @@ export default {
     closeSlide() {
       this.dialog = false;
       this.slideAction = false;
+      this.index = 1;
+      this.slidePhotos = [];
+      clearInterval(this.slideShowInterval);
+      this.threePhotos = [];
     },
-    slideShow() {
+    async slideShows() {
       this.slideAction = !this.slideAction;
+
+      if (this.slideAction) {
+        this.slideShowInterval = await setInterval(() => {
+          this.slidePhotos = [];
+          this.threePhotos = [];
+          this.index = this.index + 1;
+          this.showSildeWithImageId(this.index);
+          if (this.index == this.slidePhotos.length - 1) {
+            this.index = -1;
+          }
+        }, 2000);
+      } else {
+        clearInterval(this.slideShowInterval);
+      }
     },
 
-    removeItem(index, photo) {
+    removeItem(photo, index) {
+      var i = this.photoSelected.indexOf(photo);
+      if (i > -1) {
+        this.photoSelected.splice(i, 1);
+      }
       //       this.photos2.splice(index, 1);
       //       let totalNew = 0;
       //       if (this.photos2.length > 0) {
@@ -384,6 +397,7 @@ export default {
       //       $(".active-image" + photo.image_id).css("color", "#464D69");
     },
     removeAllItem() {
+      this.photoSelected = [];
       //       _.forEach(this.photos2, (value, index) => {
       //         this.deletePhotoUnselected(value.image_id);
       //       });
@@ -449,6 +463,10 @@ export default {
       //       }
     },
     selectPhoto(photo, index) {
+      if (!this.photoSelected.includes(photo)) {
+        this.photoSelected.push(photo);
+      }
+      //   console.log(photo, index);
       //       var photoSelected = _.find(this.photos2, (value, key) => {
       //         return value.image_id == photo.id;
       //       });
@@ -503,45 +521,42 @@ export default {
     //       });
     //     },
     getIndex() {},
+    // slide handle click next or previus
     async click(e) {
       if (
         e.target.className === "v-icon fas fa-chevron-circle-right theme--dark"
       ) {
-        // await this.createSlideWithIndex(this.shopImages, this.index);
-        // this.createSlideWithIndex(this.nextIndex);
-        // this.nextIndex++;
-
-        // let wItems = e.path[4].getElementsByClassName("v-window-item");
-        // let element;
-        // for (var i = 0; i < wItems.length; i++) {
-        //   if ($(wItems[i]).css("display") === "block") {
-        //     element = wItems[i];
-        //     element = element.getElementsByClassName(
-        //       "v-responsive v-image reponsive-img-carousel"
-        //     );
-        //     id = element[0].getAttribute("id").split("carousel-item-")[1];
-        //     element = element.getElementsByClassName(
-        //       "v-image__image v-image__image--contain"
-        //     )[0];
-        //   }
-        // }
-
-        // this.calculatePos(element, id);
-
-        // await this.createSlideWithIndex(id);
-        // wItems.forEach((e, k) => {
-        //   console.log(e.style);
-        // });
-        // let carouselItem = document.getElementById(`carousel-item-${index}`);
-        // let imgItems = carouselItem.getElementsByClassName(
-        //   "v-image__image v-image__image--contain"
-        // );
+        this.index = this.index + 1;
+        this.slidePhotos = [];
+        this.threePhotos = [];
+        await this.showSildeWithImageId(this.index);
       }
-      // console.log(e)
-      // console.log(e.path[4])
-      // this.showSildeWithImageId(callback)
-      // console.log(callback)
-      //   console.log(callback);
+
+      if (
+        e.target.className === "v-icon fas fa-chevron-circle-left theme--dark"
+      ) {
+        this.index = this.index - 1;
+        this.slidePhotos = [];
+        this.threePhotos = [];
+        await this.showSildeWithImageId(this.index);
+      }
+    },
+    async showSildeWithImageId(index) {
+      this.dialog = true;
+      this.index = index;
+
+      await this.createSlideWithIndex(this.shopImages, index);
+      // show first image
+      let wItem = document.getElementsByClassName(`v-window-item`);
+      wItem[0].style.display = "block";
+      // get image contain
+      let i = 0;
+      let carouselItem = document.getElementById(`carousel-item-${i}`);
+      let imgItems = carouselItem.getElementsByClassName(
+        "v-image__image v-image__image--contain"
+      );
+      // custom slide
+      this.calculatePos(imgItems[0], i);
     },
     createSlideWithIndex(arr, index) {
       let photos = arr;
@@ -554,26 +569,40 @@ export default {
           tmp2.push(p);
         }
       });
-
+      // concat array
       this.slidePhotos = tmp1.concat(tmp2);
-      this.threePhotos = [
-        photos[index + 1],
-        photos[index + 2],
-        photos[index + 3]
-      ];
-    },
-    async showSildeWithImageId(index) {
-      this.dialog = true;
-      this.index = index
-      await this.createSlideWithIndex(this.shopImages, index);
-      // after load array. index begin 0
-      index = 0;
-      let carouselItem = document.getElementById(`carousel-item-${index}`);
-      let imgItems = carouselItem.getElementsByClassName(
-        "v-image__image v-image__image--contain"
-      );
 
-      this.calculatePos(imgItems[0], index);
+      // get next and prev btn
+      let nextDiv = document.getElementsByClassName("v-carousel__next")[0];
+      let nextBtn = nextDiv.getElementsByTagName("button")[0];
+      let prevDiv = document.getElementsByClassName("v-carousel__prev")[0];
+      let prevBtn = prevDiv.getElementsByTagName("button")[0];
+      // first image in arr
+      if (index == 0) {
+        prevBtn.style.display = "none";
+      } else {
+        prevBtn.style.display = "block";
+      }
+      // image arr length - 1
+      if (index == this.slidePhotos.length - 1) {
+        nextBtn.style.display = "none";
+      } else {
+        nextBtn.style.display = "block";
+      }
+      // show right exist image
+      if (index == this.slidePhotos.length - 1) {
+        this.threePhotos = [];
+      } else if (index == this.slidePhotos.length - 2) {
+        this.threePhotos = [photos[index + 1]];
+      } else if (index == this.slidePhotos.length - 3) {
+        this.threePhotos = [photos[index + 1], photos[index + 2]];
+      } else {
+        this.threePhotos = [
+          photos[index + 1],
+          photos[index + 2],
+          photos[index + 3]
+        ];
+      }
     },
     calculatePos(mainImg, index) {
       var url = $(mainImg)

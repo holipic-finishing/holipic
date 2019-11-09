@@ -10,12 +10,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="detail in detailBooking">
-          <td>{{detail.size}}</td>
-          <td v-if="detail.priceNew != 0">{{detail.quantity}}</td>
-          <td v-else>0</td>
-          <td>{{detail.priceNew}}</td>
-        </tr>
+        <template v-for="(detail, key) in detailBooking">
+          <tr :key="key">
+            <td>{{detail.size}}</td>
+            <td v-if="detail.priceNew != 0">{{detail.quantity}}</td>
+            <td v-else>0</td>
+            <td>{{detail.priceNew}}</td>
+          </tr>
+        </template>
       </tbody>
     </table>
     <div class="checkout-table">

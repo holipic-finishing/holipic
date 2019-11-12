@@ -62,24 +62,21 @@
                             <div class="swiper-wrapper">
                                 <!-- Version slide start -->
                                 <div class="swiper-slide">
-                                    <div class="version-slide" data-version="Launch" data-date="June, 2001">
+                                    <!-- <div class="version-slide" data-version="Launch" data-date="June, 2001"> -->
+                                    <div class="version-slide" data-version="Manage">
                                         <div class="version-image">
                                             <img src="images/holipic.jpg" alt="" />
                                         </div>
 
                                         <div class="version-entry">
-                                            <h3>Group chat & Profile setting</h3>
-                                            <p>Before you arrive, check in from the train, plane, or road. As you depart, leave your key and hit the road. Before you arrive, check in from the train, plane, or road. As you depart.</p>
+                                            <h3>Manage All Bussiness Activy</h3>
+                                            <p>Holipic App is ideal for Bussiness that need to monitor and manage retail/shop real time operations.</p>
 
                                             <ul>
-                                                <li>Easy to Use</li>
-                                                <li>Easy to Use</li>
-                                                <li>Account Activity</li>
-                                                <li>Account Activity</li>
-                                                <li>Friendly Support</li>
-                                                <li>Friendly Support</li>
-                                                <li>Great Security</li>
-                                                <li>Great Security</li>
+                                                <li>Check Quality of Photos & Selling</li>
+                                                <li>Compare selling, daily, weekly, monthly or yearly</li>
+                                                <li>See detailed finance reports</li>
+                                                <li>Control easily your customer, feedbacks, requests etc.</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -88,24 +85,20 @@
 
                                 <!-- Version slide start -->
                                 <div class="swiper-slide">
-                                    <div class="version-slide" data-version="Version 1.1" data-date="June, 2002">
+                                    <div class="version-slide" data-version="Increase" data-date="June, 2002">
                                         <div class="version-image">
                                             <img src="images/version-image-1.png" alt="" />
                                         </div>
 
                                         <div class="version-entry">
-                                            <h3>Group chat & Profile setting</h3>
-                                            <p>Before you arrive, check in from the train, plane, or road. As you depart, leave your key and hit the road. Before you arrive, check in from the train, plane, or road. As you depart.</p>
+                                            <h3>Increase Company Income</h3>
+                                            <p>Holipic App is online software which is automates the process of accepting photo order for your bussiness. You can gain selling benefits from this software like:</p>
 
                                             <ul>
-                                                <li>Easy to Use</li>
-                                                <li>Easy to Use</li>
-                                                <li>Account Activity</li>
-                                                <li>Account Activity</li>
-                                                <li>Friendly Support</li>
-                                                <li>Friendly Support</li>
-                                                <li>Great Security</li>
-                                                <li>Great Security</li>
+                                                <li>Continue to sale photos, even after customers back to home.</li>
+                                                <li>Holipic App will send auto promo emails to increase your sales.</li>
+                                                <li>Leave work to computers, make your staff busy in other important things.</li>
+                                                <li>Accept orders much faster and reduce mistake caused by human factors.</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -114,128 +107,21 @@
 
                                 <!-- Version slide start -->
                                 <div class="swiper-slide">
-                                    <div class="version-slide" data-version="Version 1.2" data-date="June, 2003">
+                                    <div class="version-slide" data-version="Secure" data-date="June, 2003">
                                         <div class="version-image">
                                             <img src="images/version-image-1.png" alt="" />
                                         </div>
 
                                         <div class="version-entry">
-                                            <h3>Group chat & Profile setting</h3>
-                                            <p>Before you arrive, check in from the train, plane, or road. As you depart, leave your key and hit the road. Before you arrive, check in from the train, plane, or road. As you depart.</p>
+                                            <h3>Secure your Company from Mistakes</h3>
+                                            <p>The Holipic App are fully integrated to provide consumers with this type of a ecured experience for photo ordering and storage, regardless of channel or device.</p>
 
                                             <ul>
-                                                <li>Easy to Use</li>
-                                                <li>Easy to Use</li>
-                                                <li>Account Activity</li>
-                                                <li>Account Activity</li>
-                                                <li>Friendly Support</li>
-                                                <li>Friendly Support</li>
-                                                <li>Great Security</li>
-                                                <li>Great Security</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Version slide end -->
-
-                                <!-- Version slide start -->
-                                <div class="swiper-slide">
-                                    <div class="version-slide" data-version="Version 1.3" data-date="June, 2004">
-                                        <div class="version-image">
-                                            <img src="images/version-image-1.png" alt="" />
-                                        </div>
-
-                                        <div class="version-entry">
-                                            <h3>Group chat & Profile setting</h3>
-                                            <p>Before you arrive, check in from the train, plane, or road. As you depart, leave your key and hit the road. Before you arrive, check in from the train, plane, or road. As you depart.</p>
-
-                                            <ul>
-                                                <li>Easy to Use</li>
-                                                <li>Easy to Use</li>
-                                                <li>Account Activity</li>
-                                                <li>Account Activity</li>
-                                                <li>Friendly Support</li>
-                                                <li>Friendly Support</li>
-                                                <li>Great Security</li>
-                                                <li>Great Security</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Version slide end -->
-
-                                <!-- Version slide start -->
-                                <div class="swiper-slide">
-                                    <div class="version-slide"  data-version="Version 1.4" data-date="June, 2005">
-                                        <div class="version-image">
-                                            <img src="images/version-image-1.png" alt="" />
-                                        </div>
-
-                                        <div class="version-entry">
-                                            <h3>Group chat & Profile setting</h3>
-                                            <p>Before you arrive, check in from the train, plane, or road. As you depart, leave your key and hit the road. Before you arrive, check in from the train, plane, or road. As you depart.</p>
-
-                                            <ul>
-                                                <li>Easy to Use</li>
-                                                <li>Easy to Use</li>
-                                                <li>Account Activity</li>
-                                                <li>Account Activity</li>
-                                                <li>Friendly Support</li>
-                                                <li>Friendly Support</li>
-                                                <li>Great Security</li>
-                                                <li>Great Security</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Version slide end -->
-
-                                <!-- Version slide start -->
-                                <div class="swiper-slide">
-                                    <div class="version-slide"  data-version="Version 1.5" data-date="June, 2006">
-                                        <div class="version-image">
-                                            <img src="images/version-image-1.png" alt="" />
-                                        </div>
-
-                                        <div class="version-entry">
-                                            <h3>Group chat & Profile setting</h3>
-                                            <p>Before you arrive, check in from the train, plane, or road. As you depart, leave your key and hit the road. Before you arrive, check in from the train, plane, or road. As you depart.</p>
-
-                                            <ul>
-                                                <li>Easy to Use</li>
-                                                <li>Easy to Use</li>
-                                                <li>Account Activity</li>
-                                                <li>Account Activity</li>
-                                                <li>Friendly Support</li>
-                                                <li>Friendly Support</li>
-                                                <li>Great Security</li>
-                                                <li>Great Security</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Version slide end -->
-
-                                <!-- Version slide start -->
-                                <div class="swiper-slide">
-                                    <div class="version-slide"  data-version="Version 1.6" data-date="June, 2001">
-                                        <div class="version-image">
-                                            <img src="images/version-image-1.png" alt="" />
-                                        </div>
-
-                                        <div class="version-entry">
-                                            <h3>Group chat & Profile setting</h3>
-                                            <p>Before you arrive, check in from the train, plane, or road. As you depart, leave your key and hit the road. Before you arrive, check in from the train, plane, or road. As you depart.</p>
-
-                                            <ul>
-                                                <li>Easy to Use</li>
-                                                <li>Easy to Use</li>
-                                                <li>Account Activity</li>
-                                                <li>Account Activity</li>
-                                                <li>Friendly Support</li>
-                                                <li>Friendly Support</li>
-                                                <li>Great Security</li>
-                                                <li>Great Security</li>
+                                                <li>No more using CD/DVD</li>
+                                                <li>Secure online payments</li>
+                                                <li>By storing your data online you are reducing losing of your photos</li>
+                                                <li>Private Page for your ever costumer</li>
+                                                <li>Limited access for branches, full access for owners</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -280,10 +166,10 @@
                                 <a id="tab-A" href="#register" class="nav-link active" data-toggle="tab" role="tab"><i class="flaticon-login"></i> Register / Login</a>
                             </li>
                             <li class="nav-item">
-                                <a id="tab-B" href="#search" class="nav-link" data-toggle="tab" role="tab"><i class="flaticon-friend-request"></i> Search & Find Friends</a>
+                                <a id="tab-B" href="#search" class="nav-link" data-toggle="tab" role="tab"><i class="flaticon-friend-request"></i> Setup System</a>
                             </li>
                             <li class="nav-item">
-                                <a id="tab-C" href="#friend" class="nav-link" data-toggle="tab" role="tab"><i class="flaticon-joke"></i> Become Friend</a>
+                                <a id="tab-C" href="#friend" class="nav-link" data-toggle="tab" role="tab"><i class="flaticon-joke"></i> Start Selling</a>
                             </li>
                         </ul>
                         <!-- How it work tab navigation end -->
@@ -313,9 +199,15 @@
                                                 <div class="how-it-content">
                                                     <h3>Register / Login</h3>
 
-                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
-
-                                                    <p>Text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets and Contrary to popular belief, Lorem Ipsum is not simply random text.</p>
+                                                    <p>We offer a secure Digital Goods eCommerce service or anyone to sell photos and pictures online easily.
+                                                      <br>
+                                                      Get started selling photos on Holipic App in just a few minutes using our simple links anywhere you like.</p>
+                                                    <p>Follow Easy 3 Steps</p>
+                                                    <ul>
+                                                      <li>Select Package: Basic or Pro</li>
+                                                      <li>Fill the Form: Register your Company</li>
+                                                      <li>Login: Use passwords sent by email</li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -329,7 +221,7 @@
                                 <div class="card-header" role="tab" id="heading-B">
                                     <h5 class="mb-0">
                                         <a class="collapsed" data-toggle="collapse" href="#collapse-B" data-parent="#content" aria-expanded="false" aria-controls="collapse-B">
-                                            <i class="flaticon-friend-request"></i> Search & Find Friends
+                                            <i class="flaticon-friend-request"></i> Setup Selling
                                         </a>
                                     </h5>
                                 </div>
@@ -345,11 +237,15 @@
 
                                             <div class="col-md-7">
                                                 <div class="how-it-content">
-                                                    <h3>Search & Find Friends</h3>
+                                                    <h3>Setup Selling</h3>
 
-                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
+                                                    <p>Holipic App makes it easy to manage multiple stores from the same account.</p>
 
-                                                    <p>Text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets and Contrary to popular belief, Lorem Ipsum is not simply random text.</p>
+                                                    <ul>
+                                                      <li>Login to main dashboard</li>
+                                                      <li>Setup your branches, team, packages and products</li>
+                                                      <li>Deliver links and logins to the team</li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -362,7 +258,7 @@
                             <div id="friend" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-C">
                                 <div class="card-header" role="tab" id="heading-C">
                                     <h5 class="mb-0">
-                                        <a class="collapsed" data-toggle="collapse" href="#collapse-C" data-parent="#content" aria-expanded="false" aria-controls="collapse-C"><i class="flaticon-joke"></i> Become Friend
+                                        <a class="collapsed" data-toggle="collapse" href="#collapse-C" data-parent="#content" aria-expanded="false" aria-controls="collapse-C"><i class="flaticon-joke"></i> Start Selling
                                         </a>
                                     </h5>
                                 </div>
@@ -377,11 +273,15 @@
 
                                             <div class="col-md-7">
                                                 <div class="how-it-content">
-                                                    <h3>Become Friend</h3>
+                                                    <h3>Start Selling</h3>
 
-                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.</p>
+                                                    <p>Holipic Shop App automates the photos order and even order fulfillment process. Leave monotonous work to computers, Your customers will be much happier with your quality service.</p>
 
-                                                    <p>Text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets and Contrary to popular belief, Lorem Ipsum is not simply random text.</p>
+                                                    <ul>
+                                                      <li>Upload photos</li>
+                                                      <li>Start selling in shop app</li>
+                                                      <li>Offer to your customers rest of photos</li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -411,10 +311,11 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="pricing-title wow fadeInUp">
-                        <h3>Everything get easier here</h3>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                        <h3>Pay As You Go</h3>
+                        <p>The Holipic Online Selling systems is completely free to use and there is no charger until you make a sale. We'll only earn when you earn.</p>
 
-                        <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <p>Your online sales are automatically loaded into ewallet which is is support your system fee not paying from your pocket, that means Holipic App can earn own payment by promoting and selling your photos.</p>
+                        <p>Get started now by select suitable packages.</p>
                     </div>
 
                     <div class="pricing-tab">
@@ -451,22 +352,26 @@
                                                     <li {{$value->package_name=="Basic" ? "class=title-basic" : " class=title-enterprise"}}>
                                                         {{$value->fee}}%
                                                     </li>
-                                                    {{-- <li>
-                                                        @if($value->package_name=="Basic")
-                                                            {{$value->secure_storage}} GB secure storage
-                                                        @else
-                                                            {{$value->secure_storage}} GB secure storage
-                                                        @endif
-                                                    </li> --}}
-                                                    <li>{{$value->file_upload}} GB file upload</li>
+                                                    <li>{{$value->file_upload}} DAYS <b style="color:#8a8a8a;">Storage</b> </li>
 
                                                     <li>
-                                                        Minimum {{$value->minimum_user}} users ,
-                                                        @if($value->package_name=="Basic")
-                                                            maximum {{$value->max_user}} users
-                                                        @else
-                                                            maximum {{$value->max_user}} users
-                                                        @endif
+                                                        {{$value->secure_storage}} <b style="color:#8a8a8a;">Space</b>
+                                                    </li>
+
+                                                    <li>
+                                                        Auto <b style="color:#8a8a8a;">Email</b>
+                                                    </li>
+
+                                                    <li>
+                                                      @if($value->package_name=="Basic")
+                                                        Auto <b style="color:#8a8a8a;">SMS</b>
+                                                      @else
+                                                          Auto <b style="color:#8a8a8a;">SMS</b>
+                                                      @endif
+                                                    </li>
+
+                                                    <li>{{$value->max_user}} <b style="color:#8a8a8a;">Branch</b>
+
                                                     </li>
                                                 </ul>
                                             </div>
@@ -474,14 +379,15 @@
 
                                         @if($value->package_name=="Basic")
 
-                                            <div class="btn-buynow">
-                                                <a data-package='1' class="select-package" href="/register" id="{{ $value->id }}">START TO BASIC</a>
-                                            </div>
+                                            <!-- <div class="btn-buynow"> -->
+                                                <!-- <a data-package='1' class="select-package has-popup" href="/register" id="{{ $value->id }}">START TO BASIC</a> -->
+                                                <!-- <a data-package='1' class="select-package has-popup" href="#login" id="{{ $value->id }}">GET STARTED</a>
+                                            </div> -->
+                                            <a style="color:#fff!important;" data-package='1' class="select-package has-popup" href="#login" id="{{ $value->id }}">
+                                            <div class="btn-buynow">GET STARTED</div></a>
                                         @else
-
-                                            <div class="btn-buynow btn-enterprise">
-                                                <a data-package='2' class="select-package" href="/register" id="{{ $value->id }}">UPDATE TO PRO</a>
-                                            </div>
+                                            <a style="color:#fff!important;" data-package='1' class="select-package has-popup" href="#login" id="{{ $value->id }}">
+                                            <div class="btn-buynow btn-enterprise">GET STARTED</div></a>
                                         @endif
                                     </div>
                                 </div>
@@ -496,4 +402,121 @@
             </div>
         </div>
     </section>
+
+    <div class="popup-page mfp-with-anim mfp-hide" id="login">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="myaccount-form">
+        <h3>Let's get started, <br />
+        Sign Up just in minutes</h3>
+
+        <form action="#" method="post">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="fa fa-user"></span>
+              </div>
+
+              <input type="text" class="form-control" placeholder="Enter Your Full Name" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="fa fa-building"></span>
+              </div>
+
+              <input type="text" class="form-control" placeholder="Enter Your Company Name" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="fa fa-phone"></span>
+              </div>
+
+              <input type="tel" class="form-control" placeholder="Enter Your Phone Number" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="fa fa-envelope"></span>
+              </div>
+
+              <input type="email" class="form-control" placeholder="Enter Your Email" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="fa fa-lock"></span>
+              </div>
+
+              <input type="password" class="form-control" placeholder="Enter Your Password" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="fa fa-suitcase"></span>
+              </div>
+
+              <select class="form-control" name="package_id" required>
+                @foreach($packages as $value)
+                <option value="{{$value->id}}">{{$value->package_name}}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="fa fa-dollar"></span>
+              </div>
+
+              <select class="form-control" name="package_id" required>
+                <option value="1">Dollar</option>
+                <option value="2">Rupiah</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="account-row">
+            <!-- <div class="account-left"> -->
+              <label class="account-checkbox">
+                <input type="checkbox">
+                <span class="checkmark"></span>
+                <b>I read and agree to Terms & Conditions</b>
+              </label>
+            <!-- </div> -->
+          </div>
+
+          <div class="form-group">
+            <input type="submit" value="Sign Up" class="btn-submit" />
+            <span style="font-size: .8rem!important;">have an account? <a href="http://127.0.0.1:8000/login">Sign In</a></span>
+            <!-- <a href="#signup" class="btn-submit has-popup">Sign Up</a> -->
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="myaccount-image-note">
+        <figure>
+          <img src="images/logo-large.png" alt="" />
+        </figure>
+
+        <p>Start fully manage your customer, incomes, staff and Improving sales by registration your company.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End login popup -->
 @endsection

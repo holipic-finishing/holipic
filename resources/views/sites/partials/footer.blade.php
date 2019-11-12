@@ -33,9 +33,9 @@
             <div class="col-lg-3 col-md-6">
                 <div class="footer-info wow fadeInUp" data-wow-delay="0.6s">
                     <h3>Contact us</h3>
-                    <p>58 Ferari Street, South Gujarat, <br />India - 360005</p>
-                    <p>support@domainname.com</p>
-                    <p>(+01) 125 12 09876</p>
+                    <p>Jl Melasti No 1, Legian, Kuta <br />Bali - Indonesia 80361</p>
+                    <p>holipicapp@gmail.com</p>
+                    <p>WA. (+62) 8113937070</p>
                 </div>
             </div>
             <!-- Contact info end -->
@@ -48,10 +48,10 @@
                     <div class="footer-payment-box">
                         <i class="fa fa-cc-visa"></i>
                         <i class="fa fa-cc-mastercard"></i>
-                        <i class="fa fa-cc-amex"></i>
+                        <!-- <i class="fa fa-cc-amex"></i>
                         <i class="fa fa-cc-paypal"></i>
                         <i class="fa fa-cc-stripe"></i>
-                        <i class="fa fa-cc-diners-club"></i>
+                        <i class="fa fa-cc-diners-club"></i> -->
                     </div>
                 </div>
             </div>
@@ -66,6 +66,8 @@
 			<!-- Footer Copyright start -->
 			<div class="col-md-6">
 				<div class="footer-copyright wow fadeInUp" data-wow-delay="0.2s">
+          <h6>Design by Holipic.com</h6>
+          <h6>@2019 Holipic App. All Rights Reserved.</h6>
 				</div>
 			</div>
 			<!-- Footer Copyright end -->
@@ -76,10 +78,7 @@
 					<h3>Follow us:</h3>
 					<a href="#"><i class="fa fa-facebook"></i></a>
 					<a href="#"><i class="fa fa-twitter"></i></a>
-					<a href="#"><i class="fa fa-snapchat-ghost"></i></a>
-					<a href="#"><i class="fa fa-youtube"></i></a>
 					<a href="#"><i class="fa fa-instagram"></i></a>
-					<a href="#"><i class="fa fa-linkedin"></i></a>
 				</div>
 			</div>
 			<!-- Footer Social end -->

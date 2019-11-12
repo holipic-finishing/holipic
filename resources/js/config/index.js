@@ -8,7 +8,7 @@
  */
 var APP_PROTOCOL = process.env.MIX_APP_PROTOCOL;
 
-var APP_DOMAIN = APP_PROTOCOL + '://' + process.env.MIX_APP_DOMAIN;
+var APP_DOMAIN = APP_PROTOCOL + '://' + process.env.MIX_APP_DOMAIN +':8000';
 
 export default {
     API_URL: APP_DOMAIN + '/api/',

@@ -8,6 +8,7 @@
                 <li class="nav-item"><a class="nav-link" href="#benefits">Benefits</a></li>
                 <li class="nav-item"><a class="nav-link" href="#howitwork">How it work</a></li>
                 <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                <li class="nav-item"><a class="nav-link has-popup" href="#login">Register</a></li>
             </ul>
             <div class="navbar-toggle"></div>
             <div id="responsive-menu"></div>

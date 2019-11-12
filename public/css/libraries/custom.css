@@ -546,7 +546,7 @@ a:focus{
 	color: #3e4555;
 	font-size: 30px;
 	padding-bottom: 20px;
-	background: url(../../images/title-bg.png) no-repeat bottom center;
+	/* background: url(../../images/title-bg.png) no-repeat bottom center; */
 }
 
 .how-it-work-tab .nav-tabs {
@@ -667,7 +667,7 @@ a:focus{
 }
 
 .pricing-layout-1 .pricing-title{
-	padding-top: 80px;
+	/* padding-top: 80px; */
 }
 
 .pricing-layout-1 .pricing-title h3{
@@ -735,7 +735,7 @@ a:focus{
 }
 
 .pricing-layout-1 .pricing-header{
-	margin-bottom: 30px;
+	/* margin-bottom: 30px; */
 }
 
 .pricing-layout-1 .pricing-header .icon-box{
@@ -766,7 +766,7 @@ a:focus{
 	font-size: 28px;
 	color: #fff;
 	font-weight: 600;
-	margin: 0; 
+	margin: 0;
 }
 
 .pricing-layout-1 .btn-buynow{
@@ -1018,7 +1018,7 @@ a:focus{
 .version-history-layout-1 .version-entry{
 	width: 48%;
 	float: right;
-	margin-top: 26px;
+	/* margin-top: 26px; */
 }
 
 .version-history-layout-1 .version-entry h3{
@@ -1050,8 +1050,8 @@ a:focus{
 .version-history-layout-1 .version-entry ul li{
 	font-size: 14px;
 	color: #8d98ae;
-	width: 48%;
-	margin-right: 4%;
+	/* width: 48%; */
+	/* margin-right: 4%; */
 	float: left;
 	padding: 6px 0;
 }
@@ -1369,11 +1369,11 @@ footer.footer-layout-1{
 	.header-layout-1 .navbar-light .navbar-nav .nav-link{
 		padding: 8px 6px;
 	}
-	
+
 	.testimonial-layout-1 .testimonial-slider-wrapper{
 		padding-left: 60px;
 	}
-	
+
 	.version-history-layout-1 .history-item{
 		padding: 4px 14px;
 	}
@@ -1383,7 +1383,7 @@ footer.footer-layout-1{
 	.header-layout-1 .navbar-nav{
 		display: none;
 	}
-	
+
 	.header-layout-1 .navbar{
 		padding: 10px 0;
 		overflow: auto;
@@ -1394,77 +1394,77 @@ footer.footer-layout-1{
 	.header-layout-1 .navbar .container{
 		flex-wrap: wrap;
 	}
-	
+
 	.header-layout-1 .navbar-toggle,
 	#responsive-menu{
 		display: block;
 	}
-	
+
 	.banner-layout-1 .header-img{
 		margin-top: 50px;
 	}
-	
+
 	.service-layout-1 .service-single{
 		margin-bottom: 30px;
 	}
-	
+
 	.faq-layout-1 .faq-tabs .card-header a.active{
 		background: #f5f7fa;
 		color: #3e4555;
 	}
-	
+
 	.features-layout-1{
 		background: none;
 	}
-	
+
 	.features-layout-1 .feature-content{
 		padding-top: 0;
 	}
-	
+
 	.pricing-layout-1 .pricing-title{
 		padding-top: 0;
 	}
-	
+
 	.pricing-layout-1 .tab-content{
 		padding-top: 40px;
 	}
-	
+
 	.screenshot-layout-1 .screenshot-slider-wrapper{
 		padding: 0 60px;
 	}
-	
+
 	.download-app-layout-1{
 		background-image: none;
 	}
-	
+
 	.mega-footer-layout-1 .footer-link,
 	.mega-footer-layout-1 .footer-info{
 		margin-bottom: 30px;
 	}
-	
+
 	.version-history-layout-1 .version-history-slider{
 		padding: 0;
 	}
-	
+
 	.version-history-layout-1 .version-history{
 		display: none;
 	}
-	
+
 	.version-history-layout-1 .version-image{
 		float: none;
 		width: 100%;
 	}
-	
+
 	.version-history-layout-1 .version-entry{
 		float: none;
 		width: 100%;
 	}
-	
+
 	.version-history-layout-1 .version-navigation{
 		text-align: center;
 		margin-top: 30px;
 	}
-	
+
 	.version-history-layout-1 .version-navigation .version-prev,
 	.version-history-layout-1 .version-navigation .version-next{
 		font-size: 30px;
@@ -1472,7 +1472,7 @@ footer.footer-layout-1{
 		position: static;
 		margin: 0 10px;
 	}
-	
+
 	.version-history-layout-1 .version-entry ul li{
 		width: 100%;
 		float: none;
@@ -1488,11 +1488,11 @@ footer.footer-layout-1{
 	.banner-layout-1{
 		padding: 100px 0 160px;
 	}
-	
+
 	.service-layout-1{
 		padding: 0 0 10px;
 	}
-	
+
 	.welcome-layout-1,
 	.how-it-work-layout-1,
 	.features-layout-1,
@@ -1500,60 +1500,60 @@ footer.footer-layout-1{
 	.faq-layout-1{
 		padding: 40px 0;
 	}
-	
+
 	.pricing-layout-1{
 		padding: 40px 0 0;
 	}
-	
+
 	.download-app-layout-1 .download-entry{
 		padding: 60px 0 50px;
 	}
-	
+
 	.mega-footer-layout-1{
 		padding: 60px 0;
 	}
-	
+
 	.screenshot-layout-1{
 		padding: 40px 0 80px;
 	}
-	
+
 	.section-title{
 		margin-bottom: 40px;
 	}
-	
+
 	.section-title h2{
 		font-size: 22px;
 		background-size: 80px auto;
 	}
-	
+
 	.features-layout-1 .feature-image{
 		margin-top: 40px;
 	}
-	
+
 	.features-layout-1 .feature-content h2{
 		font-size: 22px;
 	}
-	
+
 	.banner-layout-1 .header-content h2{
 		font-size: 32px;
 	}
-	
+
 	.features-layout-1 .feature-image img{
 		max-width: 200px;
 	}
-	
+
 	.pricing-layout-1 .pricing-box-wrapper{
 		margin-bottom: 40px;
 	}
-	
+
 	.screenshot-layout-1 .screenshot-pagination{
 		text-align: center;
 	}
-	
+
 	.screenshot-layout-1 .screenshot-slider-wrapper{
 		padding: 0;
 	}
-	
+
 	.screenshot-layout-1 .screenshot-pagination .screenshot-prev,
 	.screenshot-layout-1 .screenshot-pagination .screenshot-next{
 		position: relative;
@@ -1562,88 +1562,88 @@ footer.footer-layout-1{
 		margin: 0 6px;
 		transform: translate(0);
 	}
-	
+
 	.download-app-layout-1 .download-entry h2{
 		font-size: 26px;
 	}
-	
+
 	.footer-layout-1 .footer-copyright{
 		text-align: center;
 		margin-bottom: 30px;
 	}
-	
+
 	.footer-layout-1 .footer-social{
 		text-align: center;
 	}
-	
+
 	.footer-layout-1 .footer-social a{
 		margin: 0 5px;
 	}
-	
+
 	.how-it-work-layout-1 .tab-pane {
 		display: block !important;
 		opacity: 1;
 	}
-  
+
 	.how-it-work-layout-1 .how-it-work-tab .card{
 		margin-bottom: 10px;
 	}
-	
+
 	.how-it-work-layout-1 .how-it-work-tab .how-it-content{
 		padding: 10px 20px 0;
 	}
-	
+
 	.how-it-work-layout-1 .how-it-work-tab .how-it-image{
 		padding: 20px;
 	}
-	
+
 	.how-it-work-layout-1 .how-it-work-tab .card-body{
 		padding: 0;
 	}
-	
+
 	.how-it-work-layout-1 .how-it-work-tab .how-it-content h3{
 		font-size: 18px;
 		margin-bottom: 1em;
 	}
-	
+
 	.how-it-work-layout-1 .how-it-work-tab .how-it-content p{
 		font-size: 14px;
 	}
-	
+
 	.pricing-layout-1 .pricing-header .icon-box{
 		font-size: 60px;
 	}
-	
+
 	.pricing-layout-1 .pricing-header h3{
 		font-size: 24px;
 	}
-	
+
 	.pricing-layout-1 .pricing-body h4{
 		font-size: 22px;
 	}
-	
+
 	.pricing-layout-1 .pricing-box-wrapper{
 		margin-left: 20px;
 	}
-	
+
 	.pricing-layout-1 .pricing-box{
 		margin-left: -20px;
 		margin-right: 20px;
 	}
-	
+
 	.faq-layout-1 .faq-tabs .faq-accordion .card-header a{
 		font-size: 14px;
 		line-height: 1.7em;
 		padding-right: 48px;
 	}
-	
+
 	.download-app-layout-1 .download-entry h2{
 		font-size: 22px;
 	}
 }
 
 @media(min-width:768px) {
-	
+
 	.how-it-work-layout-1 .how-it-work-tab .nav-tabs{
 		display: flex;
 	}
@@ -1654,8 +1654,8 @@ footer.footer-layout-1{
 
 	.how-it-work-layout-1 .how-it-work-tab .card .card-header{
 		display:none;
-		
-	}  
+
+	}
 
 	.how-it-work-layout-1 .how-it-work-tab .card .collapse{
 		display:block;
@@ -1663,47 +1663,47 @@ footer.footer-layout-1{
 }
 
 @media only screen and (max-width: 575px){
-	
+
 	.header-layout-1 .container{
 		width: 100%;
 		padding-left: 15px !important;
 		padding-right: 15px !important;
 	}
-	
+
 	.banner-layout-1 .btn-play img{
 		max-width: 70px;
 	}
-	
+
 	.banner-layout-1 .btn-video-play span{
 		font-size: 16px;
 		margin-left: 10px;
 	}
-	
+
 	.welcome-layout-1 .welcome-box p{
 		font-size: 20px;
 	}
-	
+
 	.testimonial-layout-1 .testimonial-slider-wrapper{
 		padding: 0;
 	}
-	
+
 	.testimonial-layout-1 .testimonial-pagination{
 		position: relative;
 		transform: translate(0);
 	}
-	
+
 	.testimonial-layout-1 .testimonial-pagination{
 		text-align: center;
 		margin-top: 20px;
 	}
-	
+
 	.testimonial-layout-1 .testimonial-pagination .testimonial-prev,
 	.testimonial-layout-1 .testimonial-pagination .testimonial-next{
 		display: inline-block;
 		font-size: 30px;
 		margin: 0 6px;
 	}
-	
+
 	.download-app-layout-1 .btn-download{
 		margin-bottom: 10px;
 	}
@@ -1732,4 +1732,10 @@ footer.footer-layout-1{
 
 .banner-layout-1 .header-content p {
 	margin-top: 70px;
+}
+
+/* custom css Rizky */
+
+.date {
+	display: none!important;
 }

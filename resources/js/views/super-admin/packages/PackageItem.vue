@@ -34,15 +34,12 @@
             <v-list-tile-content class="h-100">
               <v-list-tile-title class="content-flex-end h-100">
                 <span class="font-weight-bold item-title position-item">Fee:</span>
-                <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
-                    placeholder="Enter fee"
+                    label="Enter fee"
                     v-model="item.fee"
-                    outline
                     :rules="[rules.required, rules.decimal]"
                   ></v-text-field>
-                </span>
+                <!-- </span> -->
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -54,11 +51,9 @@
                 <span class="font-weight-bold item-title position-item">Package Name:</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
-                    placeholder="Enter package name"
+                    label="Enter package name"
                     v-model="item.package_name"
                     :rules="[rules.required]"
-                    outline
                   ></v-text-field>
                 </span>
               </v-list-tile-title>
@@ -72,11 +67,9 @@
                 <span class="font-weight-bold item-title position-item">Secure Storage:</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
-                    placeholder="Enter secure storage"
+                    label="Enter secure storage"
                     v-model="item.secure_storage"
                     :rules="[rules.required]"
-                    outline
                   ></v-text-field>
                 </span>
               </v-list-tile-title>
@@ -90,11 +83,9 @@
                 <span class="font-weight-bold item-title position-item">File Upload:</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
-                    placeholder="Enter file upload"
+                    label="Enter file upload"
                     v-model="item.file_upload"
                     :rules="[rules.required, rules.number]"
-                    outline
                   ></v-text-field>
                 </span>
               </v-list-tile-title>
@@ -108,11 +99,9 @@
                 <span class="font-weight-bold item-title position-item">Minimum User:</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
-                    placeholder="Minimum user"
+                    label="Minimum user"
                     v-model="item.minimum_user"
                     :rules="[rules.required, rules.number]"
-                    outline
                   ></v-text-field>
                 </span>
               </v-list-tile-title>
@@ -377,10 +366,8 @@
                 <span class="font-weight-bold item-title position-item">Fee:</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
                     placeholder="Enter fee"
                     v-model="data.fee"
-                    outline
                     :rules="[rules.required, rules.decimal]"
                     @blur="editItem('fee', data.fee)"
                     @keyup.enter="editItem('fee', data.fee)"
@@ -397,11 +384,9 @@
                 <span class="font-weight-bold item-title position-item">Package name:</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
                     placeholder="Enter package name"
                     v-model="data.package_name"
                     :rules="[rules.required]"
-                    outline
                     @blur="editItem('package_name', data.package_name)"
                     @keyup.enter="editItem('package_name', data.package_name)"
                   ></v-text-field>
@@ -413,18 +398,16 @@
 
           <v-list-tile class="height-80">
             <v-list-tile-content class="h-100">
-              <v-list-tile-title class="content-flex-end h-100">
-                <span class="font-weight-bold item-title position-item">Secure Storage:</span>
+              <v-list-tile-title class="content-flex-end align-items-center h-100">
+                <span class="font-weight-bold item-title position-item">Description:</span>
                 <span class="contain-text-field">
-                  <v-text-field
-                    class="font-weight-bold height-input"
-                    placeholder="Enter secure storage"
-                    v-model="data.secure_storage"
+                  <v-textarea
+                    placeholder="Minimum user"
+                    v-model="data.short_description"
                     :rules="[rules.required]"
-                    outline
-                    @blur="editItem('secure_storage', data.secure_storage)"
-                    @keyup.enter="editItem('secure_storage', data.secure_storage)"
-                  ></v-text-field>
+                    @blur="editItem('short_description', data.short_description)"
+                    @keyup.enter="editItem('short_description', data.short_description)"
+                  ></v-textarea>
                 </span>
               </v-list-tile-title>
             </v-list-tile-content>
@@ -434,14 +417,12 @@
           <v-list-tile class="height-80">
             <v-list-tile-content class="h-100">
               <v-list-tile-title class="content-flex-end h-100">
-                <span class="font-weight-bold item-title position-item">File upload:</span>
+                <span class="font-weight-bold item-title position-item">Storage (Days):</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
                     placeholder="Enter file upload"
                     v-model="data.file_upload"
                     :rules="[rules.required, rules.number]"
-                    outline
                     @blur="editItem('file_upload', data.file_upload)"
                     @keyup.enter="editItem('file_upload', data.file_upload)"
                   ></v-text-field>
@@ -454,17 +435,34 @@
           <v-list-tile class="height-80">
             <v-list-tile-content class="h-100">
               <v-list-tile-title class="content-flex-end h-100">
-                <span class="font-weight-bold item-title position-item">Minimum User:</span>
+                <span class="font-weight-bold item-title position-item">Space (GB):</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
+                    placeholder="Enter secure storage"
+                    v-model="data.secure_storage"
+                    :rules="[rules.required]"
+                    @blur="editItem('secure_storage', data.secure_storage)"
+                    @keyup.enter="editItem('secure_storage', data.secure_storage)"
+                  ></v-text-field>
+                </span>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider class="mt-0 mb-0"></v-divider>
+
+          <v-list-tile class="height-80">
+            <v-list-tile-content class="h-100">
+              <v-list-tile-title class="content-flex-end h-100">
+                <span class="font-weight-bold item-title position-item">Auto Email:</span>
+                <span class="contain-text-field">
+                  <!-- <v-text-field
                     placeholder="Minimum user"
                     v-model="data.minimum_user"
                     :rules="[rules.required, rules.number]"
-                    outline
                     @blur="editItem('minimum_user', data.minimum_user)"
                     @keyup.enter="editItem('minimum_user', data.minimum_user)"
-                  ></v-text-field>
+                  ></v-text-field> -->
+                  <v-switch v-model="data.sms" @change="editSetting('sms', data.sms)"></v-switch>
                 </span>
               </v-list-tile-title>
             </v-list-tile-content>
@@ -477,11 +475,9 @@
                 <span class="font-weight-bold item-title position-item">Maximum User:</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
                     placeholder="Minimum user"
                     v-model="data.max_user"
                     :rules="[rules.required]"
-                    outline
                     @blur="editItem('max_user', data.max_user)"
                     @keyup.enter="editItem('max_user', data.max_user)"
                   ></v-text-field>
@@ -491,25 +487,6 @@
           </v-list-tile>
           <v-divider class="mt-0 mb-0"></v-divider>
 
-          <v-list-tile class="height-150">
-            <v-list-tile-content class="h-100">
-              <v-list-tile-title class="content-flex-end h-100 align-items-center">
-                <span class="font-weight-bold item-title position-item">Description:</span>
-                <span class="contain-text-field h-100">
-                  <v-textarea
-                    outline
-                    placeholder="Minimum user"
-                    v-model="data.short_description"
-                    class="font-weight-bold height-area"
-                    :rules="[rules.required]"
-                    @blur="editItem('short_description', data.short_description)"
-                    @keyup.enter="editItem('short_description', data.short_description)"
-                  ></v-textarea>
-                </span>
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-divider class="mt-0 mb-0"></v-divider>
         </v-list>
       </v-form>
       <!-- End Edit Package -->

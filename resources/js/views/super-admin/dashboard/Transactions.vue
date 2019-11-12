@@ -277,6 +277,7 @@ export default {
     fetchData(params) {
       post("history-transactions", params)
         .then(res => {
+          // console.log("res");
           if (res && res.success) {
             this.desserts = res.data;
             this.loading = false;

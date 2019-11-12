@@ -191,12 +191,12 @@ class TransactionAPIController extends AppBaseController
     */
     public function getCompanyTransactions(Request $request) {
 
-        $input = $request->all(); 
+        $input = $request->all();
 
         $perPage = $request->input('perPage');
 
         $timeArr = ['Day', 'Week', 'Month', 'Year'];
-        
+
         $data = [];
 
         $searchBy = [];
@@ -204,7 +204,7 @@ class TransactionAPIController extends AppBaseController
         if($request->has('search') && $request->input('search')){
 
             $searchValues = explode(';', $request->input('search'));
-            
+
             foreach ($searchValues as $val) {
             $tmp = explode(':', $val);
 
@@ -214,15 +214,15 @@ class TransactionAPIController extends AppBaseController
             }
 
         }
-  
+
         foreach ($timeArr as $tmp) {
             $input['time'] = $tmp;
             $result = $this->transactionRepository->transactionHistory($input,$perPage, $searchBy);
-            $data[$tmp] = $result; 
+            $data[$tmp] = $result;
         }
 
         return $this->sendResponse($data, 'Transaction updated successfully');
-    
+
     }
 
 
@@ -242,15 +242,15 @@ class TransactionAPIController extends AppBaseController
         if($request->has('search') && $request->input('search')){
 
             $searchValues = explode(';', $request->input('search'));
-            
+
             foreach ($searchValues as $val) {
             $tmp = explode(':', $val);
-    
+
                 if(count($tmp) > 1){
                     $searchBy[$tmp[0]] = $tmp[1];
                 }
             }
-     
+
         }
 
         $result = $this->transactionRepository->transactionHistory($input, $input['perPage'], $searchBy);
@@ -258,4 +258,3 @@ class TransactionAPIController extends AppBaseController
         return $this->sendResponse($result, 'Transactions retrieved successfully');
     }
 }
-

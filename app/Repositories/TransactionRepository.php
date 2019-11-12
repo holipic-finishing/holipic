@@ -55,7 +55,7 @@ class TransactionRepository extends BaseRepository
 
             $endDay     = Carbon::today()->format('Y-m-d');
         }
-       
+
 
         $transactions = Transaction::with('transactionexchange')
                         ->where('status','RECIVED')
@@ -64,7 +64,7 @@ class TransactionRepository extends BaseRepository
 
 
         $dates = $this->sumAmount($dates, $transactions, 'day');
-       
+
         return $dates;
     }
 
@@ -118,7 +118,7 @@ class TransactionRepository extends BaseRepository
                         ->get()->toArray();
 
         $years = $this->sumAmount($years, $transactions, 'year');
- 
+
 
         return $years;
 
@@ -139,12 +139,12 @@ class TransactionRepository extends BaseRepository
 
             $endDay     = Carbon::today()->format('Y-m-d');
 
-        }          
+        }
 
         $transactions = Transaction::with('transactionexchange')
                         ->where('status','RECIVED')
                         ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
-                        ->get()->toArray();                       
+                        ->get()->toArray();
 
 
         foreach ($dayWeeks as $key => $date) {
@@ -152,7 +152,7 @@ class TransactionRepository extends BaseRepository
             $count=0;
             if(count($transactions)) {
                 foreach ($transactions as $k_v => $value) {
-                    
+
                     $day = Carbon::parse($value['dated'])->format('Y-m-d');
 
                     if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
@@ -161,21 +161,21 @@ class TransactionRepository extends BaseRepository
 
                         $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
 
-                        $count = $count + $amount *  $exchange_rate_to_dollar;  
-                    } 
+                        $count = $count + $amount *  $exchange_rate_to_dollar;
+                    }
                     else {
                         $dayWeek[$key]['total'] = 0;
-                       
+
                     }
                 }
 
                 $dayWeeks[$key]['total'] = round($count,3);
             }  else {
                 $dayWeeks[$key]['total'] = 0;
-            }   
-       
-        }    
-    
+            }
+
+        }
+
 
         return $dayWeeks;
     }
@@ -188,18 +188,18 @@ class TransactionRepository extends BaseRepository
     public function getHistoriesTransaction($params){
         $results = $this->scopeQuery(function($query) use($params){
 
-            // $query = $query->with(['user' => function($q) {
-            //                     $q->with('package')->with(['company' => function($que) {
-            //                         $que->withTrashed();
-            //                     }]);
-            //                 }]);
+            $query = $query->with(['user' => function($q) {
+                                $q->with('package')->with(['company' => function($que) {
+                                    $que->withTrashed();
+                                }]);
+                            }]);
             $query = $query->with(['company' => function($q) {
                                 $q->withTrashed();
                             }]);
 
             $query = $query->with('currency')
                         ->with('transactionexchange');
-          
+
             if (!empty($params['defaultDay'])) {
 
                 $startDay   = Carbon::today()->subDays(7)->format('Y-m-d');
@@ -270,10 +270,11 @@ class TransactionRepository extends BaseRepository
 
             return $query;
         })->get();
-        $results = $this->transform($results);
+        // $results = $this->transform($results);
+        // $results = "sukses";
 
-        return $results; 
-    }  
+        return $results;
+    }
 
     /**
      * Transfrom transaction data
@@ -284,16 +285,16 @@ class TransactionRepository extends BaseRepository
 
             $results[$key]->company_name = $result->company->name;
 
-            $results[$key]->amount_with_symbol = round(($result->amount * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol; 
+            // $results[$key]->amount_with_symbol = round(($result->amount * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol;
 
-            $results[$key]->system_fee_with_symbol = round(($result->system_fee * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol;         
-            $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
+            // $results[$key]->system_fee_with_symbol = round(($result->system_fee * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol;
+            // $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
 
             // $results[$key]->fullname = $result->user->first_name . " " . $result->user->last_name;
         }
 
         return $results;
-    } 
+    }
 
 
     /*
@@ -336,7 +337,7 @@ class TransactionRepository extends BaseRepository
 
         });
 
-        return $transactions->paginate($perPage);                            
+        return $transactions->paginate($perPage);
 
     }
 
@@ -350,7 +351,7 @@ class TransactionRepository extends BaseRepository
         $startDay   = \Carbon\Carbon::today()->subDays(7)->format('Y-m-d');
         $endDay     = \Carbon\Carbon::today()->format('Y-m-d');
         $user_id = $attributes['userId'];
-        
+
         $search = '';
 
         if (!empty($searchBy['title'])) {
@@ -382,8 +383,8 @@ class TransactionRepository extends BaseRepository
             return $query;
 
         });
-        
-        return $transactions->paginate($perPage);                            
+
+        return $transactions->paginate($perPage);
 
     }
 
@@ -396,13 +397,13 @@ class TransactionRepository extends BaseRepository
 
         $month = \Carbon\Carbon::today()->format('Y-m');
         $user_id = $attributes['userId'];
-        
+
         $search = '';
 
         if (!empty($searchBy['title'])) {
             $search = $searchBy['title'];
         }
-      
+
         $transactions = $this->scopeQuery(function($query) use($search, $user_id, $month){
 
             $query = $query->select('id','title','dated','amount','status')
@@ -412,7 +413,7 @@ class TransactionRepository extends BaseRepository
                             ->whereHas('companyUser', function($query) use ($user_id){
                                 $query->where('owner_id',$user_id);
                             });
-            
+
             if(!empty($search)){
 
                 $query = $query->where(function($query) use ($search){
@@ -429,7 +430,7 @@ class TransactionRepository extends BaseRepository
 
         });
 
-        return $transactions->paginate($perPage); 
+        return $transactions->paginate($perPage);
 
     }
 
@@ -442,7 +443,7 @@ class TransactionRepository extends BaseRepository
 
         $year = \Carbon\Carbon::today()->format('Y');
         $user_id = $attributes['userId'];
-        
+
         $search = '';
 
         if (!empty($searchBy['title'])) {
@@ -474,15 +475,15 @@ class TransactionRepository extends BaseRepository
 
         });
 
-        return $transactions->paginate($perPage); 
+        return $transactions->paginate($perPage);
 
     }
-    
+
     /*
     *  Target : Get all data in transaction history in array with key by "Day", "Week", "Month", "Year"
     *  From   : func: transactionHistoryDay, func:transactionHistoryWeek, func:transactionHistoryMonth,       func:transactionHistoryYear
     *  To : array $attributes, int $prerPage, array $searchBy
-    */ 
+    */
     public function transactionHistory($attributes, $perPage, $searchBy){
 
         switch ($attributes['time']) {
@@ -505,7 +506,7 @@ class TransactionRepository extends BaseRepository
                 $result = $this->transactionHistoryYear($attributes,$perPage, $searchBy);
                 return $result;
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -535,8 +536,8 @@ class TransactionRepository extends BaseRepository
                         }
                         if($timevalue == 'year'){
                             $time_value = Carbon::parse($value['dated'])->format('Y');
-                        }                    
-                    
+                        }
+
                     if($key == $time_value) {
 
                         $amount = $value['amount'];
@@ -544,17 +545,17 @@ class TransactionRepository extends BaseRepository
                         $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
 
                         $count = $count + $amount *  $exchange_rate_to_dollar;
-                                     
+
 
                     } else {
                         $dates[$key]['total'] = 0;
                     }
-                }  
+                }
                  $dates[$key]['total'] = round($count,3);
-                    
+
             } else {
                  $dates[$key]['total'] = 0;
-            }           
+            }
         }
         return $dates;
     }

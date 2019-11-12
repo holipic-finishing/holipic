@@ -16,7 +16,7 @@
 	      <v-divider class="m-0"></v-divider>
 
 	      <!--Search Component -->
-				<v-card-title>
+				<!-- <v-card-title>
 	      	<v-spacer></v-spacer>
 	        <div class="w-25">
   	      	<v-text-field
@@ -27,7 +27,7 @@
 	  	        hide-details
   	      	></v-text-field>
 	        </div>
-	    	</v-card-title>
+	    	</v-card-title> -->
 
 	    	<v-data-table
 					:headers="headers"

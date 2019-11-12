@@ -10,8 +10,16 @@
 				</div>
 				<div class="d-custom-flex ">
 					<div class="">
-						<h3 class="info--text mb-0 active">$ {{ computedTotalTransactions }}</h3>
-						<p class="fs-12 grey--text mb-0 total-transaction">Total Income</p>
+						<!-- <h3 class="info--text mb-0 active">$ {{ computedTotalTransactions }}</h3> -->
+			        <!-- <v-btn text color="primary" @click="show = !show">Total Income</v-btn> -->
+						<!-- <p class="fs-12 grey--text mb-0 total-transaction" @click="show = !show">Total Income</p> -->
+						<div class="dropdown">
+						  <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Total Income</button>
+						  <ul class="dropdown-menu pl-3">
+						    <li>USD 40000</li>
+						    <li>IDR 1000000000</li>
+						  </ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -535,6 +543,7 @@ export default {
 			totalCompany:0,
 			tweenedNumber: 0,
 			tweenedNumberTransactions: 0,
+			show: false,
 		}
 	},
 	methods:{

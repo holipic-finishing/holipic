@@ -8,13 +8,17 @@
         :reloadable="true"
         :closeable="false"
       >
-        <v-toolbar flat color="white">
-          <v-toolbar-title>Company List</v-toolbar-title>
+        <!-- <v-toolbar flat color="white">
+          <v-toolbar-title>
+            <p>Company List</p>
+
+          </v-toolbar-title>
         </v-toolbar>
-        <v-divider class="m-0"></v-divider>
+        <v-divider class="m-0"></v-divider> -->
 
         <!--Search Component -->
         <v-card-title>
+          <p class="headline">Companies</p>
           <!-- <v-spacer></v-spacer>
 			        <div class="w-25">
 			  	      <v-text-field
@@ -37,24 +41,28 @@
           <v-spacer></v-spacer>
           <div class="w-25">
             <v-text-field
+            class="pt-0 mt-0"
               v-model="search"
               append-icon="search"
-              label="Enter Search Value"
+              label="Search"
               single-line
               hide-details
             ></v-text-field>
           </div>
-          <v-tooltip bottom>
+          <!-- <v-tooltip bottom>
             <a
               :href="urlExport"
               target="_blank"
               slot="activator"
-              class="btn btn-primary ml-2 btn-gradient-primary custom-btn"
-            >
-              <v-icon small color="white">fas fa-file-excel</v-icon>
-            </a>
+              class="btn btn-primary custom-btn"
+            > -->
+              <!-- <v-icon small color="white">fas fa-file-excel</v-icon> -->
+              <v-btn :href="urlExport" color="white" icon>
+                <v-icon small color="grey">cloud_download</v-icon>
+              </v-btn>
+            <!-- </a>
             <span>Export companies</span>
-          </v-tooltip>
+          </v-tooltip> -->
         </v-card-title>
         <!--End Search Component -->
 
@@ -146,7 +154,27 @@
         </v-data-table>
       </app-card>
       <!-- Dialog -->
-      <v-dialog v-model="dialog" persistent max-width="450">
+
+      <v-dialog v-model="dialog" persistent max-width="300">
+        <v-card>
+          <!-- <v-card-title class="headline font-weight-bold text-center">
+            <v-icon x-large color="yellow accent-3" class="mr-2">error_outline</v-icon>
+          </v-card-title>
+          <v-divider class="mt-0"></v-divider> -->
+
+          <v-card-text class="text-center">
+            <v-icon size="80" color="orange darken-1" class="mr-2">error_outline</v-icon>
+            <p class="headline">Are you sure?</p>
+            <p class="subtitle-2">You will not be able to recover this Module!</p>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn round dark color="grey" @click="dialog = false">Disagree</v-btn>
+            <v-spacer />
+            <v-btn round dark color="error" @click="deleteItem">Agree</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <!-- <v-dialog v-model="dialog" persistent max-width="450">
         <v-card>
           <v-card-title class="headline font-weight-bold">
             <v-icon x-large color="yellow accent-3" class="mr-2">warning</v-icon>Do you want delete this item ?
@@ -158,7 +186,7 @@
             <v-btn flat @click="deleteItem">Agree</v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
+      </v-dialog> -->
       <!-- component -->
       <coupon-code-component :typeEvent="typeEvent" :item="item"></coupon-code-component>
       <transaction-component></transaction-component>

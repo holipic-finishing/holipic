@@ -32,10 +32,8 @@
                           <span class="font-weight-bold item-title position-item">Company Name:</span>
                           <span class="contain-text-field">
                             <v-text-field
-                              class="font-weight-bold height-input"
                               placeholder="Enter Company Name"
                               v-model="company.name"
-                              outline
                               @keyup.enter="updateCompany('name', company.name)"
                               :rules="[rules.required]"
                             ></v-text-field>
@@ -57,10 +55,8 @@
                           <span class="font-weight-bold item-title position-item">Address:</span>
                           <span class="contain-text-field">
                             <v-text-field
-                              class="font-weight-bold height-input"
                               placeholder="Enter address"
                               v-model="company.address"
-                              outline
                               @keyup.enter="updateCompany('address', company.address)"
                               :rules="[rules.required]"
                             ></v-text-field>
@@ -82,10 +78,8 @@
                           <span class="font-weight-bold item-title position-item">Description:</span>
                           <span class="contain-text-field">
                             <v-text-field
-                              class="font-weight-bold height-input"
                               placeholder="Enter description"
                               v-model="company.description"
-                              outline
                               @keyup.enter="updateCompany('description', company.description)"
                               :rules="[rules.required]"
                             ></v-text-field>
@@ -108,10 +102,8 @@
                           <span class="font-weight-bold item-title position-item">Phone:</span>
                           <span class="contain-text-field">
                             <v-text-field
-                              class="font-weight-bold height-input"
                               placeholder="Enter phone"
                               v-model="company.phone"
-                              outline
                               @keyup.enter="updateCompany('phone', company.phone)"
                               :rules="[rules.required]"
                             ></v-text-field>

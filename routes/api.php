@@ -33,11 +33,18 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('email/verify', 'Auth\VerificationController@check')->name('verification.notice');
     Route::post('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
     Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+    // Route::get('compdadasanies/export-excel', 'CompanyAPIController@exportExcel')->namespace('API');;
 });
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['namespace' => 'API'],function(){
+  Route::group(['namespace' => 'SuperAdmin'], function() {
+    Route::get('companies/export-excel', 'CompanyAPIController@exportExcel');
+  });
 });
 
 Route::group(['namespace' => 'API', 'middleware' => 'jwt'],function(){
@@ -83,8 +90,9 @@ Route::group(['namespace' => 'API', 'middleware' => 'jwt'],function(){
 		************************************************/
 
 		/*************CompanyAPIController**************/
+    // Route::get('companies', 'CompanyAPIController@index');
 		Route::get('companies/information', 'CompanyAPIController@showInformationCompany');
-		Route::get('companies/export-excel', 'CompanyAPIController@exportExcel');
+		// Route::get('companies/export-excel', 'CompanyAPIController@exportExcel');
 
 		/*************TransactionAPIController**************/
 		Route::post('history-transactions', 'TransactionAPIController@getDashboardTransactions');

@@ -243,12 +243,7 @@
       <!-- End Add Package -->
 
       <!-- Setting Package -->
-      <v-form
-        ref="form1"
-        @submit.prevent="savePackagesSetting"
-        v-show="check == 'setting'"
-        class="heigth-list-title"
-      >
+      <v-form ref="form1" @submit.prevent="savePackagesSetting" v-show="check == 'setting'" class="heigth-list-title">
         <v-list two-line>
           <v-alert v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 
@@ -455,13 +450,6 @@
               <v-list-tile-title class="content-flex-end h-100">
                 <span class="font-weight-bold item-title position-item">Auto Email:</span>
                 <span class="contain-text-field">
-                  <!-- <v-text-field
-                    placeholder="Minimum user"
-                    v-model="data.minimum_user"
-                    :rules="[rules.required, rules.number]"
-                    @blur="editItem('minimum_user', data.minimum_user)"
-                    @keyup.enter="editItem('minimum_user', data.minimum_user)"
-                  ></v-text-field> -->
                   <v-switch v-model="data.sms" @change="editSetting('sms', data.sms)"></v-switch>
                 </span>
               </v-list-tile-title>

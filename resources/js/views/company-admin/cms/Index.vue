@@ -8,6 +8,7 @@
 				:reloadable="true"
 				:closeable="false"
 			>
+			<cms-item></cms-item>
 				<v-toolbar flat color="white">
 	        <v-toolbar-title>
 	          Content Management System
@@ -63,13 +64,8 @@
 						<td class="text-xs-left">{{ props.item.page_title }}</td>
 						<td class="text-xs-left" v-html="props.item.sort_content.substring(0,250)+'....'">...</td>
 			      <td class="text-right action-width">
-							<v-icon
-								small
-								class="mr-2 hover-icon"
-								@click="showFormEdit('edit',props.item)"
-							>
-								edit
-							</v-icon>
+							<!-- <v-icon small class="mr-2 hover-icon" @click="showFormEdit('edit',props.item)">edit</v-icon> -->
+							<v-icon small class="mr-2 hover-icon" @click="showFormEdit(props.item)">edit</v-icon>
 						</td>
 					</template>
 					<!--No data -->
@@ -85,14 +81,13 @@
 	        </v-alert>
 
 				</v-data-table>
-				<v-dialog
+				<!-- <v-dialog
 					fixed
 					v-model="drawer"
 					:right="!rtlLayout"
 					fullscreen hide-overlay transition="slide-x-reverse-transition"
 				>
-					<cms-item :eventType="eventType" :item="item"></cms-item>
-				</v-dialog>
+				</v-dialog> -->
 			</app-card>
 		</v-layout>
 	</v-container>
@@ -119,7 +114,7 @@ export default {
 				  	sortBy: 'id',
 				  	descending: false
 		    },
-		    item: null,
+		    item: [],
       		eventType: '',
 		    headers: [
 					{ text: 'ID', value: 'id',  align: 'left', width: '3%'},
@@ -147,10 +142,17 @@ export default {
   				console.log(err)
   			})
   		},
-  		showFormEdit(event,item){
-  			this.drawer = true
-			this.eventType = event
-			this.item = item
+  		showFormEdit(item){
+  			// this.drawer = true
+			// this.eventType = event
+			// this.item = item
+			let obj = {
+        check: "edit",
+        showDialog: true
+      };
+
+      this.$root.$emit("change-status", obj);
+      this.$root.$emit("data-packages", item);
   		},
   		doReset(){
 				this.search.keywords = ''

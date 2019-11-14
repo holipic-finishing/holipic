@@ -1,86 +1,102 @@
 <template>
-  <v-card class="h-100 position-relative">
-  	<v-toolbar>
-      <v-toolbar-title class="text-capitalize">{{ eventType }} Content Management</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-side-icon @click="closeDrawer">
-      	<v-icon>
-          fas fa-times
-        </v-icon>
-      </v-toolbar-side-icon>
-    </v-toolbar>
-    <v-divider class="mt-0 mb-0"></v-divider>
-
-      <!-- Edit Item -->
-  	<v-list v-if="itemToLoad && eventType === 'edit'" class="heigth-list-title">
-
-      <!-- <v-alert  v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert> -->
-      <v-list-tile class="height-80">
-        <v-list-tile-content class="h-100">
-          <v-list-tile-title class="content-flex-end h-100">
-            <span class="font-weight-bold item-title-style position-item">Page Title</span>
-            <span class="contain-text-field">
-              <v-text-field
-                class="font-weight-bold height-input"
-                placeholder="Enter Page Title"
-                v-model="itemToLoad.page_title"
-                outline
-                :rules="[rules.required]"
-                @blur="editItem('page_title', itemToLoad.page_title)"
-                @keyup.enter="editItem('page_title', itemToLoad.page_title)"
-              ></v-text-field>
-            </span>
-            <!-- <span class="position-item">
-              <v-btn flat icon @click="unDisableItem(1)"><v-icon small>fas fa-marker</v-icon></v-btn>
-            </span> -->
-          </v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
+  <v-navigation-drawer fixed v-model="drawerRight" right clipped app this.width="this.getCurrentWithContentWrap()" :width="widthComputed" temporary>
+    <v-card class="h-100 position-relative">
+      <v-toolbar>
+        <!-- <v-toolbar-title class="text-capitalize">{{ check ? 'Add Package' : 'Update Package'}}</v-toolbar-title> -->
+        <v-toolbar-title v-if="check == 'edit'" class="text-capitalize">Update Package</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-side-icon @click.stop="stopdrawerRight()">
+          <v-icon>fas fa-times</v-icon>
+        </v-toolbar-side-icon>
+      </v-toolbar>
       <v-divider class="mt-0 mb-0"></v-divider>
-      <v-spacer></v-spacer>
 
-      <v-list-tile class="height-100">
-        <v-list-tile-content class="h-100">
-          <v-list-tile-title class="content-flex-end h-100">
-				    <ckeditor
-  				    id="editor1"
-  			      v-model="itemToLoad.page_content"
-  			      :config="config"
-  			      v-validate="'required'"
-  			      name="page_content"
-  			      @blur="editItem('page_content', itemToLoad.page_content)"
-              class="style-ckeditor"
-			      >
-			     </ckeditor>
-          </v-list-tile-title>
-          <span v-show="errors.has('page_content')" class="help is-danger" style="color:red">{{ errors.first('page_content') }}</span>
-        </v-list-tile-content>
-      </v-list-tile>
+      <!-- Edit package -->
+      <v-form ref="form2" v-show="check == 'edit'" class="heigth-list-title">
+        <v-list two-line>
+          <v-alert v-model="alertStt" :type="alertType" dismissible>{{ alertMes }}</v-alert>
 
-    </v-list>
-  	<!-- End Item Edit -->
-  </v-card>
+          <v-list-tile class="height-80">
+            <v-list-tile-content class="h-100">
+              <v-list-tile-title class="content-flex-end h-100">
+                <span class="font-weight-bold item-title position-item">Title:</span>
+                <span class="contain-text-field">
+                  <v-text-field
+                    placeholder="Title"
+                    v-model="data.page_title"
+                    :rules="[rules.required]"
+                    @blur="editItem('page_title', data.page_title)"
+                    @keyup.enter="editItem('page_title', data.page_title)"
+                  ></v-text-field>
+                </span>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider class="mt-0 mb-0"></v-divider>
+
+          <v-list-tile class="height-80">
+            <v-list-tile-content class="h-100">
+              <v-list-tile-title class="content-flex-end h-100">
+                <span class="font-weight-bold item-title position-item">Package name:</span>
+                <span class="contain-text-field">
+                  <!-- <v-text-field
+                    placeholder="Enter package name"
+                    v-model="data.package_name"
+                    :rules="[rules.required]"
+                    @blur="editItem('package_name', data.package_name)"
+                    @keyup.enter="editItem('package_name', data.package_name)"
+                  ></v-text-field> -->
+                  <ckeditor
+        				    id="editor1"
+        			      v-model="data.page_content"
+        			      :config="config"
+        			      v-validate="'required'"
+        			      name="page_content"
+                    @blur="editItem('page_title', data.page_content)"
+                    class="style-ckeditor"
+      			      >
+      			     </ckeditor>
+                </span>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider class="mt-0 mb-0"></v-divider>
+
+        </v-list>
+      </v-form>
+      <!-- End Edit Package -->
+    </v-card>
+  </v-navigation-drawer>
 </template>
 
 <script>
-import Ckeditor from 'vue-ckeditor2'
-import config from '../../../config'
-import { post } from '../../../api'
+import { post, put } from "../../../api/index.js";
+import Vue from "vue";
+import Ckeditor from 'vue-ckeditor2';
+import config from '../../../config';
+import { getWithContentWrap } from "../../../helpers/helpers";
 
 export default {
-
-	name: 'CmsItem',
- 	props: ['eventType', 'item'],
- 	components: { Ckeditor },
-	data () {
-		return {
-	    alertType: 'success',
-	    alertMes: '',
-	    key : 0,
-		  rules: {
-      		required: value => !!value || 'This field is required.'
-  		},
-	    config: {
+  name: 'CmsItem',
+  data() {
+    return {
+      drawerRight: false,
+      check: "",
+      rules: {
+        required: value => !!value || "Required."
+      },
+      item: {
+        sms: false,
+        email_service: false
+      },
+      alertStt: false,
+      alertType: "success",
+      alertMes: "",
+      key: 0,
+      data: {},
+      width: 0,
+      drawerHeaderStt: null,
+      config: {
 	        toolbar: [
 	          ['Undo','Redo'],
 	          ['Bold','Italic','Strike'],
@@ -94,100 +110,144 @@ export default {
 	        height: 270,
 	        width: '100%',
 	    },
-	    validate:false
-		}
+    };
   },
-  methods:{
-		closeDrawer(){
-			this.$root.$emit('closeDrawerItem', false)
-			this.key = 0
-		},
-		unDisableItem(key){
-   		this.key = key
-  	},
-    editItem(field_name, value){
-    	this.Validate(field_name,value)
-    	if(this.validate) {
-    		var regex = /(&nbsp;|<([^>]+)>)/ig
-	    	var strippedContent = value.replace(regex, '');
-	    	if(field_name == 'page_title'){
-
-  				var field = {
-  					field_name: field_name,
-  					value: value
-  				}
-
-	    	}else {
-
-	    		var field = {
-  					field_name: field_name,
-  					value: value,
-  					sort_value : strippedContent
-				  }
-	    	}
-				this.fetchData(field)
-	    }
-		},
-		fetchData(field){
-  		post(config.API_URL + 'edit/page/' + this.itemToLoad.id, field)
-			.then((res) => {
-				if(res.data && res.data.success){
-	        this.alertType = 'success'
-	        this.alertMes = 'Update Successfully'
-	        this.$notify({
-            title: 'Success',
-            message: this.alertMes,
-            type: this.alertType,
-            duration: 2000,
+  computed: {
+    widthComputed() {
+      return this.width;
+    }
+  },
+  components: { Ckeditor },
+  methods: {
+    getCurrentWithContentWrap() {
+      return getWithContentWrap(this.drawerHeaderStt);
+    },
+    resetData() {
+      this.$refs.form2.reset();
+    },
+    stopdrawerRight() {
+      this.drawerRight = false;
+    },
+    savePackageAdd() {
+      if (this.$refs.form.validate()) {
+        let url = "packages";
+        post(url, this.item)
+          .then(res => {
+            if (res && res.success) {
+              setTimeout(function() {
+                Vue.notify({
+                  group: "loggedIn",
+                  type: "success",
+                  text: "Add Package Success!"
+                });
+              }, 500);
+              this.drawerRight = false;
+              this.$root.$emit("reload-table", true);
+              this.item = {
+                sms: false,
+                email_service: false
+              };
+            }
           })
-			    this.key = 0
-					this.$root.$emit('editItemSucess')
-				}
-			})
-			.catch((e) =>{
-        this.alertType = 'error'
-        this.alertMes = 'System Error Occurred'
-        this.$notify({
-          title: 'Error',
-          message: this.alertMes,
-          type: this.alertType,
-          duration: 2000,
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    },
+    unDisableItem(key) {
+      this.key = key;
+    },
+    editItem(field_name, value) {
+      var field = {
+        field_name: field_name,
+        value: value
+      };
+
+      // console.log(field.value);
+
+      this.fetchData(field);
+    },
+
+    fetchData(field) {
+      post("edit/page/" + this.data.id, field)
+        .then(res => {
+          console.log(res);
+          if (res && res.success) {
+            this.alertStt = true;
+            this.alertType = "success";
+            this.alertMes = "Update Successfully";
+            setTimeout(() => {
+              this.alertStt = false;
+            }, 1500);
+            this.key = 0;
+            this.$root.$emit("editItemSucess");
+          }
         })
-			})
- 		},
- 		Validate(field_name,value){
- 			if(!value){
-			this.alertStt = true
-	        this.alertType = 'error'
-	        this.alertMes = 'No ' + field_name + ' Yet'
-	        this.validate = false
-	        setTimeout(() => {this.alertStt = false}, 1500)
- 			}else {
- 				this.validate = true
- 			}
- 		}
+        .catch(e => {
+          console.log(e);
+          this.alertStt = true;
+          this.alertType = "error";
+          this.alertMes = "System Error Occurred";
+          setTimeout(() => {
+            this.alertStt = false;
+          }, 1500);
+        });
+    },
+
+    editSetting(field_name, value) {
+      var field = {
+        field_name: field_name,
+        value: value
+      };
+
+      // this.fetchDataSetting(field);
+    },
   },
-	computed:{
-		itemToLoad(){
-			return this.item
-		},
-	}
+  mounted() {
+    this.$root.$on("change-status", res => {
+      this.drawerRight = res.showDialog;
+      this.check = res.check;
+      this.resetData();
+      this.width = this.getCurrentWithContentWrap();
+    });
+
+    this.$root.$on("data-packages", res => {
+      this.data = res;
+    });
+  }
 };
 </script>
 
 <style lang="scss" scoped>
+.text-center {
+  display: block !important;
+}
 
-.item-title-style {
-    margin-right:15px;
+.style-content {
+  margin: 0px !important;
 }
-.contain-text-field {
-    width: 50%  !important;
+
+.style-flex {
+  padding: 15px 12px !important;
+  font-weight: 500 !important;
 }
-.content-flex-end {
-    justify-content: center !important;
-    align-items: center !important;
+
+h4 {
+  padding-left: 10px;
 }
-.style-ckeditor{
-  width: 100%
+
+.style-flex p {
+  margin-bottom: 0px !important;
+}
+
+.fix-contain-text-field {
+  display: block;
+  right: 0px;
+  position: absolute;
+  width: 150px;
+}
+
+.fix-style-flex {
+  float: right;
 }
 </style>

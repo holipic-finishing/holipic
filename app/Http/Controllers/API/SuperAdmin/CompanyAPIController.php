@@ -41,7 +41,7 @@ class CompanyAPIController extends AppBaseController
         $this->companyRepository->pushCriteria(new RequestCriteria($request));
         $this->companyRepository->pushCriteria(new LimitOffsetCriteria($request));
 
-        $companies = $this->companyRepository->getCompanies(); 
+        $companies = $this->companyRepository->getCompanies();
 
         return $this->sendResponse($companies->toArray(), 'Companies retrieved successfully');
     }
@@ -74,7 +74,7 @@ class CompanyAPIController extends AppBaseController
     public function show($id)
     {
         /** @var Company $company */
-        
+
         $company = $this->companyRepository->findWithoutFail($id);
         if (empty($company)) {
             return $this->sendError('Company not found');
@@ -131,19 +131,21 @@ class CompanyAPIController extends AppBaseController
     }
 
     public function getTransactionHistory(Request $request){
-        
+
         $input = $request->all();
 
         return $this->sendResponse($results->toArray(), 'Transaction History successfully');
     }
-    
+
     public function exportExcel(Request $request){
-
         return \Excel::download(new ListCompaniesExport($request->all()), 'ListCompany.xlsx');
-
     }
 
-    public function showInformationCompany(Request $request) 
+    // public function show(Request $request){
+    //     return \Excel::download(new ListCompaniesExport($request->all()), 'ListCompany.xlsx');
+    // }
+
+    public function showInformationCompany(Request $request)
     {
         $companyInfo = $this->companyRepository->handleShowInformationCompany(request('companyId'));
 
@@ -158,7 +160,7 @@ class CompanyAPIController extends AppBaseController
     public function createLink($company_id){
 
         $path = public_path() . '/files' . DIRECTORY_SEPARATOR;
-        
+
         $csvPath = $path .$company_id. '_Customer_email.csv';
 
         if(\File::exists($csvPath)){
@@ -171,7 +173,7 @@ class CompanyAPIController extends AppBaseController
         $file = fopen($csvPath,"a+");
         $keys = ['SN.','Email'];
         fputcsv($file,$keys);
-        fclose($file); 
+        fclose($file);
         return $csvPath;
     }
 }

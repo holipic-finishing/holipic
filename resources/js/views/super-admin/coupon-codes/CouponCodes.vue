@@ -13,14 +13,15 @@
         <coupon-code-item :eventType="eventType" :item="item"></coupon-code-item>
       </v-navigation-drawer>
 
-      <page-title-bar></page-title-bar>
+      <!-- <page-title-bar></page-title-bar> -->
 
-      <v-toolbar flat color="white" class="plr-0">
+      <v-toolbar flat color="white">
+        <p class="headline">Coupon Code List</p>
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
           append-icon="search"
-          label="Enter Search Value"
+          label="Search"
           single-line
           hide-details
           class="mr-3"
@@ -28,8 +29,9 @@
         <v-tooltip bottom>
           <v-btn
             @click="couponCodeEvent('add-new', null)"
-            color="primary"
+            color="grey"
             dark
+            depressed
             slot="activator"
             fab
             small
@@ -102,16 +104,17 @@
         >Your search for "{{ search }}" found no results.</v-alert>
       </v-data-table>
     </app-card>
-    <v-dialog v-model="dialog" persistent max-width="450">
+    <v-dialog v-model="dialog" persistent max-width="300">
       <v-card>
-        <v-card-title class="headline font-weight-bold">
-          <v-icon x-large color="yellow accent-3" class="mr-2">warning</v-icon>Do you want delete this item ?
-        </v-card-title>
-        <v-divider class="mt-0"></v-divider>
+        <v-card-text class="text-center">
+          <v-icon size="80" color="orange darken-1" class="mr-2">error_outline</v-icon>
+          <p class="headline">Are you sure?</p>
+          <p class="subtitle-2">You will not be able to recover this Module!</p>
+        </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn flat @click="dialog = false">Disagree</v-btn>
-          <v-btn flat @click="deleteItem">Agree</v-btn>
+          <v-btn round dark color="grey" @click="dialog = false">Disagree</v-btn>
+          <v-spacer />
+          <v-btn round dark color="error" @click="deleteItem">Agree</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

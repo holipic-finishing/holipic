@@ -157,11 +157,6 @@
 
       <v-dialog v-model="dialog" persistent max-width="300">
         <v-card>
-          <!-- <v-card-title class="headline font-weight-bold text-center">
-            <v-icon x-large color="yellow accent-3" class="mr-2">error_outline</v-icon>
-          </v-card-title>
-          <v-divider class="mt-0"></v-divider> -->
-
           <v-card-text class="text-center">
             <v-icon size="80" color="orange darken-1" class="mr-2">error_outline</v-icon>
             <p class="headline">Are you sure?</p>

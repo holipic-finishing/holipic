@@ -8,13 +8,14 @@
         :reloadable="true"
         :closeable="false"
       >
-        <v-toolbar flat color="white">
+        <!-- <v-toolbar flat color="white">
           <v-toolbar-title>Ewallet Withdraw</v-toolbar-title>
         </v-toolbar>
-        <v-divider class="m-0"></v-divider>
+        <v-divider class="m-0"></v-divider> -->
 
         <!--Search Component -->
         <v-card-title>
+          <p class="headline">Ewallet Withdraw</p>
           <v-spacer></v-spacer>
           <div class="w-25">
             <v-text-field

@@ -136,16 +136,17 @@
         </v-data-table>
         <!--End Data Table Component -->
       </app-card>
-      <v-dialog v-model="dialog" persistent max-width="450">
+      <v-dialog v-model="dialog" persistent max-width="300">
         <v-card>
-          <v-card-title class="headline font-weight-bold">
-            <v-icon x-large color="yellow accent-3" class="mr-2">warning</v-icon>Do you want delete this item ?
-          </v-card-title>
-          <v-divider class="mt-0"></v-divider>
+          <v-card-text class="text-center">
+            <v-icon size="80" color="orange darken-1" class="mr-2">error_outline</v-icon>
+            <p class="headline">Are you sure?</p>
+            <p class="subtitle-2">You will not be able to recover this Module!</p>
+          </v-card-text>
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn flat @click="dialog = false">Disagree</v-btn>
-            <v-btn flat @click="deleteItem">Agree</v-btn>
+            <v-btn round dark color="grey" @click="dialog = false">Disagree</v-btn>
+            <v-spacer />
+            <v-btn round dark color="error" @click="deleteItem">Agree</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

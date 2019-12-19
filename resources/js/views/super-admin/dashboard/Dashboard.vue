@@ -16,8 +16,8 @@
 						<div class="dropdown">
 						  <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Total Income</button>
 						  <ul class="dropdown-menu pl-3">
-						    <li>USD 40000</li>
-						    <li>IDR 1000000000</li>
+						    <li>USD {{totalUsd}}</li>
+						    <li>IDR {{ totalIdr }}</li>
 						  </ul>
 						</div>
 					</div>
@@ -526,7 +526,8 @@ export default {
 			from_year:'',
 			to_year:'',
 			typeTime:'day',
-			total:0,
+			totalUsd:0,
+			totalIdr:0,
 			from_day_week:'',
 			to_day_week:'',
 			validate:false,
@@ -902,7 +903,9 @@ export default {
 	},
 	mounted() {
 		this.$root.$on('totalTransaction', res => {
-			this.total = res
+			this.totalUsd = res.totalUsd
+			this.totalIdr = res.totalIdr
+			// console.log(res.totalIdr);
 		});
 
 		this.$root.$on('total-companies', res => {
@@ -947,7 +950,7 @@ export default {
 		totalCompany: function(newValue) {
 			TweenLite.to(this.$data, 0.5, { tweenedNumber: newValue })
 		},
-		total: function(newValue) {
+		totalUsd: function(newValue) {
 			TweenLite.to(this.$data, 0.5, { tweenedNumberTransactions: newValue })
 		}
 	},

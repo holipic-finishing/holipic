@@ -3,8 +3,10 @@ import config from '../config';
 import router from '../router';
 
 const API_URL = config.API_URL;
+// const API_URL = 'http://holipicnet-env.ecbydrxemn.eu-central-1.elasticbeanstalk.com/api/';
+// const API_URL = 'http://127.0.0.1:8000/api/';
 var access_token = localStorage.getItem('access_token');
-
+// axios.defaults.baseURL = 'http://holipicnet-env.ecbydrxemn.eu-central-1.elasticbeanstalk.com/api/';
 axios.defaults.baseURL = API_URL;
 axios.defaults.headers.common['Authorization'] = access_token;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

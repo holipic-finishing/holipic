@@ -68,7 +68,7 @@ export function getWithContentWrap(drawerHeaderStt){
     var sidebarWidth = sidebarElement.clientWidth
 
     if (contentWidth >= 1366) {
-    	return (contentWidth - sidebarWidth)*25/100
+    	return (contentWidth - sidebarWidth)*30/100
     } else if (contentWidth < 1365 && contentWidth >= 1264) {
     	return (contentWidth - sidebarWidth)*30/100
     } else {

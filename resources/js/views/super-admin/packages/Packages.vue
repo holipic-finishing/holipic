@@ -69,7 +69,7 @@
             <td class="text-xs-center">{{ props.item.fee }}</td>
             <td class="text-xs-center">{{ props.item.max_user }}</td>
             <td class="text-right action-width">
-              <v-icon small class="mr-2" @click="settingItem(props.item)">settings</v-icon>
+              <!-- <v-icon small class="mr-2" @click="settingItem(props.item)">settings</v-icon> -->
               <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
               <v-icon
                 small

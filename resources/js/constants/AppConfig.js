@@ -4,7 +4,7 @@
 export default {
 	appLogo: '/images/HOLIPIC-FAVICON.png',                                   // App Logo,
 	darkLogo: '/images/HOLIPIC-LOGO.png',							    // dark logo
-	appLogo2: '/images/HOLIPIC-FAVICON.png',                                    // App Logo 2 For Login & Signup Page
+	appLogo2: '/images/holipic-large.png',                                    // App Logo 2 For Login & Signup Page
 	brand: 'Holipic',                                        			        // Brand Name
 	copyrightText: 'Vuely © 2018 All Rights Reserved.',                     // Copyright Text
 	enableUserTour: process.env.NODE_ENV === 'production' ? true : false,   // Enable User Tour

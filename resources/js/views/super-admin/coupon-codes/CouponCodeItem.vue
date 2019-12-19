@@ -20,10 +20,8 @@
               <span class="font-weight-bold item-title position-item">Coupon Name</span>
               <span class="contain-text-field">
                 <v-text-field
-                  class="font-weight-bold height-input"
                   placeholder="Enter Coupon Name"
                   v-model="itemToSave.name"
-                  outline
                   :rules="[rules.required, rules.coupon_name]"
                 ></v-text-field>
               </span>
@@ -38,12 +36,29 @@
               <span class="font-weight-bold item-title position-item">Code</span>
               <span class="contain-text-field">
                 <v-text-field
-                  class="font-weight-bold height-input"
                   placeholder="Enter Code"
                   v-model="itemToSave.code"
-                  outline
                   :rules="[rules.required]"
                 ></v-text-field>
+              </span>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-divider class="mt-0 mb-0"></v-divider>
+
+        <v-list-tile class="height-80">
+          <v-list-tile-content class="h-100">
+            <v-list-tile-title class="content-flex-end h-100">
+              <span class="font-weight-bold item-title position-item">Discount type</span>
+              <span class="contain-text-field">
+                <v-select
+                  placeholder="Discount type"
+                  :items="type"
+                  item-value="code"
+                  item-name="text"
+                  v-model="itemToSave.discount_type"
+                  :rules="[rules.required]"
+                ></v-select>
               </span>
             </v-list-tile-title>
           </v-list-tile-content>
@@ -57,10 +72,8 @@
               <span class="contain-text-field">
                 <v-text-field
                   type="number"
-                  class="font-weight-bold height-input"
                   placeholder="Enter Coupon Code Name"
                   v-model="itemToSave.discount"
-                  outline
                   :rules="[rules.required, rules.decimal]"
                 ></v-text-field>
               </span>
@@ -87,9 +100,7 @@
                     slot="activator"
                     v-model="computedFromDateFormatted"
                     readonly
-                    class="font-weight-bold height-input"
                     placeholder="Enter From Date"
-                    outline
                   ></v-text-field>
                   <v-date-picker v-model="from_date" no-title @input="menu1 = false"></v-date-picker>
                 </v-menu>
@@ -117,9 +128,7 @@
                     slot="activator"
                     v-model="computedToDateFormatted"
                     readonly
-                    class="font-weight-bold height-input"
                     placeholder="Enter To Date"
-                    outline
                   ></v-text-field>
                   <v-date-picker v-model="to_date" no-title @input="menu2 = false"></v-date-picker>
                 </v-menu>
@@ -163,10 +172,8 @@
               <span class="font-weight-bold item-title position-item">Coupon Name</span>
               <span class="contain-text-field">
                 <v-text-field
-                  class="font-weight-bold height-input"
                   placeholder="Enter Coupon Name"
                   v-model="itemToLoad.name"
-                  outline
                   :rules="[rules.required, rules.coupon_name]"
                   @blur="editItem('name', itemToLoad.name)"
                   @keyup.enter="editItem('name', itemToLoad.name)"
@@ -186,10 +193,8 @@
               <span class="font-weight-bold item-title position-item">Code</span>
               <span class="contain-text-field">
                 <v-text-field
-                  class="font-weight-bold height-input"
                   placeholder="Enter Code"
                   v-model="itemToLoad.code"
-                  outline
                   :rules="[rules.required]"
                   @blur="editItem('code', itemToLoad.code)"
                   @keyup.enter="editItem('code', itemToLoad.code)"
@@ -203,14 +208,33 @@
         <v-list-tile class="height-80">
           <v-list-tile-content class="h-100">
             <v-list-tile-title class="content-flex-end h-100">
+              <span class="font-weight-bold item-title position-item">Discount type</span>
+              <span class="contain-text-field">
+                <v-select
+                  placeholder="Discount type"
+                  :items="type"
+                  item-value="code"
+                  item-name="text"
+                  v-model="itemToLoad.discount_type"
+                  :rules="[rules.required]"
+                  @blur="editItem('code', itemToLoad.discount_type)"
+                  @keyup.enter="editItem('code', itemToLoad.discount_type)"
+                ></v-select>
+              </span>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-divider class="mt-0 mb-0"></v-divider>
+
+        <v-list-tile class="height-80">
+          <v-list-tile-content class="h-100">
+            <v-list-tile-title class="content-flex-end h-100">
               <span class="font-weight-bold item-title position-item">Discount</span>
               <span class="contain-text-field">
                 <v-text-field
                   type="number"
-                  class="font-weight-bold height-input"
                   placeholder="Enter Coupon Code Name"
                   v-model="itemToLoad.discount"
-                  outline
                   :rules="[rules.required, rules.decimal]"
                   @blur="editItem('discount', itemToLoad.discount)"
                   @keyup.enter="editItem('discount', itemToLoad.discount)"
@@ -239,9 +263,7 @@
                     slot="activator"
                     v-model="computedFromDateFormattedEdit"
                     readonly
-                    class="font-weight-bold height-input"
                     placeholder="Enter From Date"
-                    outline
                   ></v-text-field>
                   <v-date-picker
                     v-model="from_date"
@@ -273,9 +295,7 @@
                     slot="activator"
                     v-model="computedToDateFormattedEdit"
                     readonly
-                    class="font-weight-bold height-input"
                     placeholder="Enter To Date"
-                    outline
                   ></v-text-field>
                   <v-date-picker v-model="to_date" no-title @input="editItem('to_date', to_date)"></v-date-picker>
                 </v-menu>
@@ -338,11 +358,15 @@ export default {
       itemToSave: {
         name: "",
         code: "",
+        discount_type: "",
         discount: 0,
         from_date: "",
         to_date: "",
         active: false
       },
+      type: [
+        { code: 'balance', text: 'TopUp Balance' },
+        { code: 'percent', text: 'Discount %' }],
       menu1: false,
       menu2: false,
       from_date: new Date().toISOString().substr(0, 10),
@@ -379,11 +403,16 @@ export default {
           this.errorAlert("From day must before To day");
           return;
         }
-
-        if (this.itemToSave.discount > 50) {
-          this.errorAlert("Discount cannot be greater than 50%");
-          return;
+        if (this.itemToSave.discount_type == 'percent') {
+          if (this.itemToSave.discount > 50) {
+            this.errorAlert("Discount cannot be greater than 50%");
+            return;
+          }
         }
+        // if (this.itemToSave.discount > 50) {
+        //   this.errorAlert("Discount cannot be greater than 50%");
+        //   return;
+        // }
 
         let url = "coupon_codes";
 
@@ -478,7 +507,8 @@ export default {
           if (res && res.success) {
             this.successAlert("Update Successfully");
             this.key = 0;
-            this.$root.$emit("editItemSucess");
+            console.log(res.success);
+            // this.$root.$emit("editItemSucess");
             // this.$root.$emit('closeDrawerItem', false)
           }
         })

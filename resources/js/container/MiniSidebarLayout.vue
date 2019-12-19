@@ -1,10 +1,11 @@
 <!-- App Main Structure -->
 <template>
 	<div class="app-mini-layout">
-		<template v-if="loading">
+		<!-- <template v-if="loading">
 			<rotate-square2></rotate-square2>
 		</template>
-		<template v-else>
+		<template v-else> -->
+		<template>
 			<!-- App Header -->
 			<app-header></app-header>
 			<!-- App Main Content -->
@@ -63,4 +64,3 @@ export default {
   height: 100vh;
 }
 </style>
-

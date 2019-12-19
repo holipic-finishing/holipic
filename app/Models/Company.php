@@ -21,7 +21,7 @@ class Company extends Model
     use SoftDeletes;
 
     public $table = 'companies';
-    
+
     public $fillable = [
         'name',
         'description',
@@ -29,7 +29,8 @@ class Company extends Model
         'owner_id',
         'logo',
         'coupon_codes_id',
-        'phone'
+        'phone',
+        'currency_id'
     ];
 
     protected $dates = ['deleted_at'];
@@ -53,7 +54,7 @@ class Company extends Model
      * @var array
      */
     public static $rules = [
-        
+
     ];
 
     public function files(){

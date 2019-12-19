@@ -25,13 +25,13 @@
 <body data-spy="scroll" data-target="#navigation" data-offset="71">
 
 	<!-- Preloader starts -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="loader">
 			<div class="diamond"></div>
 			<div class="diamond"></div>
 			<div class="diamond"></div>
 		</div>
-    </div>
+  </div> -->
 
     {{-- Header Section --}}
     @include('sites.partials.header')

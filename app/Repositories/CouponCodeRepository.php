@@ -35,4 +35,26 @@ class CouponCodeRepository extends BaseRepository
     {
         return CouponCode::class;
     }
+
+    public function addCoupon($input)
+    {
+      $create = $this->model->create([
+        'name' => $input['name'],
+        'code' => $input['code'],
+        'discount_type' => $input['discount_type'],
+        'discount' => $input['discount'],
+        'active' => $input['active'],
+        'from_date' => $input['from_date'],
+        'to_date' => $input['to_date'],
+      ]);
+      return $create;
+    }
+
+    public function updateCoupon($input, $itemId)
+    {
+      $update = $this->model->where('id', $itemId)->update($input);
+      return $update;
+    }
+
+
 }

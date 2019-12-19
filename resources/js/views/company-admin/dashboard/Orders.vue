@@ -21,21 +21,85 @@
           <!-- Order Item -->
         </v-navigation-drawer>
 
-        <v-toolbar flat color="white">
+        <!-- <v-toolbar flat color="white">
           <v-toolbar-title>Orders</v-toolbar-title>
         </v-toolbar>
-        <v-divider class="m-0"></v-divider>
+        <v-divider class="m-0"></v-divider> -->
         <!--Search Component -->
         <v-card-title>
-          <v-spacer></v-spacer>
-          <div class="w-25">
+          <v-flex xl2 lg2 md2 sm6 xs12 b-50>
+            <v-chip
+              class="chip-style"
+              color="green"
+              text-color="white"
+              @click="searchTag(done.name)"
+              outline
+            >
+              <v-avatar class="green darken-4 chip-style">{{done.value}}</v-avatar>
+              <span style="color: #1b5e20">{{done.name}}</span>
+            </v-chip>
+          </v-flex>
+
+          <v-flex xl2 lg2 md2 sm6 xs12 b-50>
+            <v-chip
+              class="chip-style"
+              color="indigo"
+              text-color="white"
+              outline
+              @click="searchTag(paid.name)"
+            >
+              <v-avatar class="indigo darken-4 chip-style">{{paid.value}}</v-avatar>
+
+              <span style="color: #1a237e">{{paid.name}}</span>
+            </v-chip>
+          </v-flex>
+
+          <v-flex xl2 lg2 md2 sm6 xs12 b-50>
+            <v-chip
+              class="chip-style"
+              color="orange"
+              text-color="white"
+              outline
+              @click="searchTag(pending.name)"
+            >
+              <v-avatar class="orange darken-4 chip-style">{{pending.value}}</v-avatar>
+              <span style="color: #e65100">{{pending.name}}</span>
+            </v-chip>
+          </v-flex>
+
+          <v-flex xl2 lg2 md2 sm6 xs12 b-50>
+            <v-chip
+              class="chip-style"
+              color="red"
+              text-color="white"
+              outline
+              @click="searchTag(cancel.name)"
+            >
+              <v-avatar class="red darken-4 chip-style">{{cancel.value}}</v-avatar>
+              <span style="color: #b71c1c">{{cancel.name}}</span>
+            </v-chip>
+          </v-flex>
+          <v-flex xl2 lg2 md2 sm6 xs12 b-50>
+            <v-chip
+              class="chip-style"
+              color="primary"
+              text-color="white"
+              outline
+              @click="searchTag(booking.name)"
+            >
+              <v-avatar class="primary darken-4 chip-style">{{booking.value}}</v-avatar>
+              <span style="color: #003385">{{booking.name}}</span>
+            </v-chip>
+          </v-flex>
+          <!-- <v-spacer></v-spacer> -->
+          <!-- <div class="w-25">
             <v-text-field
               v-model="search"
               append-icon="search"
               label="Enter Search Value"
               single-line
               hide-details
-            ></v-text-field>
+            ></v-text-field> -->
           </div>
         </v-card-title>
         <!--End Search Component -->
@@ -133,7 +197,13 @@ import OrderDetail from "./OrderDetail.vue";
 
 export default {
   name: "Orders",
-
+  props: [
+    'done',
+    'paid',
+    'pending',
+    'cancel',
+    'booking',
+  ],
   components: {
     // TransactionItem
     "order-detail": OrderDetail
@@ -141,6 +211,9 @@ export default {
   data() {
     return {
       dialog: false,
+      paramsSearchTag: {
+        status: ""
+      },
       desserts: [],
       headers: [
         {
@@ -242,13 +315,21 @@ export default {
       this.fetchData(this.params);
     });
 
-    this.$root.$on("searchTag", res => {
-      this.params = res;
-      this.params.check = 1;
-      this.fetchData(this.params);
-    });
+    // this.$root.$on("searchTag", res => {
+    //   this.params = res;
+    //   console.log(this.params);
+    //   this.params.check = 1;
+    //   this.fetchData(this.params);
+    // });
   },
   methods: {
+    searchTag(params) {
+      this.params.status = params;
+      this.params.check = 1;
+      console.log(this.params);
+      this.fetchData(this.params);
+      // this.$root.$emit("searchTag", this.paramsSearchTag);
+    },
     fetchData(params) {
       params.company_id = this.company_id;
       let url = "order/history-order";
@@ -309,7 +390,9 @@ export default {
   min-width: 130px;
   width: 130px;
 }
-
+.chip-style {
+  cursor: pointer;
+}
 .hover-icon {
   &:hover {
     color: blue;

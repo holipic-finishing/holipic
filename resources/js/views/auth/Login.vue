@@ -1,13 +1,13 @@
 <template>
   <v-content class="pb-md-20 pb-sm-5">
     <v-card class="shadow-none bg-color">
-      <v-card-title
+      <!-- <v-card-title
         class="font-weight-bold display-1 justify-content-center"
-      >
-        {{$t('message.loginToAdmin')}}
-      </v-card-title>
+      > -->
+        <!-- {{$t('message.loginToAdmin')}} -->
+      <!-- </v-card-title> -->
       <v-card-text class="text-muted text-center h2 lead">
-        Enter email and password to access control panel of Holipic.
+        Login to Manage Whole Bussiness
       </v-card-text>
 
       <v-form v-model="valid" class="mb-4" ref="form">
@@ -27,10 +27,11 @@
           required
           @keyup.enter="login"
         ></v-text-field>
+        <div class="d-flex flex-row">
+          <v-checkbox color="primary" label="Remember me" v-model="checkbox"></v-checkbox>
 
-        <v-checkbox color="primary" label="Remember me" v-model="checkbox"></v-checkbox>
-
-        <router-link class="mb-1" to="/session/forgot-password">{{ $t('message.forgotPassword') }}?</router-link>
+          <router-link style="color:rgb(121, 121, 121);" class="mt-4 subtitle-1" to="/session/forgot-password">{{ $t('message.forgotPassword') }}?</router-link>
+        </div>
         <div>
           <v-btn large @click="login" block color="primary">{{ $t('message.loginNow') }}</v-btn>
         </div>

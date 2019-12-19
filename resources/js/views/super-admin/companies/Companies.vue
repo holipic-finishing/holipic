@@ -185,7 +185,7 @@
       <!-- component -->
       <coupon-code-component :typeEvent="typeEvent" :item="item"></coupon-code-component>
       <transaction-component></transaction-component>
-      <company-information></company-information>
+      <company-information :data="desserts"></company-information>
       <company-edit-component></company-edit-component>
     </v-layout>
   </v-container>

@@ -155,10 +155,8 @@
                 <span class="font-weight-bold item-title position-item">Company Name</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
                     placeholder="Enter Company Name"
                     v-model="itemToLoad.company_name"
-                    outline
                     :rules="[rules.required]"
                     @blur="editItem('company_name', itemToLoad.company_name)"
                     @keyup.enter="editItem('company_name', itemToLoad.company_name)"
@@ -178,10 +176,8 @@
                 <span class="font-weight-bold item-title position-item">Invoice</span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
                     placeholder="Enter Invoice"
                     v-model="itemToLoad.invoice"
-                    outline
                     :rules="[rules.required]"
                     @blur="editItem('invoice', itemToLoad.invoice)"
                     @keyup.enter="editItem('invoice', itemToLoad.invoice)"
@@ -214,10 +210,7 @@
                       slot="activator"
                       v-model="computedDateFormatted"
                       readonly
-                      class="font-weight-bold height-input"
                       placeholder="Enter date"
-                      outline
-
                     ></v-text-field>
                     <v-date-picker v-model="date" no-title  @input="editItem('dated', date)" :max="new Date().toISOString().substr(0, 10)"></v-date-picker>
                   </v-menu>
@@ -230,42 +223,18 @@
           </v-list-tile>
           <v-divider class="mt-0 mb-0"></v-divider>
 
-          <v-list-tile class="height-80">
-            <v-list-tile-content class="h-100">
-              <v-list-tile-title class="content-flex-end h-100">
-                <span class="font-weight-bold item-title position-item">Transaction</span>
-                <span class="contain-text-field">
-                  <v-select
-                    class="font-weight-bold height-input"
-                    outline
-                    :items="listStatus"
-                    v-model="itemToLoad.status"
-
-                    @change="editItem('status', itemToLoad.status)"
-                  ></v-select>
-                </span>
-               <!--  <span class="position-item">
-                  <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
-                </span> -->
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-divider class="mt-0 mb-0"></v-divider>
-
           <v-list-tile class="height-80 rp-amount">
             <v-list-tile-content class="h-100">
               <v-list-tile-title class="content-flex-end h-100 align-amount">
                 <span class="font-weight-bold item-title position-item ">
-                  Amount {{ itemToLoad.currency.name }}
+                  <!-- Amount {{ itemToLoad.currency.name }} -->
+                  Amount
                   <!-- <div>{{ itemToLoad.currency.name }}</div> -->
                 </span>
                 <span class="contain-text-field">
                   <v-text-field
-                    class="font-weight-bold height-input"
                     v-model="itemToLoad.amount"
                     :rules="[rules.required]"
-                    outline
-
                     @blur="editItem('amount', itemToLoad.amount)"
                     @keyup.enter="editItem('amount', itemToLoad.amount)"
                   ></v-text-field>
@@ -277,6 +246,28 @@
             </v-list-tile-content>
           </v-list-tile>
           <v-divider class="mt-0 mb-0"></v-divider>
+
+          <v-list-tile class="height-80">
+            <v-list-tile-content class="h-100">
+              <v-list-tile-title class="content-flex-end h-100">
+                <span class="font-weight-bold item-title position-item">Transaction</span>
+                <span class="contain-text-field">
+                  <v-select
+                    :items="listStatus"
+                    item-text="text"
+                    item-value="value"
+                    v-model="itemToLoad.status"
+                    @change="editItem('status', itemToLoad.status)"
+                  ></v-select>
+                </span>
+               <!--  <span class="position-item">
+                  <v-btn flat icon @click="unDisableItem(4)"><v-icon small>fas fa-marker</v-icon></v-btn>
+                </span> -->
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider class="mt-0 mb-0"></v-divider>
+
           <v-spacer></v-spacer>
 
         </v-list>
@@ -300,7 +291,17 @@ export default {
   props: ['eventType', 'item'],
   data () {
     return {
-    	listStatus: [ 'RECIVED', 'DONE'],
+    	// listStatus: [ 'RECEIVED', 'DONE'],
+      listStatus: [
+        {
+          text: 'RECEIVED',
+          value: 'RECIVED'
+        },
+        {
+          text: 'DONE',
+          value: 'DONE'
+        }
+      ],
     	rules: {
         required: value => !!value || 'This field is required.',
       	number: value => {

@@ -4,12 +4,11 @@
             <!-- Quick link start -->
             <div class="col-lg-3 col-md-6">
                 <div class="footer-link wow fadeInUp" data-wow-delay="0.2s">
-                    <h3>Company</h3>
+                    <h3>{{ __('company') }}</h3>
                     <ul>
                         <li><a href="#">About us</a></li>
                         <li><a href="#">Team</a></li>
                         <li><a href="#">Careers</a></li>
-                        <li><a href="#">Our Services</a></li>
                     </ul>
                 </div>
             </div>
@@ -18,12 +17,11 @@
             <!-- Quick link start -->
             <div class="col-lg-3 col-md-6">
                 <div class="footer-link wow fadeInUp" data-wow-delay="0.4s">
-                    <h3>Legal</h3>
+                    <h3>{{ __('legal') }}</h3>
                     <ul>
-                        <li><a href="#">Terms & Conditions</a></li>
-                        <li><a href="#">Refund & Cancellation</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Offer Terms</a></li>
+                        <li><a class="has-popup" href="#term">{{ __('modal-term-link') }}</a></li>
+                        <li><a class="has-popup" href="#refund">{{ __('modal-refund-link') }}</a></li>
+                        <li><a class="has-popup" href="#policy">{{ __('modal-policy-link') }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -32,7 +30,7 @@
             <!-- Contact info start -->
             <div class="col-lg-3 col-md-6">
                 <div class="footer-info wow fadeInUp" data-wow-delay="0.6s">
-                    <h3>Contact us</h3>
+                    <h3>{{ __('contact') }}</h3>
                     <p>Jl Melasti No 1, Legian, Kuta <br />Bali - Indonesia 80361</p>
                     <p>holipicapp@gmail.com</p>
                     <p>WA. (+62) 8113937070</p>
@@ -43,7 +41,7 @@
             <!-- Available Payment start -->
             <div class="col-lg-3 col-md-6">
                 <div class="footer-payment wow fadeInUp" data-wow-delay="0.8s">
-                    <h3>We Accept</h3>
+                    <h3>{{ __('accept') }}</h3>
 
                     <div class="footer-payment-box">
                         <i class="fa fa-cc-visa"></i>
@@ -66,20 +64,20 @@
 			<!-- Footer Copyright start -->
 			<div class="col-md-6">
 				<div class="footer-copyright wow fadeInUp" data-wow-delay="0.2s">
-          <h6>Design by Holipic.com</h6>
-          <h6>@2019 Holipic App. All Rights Reserved.</h6>
+          <p>Design by Holipic.com</p>
+          <p>@2019 Holipic App. All Rights Reserved.</p>
 				</div>
 			</div>
 			<!-- Footer Copyright end -->
 
 			<!-- Footer Social start -->
 			<div class="col-md-6">
-				<div class="footer-social wow fadeInUp" data-wow-delay="0.4s">
+				<!-- <div class="footer-social wow fadeInUp" data-wow-delay="0.4s">
 					<h3>Follow us:</h3>
 					<a href="#"><i class="fa fa-facebook"></i></a>
 					<a href="#"><i class="fa fa-twitter"></i></a>
 					<a href="#"><i class="fa fa-instagram"></i></a>
-				</div>
+				</div> -->
 			</div>
 			<!-- Footer Social end -->
 		</div>

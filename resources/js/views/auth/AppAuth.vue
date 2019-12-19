@@ -4,6 +4,7 @@
       <v-layout align-center justify-center>
         <v-flex xs12 sm8 md4>
           <div class="session-content text-center">
+            <p class="display-2"><b>Welcome</b></p>
             <v-img
               :src="appLogo"
               class="d-inline-block img-responsive mb-3 rounded"

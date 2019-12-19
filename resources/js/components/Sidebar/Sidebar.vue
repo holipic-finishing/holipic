@@ -1,10 +1,17 @@
 <!-- Side Structure -->
 <template>
-  <div class="sidebar" :class="sidebarSelectedFilter.class">
-    <vue-perfect-scrollbar class="scroll-area" :settings="settings">
+  <!-- <div class="sidebar" :class="sidebarSelectedFilter.class"> -->
+  <div class="sidebar">
+    <!-- <vue-perfect-scrollbar class="scroll-area" :settings="settings"> -->
       <v-toolbar flat class="transparent scroll-area navigation">
         <v-list>
-          <app-logo></app-logo>
+          <!-- <v-subheader><app-logo></app-logo></v-subheader> -->
+          <v-list-item>
+            <v-list-item-content>
+              <app-logo></app-logo>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- <app-logo></app-logo> -->
           <template v-for="(category, key) in menus">
             <div :key="key">
               <!-- <div class="sidebar-title px-3">
@@ -23,6 +30,7 @@
                       <v-list-tile-content>
                         <v-list-tile-title>
                           <i class="mr-2 zmdi" :class="item.action"></i>
+                          <br>
                           <span>{{ textTruncate($t(item.title)) }}</span>
                         </v-list-tile-title>
                       </v-list-tile-content>
@@ -44,13 +52,13 @@
                     :to="!item.exact ? `/${getCurrentAppLayoutHandler() + item.path}` : item.path"
                     :key="item.path"
                   >
-                    <v-list-tile-action>
+                    <!-- <v-list-tile-action class="pa-0">
                       <i class="zmdi zmdi-caret-right"></i>
-                    </v-list-tile-action>
+                    </v-list-tile-action> -->
                     <v-list-tile-content>
-                      <v-list-tile-title class="">
-                        <i class="mr-2 zmdi lead" :class="item.action"></i>
-                        <span>{{ textTruncate($t(item.title)) }}</span>
+                      <v-list-tile-title style="height:100%!important;" class="text-center">
+                        <i class="zmdi lead" :class="item.action"></i>
+                        <p style="font-size: 10px;">{{ textTruncate($t(item.title)) }}</p>
                       </v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
@@ -60,7 +68,7 @@
           </template>
         </v-list>
       </v-toolbar>
-    </vue-perfect-scrollbar>
+    <!-- </vue-perfect-scrollbar> -->
   </div>
 </template>
 
@@ -87,6 +95,7 @@ export default {
   mounted() {
     this.$store.dispatch("setActiveMenuGroup", this.$router);
     this.user = JSON.parse(localStorage.getItem("user"));
+    // console.log(sidebarSelectedFilter);
   },
   methods: {
     textTruncate(text) {
@@ -98,3 +107,11 @@ export default {
   }
 };
 </script>
+<style>
+.sidebar * {
+  color: #797878!important;
+}
+.v-navigation-drawer .navigation .v-list .v-list__tile--link{
+  width: 80px!important;
+}
+</style>

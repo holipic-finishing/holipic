@@ -64,9 +64,10 @@ class CouponCodeAPIController extends AppBaseController
     public function store(CreateCouponCodeAPIRequest $request)
     {
         $input = $request->all();
-        $couponCodes = $this->couponCodeRepository->create($input);
+        $couponCodes = $this->couponCodeRepository->addCoupon($input);
 
-        return $this->sendResponse($couponCodes->toArray(), 'Coupon Code saved successfully');
+        // return $this->sendResponse($input->toArray(), 'Coupon Code saved successfully');
+        return $this->sendResponse($couponCodes, 'Coupon Code saved successfully');
     }
 
     /**
@@ -151,7 +152,7 @@ class CouponCodeAPIController extends AppBaseController
 
         $result = null;
 
-        $result = $this->couponCodeRepository->update([
+        $result = $this->couponCodeRepository->updateCoupon([
             $input['field_name'] => $input['value']
         ], $itemId);
 
@@ -161,7 +162,7 @@ class CouponCodeAPIController extends AppBaseController
         // $log->save();
 
         if($result){
-            return $this->sendResponse([], 'Coupon code updated successfully');
+            return $this->sendResponse($result, 'Coupon code updated successfully');
         }else{
             return $this->sendError('System Error Occurred');
         }

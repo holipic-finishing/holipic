@@ -24,10 +24,11 @@ class CouponCode extends Model
     public $table = 'coupon_codes';
 
     public $timestamps = false;
-    
+
     public $fillable = [
         'name',
         'code',
+        'discount_type',
         'discount',
         'active',
         'from_date',
@@ -51,7 +52,7 @@ class CouponCode extends Model
      * @var array
      */
     public static $rules = [
-        
+
     ];
 
     public function company(){

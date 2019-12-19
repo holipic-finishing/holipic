@@ -52,6 +52,30 @@
                     <v-list-tile class="height-80">
                       <v-list-tile-content class="h-100">
                         <v-list-tile-title class="content-flex-end h-100">
+                          <span class="font-weight-bold item-title position-item">Owner/Manager:</span>
+                          <span class="contain-text-field">
+                            <v-text-field
+                            disabled
+                              placeholder="Enter Owner/Manager Name"
+                              v-model="company.fullname"
+                              @keyup.enter="updateCompany('fullname', company.fullname)"
+                              :rules="[rules.required]"
+                            ></v-text-field>
+                          </span>
+                          <!--  <span class="position-item">
+								              <v-btn flat icon @click="unDisableItem(2)"><v-icon small>fas fa-marker</v-icon></v-btn>
+                          </span>-->
+                        </v-list-tile-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </v-flex>
+                  <v-flex d-flex xs12 sm12 md12 class="flex-padding">
+                    <v-divider class="no-mg-bottom"></v-divider>
+                  </v-flex>
+                  <v-flex d-flex xs12 sm12 md12 class="flex-padding">
+                    <v-list-tile class="height-80">
+                      <v-list-tile-content class="h-100">
+                        <v-list-tile-title class="content-flex-end h-100">
                           <span class="font-weight-bold item-title position-item">Address:</span>
                           <span class="contain-text-field">
                             <v-text-field
@@ -184,6 +208,7 @@ export default {
       if (
         this.company.name == "" ||
         this.company.address == "" ||
+        this.company.fullname == "" ||
         this.company.description == "" ||
         this.company.phone == ""
       ) {
@@ -207,6 +232,9 @@ export default {
         case "name":
           params = { name: this.company.name };
           break;
+        case "fullname":
+          params = { fullname: this.company.fullname };
+          break;
         case "address":
           params = { address: this.company.address };
           break;
@@ -223,6 +251,7 @@ export default {
           .then(response => {
             if (response && response.success) {
               this.company = response.data;
+              console.log(response.data);
               this.alertStt = true;
               this.alertType = "success";
               this.alertMes = "Update Successfully";

@@ -8,7 +8,7 @@ export const menus = {
         //////////////////////////////////////////////
         {
             action: 'fas fa-tachometer-alt',
-            title: 'message.dashboard',
+            title: 'Dashboard',
             active: true,
             path: '/dashboard',
             items: null,
@@ -111,7 +111,8 @@ export const menus = {
         },
         {
             action: 'fas fa-tasks',
-            title: 'message.companymanagement',
+            // title: 'message.companymanagement',
+            title: 'Companies',
             active: false,
             path: '/companies',
             role_id: 1,
@@ -119,7 +120,7 @@ export const menus = {
         },
         {
             action: 'fas fa-box-open',
-            title: 'message.package',
+            title: 'Packages',
             active: false,
             items: null,
             role_id: 1,
@@ -135,14 +136,14 @@ export const menus = {
         },
         {
             action: 'fas fa-ticket-alt',
-            title: 'message.couponCode',
+            title: 'Couponds',
             active: false,
             role_id: 1,
             path: '/coupon-codes'
         },
         {
             action: 'fas fa-dollar-sign',
-            title: 'message.ewallet',
+            title: 'E-Wallet',
             active: false,
             role_id: 1,
             path: '/ewallet-withdraw'

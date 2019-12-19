@@ -21,7 +21,7 @@
           <transaction-item :eventType="eventType" :item="item"></transaction-item>
         </v-navigation-drawer>
 
-        <v-toolbar flat color="white">
+        <!-- <v-toolbar flat color="white">
           <v-toolbar-title>
             <v-hover>
               <router-link
@@ -33,17 +33,20 @@
             </v-hover>
           </v-toolbar-title>
         </v-toolbar>
-        <v-divider></v-divider>
+        <v-divider></v-divider> -->
         <!--Search Component -->
         <v-card-title>
+          <p class="headline">Transactions</p>
           <v-spacer></v-spacer>
-          <v-text-field
+          <input type="search" v-model="search" class="cari" id="search" name="search" placeholder="Search">
+          <!-- <input type="search" v-model="search" class="cari" id="search" name="search" placeholder="Search"> -->
+          <!-- <i class="fa fa-search"></i> -->
+          <!-- <v-text-field
             v-model="search"
             append-icon="search"
-            label="Enter Search Value"
-            single-line
-            hide-details
-          ></v-text-field>
+            label="Search"
+            id="search"
+          ></v-text-field> -->
         </v-card-title>
         <!--End Search Component -->
         <!--Data Table Component -->
@@ -89,28 +92,44 @@
             <td>{{ props.item.company_name }}</td>
             <td>{{ props.item.invoice }}</td>
             <td>{{ props.item.dated | moment("DD/MM/YYYY") }}</td>
-            <td>{{ props.item.title }}</td>
+            <!-- <td>{{ props.item.title }}</td> -->
             <td>
               <div
                 v-if="props.item.status === 'RECIVED'"
-                style="color:green"
-              >+ {{ props.item.amount_with_symbol }}</div>
-              <div v-else>{{ - props.item.amount_with_symbol }}</div>
+              >Top Up</div>
+              <div v-else-if="props.item.status === 'DONE'"> Bank Transfer</div>
             </td>
             <td>
-              <v-btn
+              <div
+                v-if="props.item.status === 'RECIVED'"
+              > {{ props.item.amount_with_symbol }}</div>
+              <div v-else> {{ props.item.amount_with_symbol }}</div>
+            </td>
+            <td>
+              <p v-if="props.item.status === 'RECIVED'" class="success--text">RECEIVED</p>
+              <p v-else class="error--text">{{ props.item.status }}</p>
+              <!-- <v-btn
                 color="success"
                 small
+                flat
                 v-if="props.item.status === 'RECIVED'"
-              >{{ props.item.status }}</v-btn>
-              <v-btn color="error" small v-else>{{ props.item.status }}</v-btn>
+              >{{ props.item.status }}</v-btn> -->
+              <!-- <v-btn
+                color="success"
+                small
+                flat
+                v-if="props.item.status === 'RECIVED'"
+              >RECEIVED</v-btn>
+              <v-btn flat color="error" small v-else>{{ props.item.status }}</v-btn> -->
+              <!-- <v-btn flat color="error" small v-else>{{ props.item.status }}</v-btn> -->
             </td>
-            <td class="action-width">
-              <v-icon
+            <!-- <td class="action-width"> -->
+            <td>
+              <!-- <v-icon
                 small
                 class="mr-2 hover-icon"
                 @click="transactionEvent('show', props.item)"
-              >visibility</v-icon>
+              >visibility</v-icon> -->
               <v-icon
                 small
                 class="mr-2 hover-icon"
@@ -180,7 +199,7 @@ export default {
           width: "3%"
         },
         {
-          text: "Company Name",
+          text: "Company",
           align: "left",
           value: "company_name",
           width: "10%"
@@ -201,7 +220,7 @@ export default {
           value: "title"
         },
         {
-          text: "Amount($)",
+          text: "Amount",
           align: "right",
           value: "amount_with_symbol",
           sortable: false
@@ -218,7 +237,9 @@ export default {
           sortable: false
         }
       ],
-      pagination: {},
+      pagination: {
+        descending: true
+      },
       loading: true,
       search: "",
       selected: [],
@@ -230,7 +251,8 @@ export default {
       },
       itemIdToDelete: null,
       rowsPerPageItems: [
-        20,
+        10,
+        25,
         50,
         100,
         { text: "$vuetify.dataIterator.rowsPerPageAll", value: -1 }
@@ -278,9 +300,9 @@ export default {
     fetchData(params) {
       post("history-transactions", params)
         .then(res => {
-          // console.log("res");
           if (res && res.success) {
             this.desserts = res.data;
+            console.log(this.desserts);
             this.loading = false;
             this.$root.$emit("total-companies", this.desserts.length);
           }
@@ -354,6 +376,68 @@ export default {
 .action-width {
   min-width: 130px;
   width: 130px;
+}
+
+input[type=search] {
+	background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 11px center;
+	border: solid 1px #ccc;
+	padding: 9px 10px 9px 32px;
+	width: 15px;
+
+	-webkit-border-radius: 10em;
+	-moz-border-radius: 10em;
+	border-radius: 10em;
+
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	transition: all .5s;
+}
+//
+// #search input[type=search] {
+// 	width: 15px;
+// 	padding-left: 10px;
+// 	color: transparent;
+// 	cursor: pointer;
+// }
+// #search input[type=search]:hover {
+// 	background-color: #fff;
+// }
+// #search input[type=search]:focus {
+// 	width: 100%;
+// 	padding-left: 32px;
+// 	color: #000;
+// 	background-color: #fff;
+// 	cursor: auto;
+// }
+// #search input:-moz-placeholder {
+// 	color: transparent;
+// }
+// #search input::-webkit-input-placeholder {
+// 	color: transparent;
+// }
+
+.cari {
+  // background-color: #333;
+  position: relative;
+  display:block;
+  margin: 0 0 0 auto;
+  width: 130px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  // background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+  // background-color: white;
+  // background-image: url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png);
+  // background-position: 10px 10px;
+  // background-repeat: no-repeat;
+  padding: 12px 20px 12px 10px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+.cari:focus {
+  width: 50%;
+  outline: none!important;
 }
 
 .hover-icon {

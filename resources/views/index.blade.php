@@ -21,12 +21,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <base href="{{secure_asset('')}}">
-    <link rel="shortcut icon" type="image/png" href="{{secure_asset('favicon.png')}}" />
-    <link rel="stylesheet" type="text/css" href="{{secure_asset('css/app.css')}}">
+    <base href="{{asset('')}}">
+    <!-- <link rel="shortcut icon" type="image/png" href="{{secure_asset('favicon.png')}}" />
+    <link rel="stylesheet" type="text/css" href="{{secure_asset('css/app.css')}}"> -->
+    <!-- <link rel="shortcut icon" type="image/png" href="{{asset('favicon.png')}}" /> -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/HOLIPIC-FAVICON.png" />
+    <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
 
-    <title>Holipic Admin</title>
+    <title>Holipic</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <script src="https://kit.fontawesome.com/db37308111.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -90,7 +94,8 @@
 
     {{-- Polyfill JS features via polyfill.io --}}
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features={{ implode(',', $polyfills) }}"></script>
-    <script type="text/javascript" src="{{secure_asset('js/app.js')}}"></script>
+    <!-- <script type="text/javascript" src="{{secure_asset('js/app.js')}}"></script> -->
+    <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
 </body>
 
 </html>

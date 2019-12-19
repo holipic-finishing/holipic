@@ -36,34 +36,6 @@
                 <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
                   <v-divider class="no-mg-bottom"></v-divider>
                 </v-flex>
-                <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
-                  <v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title class="content-flex">
-                        <span class="font-weight-bold item-title">Email login:</span>
-                        <span class="max-value">{{company.email}}</span>
-                      </v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-flex>
-                <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
-                  <v-divider class="no-mg-bottom"></v-divider>
-                </v-flex>
-
-                <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
-                  <v-list-tile>
-                    <v-list-tile-content>
-                      <v-list-tile-title class="content-flex">
-                        <span class="font-weight-bold item-title">Address:</span>
-                        <span class="max-value">{{company.address}}</span>
-                      </v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                </v-flex>
-
-                <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
-                  <v-divider class="no-mg-bottom"></v-divider>
-                </v-flex>
 
                 <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
                   <v-list-tile>
@@ -83,6 +55,20 @@
                   <v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title class="content-flex">
+                        <span class="font-weight-bold item-title">Address:</span>
+                        <span class="max-value">{{company.address}}</span>
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
+                  <v-divider class="no-mg-bottom"></v-divider>
+                </v-flex>
+
+                <!-- <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title class="content-flex">
                         <span class="font-weight-bold item-title">Total customer:</span>
                         <span class="max-value">...</span>
                       </v-list-tile-title>
@@ -92,13 +78,13 @@
 
                 <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
                   <v-divider class="no-mg-bottom"></v-divider>
-                </v-flex>
+                </v-flex> -->
 
                 <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
                   <v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title class="content-flex">
-                        <span class="font-weight-bold item-title">Total storage:</span>
+                        <span class="font-weight-bold item-title">Storage GB:</span>
                         <span class="max-value">{{company.file_upload}}GB</span>
                       </v-list-tile-title>
                     </v-list-tile-content>
@@ -112,8 +98,36 @@
                   <v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-title class="content-flex">
-                        <span class="font-weight-bold item-title">Total income :</span>
+                        <span class="font-weight-bold item-title">Income :</span>
                         <span class="max-value">{{company.total_income}}</span>
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
+                  <v-divider class="no-mg-bottom"></v-divider>
+                </v-flex>
+
+                <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title class="content-flex">
+                        <span class="font-weight-bold item-title">Login:</span>
+                        <span class="max-value">{{company.email}}</span>
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-flex>
+                <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
+                  <v-divider class="no-mg-bottom"></v-divider>
+                </v-flex>
+
+                <v-flex d-flex xs12 sm12 md12 class="flex-padding-2">
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-title class="content-flex">
+                        <span class="font-weight-bold item-title">Password:</span>
+                        <span class="max-value">{{company.show_password}}</span>
                       </v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
@@ -221,6 +235,7 @@ export default {
     this.$root.$on("sendEventCompanyInformation", response => {
       this.drawerRight = response.showNavigation;
       this.companyId = response.data.id;
+      this.company = response.data;
       this.informationCompany(this.companyId);
       this.width = this.getCurrentWithContentWrap();
     });

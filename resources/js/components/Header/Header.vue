@@ -4,16 +4,12 @@
     <v-navigation-drawer
       app
       fixed
-      mini-variant-width="80"
+      color="white"
       v-if="!horizontal"
       v-model="drawer"
       class="Vuely-sidebar"
-      :mini-variant.sync="collapseSidebar"
-      :width="250"
-      :style="{backgroundImage: 'url(' + selectedSidebarBgImage.url + ')'}"
-      :class="{'background-none': !backgroundImage}"
       :right="rtlLayout"
-      @input="updateDrawerHeaderStt"
+      width= "80"
     >
       <!-- App Sidebar -->
       <app-sidebar></app-sidebar>
@@ -101,7 +97,7 @@ export default {
     return {
       user: JSON.parse(localStorage.getItem("user")),
       collapsed: false, // collapse sidebar
-      drawer: true, // sidebar drawer default true
+      drawer: false, // sidebar drawer default true
       chatSidebar: false, // chat component right sidebar
       sidebarImages: "", // sidebar background images
       enableDefaultSidebar: false,
@@ -184,5 +180,11 @@ export default {
 }
 .icon-ewallet {
   margin-right: 10px;
+}
+.collapse-sidebar .Vuely-sidebar.v-navigation-drawer:hover{
+  width: 80px !important;
+}
+.v-navigation-drawer .navigation .v-list .v-list__tile--link{
+  width: 80px !important;
 }
 </style>

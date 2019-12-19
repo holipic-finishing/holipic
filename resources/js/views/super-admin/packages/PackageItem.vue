@@ -1,14 +1,5 @@
 <template>
-  <v-navigation-drawer
-    fixed
-    v-model="drawerRight"
-    right
-    clipped
-    app
-    this.width="this.getCurrentWithContentWrap()"
-    :width="widthComputed"
-    temporary
-  >
+  <v-navigation-drawer fixed v-model="drawerRight" right clipped app this.width="this.getCurrentWithContentWrap()" :width="widthComputed" temporary>
     <v-card class="h-100 position-relative">
       <v-toolbar>
         <!-- <v-toolbar-title class="text-capitalize">{{ check ? 'Add Package' : 'Update Package'}}</v-toolbar-title> -->
@@ -358,24 +349,6 @@
           <v-list-tile class="height-80">
             <v-list-tile-content class="h-100">
               <v-list-tile-title class="content-flex-end h-100">
-                <span class="font-weight-bold item-title position-item">Fee:</span>
-                <span class="contain-text-field">
-                  <v-text-field
-                    placeholder="Enter fee"
-                    v-model="data.fee"
-                    :rules="[rules.required, rules.decimal]"
-                    @blur="editItem('fee', data.fee)"
-                    @keyup.enter="editItem('fee', data.fee)"
-                  ></v-text-field>
-                </span>
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-divider class="mt-0 mb-0"></v-divider>
-
-          <v-list-tile class="height-80">
-            <v-list-tile-content class="h-100">
-              <v-list-tile-title class="content-flex-end h-100">
                 <span class="font-weight-bold item-title position-item">Package name:</span>
                 <span class="contain-text-field">
                   <v-text-field
@@ -450,7 +423,9 @@
               <v-list-tile-title class="content-flex-end h-100">
                 <span class="font-weight-bold item-title position-item">Auto Email:</span>
                 <span class="contain-text-field">
-                  <v-switch v-model="data.sms" @change="editSetting('sms', data.sms)"></v-switch>
+                  <v-select :items="emails" item-value="kode" item-text="text" v-model="data.email_service" @change="editSetting('email_service', data.email_service)"></v-select>
+                  <!-- <v-switch v-model="data.sms" @change="editSetting('sms', data.sms)"></v-switch> -->
+                  <!-- <v-switch v-model="data.email_service" @change="editSetting('email_service', data.email_service)"></v-switch> -->
                 </span>
               </v-list-tile-title>
             </v-list-tile-content>
@@ -460,7 +435,39 @@
           <v-list-tile class="height-80">
             <v-list-tile-content class="h-100">
               <v-list-tile-title class="content-flex-end h-100">
-                <span class="font-weight-bold item-title position-item">Maximum User:</span>
+                <span class="font-weight-bold item-title position-item">SMS:</span>
+                <span class="contain-text-field">
+                  <v-select :items="emails" item-value="kode" item-text="text" v-model="data.sms" @change="editSetting('sms', data.sms)"></v-select>
+                  <!-- <v-switch v-model="data.sms" @change="editSetting('sms', data.sms)"></v-switch> -->
+                  <!-- <v-switch v-model="data.email_service" @change="editSetting('email_service', data.email_service)"></v-switch> -->
+                </span>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider class="mt-0 mb-0"></v-divider>
+
+          <v-list-tile class="height-80">
+            <v-list-tile-content class="h-100">
+              <v-list-tile-title class="content-flex-end h-100">
+                <span class="font-weight-bold item-title position-item">Fee (%):</span>
+                <span class="contain-text-field">
+                  <v-text-field
+                    placeholder="Enter fee"
+                    v-model="data.fee"
+                    :rules="[rules.required, rules.decimal]"
+                    @blur="editItem('fee', data.fee)"
+                    @keyup.enter="editItem('fee', data.fee)"
+                  ></v-text-field>
+                </span>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-divider class="mt-0 mb-0"></v-divider>
+
+          <v-list-tile class="height-80">
+            <v-list-tile-content class="h-100">
+              <v-list-tile-title class="content-flex-end h-100">
+                <span class="font-weight-bold item-title position-item">Maximum Branch:</span>
                 <span class="contain-text-field">
                   <v-text-field
                     placeholder="Minimum user"
@@ -491,6 +498,10 @@ export default {
   name: "PackageItem",
   data() {
     return {
+      emails:[
+        { kode: true, text: 'Yes'},
+        { kode: false, text: 'No'}
+      ],
       drawerRight: false,
       check: "",
       rules: {

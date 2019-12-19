@@ -28,9 +28,9 @@
 /************************************/
 
 body{
-	font-size: 16px;
+	font-size: 15px;
 	font-family: 'Poppins', sans-serif;
-	color: #8d97ad;
+	color: #6f7880;
 }
 
 body.on-side{
@@ -539,7 +539,7 @@ a:focus{
 
 .section-title{
 	text-align: center;
-	margin-bottom: 60px;
+	margin-bottom: 1rem;
 }
 
 .section-title h2{
@@ -678,8 +678,8 @@ a:focus{
 }
 
 .pricing-layout-1 .pricing-title p{
-	color: #8d97ad;
-	font-size: 14px;
+	color: #6f7880;
+	font-size: 15px;
 	line-height: 1.7em;
 	margin-bottom: 1.7em;
 }
@@ -1738,4 +1738,73 @@ footer.footer-layout-1{
 
 .date {
 	display: none!important;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  /* no standardized syntax available, no ie-friendly solution available */
+}
+
+select + i.fa {
+  float: right;
+  margin-top: -30px;
+  margin-right: 5px;
+  /* this is so when you click on the chevron, your click actually goes on the dropdown menu */
+  pointer-events: none;
+  /* everything after this is just to cover up the original arrow */
+  /* (for browsers that don't support the syntax used above) */
+  background-color: #fff;
+  padding-right: 5px;
+}
+
+.fa-besar {
+	font-size: 3.5rem!important;
+	color: #4dc2f0!important;
+}
+
+.center-text {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+}
+
+div.card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.dashed{
+  border-top: 1px dashed #22a7e9;
+}
+
+.paket{
+	font-size: 1.5rem!important;
+	color: #8d97ad!important;
+}
+
+.carousel-indicators{
+	bottom: -20px!important;
+}
+
+.carousel-indicators li{
+	background-color: rgba(111, 111, 111, 0.5)!important;
+}
+
+.carousel-indicators .active{
+	background-color: #000!important;
+}
+
+.input-group-append{
+	display: block;
+  height: 44px;
+  width: 44px;
+  text-align: center;
+  font-size: 18px;
+  color: #8d97ad;
+  line-height: 44px;
+  background: #f5f7fa;
+  border: 1px solid #dce3e9;
+  border-left: none;
+  border-radius: 0px 4px 4px 0px;
 }

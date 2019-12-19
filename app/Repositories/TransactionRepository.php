@@ -57,13 +57,17 @@ class TransactionRepository extends BaseRepository
         }
 
 
-        $transactions = Transaction::with('transactionexchange')
-                        ->where('status','RECIVED')
+        // $transactions = Transaction::with('transactionexchange')
+        //                 ->where('status','RECIVED')
+        //                 ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
+        //                 ->get()->toArray();
+
+        $transactionDolars = Transaction::where('status','RECIVED')
+                        ->whereIn('currency_id', [1,3])
                         ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
                         ->get()->toArray();
 
-
-        $dates = $this->sumAmount($dates, $transactions, 'day');
+        $dates = $this->sumAmount($dates, $transactionDolars, 'day');
 
         return $dates;
     }
@@ -83,7 +87,7 @@ class TransactionRepository extends BaseRepository
             $toMonth = Carbon::today()->format('Y-m');
         }
 
-        $transactions = Transaction::with('transactionexchange')
+        $transactions = Transaction::whereIn('currency_id', [1,3])
                         ->where('status','RECIVED')
                         ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '>=', $fromMonth)
                         ->where(DB::raw("DATE_FORMAT(dated,'%Y-%m')"), '<=', $toMonth)
@@ -111,7 +115,7 @@ class TransactionRepository extends BaseRepository
         }
 
 
-        $transactions = Transaction::with('transactionexchange')
+        $transactions = Transaction::whereIn('currency_id', [1,3])
                         ->where('status','RECIVED')
                         ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '>=', $from_year)
                         ->where(DB::raw("DATE_FORMAT(dated,'%Y')"), '<=', $to_year)
@@ -141,7 +145,7 @@ class TransactionRepository extends BaseRepository
 
         }
 
-        $transactions = Transaction::with('transactionexchange')
+        $transactions = Transaction::whereIn('currency_id', [1,3])
                         ->where('status','RECIVED')
                         ->whereBetween(DB::raw('date(dated)'),[$startDay,$endDay])
                         ->get()->toArray();
@@ -149,7 +153,11 @@ class TransactionRepository extends BaseRepository
 
         foreach ($dayWeeks as $key => $date) {
 
-            $count=0;
+            // $count=0;
+            $countUsd=0;
+            $countIdr=0;
+            $amountIdr=0;
+            $amountUsd=0;
             if(count($transactions)) {
                 foreach ($transactions as $k_v => $value) {
 
@@ -157,21 +165,36 @@ class TransactionRepository extends BaseRepository
 
                     if($date['startOfWeek'] <= $day && $day <= $date['endOfWeek']) {
 
-                        $amount = $value['amount'];
+                        // $amount = $value['amount'];
+                        if ($value['currency_id'] == 3) {
+                            $amountIdr = $value['amount'];
+                        }
 
-                        $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
+                        elseif ($value['currency_id'] == 1) {
+                            $amountUsd = $value['amount'];
+                        }
 
-                        $count = $count + $amount *  $exchange_rate_to_dollar;
+                        // $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
+
+                        // $count = $count + $amount *  $exchange_rate_to_dollar;
+                        $countUsd = $countUsd + $amountUsd;
+                        $countIdr = $countIdr + $amountIdr;
                     }
                     else {
-                        $dayWeek[$key]['total'] = 0;
+                        // $dayWeek[$key]['total'] = 0;
+                        $dayWeek[$key]['totalUsd'] = 0;
+                        $dayWeek[$key]['totalIdr'] = 0;
 
                     }
                 }
 
-                $dayWeeks[$key]['total'] = round($count,3);
+                // $dayWeeks[$key]['total'] = round($count,3);
+                $dayWeeks[$key]['totalUsd'] = round($countUsd,3);
+                $dayWeeks[$key]['totalIdr'] = round($countIdr,2);
             }  else {
-                $dayWeeks[$key]['total'] = 0;
+                // $dayWeeks[$key]['total'] = 0;
+                $dayWeek[$key]['totalUsd'] = 0;
+                $dayWeek[$key]['totalIdr'] = 0;
             }
 
         }
@@ -196,9 +219,12 @@ class TransactionRepository extends BaseRepository
             $query = $query->with(['company' => function($q) {
                                 $q->withTrashed();
                             }]);
+            $query = $query->with(['currency' => function($q) {
+                                $q->withTrashed();
+                            }]);
 
-            $query = $query->with('currency')
-                        ->with('transactionexchange');
+            // $query = $query->with('currency')
+            //             ->with('transactionexchange');
 
             if (!empty($params['defaultDay'])) {
 
@@ -269,8 +295,8 @@ class TransactionRepository extends BaseRepository
             }
 
             return $query;
-        })->get();
-        // $results = $this->transform($results);
+        })->orderBy('id', 'desc')->get();
+        $results = $this->transform($results);
         // $results = "sukses";
 
         return $results;
@@ -283,9 +309,11 @@ class TransactionRepository extends BaseRepository
 
         foreach ($results as $key => $result) {
 
-            $results[$key]->company_name = $result->company->name;
+            $results[$key]->company_name = $result->company['name'];
 
-            // $results[$key]->amount_with_symbol = round(($result->amount * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol;
+            // $results[$key]->amount_with_symbol = round($result->amount,3)." ".$result->symbol;
+            // $results[$key]->amount_with_symbol = $result->currency['symbol']." ".round($result->amount,3);
+            $results[$key]->amount_with_symbol = $result->currency['symbol']." ".round($result->amount,0);
 
             // $results[$key]->system_fee_with_symbol = round(($result->system_fee * $result->transactionexchange->exchange_rate_to_dollar),3)." ".$result->symbol;
             // $results[$key]->credit_card_fee_with_symbol = round(($result->credit_card_fee * $result->transactionexchange->exchange_rate_to_dollar),3) ." ".$result->symbol;
@@ -523,7 +551,10 @@ class TransactionRepository extends BaseRepository
     public function sumAmount($dates, $transactions, $timevalue){
 
         foreach ($dates as $key => $date) {
-            $count=0;
+            $countUsd=0;
+            $countIdr=0;
+            $amountIdr=0;
+            $amountUsd=0;
             if(count($transactions)){
                 foreach ($transactions as $k_v => $value) {
 
@@ -539,24 +570,37 @@ class TransactionRepository extends BaseRepository
                         }
 
                     if($key == $time_value) {
+                      // Rizky Code
+                        if ($value['currency_id'] == 3) {
+                            $amountIdr = $value['amount'];
+                        }
 
-                        $amount = $value['amount'];
+                        elseif ($value['currency_id'] == 1) {
+                            $amountUsd = $value['amount'];
+                        }
+                      // Rizky Code
+                        // $amount = $value['amount'];
 
-                        $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
+                        // $exchange_rate_to_dollar =  $value['transactionexchange']['exchange_rate_to_dollar'];
 
-                        $count = $count + $amount *  $exchange_rate_to_dollar;
-
+                        // $count = $count + $amount *  $exchange_rate_to_dollar;
+                        $countUsd = $countUsd + $amountUsd;
+                        $countIdr = $countIdr + $amountIdr;
 
                     } else {
-                        $dates[$key]['total'] = 0;
+                        $dates[$key]['totalUsd'] = 0;
+                        $dates[$key]['totalIdr'] = 0;
                     }
                 }
-                 $dates[$key]['total'] = round($count,3);
+                 $dates[$key]['totalUsd'] = round($countUsd,3);
+                 $dates[$key]['totalIdr'] = round($countIdr,2);
 
             } else {
-                 $dates[$key]['total'] = 0;
+                 $dates[$key]['totalUsd'] = 0;
+                 $dates[$key]['totalIdr'] = 0;
             }
         }
         return $dates;
+        // return $transactions;
     }
 }

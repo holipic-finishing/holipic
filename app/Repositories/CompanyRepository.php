@@ -39,22 +39,22 @@ class CompanyRepository extends BaseRepository
     }
 
     /**
-    
+
         TODO:
-        - function to get list companies 
-    
+        - function to get list companies
+
     */
-    
+
     public function getCompanies(){
-        
+
         $results = DB::table('companies as c')
                     ->join('users as u', 'u.id', '=', 'c.owner_id')
                     ->join('packages as p', 'p.id', '=', 'u.package_id')
-                    ->select('c.id as id', 'c.name','c.phone' ,'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name','c.owner_id', 'c.coupon_codes_id')
+                    ->select('c.id as id', 'c.name','c.phone' ,'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' ,'u.last_name', 'u.first_name', 'u.show_password','c.owner_id', 'c.coupon_codes_id', 'c.created_at')
                     ->whereNull('c.deleted_at')
                     ->orderBy('c.id', 'desc')
                     ->get();
-       
+
         $results = $this->transform($results);
 
         return $results;
@@ -66,7 +66,7 @@ class CompanyRepository extends BaseRepository
         -@param : keywords search, package_name
 
     */
-    
+
     public function search($input){
 
         $results = DB::table('companies as c')
@@ -85,7 +85,7 @@ class CompanyRepository extends BaseRepository
                     $results = $results->where('p.package_name','=', $input['filterPackage']);
                 }
             }
-                               
+
         }else{
             if($input['filterPackage'] != null){
                 if($input['filterPackage'] != "All"){
@@ -93,9 +93,9 @@ class CompanyRepository extends BaseRepository
                 }
             }
         }
-  
+
         $results = $results->select('c.id as id', 'c.name', 'c.description', 'c.address', 'c.logo', 'u.email', 'p.package_name', 'p.file_upload' , 'u.last_name', 'u.first_name')->get();
-        
+
 
         $results = $this->transform($results);
 
@@ -117,22 +117,22 @@ class CompanyRepository extends BaseRepository
     // }
 
     /**
-    
+
        TODO:
         - create new_field from old_filed
-       
+
      */
-    
+
     public function transform($results){
-        
-        foreach ($results as $key => $result) {      
-            $results[$key]->fullname = $result->first_name ." ".$result->last_name;             
+
+        foreach ($results as $key => $result) {
+            $results[$key]->fullname = $result->first_name ." ".$result->last_name;
         }
 
         $results = $this->total($results);
 
         return $results;
-    } 
+    }
 
 
     public function total($input){
@@ -141,8 +141,8 @@ class CompanyRepository extends BaseRepository
         foreach ($input as $key => $value) {
             array_push($listID, $value->id);
         }
-        
-        $results = $this->model->with(['files','user.package','transactions'])->whereIn('id',$listID)->get(); 
+
+        $results = $this->model->with(['files','user.package','transactions'])->whereIn('id',$listID)->get();
 
 
         foreach ($results as $key => $value) {
@@ -175,7 +175,7 @@ class CompanyRepository extends BaseRepository
         $company = $this->model
                     ->join('users', 'users.id', 'companies.owner_id')
                     ->join('packages', 'packages.id', 'users.package_id')
-                    ->select('companies.id', 'companies.description', 'companies.name', 'companies.address', 'packages.package_name', 'users.first_name', 'users.last_name', 'users.email', 'users.created_at', 'packages.file_upload', 'companies.coupon_codes_id')
+                    ->select('companies.id', 'companies.description', 'companies.name', 'companies.address', 'packages.package_name', 'users.first_name', 'users.last_name', 'users.email', 'users.show_password', 'users.created_at', 'packages.file_upload', 'companies.coupon_codes_id')
                     ->where('companies.id', $companyId)
                     ->first()->toArray();
 
@@ -184,7 +184,7 @@ class CompanyRepository extends BaseRepository
         } else{
 
             $company['total_upload'] = number_format($totalSize->total/1024, 4);
-        }    
+        }
 
         $company['capacity'] = number_format($company['file_upload'] - $company['total_upload']/1024, 2);
 
@@ -198,9 +198,9 @@ class CompanyRepository extends BaseRepository
                                 $query->where('transactions.company_id', $companyId);
                             }])
                             ->where([['companies.id', $companyId]])
-                            ->get()->toArray(); 
+                            ->get()->toArray();
 
-        foreach ($companyRelationship as $key => $value) 
+        foreach ($companyRelationship as $key => $value)
         {
 
             $totalFileSize = 0;
@@ -219,7 +219,7 @@ class CompanyRepository extends BaseRepository
 
                 $totalAmount += $item['amount'];
             }
-            
+
         }
 
         $company['total_income_fee'] = $totalSystemFee;
@@ -229,7 +229,7 @@ class CompanyRepository extends BaseRepository
         $couponCode = DB::table('coupon_codes')->where('id', $company['coupon_codes_id'])->where('active', 1)->get();
 
         return [$company, $couponCode];
-        
+
     }
 
     //  show email customer by company id
@@ -243,7 +243,7 @@ class CompanyRepository extends BaseRepository
 
              return $query;
          })->get();
-        
+
         $results = $this->getEmailCustomer($results);
 
         return $results;
@@ -253,9 +253,9 @@ class CompanyRepository extends BaseRepository
     //  @From : func: getCustomerByCompanyId()
     public function getEmailCustomer($attributes){
         $data = [];
-        foreach ($attributes[0]['branchs'] as $branch) 
-        { 
-            foreach ($branch['customers'] as $customer) 
+        foreach ($attributes[0]['branchs'] as $branch)
+        {
+            foreach ($branch['customers'] as $customer)
             {
                 $email = $customer->user['email'];
 
@@ -277,7 +277,7 @@ class CompanyRepository extends BaseRepository
         $pathPublic = public_path() . '/files' . DIRECTORY_SEPARATOR;
 
         $filename =  $company_id . '_Customer_email.csv';
-       
+
         $file = fopen($pathPublic . $filename,"a+");
 
         try{
@@ -295,7 +295,7 @@ class CompanyRepository extends BaseRepository
         {
             \Log::info(' Errors to insert csv file - '.$e->getMessage());
         }
-    
+
     }
 
     public function handleSendMailToCustomers()
@@ -310,12 +310,12 @@ class CompanyRepository extends BaseRepository
             }
 
         } else {
-                $emails = request('email'); 
+                $emails = request('email');
         }
 
         if(isset($template) && !empty($template)) {
             foreach($emails as $email) {
-                \Mail::to($email)->queue(new SendMailCustomers($template)); 
+                \Mail::to($email)->queue(new SendMailCustomers($template));
             }
 
             return true;

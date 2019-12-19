@@ -28,27 +28,28 @@
           </div>
 
           <!-- Load statistical -->
-          <div class="d-custom-flex justify-space-between w-30">
-            <div>
-              <h4 class="info--text mb-0">0</h4>
-              <p class="fs-12 grey--text mb-0">Customers</p>
-            </div>
-            <div>
-              <h4 class="primary--text mb-0">{{ computedCash }}</h4>
-              <p class="fs-12 grey--text mb-0">Cash</p>
-            </div>
-            <div>
-              <h4 class="primary--text mb-0">{{ computedCC }}</h4>
-              <p class="fs-12 grey--text mb-0">CC</p>
-            </div>
-            <div>
-              <h4 class="primary--text mb-0">{{ computedWeb }}</h4>
-              <p class="fs-12 grey--text mb-0">Online</p>
-            </div>
-            <div>
-              <h4 class="primary--text mb-0">{{ computedTotalIncome }}</h4>
-              <p class="fs-12 grey--text mb-0">Total Income</p>
-            </div>
+          <div class="d-custom-flex">
+            <div class="dropdown">
+						  <div class="dropdown-toggle" data-toggle="dropdown">
+                <h4 class="primary--text mb-0">{{ computedTotalIncome }}</h4>
+                Total Income
+              </div>
+						  <ul class="dropdown-menu pl-3">
+                <li>
+                  <h4 class="info--text mb-0">0</h4>
+                  <p class="fs-12 grey--text mb-0">Customers</p>
+                </li>
+                <li>
+                  <h4 class="primary--text mb-0">Cash {{ computedCash }}</h4>
+                </li>
+                <li>
+                  <h4 class="primary--text mb-0">CC {{ computedCC }}</h4>
+                </li>
+                <li>
+                  <h4 class="primary--text mb-0">Online {{ computedWeb }}</h4>
+                </li>
+						  </ul>
+						</div>
           </div>
         </div>
         <div class="px-4 pos-relative">
@@ -508,7 +509,7 @@
       </v-layout>
       <!-- End Week Component-->
 
-      <v-layout row wrap class="stats-card-v4">
+      <!-- <v-layout row wrap class="stats-card-v4">
         <v-flex xl2 lg2 md2 sm6 xs12 b-50>
           <v-chip
             class="chip-style"
@@ -573,10 +574,10 @@
             <span style="color: #003385">{{booking.name}}</span>
           </v-chip>
         </v-flex>
-      </v-layout>
+      </v-layout> -->
       <!-- End Week Component -->
     </v-container>
-    <orders :companyId="company_id"></orders>
+    <orders :paid="paid" :done="done" :pending="pending" :cancel="cancel" :booking="booking"  :companyId="company_id"></orders>
   </div>
 </template>
 
@@ -670,16 +671,16 @@ export default {
         name: "BOOKING",
         value: 0
       },
-      paramsSearchTag: {
-        status: ""
-      }
+      // paramsSearchTag: {
+      //   status: ""
+      // }
     };
   },
   methods: {
-    searchTag(params) {
-      this.paramsSearchTag.status = params;
-      this.$root.$emit("searchTag", this.paramsSearchTag);
-    },
+    // searchTag(params) {
+    //   this.paramsSearchTag.status = params;
+    //   this.$root.$emit("searchTag", this.paramsSearchTag);
+    // },
     countValuesOfTag() {
       var url = "order/countValuesOfTag?companyId=" + this.company_id;
       get(url)
@@ -1366,9 +1367,9 @@ export default {
 .pdl {
   padding-left: 8px !important;
 }
-.chip-style {
+/* .chip-style {
   cursor: pointer;
-}
+} */
 .style-container {
   padding-bottom: 0px !important;
 }
